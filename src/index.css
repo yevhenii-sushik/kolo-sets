@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/* Дополнительные глобальные стили */
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors;
+  }
+}
+
+/* Стили для флешкарточек */
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  backface-visibility: hidden;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+
+.version-badge {
+  font-size: 0.8em;
+  padding: 3px 8px;
+  margin-left: 15px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-alpha {
+  background: #fff7ed;
+  color: #f97316;
+  border: 1px solid #fed7aa;
+}
+
+.badge-beta {
+  background: #f5f3ff;
+  color: #8b5cf6;
+  border: 1px solid #ddd6fe;
+}
+
+.badge-beta-dark {
+  background: #4c1d95;
+  color: #ede9fe;
+  border: 1px solid #7e68bf;
+}
