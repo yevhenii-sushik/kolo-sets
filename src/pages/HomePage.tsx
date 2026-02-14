@@ -29,7 +29,7 @@ export default function HomePage() {
   };
 
   const handleDeleteCollection = (id: string) => {
-    if (window.confirm('Вы уверены, что хотите удалить эту коллекцию?')) {
+    if (window.confirm('Are you sure you want to delete this deck?')) {
       deleteCollection(id);
       loadCollections();
     }
@@ -41,20 +41,20 @@ export default function HomePage() {
       <div className="flex justify-between items-center mb-8">
         <div>
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Мои коллекции
+            My decks
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
             {collections.length === 0 
-              ? 'У вас пока нет коллекций. Создайте первую!' 
-              : `Всего коллекций: ${collections.length}`}
+              ? 'You don\'t have any decks yet. Create your first one!' 
+              : `Total decks: ${collections.length}`}
           </p>
         </div>
         
         <button
           onClick={() => setIsCreateModalOpen(true)}
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
+          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-colors shadow-md hover:shadow-lg"
         >
-          + Создать коллекцию
+          + Add deck
         </button>
       </div>
 

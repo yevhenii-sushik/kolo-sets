@@ -1,4 +1,6 @@
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { EllipsisVertical, Pencil, Trash2, Layers, HelpCircle, FileText, Calendar, Target } from 'lucide-react';
 import { Collection } from '../types';
 
 interface CollectionCardProps {
@@ -8,6 +10,19 @@ interface CollectionCardProps {
 
 export default function CollectionCard({ collection, onDelete }: CollectionCardProps) {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Закрытие меню при клике вне его области
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat('ru-RU', {
@@ -18,74 +33,91 @@ export default function CollectionCard({ collection, onDelete }: CollectionCardP
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 border border-gray-200 dark:border-gray-700">
-      {/* Заголовок коллекции */}
-      <div className="flex justify-between items-start mb-4">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+    <div className="bg-white dark:bg-gray-800 rounded-4xl shadow-md hover:shadow-lg transition-shadow p-6 border border-gray-200 dark:border-gray-700 relative">
+      <div className="flex justify-between mb-4 gap-2"> 
+        {/* Добавляем truncate и flex-1 */}
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white truncate flex-1 self-center" title={collection.name}>
           {collection.name}
         </h3>
-        <button
-          onClick={() => onDelete(collection.id)}
-          className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 text-sm"
-          title="Удалить коллекцию"
-        >
-          🗑️
-        </button>
+
+        {/* Контейнер с кнопкой меню (три точки) */}
+        <div className="relative shrink-0" ref={menuRef}>
+         <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-500"
+          title="Actions">
+      <EllipsisVertical size={20} />
+    </button>
+
+          {/* Выпадающее меню */}
+          {isMenuOpen && (
+            <div className="absolute right-0 w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-xl z-10 overflow-hidden">
+              <button
+                onClick={() => {
+                  navigate(`/collection/${collection.id}/edit`);
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              >
+                <Pencil size={16} className="mr-3" />
+                Редактировать
+              </button>
+              
+              <button
+                onClick={() => {
+                  if (confirm('Удалить эту коллекцию?')) {
+                    onDelete(collection.id);
+                  }
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+              >
+                <Trash2 size={16} className="mr-3" />
+                Удалить
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Информация о коллекции */}
-      <div className="space-y-2 mb-4">
+      <div className="space-y-2 mb-6">
         <div className="flex items-center text-gray-600 dark:text-gray-400">
-          <span className="mr-2">📝</span>
-          <span className="text-sm">
-            Слов: <strong>{collection.cards.length}</strong>
-          </span>
+          <FileText size={16} className="mr-2" />
+          <span className="text-sm">Слов: <strong>{collection.cards.length}</strong></span>
         </div>
         
         <div className="flex items-center text-gray-600 dark:text-gray-400">
-          <span className="mr-2">📅</span>
-          <span className="text-sm">
-            Создано: {formatDate(collection.createdAt)}
-          </span>
+          <Calendar size={16} className="mr-2" />
+          <span className="text-sm">Создано: {formatDate(collection.createdAt)}</span>
         </div>
 
         {collection.lastStudied && (
           <div className="flex items-center text-gray-600 dark:text-gray-400">
-            <span className="mr-2">🎯</span>
-            <span className="text-sm">
-              Последнее изучение: {formatDate(collection.lastStudied)}
-            </span>
+            <Target size={16} className="mr-2" />
+            <span className="text-sm">Последнее изучение: {formatDate(collection.lastStudied)}</span>
           </div>
         )}
       </div>
 
-      {/* Кнопки действий */}
-      <div className="flex gap-2 mt-4">
+      {/* Основные кнопки действий */}
+      <div className="flex gap-3">
         <button
           onClick={() => navigate(`/collection/${collection.id}/flashcards`)}
-          className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-sm font-medium transition-colors disabled:opacity-50"
           disabled={collection.cards.length === 0}
-          title={collection.cards.length === 0 ? 'Добавьте слова в коллекцию' : 'Изучать флешкарточки'}
         >
-          🎴 Флешкарточки
+          <Layers size={18} /> Cards
         </button>
         
         <button
           onClick={() => navigate(`/collection/${collection.id}/quiz`)}
-          className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-2xl text-sm font-medium transition-colors disabled:opacity-50"
           disabled={collection.cards.length < 4}
-          title={collection.cards.length < 4 ? 'Нужно минимум 4 слова для Quiz' : 'Пройти Quiz'}
         >
-          ❓ Quiz
+          <HelpCircle size={18} /> Quiz
         </button>
       </div>
-
-      <button
-        onClick={() => navigate(`/collection/${collection.id}/edit`)}
-        className="w-full mt-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium transition-colors"
-      >
-        ✏️ Редактировать
-      </button>
     </div>
   );
 }

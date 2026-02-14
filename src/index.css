@@ -16,6 +16,7 @@
 /* Стили для флешкарточек */
 .flip-card {
   perspective: 1000px;
+  color: #101828f1;
 }
 
 .flip-card-inner {

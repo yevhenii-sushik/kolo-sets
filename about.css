@@ -69,10 +69,10 @@
 .version-block::before {
   content: "";
   position: absolute;
-  left: -46px;
+  left: -44px;
   top: 12px;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--accent);
   border: 2px solid var(--bg);
@@ -87,7 +87,7 @@
   background: var(--beta);
 }
 
-.version-block.stable::before {
+.version-block.success::before {
   background: var(--success);
 }
 
@@ -122,6 +122,13 @@
   background: #f5f3ff;
   color: var(--beta);
   border: 1px solid #ddd6fe;
+}
+
+.badge-success {
+  background: #f4fff3;
+  color: var(--success);
+  border: 1px solid #ddd6fe;
+
 }
 
 .version-date {

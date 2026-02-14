@@ -84,3 +84,4 @@ export interface QuizMistake {
   correctAnswer: string;
   taskType: TaskType;
 }
+
