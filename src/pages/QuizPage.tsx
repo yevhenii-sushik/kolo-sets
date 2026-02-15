@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Collection, TaskType, QuizStats, QuizMistake, QuizSettings } from '../types';
 import { getCollection, updateCollection } from '../utils/storage';
+import { updateQuizStats, checkAndUnlockAchievements } from '../firebase/firestore';
+import { useAuth } from '../contexts/AuthContext';
 import { generateQuizQuestions, QuizQuestion } from '../utils/quizGenerator';
 import QuizQuestionComponent from '../components/QuizQuestion';
 import QuizStatsModal from '../components/QuizStatsModal';
@@ -10,6 +12,7 @@ import QuizSettingsModal from '../components/QuizSettingsModal';
 export default function QuizPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [collection, setCollection] = useState<Collection | null>(null);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -119,7 +122,26 @@ export default function QuizPage() {
         lastStudied: new Date()
       };
       await updateCollection(updatedCollection);
-      setStats(prev => ({ ...prev, duration }));
+      
+      const finalStats = { ...stats, duration };
+      setStats(finalStats);
+      
+      // Сохраняем статистику в Firestore
+      if (user) {
+        try {
+          await updateQuizStats(
+            user.uid,
+            finalStats.totalQuestions,
+            finalStats.correctAnswers,
+            duration
+          );
+          const totalCards = collection.cards.length;
+          await checkAndUnlockAchievements(user.uid, totalCards);
+        } catch (error) {
+          console.error('Error updating quiz stats:', error);
+        }
+      }
+      
       setShowStats(true);
     }
   };

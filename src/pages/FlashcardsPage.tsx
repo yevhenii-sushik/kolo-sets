@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Collection, Card, KnowledgeLevel, FlashcardStats } from '../types';
 import { getCollection, updateCollection, updateSRSData } from '../utils/storage';
+import { updateFlashcardStats, checkAndUnlockAchievements } from '../firebase/firestore';
+import { useAuth } from '../contexts/AuthContext';
 import Flashcard from '../components/Flashcard';
 import FlashcardStatsModal from '../components/FlashcardStatsModal';
 
 export default function FlashcardsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [collection, setCollection] = useState<Collection | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -96,6 +99,18 @@ export default function FlashcardsPage() {
       // Сессия завершена - показываем статистику
       const duration = Math.floor((Date.now() - startTime) / 1000);
       setStats(prev => ({ ...prev, duration }));
+      
+      // Сохраняем статистику в Firestore
+      if (user) {
+        try {
+          await updateFlashcardStats(user.uid, cards.length, duration);
+          const totalCards = collection.cards.length;
+          await checkAndUnlockAchievements(user.uid, totalCards);
+        } catch (error) {
+          console.error('Error updating stats:', error);
+        }
+      }
+      
       setShowStats(true);
     }
   };

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getCollections } from '../utils/storage';
-import { Collection, UserProfile, AchievementType } from '../types';
+import { Collection, UserProfile } from '../types';
 import { ALL_ACHIEVEMENTS, getAchievementProgress } from '../utils/achievements';
 import {
   getActivityCalendarData,
@@ -14,17 +15,25 @@ import {
   importCollectionsFromJSON,
   readJSONFile
 } from '../utils/exportImport';
-import { getUserProfile, saveUserCollection } from '../firebase/firestore';
+import { getUserProfile, saveUserCollection, updateUserProfile } from '../firebase/firestore';
+import { updateProfile } from 'firebase/auth';
 import ActivityCalendar from '../components/ActivityCalendar';
 import AchievementCard from '../components/AchievementCard';
-import { Download, Upload, Flame, TrendingUp } from 'lucide-react';
+import { Download, Upload, Flame, TrendingUp, Edit2, LogOut, Camera } from 'lucide-react';
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [totalCards, setTotalCards] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    displayName: '',
+    username: '',
+    photoURL: ''
+  });
 
   useEffect(() => {
     loadProfile();
@@ -39,9 +48,9 @@ export default function ProfilePage() {
       
       const total = colls.reduce((sum, coll) => sum + coll.cards.length, 0);
       
-      setProfile({
+      const loadedProfile: UserProfile = {
         uid: user.uid,
-        displayName: user.displayName || 'User',
+        displayName: user.displayName || profileData.displayName || 'User',
         email: user.email || '',
         createdAt: profileData.createdAt?.toDate() || new Date(),
         stats: profileData.stats || {
@@ -54,17 +63,61 @@ export default function ProfilePage() {
         },
         currentStreak: profileData.currentStreak || 0,
         longestStreak: profileData.longestStreak || 0,
-        lastStudyDate: profileData.lastStudyDate?.toDate(),
+        lastStudyDate: profileData.lastStudyDate?.toDate?.(),
         achievements: profileData.achievements || [],
         studyHistory: profileData.studyHistory || []
-      });
+      };
       
+      setProfile(loadedProfile);
       setCollections(colls);
       setTotalCards(total);
+      
+      setEditForm({
+        displayName: loadedProfile.displayName,
+        username: profileData.username || '',
+        photoURL: user.photoURL || profileData.photoURL || ''
+      });
     } catch (error) {
       console.error('Error loading profile:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSaveProfile = async () => {
+    if (!user || !profile) return;
+
+    try {
+      // Обновляем Firebase Auth profile
+      await updateProfile(user, {
+        displayName: editForm.displayName,
+        photoURL: editForm.photoURL || null
+      });
+
+      // Обновляем Firestore profile
+      await updateUserProfile(user.uid, {
+        displayName: editForm.displayName,
+        username: editForm.username,
+        photoURL: editForm.photoURL
+      });
+
+      setProfile({
+        ...profile,
+        displayName: editForm.displayName
+      });
+
+      setIsEditing(false);
+      alert('Профиль обновлен!');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Ошибка обновления профиля');
+    }
+  };
+
+  const handleLogout = async () => {
+    if (window.confirm('Вы уверены, что хотите выйти?')) {
+      await logout();
+      navigate('/login');
     }
   };
 
@@ -116,14 +169,112 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-8">
-      {/* Заголовок */}
-      <div>
-        <h1 className="text-4xl font-bold tracking-tight mb-2">
-          Профиль
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          {profile.displayName} • {profile.email}
-        </p>
+      {/* Заголовок и профиль */}
+      <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700">
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center gap-6">
+            {/* Avatar */}
+            <div className="relative">
+              {editForm.photoURL ? (
+                <img 
+                  src={editForm.photoURL} 
+                  alt="Profile" 
+                  className="w-24 h-24 rounded-full object-cover border-4 border-purple-200 dark:border-purple-800"
+                />
+              ) : (
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-3xl font-bold border-4 border-purple-200 dark:border-purple-800">
+                  {profile.displayName.charAt(0).toUpperCase()}
+                </div>
+              )}
+              {isEditing && (
+                <button 
+                  className="absolute bottom-0 right-0 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white hover:bg-purple-700"
+                  onClick={() => {
+                    const url = prompt('Введите URL изображения:', editForm.photoURL);
+                    if (url !== null) {
+                      setEditForm({ ...editForm, photoURL: url });
+                    }
+                  }}
+                >
+                  <Camera size={16} />
+                </button>
+              )}
+            </div>
+
+            {/* Info */}
+            <div>
+              {isEditing ? (
+                <div className="space-y-3">
+                  <input
+                    type="text"
+                    value={editForm.displayName}
+                    onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
+                    className="text-2xl font-bold bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-lg border-2 border-purple-300 dark:border-purple-700"
+                    placeholder="Имя"
+                  />
+                  <input
+                    type="text"
+                    value={editForm.username}
+                    onChange={(e) => setEditForm({ ...editForm, username: e.target.value })}
+                    className="text-lg bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600"
+                    placeholder="@username"
+                  />
+                  <p className="text-gray-600 dark:text-gray-400">{profile.email}</p>
+                </div>
+              ) : (
+                <>
+                  <h1 className="text-3xl font-bold mb-1">{profile.displayName}</h1>
+                  {editForm.username && (
+                    <p className="text-gray-600 dark:text-gray-400 mb-1">@{editForm.username}</p>
+                  )}
+                  <p className="text-gray-600 dark:text-gray-400">{profile.email}</p>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex gap-2">
+            {isEditing ? (
+              <>
+                <button
+                  onClick={handleSaveProfile}
+                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors font-medium"
+                >
+                  Сохранить
+                </button>
+                <button
+                  onClick={() => {
+                    setIsEditing(false);
+                    setEditForm({
+                      displayName: profile.displayName,
+                      username: editForm.username,
+                      photoURL: user?.photoURL || ''
+                    });
+                  }}
+                  className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl transition-colors"
+                >
+                  Отмена
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => setIsEditing(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 hover:bg-purple-200 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-xl transition-colors font-medium"
+              >
+                <Edit2 size={18} />
+                Редактировать
+              </button>
+            )}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-700 dark:text-red-300 rounded-xl transition-colors font-medium"
+            >
+              <LogOut size={18} />
+              Выйти
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Стрик - крупная карточка */}

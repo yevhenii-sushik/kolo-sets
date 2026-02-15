@@ -1,15 +1,12 @@
 import Sidebar from '../components/Sidebar';
 import BottomNav from '../components/BottomNav';
 import { Outlet, Link } from 'react-router-dom';
-import { Menu, LogOut } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 
 const SIDEBAR_KEY = 'sidebar-open';
 
 export default function MainLayout() {
-  const { user, logout } = useAuth();
-  
   // состояние sidebar с сохранением в localStorage
   const [open, setOpen] = useState<boolean>(() => {
     const saved = localStorage.getItem(SIDEBAR_KEY);
@@ -22,47 +19,22 @@ export default function MainLayout() {
     localStorage.setItem(SIDEBAR_KEY, String(open));
   }, [open]);
 
-  const handleLogout = async () => {
-    if (window.confirm('Вы уверены, что хотите выйти?')) {
-      await logout();
-    }
-  };
-
 return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <div className="px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center">
-            {/* Скрываем бургер на мобилках (hidden), показываем от md и выше (md:flex) */}
-            <button
-              onClick={toggleSidebar}
-              className="hidden md:flex p-2 mr-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors"
-            >
-              <Menu size={24} />
-            </button>
+        <div className="px-4 h-16 flex items-center">
+          {/* Скрываем бургер на мобилках (hidden), показываем от md и выше (md:flex) */}
+          <button
+            onClick={toggleSidebar}
+            className="hidden md:flex p-2 mr-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors"
+          >
+            <Menu size={24} />
+          </button>
 
-            <Link to="/" className="flex items-center gap-2">
-              <img src="/icon.svg" alt="logo" className="w-8 h-8" />
-              <h1 className="text-2xl font-bold tracking-tight">Kolo</h1>
-            </Link>
-          </div>
-
-          {/* User info and logout */}
-          {user && (
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:block text-right">
-                <div className="text-sm font-medium">{user.displayName || 'User'}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">{user.email}</div>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl transition-colors"
-                title="Выйти"
-              >
-                <LogOut size={20} />
-              </button>
-            </div>
-          )}
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/icon.svg" alt="logo" className="w-8 h-8" />
+            <h1 className="text-2xl font-bold tracking-tight">Kolo</h1>
+          </Link>
         </div>
       </header>
 
