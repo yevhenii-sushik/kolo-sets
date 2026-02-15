@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { POPULAR_LANGUAGES } from '../utils/tts';
 
 interface CreateCollectionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (name: string) => void;
+  onCreate: (name: string, language: string) => void;
 }
 
 export default function CreateCollectionModal({ 
@@ -12,31 +13,34 @@ export default function CreateCollectionModal({
   onCreate 
 }: CreateCollectionModalProps) {
   const [name, setName] = useState('');
+  const [language, setLanguage] = useState('nb-NO');
 
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
-      onCreate(name.trim());
+      onCreate(name.trim(), language);
       setName('');
+      setLanguage('nb-NO');
     }
   };
 
   const handleClose = () => {
     setName('');
+    setLanguage('nb-NO');
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#101828fa]/20 backdrop-blur-sm dark:bg-[#F9FAFBfa]/10 backdrop-blur-sm">
-      <div className="bg-white dark:bg-gray-800 rounded-4xl shadow-xl max-w-md w-full p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl max-w-md w-full p-6">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Создать новую коллекцию
         </h2>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
             <label 
               htmlFor="collection-name" 
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -48,24 +52,45 @@ export default function CreateCollectionModal({
               id="collection-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Например: Английский - Базовые слова"
-              className="w-full mt-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+              placeholder="Например: Norsk - Grunnleggende ord"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
               autoFocus
             />
           </div>
 
-          <div className="flex gap-3 justify-end">
+          <div>
+            <label 
+              htmlFor="collection-language" 
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
+              Язык слов (для озвучки)
+            </label>
+            <select
+              id="collection-language"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+            >
+              {POPULAR_LANGUAGES.map(lang => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex gap-3 justify-end pt-2">
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+              className="px-6 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors"
             >
               Отмена
             </button>
             <button
               type="submit"
               disabled={!name.trim()}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-full transition-colors disabled:cursor-not-allowed"
+              className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white rounded-xl transition-colors disabled:cursor-not-allowed"
             >
               Создать
             </button>

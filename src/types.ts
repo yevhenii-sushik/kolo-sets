@@ -68,6 +68,7 @@ export interface Card {
 export interface Collection {
   id: string;
   name: string;
+  language: string;          // Код языка для TTS (например 'en-US', 'nb-NO')
   cards: Card[];
   createdAt: Date;
   lastStudied?: Date;

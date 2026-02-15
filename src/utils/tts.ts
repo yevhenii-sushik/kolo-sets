@@ -31,7 +31,7 @@ export const getAvailableVoices = (lang?: string): VoiceOption[] => {
 export const speak = (
   text: string,
   lang: string = 'en-US',
-  rate: number = 1.0
+  rate: number = 0.9
 ): void => {
   // Останавливаем текущую озвучку если идет
   window.speechSynthesis.cancel();
@@ -39,14 +39,31 @@ export const speak = (
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = lang;
   utterance.rate = rate;
+  utterance.pitch = 1.0;
+  utterance.volume = 1.0;
   
   // Пытаемся найти подходящий голос
   const voices = window.speechSynthesis.getVoices();
-  const voice = voices.find(v => v.lang === lang) || voices.find(v => v.lang.startsWith(lang.split('-')[0]));
+  
+  // Приоритет: точное совпадение языка > начинается с кода > первый доступный
+  let voice = voices.find(v => v.lang === lang);
+  
+  if (!voice) {
+    const langPrefix = lang.split('-')[0];
+    voice = voices.find(v => v.lang.startsWith(langPrefix));
+  }
+  
+  // Для норвежского - ищем nb-NO (Bokmål) или nn-NO (Nynorsk)
+  if (!voice && (lang.startsWith('no') || lang.startsWith('nb') || lang.startsWith('nn'))) {
+    voice = voices.find(v => v.lang.startsWith('nb-NO') || v.lang.startsWith('nn-NO') || v.lang.startsWith('no'));
+  }
   
   if (voice) {
     utterance.voice = voice;
   }
+  
+  // Для отладки - покажем какой голос используется
+  console.log('Using TTS voice:', voice ? `${voice.name} (${voice.lang})` : 'default');
   
   window.speechSynthesis.speak(utterance);
 };
@@ -67,6 +84,9 @@ export const getLanguageName = (langCode: string): string => {
     'en': 'English',
     'en-US': 'English (US)',
     'en-GB': 'English (UK)',
+    'no': 'Norsk',
+    'nb-NO': 'Norsk (Bokmål)',
+    'nn-NO': 'Norsk (Nynorsk)',
     'ru': 'Русский',
     'ru-RU': 'Русский',
     'es': 'Español',
@@ -98,6 +118,8 @@ export const getLanguageName = (langCode: string): string => {
 export const POPULAR_LANGUAGES = [
   { code: 'en-US', name: 'English (US)' },
   { code: 'en-GB', name: 'English (UK)' },
+  { code: 'nb-NO', name: 'Norsk (Bokmål)' },
+  { code: 'nn-NO', name: 'Norsk (Nynorsk)' },
   { code: 'ru-RU', name: 'Русский' },
   { code: 'es-ES', name: 'Español' },
   { code: 'fr-FR', name: 'Français' },
@@ -106,7 +128,5 @@ export const POPULAR_LANGUAGES = [
   { code: 'pt-BR', name: 'Português' },
   { code: 'ja-JP', name: '日本語' },
   { code: 'ko-KR', name: '한국어' },
-  { code: 'zh-CN', name: '中文' },
-  { code: 'ar-SA', name: 'العربية' },
-  { code: 'hi-IN', name: 'हिन्दी' }
+  { code: 'zh-CN', name: '中文' }
 ];

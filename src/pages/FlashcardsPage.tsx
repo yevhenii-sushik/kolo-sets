@@ -4,6 +4,7 @@ import { Collection, Card, KnowledgeLevel, FlashcardStats } from '../types';
 import { getCollection, updateCollection, updateSRSData } from '../utils/storage';
 import { updateFlashcardStats, checkAndUnlockAchievements } from '../firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
+import { playSessionCompleteIfEnabled } from '../utils/sounds';
 import Flashcard from '../components/Flashcard';
 import FlashcardStatsModal from '../components/FlashcardStatsModal';
 
@@ -111,6 +112,9 @@ export default function FlashcardsPage() {
         }
       }
       
+      // Воспроизводим звук завершения сессии
+      playSessionCompleteIfEnabled();
+      
       setShowStats(true);
     }
   };
@@ -197,6 +201,7 @@ export default function FlashcardsPage() {
         <Flashcard
           card={currentCard}
           isFlipped={isFlipped}
+          language={collection.language}
           onFlip={handleFlip}
         />
       </div>

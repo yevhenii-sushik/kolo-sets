@@ -4,6 +4,11 @@ import { Collection, TaskType, QuizStats, QuizMistake, QuizSettings } from '../t
 import { getCollection, updateCollection } from '../utils/storage';
 import { updateQuizStats, checkAndUnlockAchievements } from '../firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
+import { 
+  playCorrectIfEnabled, 
+  playIncorrectIfEnabled, 
+  playSessionCompleteIfEnabled 
+} from '../utils/sounds';
 import { generateQuizQuestions, QuizQuestion } from '../utils/quizGenerator';
 import QuizQuestionComponent from '../components/QuizQuestion';
 import QuizStatsModal from '../components/QuizStatsModal';
@@ -81,6 +86,13 @@ export default function QuizPage() {
     setIsCorrect(correct);
     setShowFeedback(true);
 
+    // Воспроизводим звук в зависимости от правильности ответа
+    if (correct) {
+      playCorrectIfEnabled();
+    } else {
+      playIncorrectIfEnabled();
+    }
+
     // Обновляем статистику
     const newStats = { ...stats };
     
@@ -141,6 +153,9 @@ export default function QuizPage() {
           console.error('Error updating quiz stats:', error);
         }
       }
+      
+      // Воспроизводим звук завершения квиза
+      playSessionCompleteIfEnabled();
       
       setShowStats(true);
     }

@@ -4,13 +4,14 @@ import { speak, isTTSSupported } from '../utils/tts';
 interface FlashcardProps {
   card: Card;
   isFlipped: boolean;
+  language?: string;
   onFlip: () => void;
 }
 
-export default function Flashcard({ card, isFlipped, onFlip }: FlashcardProps) {
+export default function Flashcard({ card, isFlipped, language = 'nb-NO', onFlip }: FlashcardProps) {
   const handleSpeak = (e: React.MouseEvent) => {
     e.stopPropagation();
-    speak(card.word, 'en-US');
+    speak(card.word, language);
   };
 
   const ttsSupported = isTTSSupported();

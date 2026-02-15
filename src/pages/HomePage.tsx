@@ -20,8 +20,8 @@ export default function HomePage() {
     setCollections(loaded);
   };
 
-  const handleCreateCollection = async (name: string) => {
-    const newCollection = await createCollection(name);
+  const handleCreateCollection = async (name: string, language: string) => {
+    const newCollection = await createCollection(name, language);
     await loadCollections();
     setIsCreateModalOpen(false);
     // Переходим к редактированию новой коллекции

@@ -36,6 +36,7 @@ const getLocalCollections = (): Collection[] => {
     // Преобразуем строки дат обратно в объекты Date
     return collections.map((col: any) => ({
       ...col,
+      language: col.language || 'nb-NO', // Добавляем язык по умолчанию для старых коллекций
       createdAt: new Date(col.createdAt),
       lastStudied: col.lastStudied ? new Date(col.lastStudied) : undefined,
       cards: col.cards.map((card: any) => ({
@@ -70,10 +71,11 @@ export const getCollection = async (id: string): Promise<Collection | undefined>
 };
 
 // Создать новую коллекцию
-export const createCollection = async (name: string): Promise<Collection> => {
+export const createCollection = async (name: string, language: string = 'nb-NO'): Promise<Collection> => {
   const newCollection: Collection = {
     id: crypto.randomUUID(),
     name,
+    language,
     cards: [],
     createdAt: new Date()
   };

@@ -4,36 +4,10 @@ export default function AboutPage() {
 
   const versions = [
     {
-      number: "0.2.1",
+      number: "0.1.2",
       status: "Latest",
       date: "Februar 2026",
       badgeClass: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-      changes: [
-        "Полная поддержка темной темы (Dark Mode)",
-        "Адаптивный интерфейс для мобильных устройств",
-        "Обновленный алгоритм интервальных повторений (SRS)",
-        "Новый дизайн бокового и нижнего меню",
-        "Оптимизация производительности анимаций"
-      ]
-    },
-    {
-      number: "0.2.0",
-      status: "Release",
-      date: "Februar 2026",
-      badgeClass: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-      changes: [
-        "Полная поддержка темной темы (Dark Mode)",
-        "Адаптивный интерфейс для мобильных устройств",
-        "Обновленный алгоритм интервальных повторений (SRS)",
-        "Новый дизайн бокового и нижнего меню",
-        "Оптимизация производительности анимаций"
-      ]
-    },
-    {
-      number: "0.1.2",
-      status: "Release",
-      date: "Februar 2026",
-      badgeClass: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
       changes: [
         "Полная поддержка темной темы (Dark Mode)",
         "Адаптивный интерфейс для мобильных устройств",
