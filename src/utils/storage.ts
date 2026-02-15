@@ -1,10 +1,33 @@
 import { Collection, Card, SRSData, KnowledgeLevel } from '../types';
+import { auth } from '../firebase/config';
+import {
+  getUserCollections,
+  saveUserCollection,
+  deleteUserCollection as deleteFirestoreCollection
+} from '../firebase/firestore';
 
 const STORAGE_KEY = 'language_cards_collections';
 const THEME_KEY = 'language_cards_theme';
 
-// Получить все коллекции
-export const getCollections = (): Collection[] => {
+// Получить все коллекции (из Firestore если залогинен, иначе из localStorage)
+export const getCollections = async (): Promise<Collection[]> => {
+  const user = auth.currentUser;
+  
+  if (user) {
+    // Получаем из Firestore
+    try {
+      return await getUserCollections(user.uid);
+    } catch (error) {
+      console.error('Ошибка получения из Firestore:', error);
+      return getLocalCollections();
+    }
+  }
+  
+  return getLocalCollections();
+};
+
+// Получить коллекции из localStorage
+const getLocalCollections = (): Collection[] => {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     if (!data) return [];
@@ -31,8 +54,8 @@ export const getCollections = (): Collection[] => {
   }
 };
 
-// Сохранить все коллекции
-export const saveCollections = (collections: Collection[]): void => {
+// Сохранить все коллекции в localStorage
+const saveLocalCollections = (collections: Collection[]): void => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(collections));
   } catch (error) {
@@ -41,13 +64,13 @@ export const saveCollections = (collections: Collection[]): void => {
 };
 
 // Получить коллекцию по ID
-export const getCollection = (id: string): Collection | undefined => {
-  const collections = getCollections();
+export const getCollection = async (id: string): Promise<Collection | undefined> => {
+  const collections = await getCollections();
   return collections.find(col => col.id === id);
 };
 
 // Создать новую коллекцию
-export const createCollection = (name: string): Collection => {
+export const createCollection = async (name: string): Promise<Collection> => {
   const newCollection: Collection = {
     id: crypto.randomUUID(),
     name,
@@ -55,29 +78,53 @@ export const createCollection = (name: string): Collection => {
     createdAt: new Date()
   };
   
-  const collections = getCollections();
-  collections.push(newCollection);
-  saveCollections(collections);
+  const user = auth.currentUser;
+  
+  if (user) {
+    // Сохраняем в Firestore
+    await saveUserCollection(user.uid, newCollection);
+  } else {
+    // Сохраняем локально
+    const collections = getLocalCollections();
+    collections.push(newCollection);
+    saveLocalCollections(collections);
+  }
   
   return newCollection;
 };
 
 // Обновить коллекцию
-export const updateCollection = (updatedCollection: Collection): void => {
-  const collections = getCollections();
-  const index = collections.findIndex(col => col.id === updatedCollection.id);
+export const updateCollection = async (updatedCollection: Collection): Promise<void> => {
+  const user = auth.currentUser;
   
-  if (index !== -1) {
-    collections[index] = updatedCollection;
-    saveCollections(collections);
+  if (user) {
+    // Обновляем в Firestore
+    await saveUserCollection(user.uid, updatedCollection);
+  } else {
+    // Обновляем локально
+    const collections = getLocalCollections();
+    const index = collections.findIndex(col => col.id === updatedCollection.id);
+    
+    if (index !== -1) {
+      collections[index] = updatedCollection;
+      saveLocalCollections(collections);
+    }
   }
 };
 
 // Удалить коллекцию
-export const deleteCollection = (id: string): void => {
-  const collections = getCollections();
-  const filtered = collections.filter(col => col.id !== id);
-  saveCollections(filtered);
+export const deleteCollection = async (id: string): Promise<void> => {
+  const user = auth.currentUser;
+  
+  if (user) {
+    // Удаляем из Firestore
+    await deleteFirestoreCollection(user.uid, id);
+  } else {
+    // Удаляем локально
+    const collections = getLocalCollections();
+    const filtered = collections.filter(col => col.id !== id);
+    saveLocalCollections(filtered);
+  }
 };
 
 // Создать новую карточку с начальными данными SRS

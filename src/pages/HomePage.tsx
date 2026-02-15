@@ -15,23 +15,23 @@ export default function HomePage() {
     loadCollections();
   }, []);
 
-  const loadCollections = () => {
-    const loaded = getCollections();
+  const loadCollections = async () => {
+    const loaded = await getCollections();
     setCollections(loaded);
   };
 
-  const handleCreateCollection = (name: string) => {
-    const newCollection = createCollection(name);
-    loadCollections();
+  const handleCreateCollection = async (name: string) => {
+    const newCollection = await createCollection(name);
+    await loadCollections();
     setIsCreateModalOpen(false);
     // Переходим к редактированию новой коллекции
     navigate(`/collection/${newCollection.id}/edit`);
   };
 
-  const handleDeleteCollection = (id: string) => {
+  const handleDeleteCollection = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this deck?')) {
-      deleteCollection(id);
-      loadCollections();
+      await deleteCollection(id);
+      await loadCollections();
     }
   };
 

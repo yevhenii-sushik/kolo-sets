@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Collection, TaskType, QuizStats, QuizSettings } from '../types';
+import { Collection, TaskType, QuizStats, QuizMistake, QuizSettings } from '../types';
 import { getCollection, updateCollection } from '../utils/storage';
 import { generateQuizQuestions, QuizQuestion } from '../utils/quizGenerator';
 import QuizQuestionComponent from '../components/QuizQuestion';
@@ -38,15 +38,18 @@ export default function QuizPage() {
   });
 
   useEffect(() => {
-    if (id) {
-      const loaded = getCollection(id);
-      if (loaded && loaded.cards.length >= 4) {
-        setCollection(loaded);
-        initializeQuiz(loaded, settings);
-      } else {
-        navigate('/');
+    const loadCollection = async () => {
+      if (id) {
+        const loaded = await getCollection(id);
+        if (loaded && loaded.cards.length >= 4) {
+          setCollection(loaded);
+          initializeQuiz(loaded, settings);
+        } else {
+          navigate('/');
+        }
       }
-    }
+    };
+    loadCollection();
   }, [id, navigate]);
 
   const initializeQuiz = (coll: Collection, quizSettings: QuizSettings) => {
@@ -90,19 +93,19 @@ export default function QuizPage() {
       });
     }
 
-    // // Статистика по типам заданий
-    // if (!newStats.byTaskType[currentQuestion.type]) {
-    //   newStats.byTaskType[currentQuestion.type] = { correct: 0, total: 0 };
-    // }
-    // newStats.byTaskType[currentQuestion.type].total++;
-    // if (correct) {
-    //   newStats.byTaskType[currentQuestion.type].correct++;
-    // }
+    // Статистика по типам заданий
+    if (!newStats.byTaskType[currentQuestion.type]) {
+      newStats.byTaskType[currentQuestion.type] = { correct: 0, total: 0 };
+    }
+    newStats.byTaskType[currentQuestion.type].total++;
+    if (correct) {
+      newStats.byTaskType[currentQuestion.type].correct++;
+    }
 
     setStats(newStats);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setUserAnswer('');
@@ -115,7 +118,7 @@ export default function QuizPage() {
         ...collection,
         lastStudied: new Date()
       };
-      updateCollection(updatedCollection);
+      await updateCollection(updatedCollection);
       setStats(prev => ({ ...prev, duration }));
       setShowStats(true);
     }

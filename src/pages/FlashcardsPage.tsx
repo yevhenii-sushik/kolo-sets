@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Collection, Card, KnowledgeLevel, FlashcardStats } from '../types';
 import { getCollection, updateCollection, updateSRSData } from '../utils/storage';
-import { ArrowLeft, ArrowUpDown} from 'lucide-react';
 import Flashcard from '../components/Flashcard';
 import FlashcardStatsModal from '../components/FlashcardStatsModal';
 
@@ -25,16 +24,19 @@ export default function FlashcardsPage() {
   const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
-    if (id) {
-      const loaded = getCollection(id);
-      if (loaded && loaded.cards.length > 0) {
-        setCollection(loaded);
-        setCards([...loaded.cards]);
-        setStats(prev => ({ ...prev, totalCards: loaded.cards.length }));
-      } else {
-        navigate('/');
+    const loadCollection = async () => {
+      if (id) {
+        const loaded = await getCollection(id);
+        if (loaded && loaded.cards.length > 0) {
+          setCollection(loaded);
+          setCards([...loaded.cards]);
+          setStats(prev => ({ ...prev, totalCards: loaded.cards.length }));
+        } else {
+          navigate('/');
+        }
       }
-    }
+    };
+    loadCollection();
   }, [id, navigate]);
 
   if (!collection || cards.length === 0) {
@@ -52,7 +54,7 @@ export default function FlashcardsPage() {
     setIsFlipped(!isFlipped);
   };
 
-  const handleRating = (level: KnowledgeLevel) => {
+  const handleRating = async (level: KnowledgeLevel) => {
     // Обновляем статистику
     const newStats = { ...stats };
     switch (level) {
@@ -83,7 +85,7 @@ export default function FlashcardsPage() {
       lastStudied: new Date()
     };
 
-    updateCollection(updatedCollection);
+    await updateCollection(updatedCollection);
     setCollection(updatedCollection);
 
     // Переходим к следующей карточке
@@ -130,82 +132,110 @@ export default function FlashcardsPage() {
     setShowStats(false);
   };
 
-return (
-    // 1. Главный контейнер на всю высоту экрана без прокрутки
-    <div className="h-[85dvh] flex flex-col md:p-6 bg-white dark:bg-gray-900 overflow-hidden">
-      
-      {/* 2. Верхняя панель: фиксированная высота */}
-      <div className="flex justify-between items-center gap-4 mb-8 shrink-0">
+  return (
+    <div>
+      {/* Заголовок и навигация */}
+      <div className="mb-6">
         <button
           onClick={() => navigate('/')}
-          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-500 dark:text-gray-400"
+          className="text-blue-600 dark:text-blue-400 hover:underline mb-4 flex items-center"
         >
-          <ArrowLeft size={25} />
+          ← Назад к коллекциям
         </button>
 
-        <div className="flex-1 max-w-2xl">
-          <div className="flex justify-between text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2">
-            <span>Card {currentIndex + 1} of {cards.length}</span>
-            <span>{Math.round(progress)}%</span>
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              {collection.name}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
+              Режим: Флешкарточки
+            </p>
           </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-            <div
-              className="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+
+          <button
+            onClick={handleShuffle}
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+            title="Перемешать карточки"
+          >
+            🔀 Перемешать
+          </button>
         </div>
-
-        <button
-          onClick={handleShuffle}
-          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-500 dark:text-gray-400"
-        >
-          <ArrowUpDown size={25} />
-        </button>
       </div>
 
-      {/* 3. Центральная часть с карточкой: забирает всё свободное место */}
-      <div className="flex-1 flex items-center justify-center min-h-0 py-4">
-        {/* Обертка для сохранения пропорций карточки */}
-        <div className="w-full max-w-2xl h-full max-h-[500px]"> 
-          <Flashcard
-            card={currentCard}
-            isFlipped={isFlipped}
-            onFlip={handleFlip}
+      {/* Прогресс-бар */}
+      <div className="mb-6">
+        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <span>Карточка {currentIndex + 1} из {cards.length}</span>
+          <span>{Math.round(progress)}%</span>
+        </div>
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+          <div
+            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+            style={{ width: `${progress}%` }}
           />
         </div>
       </div>
 
-      {/* 4. Нижняя панель с кнопками: фиксированная высота внизу */}
-      <div className="shrink-0 pt-2 pb-4">
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-5">
-          {isFlipped ? "How well do you know this word?" : "Click on the card to see the information"}
-        </p>
-        
-        <div className="max-w-3xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {/* Универсальная функция для рендера кнопок, чтобы не дублировать код */}
-          {[
-            { level: KnowledgeLevel.DONT_KNOW, label: 'Не знаю', emoji: '😕', color: 'bg-red-600' },
-            { level: KnowledgeLevel.FORGOT, label: 'Забыл', emoji: '🤔', color: 'bg-orange-600' },
-            { level: KnowledgeLevel.REMEMBER, label: 'Помню', emoji: '🙂', color: 'bg-yellow-600' },
-            { level: KnowledgeLevel.KNOW, label: 'Знаю', emoji: '😊', color: 'bg-green-600' }
-          ].map((btn) => (
-            <button
-              key={btn.level}
-              disabled={!isFlipped}
-              onClick={() => handleRating(btn.level)}
-              className={`
-                flex flex-col items-center justify-center py-2 md:py-3 rounded-3xl font-medium transition-all shadow-md
-                ${isFlipped ? `${btn.color} hover:scale-105 text-white` : 'bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed'}
-              `}
-            >
-              <span className="text-xl md:text-2xl mb-1">{btn.emoji}</span>
-              <span className="text-xs md:text-sm">{btn.label}</span>
-            </button>
-          ))}
-        </div>
+      {/* Флешкарточка */}
+      <div className="flex justify-center mb-8">
+        <Flashcard
+          card={currentCard}
+          isFlipped={isFlipped}
+          onFlip={handleFlip}
+        />
       </div>
 
+      {/* Кнопки оценки (показываются только когда карточка перевернута) */}
+      {isFlipped && (
+        <div className="max-w-3xl mx-auto">
+          <p className="text-center text-gray-600 dark:text-gray-400 mb-4">
+            Насколько хорошо вы знаете это слово?
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <button
+              onClick={() => handleRating(KnowledgeLevel.DONT_KNOW)}
+              className="px-6 py-4 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-all hover:scale-105 shadow-md"
+            >
+              <div className="text-2xl mb-1">😕</div>
+              <div>Не знаю</div>
+            </button>
+
+            <button
+              onClick={() => handleRating(KnowledgeLevel.FORGOT)}
+              className="px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-all hover:scale-105 shadow-md"
+            >
+              <div className="text-2xl mb-1">🤔</div>
+              <div>Забыл</div>
+            </button>
+
+            <button
+              onClick={() => handleRating(KnowledgeLevel.REMEMBER)}
+              className="px-6 py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-medium transition-all hover:scale-105 shadow-md"
+            >
+              <div className="text-2xl mb-1">🙂</div>
+              <div>Помню</div>
+            </button>
+
+            <button
+              onClick={() => handleRating(KnowledgeLevel.KNOW)}
+              className="px-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all hover:scale-105 shadow-md"
+            >
+              <div className="text-2xl mb-1">😊</div>
+              <div>Знаю</div>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Подсказка если карточка не перевернута */}
+      {!isFlipped && (
+        <p className="text-center text-gray-500 dark:text-gray-400 mt-8">
+          Нажмите на карточку, чтобы увидеть перевод и информацию
+        </p>
+      )}
+
+      {/* Модальное окно со статистикой */}
       <FlashcardStatsModal
         isOpen={showStats}
         stats={stats}

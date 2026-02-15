@@ -15,15 +15,18 @@ export default function CollectionEditPage() {
   const [editingCard, setEditingCard] = useState<Card | null>(null);
 
   useEffect(() => {
-    if (id) {
-      const loaded = getCollection(id);
-      if (loaded) {
-        setCollection(loaded);
-      } else {
-        // Коллекция не найдена - возвращаемся на главную
-        navigate('/');
+    const loadCollection = async () => {
+      if (id) {
+        const loaded = await getCollection(id);
+        if (loaded) {
+          setCollection(loaded);
+        } else {
+          // Коллекция не найдена - возвращаемся на главную
+          navigate('/');
+        }
       }
-    }
+    };
+    loadCollection();
   }, [id, navigate]);
 
   if (!collection) {
@@ -34,7 +37,7 @@ export default function CollectionEditPage() {
     );
   }
 
-  const handleAddCard = (cardData: Omit<Card, 'id' | 'srsData' | 'createdAt'>) => {
+  const handleAddCard = async (cardData: Omit<Card, 'id' | 'srsData' | 'createdAt'>) => {
     const newCard = createCard(
       cardData.word,
       cardData.translation,
@@ -48,12 +51,12 @@ export default function CollectionEditPage() {
       cards: [...collection.cards, newCard]
     };
 
-    updateCollection(updatedCollection);
+    await updateCollection(updatedCollection);
     setCollection(updatedCollection);
     setIsAddModalOpen(false);
   };
 
-  const handleImportCards = (text: string) => {
+  const handleImportCards = async (text: string) => {
     const parsedCards = parseImportText(text);
     const newCards = parsedCards.map(cardData =>
       createCard(
@@ -70,12 +73,12 @@ export default function CollectionEditPage() {
       cards: [...collection.cards, ...newCards]
     };
 
-    updateCollection(updatedCollection);
+    await updateCollection(updatedCollection);
     setCollection(updatedCollection);
     setIsImportModalOpen(false);
   };
 
-  const handleEditCard = (cardData: Omit<Card, 'id' | 'srsData' | 'createdAt'>) => {
+  const handleEditCard = async (cardData: Omit<Card, 'id' | 'srsData' | 'createdAt'>) => {
     if (!editingCard) return;
 
     const updatedCards = collection.cards.map(card =>
@@ -89,12 +92,12 @@ export default function CollectionEditPage() {
       cards: updatedCards
     };
 
-    updateCollection(updatedCollection);
+    await updateCollection(updatedCollection);
     setCollection(updatedCollection);
     setEditingCard(null);
   };
 
-  const handleDeleteCard = (cardId: string) => {
+  const handleDeleteCard = async (cardId: string) => {
     if (window.confirm('Удалить это слово?')) {
       const updatedCards = collection.cards.filter(card => card.id !== cardId);
       const updatedCollection = {
@@ -102,19 +105,19 @@ export default function CollectionEditPage() {
         cards: updatedCards
       };
 
-      updateCollection(updatedCollection);
+      await updateCollection(updatedCollection);
       setCollection(updatedCollection);
     }
   };
 
-  const handleRenameCollection = () => {
+  const handleRenameCollection = async () => {
     const newName = window.prompt('Новое название коллекции:', collection.name);
     if (newName && newName.trim()) {
       const updatedCollection = {
         ...collection,
         name: newName.trim()
       };
-      updateCollection(updatedCollection);
+      await updateCollection(updatedCollection);
       setCollection(updatedCollection);
     }
   };

@@ -4,10 +4,23 @@ export default function AboutPage() {
 
   const versions = [
     {
-      number: "0.1.2",
+      number: "0.2.0",
       status: "Latest",
       date: "Februar 2026",
       badgeClass: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+      changes: [
+        "Добавлены критически важная система аккаунтов и синхронизация данных через облако",
+        "Добавление поддержки синтеза речи",
+        "Улучшенный дизайн интерфейса, анимаций и взаимодействия",
+        "Улучения адаптивности под мобильные устройства",
+        "Оптимизация производительности анимаций"
+      ]
+    },
+    {
+      number: "0.1.2",
+      status: "release",
+      date: "Februar 2026",
+      badgeClass: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
       changes: [
         "Полная поддержка темной темы (Dark Mode)",
         "Адаптивный интерфейс для мобильных устройств",
@@ -31,7 +44,7 @@ export default function AboutPage() {
     {
       number: "0.1.0",
       status: "Release",
-      date: "Februar 2026",
+      date: "Januar 2026",
       badgeClass: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
       changes: [
         "Первый публичный релиз",
@@ -93,7 +106,7 @@ export default function AboutPage() {
           {versions.map((v) => (
             <div key={v.number} className="relative">
               {/* Точка на таймлайне */}
-              <div className="absolute -left-[41px] top-1 w-5 h-5 bg-white dark:bg-gray-900 border-4 border-purple-600 rounded-full" />
+              <div className="absolute -left-[41px] top-2 w-4 h-4 bg-white dark:bg-gray-900 border-4 border-purple-600 rounded-full" />
               
               <div className="space-y-4">
                 <div className="flex items-center gap-4">

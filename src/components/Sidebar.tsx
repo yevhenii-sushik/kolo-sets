@@ -12,7 +12,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         className={`hidden md:flex flex-col fixed top-16 left-0 h-[calc(100vh-64px)] 
           bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800
           transition-[width] duration-300 z-40
-          ${open ? 'w-64' : 'w-18'}
+          ${open ? 'w-55' : 'w-18'}
         `}
       >
         <nav className="flex-1 px-3 py-4 space-y-2">
