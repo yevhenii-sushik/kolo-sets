@@ -40,7 +40,7 @@ export default function ActivityCalendar({ data }: ActivityCalendarProps) {
         <div className="flex gap-1">
           {weeks.map((week, weekIndex) => (
             <div key={weekIndex} className="flex flex-col gap-1">
-              {week.map((day, dayIndex) => {
+              {week.map((day) => {
                 const intensity = getActivityIntensity(day.sessions);
                 const colorClass = getColorClass(intensity);
 

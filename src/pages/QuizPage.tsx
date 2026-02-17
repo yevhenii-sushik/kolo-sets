@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Collection, TaskType, QuizStats, QuizMistake, QuizSettings } from '../types';
+import { Collection, TaskType, QuizStats, QuizSettings } from '../types';
 import { getCollection, updateCollection } from '../utils/storage';
 import { updateQuizStats, checkAndUnlockAchievements } from '../firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
@@ -112,9 +112,9 @@ export default function QuizPage() {
     if (!newStats.byTaskType[currentQuestion.type]) {
       newStats.byTaskType[currentQuestion.type] = { correct: 0, total: 0 };
     }
-    newStats.byTaskType[currentQuestion.type].total++;
+    newStats.byTaskType[currentQuestion.type]!.total++;
     if (correct) {
-      newStats.byTaskType[currentQuestion.type].correct++;
+      newStats.byTaskType[currentQuestion.type]!.correct++;
     }
 
     setStats(newStats);

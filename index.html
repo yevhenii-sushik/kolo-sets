@@ -1,13 +1,40 @@
 <!doctype html>
-<html lang="ru">
+<html lang="no">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kolo sets</title>
+    <meta name="description" content="Minimalist tool for learning Norwegian with spaced repetition" />
+    
+    <title>Kolo Sets - Language Learning</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- УДАЛЕНИЕ старого Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister().then(function(success) {
+              if (success) {
+                console.log('✅ Service Worker удален - приложение теперь всегда обновляется');
+              }
+            });
+          }
+        });
+        
+        // Очищаем весь кэш
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (let name of names) {
+              caches.delete(name);
+              console.log('🗑️ Кэш очищен:', name);
+            }
+          });
+        }
+      }
+    </script>
   </body>
 </html>

@@ -1,12 +1,17 @@
 import Sidebar from '../components/Sidebar';
 import BottomNav from '../components/BottomNav';
 import { Outlet, Link } from 'react-router-dom';
-import { Menu } from 'lucide-react';
+import { Menu, Languages } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useI18n } from '../contexts/I18nContext';
+import { Language } from '../utils/i18n';
 
 const SIDEBAR_KEY = 'sidebar-open';
 
 export default function MainLayout() {
+  const { language, setLanguage } = useI18n();
+  const [showLangMenu, setShowLangMenu] = useState(false);
+  
   // состояние sidebar с сохранением в localStorage
   const [open, setOpen] = useState<boolean>(() => {
     const saved = localStorage.getItem(SIDEBAR_KEY);
@@ -18,23 +23,71 @@ export default function MainLayout() {
   useEffect(() => {
     localStorage.setItem(SIDEBAR_KEY, String(open));
   }, [open]);
+  
+  const languageNames = {
+    en: '🇬🇧 English',
+    no: '🇳🇴 Norsk',
+    ru: '🇷🇺 Русский'
+  };
 
 return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <div className="px-4 h-16 flex items-center">
-          {/* Скрываем бургер на мобилках (hidden), показываем от md и выше (md:flex) */}
-          <button
-            onClick={toggleSidebar}
-            className="hidden md:flex p-2 mr-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors"
-          >
-            <Menu size={24} />
-          </button>
+        <div className="px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center">
+            {/* Скрываем бургер на мобилках (hidden), показываем от md и выше (md:flex) */}
+            <button
+              onClick={toggleSidebar}
+              className="hidden md:flex p-2 mr-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors"
+            >
+              <Menu size={24} />
+            </button>
 
-          <Link to="/" className="flex items-center gap-2">
-            <img src="/icon.svg" alt="logo" className="w-8 h-8" />
-            <h1 className="text-2xl font-bold tracking-tight">Kolo</h1>
-          </Link>
+            <Link to="/" className="flex items-center gap-2">
+              <img src="/icon.svg" alt="logo" className="w-8 h-8" />
+              <h1 className="text-2xl font-bold tracking-tight">Kolo</h1>
+            </Link>
+          </div>
+          
+          {/* Language switcher */}
+          <div className="relative">
+            <button
+              onClick={() => setShowLangMenu(!showLangMenu)}
+              className="flex items-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors"
+              title="Change language"
+            >
+              <Languages size={20} />
+              <span className="hidden sm:inline text-sm">{languageNames[language]}</span>
+            </button>
+            
+            {showLangMenu && (
+              <>
+                {/* Overlay to close menu */}
+                <div 
+                  className="fixed inset-0 z-40" 
+                  onClick={() => setShowLangMenu(false)}
+                />
+                
+                {/* Dropdown menu */}
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                  {(Object.keys(languageNames) as Language[]).map((lang) => (
+                    <button
+                      key={lang}
+                      onClick={() => {
+                        setLanguage(lang);
+                        setShowLangMenu(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+                        language === lang ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400' : ''
+                      }`}
+                    >
+                      {languageNames[lang]}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </header>
 

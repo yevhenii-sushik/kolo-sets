@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useConfirm } from '../hooks/useConfirm';
+import { useToast } from '../hooks/useToast';
 import { getCollections } from '../utils/storage';
 import { Collection, UserProfile } from '../types';
 import { ALL_ACHIEVEMENTS, getAchievementProgress } from '../utils/achievements';
@@ -19,11 +21,15 @@ import { getUserProfile, saveUserCollection, updateUserProfile } from '../fireba
 import { updateProfile } from 'firebase/auth';
 import ActivityCalendar from '../components/ActivityCalendar';
 import AchievementCard from '../components/AchievementCard';
+import ConfirmDialog from '../components/ConfirmDialog';
+import Toast from '../components/Toast';
 import { Download, Upload, Flame, TrendingUp, Edit2, LogOut, Camera } from 'lucide-react';
 
 export default function ProfilePage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
+  const { success, error, toastState, hideToast } = useToast();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [totalCards, setTotalCards] = useState(0);
@@ -107,15 +113,23 @@ export default function ProfilePage() {
       });
 
       setIsEditing(false);
-      alert('Профиль обновлен!');
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Ошибка обновления профиля');
+      success('Profile updated successfully!');
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      error('Error updating profile');
     }
   };
 
   const handleLogout = async () => {
-    if (window.confirm('Вы уверены, что хотите выйти?')) {
+    const confirmed = await confirm({
+      title: 'Logout',
+      message: 'Are you sure you want to logout?',
+      type: 'warning',
+      confirmText: 'Logout',
+      cancelText: 'Cancel'
+    });
+
+    if (confirmed) {
       await logout();
       navigate('/login');
     }
@@ -146,10 +160,10 @@ export default function ProfilePage() {
           await saveUserCollection(user.uid, coll);
         }
         
-        alert(`Успешно импортировано ${imported.length} коллекций!`);
+        success(`Successfully imported ${imported.length} collections!`);
         await loadProfile();
-      } catch (error: any) {
-        alert(`Ошибка импорта: ${error.message}`);
+      } catch (err: any) {
+        error(`Import error: ${err.message}`);
       }
     };
     
@@ -428,6 +442,27 @@ export default function ProfilePage() {
           Экспорт создаст JSON файл со всеми вашими коллекциями. Импорт позволит загрузить коллекции из файла.
         </p>
       </div>
+
+      {/* Диалог подтверждения */}
+      <ConfirmDialog
+        isOpen={confirmState.isOpen}
+        title={confirmState.title}
+        message={confirmState.message}
+        type={confirmState.type}
+        confirmText={confirmState.confirmText}
+        cancelText={confirmState.cancelText}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+      />
+
+      {/* Toast уведомления */}
+      <Toast
+        isOpen={toastState.isOpen}
+        message={toastState.message}
+        type={toastState.type}
+        duration={toastState.duration}
+        onClose={hideToast}
+      />
     </div>
   );
 }

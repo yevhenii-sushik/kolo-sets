@@ -74,7 +74,8 @@ const parseCollection = (obj: any): Collection => {
       }
     })),
     createdAt: obj.createdAt ? new Date(obj.createdAt) : new Date(),
-    lastStudied: obj.lastStudied ? new Date(obj.lastStudied) : undefined
+    lastStudied: obj.lastStudied ? new Date(obj.lastStudied) : undefined,
+    language: obj.language || 'nb-NO' // Default to Norwegian if not specified
   };
 };
 

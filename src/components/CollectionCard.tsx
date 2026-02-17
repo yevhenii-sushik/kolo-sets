@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EllipsisVertical, Pencil, Trash2, Layers, HelpCircle, FileText, Calendar, Target } from 'lucide-react';
 import { Collection } from '../types';
+import { useI18n } from '../contexts/I18nContext';
 
 interface CollectionCardProps {
   collection: Collection;
@@ -10,6 +11,7 @@ interface CollectionCardProps {
 
 export default function CollectionCard({ collection, onDelete }: CollectionCardProps) {
   const navigate = useNavigate();
+  const { t } = useI18n();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -60,20 +62,18 @@ export default function CollectionCard({ collection, onDelete }: CollectionCardP
                 className="w-full flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
                 <Pencil size={16} className="mr-3" />
-                Редактировать
+                {t.collectionCard.edit}
               </button>
               
               <button
                 onClick={() => {
-                  if (confirm('Удалить эту коллекцию?')) {
-                    onDelete(collection.id);
-                  }
+                  onDelete(collection.id);
                   setIsMenuOpen(false);
                 }}
                 className="w-full flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
               >
                 <Trash2 size={16} className="mr-3" />
-                Удалить
+                {t.delete}
               </button>
             </div>
           )}
@@ -84,18 +84,18 @@ export default function CollectionCard({ collection, onDelete }: CollectionCardP
       <div className="space-y-2 mb-6">
         <div className="flex items-center text-gray-600 dark:text-gray-400">
           <FileText size={16} className="mr-2" />
-          <span className="text-sm">Слов: <strong>{collection.cards.length}</strong></span>
+          <span className="text-sm">{collection.cards.length} {t.collectionCard.cards}</span>
         </div>
         
         <div className="flex items-center text-gray-600 dark:text-gray-400">
           <Calendar size={16} className="mr-2" />
-          <span className="text-sm">Создано: {formatDate(collection.createdAt)}</span>
+          <span className="text-sm">{formatDate(collection.createdAt)}</span>
         </div>
 
         {collection.lastStudied && (
           <div className="flex items-center text-gray-600 dark:text-gray-400">
             <Target size={16} className="mr-2" />
-            <span className="text-sm">Последнее изучение: {formatDate(collection.lastStudied)}</span>
+            <span className="text-sm">{t.collectionCard.lastStudied}: {formatDate(collection.lastStudied)}</span>
           </div>
         )}
       </div>
@@ -107,7 +107,7 @@ export default function CollectionCard({ collection, onDelete }: CollectionCardP
           className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-sm font-medium transition-colors disabled:opacity-50"
           disabled={collection.cards.length === 0}
         >
-          <Layers size={18} /> Cards
+          <Layers size={18} /> {t.collectionCard.study}
         </button>
         
         <button
@@ -115,7 +115,7 @@ export default function CollectionCard({ collection, onDelete }: CollectionCardP
           className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-2xl text-sm font-medium transition-colors disabled:opacity-50"
           disabled={collection.cards.length < 4}
         >
-          <HelpCircle size={18} /> Quiz
+          <HelpCircle size={18} /> {t.collectionCard.quiz}
         </button>
       </div>
     </div>

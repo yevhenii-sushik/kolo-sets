@@ -1,10 +1,22 @@
 import { NavLink } from 'react-router-dom';
 import { navItems } from '../navigation';
+import { useI18n } from '../contexts/I18nContext';
 
 export default function BottomNav() {
+  const { t } = useI18n();
+  
+  const getLabel = (labelKey: string) => {
+    const keys = labelKey.split('.');
+    let value: any = t;
+    for (const key of keys) {
+      value = value[key];
+    }
+    return value;
+  };
+  
   return (
     <nav className="md:hidden fixed h-24 pb-5 bottom-0 left-0 right-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center px-2 z-50">
-      {navItems.map(({ to, label, icon: Icon }) => (
+      {navItems.map(({ to, labelKey, icon: Icon }) => (
         <NavLink
           key={to}
           to={to}
@@ -27,7 +39,7 @@ export default function BottomNav() {
               
               {/* Текст под иконкой */}
               <span className={`text-[10px] font-medium leading-none ${isActive ? 'opacity-100' : 'opacity-80'}`}>
-                {label}
+                {getLabel(labelKey)}
               </span>
             </>
           )}

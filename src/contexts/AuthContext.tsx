@@ -8,12 +8,10 @@ import {
   logout as firebaseLogout
 } from '../firebase/auth';
 import {
-  getUserCollections,
   syncCollectionsToFirestore,
   getUserProfile
 } from '../firebase/firestore';
 import { getCollections } from '../utils/storage';
-import { Collection } from '../types';
 
 interface AuthContextType {
   user: User | null;
@@ -52,7 +50,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         await getUserProfile(firebaseUser.uid);
         
         // Синхронизируем локальные данные с Firestore
-        const localCollections = getCollections();
+        const localCollections = await getCollections();
         if (localCollections.length > 0) {
           // Если есть локальные данные, синхронизируем их
           try {
@@ -89,7 +87,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const syncCollections = async () => {
     if (!user) return;
     
-    const localCollections = getCollections();
+    const localCollections = await getCollections();
     await syncCollectionsToFirestore(user.uid, localCollections);
   };
 

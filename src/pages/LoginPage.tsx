@@ -64,9 +64,8 @@ export default function LoginPage() {
       <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8">
         {/* Заголовок */}
         <div className="text-center mb-8">
-          <div className="text-6xl mb-4">🎴</div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Language Cards
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mt-2 mb-6">
+            Kolo <span className="text-purple-600">Sets</span>
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             Войдите, чтобы продолжить обучение

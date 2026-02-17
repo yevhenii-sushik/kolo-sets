@@ -1,8 +1,20 @@
 // Sidebar.tsx
 import { NavLink } from 'react-router-dom';
 import { navItems } from '../navigation';
+import { useI18n } from '../contexts/I18nContext';
 
 export default function Sidebar({ open }: { open: boolean }) {
+  const { t } = useI18n();
+  
+  const getLabel = (labelKey: string) => {
+    const keys = labelKey.split('.');
+    let value: any = t;
+    for (const key of keys) {
+      value = value[key];
+    }
+    return value;
+  };
+  
   return (
     <>
       {/* Прослойка (Spacer), чтобы контент не нырял под фиксированный сайдбар */}
@@ -16,7 +28,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         `}
       >
         <nav className="flex-1 px-3 py-4 space-y-2">
-          {navItems.map(({ to, label, icon: Icon }) => (
+          {navItems.map(({ to, labelKey, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
@@ -35,7 +47,7 @@ export default function Sidebar({ open }: { open: boolean }) {
               <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${
                 open ? 'opacity-100 w-auto' : 'opacity-0 w-0'
               }`}>
-                {label}
+                {getLabel(labelKey)}
               </span>
             </NavLink>
           ))}

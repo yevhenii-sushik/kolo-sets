@@ -74,7 +74,6 @@ export default function RegisterPage() {
       <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8">
         {/* Заголовок */}
         <div className="text-center mb-8">
-          <div className="text-6xl mb-4">🎴</div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Создать аккаунт
           </h1>

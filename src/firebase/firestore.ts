@@ -5,13 +5,11 @@ import {
   getDocs,
   setDoc,
   deleteDoc,
-  query,
-  where,
   Timestamp,
   writeBatch
 } from 'firebase/firestore';
 import { db } from './config';
-import { Collection, Card } from '../types';
+import { Collection } from '../types';
 
 // Преобразование Collection в формат Firestore
 const collectionToFirestore = (coll: Collection) => {
