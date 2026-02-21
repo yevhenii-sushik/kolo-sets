@@ -182,21 +182,21 @@ export default function ProfilePage() {
   const calendarData = getActivityCalendarData(profile.studyHistory, 90);
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-6xl mx-auto px-4 py-6 space-y-6 md:space-y-8">
       {/* Заголовок и профиль */}
-      <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700">
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center gap-6">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl p-4 md:p-8 border border-gray-200 dark:border-gray-700">
+        <div className="flex flex-col md:flex-row items-start md:justify-between gap-4 mb-6">
+          <div className="flex items-center gap-4 md:gap-6 w-full md:w-auto">
             {/* Avatar */}
-            <div className="relative">
+            <div className="relative flex-shrink-0">
               {editForm.photoURL ? (
                 <img 
                   src={editForm.photoURL} 
                   alt="Profile" 
-                  className="w-24 h-24 rounded-full object-cover border-4 border-purple-200 dark:border-purple-800"
+                  className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-4 border-purple-200 dark:border-purple-800"
                 />
               ) : (
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-3xl font-bold border-4 border-purple-200 dark:border-purple-800">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-2xl md:text-3xl font-bold border-4 border-purple-200 dark:border-purple-800">
                   {profile.displayName.charAt(0).toUpperCase()}
                 </div>
               )}
@@ -216,14 +216,14 @@ export default function ProfilePage() {
             </div>
 
             {/* Info */}
-            <div>
+            <div className="flex-1 min-w-0">
               {isEditing ? (
                 <div className="space-y-3">
                   <input
                     type="text"
                     value={editForm.displayName}
                     onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
-                    className="text-2xl font-bold bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-lg border-2 border-purple-300 dark:border-purple-700"
+                    className="text-xl md:text-2xl font-bold bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-lg border-2 border-purple-300 dark:border-purple-700 w-full"
                     placeholder="Имя"
                   />
                   <input

@@ -22,24 +22,6 @@ export default function CardListItem({ card, onEdit, onDelete }: CardListItemPro
               </span>
             )}
           </div>
-
-          <div className="space-y-2">
-            <p className="text-gray-700 dark:text-gray-300">
-              <strong>Перевод:</strong> {card.translation}
-            </p>
-
-            {card.explanation && (
-              <p className="text-gray-600 dark:text-gray-400">
-                <strong>Объяснение:</strong> {card.explanation}
-              </p>
-            )}
-
-            {card.example && (
-              <p className="text-gray-600 dark:text-gray-400 italic">
-                <strong>Пример:</strong> {card.example}
-              </p>
-            )}
-          </div>
         </div>
 
         {/* Кнопки действий */}
@@ -59,6 +41,24 @@ export default function CardListItem({ card, onEdit, onDelete }: CardListItemPro
             🗑️
           </button>
         </div>
+      </div>
+      
+      <div className="space-y-2">
+        <p className="text-gray-700 dark:text-gray-300">
+          <strong>Перевод:</strong> {card.translation}
+        </p>
+
+        {card.explanation && (
+          <p className="text-gray-600 dark:text-gray-400">
+            <strong>Объяснение:</strong> {card.explanation}
+          </p>
+        )}
+
+        {card.example && (
+          <p className="text-gray-600 dark:text-gray-400 italic">
+            <strong>Пример:</strong> {card.example}
+          </p>
+        )}
       </div>
     </div>
   );

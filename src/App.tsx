@@ -4,28 +4,40 @@ import { getTheme, setTheme } from './utils/storage';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { I18nProvider } from './contexts/I18nContext';
 
+// Layouts
 import MainLayout from './pages/MainLayout';
 import EmptyLayout from './pages/EmptyLayout';
 
+// Pages
 import HomePage from './pages/HomePage';
 import CollectionEditPage from './pages/CollectionEditPage';
 import FlashcardsPage from './pages/FlashcardsPage';
 import QuizPage from './pages/QuizPage';
-import AboutPage from './pages/AboutPage';
+import UpdatesPage from './pages/UpdatesPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import OtherPage from './pages/OtherPage';
+import LandingPage from './pages/LandingPage';
+import PrivacyPage from './pages/PrivacyPage';
+import SystemInfoPage from './pages/SystemInfoPage';
 
-// Компонент для защищенных маршрутов
+/**
+ * Защищенный маршрут — только для авторизованных
+ */
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  return user ? <>{children}</> : <Navigate to="/login" />;
+  // Если юзера нет, отправляем на лендинг (или логин)
+  return user ? <>{children}</> : <Navigate to="/welcome" replace />;
 }
 
-// Компонент для публичных маршрутов (только для незалогиненных)
+/**
+ * Публичный маршрут — только для гостей (логин/регистрация/приветствие)
+ */
 function PublicRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  return !user ? <>{children}</> : <Navigate to="/" />;
+  // Если юзер уже залогинен, отправляем его в приложение
+  return !user ? <>{children}</> : <Navigate to="/" replace />;
 }
 
 function AppContent() {
@@ -33,34 +45,51 @@ function AppContent() {
 
   useEffect(() => {
     setTheme(theme);
+    // Принудительно обновляем класс на body для Tailwind dark mode
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }, [theme]);
 
   return (
     <Routes>
-      {/* Публичные маршруты (Login/Register) */}
+      {/* 1. Группа публичных маршрутов (доступны без входа) */}
+      <Route path="/welcome" element={
+        <PublicRoute>
+          <LandingPage />
+        </PublicRoute>
+      } />
+      
       <Route path="/login" element={
         <PublicRoute>
           <LoginPage />
         </PublicRoute>
       } />
+      
       <Route path="/register" element={
         <PublicRoute>
           <RegisterPage />
         </PublicRoute>
       } />
 
-      {/* Страницы с хедером и футером (защищенные) */}
+      {/* 2. Основное приложение (с Хедером/Футером) */}
       <Route element={
         <ProtectedRoute>
           <MainLayout />
         </ProtectedRoute>
       }>
         <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+
+        <Route path="/other" element={<OtherPage />} />
+        <Route path="/updates" element={<UpdatesPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/system-info" element={<SystemInfoPage />} />
       </Route>
 
-      {/* Страницы БЕЗ хедера и футера (защищенные) */}
+      {/* 3. Игровые/Редакторские режимы (Чистый экран без лишнего) */}
       <Route element={
         <ProtectedRoute>
           <EmptyLayout />
@@ -70,6 +99,9 @@ function AppContent() {
         <Route path="/collection/:id/flashcards" element={<FlashcardsPage />} />
         <Route path="/collection/:id/quiz" element={<QuizPage />} />
       </Route>
+
+      {/* Редирект для любых неопознанных путей */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

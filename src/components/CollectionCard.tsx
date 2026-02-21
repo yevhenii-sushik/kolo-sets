@@ -48,8 +48,8 @@ export default function CollectionCard({ collection, onDelete }: CollectionCardP
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-500"
           title="Actions">
-      <EllipsisVertical size={20} />
-    </button>
+            <EllipsisVertical size={20} />
+          </button>
 
           {/* Выпадающее меню */}
           {isMenuOpen && (

@@ -19,8 +19,8 @@ export interface Translations {
   // Навигация
   nav: {
     home: string;
-    about: string;
     profile: string;
+    other: string;
   };
   
   // Главная страница
@@ -101,6 +101,12 @@ export interface Translations {
     mistakes: string;
     restartQuiz: string;
     backToCollection: string;
+    enterAnswer: string;
+    additionalInfo: string;
+    word: string;
+    translation: string;
+    explanation: string;
+    example: string;
   };
   
   // Редактирование коллекции
@@ -265,8 +271,8 @@ export const translations: Record<Language, Translations> = {
     // Навигация
     nav: {
       home: 'Home',
-      about: 'About',
       profile: 'Profile',
+      other: 'Other',
     },
     
     // Главная страница
@@ -330,7 +336,7 @@ export const translations: Record<Language, Translations> = {
       question: 'Question',
       of: 'of',
       yourAnswer: 'Your answer',
-      correct: 'Correct!',
+      correct: 'Correct',
       incorrect: 'Incorrect',
       correctAnswer: 'Correct answer',
       checkAnswer: 'Check',
@@ -347,6 +353,12 @@ export const translations: Record<Language, Translations> = {
       mistakes: 'Mistakes',
       restartQuiz: 'Restart quiz',
       backToCollection: 'Back to deck',
+      enterAnswer: 'Enter your answer',
+      additionalInfo: 'Additional info',
+      word: 'Word',
+      translation: 'Translation',
+      explanation: 'Explanation',
+      example: 'Example',
     },
     
     // Редактирование коллекции
@@ -506,8 +518,8 @@ export const translations: Record<Language, Translations> = {
     // Навигация
     nav: {
       home: 'Hjem',
-      about: 'Om',
       profile: 'Profil',
+      other: 'Annet',
     },
     
     // Главная страница
@@ -571,7 +583,7 @@ export const translations: Record<Language, Translations> = {
       question: 'Spørsmål',
       of: 'av',
       yourAnswer: 'Ditt svar',
-      correct: 'Riktig!',
+      correct: 'Riktig',
       incorrect: 'Feil',
       correctAnswer: 'Riktig svar',
       checkAnswer: 'Sjekk',
@@ -588,6 +600,12 @@ export const translations: Record<Language, Translations> = {
       mistakes: 'Feil',
       restartQuiz: 'Start quiz på nytt',
       backToCollection: 'Tilbake til kortstokk',
+      enterAnswer: 'Skriv ditt svar',
+      additionalInfo: 'Tilleggsinformasjon',
+      word: 'Ord',
+      translation: 'Oversettelse',
+      explanation: 'Forklaring',
+      example: 'Eksempel',
     },
     
     // Редактирование коллекции
@@ -747,8 +765,8 @@ export const translations: Record<Language, Translations> = {
     // Навигация
     nav: {
       home: 'Главная',
-      about: 'О приложении',
       profile: 'Профиль',
+      other: 'Другое',
     },
     
     // Главная страница
@@ -812,7 +830,7 @@ export const translations: Record<Language, Translations> = {
       question: 'Вопрос',
       of: 'из',
       yourAnswer: 'Ваш ответ',
-      correct: 'Правильно!',
+      correct: 'Правильно',
       incorrect: 'Неправильно',
       correctAnswer: 'Правильный ответ',
       checkAnswer: 'Проверить',
@@ -829,6 +847,12 @@ export const translations: Record<Language, Translations> = {
       mistakes: 'Ошибки',
       restartQuiz: 'Начать заново',
       backToCollection: 'Назад к колоде',
+      enterAnswer: 'Введите ответ',
+      additionalInfo: 'Дополнительная информация',
+      word: 'Слово',
+      translation: 'Перевод',
+      explanation: 'Объяснение',
+      example: 'Пример',
     },
     
     // Редактирование коллекции

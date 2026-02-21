@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Collection, Card } from '../types';
 import { getCollection, updateCollection, createCard, parseImportText } from '../utils/storage';
+import { useI18n } from '../contexts/I18nContext';
+import { ArrowLeft, Plus, Upload} from 'lucide-react';
 import AddCardModal from '../components/AddCardModal';
 import ImportCardsModal from '../components/ImportCardsModal';
 import CardListItem from '../components/CardListItem';
@@ -9,6 +11,7 @@ import CardListItem from '../components/CardListItem';
 export default function CollectionEditPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useI18n();
   const [collection, setCollection] = useState<Collection | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
@@ -21,7 +24,6 @@ export default function CollectionEditPage() {
         if (loaded) {
           setCollection(loaded);
         } else {
-          // Коллекция не найдена - возвращаемся на главную
           navigate('/');
         }
       }
@@ -32,7 +34,7 @@ export default function CollectionEditPage() {
   if (!collection) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Загрузка...</div>
+        <div className="text-xl text-gray-600 dark:text-gray-400">{t.loading}</div>
       </div>
     );
   }
@@ -123,79 +125,84 @@ export default function CollectionEditPage() {
   };
 
   return (
-    <div>
-      {/* Заголовок и кнопки */}
-      <div className="mb-6">
+    <div className="max-w-6xl mx-auto md:py-8">
+      {/* Header */}
+      <div className="mb-6 md:mb-8">
         <button
           onClick={() => navigate('/')}
-          className="text-blue-600 dark:text-blue-400 hover:underline mb-4 flex items-center"
+          className="flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 mb-4 transition-colors"
         >
-          ← Назад к коллекциям
+          <ArrowLeft size={20} />
+          <span>{t.back}</span>
         </button>
 
-        <div className="flex justify-between items-start">
-          <div>
-            <div className="flex items-center gap-3">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white truncate">
                 {collection.name}
-              </h2>
+              </h1>
               <button
                 onClick={handleRenameCollection}
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                title="Переименовать коллекцию"
+                className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                title={t.edit}
               >
                 ✏️
               </button>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Всего слов: {collection.cards.length}
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">
+              {collection.cards.length} {t.collectionCard.cards}
             </p>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-shrink-0">
             <button
               onClick={() => setIsImportModalOpen(true)}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+              className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors text-sm md:text-base font-medium"
             >
-              📥 Импорт
+              <Upload size={18} />
+              <span className="hidden sm:inline">{t.editCollection.import}</span>
             </button>
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors text-sm md:text-base font-medium shadow-md"
             >
-              + Добавить слово
+              <Plus size={18} />
+              <span className="hidden sm:inline">{t.editCollection.addCard}</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Список слов */}
+      {/* Cards list */}
       {collection.cards.length === 0 ? (
-        <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-lg">
-          <div className="text-6xl mb-4">📝</div>
-          <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-            В коллекции пока нет слов
+        <div className="text-center py-12 md:py-16 bg-white dark:bg-gray-800 rounded-3xl border-2 border-dashed border-gray-300 dark:border-gray-600">
+          <div className="text-5xl md:text-6xl mb-4">📝</div>
+          <h3 className="text-lg md:text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            {t.editCollection.noCards}
           </h3>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
-            Добавьте слова вручную или импортируйте из текста
+          <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 mb-6 px-4">
+            {t.editCollection.noCardsDescription}
           </p>
-          <div className="flex gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center px-4">
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors font-medium"
             >
-              + Добавить слово
+              <Plus size={20} />
+              {t.editCollection.addCard}
             </button>
             <button
               onClick={() => setIsImportModalOpen(true)}
-              className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors font-medium"
             >
-              📥 Импортировать
+              <Upload size={20} />
+              {t.editCollection.import}
             </button>
           </div>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-2 md:space-y-3">
           {collection.cards.map((card) => (
             <CardListItem
               key={card.id}
