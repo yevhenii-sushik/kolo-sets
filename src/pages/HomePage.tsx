@@ -55,7 +55,7 @@ export default function HomePage() {
   };
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto py-6">
       {/* Заголовок и кнопка создания */}
       <div className="flex justify-between items-center mb-8">
         <div>

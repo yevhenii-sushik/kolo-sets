@@ -9,18 +9,21 @@ import MainLayout from './pages/MainLayout';
 import EmptyLayout from './pages/EmptyLayout';
 
 // Pages
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import CollectionEditPage from './pages/CollectionEditPage';
 import FlashcardsPage from './pages/FlashcardsPage';
 import QuizPage from './pages/QuizPage';
-import UpdatesPage from './pages/UpdatesPage';
 import ProfilePage from './pages/ProfilePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
 import OtherPage from './pages/OtherPage';
-import LandingPage from './pages/LandingPage';
+import UpdatesPage from './pages/UpdatesPage';
 import PrivacyPage from './pages/PrivacyPage';
 import SystemInfoPage from './pages/SystemInfoPage';
+import DataManagementPage from './pages/DataManagementPage';
+import SupportPage from './pages/SupportPage';
+
 
 /**
  * Защищенный маршрут — только для авторизованных
@@ -87,6 +90,8 @@ function AppContent() {
         <Route path="/updates" element={<UpdatesPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/system-info" element={<SystemInfoPage />} />
+        <Route path="/data-management" element={<DataManagementPage />} />
+        <Route path="/support" element={<SupportPage />} />
       </Route>
 
       {/* 3. Игровые/Редакторские режимы (Чистый экран без лишнего) */}

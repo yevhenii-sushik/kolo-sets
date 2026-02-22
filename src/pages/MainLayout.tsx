@@ -32,7 +32,7 @@ export default function MainLayout() {
 
 return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-50 dark:bg-gray-900 backdrop-blur-md">
         <div className="px-4 h-16 flex items-center justify-between">
           <div className="flex items-center">
             {/* Скрываем бургер на мобилках (hidden), показываем от md и выше (md:flex) */}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { X, Copy, Sparkles, FileText, CheckCircle2, Info } from 'lucide-react';
 
 interface ImportCardsModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ export default function ImportCardsModal({
   onImport
 }: ImportCardsModalProps) {
   const [text, setText] = useState('');
+  const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
@@ -23,70 +25,125 @@ export default function ImportCardsModal({
     }
   };
 
-  const handleClose = () => {
-    setText('');
-    onClose();
+  const copyPrompt = () => {
+    // Обновленный промт с акцентом на изучаемый язык
+    const prompt = `Создай список слов для изучения в формате CSV (разделитель точка с запятой ";"). 
+ВАЖНО: слово и перевод — как обычно, но ОБЪЯСНЕНИЕ, ПРИМЕР и ЧАСТЬ РЕЧИ должны быть строго на изучаемом языке (например, на норвежском).
+
+Формат строки: слово; перевод; описание (на изучаемом); пример (на изучаемом); часть речи (на изучаемом).
+
+Вот список слов: [ВСТАВЬ СВОИ СЛОВА ЗДЕСЬ]`;
+    
+    navigator.clipboard.writeText(prompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const exampleText = `hello; привет; a greeting; Hello, how are you?; междометие
-world; мир; the earth and all its people; Welcome to our world; существительное
-book; книга; written work; I'm reading a book; существительное`;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Импорт слов
-          </h2>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      {/* Overlay с эффектом размытия */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-md" onClick={onClose} />
 
-          <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-2">
-              📝 Формат импорта:
-            </h3>
-            <p className="text-sm text-blue-800 dark:text-blue-300 mb-2">
-              Каждое слово на новой строке в формате:
-            </p>
-            <code className="block text-xs bg-white dark:bg-gray-900 p-2 rounded border border-blue-200 dark:border-blue-800 mb-2">
-              слово; перевод; объяснение; пример; часть речи
-            </code>
-            <p className="text-xs text-blue-700 dark:text-blue-400">
-              Обязательны только первые два поля (слово и перевод)
-            </p>
+      <div className="relative bg-white/90 dark:bg-gray-900/95 border border-white/20 dark:border-gray-800 rounded-[2.5rem] shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col animate-in zoom-in duration-300">
+        
+        {/* Header */}
+        <div className="p-6 md:p-8 flex justify-between items-center border-b border-gray-100 dark:border-gray-800">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-green-500/10 text-green-600 rounded-2xl">
+              <FileText size={24} />
+            </div>
+            <div>
+              <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
+                Импорт слов
+              </h2>
+              <p className="text-sm text-gray-500">Погружение в язык через контекст</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+            <X size={24} className="text-gray-400" />
+          </button>
+        </div>
+
+        <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-1 grid md:grid-cols-2 gap-8">
+          
+          {/* Левая колонка: Инструкции и AI */}
+          <div className="space-y-6">
+            <div className="bg-purple-600/5 dark:bg-purple-500/10 p-6 rounded-[2rem] border border-purple-500/20 shadow-inner">
+              <div className="flex items-center gap-2 mb-3 text-purple-600 dark:text-purple-400 font-bold">
+                <Sparkles size={20} />
+                <h3>Мастер Промптов</h3>
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                Используйте AI, чтобы создать правильный контент. Наш промт попросит нейросеть написать описание и примеры <b>только на изучаемом языке</b> для лучшего запоминания.
+              </p>
+              <button
+                onClick={copyPrompt}
+                className="w-full flex items-center justify-center gap-2 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-purple-200 dark:border-purple-700 rounded-xl hover:shadow-lg transition-all active:scale-95 font-bold text-sm"
+              >
+                {copied ? <CheckCircle2 size={18} className="text-green-500" /> : <Copy size={18} />}
+                {copied ? 'Готово к вставке в AI' : 'Копировать AI-промт'}
+              </button>
+            </div>
+
+            <div className="bg-blue-500/5 dark:bg-blue-500/5 p-6 rounded-[2rem] border border-blue-500/10">
+              <h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white uppercase tracking-widest mb-4">
+                <Info size={16} className="text-blue-500" />
+                Правила формата
+              </h3>
+              <div className="space-y-4">
+                <div className="p-3 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+                   <code className="text-[10px] md:text-xs text-purple-600 dark:text-purple-400 block break-all">
+                    слово; перевод; описание_на_иностранном; пример_на_иностранном; часть_речи
+                   </code>
+                </div>
+                <ul className="space-y-2.5">
+                  <li className="flex gap-3 text-xs text-gray-600 dark:text-gray-400">
+                    <span className="text-purple-500 font-bold">1.</span>
+                    <span><b>Описание:</b> должно быть на изучаемом языке (объяснение смысла слова).</span>
+                  </li>
+                  <li className="flex gap-3 text-xs text-gray-600 dark:text-gray-400">
+                    <span className="text-purple-500 font-bold">2.</span>
+                    <span><b>Пример:</b> целое предложение на изучаемом языке.</span>
+                  </li>
+                  <li className="flex gap-3 text-xs text-gray-600 dark:text-gray-400">
+                    <span className="text-purple-500 font-bold">3.</span>
+                    <span><b>Часть речи:</b> например, "Substantiv" или "Verb" вместо "Сущ".</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Вставьте текст для импорта:
-              </label>
+          {/* Правая колонка: Тестовое поле */}
+          <form onSubmit={handleSubmit} className="flex flex-col h-full">
+            <div className="flex-1 min-h-[350px] relative">
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder={exampleText}
-                rows={12}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white font-mono text-sm resize-none"
-                autoFocus
+                placeholder="skrive; писать; å uttrykke tanker med tegn; Jeg skriver в bok; verb"
+                className="w-full h-full p-6 bg-gray-50 dark:bg-gray-800/30 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-[2.5rem] focus:border-purple-500 focus:bg-white dark:focus:bg-gray-800 outline-none transition-all font-mono text-sm resize-none shadow-inner"
               />
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                Будет импортировано строк: {text.trim().split('\n').filter(line => line.trim()).length}
-              </p>
+              {text.trim() && (
+                <div className="absolute bottom-6 right-6 px-4 py-1.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[10px] font-black rounded-full shadow-xl animate-in fade-in slide-in-from-bottom-2">
+                   {text.trim().split('\n').length} КАРТОЧЕК ГОТОВО
+                </div>
+              )}
             </div>
 
-            <div className="flex gap-3 justify-end">
+            <div className="mt-6 flex items-center gap-4">
               <button
                 type="button"
-                onClick={handleClose}
-                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                onClick={onClose}
+                className="px-6 py-4 text-gray-500 font-bold hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
               >
                 Отмена
               </button>
               <button
                 type="submit"
                 disabled={!text.trim()}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white rounded-lg transition-colors disabled:cursor-not-allowed"
+                className="flex-1 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 disabled:from-gray-300 disabled:to-gray-300 dark:disabled:from-gray-800 dark:disabled:to-gray-800 text-white rounded-2xl shadow-xl shadow-purple-500/20 transition-all active:scale-[0.98] font-black disabled:shadow-none"
               >
-                Импортировать
+                Начать импорт
               </button>
             </div>
           </form>

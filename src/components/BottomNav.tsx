@@ -15,7 +15,7 @@ export default function BottomNav() {
   };
   
   return (
-    <nav className="md:hidden fixed h-24 pb-5 bottom-0 left-0 right-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center px-2 z-50">
+    <nav className="md:hidden fixed h-24 pb-5 bottom-0 left-0 right-0 bg-gray-50/70 backdrop-blur-lg dark:bg-gray-900/70 backdrop-blur-lg flex justify-around items-center px-2 z-50">
       {navItems.map(({ to, labelKey, icon: Icon }) => (
         <NavLink
           key={to}

@@ -1,15 +1,28 @@
+import { Link } from 'react-router-dom';
 import { Rocket, Zap, ShieldCheck, Sparkles, Clock, CheckCircle2 } from 'lucide-react';
 
 export default function UpdatesPage() {
   const versions = [
     {
-      number: "0.2.2",
+      number: "0.2.3",
       status: "Latest",
       date: "Februar 2026",
-      type: "Feature Release",
+      type: "UI Update",
       badgeClass: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
       changes: [
-        
+        "Глобальное изменение дизайна и пользовательского интерфейса для более современного и чистого вида",
+        "Добавлена страница Support с формой обратной связи c командой разработчиков",
+        "Смена окна импорта карточек на более современное и удобное интерфейсное решение добавлена кнопка помощи создания карточек при помощи AI",
+        "Исправлена ошибка, при которой завершенное достижение могло отображаться как незавершенное",
+      ]
+    },
+    {
+      number: "0.2.2",
+      status: "Patch",
+      date: "Februar 2026",
+      type: "Feature Release",
+      badgeClass: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+      changes: [
         "Изменена навигация между страницами прочего и обновлений для более интуитивного опыта",
         "Добавлена приветственная страница с обзором функций для новых пользователей",
         "Исправлена критическая ошибка, приводившая к потере страниц при навигации",
@@ -17,12 +30,11 @@ export default function UpdatesPage() {
         "Исправлены ошибки визуального отображения на мобильных устройствах",
         "Редизайн в режиие изучения для более чистого и современного вида",
         "Прочий общий редизайн и оптимизация пользовательского интерфейса для более плавного опыта",
-
       ]
     },
     {
       number: "0.2.1",
-      status: "Released",
+      status: "Patch",
       date: "Februar 2026",
       type: "Maintenance",
       badgeClass: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
@@ -34,7 +46,7 @@ export default function UpdatesPage() {
     },
     {
       number: "0.2.0",
-      status: "Major",
+      status: "Minor",
       date: "Februar 2026",
       type: "Feature Release",
       badgeClass: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
@@ -51,7 +63,7 @@ export default function UpdatesPage() {
     },
     {
       number: "0.1.2",
-      status: "Released",
+      status: "Patch",
       date: "Februar 2026",
       type: "UI Update",
       badgeClass: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
@@ -63,7 +75,7 @@ export default function UpdatesPage() {
     },
     {
       number: "0.1.1",
-      status: "Released",
+      status: "Patch",
       date: "Februar 2026",
       type: "UI Update",
       badgeClass: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
@@ -75,7 +87,7 @@ export default function UpdatesPage() {
     },
     {
       number: "0.1.0",
-      status: "Released",
+      status: "Minor",
       date: "January 2026",
       type: "Feature Release",
       badgeClass: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
@@ -188,13 +200,12 @@ export default function UpdatesPage() {
         <p className="text-purple-100 max-w-xl mx-auto">
           У нас большие планы на 2026 год: интеграция историй, групповые челленджи и еще больше нового контента
         </p>
-        <button className="relative group px-8 py-4 bg-white text-purple-600 font-black rounded-2xl hover:bg-gray-100 transition-all shadow-xl active:scale-95">
+        <Link
+          to="/support"
+          className="relative group px-8 py-4 bg-white text-purple-600 font-black rounded-2xl hover:bg-gray-100 transition-all shadow-xl active:scale-95"
+        >
           Предложить функцию
-          {/* Маленький значок сверху */}
-          <span className="absolute -top-3 -right-3 px-3 py-1 bg-yellow-400 text-black text-[10px] font-black uppercase tracking-tighter rounded-lg rotate-12 shadow-lg group-hover:rotate-0 transition-transform">
-            Скоро
-          </span>
-        </button>
+        </Link>
       </section>
 
       <footer className="pt-12 border-t border-gray-100 dark:border-gray-800 text-center">

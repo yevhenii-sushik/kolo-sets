@@ -4,26 +4,26 @@ import { useAuth } from '../contexts/AuthContext';
 import { useConfirm } from '../hooks/useConfirm';
 import { useToast } from '../hooks/useToast';
 import { getCollections } from '../utils/storage';
-import { Collection, UserProfile } from '../types';
+import { UserProfile } from '../types';
 import { ALL_ACHIEVEMENTS, getAchievementProgress } from '../utils/achievements';
 import {
   getActivityCalendarData,
   formatTime,
   getWeekStats
 } from '../utils/progress';
-import {
-  exportCollectionsToJSON,
-  downloadJSON,
-  importCollectionsFromJSON,
-  readJSONFile
-} from '../utils/exportImport';
-import { getUserProfile, saveUserCollection, updateUserProfile } from '../firebase/firestore';
+// import {
+//   exportCollectionsToJSON,
+//   downloadJSON,
+//   importCollectionsFromJSON,
+//   readJSONFile
+// } from '../utils/exportImport';
+import { getUserProfile, updateUserProfile } from '../firebase/firestore';
 import { updateProfile } from 'firebase/auth';
 import ActivityCalendar from '../components/ActivityCalendar';
 import AchievementCard from '../components/AchievementCard';
 import ConfirmDialog from '../components/ConfirmDialog';
 import Toast from '../components/Toast';
-import { Download, Upload, Flame, TrendingUp, Edit2, LogOut, Camera } from 'lucide-react';
+import { Flame, TrendingUp, Edit2, LogOut, Camera } from 'lucide-react';
 
 export default function ProfilePage() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function ProfilePage() {
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [collections, setCollections] = useState<Collection[]>([]);
+  // const [ setCollections] = useState<Collection[]>([]);
   const [totalCards, setTotalCards] = useState(0);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -75,7 +75,7 @@ export default function ProfilePage() {
       };
       
       setProfile(loadedProfile);
-      setCollections(colls);
+      // setCollections(colls);
       setTotalCards(total);
       
       setEditForm({
@@ -135,40 +135,40 @@ export default function ProfilePage() {
     }
   };
 
-  const handleExportAll = () => {
-    const json = exportCollectionsToJSON(collections);
-    const filename = `kolo-sets-export-${new Date().toISOString().split('T')[0]}.json`;
-    downloadJSON(json, filename);
-  };
+  // const handleExportAll = () => {
+  //   const json = exportCollectionsToJSON(collections);
+  //   const filename = `kolo-sets-export-${new Date().toISOString().split('T')[0]}.json`;
+  //   downloadJSON(json, filename);
+  // };
 
-  const handleImport = async () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
+  // const handleImport = async () => {
+  //   const input = document.createElement('input');
+  //   input.type = 'file';
+  //   input.accept = '.json';
     
-    input.onchange = async (e: any) => {
-      const file = e.target?.files?.[0];
-      if (!file) return;
+  //   input.onchange = async (e: any) => {
+  //     const file = e.target?.files?.[0];
+  //     if (!file) return;
 
-      try {
-        const content = await readJSONFile(file);
-        const imported = importCollectionsFromJSON(content);
+  //     try {
+  //       const content = await readJSONFile(file);
+  //       const imported = importCollectionsFromJSON(content);
         
-        if (!user) return;
+  //       if (!user) return;
         
-        for (const coll of imported) {
-          await saveUserCollection(user.uid, coll);
-        }
+  //       for (const coll of imported) {
+  //         await saveUserCollection(user.uid, coll);
+  //       }
         
-        success(`Successfully imported ${imported.length} collections!`);
-        await loadProfile();
-      } catch (err: any) {
-        error(`Import error: ${err.message}`);
-      }
-    };
+  //       success(`Successfully imported ${imported.length} collections!`);
+  //       await loadProfile();
+  //     } catch (err: any) {
+  //       error(`Import error: ${err.message}`);
+  //     }
+  //   };
     
-    input.click();
-  };
+  //   input.click();
+  // };
 
   if (loading || !profile) {
     return (
@@ -182,10 +182,10 @@ export default function ProfilePage() {
   const calendarData = getActivityCalendarData(profile.studyHistory, 90);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6 space-y-6 md:space-y-8">
+    <div className="max-w-5xl mx-auto py-6 space-y-6 md:space-y-8">
       {/* Заголовок и профиль */}
-      <div className="bg-white dark:bg-gray-800 rounded-3xl p-4 md:p-8 border border-gray-200 dark:border-gray-700">
-        <div className="flex flex-col md:flex-row items-start md:justify-between gap-4 mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-4xl p-4 md:p-8 border border-gray-200 dark:border-gray-700">
+        <div className="flex flex-col md:flex-row items-start md:justify-between gap-4 py-2">
           <div className="flex items-center gap-4 md:gap-6 w-full md:w-auto">
             {/* Avatar */}
             <div className="relative flex-shrink-0">
@@ -292,7 +292,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Стрик - крупная карточка */}
-      <div className="bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-3xl p-8 text-white relative overflow-hidden">
+      <div className="bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-4xl p-8 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32" />
         <div className="relative z-10 flex items-center justify-between">
           <div>
@@ -317,7 +317,7 @@ export default function ProfilePage() {
           <h2 className="text-2xl font-bold">Статистика за неделю</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-gray-800 rounded-4xl p-6 border border-gray-200 dark:border-gray-700">
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
               Сессий
             </div>
@@ -326,7 +326,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-gray-800 rounded-4xl p-6 border border-gray-200 dark:border-gray-700">
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
               Карточек изучено
             </div>
@@ -335,7 +335,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-gray-800 rounded-4xl p-6 border border-gray-200 dark:border-gray-700">
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
               Время обучения
             </div>
@@ -347,7 +347,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Календарь активности */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-4xl p-6 border border-gray-200 dark:border-gray-700">
         <h2 className="text-2xl font-bold mb-4">
           Активность (последние 90 дней)
         </h2>
@@ -355,7 +355,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Общая статистика */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-4xl p-6 border border-gray-200 dark:border-gray-700">
         <h2 className="text-2xl font-bold mb-4">
           Общая статистика
         </h2>
@@ -418,7 +418,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Экспорт/Импорт */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      {/* <div className="bg-white dark:bg-gray-800 rounded-4xl p-6 border border-gray-200 dark:border-gray-700">
         <h2 className="text-2xl font-bold mb-4">
           Экспорт и импорт
         </h2>
@@ -441,7 +441,7 @@ export default function ProfilePage() {
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
           Экспорт создаст JSON файл со всеми вашими коллекциями. Импорт позволит загрузить коллекции из файла.
         </p>
-      </div>
+      </div> */}
 
       {/* Диалог подтверждения */}
       <ConfirmDialog
