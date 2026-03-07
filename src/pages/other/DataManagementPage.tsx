@@ -1,30 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { useToast } from '../hooks/useToast';
-import { getCollections } from '../utils/storage';
-import { 
-  exportCollectionsToJSON, 
-  downloadJSON, 
-  importCollectionsFromJSON, 
-  readJSONFile 
-} from '../utils/exportImport';
-import { saveUserCollection } from '../firebase/firestore';
-import { 
-  Download, 
-  Upload, 
-  ArrowLeft, 
-  Database, 
-  ShieldCheck, 
-  FileJson, 
-  AlertCircle,
-  CheckCircle2,
-  RefreshCw
-} from 'lucide-react';
-import Toast from '../components/Toast';
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../hooks/useToast';
+import { getCollections } from '../../utils/storage';
+import { exportCollectionsToJSON, downloadJSON, importCollectionsFromJSON, readJSONFile } from '../../utils/exportImport';
+import { saveUserCollection } from '../../firebase/firestore';
+import { Download, Upload, Database, ShieldCheck, FileJson, AlertCircle, CheckCircle2, RefreshCw } from 'lucide-react';
+import Toast from '../../components/Toast';
 
 export default function DataManagementPage() {
-  const navigate = useNavigate();
   const { user } = useAuth();
   const { success, error, toastState, hideToast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -83,16 +66,7 @@ export default function DataManagementPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 animate-in fade-in duration-700">
-      {/* Кнопка назад */}
-      <button
-        onClick={() => navigate(-1)}
-        className="group flex items-center gap-2 text-gray-400 hover:text-purple-500 transition-colors mb-8"
-      >
-        <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-        <span className="font-bold uppercase tracking-widest text-[10px]">Вернуться назад</span>
-      </button>
-
+    <div className="max-w-5xl mx-auto py-8 animate-in fade-in duration-700">
       {/* Заголовок */}
       <div className="flex items-center gap-4 mb-12">
         <div className="p-4 bg-blue-500/10 text-blue-600 rounded-[1.5rem] dark:bg-blue-500/20">

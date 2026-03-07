@@ -9,9 +9,9 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors;
+    @apply bg-[#F5F2ED] dark:bg-[#0F0E0C] text-gray-900 dark:text-gray-100 transition-colors duration-300;
   }
-}
+}ы
 
 /* Стили для флешкарточек */
 .flip-card {
@@ -36,7 +36,6 @@
 .flip-card-back {
   transform: rotateY(180deg);
 }
-
 
 .version-badge {
   font-size: 0.8em;

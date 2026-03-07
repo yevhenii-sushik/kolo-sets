@@ -101,7 +101,7 @@ export default function UpdatesPage() {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto pt-10 pb-24 px-6 space-y-24">
+    <div className="max-w-5xl mx-auto pt-10 pb-24 space-y-24">
       
       {/* 1. HERO HEADER */}
       <header className="text-center space-y-6">

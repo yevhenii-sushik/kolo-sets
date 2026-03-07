@@ -22,8 +22,8 @@ export default function Sidebar({ open }: { open: boolean }) {
       
       <aside
         className={`hidden md:flex flex-col fixed top-16 left-0 h-[calc(100vh-64px)] 
-          
           transition-[width] duration-300 z-40
+      
           ${open ? 'w-45' : 'w-18'}
         `}
       >
@@ -35,16 +35,16 @@ export default function Sidebar({ open }: { open: boolean }) {
               className={({ isActive }) => `
                 flex items-center gap-4 px-3 py-3 rounded-2xl transition-all duration-200
                 ${isActive 
-                  ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400' 
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'}
+                  ? 'bg-[#FFF0ED] font-bold text-[#FF5733] dark:bg-[#2A1A15] dark:text-[#FF6B47]' 
+                  : 'text-[#7A756E] dark:text-[#8A867F] hover:bg-[#EDEAE4] dark:hover:bg-[#242220]'}
               `}
             >
               <div className="shrink-0">
-                <Icon size={24}  />
+                <Icon size={24} />
               </div>
               
               {/* Плавное исчезновение текста при закрытии */}
-              <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${
+              <span className={` text-[15px] whitespace-nowrap overflow-hidden transition-all duration-300 ${
                 open ? 'opacity-100 w-auto' : 'opacity-0 w-0'
               }`}>
                 {getLabel(labelKey)}

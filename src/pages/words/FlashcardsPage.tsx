@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Collection, Card, KnowledgeLevel, FlashcardStats } from '../types';
-import { getCollection, updateCollection, updateSRSData } from '../utils/storage';
-import { updateFlashcardStats } from '../firebase/firestore';
-import { useAuth } from '../contexts/AuthContext';
-import { useI18n } from '../contexts/I18nContext';
-import { playSessionCompleteIfEnabled } from '../utils/sounds';
+import { Collection, Card, KnowledgeLevel, FlashcardStats } from '../../types';
+import { getCollection, updateCollection, updateSRSData } from '../../utils/storage';
+import { updateFlashcardStats } from '../../firebase/firestore';
+import { useAuth } from '../../contexts/AuthContext';
+import { useI18n } from '../../contexts/I18nContext';
+import { playSessionCompleteIfEnabled } from '../../utils/sounds';
 import { Shuffle, X } from 'lucide-react';
-import Flashcard from '../components/Flashcard';
-import FlashcardStatsModal from '../components/FlashcardStatsModal';
+import Flashcard from '../../components/Flashcard';
+import FlashcardStatsModal from '../../components/FlashcardStatsModal';
 
 export default function FlashcardsPage() {
   const { id } = useParams<{ id: string }>();

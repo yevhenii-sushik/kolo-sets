@@ -1,14 +1,5 @@
 import { useState } from 'react';
-import { 
-  Send, 
-  Bug, 
-  Lightbulb, 
-  MessageSquareHeart, 
-  ArrowLeft, 
-  CheckCircle2, 
-  Sparkles,
-  Zap
-} from 'lucide-react';
+import { Send, Bug, Lightbulb, MessageSquareHeart, CheckCircle2, Sparkles, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 // Константы для Telegram (в реальном проекте лучше хранить в .env)
@@ -90,14 +81,6 @@ ${formData.message}
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10 animate-in fade-in duration-700">
-      <button
-        onClick={() => navigate(-1)}
-        className="group flex items-center gap-2 text-gray-400 hover:text-purple-500 transition-colors mb-10"
-      >
-        <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-        <span className="font-bold uppercase tracking-widest text-xs">Назад</span>
-      </button>
-
       <div className="mb-12">
         <h1 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tighter mb-4 italic">
           Kolo <span className="text-purple-600">Feedback</span>

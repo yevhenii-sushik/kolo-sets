@@ -1,9 +1,8 @@
 // Переводы интерфейса
 
-export type Language = 'en' | 'no' | 'ru';
+export type Language = 'en' | 'ru' ;
 
 export interface Translations {
-  // Общие
   appName: string;
   loading: string;
   save: string;
@@ -16,14 +15,15 @@ export interface Translations {
   finish: string;
   close: string;
   
-  // Навигация
   nav: {
     home: string;
+    words: string;
+    stories: string;
+    dictionary: string;
     profile: string;
     other: string;
   };
-  
-  // Главная страница
+
   home: {
     title: string;
     myDecks: string;
@@ -34,7 +34,6 @@ export interface Translations {
     totalDecks: string;
   };
   
-  // Создание коллекции
   createCollection: {
     title: string;
     nameLabel: string;
@@ -43,7 +42,6 @@ export interface Translations {
     languageDescription: string;
   };
   
-  // Карточка коллекции
   collectionCard: {
     cards: string;
     lastStudied: string;
@@ -53,8 +51,7 @@ export interface Translations {
     edit: string;
     confirmDelete: string;
   };
-  
-  // Флешкарточки
+
   flashcards: {
     title: string;
     mode: string;
@@ -76,8 +73,7 @@ export interface Translations {
     backToCollection: string;
     accuracy: string;
   };
-  
-  // Quiz
+
   quiz: {
     title: string;
     mode: string;
@@ -108,8 +104,7 @@ export interface Translations {
     explanation: string;
     example: string;
   };
-  
-  // Редактирование коллекции
+
   editCollection: {
     title: string;
     addCard: string;
@@ -121,8 +116,7 @@ export interface Translations {
     translation: string;
     partOfSpeech: string;
   };
-  
-  // Добавление карточки
+
   addCard: {
     title: string;
     wordLabel: string;
@@ -137,9 +131,8 @@ export interface Translations {
     partOfSpeechPlaceholder: string;
   };
   
-  // Профиль
   profile: {
-    title: string;
+    pictureUrl: string,
     editProfile: string;
     logout: string;
     saveChanges: string;
@@ -148,64 +141,28 @@ export interface Translations {
     enterImageUrl: string;
     confirmLogout: string;
     
-    // Стрик
     streak: {
       title: string;
-      days: string;
+      daysInRow: string;
       record: string;
+      days: string;
     };
     
-    // Статистика
     stats: {
       weekTitle: string;
       sessions: string;
       cardsStudied: string;
       studyTime: string;
       activityTitle: string;
-      last90Days: string;
       overallTitle: string;
       totalCards: string;
       flashcardSessions: string;
       quizzesTaken: string;
     };
     
-    // Достижения
     achievements: {
       title: string;
-      unlocked: string;
     };
-    
-    // Экспорт/Импорт
-    exportImport: {
-      title: string;
-      exportAll: string;
-      import: string;
-      description: string;
-      importSuccess: string;
-      importError: string;
-    };
-  };
-  
-  // О приложении
-  about: {
-    title: string;
-    subtitle: string;
-    features: {
-      efficiency: {
-        title: string;
-        description: string;
-      };
-      privacy: {
-        title: string;
-        description: string;
-      };
-      simplicity: {
-        title: string;
-        description: string;
-      };
-    };
-    versionsTitle: string;
-    developedBy: string;
   };
   
   // Аутентификация
@@ -240,8 +197,17 @@ export interface Translations {
       passwordsDontMatch: string;
     };
   };
-  
-  // Настройки
+
+  other: {
+    settings: string,
+    updates: string,
+    privacy: string,
+    systemInfo: string,
+    dataManagement: string,
+    support: string,
+    footer: string,
+  },
+
   settings: {
     soundEffects: string;
     soundEffectsDescription: string;
@@ -250,6 +216,27 @@ export interface Translations {
     theme: string;
     lightMode: string;
     darkMode: string;
+  };
+
+  updates: {
+    title: string;
+    subtitle: string;
+    features: {
+      efficiency: {
+        title: string;
+        description: string;
+      };
+      privacy: {
+        title: string;
+        description: string;
+      };
+      simplicity: {
+        title: string;
+        description: string;
+      };
+    };
+    versionsTitle: string;
+    developedBy: string;
   };
 }
 
@@ -268,14 +255,15 @@ export const translations: Record<Language, Translations> = {
     finish: 'Finish',
     close: 'Close',
     
-    // Навигация
     nav: {
       home: 'Home',
+      words: 'Words',
+      stories: 'Stories',
+      dictionary: 'Dictionary',
       profile: 'Profile',
       other: 'Other',
     },
-    
-    // Главная страница
+
     home: {
       title: 'Home',
       myDecks: 'My decks',
@@ -285,8 +273,7 @@ export const translations: Record<Language, Translations> = {
       addDeck: 'Add deck',
       totalDecks: 'Total decks',
     },
-    
-    // Создание коллекции
+
     createCollection: {
       title: 'Create new deck',
       nameLabel: 'Deck name',
@@ -294,8 +281,7 @@ export const translations: Record<Language, Translations> = {
       languageLabel: 'Word language (for pronunciation)',
       languageDescription: 'Select the language of words in this deck',
     },
-    
-    // Карточка коллекции
+
     collectionCard: {
       cards: 'cards',
       lastStudied: 'Last studied',
@@ -305,8 +291,7 @@ export const translations: Record<Language, Translations> = {
       edit: 'Edit',
       confirmDelete: 'Are you sure you want to delete this deck?',
     },
-    
-    // Флешкарточки
+
     flashcards: {
       title: 'Flashcards',
       mode: 'Mode: Flashcards',
@@ -328,8 +313,7 @@ export const translations: Record<Language, Translations> = {
       backToCollection: 'Back to deck',
       accuracy: 'Accuracy',
     },
-    
-    // Quiz
+
     quiz: {
       title: 'Quiz',
       mode: 'Mode: Quiz',
@@ -360,8 +344,7 @@ export const translations: Record<Language, Translations> = {
       explanation: 'Explanation',
       example: 'Example',
     },
-    
-    // Редактирование коллекции
+
     editCollection: {
       title: 'Edit deck',
       addCard: 'Add card',
@@ -373,8 +356,7 @@ export const translations: Record<Language, Translations> = {
       translation: 'Translation',
       partOfSpeech: 'Part of speech',
     },
-    
-    // Добавление карточки
+
     addCard: {
       title: 'Add card',
       wordLabel: 'Word',
@@ -388,11 +370,10 @@ export const translations: Record<Language, Translations> = {
       partOfSpeechLabel: 'Part of speech',
       partOfSpeechPlaceholder: 'e.g., noun, verb, adjective',
     },
-    
-    // Профиль
+
     profile: {
-      title: 'Profile',
-      editProfile: 'Edit profile',
+      pictureUrl: 'Enter image URL',
+      editProfile: 'Edit',
       logout: 'Logout',
       saveChanges: 'Save changes',
       displayName: 'Display name',
@@ -402,8 +383,9 @@ export const translations: Record<Language, Translations> = {
       
       streak: {
         title: 'Streak',
-        days: 'days',
+        daysInRow: 'days in row',
         record: 'Record',
+        days: 'days',
       },
       
       stats: {
@@ -412,7 +394,6 @@ export const translations: Record<Language, Translations> = {
         cardsStudied: 'Cards studied',
         studyTime: 'Study time',
         activityTitle: 'Activity',
-        last90Days: 'Last 90 days',
         overallTitle: 'Overall statistics',
         totalCards: 'Total cards',
         flashcardSessions: 'Flashcard sessions',
@@ -421,41 +402,10 @@ export const translations: Record<Language, Translations> = {
       
       achievements: {
         title: 'Achievements',
-        unlocked: 'unlocked',
-      },
-      
-      exportImport: {
-        title: 'Export & Import',
-        exportAll: 'Export all decks',
-        import: 'Import decks',
-        description: 'Export creates a JSON file with all your decks. Import allows loading decks from a file.',
-        importSuccess: 'Successfully imported {count} decks!',
-        importError: 'Import error: {error}',
       },
     },
-    
-    // О приложении
-    about: {
-      title: 'Kolo Sets',
-      subtitle: 'Minimalist tool for learning Norwegian built on scientific spaced repetition approach.',
-      features: {
-        efficiency: {
-          title: 'Efficiency',
-          description: 'SRS algorithm shows words exactly when you are about to forget them.',
-        },
-        privacy: {
-          title: 'Privacy',
-          description: 'All your data is stored locally in the browser. No servers or data collection.',
-        },
-        simplicity: {
-          title: 'Simplicity',
-          description: 'Focus on learning, not on settings. Create sets and start learning right away.',
-        },
-      },
-      versionsTitle: 'Version History',
-      developedBy: 'Developed by',
-    },
-    
+ 
+
     // Аутентификация
     auth: {
       login: {
@@ -488,8 +438,17 @@ export const translations: Record<Language, Translations> = {
         passwordsDontMatch: 'Passwords do not match',
       },
     },
-    
-    // Настройки
+
+    other: {
+      settings: 'Settings',
+      updates: 'Kolo Updates',
+      privacy: 'Security & Privacy',
+      systemInfo: 'About System',
+      dataManagement: 'Export & Import',
+      support: 'Support',
+      footer: 'Developed by',
+    },
+
     settings: {
       soundEffects: 'Sound effects',
       soundEffectsDescription: 'Play sounds for correct/incorrect answers',
@@ -499,257 +458,30 @@ export const translations: Record<Language, Translations> = {
       lightMode: 'Light',
       darkMode: 'Dark',
     },
-  },
-  
-  no: {
-    // Общие
-    appName: 'Kolo Sets',
-    loading: 'Laster...',
-    save: 'Lagre',
-    cancel: 'Avbryt',
-    delete: 'Slett',
-    edit: 'Rediger',
-    create: 'Opprett',
-    back: 'Tilbake',
-    next: 'Neste',
-    finish: 'Fullfør',
-    close: 'Lukk',
-    
-    // Навигация
-    nav: {
-      home: 'Hjem',
-      profile: 'Profil',
-      other: 'Annet',
-    },
-    
-    // Главная страница
-    home: {
-      title: 'Hjem',
-      myDecks: 'Mine kortstokker',
-      noDecks: 'Du har ingen kortstokker ennå',
-      noDecksDescription: 'Opprett din første kortstokk for å begynne å lære',
-      createDeck: 'Opprett kortstokk',
-      addDeck: 'Legg til kortstokk',
-      totalDecks: 'Totalt kortstokker',
-    },
-    
-    // Создание коллекции
-    createCollection: {
-      title: 'Opprett ny kortstokk',
-      nameLabel: 'Navn på kortstokk',
-      namePlaceholder: 'f.eks., Norsk - Grunnleggende ord',
-      languageLabel: 'Ordspråk (for uttale)',
-      languageDescription: 'Velg språket for ordene i denne kortstokken',
-    },
-    
-    // Карточка коллекции
-    collectionCard: {
-      cards: 'kort',
-      lastStudied: 'Sist studert',
-      neverStudied: 'Aldri studert',
-      study: 'Studer',
-      quiz: 'Quiz',
-      edit: 'Rediger',
-      confirmDelete: 'Er du sikker på at du vil slette denne kortstokken?',
-    },
-    
-    // Флешкарточки
-    flashcards: {
-      title: 'Flashkort',
-      mode: 'Modus: Flashkort',
-      shuffle: 'Bland',
-      card: 'Kort',
-      of: 'av',
-      flipToSee: 'Klikk for å snu',
-      translation: 'Oversettelse',
-      explanation: 'Forklaring',
-      example: 'Eksempel',
-      dontKnow: 'Vet ikke',
-      forgot: 'Glemt',
-      remember: 'Husker',
-      know: 'Kan',
-      sessionComplete: 'Økt fullført!',
-      statistics: 'Statistikk',
-      totalCards: 'Totalt kort',
-      duration: 'Varighet',
-      backToCollection: 'Tilbake til kortstokk',
-      accuracy: 'Nøyaktighet',
-    },
-    
-    // Quiz
-    quiz: {
-      title: 'Quiz',
-      mode: 'Modus: Quiz',
-      question: 'Spørsmål',
-      of: 'av',
-      yourAnswer: 'Ditt svar',
-      correct: 'Riktig',
-      incorrect: 'Feil',
-      correctAnswer: 'Riktig svar',
-      checkAnswer: 'Sjekk',
-      nextQuestion: 'Neste',
-      finishQuiz: 'Fullfør',
-      settings: 'Innstillinger',
-      quizComplete: 'Quiz fullført!',
-      statistics: 'Statistikk',
-      totalQuestions: 'Totalt spørsmål',
-      correctAnswers: 'Riktige svar',
-      wrongAnswers: 'Feil svar',
-      accuracy: 'Nøyaktighet',
-      duration: 'Varighet',
-      mistakes: 'Feil',
-      restartQuiz: 'Start quiz på nytt',
-      backToCollection: 'Tilbake til kortstokk',
-      enterAnswer: 'Skriv ditt svar',
-      additionalInfo: 'Tilleggsinformasjon',
-      word: 'Ord',
-      translation: 'Oversettelse',
-      explanation: 'Forklaring',
-      example: 'Eksempel',
-    },
-    
-    // Редактирование коллекции
-    editCollection: {
-      title: 'Rediger kortstokk',
-      addCard: 'Legg til kort',
-      import: 'Importer',
-      export: 'Eksporter',
-      noCards: 'Ingen kort ennå',
-      noCardsDescription: 'Legg til ditt første kort for å begynne å lære',
-      word: 'Ord',
-      translation: 'Oversettelse',
-      partOfSpeech: 'Ordklasse',
-    },
-    
-    // Добавление карточки
-    addCard: {
-      title: 'Legg til kort',
-      wordLabel: 'Ord',
-      wordPlaceholder: 'Skriv inn ord',
-      translationLabel: 'Oversettelse',
-      translationPlaceholder: 'Skriv inn oversettelse',
-      explanationLabel: 'Forklaring',
-      explanationPlaceholder: 'Skriv inn forklaring (valgfritt)',
-      exampleLabel: 'Eksempel',
-      examplePlaceholder: 'Skriv inn eksempelsetning (valgfritt)',
-      partOfSpeechLabel: 'Ordklasse',
-      partOfSpeechPlaceholder: 'f.eks., substantiv, verb, adjektiv',
-    },
-    
-    // Профиль
-    profile: {
-      title: 'Profil',
-      editProfile: 'Rediger profil',
-      logout: 'Logg ut',
-      saveChanges: 'Lagre endringer',
-      displayName: 'Visningsnavn',
-      username: 'Brukernavn',
-      enterImageUrl: 'Skriv inn bilde-URL',
-      confirmLogout: 'Er du sikker på at du vil logge ut?',
-      
-      streak: {
-        title: 'Rekke',
-        days: 'dager',
-        record: 'Rekord',
-      },
-      
-      stats: {
-        weekTitle: 'Denne uken',
-        sessions: 'Økter',
-        cardsStudied: 'Kort studert',
-        studyTime: 'Studietid',
-        activityTitle: 'Aktivitet',
-        last90Days: 'Siste 90 dager',
-        overallTitle: 'Samlet statistikk',
-        totalCards: 'Totalt kort',
-        flashcardSessions: 'Flashkort-økter',
-        quizzesTaken: 'Quiz tatt',
-      },
-      
-      achievements: {
-        title: 'Prestasjoner',
-        unlocked: 'låst opp',
-      },
-      
-      exportImport: {
-        title: 'Eksport og import',
-        exportAll: 'Eksporter alle kortstokker',
-        import: 'Importer kortstokker',
-        description: 'Eksport oppretter en JSON-fil med alle kortstokkene dine. Import lar deg laste inn kortstokker fra en fil.',
-        importSuccess: 'Vellykket import av {count} kortstokker!',
-        importError: 'Importfeil: {error}',
-      },
-    },
-    
-    // О приложении
-    about: {
+
+    updates: {
       title: 'Kolo Sets',
-      subtitle: 'Minimalistisk verktøy for å lære norsk bygget på vitenskapelig tilnærming til repetisjoner.',
+      subtitle: 'Minimalist tool for learning Norwegian built on scientific spaced repetition approach.',
       features: {
         efficiency: {
-          title: 'Effektivitet',
-          description: 'SRS-algoritmen viser ord akkurat når du er i ferd med å glemme dem.',
+          title: 'Efficiency',
+          description: 'SRS algorithm shows words exactly when you are about to forget them.',
         },
         privacy: {
-          title: 'Personvern',
-          description: 'All dataene dine lagres lokalt i nettleseren. Ingen servere eller datainnsamling.',
+          title: 'Privacy',
+          description: 'All your data is stored locally in the browser. No servers or data collection.',
         },
         simplicity: {
-          title: 'Enkelhet',
-          description: 'Fokuser på læring, ikke på innstillinger. Opprett sett og begynn å lære med en gang.',
+          title: 'Simplicity',
+          description: 'Focus on learning, not on settings. Create sets and start learning right away.',
         },
       },
-      versionsTitle: 'Versjonshistorikk',
-      developedBy: 'Utviklet av',
-    },
-    
-    // Аутентификация
-    auth: {
-      login: {
-        title: 'Velkommen tilbake',
-        subtitle: 'Logg inn for å fortsette å lære',
-        emailLabel: 'E-post',
-        emailPlaceholder: 'din@epost.no',
-        passwordLabel: 'Passord',
-        passwordPlaceholder: 'Skriv inn passord',
-        loginButton: 'Logg inn',
-        googleButton: 'Logg inn med Google',
-        noAccount: 'Har du ingen konto?',
-        register: 'Registrer deg',
-      },
-      register: {
-        title: 'Opprett konto',
-        subtitle: 'Start din læringsreise',
-        nameLabel: 'Navn',
-        namePlaceholder: 'Ditt navn',
-        emailLabel: 'E-post',
-        emailPlaceholder: 'din@epost.no',
-        passwordLabel: 'Passord',
-        passwordPlaceholder: 'Opprett passord',
-        confirmPasswordLabel: 'Bekreft passord',
-        confirmPasswordPlaceholder: 'Bekreft passord',
-        registerButton: 'Registrer deg',
-        googleButton: 'Registrer deg med Google',
-        haveAccount: 'Har du allerede en konto?',
-        login: 'Logg inn',
-        passwordsDontMatch: 'Passordene stemmer ikke overens',
-      },
-    },
-    
-    // Настройки
-    settings: {
-      soundEffects: 'Lydeffekter',
-      soundEffectsDescription: 'Spill av lyder for riktige/feil svar',
-      language: 'Grensesnittspråk',
-      languageDescription: 'Endre grensesnittspråk',
-      theme: 'Tema',
-      lightMode: 'Lys',
-      darkMode: 'Mørk',
+      versionsTitle: 'Version History',
+      developedBy: 'Developed by',
     },
   },
   
   ru: {
-    // Общие
     appName: 'Kolo Sets',
     loading: 'Загрузка...',
     save: 'Сохранить',
@@ -762,14 +494,15 @@ export const translations: Record<Language, Translations> = {
     finish: 'Завершить',
     close: 'Закрыть',
     
-    // Навигация
     nav: {
       home: 'Главная',
+      words: 'Слова',
+      stories: 'Истории',
+      dictionary: 'Словарь',
       profile: 'Профиль',
       other: 'Другое',
     },
-    
-    // Главная страница
+
     home: {
       title: 'Главная',
       myDecks: 'Мои колоды',
@@ -779,8 +512,7 @@ export const translations: Record<Language, Translations> = {
       addDeck: 'Добавить колоду',
       totalDecks: 'Всего колод',
     },
-    
-    // Создание коллекции
+
     createCollection: {
       title: 'Создать новую колоду',
       nameLabel: 'Название колоды',
@@ -788,8 +520,7 @@ export const translations: Record<Language, Translations> = {
       languageLabel: 'Язык слов (для озвучки)',
       languageDescription: 'Выберите язык слов в этой колоде',
     },
-    
-    // Карточка коллекции
+
     collectionCard: {
       cards: 'карточек',
       lastStudied: 'Последнее изучение',
@@ -799,8 +530,7 @@ export const translations: Record<Language, Translations> = {
       edit: 'Редактировать',
       confirmDelete: 'Вы уверены, что хотите удалить эту колоду?',
     },
-    
-    // Флешкарточки
+
     flashcards: {
       title: 'Флешкарточки',
       mode: 'Режим: Флешкарточки',
@@ -822,8 +552,7 @@ export const translations: Record<Language, Translations> = {
       backToCollection: 'Назад к колоде',
       accuracy: 'Точность',
     },
-    
-    // Quiz
+
     quiz: {
       title: 'Квиз',
       mode: 'Режим: Квиз',
@@ -854,8 +583,7 @@ export const translations: Record<Language, Translations> = {
       explanation: 'Объяснение',
       example: 'Пример',
     },
-    
-    // Редактирование коллекции
+
     editCollection: {
       title: 'Редактировать колоду',
       addCard: 'Добавить карточку',
@@ -867,8 +595,7 @@ export const translations: Record<Language, Translations> = {
       translation: 'Перевод',
       partOfSpeech: 'Часть речи',
     },
-    
-    // Добавление карточки
+
     addCard: {
       title: 'Добавить карточку',
       wordLabel: 'Слово',
@@ -882,11 +609,10 @@ export const translations: Record<Language, Translations> = {
       partOfSpeechLabel: 'Часть речи',
       partOfSpeechPlaceholder: 'например, существительное, глагол, прилагательное',
     },
-    
-    // Профиль
+
     profile: {
-      title: 'Профиль',
-      editProfile: 'Редактировать профиль',
+      pictureUrl: 'Введите URL изображения',
+      editProfile: 'Редактировать',
       logout: 'Выйти',
       saveChanges: 'Сохранить изменения',
       displayName: 'Отображаемое имя',
@@ -896,8 +622,9 @@ export const translations: Record<Language, Translations> = {
       
       streak: {
         title: 'Ударный режим',
-        days: 'дней',
+        daysInRow: 'дней в подряд',
         record: 'Рекорд',
+        days: 'дней',
       },
       
       stats: {
@@ -906,7 +633,6 @@ export const translations: Record<Language, Translations> = {
         cardsStudied: 'Карточек изучено',
         studyTime: 'Время обучения',
         activityTitle: 'Активность',
-        last90Days: 'Последние 90 дней',
         overallTitle: 'Общая статистика',
         totalCards: 'Всего карточек',
         flashcardSessions: 'Сессий флешкарточек',
@@ -915,41 +641,10 @@ export const translations: Record<Language, Translations> = {
       
       achievements: {
         title: 'Достижения',
-        unlocked: 'разблокировано',
-      },
-      
-      exportImport: {
-        title: 'Экспорт и импорт',
-        exportAll: 'Экспортировать все колоды',
-        import: 'Импортировать колоды',
-        description: 'Экспорт создаст JSON файл со всеми вашими колодами. Импорт позволит загрузить колоды из файла.',
-        importSuccess: 'Успешно импортировано {count} колод!',
-        importError: 'Ошибка импорта: {error}',
       },
     },
-    
-    // О приложении
-    about: {
-      title: 'Kolo Sets',
-      subtitle: 'Минималистичный инструмент для изучения норвежского языка, построенный на научном подходе интервальных повторений.',
-      features: {
-        efficiency: {
-          title: 'Эффективность',
-          description: 'Алгоритм SRS показывает слова именно тогда, когда вы готовы их забыть.',
-        },
-        privacy: {
-          title: 'Приватность',
-          description: 'Все ваши данные хранятся локально в браузере. Никаких серверов и сбора данных.',
-        },
-        simplicity: {
-          title: 'Простота',
-          description: 'Фокус на обучении, а не на настройках. Создавайте наборы и учитесь сразу.',
-        },
-      },
-      versionsTitle: 'История версий',
-      developedBy: 'Разработано',
-    },
-    
+
+
     // Аутентификация
     auth: {
       login: {
@@ -981,9 +676,18 @@ export const translations: Record<Language, Translations> = {
         login: 'Войти',
         passwordsDontMatch: 'Пароли не совпадают',
       },
+    },   
+
+    other: {
+      settings: 'Настройки',
+      updates: 'Kolo Обновления',
+      privacy: 'Конфиденциальность',
+      systemInfo: 'О системе',
+      dataManagement: 'Экспорт и импорт',
+      support: 'Поддержка',
+      footer: 'Разработано',
     },
-    
-    // Настройки
+
     settings: {
       soundEffects: 'Звуковые эффекты',
       soundEffectsDescription: 'Воспроизводить звуки для правильных/неправильных ответов',
@@ -993,13 +697,34 @@ export const translations: Record<Language, Translations> = {
       lightMode: 'Светлая',
       darkMode: 'Тёмная',
     },
+
+    updates: {
+      title: 'Kolo Sets',
+      subtitle: 'Минималистичный инструмент для изучения норвежского языка, построенный на научном подходе интервальных повторений.',
+      features: {
+        efficiency: {
+          title: 'Эффективность',
+          description: 'Алгоритм SRS показывает слова именно тогда, когда вы готовы их забыть.',
+        },
+        privacy: {
+          title: 'Приватность',
+          description: 'Все ваши данные хранятся локально в браузере. Никаких серверов и сбора данных.',
+        },
+        simplicity: {
+          title: 'Простота',
+          description: 'Фокус на обучении, а не на настройках. Создавайте наборы и учитесь сразу.',
+        },
+      },
+      versionsTitle: 'История версий',
+      developedBy: 'Разработано',
+    }, 
   },
 };
 
 // Получить текущий язык из localStorage
 export const getCurrentLanguage = (): Language => {
   const saved = localStorage.getItem('appLanguage') as Language;
-  return saved || 'no'; // По умолчанию норвежский
+  return saved || 'en'; // По умолчанию английский
 };
 
 // Установить язык

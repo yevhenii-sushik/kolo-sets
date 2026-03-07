@@ -23,7 +23,7 @@ export default function PrivacyPage() {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto pt-10 pb-24 px-6 space-y-20">
+    <div className="max-w-5xl mx-auto pt-10 pb-24 space-y-20">
       
       {/* Hero Header */}
       <section className="text-center space-y-6">
@@ -31,7 +31,7 @@ export default function PrivacyPage() {
           <ShieldCheck size={16} /> На страже ваших данных
         </div>
         <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight">
-          Безопасность и <br /><span className="text-green-600 font-serif italic">Приватность.</span>
+          Безопасность и <br /><span className="text-green-600 font-serif italic">приватность.</span>
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
           В Kolo Sets мы не просто храним слова, мы защищаем ваш прогресс. 

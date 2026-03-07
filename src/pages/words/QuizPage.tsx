@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Collection, TaskType, QuizStats, QuizSettings } from '../types';
-import { getCollection, updateCollection } from '../utils/storage';
-import { updateQuizStats, checkAndUnlockAchievements } from '../firebase/firestore';
-import { useAuth } from '../contexts/AuthContext';
+import { Collection, TaskType, QuizStats, QuizSettings } from '../../types';
+import { getCollection, updateCollection } from '../../utils/storage';
+import { updateQuizStats, checkAndUnlockAchievements } from '../../firebase/firestore';
+import { useAuth } from '../../contexts/AuthContext';
 import { 
   playCorrectIfEnabled, 
   playIncorrectIfEnabled, 
   playSessionCompleteIfEnabled 
-} from '../utils/sounds';
-import { generateQuizQuestions, QuizQuestion } from '../utils/quizGenerator';
-import QuizQuestionComponent from '../components/QuizQuestion';
-import QuizStatsModal from '../components/QuizStatsModal';
-import QuizSettingsModal from '../components/QuizSettingsModal';
+} from '../../utils/sounds';
+import { generateQuizQuestions, QuizQuestion } from '../../utils/quizGenerator';
+import QuizQuestionComponent from '../../components/QuizQuestion';
+import QuizStatsModal from '../../components/QuizStatsModal';
+import QuizSettingsModal from '../../components/QuizSettingsModal';
 
 export default function QuizPage() {
   const { id } = useParams<{ id: string }>();

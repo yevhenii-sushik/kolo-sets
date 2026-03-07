@@ -5,18 +5,18 @@ import {
 
 export default function SystemInfoPage() {
   return (
-    <div className="max-w-5xl mx-auto pt-10 pb-24 px-6 space-y-24">
+    <div className="max-w-5xl mx-auto pt-10 pb-24 space-y-24">
       
       {/* Hero */}
       <header className="space-y-8">
         <div className="flex items-center gap-3 text-purple-600 font-bold tracking-widest uppercase text-sm">
           <Binary size={18} /> System Core v0.2.0
         </div>
-        <h1 className="text-6xl md:text-7xl font-black text-gray-900 dark:text-white leading-[0.9]">
+        <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white leading-[0.9]">
           Инженерия <br />
           <span className="text-purple-600 font-serif italic">знаний.</span>
         </h1>
-        <p className="text-2xl text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
+        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
           Kolo Sets — это высокопроизводительная среда для обучения, оптимизированная для работы на любом устройстве.
         </p>
       </header>
@@ -131,12 +131,6 @@ export default function SystemInfoPage() {
           </div>
         </div>
       </section>
-
-      <footer className="pt-12 mt-12 border-t border-gray-200 dark:border-gray-800 text-center">
-        <p className="text-gray-500 dark:text-gray-400">
-          Utviklet av <span className="font-semibold text-gray-900 dark:text-white">Euphoria Software</span>
-        </p>
-      </footer>
     </div>
   );
 }

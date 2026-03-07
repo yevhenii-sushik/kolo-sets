@@ -15,7 +15,10 @@ export default function BottomNav() {
   };
   
   return (
-    <nav className="md:hidden fixed h-24 pb-5 bottom-0 left-0 right-0 bg-gray-50/70 backdrop-blur-lg dark:bg-gray-900/70 backdrop-blur-lg flex justify-around items-center px-2 z-50">
+    <nav className="md:hidden fixed h-24 pb-5 bottom-0 left-0 right-0 
+                    bg-[#F5F2ED]/80 backdrop-blur-lg dark:bg-[#0F0E0C]/70 backdrop-blur-lg 
+                    flex justify-around items-center px-2 z-50"
+    >
       {navItems.map(({ to, labelKey, icon: Icon }) => (
         <NavLink
           key={to}
@@ -23,8 +26,8 @@ export default function BottomNav() {
           className={({ isActive }) => `
             flex flex-col items-center justify-center flex-1 py-2 gap-1 transition-all duration-200
             ${isActive 
-              ? 'text-purple-600 dark:text-purple-400' 
-              : 'text-gray-500 dark:text-gray-400'}
+              ? 'text-[#FF5733] dark:text-[#FF6B47]' 
+              : 'text-[#7A756E] dark:text-[#8A867F]'}
           `}
         >
           {({ isActive }) => (
@@ -32,7 +35,7 @@ export default function BottomNav() {
               {/* Обертка для иконки с эффектом фона при активности */}
               <div className={`
                 p-2 rounded-xl transition-colors
-                ${isActive ? 'bg-purple-100 dark:bg-purple-900/30' : 'bg-transparent'}
+                ${isActive ? 'bg-[#FFF0ED] dark:bg-[#2A1A15]' : 'bg-transparent'}
               `}>
                 <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
               </div>
