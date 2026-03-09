@@ -3,7 +3,8 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDIq7CaT8AOHuf0m5XbVeHkGvKRO4TY5ss",
+  // Ключ теперь берется из файла .env.local
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "kolo-sets.firebaseapp.com",
   projectId: "kolo-sets",
   storageBucket: "kolo-sets.firebasestorage.app",
