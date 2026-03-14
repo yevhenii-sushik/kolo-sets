@@ -1,25 +1,41 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react'; // Добавили иконки глаза
+import { useAuth } from '../../contexts/AuthContext';
+import { Mail, Lock, ArrowRight, User, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const navigate = useNavigate();
-  const { login, loginGoogle } = useAuth();
+  const { register, loginGoogle } = useAuth();
   
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Состояние для "подсмотреть"
+  const [confirmPassword, setConfirmPassword] = useState('');
+  
+  const [showPass, setShowPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
+  
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (password !== confirmPassword) {
+      setError('Пароли не совпадают');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Пароль должен быть минимум 6 символов');
+      return;
+    }
+
     setLoading(true);
     try {
-      await login(email, password);
+      await register(email, password, name);
       navigate('/');
     } catch (err: any) {
       setError(getErrorMessage(err.code));
@@ -28,14 +44,14 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleRegister = async () => {
     setError('');
     setLoading(true);
     try {
       await loginGoogle();
       navigate('/');
     } catch (err: any) {
-      setError('Ошибка входа через Google');
+      setError('Ошибка регистрации через Google');
     } finally {
       setLoading(false);
     }
@@ -43,26 +59,23 @@ export default function LoginPage() {
 
   const getErrorMessage = (code: string): string => {
     switch (code) {
-      case 'auth/user-not-found': return 'Пользователь не найден';
-      case 'auth/wrong-password': return 'Неверный пароль';
-      default: return 'Ошибка входа';
+      case 'auth/email-already-in-use': return 'Этот email уже занят';
+      case 'auth/invalid-email': return 'Неверный формат email';
+      case 'auth/weak-password': return 'Слишком слабый пароль';
+      default: return 'Ошибка регистрации';
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#F5F2ED] dark:bg-[#0F0E0C] px-4 transition-colors duration-500">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#F5F2ED] dark:bg-[#0F0E0C] px-4 py-12 transition-colors duration-500">
       
       {/* Логотип и Название */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-4 mb-12"
+        className="flex items-center gap-4 mb-10"
       >
-        <img 
-          src="/icon-512.png" 
-          alt="Kolo Logo" 
-          className="w-12 h-12 object-contain" 
-        />
+        <img src="/icon-512.png" alt="Kolo Logo" className="w-12 h-12 object-contain" />
         <div className="flex flex-col">
           <h1 className="text-4xl text-[#1A1714] dark:text-[#F0EDE8] font-black tracking-tighter leading-none">
             Kolo <span className="text-[#FF5733]">Sets</span>
@@ -73,7 +86,7 @@ export default function LoginPage() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="max-w-[420px] w-full"
+        className="max-w-[440px] w-full"
       >
         <div className="bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-8 md:p-10 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm">
           {error && (
@@ -82,9 +95,27 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleEmailLogin} className="space-y-5">
+          <form onSubmit={handleRegister} className="space-y-4">
+            {/* Поле Имя */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-[0.2em] ml-4">
+                Name
+              </label>
+              <div className="relative">
+                <User className="absolute left-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742]" size={18} />
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full pl-14 pr-4 py-4 bg-[#F5F2ED] dark:bg-[#242220] border-none rounded-2xl focus:ring-2 ring-[#FF5733] transition-all text-[#1A1714] dark:text-[#F0EDE8] placeholder-[#B5B0A8]/50 outline-none"
+                  placeholder="Alex Smith"
+                  required
+                />
+              </div>
+            </div>
+
             {/* Поле Email */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <label className="text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-[0.2em] ml-4">
                 Email
               </label>
@@ -101,15 +132,15 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Поле Пароля с кнопкой подсмотреть */}
-            <div className="space-y-2">
+            {/* Поле Пароля */}
+            <div className="space-y-1.5">
               <label className="text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-[0.2em] ml-4">
                 Password
               </label>
               <div className="relative">
                 <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742]" size={18} />
                 <input
-                  type={showPassword ? "text" : "password"} // Переключаем тип поля
+                  type={showPass ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-14 pr-14 py-4 bg-[#F5F2ED] dark:bg-[#242220] border-none rounded-2xl focus:ring-2 ring-[#FF5733] transition-all text-[#1A1714] dark:text-[#F0EDE8] placeholder-[#B5B0A8]/50 outline-none"
@@ -117,11 +148,36 @@ export default function LoginPage() {
                   required
                 />
                 <button
-                  type="button" // Важно: type="button", чтобы не срабатывал submit
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742] hover:text-[#FF5733] transition-colors"
+                  type="button"
+                  onClick={() => setShowPass(!showPass)}
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742] hover:text-[#FF5733]"
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Подтверждение пароля */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-[0.2em] ml-4">
+                Repeat password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742]" size={18} />
+                <input
+                  type={showConfirmPass ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full pl-14 pr-14 py-4 bg-[#F5F2ED] dark:bg-[#242220] border-none rounded-2xl focus:ring-2 ring-[#FF5733] transition-all text-[#1A1714] dark:text-[#F0EDE8] placeholder-[#B5B0A8]/50 outline-none"
+                  placeholder="••••••••"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPass(!showConfirmPass)}
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742] hover:text-[#FF5733]"
+                >
+                  {showConfirmPass ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
@@ -129,11 +185,11 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group w-full flex items-center justify-center gap-3 px-4 py-4 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] font-black text-[11px] uppercase tracking-[0.2em] rounded-2xl transition-all hover:opacity-95 active:scale-[0.98] disabled:opacity-50 mt-4 shadow-lg shadow-[#FF5733]/10"
+              className="group w-full flex items-center justify-center gap-3 px-4 py-4 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] font-black text-[11px] uppercase tracking-[0.2em] rounded-2xl transition-all hover:opacity-95 active:scale-[0.98] disabled:opacity-50 mt-6 shadow-lg shadow-[#FF5733]/10"
             >
-              {loading ? 'Вход...' : (
+              {loading ? 'Создание...' : (
                 <>
-                  Sign In <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  Register <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </button>
@@ -144,12 +200,12 @@ export default function LoginPage() {
               <div className="w-full border-t border-[#E0DBD3] dark:border-[#2E2C29]"></div>
             </div>
             <span className="relative px-4 bg-white dark:bg-[#1A1917] text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-widest">
-              Social Login
+              Social
             </span>
           </div>
 
           <button
-            onClick={handleGoogleLogin}
+            onClick={handleGoogleRegister}
             disabled={loading}
             className="w-full flex items-center justify-center gap-3 px-4 py-4 bg-white dark:bg-transparent border-2 border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] font-black text-[10px] uppercase tracking-[0.2em] rounded-2xl hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-all"
           >
@@ -164,12 +220,12 @@ export default function LoginPage() {
         </div>
 
         <p className="mt-8 text-center text-[#7A756E] dark:text-[#8A867F] font-bold text-[11px] uppercase tracking-widest">
-          Don't have an account?{' '}
+          Already have an account?{' '}
           <button
-            onClick={() => navigate('/register')}
+            onClick={() => navigate('/login')}
             className="text-[#FF5733] hover:underline transition-all ml-1"
           >
-            Join
+            Log in
           </button>
         </p>
       </motion.div>

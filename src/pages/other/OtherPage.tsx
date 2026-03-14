@@ -66,6 +66,7 @@ export default function OtherPage() {
     { id: "about", label: t.other.systemInfo, icon: Info, path: "/system-info" },
     { id: "export", label: t.other.dataManagement, icon: FolderDown, path: "/data-management" },
     { id: "support", label: t.other.support, icon: PocketKnife, path: "/support" },
+    { id: "collections", label: "collections", icon: PocketKnife, path: "/tytyty" },
   ];
 
   return (
@@ -91,25 +92,6 @@ export default function OtherPage() {
           />
         ))}
       </div>
-
-      {/* Hero-like Footer Card */}
-      <footer className="relative mt-12 p-10 rounded-[3rem] bg-[#EDEAE4] dark:bg-[#242220] overflow-hidden border border-[#E0DBD3] dark:border-[#2E2C29] text-center">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF5733] to-transparent opacity-20" />
-        
-        <p className="text-[#7A756E] dark:text-[#B5B0A8] text-sm font-medium">
-          {t.other.footer}{" "}
-          <span className="block mt-2 text-lg font-serif italic text-[#1A1714] dark:text-[#F0EDE8]">
-            Euphoria Software
-          </span>
-        </p>
-        
-        <div className="mt-6 flex justify-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#FF5733]" />
-          <div className="w-1.5 h-1.5 rounded-full bg-[#B5B0A8] opacity-30" />
-          <div className="w-1.5 h-1.5 rounded-full bg-[#B5B0A8] opacity-30" />
-        </div>
-      </footer>
-
     </div>
   );
 }

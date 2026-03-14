@@ -10,9 +10,9 @@ import EmptyLayout from "./pages/layouts/EmptyLayout";
 import NavLayout from "./pages/layouts/NavLayout";
 
 // Pages
-import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import LandingPage from "./pages/auth/LandingPage";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
 import HomePage from "./pages/home/HomePage";
 import WordsPage from "./pages/words/WordsPage";
 import CollectionEditPage from "./pages/words/CollectionEditPage";
@@ -26,6 +26,7 @@ import PrivacyPage from "./pages/other/PrivacyPage";
 import SystemInfoPage from "./pages/other/SystemInfoPage";
 import DataManagementPage from "./pages/other/DataManagementPage";
 import SupportPage from "./pages/other/SupportPage";
+import CollectionTyPage from "./pages/CollectionTyPage";
 
 // Защищенный маршрут
 
@@ -60,7 +61,6 @@ function AppContent() {
   return (
     <Routes>
       {/* 1. Группа публичных маршрутов */}
-
       <Route
         path="/welcome"
         element={
@@ -89,7 +89,6 @@ function AppContent() {
       />
 
       {/* 2. Основное приложение (с Хедером/Футером) */}
-
       <Route
         element={
           <ProtectedRoute>
@@ -129,6 +128,7 @@ function AppContent() {
         <Route path="/system-info" element={<SystemInfoPage />} />
         <Route path="/data-management" element={<DataManagementPage />} />
         <Route path="/support" element={<SupportPage />} />
+        <Route path="/tytyty" element={<CollectionTyPage />} />
       </Route>
 
       {/* Редирект для любых неопознанных путей */}
