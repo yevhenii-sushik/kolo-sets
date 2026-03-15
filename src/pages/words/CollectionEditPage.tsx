@@ -89,7 +89,7 @@ export default function CollectionEditPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 pb-20 animate-in fade-in duration-500">
+    <div className="max-w-5xl mx-auto pb-20 animate-in fade-in duration-500">
       
       {/* Навигация */}
       <div className="flex items-center justify-between py-6">

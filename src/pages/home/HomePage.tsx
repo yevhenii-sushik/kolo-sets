@@ -103,7 +103,7 @@ export default function HomePage() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-5xl mx-auto pb-32 pt-6 space-y-5"
+      className="space-y-5"
     >
 
       {/* 1. TOP BAR */}

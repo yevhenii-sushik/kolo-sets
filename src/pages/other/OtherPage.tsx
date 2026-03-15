@@ -66,11 +66,10 @@ export default function OtherPage() {
     { id: "about", label: t.other.systemInfo, icon: Info, path: "/system-info" },
     { id: "export", label: t.other.dataManagement, icon: FolderDown, path: "/data-management" },
     { id: "support", label: t.other.support, icon: PocketKnife, path: "/support" },
-    { id: "collections", label: "collections", icon: PocketKnife, path: "/tytyty" },
   ];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-10 pb-32 pt-4">
+    <div className="space-y-10">
       
       {/* Header Section */}
       <header className="space-y-2 px-2">

@@ -131,7 +131,7 @@ export default function WordsPage() {
   [activeLevel]);
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-6">
+    <div>
       {/* Header */}
       <div className="flex justify-between items-center h-12 mb-8">
         <h2 className="text-3xl font-black text-gray-900 dark:text-white">

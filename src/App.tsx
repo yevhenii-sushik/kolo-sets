@@ -27,6 +27,7 @@ import SystemInfoPage from "./pages/other/SystemInfoPage";
 import DataManagementPage from "./pages/other/DataManagementPage";
 import SupportPage from "./pages/other/SupportPage";
 import CollectionTyPage from "./pages/CollectionTyPage";
+import SixSevenPage from "./pages/secret/SixSevenPage";
 
 // Защищенный маршрут
 
@@ -110,7 +111,6 @@ function AppContent() {
           </ProtectedRoute>
         }
       >
-        <Route path="/collection/:id/edit" element={<CollectionEditPage />} />
         <Route path="/collection/:id/flashcards" element={<FlashcardsPage />} />
         <Route path="/collection/:id/quiz" element={<QuizPage />} />
       </Route>
@@ -122,6 +122,8 @@ function AppContent() {
           </ProtectedRoute>
         }
       >
+        <Route path="/collection/:id/edit" element={<CollectionEditPage />} />
+        
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/updates" element={<UpdatesPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
@@ -129,6 +131,7 @@ function AppContent() {
         <Route path="/data-management" element={<DataManagementPage />} />
         <Route path="/support" element={<SupportPage />} />
         <Route path="/tytyty" element={<CollectionTyPage />} />
+        <Route path="/67" element={<SixSevenPage />} />
       </Route>
 
       {/* Редирект для любых неопознанных путей */}

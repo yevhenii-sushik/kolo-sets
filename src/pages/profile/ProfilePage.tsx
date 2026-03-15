@@ -137,7 +137,7 @@ export default function ProfilePage() {
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-5xl mx-auto pb-32 pt-6 space-y-5"
+      className="space-y-5"
     >
       {/* 1. HERO SECTION */}
       <section className="bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29] p-8 md:p-10">

@@ -76,8 +76,8 @@ export default function DataManagementPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F2ED] dark:bg-[#0F0E0C] selection:bg-[#FF5733]/20 transition-colors duration-500">
-      <div className="max-w-7xl mx-auto pt-16 pb-24">
+    <div>
+      <div>
       {/* 1. HEADER - Умеренный масштаб */}
         <header className="mb-20">
           <motion.div 
@@ -162,7 +162,7 @@ export default function DataManagementPage() {
           </div>
 
           {/* 3. SECURITY & COMPLIANCE BLOCK - Тот самый прикольный блок */}
-          <section className="mb-24 border-t border-[#E0DBD3] dark:border-[#2E2C29] pt-16">
+          <section className="border-t border-[#E0DBD3] dark:border-[#2E2C29] pt-16">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
               <div className="md:col-span-4 flex flex-col gap-4">
                 <div className="w-16 h-16 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-full flex items-center justify-center shadow-sm">
@@ -174,7 +174,9 @@ export default function DataManagementPage() {
               </div>
               <div className="md:col-span-8">
                 <p className="text-lg text-[#7A756E] dark:text-[#8A867F] font-medium leading-relaxed">
-                  Kolo Sets придерживается принципа <span className="text-[#1A1714] dark:text-[#F0EDE8]">Data Ownership</span>. Ваши данные не принадлежат нам — они хранятся на ваших устройствах и в вашем приватном облаке. Мы используем AES-256 шифрование при передаче данных и никогда не имеем доступа к содержимому ваших JSON-архивов.
+                  Kolo Sets придерживается принципа <span className="text-[#1A1714] dark:text-[#F0EDE8]">Data Ownership</span>. Ваши 
+                  данные не принадлежат нам — они хранятся на ваших устройствах и в вашем приватном облаке. Мы используем AES-256 
+                  шифрование при передаче данных.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-6 opacity-50">
                   <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-[#1A1714] dark:text-[#F0EDE8]">
