@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Card } from "../types";
-import { speak, isTTSSupported } from "../utils/tts";
-import { useI18n } from "../contexts/I18nContext";
+import { Card } from "../../types";
+import { speak, isTTSSupported } from "../../utils/tts";
+// import { useI18n } from "../contexts/I18nContext";
 import { Volume2, Eye, EyeOff, BookOpen, Quote } from "lucide-react";
 
 interface FlashcardProps {
@@ -12,7 +12,7 @@ interface FlashcardProps {
 }
 
 export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip }: FlashcardProps) {
-  const { t } = useI18n();
+  // const { t } = useI18n();
   const [showTranslation, setShowTranslation] = useState(false);
 
   // Сбрасываем показ перевода, когда карточка переворачивается обратно или меняется
@@ -48,9 +48,9 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
                   {card.partOfSpeech}
                 </span>
               )}
-              <div className="pt-4 animate-pulse text-white/40 text-sm font-medium">
+              {/* <div className="pt-4 animate-pulse text-white/40 text-sm font-medium">
                 {t.flashcards.flipToSee || "Trykk для å snu"}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

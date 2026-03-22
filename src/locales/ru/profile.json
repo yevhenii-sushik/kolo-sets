@@ -1,0 +1,36 @@
+{
+  "cabinet": "Личный кабинет",
+  "enterImageUrl": "Введите URL изображения профиля",
+  "usernamePlaceholder": "@имя_пользователя",
+  "save": "Сохранить",
+  "cancel": "Отмена",
+  "logoutTitle": "Выход",
+  "logoutConfirm": "Вы уверены, что хотите выйти?",
+  "streak": {
+    "title": "Ударный режим",
+    "goalReached": "Цель на сегодня достигнута",
+    "daysInRow": "дней подряд",
+    "record": "Рекорд",
+    "status": "Статус",
+    "active": "Активен",
+    "waiting": "В ожидании",
+    "daysShort": "дн."
+  },
+  "stats": {
+    "totalWords": "Всего слов",
+    "sessions": "Сессий",
+    "quizzes": "Тестов",
+    "inLearning": "В обучении",
+    "regDate": "Дата регистрации",
+    "weekTitle": "Статистика за неделю",
+    "cardsStudied": "Карточек изучено",
+    "studyTime": "Время обучения",
+    "activityMatrix": "Матрица активности"
+  },
+  "album": "Альбом",
+  "achievements": "Достижения",
+  "toast": {
+    "success": "Профиль обновлен!",
+    "error": "Ошибка обновления"
+  }
+}

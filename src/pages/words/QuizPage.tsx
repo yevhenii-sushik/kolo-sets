@@ -10,9 +10,9 @@ import {
   playSessionCompleteIfEnabled 
 } from '../../utils/sounds';
 import { generateQuizQuestions, QuizQuestion } from '../../utils/quizGenerator';
-import QuizQuestionComponent from '../../components/QuizQuestion';
-import QuizStatsModal from '../../components/QuizStatsModal';
-import QuizSettingsModal from '../../components/QuizSettingsModal';
+import QuizQuestionComponent from '../../components/quiz/QuizQuestion';
+import QuizStatsModal from '../../components/quiz/QuizStatsModal';
+import QuizSettingsModal from '../../components/quiz/QuizSettingsModal';
 
 export default function QuizPage() {
   const { id } = useParams<{ id: string }>();

@@ -1,0 +1,29 @@
+{
+  "title": "Settings",
+  "sections": {
+    "language": {
+      "title": "Interface Language",
+      "recommendation": "Recommendation: choose the language you are currently learning. This will speed up the immersion process."
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "dyslexia": "Dyslexia-friendly font",
+      "soon": "Coming soon..."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "desc": "Learning reminders and system messages."
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "deactivate": "Deactivate account",
+      "deactivateDesc": "Your profile will be hidden, but your data will be saved.",
+      "delete": "Delete account permanently",
+      "deleteDesc": "All your collections, progress, and achievements will be permanently deleted.",
+      "confirmDelete": "Are you sure you want to delete your account? This action cannot be undone."
+    }
+  }
+}

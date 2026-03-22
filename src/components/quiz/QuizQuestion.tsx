@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { TaskType } from '../types';
-import { QuizQuestion } from '../utils/quizGenerator';
+import { TaskType } from '../../types';
+import { QuizQuestion } from '../../utils/quizGenerator';
 
 interface QuizQuestionProps {
   question: QuizQuestion;

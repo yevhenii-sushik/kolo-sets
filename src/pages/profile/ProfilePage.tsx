@@ -13,18 +13,17 @@ import { updateProfile } from 'firebase/auth';
 import ActivityCalendar from '../../components/ActivityCalendar';
 import AchievementCard from '../../components/AchievementCard';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import Toast from '../../components/Toast';
+import Toast from '../../components/ui/Toast';
 import { Flame, Edit2, LogOut, Camera, Calendar, Award, Zap } from 'lucide-react';
 import { motion} from 'framer-motion';
 
 export default function ProfilePage() {
-  const { t } = useI18n();
+  const { t } = useI18n(); // Подключаем t
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
-  // 1. Smart Load: Инициализация из кэша
   const [profile, setProfile] = useState<UserProfile | null>(() => {
     if (!user?.uid) return null;
     const saved = localStorage.getItem(`profile_cache_${user.uid}`);
@@ -82,7 +81,6 @@ export default function ProfilePage() {
       setProfile(loadedProfile);
       setTotalCards(total);
       
-      // Сохраняем в кэш
       localStorage.setItem(`profile_cache_${user.uid}`, JSON.stringify(loadedProfile));
       localStorage.setItem(`total_cards_cache_${user.uid}`, total.toString());
 
@@ -104,29 +102,25 @@ export default function ProfilePage() {
       await updateUserProfile(user.uid, { displayName: editForm.displayName, username: editForm.username, photoURL: editForm.photoURL });
       setProfile({ ...profile, displayName: editForm.displayName });
       setIsEditing(false);
-      success('Профиль обновлен!');
-    } catch (err) { error('Ошибка обновления'); }
+      success(t.profile.toast.success);
+    } catch (err) { error(t.profile.toast.error); }
   };
 
   const handleLogout = async () => {
-    if (await confirm({ title: 'Выход', message: 'Вы уверены?', type: 'warning' })) {
+    if (await confirm({ title: t.profile.logoutTitle, message: t.profile.logoutConfirm, type: 'warning' })) {
       await logout(); navigate('/login');
     }
   };
 
-  // Стейты прогресса (вычисляются только когда есть профиль)
   const weekStats = useMemo(() => profile ? getWeekStats(profile.studyHistory) : null, [profile]);
   const calendarData = useMemo(() => profile ? getActivityCalendarData(profile.studyHistory, 90) : [], [profile]);
 
-  // --- SKELETON COMPONENT ---
   if (loading && !profile) return (
     <div className="max-w-5xl mx-auto space-y-6 pb-32 pt-4 px-4 animate-pulse">
       <div className="h-48 bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29]" />
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 md:col-span-7 h-80 bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29]" />
         <div className="col-span-12 md:col-span-5 h-80 bg-[#EDEAE4] dark:bg-[#242220] rounded-[2.5rem]" />
-        <div className="col-span-12 lg:col-span-4 h-96 bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29]" />
-        <div className="col-span-12 lg:col-span-8 h-96 bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29]" />
       </div>
     </div>
   );
@@ -156,7 +150,7 @@ export default function ProfilePage() {
               <button 
                 className="absolute -bottom-2 -right-2 w-12 h-12 bg-[#FF5733] text-white rounded-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-all"
                 onClick={() => {
-                  const url = prompt(t.profile.pictureUrl, editForm.photoURL);
+                  const url = prompt(t.profile.enterImageUrl, editForm.photoURL);
                   if (url !== null) setEditForm({ ...editForm, photoURL: url });
                 }}
               >
@@ -166,7 +160,7 @@ export default function ProfilePage() {
           </div>
 
           <div className="flex-1 text-center md:text-left space-y-2">
-            <p className="text-[10px] font-bold text-[#FF5733] uppercase tracking-[0.3em]">Личный кабинет</p>
+            <p className="text-[10px] font-bold text-[#FF5733] uppercase tracking-[0.3em]">{t.profile.cabinet}</p>
             {isEditing ? (
               <div className="space-y-4 max-w-sm mx-auto md:mx-0">
                 <input
@@ -180,7 +174,7 @@ export default function ProfilePage() {
                   value={editForm.username}
                   onChange={(e) => setEditForm({ ...editForm, username: e.target.value })}
                   className="text-sm font-bold bg-[#F5F2ED] dark:bg-[#141312] border border-[#E0DBD3] dark:border-[#2E2C29] px-4 py-2 rounded-xl w-full"
-                  placeholder="@username"
+                  placeholder={t.profile.usernamePlaceholder}
                 />
               </div>
             ) : (
@@ -197,8 +191,12 @@ export default function ProfilePage() {
           <div className="flex gap-3">
             {isEditing ? (
               <>
-                <button onClick={handleSaveProfile} className="px-6 py-3 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] rounded-2xl font-bold text-xs uppercase tracking-widest transition-all">Сохранить</button>
-                <button onClick={() => setIsEditing(false)} className="px-6 py-3 bg-[#EDEAE4] dark:bg-[#242220] rounded-2xl font-bold text-xs uppercase tracking-widest">Отмена</button>
+                <button onClick={handleSaveProfile} className="px-6 py-3 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] rounded-2xl font-bold text-xs uppercase tracking-widest transition-all">
+                  {t.profile.save}
+                </button>
+                <button onClick={() => setIsEditing(false)} className="px-6 py-3 bg-[#EDEAE4] dark:bg-[#242220] rounded-2xl font-bold text-xs uppercase tracking-widest">
+                  {t.profile.cancel}
+                </button>
               </>
             ) : (
               <button onClick={() => setIsEditing(true)} className="p-4 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-2xl hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-all">
@@ -228,34 +226,34 @@ export default function ProfilePage() {
                 <Flame size={20} className={isTodayActive ? 'text-white' : 'text-[#B5B0A8]'} fill={isTodayActive ? "currentColor" : "none"} />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
-                {isTodayActive ? 'Цель на сегодня достигнута' : 'Ударный режим'}
+                {isTodayActive ? t.profile.streak.goalReached : t.profile.streak.title}
               </span>
             </div>
             <div className="flex items-end gap-4">
               <span className="text-8xl font-serif italic leading-none">{profile.currentStreak}</span>
-              <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">дней подряд</span>
+              <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">{t.profile.streak.daysInRow}</span>
             </div>
             <div className="pt-6 border-t border-white/10 dark:border-black/10 flex gap-10">
                <div>
-                  <p className="text-[10px] font-bold uppercase opacity-50 mb-1">Рекорд</p>
-                  <p className="text-2xl font-serif italic">{profile.longestStreak} дн.</p>
+                  <p className="text-[10px] font-bold uppercase opacity-50 mb-1">{t.profile.streak.record}</p>
+                  <p className="text-2xl font-serif italic">{profile.longestStreak} {t.profile.streak.daysShort}</p>
                </div>
                <div>
-                  <p className="text-[10px] font-bold uppercase opacity-50 mb-1">Статус</p>
-                  <p className="text-2xl font-serif italic">{isTodayActive ? 'Активен' : 'В ожидании'}</p>
+                  <p className="text-[10px] font-bold uppercase opacity-50 mb-1">{t.profile.streak.status}</p>
+                  <p className="text-2xl font-serif italic">{isTodayActive ? t.profile.streak.active : t.profile.streak.waiting}</p>
                </div>
             </div>
           </div>
         </section>
 
         {/* 3. QUICK STATS */}
-        <section className="col-span-12 md:col-span-5 bg-[#EDEAE4] dark:bg-[#242220] rounded-[2.5rem] p-8 flex flex-col justify-between">
+        <section className="col-span-12 md:col-span-5 bg-[#EDEAE4] dark:bg-[#242220] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29] p-8 flex flex-col justify-between">
             <div className="grid grid-cols-2 gap-6">
               {[
-                { label: 'Всего слов', val: totalCards, icon: Award },
-                { label: 'Сессий', val: profile.stats.flashcardSessions, icon: Zap },
-                { label: 'Тестов', val: profile.stats.quizzesTaken, icon: Award },
-                { label: 'В обучении', val: formatTime(profile.stats.totalStudyTime), icon: Calendar },
+                { label: t.profile.stats.totalWords, val: totalCards, icon: Award },
+                { label: t.profile.stats.sessions, val: profile.stats.flashcardSessions, icon: Zap },
+                { label: t.profile.stats.quizzes, val: profile.stats.quizzesTaken, icon: Award },
+                { label: t.profile.stats.inLearning, val: formatTime(profile.stats.totalStudyTime), icon: Calendar },
               ].map((s, i) => (
                 <div key={i} className="space-y-1">
                   <p className="text-3xl font-serif italic text-[#1A1714] dark:text-[#F0EDE8]">{s.val}</p>
@@ -264,7 +262,7 @@ export default function ProfilePage() {
               ))}
             </div>
             <div className="mt-8 pt-6 border-t border-[#D6D0C5] dark:border-[#2E2C29]">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-[#B5B0A8]">Дата регистрации</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#B5B0A8]">{t.profile.stats.regDate}</p>
               <p className="text-sm font-medium mt-1">{new Date(profile.createdAt).toLocaleDateString()}</p>
             </div>
         </section>
@@ -291,7 +289,7 @@ export default function ProfilePage() {
         {/* 5. CALENDAR */}
         <div className="col-span-12 lg:col-span-8 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-[2.5rem] p-8 min-h-[280px]">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">Матрица активности</h2>
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">{t.profile.stats.activityMatrix}</h2>
             <Calendar size={16} className="text-[#B5B0A8]" />
           </div>
           <ActivityCalendar data={calendarData} />
@@ -301,8 +299,8 @@ export default function ProfilePage() {
       <section className="space-y-6 pt-6">
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-2">
-            <Award size={18} className="text-[#FF5733]" />
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">Альбом</h2>
+            <Award size={18} className="text-[#FF5733]"/>
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">{t.profile.album}</h2>
           </div>
         </div>
       </section>
@@ -312,7 +310,7 @@ export default function ProfilePage() {
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-2">
             <Award size={18} className="text-[#FF5733]" />
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">Достижения ({profile.achievements.length}/{ALL_ACHIEVEMENTS.length})</h2>
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">{t.profile.achievements} ({profile.achievements.length}/{ALL_ACHIEVEMENTS.length})</h2>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

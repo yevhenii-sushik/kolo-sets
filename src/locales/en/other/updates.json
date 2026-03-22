@@ -1,0 +1,136 @@
+{
+  "title": "Kolo",
+  "titleHighlight": "Evolution.",
+  "subtitle": "We are constantly working to make your Norwegian language learning more productive.",
+  "changelog": "Changelog",
+  "sidebarTitle": "Version Tree",
+  "stats": {
+    "intensity": "Intensity",
+    "intensityVal": "Weekly",
+    "intensitySub": "Update cycle",
+    "improvements": "Improvements",
+    "improvementsSub": "Total changes",
+    "status": "System Status",
+    "statusVal": "Online",
+    "statusSub": "Cloud Sync Active",
+    "feedback": "Feedback",
+    "feedbackVal": "100%",
+    "feedbackSub": "Community Driven"
+  },
+  "footer": {
+    "title": "This is only the beginning",
+    "subtitle": "We have big plans for 2026: story integration, group challenges and even more new content.",
+    "button": "Suggest a feature"
+  },
+  "versions": [
+    {
+      "number": "0.2.5",
+      "status": "Latest",
+      "date": "March 2026",
+      "type": "UI Update",
+      "changes": [
+        "Major navigation restructuring: the Words section is now a separate management center for your vocabulary, making room for a new interactive Dashboard panel",
+        "Launch of the updated Home page — it's now your personal hub with key statistics, useful widgets, and quick access to progress",
+        "The Words library now includes exclusive word collections, segmented by proficiency levels (from Beginner to Advanced) with regular content updates",
+        "Global update of the design code and interface to achieve impeccable visual clarity and modern user experience"
+      ]
+    },
+    {
+      "number": "0.2.4",
+      "status": "Patch",
+      "date": "March 2026",
+      "type": "Maintenance",
+      "changes": [
+        "During routine monitoring, a potential vulnerability in the configuration of API interfaces was identified. To ensure user data security and prevent unauthorized access, the hosting provider's protection algorithms initiated an emergency freeze of the server core. We conducted a full audit of security protocols, after which system operation was restored to normal mode"
+      ]
+    },
+    {
+      "number": "0.2.3",
+      "status": "Patch",
+      "date": "February 2026",
+      "type": "UI Update",
+      "changes": [
+        "Global change of design and user interface for a more modern and clean look",
+        "Added Support page with a feedback form for the development team",
+        "Changed the card import window to a more modern and convenient interface solution + AI help button",
+        "Fixed a bug where a completed achievement could be displayed as incomplete"
+      ]
+    },
+    {
+      "number": "0.2.2",
+      "status": "Patch",
+      "date": "February 2026",
+      "type": "Feature Release",
+      "changes": [
+        "Changed navigation between misc and updates pages for a more intuitive experience",
+        "Added a welcome page with a function overview for new users",
+        "Fixed a critical bug leading to page loss during navigation",
+        "Fixed a visual bug of premature card display in study mode",
+        "Fixed visual display errors on mobile devices",
+        "Redesign in study mode for a cleaner and more modern look",
+        "Other general redesign and UI optimization"
+      ]
+    },
+    {
+      "number": "0.2.1",
+      "status": "Patch",
+      "date": "February 2026",
+      "type": "Maintenance",
+      "changes": [
+        "Improved accessibility and responsiveness of the interface for mobile devices",
+        "Fixed minor bugs and improved user interfaces",
+        "Optimized application performance"
+      ]
+    },
+    {
+      "number": "0.2.0",
+      "status": "Minor",
+      "date": "February 2026",
+      "type": "Core Update",
+      "changes": [
+        "Added support for data synchronization via cloud (Cloud Sync)",
+        "Implemented critical account and authorization system",
+        "Added support for data export and import in JSON format",
+        "Added text-to-speech (TTS) function for cards",
+        "Added achievement and level system for motivation",
+        "Added strike system (Flames 🔥)",
+        "Multi-language interface support (localization)",
+        "Detailed statistics and user progress analytics"
+      ]
+    },
+    {
+      "number": "0.1.2",
+      "status": "Legacy",
+      "date": "February 2026",
+      "type": "UI Update",
+      "changes": [
+        "Full support for dark theme (Dark Mode)",
+        "Responsive interface for mobile devices",
+        "New side and bottom menu design"
+      ]
+    },
+    {
+      "number": "0.1.1",
+      "status": "Legacy",
+      "date": "February 2026",
+      "type": "UI Update",
+      "changes": [
+        "Improved home page and interface design",
+        "Collections and cards system",
+        "Study mode (Flashcards) and Quiz mode"
+      ]
+    },
+    {
+      "number": "0.1.0",
+      "status": "Initial",
+      "date": "January 2026",
+      "type": "Feature Release",
+      "changes": [
+        "First public release",
+        "Collections and cards system",
+        "Study mode (Flashcards) and Quiz mode",
+        "Local data storage (localStorage)"
+      ]
+    }
+  ]
+}

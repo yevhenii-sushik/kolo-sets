@@ -29,7 +29,6 @@ const MenuCard = ({
                  hover:shadow-2xl hover:shadow-[#FF5733]/5 hover:-translate-y-1
                  active:scale-[0.98]"
     >
-      {/* Фоновая иконка для декора */}
       <Icon 
         size={80} 
         className="absolute -right-4 -bottom-4 text-[#FF5733]/5 group-hover:text-[#FF5733]/10 transition-colors pointer-events-none rotate-12" 
@@ -60,26 +59,16 @@ export default function OtherPage() {
   const { t } = useI18n();
   
   const menuLinks = [
-    { id: "settings", label: t.other.settings, icon: Bolt, path: "/settings" },
-    { id: "updates", label: t.other.updates, icon: Rocket, path: "/updates" },
-    { id: "privacy", label: t.other.privacy, icon: ShieldCheck, path: "/privacy" },
-    { id: "about", label: t.other.systemInfo, icon: Info, path: "/system-info" },
-    { id: "export", label: t.other.dataManagement, icon: FolderDown, path: "/data-management" },
-    { id: "support", label: t.other.support, icon: PocketKnife, path: "/support" },
+    { id: "settings", label: t.other.settings, icon: Bolt, path: "/other/settings" },
+    { id: "updates", label: t.other.updates, icon: Rocket, path: "/other/updates" },
+    { id: "privacy", label: t.other.privacy, icon: ShieldCheck, path: "/other/privacy" },
+    { id: "about", label: t.other.systemInfo, icon: Info, path: "/other/system-info" },
+    { id: "export", label: t.other.dataManagement, icon: FolderDown, path: "/other/data-management" },
+    { id: "support", label: t.other.support, icon: PocketKnife, path: "/other/support" },
   ];
 
   return (
     <div className="space-y-10">
-      
-      {/* Header Section */}
-      <header className="space-y-2 px-2">
-        <p className="text-[10px] font-bold text-[#FF5733] uppercase tracking-[0.3em]">Конфигурация</p>
-        <h1 className="text-4xl md:text-5xl font-serif italic tracking-tight text-[#1A1714] dark:text-[#F0EDE8]">
-          Other
-        </h1>
-      </header>
-
-      {/* Grid Layout (Bento) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {menuLinks.map((link, index) => (
           <MenuCard

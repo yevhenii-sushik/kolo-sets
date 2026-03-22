@@ -1,0 +1,36 @@
+{
+  "cabinet": "Personal Cabinet",
+  "enterImageUrl": "Enter profile image URL",
+  "usernamePlaceholder": "@username",
+  "save": "Save",
+  "cancel": "Cancel",
+  "logoutTitle": "Logout",
+  "logoutConfirm": "Are you sure you want to logout?",
+  "streak": {
+    "title": "Streak",
+    "goalReached": "Daily goal reached",
+    "daysInRow": "days in a row",
+    "record": "Record",
+    "status": "Status",
+    "active": "Active",
+    "waiting": "Waiting",
+    "daysShort": "days"
+  },
+  "stats": {
+    "totalWords": "Total words",
+    "sessions": "Sessions",
+    "quizzes": "Quizzes",
+    "inLearning": "In training",
+    "regDate": "Registration date",
+    "weekTitle": "Weekly statistics",
+    "cardsStudied": "Cards studied",
+    "studyTime": "Study time",
+    "activityMatrix": "Activity matrix"
+  },
+  "album": "Album",
+  "achievements": "Achievements",
+  "toast": {
+    "success": "Profile updated!",
+    "error": "Update error"
+  }
+}

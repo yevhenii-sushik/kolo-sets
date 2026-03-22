@@ -1,19 +1,21 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Card, Collection } from '../../types'; // Добавили Collection
+import { Card, Collection } from '../../types';
 import { getCollection, updateCollection, createCard, parseImportText } from '../../utils/storage';
 import { useI18n } from '../../contexts/I18nContext';
+import { useConfirm } from '../../hooks/useConfirm'; // Импортируем хук
 import { ArrowLeft, Plus, Upload, Edit3, BookOpen, Layers } from 'lucide-react';
 import AddCardModal from '../../components/AddCardModal';
 import ImportCardsModal from '../../components/ImportCardsModal';
-import CardListItem from '../../components/CardListItem';
+import CardListItem from '../../components/cards/CardListItem';
+import ConfirmDialog from '../../components/ConfirmDialog'; // Не забудь добавить компонент вниз
 
 export default function CollectionEditPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useI18n();
+  const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   
-  // Состояние коллекции. Изначально null, загружается в useEffect
   const [collection, setCollection] = useState<Collection | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -35,7 +37,6 @@ export default function CollectionEditPage() {
     loadCollection();
   }, [id, navigate]);
 
-  // Вычисляем количество выученных слов безопасно
   const learnedCount = useMemo(() => {
     return collection?.cards.filter((c: Card) => c.srsData.interval > 0).length || 0;
   }, [collection]);
@@ -70,7 +71,14 @@ export default function CollectionEditPage() {
 
   const handleDeleteCard = async (cardId: string) => {
     if (!collection) return;
-    if (window.confirm('Удалить это слово?')) {
+    
+    const isConfirmed = await confirm({
+      title: t.delete,
+      message: t.words.editCollection.modals.deleteConfirm,
+      type: 'danger'
+    });
+
+    if (isConfirmed) {
       const updatedCards = collection.cards.filter((card: Card) => card.id !== cardId);
       const updated = { ...collection, cards: updatedCards };
       setCollection(updated);
@@ -80,7 +88,7 @@ export default function CollectionEditPage() {
 
   const handleRenameCollection = async () => {
     if (!collection) return;
-    const newName = window.prompt('Новое название коллекции:', collection.name);
+    const newName = window.prompt(t.words.editCollection.modals.renameTitle, collection.name);
     if (newName && newName.trim()) {
       const updated = { ...collection, name: newName.trim() };
       setCollection(updated);
@@ -91,7 +99,7 @@ export default function CollectionEditPage() {
   return (
     <div className="max-w-5xl mx-auto pb-20 animate-in fade-in duration-500">
       
-      {/* Навигация */}
+      {/* Navigation */}
       <div className="flex items-center justify-between py-6">
         <button
           onClick={() => navigate(-1)}
@@ -107,6 +115,7 @@ export default function CollectionEditPage() {
           <button
             onClick={() => setIsImportModalOpen(true)}
             className="p-3 text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-lg transition-all"
+            title={t.words.editCollection.import}
           >
             <Upload size={20} />
           </button>
@@ -115,17 +124,17 @@ export default function CollectionEditPage() {
             className="flex items-center gap-2 px-5 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl shadow-xl shadow-purple-500/20 transition-all active:scale-95 font-bold text-sm"
           >
             <Plus size={20} />
-            <span>{t.editCollection.addCard}</span>
+            <span>{t.words.editCollection.addCard}</span>
           </button>
         </div>
       </div>
 
-      {/* Шапка (Glassmorphism) */}
+      {/* Header */}
       <div className="relative overflow-hidden mb-10 p-8 md:p-10 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-[3rem] shadow-sm">
         <div className="relative z-10">
           <div className="flex items-center gap-4 group mb-6">
             <h1 className={`text-3xl md:text-5xl font-black italic tracking-tight transition-all duration-500 ${loading ? 'opacity-20 blur-sm' : 'opacity-100'}`}>
-              {collection?.name || 'Загрузка...'}
+              {collection?.name || t.words.editCollection.loading}
             </h1>
             {!loading && (
               <button
@@ -140,21 +149,21 @@ export default function CollectionEditPage() {
           <div className={`flex flex-wrap gap-4 transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
             <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-full text-[10px] font-black uppercase tracking-widest">
               <Layers size={14} />
-              {collection?.cards.length || 0} {t.collectionCard.cards}
+              {collection?.cards.length || 0} {t.words.collectionCard.cards}
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-[10px] font-black uppercase tracking-widest">
               <BookOpen size={14} />
-              {learnedCount} Выучено
+              {learnedCount} {t.words.editCollection.learned}
             </div>
           </div>
         </div>
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Список слов */}
+      {/* Word List */}
       <div className="space-y-4">
         <h2 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] px-4 mb-4">
-          Список слов
+          {t.words.editCollection.wordList}
         </h2>
 
         {loading ? (
@@ -168,10 +177,10 @@ export default function CollectionEditPage() {
                onClick={() => setIsAddModalOpen(true)}>
             <div className="text-6xl mb-6">✍️</div>
             <h3 className="text-xl font-black italic text-gray-700 dark:text-gray-300 mb-2">
-              {t.editCollection.noCards}
+              {t.words.editCollection.noCards}
             </h3>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-              Нажми сюда, чтобы добавить первое слово
+              {t.words.editCollection.noCardsDesc}
             </p>
           </div>
         ) : (
@@ -188,13 +197,13 @@ export default function CollectionEditPage() {
         )}
       </div>
 
-      {/* Модалки (Рендерим всегда, чтобы анимации открытия были плавными) */}
+      {/* Modals */}
       <AddCardModal
         isOpen={isAddModalOpen || editingCard !== null}
         onClose={() => { setIsAddModalOpen(false); setEditingCard(null); }}
         onSave={editingCard ? handleEditCard : handleAddCard}
         initialData={editingCard || undefined}
-        title={editingCard ? 'Редактировать слово' : 'Новое слово'}
+        title={editingCard ? t.words.editCollection.modals.editWord : t.words.editCollection.modals.newWord}
       />
 
       <ImportCardsModal
@@ -202,6 +211,8 @@ export default function CollectionEditPage() {
         onClose={() => setIsImportModalOpen(false)}
         onImport={handleImportCards}
       />
+
+      <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useI18n } from '../../contexts/I18nContext';
 import { playSessionCompleteIfEnabled } from '../../utils/sounds';
 import { Shuffle, X } from 'lucide-react';
-import Flashcard from '../../components/Flashcard';
+import Flashcard from '../../components/cards/Flashcard';
 import FlashcardStatsModal from '../../components/FlashcardStatsModal';
 
 export default function FlashcardsPage() {
@@ -51,7 +51,6 @@ export default function FlashcardsPage() {
   const handleRating = async (level: KnowledgeLevel) => {
     if (!isFlipped) return;
 
-    // 1. Обновляем статистику и SRS
     const currentCard = cards[currentIndex];
     const updatedCard = updateSRSData(currentCard, level);
     
@@ -72,10 +71,8 @@ export default function FlashcardsPage() {
       know: level === KnowledgeLevel.KNOW ? prev.know + 1 : prev.know,
     }));
 
-    // 2. ФИКС БАГА: Сначала закрываем карту
     setIsFlipped(false);
 
-    // 3. Ждем окончания анимации переворота (300мс), прежде чем менять слово
     setTimeout(() => {
       if (currentIndex < cards.length - 1) {
         setCurrentIndex(prev => prev + 1);
@@ -90,7 +87,7 @@ export default function FlashcardsPage() {
   };
 
   const handleShuffle = () => {
-    if (window.confirm('Перемешать колоду?')) {
+    if (window.confirm(t.words.flashcards.shuffleConfirm)) {
       setCards(prev => [...prev].sort(() => Math.random() - 0.5));
       setCurrentIndex(0);
       setIsFlipped(false);
@@ -102,14 +99,12 @@ export default function FlashcardsPage() {
   const currentCard = cards[currentIndex];
   const progress = ((currentIndex + 1) / cards.length) * 100;
 
-
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 flex flex-col overflow-hidden">
-      {/* Header - Fixed */}
+      {/* Header */}
       <div className="flex-shrink-0 px-4 md:px-6 py-3">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          {/* Back button & Title */}
-          
+          <div className="flex items-center gap-2">
             <button
               onClick={() => navigate('/')}
               className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors flex-shrink-0"
@@ -121,28 +116,22 @@ export default function FlashcardsPage() {
               <h1 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white truncate">
                 {collection.name}
               </h1>
-              {/* <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
-                {t.flashcards.mode}
-              </p> */}
             </div>
-          
+          </div>
 
-          {/* Shuffle button */}
           <button
             onClick={handleShuffle}
             className="p-2 md:px-4 md:py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors flex items-center gap-2 flex-shrink-0"
-            title={t.flashcards.shuffle}
           >
             <Shuffle size={18} />
-            <span className="hidden md:inline">{t.flashcards.shuffle}</span>
+            <span className="hidden md:inline">{t.words.flashcards.shuffle}</span>
           </button>
         </div>
       </div>
 
-      {/* Progress bar - Fixed */}
+      {/* Progress bar */}
       <div className="flex-shrink-0 px-4 md:px-6 py-3">
         <div className="max-w-6xl mx-auto flex items-center gap-4">
-          
           <div className="whitespace-nowrap text-center text-xs md:text-sm font-bold text-gray-600 dark:text-gray-400 min-w-[40px]">
             {currentIndex + 1} / {cards.length}
           </div>
@@ -155,7 +144,6 @@ export default function FlashcardsPage() {
           <div className="whitespace-nowrap text-center text-xs md:text-sm font-black text-purple-600 dark:text-purple-400 min-w-[40px]">
             {Math.round(progress)}%
           </div>
-
         </div>
       </div>
 
@@ -170,20 +158,18 @@ export default function FlashcardsPage() {
         </div>
       </main>
 
-      {/* Buttons - Fixed at bottom */}
-      {/* 4. Нижняя панель с кнопками: фиксированная высота внизу */}
+      {/* Buttons - Возвращена оригинальная верстка */}
       <div className="shrink-0 pb-10 mx-6">
         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-          {isFlipped ? "How well do you know this word?" : "Click on the card to see the information"}
+          {isFlipped ? t.words.flashcards.hints.rateKnowledge : t.words.flashcards.hints.clickToFlip}
         </p>
         
         <div className="max-w-3xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {/* Универсальная функция для рендера кнопок, чтобы не дублировать код */}
           {[
-            { level: KnowledgeLevel.DONT_KNOW, label: 'Не знаю', emoji: '😕', color: 'bg-red-600' },
-            { level: KnowledgeLevel.FORGOT, label: 'Забыл', emoji: '🤔', color: 'bg-orange-600' },
-            { level: KnowledgeLevel.REMEMBER, label: 'Помню', emoji: '🙂', color: 'bg-blue-600' },
-            { level: KnowledgeLevel.KNOW, label: 'Знаю', emoji: '😊', color: 'bg-green-600' }
+            { level: KnowledgeLevel.DONT_KNOW, label: t.words.flashcards.levels.dontKnow, emoji: '😕', color: 'bg-red-600' },
+            { level: KnowledgeLevel.FORGOT, label: t.words.flashcards.levels.forgot, emoji: '🤔', color: 'bg-orange-600' },
+            { level: KnowledgeLevel.REMEMBER, label: t.words.flashcards.levels.remember, emoji: '🙂', color: 'bg-blue-600' },
+            { level: KnowledgeLevel.KNOW, label: t.words.flashcards.levels.know, emoji: '😊', color: 'bg-green-600' }
           ].map((btn) => (
             <button
               key={btn.level}
@@ -202,7 +188,6 @@ export default function FlashcardsPage() {
         </div>
       </div>
 
-      {/* Модальное окно со статистикой */}
       <FlashcardStatsModal isOpen={showStats} stats={stats} onClose={() => navigate('/')} onRestart={loadData} />
     </div>
   );

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Language, Translations, translations, getCurrentLanguage, setLanguage as saveLanguage } from '../utils/i18n';
+import { Language, Translations, translations, getCurrentLanguage, setLanguage as saveLanguage } from '../locales';
 
 interface I18nContextType {
   language: Language;

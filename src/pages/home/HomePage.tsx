@@ -1,16 +1,18 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useI18n } from '../../contexts/I18nContext'; // Импортируем контекст
 import { getUserProfile } from '../../firebase/firestore';
 import { getCollections } from '../../utils/storage';
 import { DAILY_WORDS } from '../../data/home/dailyWords';
 import { STUDY_TIPS } from '../../data/home/tips';
-import { Flame, Play, BookOpen, Lightbulb, RotateCw, Plus, Compass, Target} from 'lucide-react';
+import { Flame, Play, BookOpen, Lightbulb, RotateCw, Plus, Compass, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useI18n(); // Достаем переводы
 
   const [profile, setProfile] = useState<any>(() => {
     if (!user?.uid) return null;
@@ -64,40 +66,21 @@ export default function HomePage() {
     setCurrentTip(STUDY_TIPS[Math.floor(Math.random() * STUDY_TIPS.length)]);
   };
 
+  // Динамическое приветствие на основе локализации
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
-    
-    const phrases = {
-      morning: [
-        "God morgen", "Доброе утро", "Утренняя разминка?", 
-        "Klar for litt norsk?", "Время для кофе и слов", "Как спалось?"
-      ],
-      afternoon: [
-        "God dag", "Добрый день", "Продуктивного дня", 
-        "Hvordan går det?", "Время сделать перерыв", "Продолжим обучение?"
-      ],
-      evening: [
-        "God kveld", "Добрый вечер", "Приятного вечера", 
-        "Kveldsøkt?", "Вечернее повторение", "Подведем итоги дня?"
-      ],
-      night: [
-        "God natt", "Доброй ночи", "Не спится?", 
-        "Nattugle?", "Тихое время для учебы", "Ночная смена"
-      ]
-    };
+    let period: 'morning' | 'afternoon' | 'evening' | 'night';
 
-    let selectedPeriod: keyof typeof phrases;
-    if (hour >= 5 && hour < 12) selectedPeriod = 'morning';
-    else if (hour >= 12 && hour < 18) selectedPeriod = 'afternoon';
-    else if (hour >= 18 && hour < 23) selectedPeriod = 'evening';
-    else selectedPeriod = 'night';
+    if (hour >= 5 && hour < 12) period = 'morning';
+    else if (hour >= 12 && hour < 18) period = 'afternoon';
+    else if (hour >= 18 && hour < 23) period = 'evening';
+    else period = 'night';
 
-    const options = phrases[selectedPeriod];
-    // Используем час + дату как сид, чтобы приветствие было разным, 
-    // но стабильным в течение часа и не прыгало при каждом рендере.
+    // Берем массив фраз из нашего home.json
+    const options = t.home.greeting[period];
     const index = (hour + new Date().getDate()) % options.length;
     return options[index];
-  }, []);
+  }, [t.home.greeting]);
 
   return (
     <motion.div
@@ -105,7 +88,6 @@ export default function HomePage() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-5"
     >
-
       {/* 1. TOP BAR */}
       <div className="flex items-center justify-between
                       bg-white/60 dark:bg-[#1A1917]/60
@@ -114,7 +96,6 @@ export default function HomePage() {
                       border border-[#E0DBD3] dark:border-[#2E2C29]
                       sticky top-18 z-50 shadow-sm">
 
-        {/* Avatar + greeting */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0
                           bg-[#EDEAE4] dark:bg-[#242220]
@@ -132,12 +113,11 @@ export default function HomePage() {
             </p>
             <p className="font-serif italic text-[17px] leading-none
                           text-[#1A1714] dark:text-[#F0EDE8]">
-              {profile?.displayName?.split(' ')[0] || (loading ? '…' : 'Гость')}
+              {profile?.displayName?.split(' ')[0] || (loading ? '…' : t.home.guest)}
             </p>
           </div>
         </div>
 
-        {/* Streak badge */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl
                         bg-[#FFF0ED] dark:bg-[#2A1A15]">
           <Flame
@@ -157,10 +137,8 @@ export default function HomePage() {
 
       {/* 2. BENTO GRID */}
       <div className="grid grid-cols-12 gap-4">
-        {/* ── Hero card: "Пора повторить" ── */}
+        {/* Hero card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
           whileHover={{ scale: 0.99 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => navigate('/words')}
@@ -169,7 +147,6 @@ export default function HomePage() {
                      bg-[#1A1714] dark:bg-[#F0EDE8]
                      rounded-[2rem] p-8 min-h-[240px]"
         >
-          {/* Decorative bg icon */}
           <div className="absolute right-[-6%] bottom-[-8%] rotate-12 pointer-events-none
                           opacity-[0.06] text-[#F5F2ED] dark:text-[#1A1714]">
             <Compass size={220} strokeWidth={1} />
@@ -181,41 +158,38 @@ export default function HomePage() {
                                text-[10px] font-semibold uppercase tracking-[0.15em]
                                bg-white/10 dark:bg-black/10
                                text-[#F5F2ED] dark:text-[#1A1714]">
-                Продолжить обучение
+                {t.home.hero.badge}
               </span>
               <h2 className="font-serif italic leading-[0.95]
                              text-[#F5F2ED] dark:text-[#1A1714]
                              text-4xl md:text-5xl">
-                Пора<br />повторить
+                {t.home.hero.titleFirst}<br />{t.home.hero.titleSecond}
               </h2>
             </div>
 
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg flex-shrink-0
-                              bg-[#FF5733] dark:bg-[#FF6B47]
-                              hover:opacity-90 transition-opacity">
+                              bg-[#FF5733] dark:bg-[#FF6B47]">
                 <Play size={18} fill="white" color="white" className="ml-0.5" />
               </div>
               <p className="text-[13px] font-medium
                             text-[#F5F2ED]/60 dark:text-[#1A1714]/60">
-                Зайди и начни прямо сейчас
+                {t.home.hero.description}
               </p>
             </div>
           </div>
         </motion.div>
 
-        {/* ── Daily word ── */}
-        <div
-          className="col-span-12 md:col-span-4
+        {/* Daily word */}
+        <div className="col-span-12 md:col-span-4
                      flex flex-col justify-between
                      bg-white dark:bg-[#1A1917]
                      border border-[#E0DBD3] dark:border-[#2E2C29]
-                     rounded-[2rem] p-7"
-        >
+                     rounded-[2rem] p-7">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.15em] mb-4
                           text-[#FF5733] dark:text-[#FF6B47]">
-              Слово дня
+              {t.home.dailyWord.title}
             </p>
             <h3 className="font-serif italic leading-tight text-[26px]
                            text-[#1A1714] dark:text-[#F0EDE8]">
@@ -235,11 +209,11 @@ export default function HomePage() {
                              text-[#B5B0A8] dark:text-[#4A4742]
                              hover:text-[#FF5733] dark:hover:text-[#FF6B47]
                              transition-colors">
-            В коллекцию <Plus size={13} />
+            {t.home.dailyWord.addToCollection} <Plus size={13} />
           </button>
         </div>
 
-        {/* ── Study tip ── */}
+        {/* Study tip */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -254,7 +228,7 @@ export default function HomePage() {
               <Lightbulb size={15} className="text-[#FF5733] dark:text-[#FF6B47]" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.15em]
                                text-[#FF5733] dark:text-[#FF6B47]">
-                Совет дня
+                {t.home.tip.title}
               </span>
             </div>
             <button
@@ -291,14 +265,13 @@ export default function HomePage() {
           </AnimatePresence>
         </motion.div>
 
-        {/* ── Stats mini cards ── */}
+        {/* Stats mini cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.12 }}
           className="col-span-12 md:col-span-5 grid grid-cols-2 gap-4"
         >
-          {/* Words */}
           <div className="flex flex-col justify-center items-center text-center
                           bg-[#EDEAE4] dark:bg-[#242220]
                           rounded-[1.75rem] p-5">
@@ -312,11 +285,10 @@ export default function HomePage() {
             </p>
             <p className="text-[10px] font-semibold uppercase tracking-[0.1em] mt-1.5
                           text-[#B5B0A8] dark:text-[#4A4742]">
-              Слов
+              {t.home.stats.words}
             </p>
           </div>
 
-          {/* Decks */}
           <div className="flex flex-col justify-center items-center text-center
                           bg-[#EDEAE4] dark:bg-[#242220]
                           rounded-[1.75rem] p-5">
@@ -330,73 +302,11 @@ export default function HomePage() {
             </p>
             <p className="text-[10px] font-semibold uppercase tracking-[0.1em] mt-1.5
                           text-[#B5B0A8] dark:text-[#4A4742]">
-              Сетов
+              {t.home.stats.decks}
             </p>
           </div>
         </motion.div>
       </div>
-
-      {/* ══════════════════════════════════════
-          3. QUICK LINKS
-          ══════════════════════════════════════ */}
-
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-
-        <Link
-          to="/words"
-          className="group flex items-center justify-between
-                     p-2 pl-5
-                     bg-white dark:bg-[#1A1917]
-                     border border-[#E0DBD3] dark:border-[#2E2C29]
-                     rounded-full hover:shadow-lg transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-[10px] flex items-center justify-center flex-shrink-0
-                            bg-[#FFF0ED] dark:bg-[#2A1A15]">
-              <Layout size={15} className="text-[#FF5733] dark:text-[#FF6B47]" />
-            </div>
-            <span className="font-serif italic text-[15px]
-                             text-[#1A1714] dark:text-[#F0EDE8]">
-              Моя библиотека
-            </span>
-          </div>
-          <div className="w-12 h-12 rounded-full flex items-center justify-center transition-all
-                          bg-[#EDEAE4] dark:bg-[#242220]
-                          text-[#7A756E] dark:text-[#8A867F]
-                          group-hover:bg-[#FF5733] dark:group-hover:bg-[#FF6B47]
-                          group-hover:text-white">
-            <ChevronRight size={18} />
-          </div>
-        </Link>
-
-        <Link
-          to="/settings"
-          className="group flex items-center justify-between
-                     p-2 pl-5
-                     bg-white dark:bg-[#1A1917]
-                     border border-[#E0DBD3] dark:border-[#2E2C29]
-                     rounded-full hover:shadow-lg transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-[10px] flex items-center justify-center flex-shrink-0
-                            bg-[#EFF6FF] dark:bg-[#1e3a5f]/30">
-              <RotateCw size={15} className="text-[#3B82F6] dark:text-[#60A5FA]" />
-            </div>
-            <span className="font-serif italic text-[15px]
-                             text-[#1A1714] dark:text-[#F0EDE8]">
-              История сессий
-            </span>
-          </div>
-          <div className="w-12 h-12 rounded-full flex items-center justify-center transition-all
-                          bg-[#EDEAE4] dark:bg-[#242220]
-                          text-[#7A756E] dark:text-[#8A867F]
-                          group-hover:bg-[#3B82F6] dark:group-hover:bg-[#60A5FA]
-                          group-hover:text-white">
-            <ChevronRight size={18} />
-          </div>
-        </Link>
-
-      </div> */}
     </motion.div>
   );
 }

@@ -1,0 +1,74 @@
+{
+  "title": "Моя библиотека",
+  "koloSets": "Kolo Наборы",
+  "addDeck": "Создать набор",
+  "tabs": {
+    "my": "Мои",
+    "kolo": "Kolo"
+  },
+  "createModal": {
+    "title": "Новый набор",
+    "nameLabel": "Название набора",
+    "namePlaceholder": "Напр: Фразы для путешествий",
+    "languageLabel": "Язык изучения",
+    "create": "Создать"
+  },
+  "collectionCard": {
+    "cards": "слов",
+    "lastStudied": "Повторяли",
+    "edit": "Изменить",
+    "study": "Учить",
+    "confirmDelete": "-",
+    "modal": {
+      "chooseMode": "Выбери режим",
+      "flashcards": "Флэшкарты",
+      "flashcardsDesc": "Переворачивай и оценивай",
+      "quiz": "Тест",
+      "quizDesc": "Проверяй знания",
+      "quizNeedsMore": "Нужно 4+ слова"
+    }
+  },
+  "editCollection": {
+    "addCard": "Добавить слово",
+    "import": "Импорт",
+    "rename": "Переименовать",
+    "learned": "Выучено",
+    "wordList": "Список слов",
+    "noCards": "В этом наборе пока нет слов",
+    "noCardsDesc": "Нажми сюда, чтобы добавить первое слово",
+    "loading": "Загрузка...",
+    "modals": {
+      "editWord": "Редактировать слово",
+      "newWord": "Новое слово",
+      "renameTitle": "Новое название набора",
+      "deleteConfirm": "Удалить это слово?"
+    }
+  },
+  "flashcards": {
+    "shuffle": "Перемешать",
+    "shuffleConfirm": "Перемешать колоду и начать заново?",
+    "back": "Назад",
+    "hints": {
+      "clickToFlip": "Нажми на карту, чтобы перевернуть",
+      "rateKnowledge": "Как хорошо ты знаешь это слово?"
+    },
+    "levels": {
+      "dontKnow": "Не знаю",
+      "forgot": "Забыл",
+      "remember": "Помню",
+      "know": "Знаю"
+    }
+  },
+  "empty": {
+    "title": "У вас пока нет наборов",
+    "description": "Создайте свой первый набор карточек, чтобы начать эффективное обучение.",
+    "button": "Создать первый набор"
+  },
+  "toast": {
+    "createSuccess": "Набор создан",
+    "deleteSuccess": "Набор удален",
+    "deleteError": "Ошибка при удалении",
+    "createError": "Ошибка при создании"
+  },
+  "soon": "Мы уже работаем над этим разделом. Совсем скоро он здесь появится."
+}

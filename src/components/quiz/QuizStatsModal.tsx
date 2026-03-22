@@ -1,5 +1,5 @@
-import { QuizStats } from '../types';
-import { getTaskTypeName } from '../utils/quizGenerator';
+import { QuizStats } from '../../types';
+import { getTaskTypeName } from '../../utils/quizGenerator';
 
 interface QuizStatsModalProps {
   isOpen: boolean;

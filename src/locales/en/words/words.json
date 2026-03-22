@@ -1,0 +1,74 @@
+{
+  "title": "My Library",
+  "koloSets": "Kolo Sets",
+  "addDeck": "Create Set",
+  "tabs": {
+    "my": "My",
+    "kolo": "Kolo"
+  },
+  "createModal": {
+    "title": "New Collection",
+    "nameLabel": "Collection Name",
+    "namePlaceholder": "e.g. Travel Phrases",
+    "languageLabel": "Target Language",
+    "create": "Create"
+  },
+  "collectionCard": {
+    "cards": "cards",
+    "lastStudied": "Last studied",
+    "edit": "Edit",
+    "study": "Study",
+    "confirmDelete": "-",
+    "modal": {
+      "chooseMode": "Choose mode",
+      "flashcards": "Flashcards",
+      "flashcardsDesc": "Flip and rate",
+      "quiz": "Quiz",
+      "quizDesc": "Test your knowledge",
+      "quizNeedsMore": "Need 4+ cards"
+    }
+  },
+    "editCollection": {
+    "addCard": "Add word",
+    "import": "Import",
+    "rename": "Rename",
+    "learned": "Learned",
+    "wordList": "Word list",
+    "noCards": "No words in this set yet",
+    "noCardsDesc": "Click here to add your first word",
+    "loading": "Loading...",
+    "modals": {
+      "editWord": "Edit word",
+      "newWord": "New word",
+      "renameTitle": "New collection name",
+      "deleteConfirm": "Delete this word?"
+    }
+  },
+  "flashcards": {
+    "shuffle": "Shuffle",
+    "shuffleConfirm": "Shuffle the deck and start over?",
+    "back": "Back",
+    "hints": {
+      "clickToFlip": "Click on the card to see the information",
+      "rateKnowledge": "How well do you know this word?"
+    },
+    "levels": {
+      "dontKnow": "Don't know",
+      "forgot": "Forgot",
+      "remember": "Remember",
+      "know": "Know"
+    }
+  },
+  "empty": {
+    "title": "No decks yet",
+    "description": "Create your first flashcard deck to start learning effectively.",
+    "button": "Create first deck"
+  },
+  "toast": {
+    "createSuccess": "Deck created",
+    "deleteSuccess": "Deck deleted",
+    "deleteError": "Delete failed",
+    "createError": "Error creating collection"
+  },
+  "soon": "We’re already working on this section. It’ll be up here very soon."
+}

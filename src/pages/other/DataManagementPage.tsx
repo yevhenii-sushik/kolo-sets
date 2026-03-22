@@ -15,7 +15,7 @@ import {
   ShieldCheck, FileJson, AlertCircle, 
   RefreshCw, HardDrive, Lock, Terminal
 } from 'lucide-react';
-import Toast from '../../components/Toast';
+import Toast from '../../components/ui/Toast';
 
 export default function DataManagementPage() {
   const { user } = useAuth();

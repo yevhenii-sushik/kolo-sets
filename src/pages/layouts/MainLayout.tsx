@@ -1,10 +1,10 @@
-import Sidebar from '../../components/Sidebar';
-import BottomNav from '../../components/BottomNav';
+import Sidebar from '../../components/ui/Sidebar';
+import BottomNav from '../../components/ui/BottomNav';
 import { Outlet, Link } from 'react-router-dom';
 import { Menu, Languages, Flame, Trophy, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useI18n } from '../../contexts/I18nContext';
-import { Language } from '../../utils/i18n';
+import { Language } from '../../locales';
 import { useAuth } from '../../contexts/AuthContext';
 import { getUserProfile } from '../../firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -58,7 +58,9 @@ export default function MainLayout() {
   
   const languageNames = {
     en: '🇬🇧 English (UK)',
-    ru: '🇷🇺 Русский'
+    no: '🇳🇴 Norsk (Bokmål)',
+    ru: '🇷🇺 Русский',
+    uk: '🇺🇦 Українстька'
   };
 
   return (

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { navItems } from '../navigation';
-import { useI18n } from '../contexts/I18nContext';
+import { navItems } from '../../navigation';
+import { useI18n } from '../../contexts/I18nContext';
 
 export default function BottomNav() {
   const { t } = useI18n();

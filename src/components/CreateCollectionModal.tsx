@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { POPULAR_LANGUAGES } from '../utils/tts';
-import { useI18n } from '../contexts/I18nContext';
+import { useState } from "react";
+import { POPULAR_LANGUAGES } from "../utils/tts";
+import { useI18n } from "../contexts/I18nContext";
 
 interface CreateCollectionModalProps {
   isOpen: boolean;
@@ -8,14 +8,14 @@ interface CreateCollectionModalProps {
   onCreate: (name: string, language: string) => void;
 }
 
-export default function CreateCollectionModal({ 
-  isOpen, 
-  onClose, 
-  onCreate 
+export default function CreateCollectionModal({
+  isOpen,
+  onClose,
+  onCreate,
 }: CreateCollectionModalProps) {
   const { t } = useI18n();
-  const [name, setName] = useState('');
-  const [language, setLanguage] = useState('nb-NO');
+  const [name, setName] = useState("");
+  const [language, setLanguage] = useState("nb-NO");
 
   if (!isOpen) return null;
 
@@ -23,14 +23,14 @@ export default function CreateCollectionModal({
     e.preventDefault();
     if (name.trim()) {
       onCreate(name.trim(), language);
-      setName('');
-      setLanguage('nb-NO');
+      setName("");
+      setLanguage("nb-NO");
     }
   };
 
   const handleClose = () => {
-    setName('');
-    setLanguage('nb-NO');
+    setName("");
+    setLanguage("nb-NO");
     onClose();
   };
 
@@ -38,34 +38,34 @@ export default function CreateCollectionModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl max-w-md w-full p-6">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {t.createCollection.title}
+          {t.words.createModal.title}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label 
-              htmlFor="collection-name" 
+            <label
+              htmlFor="collection-name"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
             >
-              {t.createCollection.nameLabel}
+              {t.words.createModal.nameLabel}
             </label>
             <input
               type="text"
               id="collection-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder={t.createCollection.namePlaceholder}
+              placeholder={t.words.createModal.namePlaceholder}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
               autoFocus
             />
           </div>
 
           <div>
-            <label 
-              htmlFor="collection-language" 
+            <label
+              htmlFor="collection-language"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
             >
-              {t.createCollection.languageLabel}
+              {t.words.createModal.languageLabel}
             </label>
             <select
               id="collection-language"
@@ -73,7 +73,7 @@ export default function CreateCollectionModal({
               onChange={(e) => setLanguage(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
             >
-              {POPULAR_LANGUAGES.map(lang => (
+              {POPULAR_LANGUAGES.map((lang) => (
                 <option key={lang.code} value={lang.code}>
                   {lang.name}
                 </option>
@@ -92,9 +92,9 @@ export default function CreateCollectionModal({
             <button
               type="submit"
               disabled={!name.trim()}
-              className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white rounded-xl transition-colors disabled:cursor-not-allowed"
+              className="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white rounded-xl transition-colors disabled:cursor-not-allowed font-bold"
             >
-              {t.create}
+              {t.words.createModal.create}
             </button>
           </div>
         </form>

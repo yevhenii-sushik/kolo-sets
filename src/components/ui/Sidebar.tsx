@@ -1,7 +1,7 @@
 // Sidebar.tsx
 import { NavLink } from 'react-router-dom';
-import { navItems } from '../navigation';
-import { useI18n } from '../contexts/I18nContext';
+import { navItems } from '../../navigation';
+import { useI18n } from '../../contexts/I18nContext';
 
 export default function Sidebar({ open }: { open: boolean }) {
   const { t } = useI18n();

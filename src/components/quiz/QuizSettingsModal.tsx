@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { QuizSettings, TaskType } from '../types';
-import { getTaskTypeName } from '../utils/quizGenerator';
+import { QuizSettings, TaskType } from '../../types';
+import { getTaskTypeName } from '../../utils/quizGenerator';
 
 interface QuizSettingsModalProps {
   isOpen: boolean;

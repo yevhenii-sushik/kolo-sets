@@ -47,7 +47,7 @@ export default function ActivityCalendar({ data }: ActivityCalendarProps) {
                 return (
                   <div
                     key={day.date}
-                    className={`w-3 h-3 rounded-sm ${colorClass} hover:ring-2 hover:ring-blue-500 cursor-pointer transition-all`}
+                    className={`w-3.5 h-3.5 rounded-sm ${colorClass} hover:ring-2 hover:ring-blue-500 cursor-pointer transition-all`}
                     title={`${formatDate(day.date)}: ${day.sessions} сессий, ${day.cardsStudied} карточек`}
                   />
                 );
@@ -63,7 +63,7 @@ export default function ActivityCalendar({ data }: ActivityCalendarProps) {
             {[0, 1, 2, 3, 4].map(intensity => (
               <div
                 key={intensity}
-                className={`w-3 h-3 rounded-sm ${getColorClass(intensity)}`}
+                className={`w-3.5 h-3.5 rounded-sm ${getColorClass(intensity)}`}
               />
             ))}
           </div>
