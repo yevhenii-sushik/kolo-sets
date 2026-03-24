@@ -28,7 +28,6 @@ import DataManagementPage from "./pages/other/DataManagementPage";
 import SupportPage from "./pages/other/SupportPage";
 
 // Защищенный маршрут
-
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   // Если юзера нет, отправляем на лендинг
@@ -121,7 +120,7 @@ function AppContent() {
         }
       >
         <Route path="/collection/:id/edit" element={<CollectionEditPage />} />
-        
+
         <Route path="/other/settings" element={<SettingsPage />} />
         <Route path="/other/updates" element={<UpdatesPage />} />
         <Route path="/other/privacy" element={<PrivacyPage />} />

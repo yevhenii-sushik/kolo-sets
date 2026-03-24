@@ -1,4 +1,10 @@
 {
+  "guestStub": {
+    "title": "Profile unavailable",
+    "description": "Sign in or register to view your progress and stats",
+    "retry": "Retry",
+    "toLogin": "Sign in"
+  },
   "cabinet": "Personal Cabinet",
   "enterImageUrl": "Enter profile image URL",
   "usernamePlaceholder": "@username",

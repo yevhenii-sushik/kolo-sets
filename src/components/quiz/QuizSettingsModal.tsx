@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { QuizSettings, TaskType } from '../../types';
-import { getTaskTypeName } from '../../utils/quizGenerator';
+import { useState, useEffect } from "react";
+import { QuizSettings, TaskType } from "../../types";
+import { getTaskTypeName } from "../../utils/quizGenerator";
 
 interface QuizSettingsModalProps {
   isOpen: boolean;
@@ -13,7 +13,7 @@ export default function QuizSettingsModal({
   isOpen,
   settings,
   onClose,
-  onSave
+  onSave,
 }: QuizSettingsModalProps) {
   const [localSettings, setLocalSettings] = useState<QuizSettings>(settings);
 
@@ -28,12 +28,12 @@ export default function QuizSettingsModal({
     TaskType.TRANSLATION_BY_WORD,
     TaskType.WORD_BY_EXPLANATION,
     TaskType.WRITE_WORD_BY_TRANSLATION,
-    TaskType.WRITE_WORD_BY_EXPLANATION
+    TaskType.WRITE_WORD_BY_EXPLANATION,
   ];
 
   const toggleTaskType = (type: TaskType) => {
     const newEnabledTypes = localSettings.enabledTaskTypes.includes(type)
-      ? localSettings.enabledTaskTypes.filter(t => t !== type)
+      ? localSettings.enabledTaskTypes.filter((t) => t !== type)
       : [...localSettings.enabledTaskTypes, type];
 
     // Должен быть включен хотя бы один тип
@@ -51,73 +51,80 @@ export default function QuizSettingsModal({
   const getTaskIcon = (type: TaskType): string => {
     switch (type) {
       case TaskType.WORD_BY_TRANSLATION:
-        return '📝';
+        return "📝";
       case TaskType.TRANSLATION_BY_WORD:
-        return '🔤';
+        return "🔤";
       case TaskType.WORD_BY_EXPLANATION:
-        return '💡';
+        return "💡";
       case TaskType.WRITE_WORD_BY_TRANSLATION:
       case TaskType.WRITE_WORD_BY_EXPLANATION:
-        return '✍️';
+        return "✍️";
       default:
-        return '❓';
+        return "❓";
     }
   };
 
   const getTaskDescription = (type: TaskType): string => {
     switch (type) {
       case TaskType.WORD_BY_TRANSLATION:
-        return 'Выбор правильного слова из 4 вариантов по переводу';
+        return "Выбор правильного слова из 4 вариантов по переводу";
       case TaskType.TRANSLATION_BY_WORD:
-        return 'Выбор правильного перевода из 4 вариантов по слову';
+        return "Выбор правильного перевода из 4 вариантов по слову";
       case TaskType.WORD_BY_EXPLANATION:
-        return 'Выбор правильного слова из 4 вариантов по описанию';
+        return "Выбор правильного слова из 4 вариантов по описанию";
       case TaskType.WRITE_WORD_BY_TRANSLATION:
-        return 'Написать слово самостоятельно по переводу';
+        return "Написать слово самостоятельно по переводу";
       case TaskType.WRITE_WORD_BY_EXPLANATION:
-        return 'Написать слово самостоятельно по описанию';
+        return "Написать слово самостоятельно по описанию";
       default:
-        return '';
+        return "";
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+    <div className="fixed inset-0 z-[150] flex items-end sm:items-center justify-center p-3 sm:p-4">
+      <div
+        className="absolute inset-0 bg-[#1A1714]/40 dark:bg-black/50 backdrop-blur-xl"
+        aria-hidden
+      />
+
+      <div className="relative w-block max-w-2xl w-full max-h-[85dvh] sm:max-h-[88vh] overflow-y-auto shadow-xl">
+        <div className="p-4 sm:p-6 md:p-8">
+          <h2 className="u-title text-xl sm:text-2xl font-bold text-[#1A1714] dark:text-[#F0EDE8] mb-1">
             Настройки Quiz
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="text-[12px] sm:text-[13px] font-medium text-[#7A756E] mb-4 sm:mb-6">
             Выберите типы заданий, которые будут использоваться в Quiz
           </p>
 
-          <div className="space-y-3 mb-6">
-            {allTaskTypes.map(type => {
+          <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+            {allTaskTypes.map((type) => {
               const isEnabled = localSettings.enabledTaskTypes.includes(type);
               return (
                 <label
                   key={type}
-                  className={`flex items-start p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                  className={`flex items-start p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border-2 cursor-pointer transition-all ${
                     isEnabled
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                      : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
+                      ? "border-[#FF5733] bg-[#FFF0ED] dark:bg-[#2A1A15]"
+                      : "border-[#E0DBD3] dark:border-[#2E2C29] bg-[#F5F2ED] dark:bg-[#141312]"
                   }`}
                 >
                   <input
                     type="checkbox"
                     checked={isEnabled}
                     onChange={() => toggleTaskType(type)}
-                    className="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    className="mt-1 w-5 h-5 text-[#FF5733] border-[#E0DBD3] rounded focus:ring-[#FF5733]"
                   />
-                  <div className="ml-4 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xl">{getTaskIcon(type)}</span>
-                      <span className="font-semibold text-gray-900 dark:text-white">
+                  <div className="ml-3 sm:ml-4 flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-lg sm:text-xl shrink-0">
+                        {getTaskIcon(type)}
+                      </span>
+                      <span className="u-title font-bold text-[#1A1714] dark:text-[#F0EDE8] text-sm sm:text-base truncate">
                         {getTaskTypeName(type)}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-[11px] sm:text-[13px] text-[#7A756E]">
                       {getTaskDescription(type)}
                     </p>
                   </div>
@@ -127,30 +134,31 @@ export default function QuizSettingsModal({
           </div>
 
           {localSettings.enabledTaskTypes.length === 0 && (
-            <div className="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-              <p className="text-sm text-yellow-800 dark:text-yellow-300">
+            <div className="mb-6 p-4 bg-[#FFF0ED] dark:bg-[#2A1A15] border border-[#FF5733]/30 rounded-2xl">
+              <p className="text-[13px] font-medium text-[#FF5733]">
                 ⚠️ Выберите хотя бы один тип задания
               </p>
             </div>
           )}
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-6">
-            <p className="text-sm text-blue-800 dark:text-blue-300">
-              💡 <strong>Совет:</strong> Комбинируйте разные типы заданий для более эффективного изучения!
+          <div className="g-block rounded-2xl p-5 mb-6 border border-[#E0DBD3] dark:border-[#2E2C29]">
+            <p className="text-[13px] font-medium text-[#1A1714] dark:text-[#F0EDE8]">
+              💡 <strong>Совет:</strong> Комбинируйте разные типы заданий для
+              более эффективного изучения!
             </p>
           </div>
 
           <div className="flex gap-3 justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="px-5 py-2.5 text-[#1A1714] dark:text-[#F0EDE8] hover:bg-[#EDEAE4] dark:hover:bg-[#242220] rounded-2xl font-bold text-sm transition-colors"
             >
               Отмена
             </button>
             <button
               onClick={handleSave}
               disabled={localSettings.enabledTaskTypes.length === 0}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg transition-colors disabled:cursor-not-allowed"
+              className="px-5 py-2.5 bg-[#FF5733] hover:bg-[#E54D2A] disabled:bg-[#B5B0A8] text-white rounded-2xl font-bold text-sm transition-colors disabled:cursor-not-allowed"
             >
               Применить и начать заново
             </button>

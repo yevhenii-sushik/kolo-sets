@@ -1,5 +1,5 @@
-import { QuizStats } from '../../types';
-import { getTaskTypeName } from '../../utils/quizGenerator';
+import { QuizStats } from "../../types";
+import { getTaskTypeName } from "../../utils/quizGenerator";
 
 interface QuizStatsModalProps {
   isOpen: boolean;
@@ -12,7 +12,7 @@ export default function QuizStatsModal({
   isOpen,
   stats,
   onClose,
-  onRestart
+  onRestart,
 }: QuizStatsModalProps) {
   if (!isOpen) return null;
 
@@ -32,80 +32,88 @@ export default function QuizStatsModal({
   };
 
   const percentage = getPercentage();
-  let resultEmoji = '🎉';
-  let resultText = 'Отлично!';
-  let resultColor = 'text-green-600 dark:text-green-400';
+  let resultEmoji = "🎉";
+  let resultText = "Отлично!";
+  let resultColor = "text-[#22C55E]";
 
   if (percentage < 50) {
-    resultEmoji = '😔';
-    resultText = 'Нужно еще поработать';
-    resultColor = 'text-red-600 dark:text-red-400';
+    resultEmoji = "😔";
+    resultText = "Нужно еще поработать";
+    resultColor = "text-red-600";
   } else if (percentage < 75) {
-    resultEmoji = '🙂';
-    resultText = 'Неплохо!';
-    resultColor = 'text-yellow-600 dark:text-yellow-400';
+    resultEmoji = "🙂";
+    resultText = "Неплохо!";
+    resultColor = "text-[#FF5733]";
   } else if (percentage < 100) {
-    resultEmoji = '😊';
-    resultText = 'Хорошо!';
-    resultColor = 'text-blue-600 dark:text-blue-400';
+    resultEmoji = "😊";
+    resultText = "Хорошо!";
+    resultColor = "text-blue-600";
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 overflow-y-auto">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full p-8 my-8">
+    <div className="fixed inset-0 z-150 flex items-end sm:items-center justify-center p-3 sm:p-4 overflow-y-auto">
+      <div
+        className="absolute inset-0 bg-[#1A1714]/40 dark:bg-black/50 backdrop-blur-xl"
+        aria-hidden
+      />
+
+      <div className="relative w-block max-w-4xl w-full max-h-[85dvh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6 md:p-8 my-0 sm:my-4 shadow-xl">
         {/* Заголовок */}
-        <div className="text-center mb-8">
-          <div className="text-6xl mb-4">{resultEmoji}</div>
-          <h2 className={`text-3xl font-bold mb-2 ${resultColor}`}>
+        <div className="text-center mb-4 sm:mb-6">
+          <div className="text-4xl sm:text-5xl mb-2 sm:mb-3">{resultEmoji}</div>
+          <h2
+            className={`u-title text-xl sm:text-2xl md:text-3xl font-bold mb-1 ${resultColor}`}
+          >
             {resultText}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            Вы ответили на {stats.totalQuestions} вопросов за {formatDuration(stats.duration)}
+          <p className="text-[12px] sm:text-[13px] font-medium text-[#7A756E]">
+            Вы ответили на {stats.totalQuestions} вопросов за{" "}
+            {formatDuration(stats.duration)}
           </p>
         </div>
 
-        {/* Общая статистика */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 text-center border-2 border-blue-200 dark:border-blue-800">
-            <div className="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-2">
+        {/* Общая статистика — g-block стиль */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
+          <div className="g-block rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center border border-[#E0DBD3] dark:border-[#2E2C29]">
+            <div className="u-title text-xl sm:text-2xl md:text-3xl font-bold text-[#3B82F6] mb-1">
               {stats.totalQuestions}
             </div>
-            <div className="text-sm text-blue-700 dark:text-blue-400">
+            <div className="sub-title text-[9px] sm:text-[10px]">
               Всего вопросов
             </div>
           </div>
-
-          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 text-center border-2 border-green-200 dark:border-green-800">
-            <div className="text-3xl font-bold text-green-700 dark:text-green-400 mb-2">
+          <div className="g-block rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center border border-[#E0DBD3] dark:border-[#2E2C29]">
+            <div className="u-title text-xl sm:text-2xl md:text-3xl font-bold text-[#22C55E] mb-1">
               {stats.correctAnswers}
             </div>
-            <div className="text-sm text-green-700 dark:text-green-400">
-              Правильных ответов
+            <div className="sub-title text-[9px] sm:text-[10px]">
+              Правильных
             </div>
           </div>
-
-          <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4 text-center border-2 border-red-200 dark:border-red-800">
-            <div className="text-3xl font-bold text-red-700 dark:text-red-400 mb-2">
+          <div className="g-block rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center border border-[#E0DBD3] dark:border-[#2E2C29]">
+            <div className="u-title text-xl sm:text-2xl md:text-3xl font-bold text-red-600 mb-1">
               {stats.wrongAnswers}
             </div>
-            <div className="text-sm text-red-700 dark:text-red-400">
-              Неправильных ответов
+            <div className="sub-title text-[9px] sm:text-[10px]">
+              Неправильных
             </div>
           </div>
         </div>
 
         {/* Прогресс */}
-        <div className="mb-8">
-          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+        <div className="mb-4 sm:mb-6">
+          <div className="flex justify-between sub-title mb-2">
             <span>Точность ответов</span>
-            <span className="font-bold">{percentage}%</span>
+            <span className="uc-title">{percentage}%</span>
           </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+          <div className="w-full bg-[#EDEAE4] dark:bg-[#242220] rounded-full h-4 overflow-hidden">
             <div
-              className={`h-4 rounded-full transition-all ${
-                percentage >= 75 ? 'bg-green-500' :
-                percentage >= 50 ? 'bg-yellow-500' :
-                'bg-red-500'
+              className={`h-4 rounded-full transition-all duration-500 ${
+                percentage >= 75
+                  ? "bg-[#22C55E]"
+                  : percentage >= 50
+                    ? "bg-[#FF5733]"
+                    : "bg-red-500"
               }`}
               style={{ width: `${percentage}%` }}
             />
@@ -113,27 +121,30 @@ export default function QuizStatsModal({
         </div>
 
         {/* Статистика по типам заданий */}
-        {Object.keys(stats.byTaskType).length > 0 && (
-          <div className="mb-8">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-              Результаты по типам заданий:
-            </h3>
-            <div className="space-y-2">
+        {/* {Object.keys(stats.byTaskType).length > 0 && (
+          <div className="mb-4 sm:mb-6">
+            <h3 className="uc-title mb-4">Результаты по типам заданий:</h3>
+            <div className="space-y-3">
               {Object.entries(stats.byTaskType).map(([type, data]) => {
-                const typePercentage = Math.round((data.correct / data.total) * 100);
+                const typePercentage = Math.round(
+                  (data.correct / data.total) * 100,
+                );
                 return (
-                  <div key={type} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                  <div
+                    key={type}
+                    className="g-block rounded-2xl p-4 border border-[#E0DBD3] dark:border-[#2E2C29]"
+                  >
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                      <span className="text-[13px] font-medium text-[#1A1714] dark:text-[#F0EDE8]">
                         {getTaskTypeName(type as any)}
                       </span>
-                      <span className="text-sm font-bold text-gray-900 dark:text-white">
+                      <span className="u-title text-sm font-bold">
                         {data.correct}/{data.total} ({typePercentage}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                    <div className="w-full bg-[#EDEAE4] dark:bg-[#2E2C29] rounded-full h-2 overflow-hidden">
                       <div
-                        className="bg-blue-500 h-2 rounded-full"
+                        className="bg-[#FF5733] h-2 rounded-full transition-all"
                         style={{ width: `${typePercentage}%` }}
                       />
                     </div>
@@ -142,31 +153,38 @@ export default function QuizStatsModal({
               })}
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Ошибки */}
         {stats.mistakes.length > 0 && (
-          <div className="mb-8">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+          <div className="mb-4 sm:mb-6">
+            <h3 className="uc-title mb-2 sm:mb-3">
               Ваши ошибки ({stats.mistakes.length}):
             </h3>
-            <div className="space-y-3 max-h-64 overflow-y-auto">
+            <div className="space-y-2 max-h-40 sm:max-h-52 overflow-y-auto min-h-[35dvh] sm:min-h-[30vh]">
               {stats.mistakes.map((mistake, index) => (
-                <div key={index} className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4 border border-red-200 dark:border-red-800">
-                  <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                <div
+                  key={index}
+                  className="bg-red-500/10 dark:bg-red-500/20 rounded-2xl p-4 border border-red-500/30"
+                >
+                  <div className="sub-title mb-1">
                     {getTaskTypeName(mistake.taskType)}
                   </div>
-                  <div className="font-medium text-gray-900 dark:text-white mb-2">
+                  <div className="font-medium text-[#1A1714] dark:text-[#F0EDE8] mb-2">
                     {mistake.question}
                   </div>
-                  <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div className="grid grid-cols-2 gap-2 text-[13px]">
                     <div>
-                      <span className="text-red-600 dark:text-red-400">Ваш ответ:</span>{' '}
-                      <span className="font-medium">{mistake.userAnswer || '(пусто)'}</span>
+                      <span className="text-red-600">Ваш ответ:</span>{" "}
+                      <span className="font-medium">
+                        {mistake.userAnswer || "(пусто)"}
+                      </span>
                     </div>
                     <div>
-                      <span className="text-green-600 dark:text-green-400">Правильный:</span>{' '}
-                      <span className="font-medium">{mistake.correctAnswer}</span>
+                      <span className="text-[#22C55E]">Правильный:</span>{" "}
+                      <span className="font-medium">
+                        {mistake.correctAnswer}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -176,16 +194,16 @@ export default function QuizStatsModal({
         )}
 
         {/* Кнопки действий */}
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <button
             onClick={onRestart}
-            className="flex-1 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors"
+            className="flex-1 px-4 py-3 sm:py-4 bg-[#FF5733] hover:bg-[#E54D2A] text-white rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm transition-colors"
           >
             🔄 Пройти еще раз
           </button>
           <button
             onClick={onClose}
-            className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg font-medium transition-colors"
+            className="flex-1 px-4 py-3 sm:py-4 bg-[#EDEAE4] dark:bg-[#242220] hover:bg-[#E0DBD3] dark:hover:bg-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm transition-colors border border-[#E0DBD3] dark:border-[#2E2C29]"
           >
             ← К коллекциям
           </button>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { TaskType } from '../../types';
 import { QuizQuestion } from '../../utils/quizGenerator';
 
@@ -20,56 +20,74 @@ export default function QuizQuestionComponent({
   onNext
 }: QuizQuestionProps) {
   const [textInput, setTextInput] = useState('');
+  const lastSubmitTimeRef = useRef(0);
 
   useEffect(() => {
     setTextInput('');
   }, [question]);
 
-  const isWriteType = 
+  const isWriteType =
     question.type === TaskType.WRITE_WORD_BY_TRANSLATION ||
     question.type === TaskType.WRITE_WORD_BY_EXPLANATION;
 
   const handleSubmitText = () => {
     if (textInput.trim()) {
+      lastSubmitTimeRef.current = Date.now();
       onAnswer(textInput.trim());
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && textInput.trim() && !showFeedback) {
+      e.preventDefault();
+      e.stopPropagation();
       handleSubmitText();
     }
   };
 
+  // Enter для "Следующий вопрос" при показе feedback (игнорируем Enter сразу после проверки)
+  useEffect(() => {
+    if (!showFeedback) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        if (Date.now() - lastSubmitTimeRef.current < 300) return; // игнорируем Enter, который только что отправил ответ
+        e.preventDefault();
+        onNext();
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [showFeedback, onNext]);
+
   return (
     <div className="max-w-3xl mx-auto">
-      {/* Вопрос */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-6">
-        <div className="text-center mb-8">
-          <div className="inline-block px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm mb-4">
+      {/* Вопрос — w-block стиль */}
+      <div className="w-block p-4 sm:p-6 md:p-8">
+        <div className="text-center mb-4 sm:mb-6">
+          <span className="inline-block px-4 py-2 bg-[#FFF0ED] dark:bg-[#2A1A15] text-[#FF5733] rounded-full text-[11px] font-bold uppercase tracking-[0.12em] mb-4">
             {getTypeLabel(question.type)}
-          </div>
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+          </span>
+          <h3 className="u-title text-lg sm:text-xl md:text-2xl font-bold text-[#1A1714] dark:text-[#F0EDE8]">
             {question.question}
           </h3>
         </div>
 
         {/* Варианты ответа (для вопросов с выбором) */}
         {question.options && !isWriteType && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
             {question.options.map((option, index) => {
-              let buttonClass = 'w-full px-6 py-4 text-lg font-medium rounded-lg transition-all border-2 ';
-              
+              let buttonClass = 'w-full px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-xl sm:rounded-2xl transition-all border-2 ';
+
               if (showFeedback) {
                 if (option === question.correctAnswer) {
-                  buttonClass += 'bg-green-100 dark:bg-green-900/30 border-green-500 text-green-800 dark:text-green-300';
+                  buttonClass += 'bg-[#22C55E]/10 dark:bg-[#22C55E]/20 border-[#22C55E] text-[#22C55E]';
                 } else if (option === userAnswer) {
-                  buttonClass += 'bg-red-100 dark:bg-red-900/30 border-red-500 text-red-800 dark:text-red-300';
+                  buttonClass += 'bg-red-500/10 dark:bg-red-500/20 border-red-600 text-red-600';
                 } else {
-                  buttonClass += 'bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500';
+                  buttonClass += 'bg-[#EDEAE4] dark:bg-[#242220] border-[#E0DBD3] dark:border-[#2E2C29] text-[#B5B0A8]';
                 }
               } else {
-                buttonClass += 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20';
+                buttonClass += 'bg-white dark:bg-[#1A1917] border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] hover:border-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15]';
               }
 
               return (
@@ -95,18 +113,18 @@ export default function QuizQuestionComponent({
               type="text"
               value={textInput}
               onChange={(e) => setTextInput(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyDown}
               disabled={showFeedback}
               placeholder="Введите ответ..."
-              className="w-full px-6 py-4 text-lg border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white disabled:opacity-50"
+              className="w-full px-6 py-4 text-lg border-2 border-[#E0DBD3] dark:border-[#2E2C29] rounded-2xl focus:ring-2 focus:ring-[#FF5733] focus:border-transparent bg-[#F5F2ED] dark:bg-[#141312] text-[#1A1714] dark:text-[#F0EDE8] disabled:opacity-50"
               autoFocus
             />
-            
+
             {!showFeedback && (
               <button
                 onClick={handleSubmitText}
                 disabled={!textInput.trim()}
-                className="w-full mt-4 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors disabled:cursor-not-allowed"
+                className="w-full mt-4 px-6 py-3 bg-[#FF5733] hover:bg-[#E54D2A] disabled:bg-[#B5B0A8] text-white rounded-2xl font-bold text-sm transition-colors disabled:cursor-not-allowed"
               >
                 Проверить
               </button>
@@ -116,50 +134,48 @@ export default function QuizQuestionComponent({
 
         {/* Обратная связь */}
         {showFeedback && (
-          <div className="mt-6 text-center">
+          <div className="mt-4 sm:mt-6 text-center">
             {isCorrect ? (
-              <div className="p-4 bg-green-100 dark:bg-green-900/30 border-2 border-green-500 rounded-lg">
+              <div className="p-4 sm:p-5 bg-[#22C55E]/10 dark:bg-[#22C55E]/20 border-2 border-[#22C55E] rounded-xl sm:rounded-2xl">
                 <div className="text-4xl mb-2">✓</div>
-                <div className="text-xl font-bold text-green-800 dark:text-green-300">
+                <div className="u-title text-xl font-bold text-[#22C55E]">
                   Правильно!
                 </div>
               </div>
             ) : (
-              <div className="p-4 bg-red-100 dark:bg-red-900/30 border-2 border-red-500 rounded-lg">
+              <div className="p-4 sm:p-5 bg-red-500/10 dark:bg-red-500/20 border-2 border-red-600 rounded-xl sm:rounded-2xl">
                 <div className="text-4xl mb-2">✗</div>
-                <div className="text-xl font-bold text-red-800 dark:text-red-300 mb-2">
+                <div className="u-title text-xl font-bold text-red-600 mb-2">
                   Неправильно
                 </div>
-                <div className="text-gray-700 dark:text-gray-300">
+                <div className="text-[#1A1714] dark:text-[#F0EDE8]">
                   Правильный ответ: <strong>{question.correctAnswer}</strong>
                 </div>
                 {isWriteType && (
-                  <div className="text-gray-600 dark:text-gray-400 mt-2">
+                  <div className="text-[#7A756E] mt-2">
                     Ваш ответ: <strong>{userAnswer}</strong>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Дополнительная информация */}
-            <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg text-left">
-              <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                Дополнительная информация:
-              </div>
+            {/* Дополнительная информация — g-block стиль */}
+            <div className="mt-3 sm:mt-4 p-3 sm:p-4 g-block rounded-xl sm:rounded-2xl text-left">
+              <div className="sub-title mb-3">Дополнительная информация:</div>
               <div className="space-y-2">
-                <p className="text-gray-900 dark:text-white">
+                <p className="text-[#1A1714] dark:text-[#F0EDE8]">
                   <strong>Слово:</strong> {question.card.word}
                 </p>
-                <p className="text-gray-900 dark:text-white">
+                <p className="text-[#1A1714] dark:text-[#F0EDE8]">
                   <strong>Перевод:</strong> {question.card.translation}
                 </p>
                 {question.card.explanation && (
-                  <p className="text-gray-900 dark:text-white">
+                  <p className="text-[#1A1714] dark:text-[#F0EDE8]">
                     <strong>Объяснение:</strong> {question.card.explanation}
                   </p>
                 )}
                 {question.card.example && (
-                  <p className="text-gray-900 dark:text-white italic">
+                  <p className="text-[#1A1714] dark:text-[#F0EDE8] italic">
                     <strong>Пример</strong> {question.card.example}
                   </p>
                 )}
@@ -168,7 +184,7 @@ export default function QuizQuestionComponent({
 
             <button
               onClick={onNext}
-              className="mt-6 w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+              className="mt-4 sm:mt-6 w-full px-4 py-3 sm:py-4 bg-[#FF5733] hover:bg-[#E54D2A] text-white rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base transition-colors"
             >
               Следующий вопрос →
             </button>

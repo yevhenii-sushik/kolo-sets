@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import { Bolt, ChevronRight, Rocket, ShieldCheck, Info, FolderDown, PocketKnife } from "lucide-react";
-import { useI18n } from '../../contexts/I18nContext';
-import { motion } from 'framer-motion';
+import { ChevronRight, Rocket, FolderDown, PocketKnife } from "lucide-react";
+import { useI18n } from "../../contexts/I18nContext";
+import { motion } from "framer-motion";
 
 // --- КОМПОНЕНТ КНОПКИ-ССЫЛКИ В СТИЛЕ BENTO ---
 const MenuCard = ({
   label,
   icon: Icon,
   to,
-  index
+  index,
 }: {
   label: string;
   icon: any;
@@ -29,15 +29,17 @@ const MenuCard = ({
                  hover:shadow-2xl hover:shadow-[#FF5733]/5 hover:-translate-y-1
                  active:scale-[0.98]"
     >
-      <Icon 
-        size={80} 
-        className="absolute -right-4 -bottom-4 text-[#FF5733]/5 group-hover:text-[#FF5733]/10 transition-colors pointer-events-none rotate-12" 
+      <Icon
+        size={80}
+        className="absolute -right-4 -bottom-4 text-[#FF5733]/5 group-hover:text-[#FF5733]/10 transition-colors pointer-events-none rotate-12"
       />
 
       <div className="flex justify-between items-start relative z-10">
-        <div className="flex items-center justify-center w-12 h-12
+        <div
+          className="flex items-center justify-center w-12 h-12
                      text-[#FF5733] bg-[#FFF0ED] dark:bg-[#2A1A15] 
-                     rounded-2xl group-hover:bg-[#FF5733] group-hover:text-white transition-all duration-300">
+                     rounded-2xl group-hover:bg-[#FF5733] group-hover:text-white transition-all duration-300"
+        >
           <Icon size={22} />
         </div>
         <ChevronRight
@@ -57,14 +59,34 @@ const MenuCard = ({
 
 export default function OtherPage() {
   const { t } = useI18n();
-  
+
   const menuLinks = [
-    { id: "settings", label: t.other.settings, icon: Bolt, path: "/other/settings" },
-    { id: "updates", label: t.other.updates, icon: Rocket, path: "/other/updates" },
-    { id: "privacy", label: t.other.privacy, icon: ShieldCheck, path: "/other/privacy" },
-    { id: "about", label: t.other.systemInfo, icon: Info, path: "/other/system-info" },
-    { id: "export", label: t.other.dataManagement, icon: FolderDown, path: "/other/data-management" },
-    { id: "support", label: t.other.support, icon: PocketKnife, path: "/other/support" },
+    // {
+    //   id: "settings",
+    //   label: t.other.settings,
+    //   icon: Bolt,
+    //   path: "/other/settings",
+    // },
+    {
+      id: "updates",
+      label: t.other.updates,
+      icon: Rocket,
+      path: "/other/updates",
+    },
+    {
+      id: "support",
+      label: t.other.support,
+      icon: PocketKnife,
+      path: "/other/support",
+    },
+    {
+      id: "export",
+      label: t.other.dataManagement,
+      icon: FolderDown,
+      path: "/other/data-management",
+    },
+    // { id: "privacy", label: t.other.privacy, icon: ShieldCheck,path: "/other/privacy" },
+    // { id: "about", label: t.other.systemInfo, icon: Info, path: "/other/system-info" },
   ];
 
   return (

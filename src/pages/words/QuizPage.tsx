@@ -1,18 +1,23 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Collection, TaskType, QuizStats, QuizSettings } from '../../types';
-import { getCollection, updateCollection } from '../../utils/storage';
-import { updateQuizStats, checkAndUnlockAchievements } from '../../firebase/firestore';
-import { useAuth } from '../../contexts/AuthContext';
-import { 
-  playCorrectIfEnabled, 
-  playIncorrectIfEnabled, 
-  playSessionCompleteIfEnabled 
-} from '../../utils/sounds';
-import { generateQuizQuestions, QuizQuestion } from '../../utils/quizGenerator';
-import QuizQuestionComponent from '../../components/quiz/QuizQuestion';
-import QuizStatsModal from '../../components/quiz/QuizStatsModal';
-import QuizSettingsModal from '../../components/quiz/QuizSettingsModal';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Collection, TaskType, QuizStats, QuizSettings } from "../../types";
+import { getCollection, updateCollection } from "../../utils/storage";
+import {
+  updateQuizStats,
+  checkAndUnlockAchievements,
+} from "../../firebase/firestore";
+import { useAuth } from "../../contexts/AuthContext";
+import {
+  playCorrectIfEnabled,
+  playIncorrectIfEnabled,
+  playSessionCompleteIfEnabled,
+} from "../../utils/sounds";
+import { generateQuizQuestions, QuizQuestion } from "../../utils/quizGenerator";
+import QuizQuestionComponent from "../../components/quiz/QuizQuestion";
+import QuizStatsModal from "../../components/quiz/QuizStatsModal";
+import QuizSettingsModal from "../../components/quiz/QuizSettingsModal";
+import { X, Settings } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function QuizPage() {
   const { id } = useParams<{ id: string }>();
@@ -21,7 +26,7 @@ export default function QuizPage() {
   const [collection, setCollection] = useState<Collection | null>(null);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [userAnswer, setUserAnswer] = useState('');
+  const [userAnswer, setUserAnswer] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [stats, setStats] = useState<QuizStats>({
@@ -30,7 +35,7 @@ export default function QuizPage() {
     wrongAnswers: 0,
     byTaskType: {},
     duration: 0,
-    mistakes: []
+    mistakes: [],
   });
   const [startTime] = useState(Date.now());
   const [showStats, setShowStats] = useState(false);
@@ -41,8 +46,8 @@ export default function QuizPage() {
       TaskType.TRANSLATION_BY_WORD,
       TaskType.WORD_BY_EXPLANATION,
       TaskType.WRITE_WORD_BY_TRANSLATION,
-      TaskType.WRITE_WORD_BY_EXPLANATION
-    ]
+      TaskType.WRITE_WORD_BY_EXPLANATION,
+    ],
   });
 
   useEffect(() => {
@@ -53,7 +58,7 @@ export default function QuizPage() {
           setCollection(loaded);
           initializeQuiz(loaded, settings);
         } else {
-          navigate('/');
+          navigate("/");
         }
       }
     };
@@ -63,16 +68,16 @@ export default function QuizPage() {
   const initializeQuiz = (coll: Collection, quizSettings: QuizSettings) => {
     const generatedQuestions = generateQuizQuestions(coll.cards, quizSettings);
     setQuestions(generatedQuestions);
-    setStats(prev => ({ 
-      ...prev, 
-      totalQuestions: generatedQuestions.length 
+    setStats((prev) => ({
+      ...prev,
+      totalQuestions: generatedQuestions.length,
     }));
   };
 
   if (!collection || questions.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Загрузка...</div>
+        <div className="u-title text-xl text-[#7A756E]">Загрузка...</div>
       </div>
     );
   }
@@ -82,7 +87,9 @@ export default function QuizPage() {
 
   const handleAnswer = (answer: string) => {
     setUserAnswer(answer);
-    const correct = answer.toLowerCase().trim() === currentQuestion.correctAnswer.toLowerCase().trim();
+    const correct =
+      answer.toLowerCase().trim() ===
+      currentQuestion.correctAnswer.toLowerCase().trim();
     setIsCorrect(correct);
     setShowFeedback(true);
 
@@ -95,7 +102,7 @@ export default function QuizPage() {
 
     // Обновляем статистику
     const newStats = { ...stats };
-    
+
     if (correct) {
       newStats.correctAnswers++;
     } else {
@@ -104,7 +111,7 @@ export default function QuizPage() {
         question: currentQuestion.question,
         userAnswer: answer,
         correctAnswer: currentQuestion.correctAnswer,
-        taskType: currentQuestion.type
+        taskType: currentQuestion.type,
       });
     }
 
@@ -123,7 +130,7 @@ export default function QuizPage() {
   const handleNext = async () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
-      setUserAnswer('');
+      setUserAnswer("");
       setShowFeedback(false);
       setIsCorrect(false);
     } else {
@@ -131,13 +138,13 @@ export default function QuizPage() {
       const duration = Math.floor((Date.now() - startTime) / 1000);
       const updatedCollection = {
         ...collection,
-        lastStudied: new Date()
+        lastStudied: new Date(),
       };
       await updateCollection(updatedCollection);
-      
+
       const finalStats = { ...stats, duration };
       setStats(finalStats);
-      
+
       // Сохраняем статистику в Firestore
       if (user) {
         try {
@@ -145,18 +152,18 @@ export default function QuizPage() {
             user.uid,
             finalStats.totalQuestions,
             finalStats.correctAnswers,
-            duration
+            duration,
           );
           const totalCards = collection.cards.length;
           await checkAndUnlockAchievements(user.uid, totalCards);
         } catch (error) {
-          console.error('Error updating quiz stats:', error);
+          console.error("Error updating quiz stats:", error);
         }
       }
-      
+
       // Воспроизводим звук завершения квиза
       playSessionCompleteIfEnabled();
-      
+
       setShowStats(true);
     }
   };
@@ -164,7 +171,7 @@ export default function QuizPage() {
   const handleRestart = () => {
     initializeQuiz(collection, settings);
     setCurrentIndex(0);
-    setUserAnswer('');
+    setUserAnswer("");
     setShowFeedback(false);
     setIsCorrect(false);
     setStats({
@@ -173,7 +180,7 @@ export default function QuizPage() {
       wrongAnswers: 0,
       byTaskType: {},
       duration: 0,
-      mistakes: []
+      mistakes: [],
     });
     setShowStats(false);
   };
@@ -183,7 +190,7 @@ export default function QuizPage() {
     setShowSettings(false);
     initializeQuiz(collection, newSettings);
     setCurrentIndex(0);
-    setUserAnswer('');
+    setUserAnswer("");
     setShowFeedback(false);
     setIsCorrect(false);
     setStats({
@@ -192,95 +199,113 @@ export default function QuizPage() {
       wrongAnswers: 0,
       byTaskType: {},
       duration: 0,
-      mistakes: []
+      mistakes: [],
     });
   };
 
   return (
-    <div>
-      {/* Заголовок и навигация */}
-      <div className="mb-6">
-        <button
-          onClick={() => navigate('/')}
-          className="text-blue-600 dark:text-blue-400 hover:underline mb-4 flex items-center"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="fixed inset-0 bg-[#F5F2ED] dark:bg-[#0F0E0C] flex flex-col overflow-hidden"
+    >
+      {/* Header — идентично FlashcardsPage */}
+      <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
+        <div
+          className="max-w-6xl mx-auto flex items-center justify-between
+                   bg-white/60 dark:bg-[#1A1917]/60 backdrop-blur-xl 
+                   p-2 sm:p-3 pr-4 sm:pr-5 rounded-full shadow-sm
+                   border border-[#E0DBD3] dark:border-[#2E2C29]"
         >
-          ← Назад к коллекциям
-        </button>
-
-        <div className="flex justify-between items-center">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate(-1)}
+              className="p-2 hover:bg-[#EDEAE4] dark:hover:bg-[#242220] rounded-xl transition-colors shrink-0 text-[#1A1714] dark:text-[#F0EDE8]"
+              title="Назад"
+            >
+              <X size={20} />
+            </button>
+            <h1 className="u-title text-lg md:text-xl text-[#1A1714] dark:text-[#F0EDE8] truncate">
               {collection.name}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Режим: Quiz
-            </p>
+            </h1>
           </div>
 
           <button
             onClick={() => setShowSettings(true)}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FFF0ED] dark:bg-[#2A1A15] text-[#FF5733] hover:bg-[#FF5733] hover:text-white transition-colors"
             title="Настройки Quiz"
           >
-            ⚙️ Настройки
+            <Settings size={18} />
+            <span className="hidden md:inline text-[13px] font-bold">
+              Настройки
+            </span>
           </button>
         </div>
       </div>
 
-      {/* Прогресс-бар */}
-      <div className="mb-6">
-        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
-          <span>Вопрос {currentIndex + 1} из {questions.length}</span>
-          <span>{Math.round(progress)}%</span>
-        </div>
-        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-          <div
-            className="bg-green-600 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </div>
+      {/* Progress bar — идентично FlashcardsPage */}
+      <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-1">
+        <div className="max-w-6xl mx-auto flex items-center gap-4">
+          <div className="sub-title min-w-[40px] text-center">
+            {currentIndex + 1} / {questions.length}
+          </div>
+          <div className="flex-1 bg-[#EDEAE4] dark:bg-[#242220] rounded-full h-3.5 overflow-hidden">
+            <div
+              className="bg-[#FF5733] rounded-full h-full transition-all duration-500 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="uc-title min-w-[40px] text-center">
+            {Math.round(progress)}%
+          </div>
 
-      {/* Счетчик правильных/неправильных */}
-      <div className="flex gap-4 mb-6">
-        <div className="flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/20 rounded-lg">
-          <span className="text-2xl">✓</span>
-          <span className="font-bold text-green-700 dark:text-green-400">
-            {stats.correctAnswers}
-          </span>
-        </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/20 rounded-lg">
-          <span className="text-2xl">✗</span>
-          <span className="font-bold text-red-700 dark:text-red-400">
-            {stats.wrongAnswers}
-          </span>
+          {/* Счетчик правильных/неправильных */}
+          <div className="shrink-0 ">
+            <div className="max-w-6xl mx-auto flex gap-2">
+              <div className="g-block flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-1.5 rounded-full">
+                <span className="text-lg sm:text-lg">✓</span>
+                <span className="u-title font-bold text-[#22C55E] text-lg sm:text-xl">
+                  {stats.correctAnswers}
+                </span>
+              </div>
+              <div className="g-block flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-1.5 rounded-full">
+                <span className="text-lg sm:text-lg">✗</span>
+                <span className="u-title font-bold text-red-600 text-lg sm:text-xl">
+                  {stats.wrongAnswers}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Вопрос */}
-      <QuizQuestionComponent
-        question={currentQuestion}
-        userAnswer={userAnswer}
-        showFeedback={showFeedback}
-        isCorrect={isCorrect}
-        onAnswer={handleAnswer}
-        onNext={handleNext}
-      />
+      <main className="flex-1 min-h-0 overflow-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto">
+          <QuizQuestionComponent
+            question={currentQuestion}
+            userAnswer={userAnswer}
+            showFeedback={showFeedback}
+            isCorrect={isCorrect}
+            onAnswer={handleAnswer}
+            onNext={handleNext}
+          />
+        </div>
+      </main>
 
       {/* Модальные окна */}
       <QuizStatsModal
         isOpen={showStats}
         stats={stats}
-        onClose={() => navigate('/')}
+        onClose={() => navigate(-1)}
         onRestart={handleRestart}
       />
-
       <QuizSettingsModal
         isOpen={showSettings}
         settings={settings}
         onClose={() => setShowSettings(false)}
         onSave={handleSettingsChange}
       />
-    </div>
+    </motion.div>
   );
 }

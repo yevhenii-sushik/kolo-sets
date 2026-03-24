@@ -173,47 +173,47 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
       {/* ── Study Mode Picker ─────────────────────────────────────────────── */}
       {showModeModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-[#1A1714]/40 dark:bg-black/50 backdrop-blur-xl"
           onClick={() => setShowModeModal(false)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-[2rem] p-6 w-full max-w-sm shadow-2xl"
+            className="bg-white dark:bg-[#1A1917] rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-6 w-full max-w-sm shadow-2xl border border-[#E0DBD3] dark:border-[#2E2C29]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-start mb-2">
+            <div className="flex justify-between items-start mb-1 sm:mb-2">
               <div>
-                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF5733] mb-1">
                   Выбери режим
                 </p>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-bold text-[#1A1714] dark:text-[#F0EDE8]">
                   {set.title}
                 </h3>
               </div>
               <button
                 onClick={() => setShowModeModal(false)}
-                className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-xl transition-colors"
+                className="p-1.5 text-[#7A756E] hover:bg-[#EDEAE4] dark:hover:bg-[#242220] rounded-xl transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            <p className="text-[12px] sm:text-[13px] font-medium text-[#7A756E] mb-4 sm:mb-5">
               {set.cardCount} слов · {set.level}
             </p>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <button
                 onClick={() => handleStartStudy("flashcards")}
-                className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-purple-50 dark:bg-purple-900/20 border-2 border-purple-200 dark:border-purple-700/50 hover:border-purple-500 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-all group"
+                className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#FFF0ED] dark:bg-[#2A1A15] border-2 border-[#FF5733]/30 hover:border-[#FF5733] transition-all group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-purple-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <Zap size={22} className="text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#FF5733] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <Zap size={20} className="text-white sm:w-[22px] sm:h-[22px]" />
                 </div>
                 <div className="text-center">
-                  <p className="font-bold text-gray-900 dark:text-white text-sm">
+                  <p className="font-bold text-[#1A1714] dark:text-[#F0EDE8] text-sm">
                     Флэшкарты
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                  <p className="text-[11px] font-medium text-[#7A756E] mt-0.5">
                     Переворачивай и оценивай
                   </p>
                 </div>
@@ -221,16 +221,16 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
 
               <button
                 onClick={() => handleStartStudy("quiz")}
-                className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-700/50 hover:border-blue-500 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all group"
+                className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#FFF0ED] dark:bg-[#2A1A15] border-2 border-[#FF5733]/30 hover:border-[#FF5733] transition-all group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <BookOpen size={22} className="text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#FF5733] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <BookOpen size={20} className="text-white sm:w-[22px] sm:h-[22px]" />
                 </div>
                 <div className="text-center">
-                  <p className="font-bold text-gray-900 dark:text-white text-sm">
+                  <p className="font-bold text-[#1A1714] dark:text-[#F0EDE8] text-sm">
                     Quiz
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                  <p className="text-[11px] font-medium text-[#7A756E] mt-0.5">
                     Проверяй знания
                   </p>
                 </div>

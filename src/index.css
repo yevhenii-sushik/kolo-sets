@@ -1,39 +1,72 @@
 @import "tailwindcss";
 
-/* Дополнительные глобальные стили */
 @layer base {
   :root {
     color-scheme: light dark;
   }
-}
-
-@layer base {
   body {
-    @apply bg-[#F5F2ED] dark:bg-[#0F0E0C] text-gray-900 dark:text-gray-100 transition-colors duration-300;
+    /* Основной фон приложения из твоего конфига */
+    @apply bg-[#F5F2ED] dark:bg-[#0F0E0C] text-[#1A1714] dark:text-[#F0EDE8] transition-colors duration-300;
   }
 }
-ы
 
-/* Стили для флешкарточек */
-.flip-card {
-  perspective: 1000px;
-  color: #101828f1;
+@layer components {
+  /* --- БЛОКИ (Blocks) --- */
+
+  /* .w-block: Белый блок (White) с бордером */
+  .w-block {
+    @apply bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-[2.5rem] p-8 shadow-sm;
+  }
+
+  /* .g-block: Серый блок (Gray/Beige) */
+  .g-block {
+    @apply bg-[#EDEAE4] dark:bg-[#242220] rounded-[2.5rem] p-8;
+  }
+
+  /* .b-block: Черный блок (Black), который в темной теме становится белым */
+  .b-block {
+    @apply bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] rounded-[2.5rem] p-8;
+  }
+
+  /* --- ТИТЛЫ (Titles) --- */
+
+  /* .u-title: Обычный (Usual) serif-курсив. 
+     Размер не фиксируем жестко (через text-current), либо ставим базу. */
+  .u-title {
+    @apply font-serif italic tracking-tight;
+  }
+
+  /* .o-title: Оранжевый (Orange) акцентный курсив */
+  .o-title {
+    @apply font-serif italic text-[#FF5733] dark:text-[#FF6B47];
+  }
+
+  /* .uc-title: Uppercase акцентный (для "СОВЕТ ДНЯ", "КАБИНЕТ") */
+  .uc-title {
+    @apply text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF5733] dark:text-[#FF6B47];
+  }
+
+  /* Доп. класс для подписей (как в твоем коде) */
+  .sub-title {
+    @apply text-[10px] font-bold uppercase tracking-[0.15em] text-[#B5B0A8] dark:text-[#4A4742];
+  }
 }
 
+/* Стили для флешкарточек (оставляем как есть) */
+.flip-card {
+  perspective: 1000px;
+}
 .flip-card-inner {
   transition: transform 0.6s;
   transform-style: preserve-3d;
 }
-
 .flip-card.flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
-
 .flip-card-front,
 .flip-card-back {
   backface-visibility: hidden;
 }
-
 .flip-card-back {
   transform: rotateY(180deg);
 }

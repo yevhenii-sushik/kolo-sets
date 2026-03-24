@@ -168,14 +168,14 @@ export default function CollectionCard({
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-sm bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-8 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-2xl"
+              className="relative w-full max-w-sm bg-white dark:bg-[#1A1917] rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-6 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-2xl"
             >
-              <div className="flex justify-between items-start mb-8">
+              <div className="flex justify-between items-start mb-5 sm:mb-6">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#FF5733] mb-1">
                     {t.words.collectionCard.modal.chooseMode}
                   </p>
-                  <h3 className="text-2xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tight">
+                  <h3 className="text-xl sm:text-2xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tight truncate max-w-[180px] sm:max-w-none">
                     {collection.name}
                   </h3>
                 </div>
@@ -187,17 +187,17 @@ export default function CollectionCard({
                 </button>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {/* Flashcards Option */}
                 <button
                   onClick={() => {
                     setShowModeModal(false);
                     navigate(`/collection/${collection.id}/flashcards`);
                   }}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent hover:border-[#FF5733] transition-all group"
+                  className="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent hover:border-[#FF5733] transition-all group"
                 >
-                  <div className="w-12 h-12 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center text-[#FF5733] shadow-sm group-hover:scale-110 transition-transform">
-                    <Zap size={20} />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center text-[#FF5733] shadow-sm group-hover:scale-110 transition-transform shrink-0">
+                    <Zap size={18} />
                   </div>
                   <div className="text-left">
                     <p className="font-black text-sm text-[#1A1714] dark:text-[#F0EDE8]">
@@ -216,10 +216,10 @@ export default function CollectionCard({
                     navigate(`/collection/${collection.id}/quiz`);
                   }}
                   disabled={tooFewQuiz}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent hover:border-blue-500 transition-all group disabled:opacity-30 disabled:grayscale"
+                  className="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent hover:border-[#FF5733] transition-all group disabled:opacity-30 disabled:grayscale"
                 >
-                  <div className="w-12 h-12 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center text-blue-500 shadow-sm group-hover:scale-110 transition-transform">
-                    <BookOpen size={20} />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center text-[#FF5733] shadow-sm group-hover:scale-110 transition-transform shrink-0">
+                    <BookOpen size={18} />
                   </div>
                   <div className="text-left">
                     <p className="font-black text-sm text-[#1A1714] dark:text-[#F0EDE8]">
