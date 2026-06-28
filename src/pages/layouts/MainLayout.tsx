@@ -2,25 +2,20 @@ import Sidebar from "../../components/ui/Sidebar";
 import BottomNav from "../../components/ui/BottomNav";
 import { Outlet, Link } from "react-router-dom";
 import { Menu, Languages, Flame, Trophy, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { Language } from "../../locales";
-import { useAuth } from "../../contexts/AuthContext";
-import { getUserProfile } from "../../firebase/firestore";
+import { useData } from "../../contexts/DataContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SIDEBAR_KEY = "sidebar-open";
 
 export default function MainLayout() {
   const { language, setLanguage } = useI18n();
-  const { user } = useAuth();
+  const { profile } = useData();
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [showStreakCard, setShowStreakCard] = useState(false);
-  const [streakData, setStreakData] = useState({
-    current: 0,
-    isActive: false,
-    longest: 0,
-  });
 
   const [open, setOpen] = useState<boolean>(() => {
     const saved = localStorage.getItem(SIDEBAR_KEY);
@@ -33,39 +28,21 @@ export default function MainLayout() {
     localStorage.setItem(SIDEBAR_KEY, String(open));
   }, [open]);
 
-  // Загрузка данных стрика для хедера
-  useEffect(() => {
-    const loadStreak = async () => {
-      if (!user) return;
-      try {
-        const profile = (await getUserProfile(user.uid)) as any;
-        if (profile) {
-          const lastDate = profile.lastStudyDate?.toDate?.();
-          const today = new Date().toDateString();
-          const isActive = lastDate && lastDate.toDateString() === today;
-
-          let current = profile.currentStreak || 0;
-          // Проверка на обнуление (как в профиле)
-          if (lastDate) {
-            const diff = Math.floor(
-              (new Date().getTime() - lastDate.getTime()) /
-                (1000 * 80 * 60 * 24),
-            );
-            if (diff > 1) current = 0;
-          }
-
-          setStreakData({
-            current,
-            isActive: !!isActive,
-            longest: profile.longestStreak || 0,
-          });
-        }
-      } catch (e) {
-        console.error("Header streak error:", e);
-      }
+  const streakData = useMemo(() => {
+    if (!profile) return { current: 0, isActive: false, longest: 0 };
+    const lastDate =
+      typeof profile.lastStudyDate?.toDate === 'function'
+        ? profile.lastStudyDate.toDate()
+        : profile.lastStudyDate
+        ? new Date(profile.lastStudyDate)
+        : null;
+    const isActive = !!lastDate && lastDate.toDateString() === new Date().toDateString();
+    return {
+      current: profile.currentStreak ?? 0,
+      isActive,
+      longest: profile.longestStreak ?? 0,
     };
-    loadStreak();
-  }, [user]);
+  }, [profile]);
 
   const languageNames = {
     en: "🇬🇧 English (UK)",
@@ -86,15 +63,57 @@ export default function MainLayout() {
               <Menu size={22} />
             </button>
 
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="p-1.5 bg-[#FF5733] rounded-lg group-hover:rotate-12 transition-transform shadow-lg shadow-orange-500/25">
+            <Link to="/" className="flex items-center gap-2 group relative">
+              {/* Иконка */}
+              <div className="p-1.5 bg-[#FF5733] rounded-lg group-hover:rotate-12 transition-transform shadow-lg shadow-orange-500/25 shrink-0">
                 <img
                   src="/icon-192.png"
                   alt="logo"
                   className="w-5 h-5 brightness-0 invert"
                 />
               </div>
-              <h1 className="text-xl font-black tracking-tighter">KOLO</h1>
+
+              <div className="flex items-baseline gap-1.5 relative">
+                <h1 className="text-xl font-black tracking-tighter leading-none">
+                  KOLO
+                </h1>
+
+                {/* Бейдж с пасхалкой */}
+                <div className="relative">
+                  <span
+                    onContextMenu={(e) => {
+                      e.preventDefault(); // Чтобы на мобилках не вылезало меню
+                      setShowEasterEgg(true);
+                      setTimeout(() => setShowEasterEgg(false), 3000);
+                    }}
+                    onClick={(e) => {
+                      if (e.detail === 4) {
+                        // Тройной клик - классика пасхалок
+                        setShowEasterEgg(true);
+                        setTimeout(() => setShowEasterEgg(false), 3000);
+                      }
+                    }}
+                    className="cursor-help select-none px-1.5 py-0.5 rounded-md bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 text-[9px] font-bold uppercase tracking-widest leading-none active:scale-90 transition-transform"
+                  >
+                    Beta
+                  </span>
+
+                  {/* Сама пасхалка */}
+                  <AnimatePresence>
+                    {showEasterEgg && (
+                      <motion.div
+                        initial={{ opacity: 0, x: 10, scale: 0.8 }}
+                        animate={{ opacity: 1, x: 20, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="absolute left-full top-0 ml-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-[10px] py-1 px-2 rounded-lg shadow-xl z-[110] font-medium"
+                      >
+                        <div className="absolute -left-1 top-2 w-2 h-2 bg-black dark:bg-white rotate-45" />
+                        Бридж добавил, чтоб не расстраивались, что много багов
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
             </Link>
           </div>
 

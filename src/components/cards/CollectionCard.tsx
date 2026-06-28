@@ -9,6 +9,7 @@ import {
   ChevronRight,
   Zap,
   BookOpen,
+  Clock,
   X,
 } from "lucide-react";
 import { Collection } from "../../types";
@@ -49,17 +50,27 @@ export default function CollectionCard({
   const isEmpty = collection.cards.length === 0;
   const tooFewQuiz = collection.cards.length < 4;
 
+  const dueToday = collection.cards.filter((c) => {
+    if (!c.srsData?.nextReview || c.srsData.interval === 0) return false;
+    const next = c.srsData.nextReview;
+    const d = next instanceof Date ? next : new Date((next as any)?.toDate?.() ?? next);
+    return d <= new Date();
+  }).length;
+
   return (
     <>
-      <div className="group relative bg-white dark:bg-[#1A1917] rounded-[2rem] p-6 border border-[#E0DBD3] dark:border-[#2E2C29] transition-all duration-300 hover:border-[#FF5733]/40 shadow-sm hover:shadow-md flex flex-col h-full">
+      <div className="group relative bg-white dark:bg-[#1A1917] rounded-4xl p-6 border border-[#E0DBD3] dark:border-[#2E2C29] transition-all duration-300 hover:border-[#FF5733]/40 shadow-sm hover:shadow-md flex flex-col h-full">
         {/* ── Header: Lang & Menu ── */}
         <div className="flex justify-between items-start mb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#F5F2ED] dark:bg-[#242220] text-[#7A756E] dark:text-[#8A867F]">
+          <div className="flex items-center gap-3">
+            {/* <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#F5F2ED] dark:bg-[#242220] text-[#7A756E] dark:text-[#8A867F]">
               {collection.language || "NO"}
-            </span>
+            </span> */}
+            <h3 className="text-xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tight mb-1 truncate">
+              {collection.name}
+            </h3>
             <div className="flex items-center gap-1 text-[11px] font-bold text-[#B5B0A8]">
-              <Layers size={12} />
+              <Layers size={14} />
               {collection.cards.length}
             </div>
           </div>
@@ -109,16 +120,19 @@ export default function CollectionCard({
 
         {/* ── Content ── */}
         <div className="flex-1">
-          <h3 className="text-xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tight mb-1 truncate">
-            {collection.name}
-          </h3>
-          <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#B5B0A8] mb-6">
+          <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#B5B0A8] mb-2">
             <Calendar size={12} />
             {formatDate(collection.createdAt)}
           </div>
+          {dueToday > 0 && (
+            <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#FF5733] mb-4">
+              <Clock size={12} />
+              {dueToday} {t.words.collectionCard.dueToday}
+            </div>
+          )}
         </div>
 
-        {/* ── Simple SRS Progress ── */}
+        {/* ── Simple SRS Progress ──
         {collection.cards.length > 0 && (
           <div className="flex gap-1 mb-6">
             {[...Array(5)].map((_, i) => (
@@ -130,14 +144,14 @@ export default function CollectionCard({
               />
             ))}
           </div>
-        )}
+        )} */}
 
         {/* ── Actions ── */}
         <div className="flex gap-2">
           <button
             onClick={() => !isEmpty && setShowModeModal(true)}
             disabled={isEmpty}
-            className="flex-[3] flex items-center justify-center gap-2 py-3.5 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] text-[11px] font-black uppercase tracking-widest rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-20"
+            className="flex-3 flex items-center justify-center gap-2 py-3.5 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] text-[11px] font-black uppercase tracking-widest rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-20"
           >
             {t.words.collectionCard.study}
             <ChevronRight size={14} />
@@ -175,7 +189,7 @@ export default function CollectionCard({
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#FF5733] mb-1">
                     {t.words.collectionCard.modal.chooseMode}
                   </p>
-                  <h3 className="text-xl sm:text-2xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tight truncate max-w-[180px] sm:max-w-none">
+                  <h3 className="text-xl sm:text-2xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tight truncate max-w-45 sm:max-w-none">
                     {collection.name}
                   </h3>
                 </div>
@@ -229,6 +243,33 @@ export default function CollectionCard({
                       {tooFewQuiz
                         ? t.words.collectionCard.modal.quizNeedsMore
                         : t.words.collectionCard.modal.quizDesc}
+                    </p>
+                  </div>
+                </button>
+
+                {/* Study Due Option */}
+                <button
+                  onClick={() => {
+                    setShowModeModal(false);
+                    navigate(`/collection/${collection.id}/flashcards?due=1`);
+                  }}
+                  disabled={dueToday === 0}
+                  className="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent hover:border-[#FF5733] transition-all group disabled:opacity-30 disabled:grayscale"
+                >
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center text-[#FF5733] shadow-sm group-hover:scale-110 transition-transform shrink-0">
+                    <Clock size={18} />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-black text-sm text-[#1A1714] dark:text-[#F0EDE8]">
+                      {t.words.collectionCard.modal.studyDue}
+                      {dueToday > 0 && (
+                        <span className="ml-2 text-[#FF5733]">({dueToday})</span>
+                      )}
+                    </p>
+                    <p className="text-[10px] font-medium text-[#7A756E]">
+                      {dueToday === 0
+                        ? t.words.collectionCard.modal.noDue
+                        : t.words.collectionCard.modal.studyDueDesc}
                     </p>
                   </div>
                 </button>

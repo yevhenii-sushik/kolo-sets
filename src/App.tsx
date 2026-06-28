@@ -1,31 +1,33 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { getTheme, setTheme } from "./utils/storage";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { I18nProvider } from "./contexts/I18nContext";
+import { DataProvider } from "./contexts/DataContext";
 
-// Layouts
+import AchievementUnlockBanner from "./components/AchievementUnlockBanner";
+
+// Layouts (небольшие — грузим сразу)
 import MainLayout from "./pages/layouts/MainLayout";
 import EmptyLayout from "./pages/layouts/EmptyLayout";
 import NavLayout from "./pages/layouts/NavLayout";
 
-// Pages
-import LandingPage from "./pages/auth/LandingPage";
-import LoginPage from "./pages/auth/LoginPage";
-import RegisterPage from "./pages/auth/RegisterPage";
-import HomePage from "./pages/home/HomePage";
-import WordsPage from "./pages/words/WordsPage";
-import CollectionEditPage from "./pages/words/CollectionEditPage";
-import FlashcardsPage from "./pages/words/FlashcardsPage";
-import QuizPage from "./pages/words/QuizPage";
-import ProfilePage from "./pages/profile/ProfilePage";
-import OtherPage from "./pages/other/OtherPage";
-import SettingsPage from "./pages/other/SettingsPage";
-import UpdatesPage from "./pages/other/UpdatesPage";
-import PrivacyPage from "./pages/other/PrivacyPage";
-import SystemInfoPage from "./pages/other/SystemInfoPage";
-import DataManagementPage from "./pages/other/DataManagementPage";
-import SupportPage from "./pages/other/SupportPage";
+// Pages (lazy — каждая в отдельном чанке)
+const LandingPage = lazy(() => import("./pages/auth/LandingPage"));
+const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
+const HomePage = lazy(() => import("./pages/home/HomePage"));
+const WordsPage = lazy(() => import("./pages/words/WordsPage"));
+const CollectionEditPage = lazy(() => import("./pages/words/CollectionEditPage"));
+const FlashcardsPage = lazy(() => import("./pages/words/FlashcardsPage"));
+const QuizPage = lazy(() => import("./pages/words/QuizPage"));
+const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
+const OtherPage = lazy(() => import("./pages/other/OtherPage"));
+const SettingsPage = lazy(() => import("./pages/other/SettingsPage"));
+const UpdatesPage = lazy(() => import("./pages/other/UpdatesPage"));
+const PrivacyPage = lazy(() => import("./pages/other/PrivacyPage"));
+const SystemInfoPage = lazy(() => import("./pages/other/SystemInfoPage"));
+const DataManagementPage = lazy(() => import("./pages/other/DataManagementPage"));
+const SupportPage = lazy(() => import("./pages/other/SupportPage"));
 
 // Защищенный маршрут
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -42,21 +44,9 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AppContent() {
-  const [theme] = useState<"light" | "dark">(getTheme());
-
-  useEffect(() => {
-    setTheme(theme);
-
-    // Принудительно обновляем класс на body для Tailwind dark mode
-
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
   return (
+    <Suspense fallback={null}>
+    <AchievementUnlockBanner />
     <Routes>
       {/* 1. Группа публичных маршрутов */}
       <Route
@@ -132,6 +122,7 @@ function AppContent() {
       {/* Редирект для любых неопознанных путей */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </Suspense>
   );
 }
 
@@ -140,7 +131,9 @@ function App() {
     <BrowserRouter>
       <I18nProvider>
         <AuthProvider>
-          <AppContent />
+          <DataProvider>
+            <AppContent />
+          </DataProvider>
         </AuthProvider>
       </I18nProvider>
     </BrowserRouter>

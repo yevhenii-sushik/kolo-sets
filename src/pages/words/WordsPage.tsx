@@ -1,13 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, Plus, Sparkles, Construction, Clock } from "lucide-react";
-import { Collection } from "../../types";
 // import { KoloSet } from "../../types/kolo-sets";
-import {
-  getCollections,
-  createCollection,
-  deleteCollection,
-} from "../../utils/storage";
+import { createCollection, deleteCollection } from "../../utils/storage";
+import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
@@ -48,51 +44,25 @@ const CollectionSkeleton = () => (
 export default function WordsPage() {
   const navigate = useNavigate();
   const { t } = useI18n();
+  const { collections, collectionsLoading, setCollections, checkAchievements } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
   const [activeTab, setActiveTab] = useState<Tab>("my");
-  const [collections, setCollections] = useState<Collection[]>(() => {
-    const cached = localStorage.getItem("collections_cache");
-    if (!cached) return [];
-    try {
-      return JSON.parse(cached);
-    } catch {
-      return [];
-    }
-  });
-
-  const [loading, setLoading] = useState(collections.length === 0);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
-
-  useEffect(() => {
-    loadCollections();
-  }, []);
-
-  const loadCollections = async () => {
-    try {
-      const loaded = await getCollections();
-      setCollections(loaded);
-      localStorage.setItem("collections_cache", JSON.stringify(loaded));
-    } catch (err) {
-      console.error("Failed to load collections:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleCreateCollection = async (name: string, language: string) => {
     try {
       const newCollection = await createCollection(name, language);
-      const updated = [newCollection, ...collections];
-      setCollections(updated);
-      localStorage.setItem("collections_cache", JSON.stringify(updated));
-
+      const updatedCollections = [newCollection, ...collections];
+      setCollections(updatedCollections);
       setIsCreateModalOpen(false);
-      success(`${t.words.toast.createSuccess}: "${name}"`); // Изменено
+      success(`${t.words.toast.createSuccess}: "${name}"`);
+      // Проверяем достижения за создание коллекций (collectionsCount уже обновлён в ref)
+      checkAchievements();
       navigate(`/collection/${newCollection.id}/edit`);
     } catch (err) {
-      error(t.words.toast.createError); // Изменено
+      error(t.words.toast.createError);
     }
   };
 
@@ -101,7 +71,7 @@ export default function WordsPage() {
     if (!collectionToDelete) return;
 
     const confirmed = await confirm({
-      title: `${t.delete}?`, // Из common.json
+      title: `${t.delete}?`,
       message: t.words.collectionCard.confirmDelete,
       type: "danger",
       confirmText: t.delete,
@@ -109,21 +79,15 @@ export default function WordsPage() {
     });
 
     if (confirmed) {
-      const originalCollections = [...collections];
-      const filtered = collections.filter((c) => c.id !== id);
-      setCollections(filtered);
-      localStorage.setItem("collections_cache", JSON.stringify(filtered));
-
+      // Оптимистичное удаление
+      const rollback = [...collections];
+      setCollections(collections.filter((c) => c.id !== id));
       try {
         await deleteCollection(id);
-        success(`"${collectionToDelete.name}" ${t.words.toast.deleteSuccess}`); // Изменено
+        success(`"${collectionToDelete.name}" ${t.words.toast.deleteSuccess}`);
       } catch (err) {
-        setCollections(originalCollections);
-        localStorage.setItem(
-          "collections_cache",
-          JSON.stringify(originalCollections),
-        );
-        error(t.words.toast.deleteError); // Изменено
+        setCollections(rollback);
+        error(t.words.toast.deleteError);
       }
     }
   };
@@ -192,7 +156,7 @@ export default function WordsPage() {
 
       {/* Content Area */}
       <div className="min-h-[400px]">
-        {loading ? (
+        {collectionsLoading ? (
           <CollectionSkeleton />
         ) : activeTab === "my" ? (
           <>

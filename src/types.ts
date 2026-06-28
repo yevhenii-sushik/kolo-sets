@@ -6,7 +6,8 @@ export enum TaskType {
   TRANSLATION_BY_WORD = 'translation_by_word',
   WORD_BY_EXPLANATION = 'word_by_explanation',
   WRITE_WORD_BY_TRANSLATION = 'write_word_by_translation',
-  WRITE_WORD_BY_EXPLANATION = 'write_word_by_explanation'
+  WRITE_WORD_BY_EXPLANATION = 'write_word_by_explanation',
+  MATCHING = 'matching'
 }
 
 // Оценка знания слова (для флешкарточек)
@@ -19,19 +20,56 @@ export enum KnowledgeLevel {
 
 // Типы достижений
 export enum AchievementType {
+  // First steps
   FIRST_COLLECTION = 'first_collection',
   FIRST_STUDY = 'first_study',
+  // Streak milestones
   STREAK_3 = 'streak_3',
   STREAK_7 = 'streak_7',
+  STREAK_14 = 'streak_14',
   STREAK_30 = 'streak_30',
+  STREAK_60 = 'streak_60',
+  STREAK_100 = 'streak_100',
+  // Card count milestones
+  CARDS_10 = 'cards_10',
+  CARDS_25 = 'cards_25',
   CARDS_50 = 'cards_50',
   CARDS_100 = 'cards_100',
+  CARDS_200 = 'cards_200',
   CARDS_500 = 'cards_500',
-  QUIZ_10 = 'quiz_10',
-  QUIZ_50 = 'quiz_50',
+  CARDS_1000 = 'cards_1000',
+  // Flashcard sessions
+  FLASHCARDS_1 = 'flashcards_1',
   FLASHCARDS_10 = 'flashcards_10',
   FLASHCARDS_50 = 'flashcards_50',
-  PERFECT_QUIZ = 'perfect_quiz'
+  FLASHCARDS_100 = 'flashcards_100',
+  // Quiz sessions
+  QUIZ_1 = 'quiz_1',
+  QUIZ_10 = 'quiz_10',
+  QUIZ_50 = 'quiz_50',
+  QUIZ_100 = 'quiz_100',
+  // Perfect quizzes
+  PERFECT_QUIZ = 'perfect_quiz',
+  PERFECT_QUIZZES_3 = 'perfect_quizzes_3',
+  PERFECT_QUIZZES_10 = 'perfect_quizzes_10',
+  // Collections
+  COLLECTIONS_3 = 'collections_3',
+  COLLECTIONS_5 = 'collections_5',
+  // Special session-based
+  NIGHT_OWL = 'night_owl',
+  EARLY_BIRD = 'early_bird',
+  MARATHON = 'marathon',
+  SPEED_DEMON = 'speed_demon',
+  ALL_KNOW = 'all_know',
+  COMEBACK = 'comeback',
+}
+
+// Контекст сессии для проверки особых достижений
+export interface SessionExtras {
+  duration?: number;       // seconds — for MARATHON, SPEED_DEMON
+  allKnow?: boolean;       // all cards rated KNOW — for ALL_KNOW
+  quizQuestions?: number;  // question count — for SPEED_DEMON check
+  isComeback?: boolean;    // returning after 7+ day gap — for COMEBACK
 }
 
 // Достижение

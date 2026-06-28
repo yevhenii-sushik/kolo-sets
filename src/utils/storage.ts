@@ -2,6 +2,7 @@ import { Collection, Card, SRSData, KnowledgeLevel } from '../types';
 import { auth } from '../firebase/config';
 import {
   getUserCollections,
+  getUserCollection,
   saveUserCollection,
   deleteUserCollection as deleteFirestoreCollection
 } from '../firebase/firestore';
@@ -27,7 +28,7 @@ export const getCollections = async (): Promise<Collection[]> => {
 };
 
 // Получить коллекции из localStorage
-const getLocalCollections = (): Collection[] => {
+export const getLocalCollections = (): Collection[] => {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     if (!data) return [];
@@ -66,8 +67,12 @@ const saveLocalCollections = (collections: Collection[]): void => {
 
 // Получить коллекцию по ID
 export const getCollection = async (id: string): Promise<Collection | undefined> => {
-  const collections = await getCollections();
-  return collections.find(col => col.id === id);
+  const user = auth.currentUser;
+  if (user) {
+    const result = await getUserCollection(user.uid, id);
+    return result ?? undefined;
+  }
+  return getLocalCollections().find(col => col.id === id);
 };
 
 // Создать новую коллекцию
@@ -234,21 +239,35 @@ export const parseImportText = (text: string): Omit<Card, 'id' | 'srsData' | 'cr
   return cards;
 };
 
-// Тема (dark/light mode)
+// Тема (dark/light/system mode)
+export const getThemePref = (): 'light' | 'dark' | 'system' => {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'dark' || saved === 'light') return saved;
+  return 'system';
+};
+
+// Оставляем для обратной совместимости
 export const getTheme = (): 'light' | 'dark' => {
   const saved = localStorage.getItem(THEME_KEY);
-  if (saved === 'dark' || saved === 'light') {
-    return saved;
-  }
-  // По умолчанию используем системную тему
+  if (saved === 'dark' || saved === 'light') return saved;
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
-export const setTheme = (theme: 'light' | 'dark'): void => {
-  localStorage.setItem(THEME_KEY, theme);
-  if (theme === 'dark') {
-    document.documentElement.classList.add('dark');
+export const setTheme = (theme: 'light' | 'dark' | 'system'): void => {
+  if (theme === 'system') {
+    localStorage.removeItem(THEME_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (prefersDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   } else {
-    document.documentElement.classList.remove('dark');
+    localStorage.setItem(THEME_KEY, theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }
 };

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 import { Language, Translations, translations, getCurrentLanguage, setLanguage as saveLanguage } from '../locales';
 
 interface I18nContextType {
@@ -18,10 +18,6 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     setT(translations[lang]);
     saveLanguage(lang);
   };
-
-  useEffect(() => {
-    setT(translations[language]);
-  }, [language]);
 
   return (
     <I18nContext.Provider value={{ language, t, setLanguage }}>

@@ -1,9 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { getUserProfile } from "../../firebase/firestore";
-import { getCollections } from "../../utils/storage";
+import { useData } from "../../contexts/DataContext";
 // import { DAILY_WORDS } from "../../data/home/dailyWords";
 import { STUDY_TIPS } from "../../data/home/tips";
 import {
@@ -21,74 +19,18 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { t } = useI18n();
+  const { profile, collections, totalCards, profileLoading } = useData();
 
-  const [profile, setProfile] = useState<any>(() => {
-    if (!user?.uid) return null;
-    const saved = localStorage.getItem(`profile_cache_${user.uid}`);
-    try {
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
-
-  const [stats, setStats] = useState(() => {
-    if (!user?.uid) return { totalDecks: 0, totalCards: 0 };
-    const saved = localStorage.getItem(`stats_cache_${user.uid}`);
-    try {
-      return saved ? JSON.parse(saved) : { totalDecks: 0, totalCards: 0 };
-    } catch {
-      return { totalDecks: 0, totalCards: 0 };
-    }
-  });
-
-  const [currentTip, setCurrentTip] = useState(STUDY_TIPS[0]);
-  const [loading, setLoading] = useState(!profile);
-
-  // const dailyWord = useMemo(() => {
-  //   const dayTimestamp = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
-  //   const index = dayTimestamp % DAILY_WORDS.length;
-  //   return DAILY_WORDS[index];
-  // }, []);
-
-  useEffect(() => {
-    async function loadData() {
-      if (!user?.uid) return;
-      try {
-        const [p, c] = await Promise.all([
-          getUserProfile(user.uid),
-          getCollections(),
-        ]);
-        const newStats = {
-          totalDecks: c.length,
-          totalCards: c.reduce((s, coll) => s + coll.cards.length, 0),
-        };
-        setProfile(p);
-        setStats(newStats);
-        localStorage.setItem(`profile_cache_${user.uid}`, JSON.stringify(p));
-        localStorage.setItem(
-          `stats_cache_${user.uid}`,
-          JSON.stringify(newStats),
-        );
-        if (loading) {
-          setCurrentTip(
-            STUDY_TIPS[Math.floor(Math.random() * STUDY_TIPS.length)],
-          );
-        }
-      } catch (e) {
-        console.error("Home load error:", e);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadData();
-  }, [user?.uid]);
+  const [currentTip, setCurrentTip] = useState(
+    () => STUDY_TIPS[Math.floor(Math.random() * STUDY_TIPS.length)]
+  );
 
   const refreshTip = () => {
     setCurrentTip(STUDY_TIPS[Math.floor(Math.random() * STUDY_TIPS.length)]);
   };
+
+  const stats = { totalDecks: collections.length, totalCards };
 
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
@@ -129,7 +71,7 @@ export default function HomePage() {
             </p>
             <p className="u-title text-[17px] leading-none">
               {profile?.displayName?.split(" ")[0] ||
-                (loading ? "…" : t.home.guest)}
+                (profileLoading ? "…" : t.home.guest)}
             </p>
           </div>
         </div>

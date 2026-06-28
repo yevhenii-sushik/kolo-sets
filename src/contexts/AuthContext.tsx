@@ -5,13 +5,15 @@ import {
   registerWithEmail,
   loginWithEmail,
   loginWithGoogle,
-  logout as firebaseLogout
+  logout as firebaseLogout,
+  deleteAccount as firebaseDeleteAccount
 } from '../firebase/auth';
+import { deleteUserData } from '../firebase/firestore';
 import {
   syncCollectionsToFirestore,
   getUserProfile
 } from '../firebase/firestore';
-import { getCollections } from '../utils/storage';
+import { getLocalCollections } from '../utils/storage';
 
 interface AuthContextType {
   user: User | null;
@@ -21,6 +23,7 @@ interface AuthContextType {
   loginGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   syncCollections: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,19 +49,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(firebaseUser);
       
       if (firebaseUser) {
-        // Пользователь вошел - проверяем профиль
         await getUserProfile(firebaseUser.uid);
-        
-        // Синхронизируем локальные данные с Firestore
-        const localCollections = await getCollections();
-        if (localCollections.length > 0) {
-          // Если есть локальные данные, синхронизируем их
-          try {
-            await syncCollectionsToFirestore(firebaseUser.uid, localCollections);
-            console.log('Локальные данные синхронизированы с облаком');
-          } catch (error) {
-            console.error('Ошибка синхронизации:', error);
+
+        // Синхронизируем локальные данные один раз — при первом входе с этого устройства.
+        // При каждом reload не синхронизируем: локальные данные могут быть устаревшими
+        // и перезаписать актуальные облачные.
+        const syncKey = `collections_synced_${firebaseUser.uid}`;
+        if (!localStorage.getItem(syncKey)) {
+          const localCollections = getLocalCollections();
+          if (localCollections.length > 0) {
+            try {
+              await syncCollectionsToFirestore(firebaseUser.uid, localCollections);
+            } catch (error) {
+              console.error('Ошибка синхронизации:', error);
+            }
           }
+          localStorage.setItem(syncKey, '1');
         }
       }
       
@@ -86,9 +92,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const syncCollections = async () => {
     if (!user) return;
-    
-    const localCollections = await getCollections();
+    const localCollections = getLocalCollections();
     await syncCollectionsToFirestore(user.uid, localCollections);
+  };
+
+  const deleteAccount = async () => {
+    if (!user) return;
+    await deleteUserData(user.uid);
+    await firebaseDeleteAccount();
   };
 
   const value = {
@@ -98,7 +109,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     login,
     loginGoogle,
     logout,
-    syncCollections
+    syncCollections,
+    deleteAccount
   };
 
   return (

@@ -4,6 +4,7 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  deleteUser,
   User
 } from 'firebase/auth';
 import { auth, googleProvider } from './config';
@@ -42,6 +43,13 @@ export const loginWithGoogle = async (): Promise<User> => {
 // Выход
 export const logout = async (): Promise<void> => {
   await signOut(auth);
+};
+
+// Удаление аккаунта (требует недавнего входа)
+export const deleteAccount = async (): Promise<void> => {
+  const user = auth.currentUser;
+  if (!user) throw new Error('No user signed in');
+  await deleteUser(user);
 };
 
 // Получить текущего пользователя

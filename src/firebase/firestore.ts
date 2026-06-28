@@ -6,10 +6,12 @@ import {
   setDoc,
   deleteDoc,
   Timestamp,
-  writeBatch
+  writeBatch,
+  query
 } from 'firebase/firestore';
 import { db } from './config';
 import { Collection } from '../types';
+import { calcUpdatedStreak } from '../utils/streak';
 
 // Преобразование Collection в формат Firestore
 const collectionToFirestore = (coll: Collection) => {
@@ -146,73 +148,37 @@ export const updateUserProfile = async (userId: string, data: any) => {
   await setDoc(docRef, data, { merge: true });
 };
 
-// Обновить статистику после завершения flashcard сессии
-export const updateFlashcardStats = async (
+// Общий хелпер для обновления статистики учебной сессии
+const updateStudySession = async (
   userId: string,
-  cardsCount: number,
-  duration: number
+  count: number,
+  duration: number,
+  statsUpdate: (stats: any) => void
 ) => {
   const docRef = doc(db, 'users', userId);
   const docSnap = await getDoc(docRef);
-  
   if (!docSnap.exists()) return;
-  
+
   const profile = docSnap.data();
   const today = new Date().toISOString().split('T')[0];
-  
-  // Обновляем studyHistory
+
   const studyHistory = profile.studyHistory || [];
   const todayIndex = studyHistory.findIndex((d: any) => d.date === today);
-  
   if (todayIndex >= 0) {
     studyHistory[todayIndex].sessions += 1;
-    studyHistory[todayIndex].cardsStudied += cardsCount;
+    studyHistory[todayIndex].cardsStudied += count;
     studyHistory[todayIndex].timeSpent += duration;
   } else {
-    studyHistory.push({
-      date: today,
-      sessions: 1,
-      cardsStudied: cardsCount,
-      timeSpent: duration
-    });
+    studyHistory.push({ date: today, sessions: 1, cardsStudied: count, timeSpent: duration });
   }
-  
-  // Обновляем стрик
-  const lastStudyDate = profile.lastStudyDate?.toDate?.();
-  let currentStreak = profile.currentStreak || 0;
-  let longestStreak = profile.longestStreak || 0;
-  
-  if (lastStudyDate) {
-    const lastDate = new Date(lastStudyDate);
-    const todayDate = new Date();
-    lastDate.setHours(0, 0, 0, 0);
-    todayDate.setHours(0, 0, 0, 0);
-    
-    const diffDays = Math.floor((todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) {
-      // Сегодня уже занимались - стрик не меняется
-    } else if (diffDays === 1) {
-      // Вчера занимались - увеличиваем стрик
-      currentStreak += 1;
-    } else {
-      // Пропустили дни - стрик сбрасывается
-      currentStreak = 1;
-    }
-  } else {
-    // Первая сессия
-    currentStreak = 1;
-  }
-  
-  if (currentStreak > longestStreak) {
-    longestStreak = currentStreak;
-  }
-  
-  // Обновляем stats
-  const stats = profile.stats || {};
-  stats.flashcardSessions = (stats.flashcardSessions || 0) + 1;
+
+  const currentStreak = calcUpdatedStreak(profile.currentStreak || 0, profile.lastStudyDate);
+  const longestStreak = Math.max(currentStreak, profile.longestStreak || 0);
+
+  const stats = { ...(profile.stats || {}) };
   stats.totalStudyTime = (stats.totalStudyTime || 0) + duration;
-  
+  statsUpdate(stats);
+
   await updateUserProfile(userId, {
     studyHistory,
     currentStreak,
@@ -222,126 +188,31 @@ export const updateFlashcardStats = async (
   });
 };
 
-// Обновить статистику после завершения quiz
-export const updateQuizStats = async (
+export const updateFlashcardStats = (userId: string, cardsCount: number, duration: number) =>
+  updateStudySession(userId, cardsCount, duration, (stats) => {
+    stats.flashcardSessions = (stats.flashcardSessions || 0) + 1;
+  });
+
+// Удалить все данные пользователя (коллекции + профиль)
+export const deleteUserData = async (userId: string): Promise<void> => {
+  const collectionsRef = collection(db, 'users', userId, 'collections');
+  const snapshot = await getDocs(query(collectionsRef));
+  const batch = writeBatch(db);
+  snapshot.docs.forEach(d => batch.delete(d.ref));
+  batch.delete(doc(db, 'users', userId));
+  await batch.commit();
+};
+
+export const updateQuizStats = (
   userId: string,
   questionsCount: number,
   correctAnswers: number,
   duration: number
-) => {
-  const docRef = doc(db, 'users', userId);
-  const docSnap = await getDoc(docRef);
-  
-  if (!docSnap.exists()) return;
-  
-  const profile = docSnap.data();
-  const today = new Date().toISOString().split('T')[0];
-  const isPerfect = correctAnswers === questionsCount;
-  
-  // Обновляем studyHistory
-  const studyHistory = profile.studyHistory || [];
-  const todayIndex = studyHistory.findIndex((d: any) => d.date === today);
-  
-  if (todayIndex >= 0) {
-    studyHistory[todayIndex].sessions += 1;
-    studyHistory[todayIndex].cardsStudied += questionsCount;
-    studyHistory[todayIndex].timeSpent += duration;
-  } else {
-    studyHistory.push({
-      date: today,
-      sessions: 1,
-      cardsStudied: questionsCount,
-      timeSpent: duration
-    });
-  }
-  
-  // Обновляем стрик (аналогично flashcards)
-  const lastStudyDate = profile.lastStudyDate?.toDate?.();
-  let currentStreak = profile.currentStreak || 0;
-  let longestStreak = profile.longestStreak || 0;
-  
-  if (lastStudyDate) {
-    const lastDate = new Date(lastStudyDate);
-    const todayDate = new Date();
-    lastDate.setHours(0, 0, 0, 0);
-    todayDate.setHours(0, 0, 0, 0);
-    
-    const diffDays = Math.floor((todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) {
-      // Сегодня уже занимались
-    } else if (diffDays === 1) {
-      currentStreak += 1;
-    } else {
-      currentStreak = 1;
+) =>
+  updateStudySession(userId, questionsCount, duration, (stats) => {
+    stats.quizzesTaken = (stats.quizzesTaken || 0) + 1;
+    if (correctAnswers === questionsCount) {
+      stats.perfectQuizzes = (stats.perfectQuizzes || 0) + 1;
     }
-  } else {
-    currentStreak = 1;
-  }
-  
-  if (currentStreak > longestStreak) {
-    longestStreak = currentStreak;
-  }
-  
-  // Обновляем stats
-  const stats = profile.stats || {};
-  stats.quizzesTaken = (stats.quizzesTaken || 0) + 1;
-  stats.totalStudyTime = (stats.totalStudyTime || 0) + duration;
-  if (isPerfect) {
-    stats.perfectQuizzes = (stats.perfectQuizzes || 0) + 1;
-  }
-  
-  await updateUserProfile(userId, {
-    studyHistory,
-    currentStreak,
-    longestStreak,
-    lastStudyDate: Timestamp.now(),
-    stats
   });
-};
 
-// Проверить и разблокировать достижения
-export const checkAndUnlockAchievements = async (
-  userId: string,
-  totalCards: number
-) => {
-  const docRef = doc(db, 'users', userId);
-  const docSnap = await getDoc(docRef);
-  
-  if (!docSnap.exists()) return [];
-  
-  const profile = docSnap.data();
-  const unlockedIds = profile.achievements || [];
-  const newAchievements: string[] = [];
-  
-  // Проверяем достижения
-  const checks = [
-    { id: 'first_collection', condition: totalCards > 0 },
-    { id: 'first_study', condition: (profile.stats?.flashcardSessions || 0) > 0 || (profile.stats?.quizzesTaken || 0) > 0 },
-    { id: 'streak_3', condition: (profile.currentStreak || 0) >= 3 },
-    { id: 'streak_7', condition: (profile.currentStreak || 0) >= 7 },
-    { id: 'streak_30', condition: (profile.currentStreak || 0) >= 30 },
-    { id: 'cards_50', condition: totalCards >= 50 },
-    { id: 'cards_100', condition: totalCards >= 100 },
-    { id: 'cards_500', condition: totalCards >= 500 },
-    { id: 'quiz_10', condition: (profile.stats?.quizzesTaken || 0) >= 10 },
-    { id: 'quiz_50', condition: (profile.stats?.quizzesTaken || 0) >= 50 },
-    { id: 'flashcards_10', condition: (profile.stats?.flashcardSessions || 0) >= 10 },
-    { id: 'flashcards_50', condition: (profile.stats?.flashcardSessions || 0) >= 50 },
-    { id: 'perfect_quiz', condition: (profile.stats?.perfectQuizzes || 0) > 0 }
-  ];
-  
-  for (const check of checks) {
-    if (check.condition && !unlockedIds.includes(check.id)) {
-      newAchievements.push(check.id);
-    }
-  }
-  
-  if (newAchievements.length > 0) {
-    await updateUserProfile(userId, {
-      achievements: [...unlockedIds, ...newAchievements]
-    });
-  }
-  
-  return newAchievements;
-};

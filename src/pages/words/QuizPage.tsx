@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Collection, TaskType, QuizStats, QuizSettings } from "../../types";
 import { getCollection, updateCollection } from "../../utils/storage";
-import {
-  updateQuizStats,
-  checkAndUnlockAchievements,
-} from "../../firebase/firestore";
+import { updateQuizStats } from "../../firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
+import { useData } from "../../contexts/DataContext";
 import {
   playCorrectIfEnabled,
   playIncorrectIfEnabled,
@@ -18,11 +16,14 @@ import QuizStatsModal from "../../components/quiz/QuizStatsModal";
 import QuizSettingsModal from "../../components/quiz/QuizSettingsModal";
 import { X, Settings } from "lucide-react";
 import { motion } from "framer-motion";
+import { useI18n } from "../../contexts/I18nContext";
 
 export default function QuizPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useI18n();
+  const { checkAchievements, profile } = useData();
   const [collection, setCollection] = useState<Collection | null>(null);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -77,7 +78,7 @@ export default function QuizPage() {
   if (!collection || questions.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="u-title text-xl text-[#7A756E]">Загрузка...</div>
+        <div className="u-title text-xl text-[#7A756E]">{t.loading}</div>
       </div>
     );
   }
@@ -86,6 +87,21 @@ export default function QuizPage() {
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
   const handleAnswer = (answer: string) => {
+    // Matching completes its own UI flow — just update stats silently
+    if (currentQuestion.type === TaskType.MATCHING) {
+      setStats(prev => {
+        const next = { ...prev };
+        next.correctAnswers++;
+        if (!next.byTaskType[currentQuestion.type]) {
+          next.byTaskType[currentQuestion.type] = { correct: 0, total: 0 };
+        }
+        next.byTaskType[currentQuestion.type]!.total++;
+        next.byTaskType[currentQuestion.type]!.correct++;
+        return next;
+      });
+      return;
+    }
+
     setUserAnswer(answer);
     const correct =
       answer.toLowerCase().trim() ===
@@ -93,38 +109,32 @@ export default function QuizPage() {
     setIsCorrect(correct);
     setShowFeedback(true);
 
-    // Воспроизводим звук в зависимости от правильности ответа
     if (correct) {
       playCorrectIfEnabled();
     } else {
       playIncorrectIfEnabled();
     }
 
-    // Обновляем статистику
-    const newStats = { ...stats };
-
-    if (correct) {
-      newStats.correctAnswers++;
-    } else {
-      newStats.wrongAnswers++;
-      newStats.mistakes.push({
-        question: currentQuestion.question,
-        userAnswer: answer,
-        correctAnswer: currentQuestion.correctAnswer,
-        taskType: currentQuestion.type,
-      });
-    }
-
-    // Статистика по типам заданий
-    if (!newStats.byTaskType[currentQuestion.type]) {
-      newStats.byTaskType[currentQuestion.type] = { correct: 0, total: 0 };
-    }
-    newStats.byTaskType[currentQuestion.type]!.total++;
-    if (correct) {
-      newStats.byTaskType[currentQuestion.type]!.correct++;
-    }
-
-    setStats(newStats);
+    setStats(prev => {
+      const next = { ...prev };
+      if (correct) {
+        next.correctAnswers++;
+      } else {
+        next.wrongAnswers++;
+        next.mistakes.push({
+          question: currentQuestion.question,
+          userAnswer: answer,
+          correctAnswer: currentQuestion.correctAnswer,
+          taskType: currentQuestion.type,
+        });
+      }
+      if (!next.byTaskType[currentQuestion.type]) {
+        next.byTaskType[currentQuestion.type] = { correct: 0, total: 0 };
+      }
+      next.byTaskType[currentQuestion.type]!.total++;
+      if (correct) next.byTaskType[currentQuestion.type]!.correct++;
+      return next;
+    });
   };
 
   const handleNext = async () => {
@@ -145,17 +155,31 @@ export default function QuizPage() {
       const finalStats = { ...stats, duration };
       setStats(finalStats);
 
-      // Сохраняем статистику в Firestore
+      // Сохраняем статистику и проверяем достижения
       if (user) {
         try {
+          const lastStudy = profile?.lastStudyDate
+            ? new Date(
+                typeof profile.lastStudyDate.toDate === 'function'
+                  ? profile.lastStudyDate.toDate()
+                  : profile.lastStudyDate
+              )
+            : null;
+          const isComeback = lastStudy
+            ? Date.now() - lastStudy.getTime() > 7 * 24 * 60 * 60 * 1000
+            : false;
+
           await updateQuizStats(
             user.uid,
             finalStats.totalQuestions,
             finalStats.correctAnswers,
             duration,
           );
-          const totalCards = collection.cards.length;
-          await checkAndUnlockAchievements(user.uid, totalCards);
+          checkAchievements({
+            duration,
+            quizQuestions: finalStats.totalQuestions,
+            isComeback,
+          });
         } catch (error) {
           console.error("Error updating quiz stats:", error);
         }
@@ -233,11 +257,11 @@ export default function QuizPage() {
           <button
             onClick={() => setShowSettings(true)}
             className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FFF0ED] dark:bg-[#2A1A15] text-[#FF5733] hover:bg-[#FF5733] hover:text-white transition-colors"
-            title="Настройки Quiz"
+            title={t.words.quiz.settings.title}
           >
             <Settings size={18} />
             <span className="hidden md:inline text-[13px] font-bold">
-              Настройки
+              {t.words.quiz.settings.title}
             </span>
           </button>
         </div>
@@ -246,7 +270,7 @@ export default function QuizPage() {
       {/* Progress bar — идентично FlashcardsPage */}
       <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-1">
         <div className="max-w-6xl mx-auto flex items-center gap-4">
-          <div className="sub-title min-w-[40px] text-center">
+          <div className="sub-title min-w-10 text-center">
             {currentIndex + 1} / {questions.length}
           </div>
           <div className="flex-1 bg-[#EDEAE4] dark:bg-[#242220] rounded-full h-3.5 overflow-hidden">
@@ -255,25 +279,23 @@ export default function QuizPage() {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="uc-title min-w-[40px] text-center">
+          <div className="uc-title min-w-10 text-center">
             {Math.round(progress)}%
           </div>
 
-          {/* Счетчик правильных/неправильных */}
-          <div className="shrink-0 ">
-            <div className="max-w-6xl mx-auto flex gap-2">
-              <div className="g-block flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-1.5 rounded-full">
-                <span className="text-lg sm:text-lg">✓</span>
-                <span className="u-title font-bold text-[#22C55E] text-lg sm:text-xl">
-                  {stats.correctAnswers}
-                </span>
-              </div>
-              <div className="g-block flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-1.5 rounded-full">
-                <span className="text-lg sm:text-lg">✗</span>
-                <span className="u-title font-bold text-red-600 text-lg sm:text-xl">
-                  {stats.wrongAnswers}
-                </span>
-              </div>
+          {/* Correct / wrong counters */}
+          <div className="shrink-0 flex gap-2">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#EDEAE4] dark:bg-[#242220] rounded-full">
+              <span className="text-sm text-[#22C55E] font-black">✓</span>
+              <span className="u-title font-bold text-[#22C55E] text-base">
+                {stats.correctAnswers}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#EDEAE4] dark:bg-[#242220] rounded-full">
+              <span className="text-sm text-red-500 font-black">✗</span>
+              <span className="u-title font-bold text-red-500 text-base">
+                {stats.wrongAnswers}
+              </span>
             </div>
           </div>
         </div>

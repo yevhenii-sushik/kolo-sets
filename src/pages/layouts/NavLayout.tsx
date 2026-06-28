@@ -1,9 +1,7 @@
-import { X } from 'lucide-react';
-import { Outlet,  useNavigate} from 'react-router-dom';
-
+import { X } from "lucide-react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function NavLayout() {
-
   const navigate = useNavigate();
 
   return (
@@ -26,11 +24,17 @@ export default function NavLayout() {
 
       {/* Footer */}
       <footer className="max-w-7xl mt-16 mx-auto px-6 py-12 border-t border-[#E0DBD3] dark:border-[#2E2C29] text-center">
-        <p className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8]">
-          © 2026 Euphoria Software AS • Built with ❤️ by Kolo Team
+        <p className="text-[12px] tracking-widest text-[#B5B0A8]">
+          © 2026 Kolo by{" "}
+          <a
+            href="https://dakuta.dev"
+            className="text-[#FF5733] hover:underline transition-colors"
+          >
+            Dakuta
+          </a>{" "}
+          • Built with ❤️ by the Team
         </p>
       </footer>
-
     </div>
   );
 }

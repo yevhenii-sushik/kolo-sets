@@ -1,5 +1,6 @@
 import { QuizStats } from "../../types";
 import { getTaskTypeName } from "../../utils/quizGenerator";
+import { useI18n } from "../../contexts/I18nContext";
 
 interface QuizStatsModalProps {
   isOpen: boolean;
@@ -14,15 +15,15 @@ export default function QuizStatsModal({
   onClose,
   onRestart,
 }: QuizStatsModalProps) {
+  const { t } = useI18n();
   if (!isOpen) return null;
+
+  const qs = t.words.quiz.stats;
 
   const formatDuration = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    if (mins > 0) {
-      return `${mins} мин ${secs} сек`;
-    }
-    return `${secs} сек`;
+    return mins > 0 ? `${mins} ${qs.min} ${secs} ${qs.sec}` : `${secs} ${qs.sec}`;
   };
 
   const getPercentage = (): number => {
@@ -33,20 +34,20 @@ export default function QuizStatsModal({
 
   const percentage = getPercentage();
   let resultEmoji = "🎉";
-  let resultText = "Отлично!";
+  let resultText = qs.great;
   let resultColor = "text-[#22C55E]";
 
   if (percentage < 50) {
     resultEmoji = "😔";
-    resultText = "Нужно еще поработать";
+    resultText = qs.poor;
     resultColor = "text-red-600";
   } else if (percentage < 75) {
     resultEmoji = "🙂";
-    resultText = "Неплохо!";
+    resultText = qs.ok;
     resultColor = "text-[#FF5733]";
   } else if (percentage < 100) {
     resultEmoji = "😊";
-    resultText = "Хорошо!";
+    resultText = qs.good;
     resultColor = "text-blue-600";
   }
 
@@ -58,52 +59,41 @@ export default function QuizStatsModal({
       />
 
       <div className="relative w-block max-w-4xl w-full max-h-[85dvh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6 md:p-8 my-0 sm:my-4 shadow-xl">
-        {/* Заголовок */}
         <div className="text-center mb-4 sm:mb-6">
           <div className="text-4xl sm:text-5xl mb-2 sm:mb-3">{resultEmoji}</div>
-          <h2
-            className={`u-title text-xl sm:text-2xl md:text-3xl font-bold mb-1 ${resultColor}`}
-          >
+          <h2 className={`u-title text-xl sm:text-2xl md:text-3xl font-bold mb-1 ${resultColor}`}>
             {resultText}
           </h2>
           <p className="text-[12px] sm:text-[13px] font-medium text-[#7A756E]">
-            Вы ответили на {stats.totalQuestions} вопросов за{" "}
+            {qs.summaryAnswered} {stats.totalQuestions} {qs.summaryIn}{" "}
             {formatDuration(stats.duration)}
           </p>
         </div>
 
-        {/* Общая статистика — g-block стиль */}
         <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
           <div className="g-block rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center border border-[#E0DBD3] dark:border-[#2E2C29]">
             <div className="u-title text-xl sm:text-2xl md:text-3xl font-bold text-[#3B82F6] mb-1">
               {stats.totalQuestions}
             </div>
-            <div className="sub-title text-[9px] sm:text-[10px]">
-              Всего вопросов
-            </div>
+            <div className="sub-title text-[9px] sm:text-[10px]">{qs.total}</div>
           </div>
           <div className="g-block rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center border border-[#E0DBD3] dark:border-[#2E2C29]">
             <div className="u-title text-xl sm:text-2xl md:text-3xl font-bold text-[#22C55E] mb-1">
               {stats.correctAnswers}
             </div>
-            <div className="sub-title text-[9px] sm:text-[10px]">
-              Правильных
-            </div>
+            <div className="sub-title text-[9px] sm:text-[10px]">{qs.correct}</div>
           </div>
           <div className="g-block rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center border border-[#E0DBD3] dark:border-[#2E2C29]">
             <div className="u-title text-xl sm:text-2xl md:text-3xl font-bold text-red-600 mb-1">
               {stats.wrongAnswers}
             </div>
-            <div className="sub-title text-[9px] sm:text-[10px]">
-              Неправильных
-            </div>
+            <div className="sub-title text-[9px] sm:text-[10px]">{qs.wrong}</div>
           </div>
         </div>
 
-        {/* Прогресс */}
         <div className="mb-4 sm:mb-6">
           <div className="flex justify-between sub-title mb-2">
-            <span>Точность ответов</span>
+            <span>{qs.accuracy}</span>
             <span className="uc-title">{percentage}%</span>
           </div>
           <div className="w-full bg-[#EDEAE4] dark:bg-[#242220] rounded-full h-4 overflow-hidden">
@@ -120,46 +110,10 @@ export default function QuizStatsModal({
           </div>
         </div>
 
-        {/* Статистика по типам заданий */}
-        {/* {Object.keys(stats.byTaskType).length > 0 && (
-          <div className="mb-4 sm:mb-6">
-            <h3 className="uc-title mb-4">Результаты по типам заданий:</h3>
-            <div className="space-y-3">
-              {Object.entries(stats.byTaskType).map(([type, data]) => {
-                const typePercentage = Math.round(
-                  (data.correct / data.total) * 100,
-                );
-                return (
-                  <div
-                    key={type}
-                    className="g-block rounded-2xl p-4 border border-[#E0DBD3] dark:border-[#2E2C29]"
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-[13px] font-medium text-[#1A1714] dark:text-[#F0EDE8]">
-                        {getTaskTypeName(type as any)}
-                      </span>
-                      <span className="u-title text-sm font-bold">
-                        {data.correct}/{data.total} ({typePercentage}%)
-                      </span>
-                    </div>
-                    <div className="w-full bg-[#EDEAE4] dark:bg-[#2E2C29] rounded-full h-2 overflow-hidden">
-                      <div
-                        className="bg-[#FF5733] h-2 rounded-full transition-all"
-                        style={{ width: `${typePercentage}%` }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )} */}
-
-        {/* Ошибки */}
         {stats.mistakes.length > 0 && (
           <div className="mb-4 sm:mb-6">
             <h3 className="uc-title mb-2 sm:mb-3">
-              Ваши ошибки ({stats.mistakes.length}):
+              {qs.mistakes} ({stats.mistakes.length}):
             </h3>
             <div className="space-y-2 max-h-40 sm:max-h-52 overflow-y-auto min-h-[35dvh] sm:min-h-[30vh]">
               {stats.mistakes.map((mistake, index) => (
@@ -175,16 +129,14 @@ export default function QuizStatsModal({
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-[13px]">
                     <div>
-                      <span className="text-red-600">Ваш ответ:</span>{" "}
+                      <span className="text-red-600">{qs.yourAnswer}</span>{" "}
                       <span className="font-medium">
-                        {mistake.userAnswer || "(пусто)"}
+                        {mistake.userAnswer || "—"}
                       </span>
                     </div>
                     <div>
-                      <span className="text-[#22C55E]">Правильный:</span>{" "}
-                      <span className="font-medium">
-                        {mistake.correctAnswer}
-                      </span>
+                      <span className="text-[#22C55E]">{qs.correctAnswer}</span>{" "}
+                      <span className="font-medium">{mistake.correctAnswer}</span>
                     </div>
                   </div>
                 </div>
@@ -193,19 +145,18 @@ export default function QuizStatsModal({
           </div>
         )}
 
-        {/* Кнопки действий */}
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <button
             onClick={onRestart}
             className="flex-1 px-4 py-3 sm:py-4 bg-[#FF5733] hover:bg-[#E54D2A] text-white rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm transition-colors"
           >
-            🔄 Пройти еще раз
+            🔄 {qs.restart}
           </button>
           <button
             onClick={onClose}
             className="flex-1 px-4 py-3 sm:py-4 bg-[#EDEAE4] dark:bg-[#242220] hover:bg-[#E0DBD3] dark:hover:bg-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm transition-colors border border-[#E0DBD3] dark:border-[#2E2C29]"
           >
-            ← К коллекциям
+            {qs.toCollections}
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Card } from "../../types";
+import { useI18n } from "../../contexts/I18nContext";
 import { Edit3, Trash2, Quote, BookOpen, Zap } from "lucide-react";
 
 interface CardListItemProps {
@@ -12,6 +13,7 @@ export default function CardListItem({
   onEdit,
   onDelete,
 }: CardListItemProps) {
+  const { t } = useI18n();
   return (
     <div className="group relative bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-6 md:p-8 border border-[#E0DBD3] dark:border-[#2E2C29] hover:border-[#FF5733] transition-all duration-500 shadow-sm hover:shadow-xl hover:shadow-[#FF5733]/5">
       {/* ВЕРХНЯЯ ЧАСТЬ: Слово и Кнопки */}
@@ -91,7 +93,7 @@ export default function CardListItem({
       {/* SRS ИНДИКАТОР: В стиле "Дерева версий" */}
       <div className="mt-6 flex items-center justify-between">
         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5B0A8]">
-          Mastery Level
+          {t.words.collectionCard.masteryLevel}
         </span>
         <div className="flex gap-1.5">
           {[...Array(5)].map((_, i) => {

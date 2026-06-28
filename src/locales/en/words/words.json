@@ -18,6 +18,8 @@
     "lastStudied": "Last studied",
     "edit": "Edit",
     "study": "Study",
+    "masteryLevel": "Mastery Level",
+    "dueToday": "due today",
     "confirmDelete": "-",
     "modal": {
       "chooseMode": "Choose mode",
@@ -25,18 +27,25 @@
       "flashcardsDesc": "Flip and rate",
       "quiz": "Quiz",
       "quizDesc": "Test your knowledge",
-      "quizNeedsMore": "Need 4+ cards"
+      "quizNeedsMore": "Need 4+ cards",
+      "studyDue": "Study due cards",
+      "studyDueDesc": "Only cards due for review",
+      "noDue": "No cards due today"
     }
   },
-    "editCollection": {
+  "editCollection": {
     "addCard": "Add word",
     "import": "Import",
+    "export": "Export",
     "rename": "Rename",
     "learned": "Learned",
     "wordList": "Word list",
     "noCards": "No words in this set yet",
     "noCardsDesc": "Click here to add your first word",
     "loading": "Loading...",
+    "exportSuccess": "Collection exported",
+    "exportError": "Export failed",
+    "importSuccess": "Words imported",
     "modals": {
       "editWord": "Edit word",
       "newWord": "New word",
@@ -48,8 +57,14 @@
     "shuffle": "Shuffle",
     "shuffleConfirm": "Shuffle the deck and start over?",
     "back": "Back",
+    "explanation": "Explanation",
+    "example": "Example",
+    "showTranslation": "Show translation",
+    "hideTranslation": "Hide translation",
+    "keyboardHint": "Space to flip · 1–4 to rate",
+    "dueOnly": "Due cards",
     "hints": {
-      "clickToFlip": "Click on the card to see the information",
+      "clickToFlip": "Tap the card to flip it",
       "rateKnowledge": "How well do you know this word?"
     },
     "levels": {
@@ -57,6 +72,75 @@
       "forgot": "Forgot",
       "remember": "Remember",
       "know": "Know"
+    },
+    "stats": {
+      "title": "Great job!",
+      "subtitle": "Session complete. You did great!",
+      "cards": "Cards",
+      "time": "Time",
+      "restart": "Restart",
+      "exit": "Exit",
+      "min": "m",
+      "sec": "s"
+    }
+  },
+  "quiz": {
+    "correct": "Correct!",
+    "incorrect": "Incorrect",
+    "correctAnswer": "Correct answer:",
+    "yourAnswer": "Your answer:",
+    "moreInfo": "More information",
+    "next": "Next →",
+    "check": "Check",
+    "placeholder": "Type your answer...",
+    "matching": {
+      "title": "Match the pairs",
+      "hint": "Select a word, then its translation",
+      "complete": "Round complete!",
+      "progress": "matched"
+    },
+    "settings": {
+      "title": "Quiz Settings",
+      "subtitle": "Choose exercise types to include",
+      "apply": "Apply & restart",
+      "cancel": "Cancel",
+      "tip": "Mix different types for better results!",
+      "minOneType": "Select at least one exercise type",
+      "types": {
+        "word_by_translation": "Word by translation",
+        "translation_by_word": "Translation by word",
+        "word_by_explanation": "Word by description",
+        "write_word_by_translation": "Write word by translation",
+        "write_word_by_explanation": "Write word by description",
+        "matching": "Match the pairs"
+      },
+      "typeDescs": {
+        "word_by_translation": "Choose the correct word from 4 options given its translation",
+        "translation_by_word": "Choose the correct translation from 4 options given the word",
+        "word_by_explanation": "Choose the correct word from 4 options given its description",
+        "write_word_by_translation": "Type the word given its translation",
+        "write_word_by_explanation": "Type the word given its description",
+        "matching": "Match words with their translations in groups"
+      }
+    },
+    "stats": {
+      "great": "Excellent!",
+      "good": "Good!",
+      "ok": "Not bad!",
+      "poor": "Keep practicing",
+      "summaryAnswered": "You answered",
+      "summaryIn": "questions in",
+      "total": "Total",
+      "correct": "Correct",
+      "wrong": "Wrong",
+      "accuracy": "Accuracy",
+      "mistakes": "Your mistakes",
+      "yourAnswer": "Your answer:",
+      "correctAnswer": "Correct:",
+      "restart": "Try again",
+      "toCollections": "← Collections",
+      "min": "min",
+      "sec": "sec"
     }
   },
   "empty": {
@@ -70,5 +154,5 @@
     "deleteError": "Delete failed",
     "createError": "Error creating collection"
   },
-  "soon": "We’re already working on this section. It’ll be up here very soon."
+  "soon": "We're already working on this section. It'll be up here very soon."
 }

@@ -1,29 +1,43 @@
 {
   "title": "Settings",
+  "subtitle": "Customize your Kolo experience",
   "sections": {
-    "language": {
-      "title": "Interface Language",
-      "recommendation": "Recommendation: choose the language you are currently learning. This will speed up the immersion process."
-    },
     "appearance": {
       "title": "Appearance",
-      "theme": "Theme",
       "light": "Light",
       "dark": "Dark",
-      "dyslexia": "Dyslexia-friendly font",
-      "soon": "Coming soon..."
+      "system": "System"
     },
-    "notifications": {
-      "title": "Notifications",
-      "desc": "Learning reminders and system messages."
+    "language": {
+      "title": "Interface Language",
+      "recommendation": "Choose the language of the app interface. It does not affect the language of your word collections."
+    },
+    "sound": {
+      "title": "Sound",
+      "effects": "Sound Effects",
+      "effectsDesc": "Feedback sounds for correct/incorrect answers and session completion"
+    },
+    "data": {
+      "title": "Data Management",
+      "export": "Export Backup",
+      "exportDesc": "Save all your collections as a .json file for local storage",
+      "import": "Import Data",
+      "importDesc": "Restore collections from a Kolo .json backup file",
+      "exportSuccess": "Backup created",
+      "exportError": "Export failed",
+      "importSuccess": "Imported",
+      "importError": "Invalid file format",
+      "noCollections": "No collections to export"
     },
     "dangerZone": {
       "title": "Danger Zone",
-      "deactivate": "Deactivate account",
-      "deactivateDesc": "Your profile will be hidden, but your data will be saved.",
-      "delete": "Delete account permanently",
-      "deleteDesc": "All your collections, progress, and achievements will be permanently deleted.",
-      "confirmDelete": "Are you sure you want to delete your account? This action cannot be undone."
+      "delete": "Delete Account",
+      "deleteDesc": "All your collections, progress and achievements will be permanently deleted. This action cannot be undone.",
+      "confirmTitle": "Delete account?",
+      "confirmMessage": "This will permanently delete your account, all collections and progress. Are you sure?",
+      "deleteSuccess": "Account deleted",
+      "deleteError": "Failed to delete account. Please sign out and sign in again, then try again.",
+      "deleting": "Deleting..."
     }
   }
 }

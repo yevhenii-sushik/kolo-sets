@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { Collection, Card, KnowledgeLevel, FlashcardStats } from "../../types";
 import {
   getCollection,
@@ -8,18 +8,32 @@ import {
 } from "../../utils/storage";
 import { updateFlashcardStats } from "../../firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
+import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
+import { useConfirm } from "../../hooks/useConfirm";
 import { playSessionCompleteIfEnabled } from "../../utils/sounds";
-import { Shuffle, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { Shuffle, X, Clock } from "lucide-react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import Flashcard from "../../components/cards/Flashcard";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
+import ConfirmDialog from "../../components/ConfirmDialog";
+
+function isDueCard(card: Card): boolean {
+  if (!card.srsData?.nextReview || card.srsData.interval === 0) return false;
+  const next = card.srsData.nextReview;
+  const d = next instanceof Date ? next : new Date((next as any)?.toDate?.() ?? next);
+  return d <= new Date();
+}
 
 export default function FlashcardsPage() {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const dueOnly = searchParams.get("due") === "1";
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
+  const { checkAchievements, profile } = useData();
+  const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
 
   const [collection, setCollection] = useState<Collection | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
@@ -36,33 +50,69 @@ export default function FlashcardsPage() {
     duration: 0,
   });
 
+  // Swipe tracking
+  const dragX = useMotionValue(0);
+  const dragRotate = useTransform(dragX, [-160, 0, 160], [-6, 0, 6]);
+  const swipedRef = useRef(false);
+
   const loadData = async () => {
-    if (id) {
-      const loaded = await getCollection(id);
-      if (loaded && loaded.cards.length > 0) {
-        setCollection(loaded);
-        setCards([...loaded.cards]);
-        setStats({
-          totalCards: loaded.cards.length,
-          dontKnow: 0,
-          forgot: 0,
-          remember: 0,
-          know: 0,
-          duration: 0,
-        });
-        setCurrentIndex(0);
-        setIsFlipped(false);
-        setStartTime(Date.now());
-        setShowStats(false);
-      } else {
-        navigate("/");
-      }
-    }
+    if (!id) return;
+    const loaded = await getCollection(id);
+    if (!loaded) { navigate("/"); return; }
+
+    const filtered = dueOnly
+      ? loaded.cards.filter(isDueCard)
+      : [...loaded.cards];
+
+    if (filtered.length === 0) { navigate(-1); return; }
+
+    setCollection(loaded);
+    setCards(filtered);
+    setStats({
+      totalCards: filtered.length,
+      dontKnow: 0,
+      forgot: 0,
+      remember: 0,
+      know: 0,
+      duration: 0,
+    });
+    setCurrentIndex(0);
+    setIsFlipped(false);
+    setStartTime(Date.now());
+    setShowStats(false);
   };
 
   useEffect(() => {
     loadData();
   }, [id]);
+
+  // Keyboard shortcuts: Space to flip, 1–4 to rate
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (showStats || !collection) return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      switch (e.code) {
+        case "Space":
+          e.preventDefault();
+          setIsFlipped(f => !f);
+          break;
+        case "Digit1": case "Numpad1":
+          if (isFlipped) handleRating(KnowledgeLevel.DONT_KNOW);
+          break;
+        case "Digit2": case "Numpad2":
+          if (isFlipped) handleRating(KnowledgeLevel.FORGOT);
+          break;
+        case "Digit3": case "Numpad3":
+          if (isFlipped) handleRating(KnowledgeLevel.REMEMBER);
+          break;
+        case "Digit4": case "Numpad4":
+          if (isFlipped) handleRating(KnowledgeLevel.KNOW);
+          break;
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFlipped, showStats, collection]);
 
   const handleRating = async (level: KnowledgeLevel) => {
     if (!isFlipped) return;
@@ -83,31 +133,55 @@ export default function FlashcardsPage() {
 
     setStats((prev) => ({
       ...prev,
-      dontKnow:
-        level === KnowledgeLevel.DONT_KNOW ? prev.dontKnow + 1 : prev.dontKnow,
+      dontKnow: level === KnowledgeLevel.DONT_KNOW ? prev.dontKnow + 1 : prev.dontKnow,
       forgot: level === KnowledgeLevel.FORGOT ? prev.forgot + 1 : prev.forgot,
-      remember:
-        level === KnowledgeLevel.REMEMBER ? prev.remember + 1 : prev.remember,
+      remember: level === KnowledgeLevel.REMEMBER ? prev.remember + 1 : prev.remember,
       know: level === KnowledgeLevel.KNOW ? prev.know + 1 : prev.know,
     }));
 
     setIsFlipped(false);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (currentIndex < cards.length - 1) {
         setCurrentIndex((prev) => prev + 1);
       } else {
         const duration = Math.floor((Date.now() - startTime) / 1000);
+        const finalKnow = stats.know + (level === KnowledgeLevel.KNOW ? 1 : 0);
         setStats((prev) => ({ ...prev, duration }));
-        if (user) updateFlashcardStats(user.uid, cards.length, duration);
+
+        if (user) {
+          const lastStudy = profile?.lastStudyDate
+            ? new Date(
+                typeof profile.lastStudyDate.toDate === "function"
+                  ? profile.lastStudyDate.toDate()
+                  : profile.lastStudyDate,
+              )
+            : null;
+          const isComeback = lastStudy
+            ? Date.now() - lastStudy.getTime() > 7 * 24 * 60 * 60 * 1000
+            : false;
+
+          await updateFlashcardStats(user.uid, cards.length, duration);
+          checkAchievements({
+            duration,
+            allKnow: finalKnow === cards.length,
+            isComeback,
+          });
+        }
+
         playSessionCompleteIfEnabled();
         setShowStats(true);
       }
     }, 200);
   };
 
-  const handleShuffle = () => {
-    if (window.confirm(t.words.flashcards.shuffleConfirm)) {
+  const handleShuffle = async () => {
+    const ok = await confirm({
+      title: t.words.flashcards.shuffle,
+      message: t.words.flashcards.shuffleConfirm,
+      type: "warning",
+    });
+    if (ok) {
       setCards((prev) => [...prev].sort(() => Math.random() - 0.5));
       setCurrentIndex(0);
       setIsFlipped(false);
@@ -125,9 +199,9 @@ export default function FlashcardsPage() {
       animate={{ opacity: 1 }}
       className="fixed inset-0 bg-[#F5F2ED] dark:bg-[#0F0E0C] flex flex-col overflow-hidden"
     >
-      {/* Header — стиль как в HomePage top bar */}
+      {/* Header */}
       <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
-        <div className="max-w-6xl mx-auto flex items-center justify-between bg-white/60 dark:bg-[#1A1917]/60 backdrop-blur-xl p-2 sm:p-3 pr-4 sm:pr-5 rounded-xl sm:rounded-[2rem] border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm">
+        <div className="max-w-6xl mx-auto flex items-center justify-between bg-white/60 dark:bg-[#1A1917]/60 backdrop-blur-xl p-2 sm:p-3 pr-4 sm:pr-5 rounded-xl sm:rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm">
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate(-1)}
@@ -141,6 +215,12 @@ export default function FlashcardsPage() {
                 {collection.name}
               </h1>
             </div>
+            {dueOnly && (
+              <span className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-black text-[#FF5733] bg-[#FFF0ED] dark:bg-[#2A1A15] rounded-full shrink-0">
+                <Clock size={10} />
+                {t.words.flashcards.dueOnly}
+              </span>
+            )}
           </div>
 
           <button
@@ -158,7 +238,7 @@ export default function FlashcardsPage() {
       {/* Progress bar */}
       <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
         <div className="max-w-6xl mx-auto flex items-center gap-4">
-          <div className="sub-title min-w-[40px] text-center">
+          <div className="sub-title min-w-10 text-center">
             {currentIndex + 1} / {cards.length}
           </div>
           <div className="flex-1 bg-[#EDEAE4] dark:bg-[#242220] rounded-full h-3.5 overflow-hidden">
@@ -167,21 +247,49 @@ export default function FlashcardsPage() {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="uc-title min-w-[40px] text-center">
+          <div className="uc-title min-w-10 text-center">
             {Math.round(progress)}%
           </div>
         </div>
       </div>
 
-      {/* Main Card Area */}
+      {/* Main Card Area — swipeable */}
       <main className="flex-1 min-h-0 flex items-center justify-center px-4 sm:px-6 py-3 sm:py-4 overflow-auto">
-        <div className="w-full max-w-5xl shrink-0">
+        <motion.div
+          className="w-full max-w-5xl shrink-0 touch-pan-y"
+          style={{ x: dragX, rotate: dragRotate }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.25}
+          dragMomentum={false}
+          onDragStart={() => { swipedRef.current = false; }}
+          onDrag={(_, info) => {
+            if (Math.abs(info.offset.x) > 8) swipedRef.current = true;
+          }}
+          onDragEnd={(_, info) => {
+            const didSwipe = swipedRef.current;
+            // keep swipedRef true briefly so the onClick in Flashcard can check it
+            setTimeout(() => { swipedRef.current = false; }, 80);
+
+            if (!didSwipe || Math.abs(info.offset.x) < 60) return;
+
+            if (!isFlipped) {
+              setIsFlipped(true);
+            } else {
+              // swipe right = know, swipe left = don't know
+              if (info.offset.x > 0) handleRating(KnowledgeLevel.KNOW);
+              else handleRating(KnowledgeLevel.DONT_KNOW);
+            }
+          }}
+        >
           <Flashcard
             card={currentCard}
             isFlipped={isFlipped}
-            onFlip={() => setIsFlipped(!isFlipped)}
+            onFlip={() => {
+              if (!swipedRef.current) setIsFlipped(f => !f);
+            }}
           />
-        </div>
+        </motion.div>
       </main>
 
       {/* Rating Buttons */}
@@ -223,21 +331,23 @@ export default function FlashcardsPage() {
               key={btn.level}
               disabled={!isFlipped}
               onClick={() => handleRating(btn.level)}
-              className={`flex flex-col items-center justify-center py-3 sm:py-4 rounded-xl sm:rounded-[2rem] transition-all active:scale-95 ${
+              className={`flex flex-col items-center justify-center py-3 sm:py-4 rounded-xl sm:rounded-4xl transition-all active:scale-95 ${
                 isFlipped
                   ? `${btn.color} text-white scale-100 border border-transparent shadow-lg`
                   : "bg-[#EDEAE4] dark:bg-[#242220] text-[#B5B0A8] opacity-60 scale-95 grayscale cursor-not-allowed border border-[#E0DBD3] dark:border-[#2E2C29]"
               }`}
             >
-              <span className="text-lg sm:text-xl md:text-2xl mb-0.5 sm:mb-1">
-                {btn.emoji}
-              </span>
+              <span className="text-lg sm:text-xl md:text-2xl mb-0.5 sm:mb-1">{btn.emoji}</span>
               <span className="text-[10px] sm:text-xs md:text-sm font-semibold leading-tight">
                 {btn.label}
               </span>
             </button>
           ))}
         </div>
+
+        <p className="hidden md:block text-center sub-title mt-3 opacity-60">
+          {t.words.flashcards.keyboardHint}
+        </p>
       </div>
 
       <FlashcardStatsModal
@@ -245,6 +355,12 @@ export default function FlashcardsPage() {
         stats={stats}
         onClose={() => navigate(-1)}
         onRestart={loadData}
+      />
+
+      <ConfirmDialog
+        {...confirmState}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
       />
     </motion.div>
   );

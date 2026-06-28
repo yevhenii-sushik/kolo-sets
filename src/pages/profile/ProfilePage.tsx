@@ -2,9 +2,9 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
+import { useData } from "../../contexts/DataContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
-import { getCollections } from "../../utils/storage";
 import { UserProfile } from "../../types";
 import {
   ALL_ACHIEVEMENTS,
@@ -15,7 +15,7 @@ import {
   formatTime,
   getWeekStats,
 } from "../../utils/progress";
-import { getUserProfile, updateUserProfile } from "../../firebase/firestore";
+import { updateUserProfile } from "../../firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import ActivityCalendar from "../../components/ActivityCalendar";
 import AchievementCard from "../../components/AchievementCard";
@@ -35,108 +35,74 @@ import {
 import { motion } from "framer-motion";
 
 export default function ProfilePage() {
-  const { t } = useI18n(); // Подключаем t
+  const { t } = useI18n();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const {
+    profile: rawProfile,
+    totalCards,
+    collections,
+    profileLoading,
+    refreshProfile,
+  } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
-  const [profile, setProfile] = useState<UserProfile | null>(() => {
-    if (!user?.uid) return null;
-    const saved = localStorage.getItem(`profile_cache_${user.uid}`);
-    try {
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
+  // Приводим сырые данные из контекста к типу UserProfile для компонента
+  const profile = useMemo<UserProfile | null>(() => {
+    if (!rawProfile || !user) return null;
+    const lastStudyDate =
+      typeof rawProfile.lastStudyDate?.toDate === 'function'
+        ? rawProfile.lastStudyDate.toDate()
+        : rawProfile.lastStudyDate
+        ? new Date(rawProfile.lastStudyDate)
+        : null;
+    return {
+      uid: user.uid,
+      displayName: user.displayName || rawProfile.displayName || 'User',
+      email: user.email || '',
+      createdAt: rawProfile.createdAt?.toDate?.() ?? new Date(rawProfile.createdAt ?? Date.now()),
+      stats: rawProfile.stats ?? {
+        totalCards: 0, cardsLearned: 0, quizzesTaken: 0,
+        flashcardSessions: 0, totalStudyTime: 0, perfectQuizzes: 0,
+      },
+      currentStreak: rawProfile.currentStreak ?? 0,
+      longestStreak: rawProfile.longestStreak ?? 0,
+      lastStudyDate,
+      achievements: rawProfile.achievements ?? [],
+      studyHistory: rawProfile.studyHistory ?? [],
+    };
+  }, [rawProfile, user]);
 
-  const [totalCards, setTotalCards] = useState(() => {
-    if (!user?.uid) return 0;
-    const saved = localStorage.getItem(`total_cards_cache_${user.uid}`);
-    return saved ? parseInt(saved) : 0;
-  });
-
-  const [loading, setLoading] = useState(!profile);
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
-    displayName: "",
-    username: "",
-    photoURL: "",
+    displayName: '',
+    username: '',
+    photoURL: '',
   });
 
+  // Синхронизируем editForm когда данные профиля появляются
   useEffect(() => {
-    loadProfile();
-  }, [user?.uid]);
-
-  const loadProfile = async () => {
-    if (!user) return;
-    try {
-      const profileData = (await getUserProfile(user.uid)) as any;
-      const colls = await getCollections();
-      const total = colls.reduce((sum, coll) => sum + coll.cards.length, 0);
-      const lastStudyDate = profileData.lastStudyDate?.toDate?.() || null;
-      let currentStreak = profileData.currentStreak || 0;
-
-      if (lastStudyDate) {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const lastDate = new Date(lastStudyDate);
-        lastDate.setHours(0, 0, 0, 0);
-        if (
-          Math.floor(
-            (today.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24),
-          ) > 1
-        ) {
-          currentStreak = 0;
-        }
-      }
-
-      const loadedProfile: UserProfile = {
-        uid: user.uid,
-        displayName: user.displayName || profileData.displayName || "User",
-        email: user.email || "",
-        createdAt: profileData.createdAt?.toDate() || new Date(),
-        stats: profileData.stats || {
-          totalCards: 0,
-          cardsLearned: 0,
-          quizzesTaken: 0,
-          flashcardSessions: 0,
-          totalStudyTime: 0,
-          perfectQuizzes: 0,
-        },
-        currentStreak: currentStreak,
-        longestStreak: profileData.longestStreak || 0,
-        lastStudyDate: lastStudyDate,
-        achievements: profileData.achievements || [],
-        studyHistory: profileData.studyHistory || [],
-      };
-
-      setProfile(loadedProfile);
-      setTotalCards(total);
-
-      localStorage.setItem(
-        `profile_cache_${user.uid}`,
-        JSON.stringify(loadedProfile),
-      );
-      localStorage.setItem(`total_cards_cache_${user.uid}`, total.toString());
-
+    if (rawProfile && user) {
       setEditForm({
-        displayName: loadedProfile.displayName,
-        username: profileData.username || "",
-        photoURL: user.photoURL || profileData.photoURL || "",
+        displayName: user.displayName || rawProfile.displayName || '',
+        username: rawProfile.username || '',
+        photoURL: user.photoURL || rawProfile.photoURL || '',
       });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [rawProfile, user]);
 
   const isTodayActive =
     profile?.lastStudyDate &&
-    new Date(profile.lastStudyDate).toDateString() ===
-      new Date().toDateString();
+    new Date(profile.lastStudyDate).toDateString() === new Date().toDateString();
+
+  const handleAvatarEasterEgg = (e: React.DragEvent) => {
+    e.preventDefault();
+    success("Так называемый 'секретный' контент загружается...");
+    setTimeout(() => {
+      window.open("https://youtu.be/3MyecXEKBlo?si=Xj8Ih-GwndYy0Zok&t=27s", "_blank");
+    }, 2000);
+  };
 
   const handleSaveProfile = async () => {
     if (!user || !profile) return;
@@ -150,7 +116,7 @@ export default function ProfilePage() {
         username: editForm.username,
         photoURL: editForm.photoURL,
       });
-      setProfile({ ...profile, displayName: editForm.displayName });
+      await refreshProfile();
       setIsEditing(false);
       success(t.profile.toast.success);
     } catch (err) {
@@ -180,7 +146,7 @@ export default function ProfilePage() {
     [profile],
   );
 
-  if (loading && !profile)
+  if (profileLoading && !profile)
     return (
       <div className="max-w-5xl mx-auto space-y-6 pb-32 pt-4 px-4 animate-pulse">
         <div className="h-48 bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29]" />
@@ -191,8 +157,8 @@ export default function ProfilePage() {
       </div>
     );
 
-  // Заглушка для гостей / когда профиль не загрузился
-  if (!profile && !loading) {
+  // Заглушка когда профиль не загрузился
+  if (!profile && !profileLoading) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -211,10 +177,7 @@ export default function ProfilePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
-              onClick={() => {
-                setLoading(true);
-                loadProfile();
-              }}
+              onClick={refreshProfile}
               className="px-6 py-3 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] rounded-2xl font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2"
             >
               <RefreshCw size={16} />
@@ -249,14 +212,21 @@ export default function ProfilePage() {
                 <img
                   src={editForm.photoURL}
                   alt="Profile"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover cursor-grab active:cursor-grabbing"
+                  onDragStart={handleAvatarEasterEgg} // ВОТ ОНА, ТВОЯ ПАСХАЛКА
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-[#1A1714] dark:text-[#F0EDE8] text-5xl font-serif italic">
+                <div
+                  className="w-full h-full flex items-center justify-center text-[#1A1714] dark:text-[#F0EDE8] text-5xl font-serif italic cursor-help"
+                  onDragStart={handleAvatarEasterEgg} // И здесь тоже, если фото нет
+                  draggable // Делаем div перетаскиваемым для срабатывания
+                >
                   {profile.displayName.charAt(0)}
                 </div>
               )}
             </div>
+            {/* ... остальной код кнопки Camera */}
+
             {isEditing && (
               <button
                 className="absolute -bottom-2 -right-2 w-12 h-12 bg-[#FF5733] text-white rounded-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-all"
@@ -540,6 +510,7 @@ export default function ProfilePage() {
                 achievement,
                 profile,
                 totalCards,
+                collections.length,
               )}
             />
           ))}

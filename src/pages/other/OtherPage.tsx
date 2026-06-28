@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChevronRight, Rocket, FolderDown, PocketKnife } from "lucide-react";
+import { ChevronRight, Rocket, FolderDown, PocketKnife, SlidersHorizontal } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { motion } from "framer-motion";
 
@@ -61,12 +61,12 @@ export default function OtherPage() {
   const { t } = useI18n();
 
   const menuLinks = [
-    // {
-    //   id: "settings",
-    //   label: t.other.settings,
-    //   icon: Bolt,
-    //   path: "/other/settings",
-    // },
+    {
+      id: "settings",
+      label: t.other.settings,
+      icon: SlidersHorizontal,
+      path: "/other/settings",
+    },
     {
       id: "updates",
       label: t.other.updates,
@@ -85,8 +85,6 @@ export default function OtherPage() {
       icon: FolderDown,
       path: "/other/data-management",
     },
-    // { id: "privacy", label: t.other.privacy, icon: ShieldCheck,path: "/other/privacy" },
-    // { id: "about", label: t.other.systemInfo, icon: Info, path: "/other/system-info" },
   ];
 
   return (
