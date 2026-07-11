@@ -306,7 +306,7 @@ export default function FlashcardsPage() {
       </main>
 
       {/* Rating Buttons */}
-      <div className="shrink-0 pb-6 sm:pb-8 px-4 sm:px-6">
+      <div className="shrink-0 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-8 px-4 sm:px-6">
         <p className="text-center text-[11px] sm:text-[13px] font-medium text-[#B5B0A8] dark:text-[#4A4742] mb-2 sm:mb-4">
           {isFlipped
             ? t.words.flashcards.hints.rateKnowledge

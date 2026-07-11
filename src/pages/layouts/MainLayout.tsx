@@ -12,6 +12,7 @@ import OnboardingModal, {
   ONBOARDING_RESTART_EVENT,
 } from "../../components/OnboardingModal";
 import VerifyEmailBanner from "../../components/VerifyEmailBanner";
+import InstallPrompt from "../../components/InstallPrompt";
 import SearchModal from "../../components/SearchModal";
 
 const SIDEBAR_KEY = "sidebar-open";
@@ -348,6 +349,7 @@ export default function MainLayout() {
       />
 
       <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
+      <InstallPrompt />
     </div>
   );
 }

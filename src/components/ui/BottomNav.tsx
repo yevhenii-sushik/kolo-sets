@@ -16,8 +16,8 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="md:hidden fixed h-24 pb-5 bottom-0 left-0 right-0 
-                    bg-[#F5F2ED]/80 backdrop-blur-lg dark:bg-[#0F0E0C]/70 backdrop-blur-lg 
+      className="md:hidden fixed h-24 pb-[max(1.25rem,env(safe-area-inset-bottom))] bottom-0 left-0 right-0
+                    bg-[#F5F2ED]/80 backdrop-blur-lg dark:bg-[#0F0E0C]/70 backdrop-blur-lg
                     flex justify-around items-center px-2 z-50"
     >
       {navItems.map(({ to, labelKey, icon: Icon }) => (
