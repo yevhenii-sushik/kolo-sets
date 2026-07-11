@@ -41,7 +41,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
 
 function ErrorFallback({ error, onReset }: { error: Error | null; onReset: () => void }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#F5F2ED] dark:bg-[#0F0E0C] px-6 text-center">
+    <div className="min-h-dvh flex flex-col items-center justify-center bg-[#F5F2ED] dark:bg-[#0F0E0C] px-6 text-center">
       <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mb-6">
         <AlertTriangle size={28} className="text-red-500" />
       </div>

@@ -97,7 +97,7 @@ export default function SearchModal({ isOpen, onClose }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.97 }}
             transition={{ duration: 0.18 }}
-            className="fixed top-[10vh] left-1/2 -translate-x-1/2 z-[201] w-full max-w-2xl px-4"
+            className="fixed top-[10dvh] left-1/2 -translate-x-1/2 z-201 w-full max-w-2xl px-4"
           >
             <div className="bg-white dark:bg-[#1A1917] rounded-4xl shadow-2xl shadow-black/20 border border-[#E0DBD3] dark:border-[#2E2C29] overflow-hidden">
               {/* Search input */}
@@ -125,7 +125,7 @@ export default function SearchModal({ isOpen, onClose }: Props) {
               </div>
 
               {/* Results */}
-              <div className="max-h-[60vh] overflow-y-auto">
+              <div className="max-h-[60dvh] overflow-y-auto">
                 {query.trim().length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-14 text-center px-6">
                     <Search size={32} className="text-[#D0CBC4] dark:text-[#3A3735] mb-3" />

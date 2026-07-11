@@ -44,7 +44,7 @@ export default function ImportCardsModal({
       {/* Overlay с эффектом размытия */}
       <div className="absolute inset-0 bg-black/40 backdrop-blur-md" onClick={onClose} />
 
-      <div className="relative bg-white/90 dark:bg-gray-900/95 border border-white/20 dark:border-gray-800 rounded-[2.5rem] shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col animate-in zoom-in duration-300">
+      <div className="relative bg-white/90 dark:bg-gray-900/95 border border-white/20 dark:border-gray-800 rounded-[2.5rem] shadow-2xl max-w-5xl w-full max-h-[90dvh] overflow-hidden flex flex-col animate-in zoom-in duration-300">
         
         {/* Header */}
         <div className="p-6 md:p-8 flex justify-between items-center border-b border-gray-100 dark:border-gray-800">

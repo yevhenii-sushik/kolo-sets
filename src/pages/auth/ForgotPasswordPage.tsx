@@ -32,7 +32,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#F5F2ED] dark:bg-[#0F0E0C] px-4 transition-colors duration-500">
+    <div className="min-h-dvh flex flex-col items-center justify-center bg-[#F5F2ED] dark:bg-[#0F0E0C] px-4 transition-colors duration-500">
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}

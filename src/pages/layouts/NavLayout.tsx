@@ -5,7 +5,7 @@ export default function NavLayout() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen my-auto mx-auto max-w-7xl px-5  sm:px-6 lg:px-8 py-8">
+    <div className="min-h-dvh my-auto mx-auto max-w-7xl px-5  sm:px-6 lg:px-8 py-8">
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#F5F2ED] dark:bg-[#0F0E0C]">
         <div className="px-3 h-12 flex items-center justify-between">
           <button

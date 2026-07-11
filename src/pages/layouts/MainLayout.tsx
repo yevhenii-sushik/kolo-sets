@@ -87,7 +87,7 @@ export default function MainLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F2ED] dark:bg-[#0F0E0C] text-gray-900 dark:text-gray-100">
+    <div className="min-h-dvh bg-[#F5F2ED] dark:bg-[#0F0E0C] text-gray-900 dark:text-gray-100">
       <header className="fixed top-0 left-0 right-0 z-100 bg-[#F5F2ED] dark:bg-[#0F0E0C]">
         <div className="px-4 h-16 flex items-center justify-between">
           <div className="flex items-center">
@@ -329,10 +329,12 @@ export default function MainLayout() {
         </div>
       </header>
 
-      <div className="flex pt-16 pb-20 md:pb-0">
+      <div className="flex pt-16">
         <Sidebar open={open} />
 
-        <main className="flex-1 w-full max-w-5xl mx-auto pb-20 px-5 sm:px-6 lg:px-8 py-6">
+        {/* pb-24 = ровно высота BottomNav (h-24=96px); pb-20 (80px) оставлял
+            низ страницы частично под нижним меню на мобилке */}
+        <main className="flex-1 w-full max-w-5xl mx-auto pt-6 pb-24 md:pb-6 px-5 sm:px-6 lg:px-8">
           <VerifyEmailBanner />
           <Outlet />
         </main>

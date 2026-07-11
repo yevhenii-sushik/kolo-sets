@@ -247,7 +247,7 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
           onClick={() => setShowWordsModal(false)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-[2rem] w-full max-w-lg shadow-2xl flex flex-col max-h-[85vh]"
+            className="bg-white dark:bg-gray-800 rounded-[2rem] w-full max-w-lg shadow-2xl flex flex-col max-h-[85dvh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal header */}

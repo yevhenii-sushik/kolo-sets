@@ -79,7 +79,7 @@ export default function AddCardModal({
         onClick={onClose} 
       />
 
-      <div className="relative bg-white/95 dark:bg-gray-900/95 border border-white/20 dark:border-gray-800 rounded-[3rem] shadow-2xl max-w-2xl w-full max-h-[92vh] overflow-hidden flex flex-col animate-in zoom-in duration-300">
+      <div className="relative bg-white/95 dark:bg-gray-900/95 border border-white/20 dark:border-gray-800 rounded-[3rem] shadow-2xl max-w-2xl w-full max-h-[92dvh] overflow-hidden flex flex-col animate-in zoom-in duration-300">
         
         {/* Шапка */}
         <div className="px-8 py-6 flex justify-between items-center border-b border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">

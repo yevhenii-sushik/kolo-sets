@@ -204,7 +204,7 @@ export default function DailyGameModal({ onClose }: Props) {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 60, opacity: 0 }}
         transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-        className="relative w-full sm:max-w-md bg-[#FAF8F5] dark:bg-[#1A1917] rounded-t-[2rem] sm:rounded-[2rem] overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[90vh]"
+        className="relative w-full sm:max-w-md bg-[#FAF8F5] dark:bg-[#1A1917] rounded-t-[2rem] sm:rounded-[2rem] overflow-hidden flex flex-col max-h-[96dvh] sm:max-h-[90dvh]"
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-6 pb-4 flex-shrink-0">

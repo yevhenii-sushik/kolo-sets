@@ -87,7 +87,7 @@ export default function LandingPage() {
   const heroScale = useTransform(scrollYProgress, [0, 0.55], [1, 0.92]);
 
   return (
-    <div className="min-h-screen bg-[#F5F2ED] dark:bg-[#0F0E0C] selection:bg-[#FF5733]/20 overflow-x-hidden">
+    <div className="min-h-dvh bg-[#F5F2ED] dark:bg-[#0F0E0C] selection:bg-[#FF5733]/20 overflow-x-hidden">
       {/* ── Sticky nav ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#F5F2ED]/80 dark:bg-[#0F0E0C]/80 border-b border-[#E0DBD3]/50 dark:border-[#2E2C29]/50">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
@@ -117,7 +117,7 @@ export default function LandingPage() {
       {/* ── Hero ── */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center px-6 pt-20 pb-24"
+        className="relative min-h-dvh flex items-center justify-center px-6 pt-20 pb-24"
       >
         <motion.div
           style={{ opacity: heroOpacity, scale: heroScale }}

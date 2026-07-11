@@ -15,7 +15,7 @@ export default function LegalLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F2ED] dark:bg-[#0F0E0C]">
+    <div className="min-h-dvh bg-[#F5F2ED] dark:bg-[#0F0E0C]">
       {/* Sticky header */}
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#F5F2ED]/85 dark:bg-[#0F0E0C]/85 border-b border-[#E0DBD3]/60 dark:border-[#2E2C29]/60">
         <div className="max-w-3xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">

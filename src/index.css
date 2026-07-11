@@ -53,13 +53,23 @@
   }
 }
 
-/* Стили для флешкарточек (оставляем как есть) */
+/* Стили для флешкарточек.
+   Мобильный Safari/WebKit игнорирует непрефиксованные backface-visibility /
+   transform-style — без -webkit- лицевая сторона "просвечивает" сквозь
+   тыльную во время/после переворота. translateZ(0) + will-change заставляют
+   WebKit создать отдельный composite-слой для каждой грани, что и решает
+   проблему на реальных мобильных устройствах (в отличие от desktop-эмуляции
+   в devtools, где баг обычно не воспроизводится). */
 .flip-card {
   perspective: 1000px;
+  -webkit-perspective: 1000px;
 }
 .flip-card-inner {
+  position: relative;
   transition: transform 0.6s;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
 }
 .flip-card.flipped .flip-card-inner {
   transform: rotateY(180deg);
@@ -67,7 +77,11 @@
 .flip-card-front,
 .flip-card-back {
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 .flip-card-back {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(0);
+  -webkit-transform: rotateY(180deg) translateZ(0);
 }

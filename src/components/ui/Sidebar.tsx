@@ -21,7 +21,7 @@ export default function Sidebar({ open }: { open: boolean }) {
       <div className={`hidden md:block shrink-0 transition-[width] duration-300 ${open ? 'w-50' : 'w-20'}`} />
       
       <aside
-        className={`hidden md:flex flex-col fixed top-16 left-0 h-[calc(100vh-64px)] 
+        className={`hidden md:flex flex-col fixed top-16 left-0 h-[calc(100dvh-64px)]
           transition-[width] duration-300 z-40
       
           ${open ? 'w-45' : 'w-18'}
