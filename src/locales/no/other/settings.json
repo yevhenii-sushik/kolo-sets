@@ -1,0 +1,43 @@
+{
+  "title": "Innstillinger",
+  "subtitle": "Tilpass Kolo-opplevelsen din",
+  "sections": {
+    "appearance": {
+      "title": "Utseende",
+      "light": "Lyst",
+      "dark": "Mørkt",
+      "system": "System"
+    },
+    "language": {
+      "title": "Grensesnittspråk",
+      "recommendation": "Velg appens grensesnittspråk. Det påvirker ikke språket i ordsamlingene dine."
+    },
+    "sound": {
+      "title": "Lyd",
+      "effects": "Lydeffekter",
+      "effectsDesc": "Tilbakemeldingslyder for riktige/gale svar og fullføring av sesjoner"
+    },
+    "data": {
+      "title": "Databehandling",
+      "export": "Eksporter sikkerhetskopi",
+      "exportDesc": "Lagre alle samlingene dine som en .json-fil for lokal lagring",
+      "import": "Importer data",
+      "importDesc": "Gjenopprett samlinger fra en Kolo .json-sikkerhetskopifil",
+      "exportSuccess": "Sikkerhetskopi opprettet",
+      "exportError": "Eksport mislyktes",
+      "importSuccess": "Importert",
+      "importError": "Ugyldig filformat",
+      "noCollections": "Ingen samlinger å eksportere"
+    },
+    "dangerZone": {
+      "title": "Faresone",
+      "delete": "Slett konto",
+      "deleteDesc": "Alle samlingene, fremgangen og prestasjonene dine vil bli permanent slettet. Denne handlingen kan ikke angres.",
+      "confirmTitle": "Slett konto?",
+      "confirmMessage": "Dette vil permanent slette kontoen din, alle samlinger og fremgangen. Er du sikker?",
+      "deleteSuccess": "Konto slettet",
+      "deleteError": "Klarte ikke å slette kontoen. Logg ut og inn igjen, og prøv på nytt.",
+      "deleting": "Sletter..."
+    }
+  }
+}

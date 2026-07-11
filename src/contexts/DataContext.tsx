@@ -26,7 +26,7 @@ interface DataContextType {
   refreshProfile: () => Promise<void>;
   refreshCollections: () => Promise<void>;
   /** Optimistic update — вызывать после мутации коллекций */
-  setCollections: (c: Collection[]) => void;
+  setCollections: (c: Collection[] | ((prev: Collection[]) => Collection[])) => void;
   /** Очередь разблокированных достижений для показа баннера */
   pendingUnlocks: Achievement[];
   /** Убрать первое достижение из очереди */
@@ -71,9 +71,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
   // Ref для sync-доступа к collections внутри колбэков без stale closure
   const collectionsRef = useRef<Collection[]>([]);
 
-  const setCollections = useCallback((c: Collection[]) => {
-    collectionsRef.current = c;
-    setCollectionsState(c);
+  // Поддерживаем функциональные апдейтеры: оптимистичные обновления/откаты
+  // должны применяться к актуальному состоянию, а не к снапшоту из замыкания
+  const setCollections = useCallback((c: Collection[] | ((prev: Collection[]) => Collection[])) => {
+    const next = typeof c === 'function' ? c(collectionsRef.current) : c;
+    collectionsRef.current = next;
+    setCollectionsState(next);
   }, []);
 
   const setProfile = useCallback((p: any, uid: string) => {
@@ -122,6 +125,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
       const currentCollections = collectionsRef.current;
       const currentTotalCards = currentCollections.reduce((s, c) => s + c.cards.length, 0);
 
+      // Всегда синхронизируем контекст со свежим профилем (обновляет стрик в шапке)
+      setProfile(freshProfile, user.uid);
+
       const newIds = computeNewAchievements(freshProfile, currentTotalCards, {
         collectionsCount: currentCollections.length,
         ...extras,
@@ -140,7 +146,6 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
       setPendingUnlocks(prev => [...prev, ...newAchievements]);
 
-      // Обновляем профиль в контексте с новыми достижениями
       setProfile({ ...freshProfile, achievements: [...existingIds, ...newIds] }, user.uid);
     } catch (err) {
       console.error('Achievement check failed:', err);

@@ -4,6 +4,7 @@ import {
   getUserCollections,
   getUserCollection,
   saveUserCollection,
+  updateUserCollectionFields,
   deleteUserCollection as deleteFirestoreCollection
 } from '../firebase/firestore';
 
@@ -119,6 +120,22 @@ export const updateCollection = async (updatedCollection: Collection): Promise<v
   }
 };
 
+// Точечно обновить метаданные коллекции (isFavorite, folderId, ...).
+// Для залогиненных — updateDoc только изменённых полей (не гоняем все карточки);
+// undefined = удалить поле. Для гостей — обычное локальное обновление.
+export const updateCollectionMeta = async (
+  coll: Collection,
+  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language'>>
+): Promise<void> => {
+  const user = auth.currentUser;
+
+  if (user) {
+    await updateUserCollectionFields(user.uid, coll.id, fields);
+  } else {
+    await updateCollection({ ...coll, ...fields });
+  }
+};
+
 // Удалить коллекцию
 export const deleteCollection = async (id: string): Promise<void> => {
   const user = auth.currentUser;
@@ -161,30 +178,31 @@ export const createCard = (
   };
 };
 
+// Карточка ожидает повторения? (interval === 0 = ещё не изучалась)
+// Единственная точка правды для due-логики — используется в App, HomePage,
+// ReviewPage, FlashcardsPage и CollectionCard.
+export const isDueCard = (card: Card): boolean => {
+  if (!card.srsData?.nextReview || card.srsData.interval === 0) return false;
+  const next = card.srsData.nextReview;
+  const d = next instanceof Date ? next : new Date((next as any)?.toDate?.() ?? next);
+  return d <= new Date();
+};
+
 // Обновить SRS данные карточки на основе оценки
 export const updateSRSData = (card: Card, level: KnowledgeLevel): Card => {
   const srs = { ...card.srsData };
   const now = new Date();
-  
+
   // Алгоритм SM-2 (упрощенная версия)
   let quality = 0;
   switch (level) {
-    case KnowledgeLevel.DONT_KNOW:
-      quality = 0;
-      break;
-    case KnowledgeLevel.FORGOT:
-      quality = 2;
-      break;
-    case KnowledgeLevel.REMEMBER:
-      quality = 3;
-      break;
-    case KnowledgeLevel.KNOW:
-      quality = 5;
-      break;
+    case KnowledgeLevel.DONT_KNOW:  quality = 0; break;
+    case KnowledgeLevel.FORGOT:     quality = 2; break;
+    case KnowledgeLevel.REMEMBER:   quality = 3; break;
+    case KnowledgeLevel.KNOW:       quality = 5; break;
   }
-  
+
   if (quality >= 3) {
-    // Правильный ответ
     if (srs.repetitions === 0) {
       srs.interval = 1;
     } else if (srs.repetitions === 1) {
@@ -194,23 +212,24 @@ export const updateSRSData = (card: Card, level: KnowledgeLevel): Card => {
     }
     srs.repetitions += 1;
   } else {
-    // Неправильный ответ - сбрасываем прогресс
     srs.repetitions = 0;
     srs.interval = 1;
   }
-  
-  // Обновляем коэффициент легкости
+
   srs.easinessFactor = Math.max(
     1.3,
     srs.easinessFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
   );
-  
-  // Устанавливаем дату следующего повторения
+
   const nextReview = new Date(now);
   nextReview.setDate(nextReview.getDate() + srs.interval);
   srs.nextReview = nextReview;
   srs.lastReviewed = now;
-  
+
+  // Per-card review counters
+  srs.totalReviews = (srs.totalReviews ?? 0) + 1;
+  if (quality >= 3) srs.correctReviews = (srs.correctReviews ?? 0) + 1;
+
   return {
     ...card,
     srsData: srs
@@ -237,6 +256,47 @@ export const parseImportText = (text: string): Omit<Card, 'id' | 'srsData' | 'cr
   }
   
   return cards;
+};
+
+// ── Порядок коллекций (localStorage, без Firestore-записей на каждый drag) ──
+
+export const getCollectionOrder = (userId: string): string[] => {
+  try {
+    return JSON.parse(localStorage.getItem(`kolo_col_order_${userId}`) ?? '[]');
+  } catch {
+    return [];
+  }
+};
+
+export const saveCollectionOrder = (userId: string, ids: string[]): void => {
+  localStorage.setItem(`kolo_col_order_${userId}`, JSON.stringify(ids));
+};
+
+export const applyCollectionOrder = (collections: import('../types').Collection[], userId: string): import('../types').Collection[] => {
+  const order = getCollectionOrder(userId);
+  if (order.length === 0) return collections;
+  const map = new Map(collections.map(c => [c.id, c]));
+  const sorted: import('../types').Collection[] = [];
+  for (const id of order) {
+    const c = map.get(id);
+    if (c) { sorted.push(c); map.delete(id); }
+  }
+  // Новые коллекции (которых нет в сохранённом порядке) — в конец
+  map.forEach(c => sorted.push(c));
+  return sorted;
+};
+
+// ── Ежедневная цель (карточек в день) ──
+const DAILY_GOAL_KEY = 'kolo_daily_goal';
+
+export const getDailyGoal = (): number => {
+  const saved = localStorage.getItem(DAILY_GOAL_KEY);
+  const n = saved ? parseInt(saved, 10) : 10;
+  return isNaN(n) ? 10 : Math.max(1, Math.min(200, n));
+};
+
+export const setDailyGoal = (goal: number): void => {
+  localStorage.setItem(DAILY_GOAL_KEY, String(Math.max(1, Math.min(200, goal))));
 };
 
 // Тема (dark/light/system mode)

@@ -1,12 +1,18 @@
 import Sidebar from "../../components/ui/Sidebar";
 import BottomNav from "../../components/ui/BottomNav";
 import { Outlet, Link } from "react-router-dom";
-import { Menu, Languages, Flame, Trophy, ChevronRight } from "lucide-react";
+import { Menu, Languages, Flame, Trophy, ChevronRight, Search } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { Language } from "../../locales";
 import { useData } from "../../contexts/DataContext";
 import { motion, AnimatePresence } from "framer-motion";
+import OnboardingModal, {
+  ONBOARDING_STORAGE_KEY,
+  ONBOARDING_RESTART_EVENT,
+} from "../../components/OnboardingModal";
+import VerifyEmailBanner from "../../components/VerifyEmailBanner";
+import SearchModal from "../../components/SearchModal";
 
 const SIDEBAR_KEY = "sidebar-open";
 
@@ -17,6 +23,8 @@ export default function MainLayout() {
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [showStreakCard, setShowStreakCard] = useState(false);
 
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [open, setOpen] = useState<boolean>(() => {
     const saved = localStorage.getItem(SIDEBAR_KEY);
     return saved === null ? true : saved === "true";
@@ -27,6 +35,33 @@ export default function MainLayout() {
   useEffect(() => {
     localStorage.setItem(SIDEBAR_KEY, String(open));
   }, [open]);
+
+  // Show onboarding once for new users
+  useEffect(() => {
+    if (!localStorage.getItem(ONBOARDING_STORAGE_KEY)) {
+      const timer = setTimeout(() => setShowOnboarding(true), 900);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  // Listen for restart event from ProfilePage
+  useEffect(() => {
+    const handler = () => setShowOnboarding(true);
+    window.addEventListener(ONBOARDING_RESTART_EVENT, handler);
+    return () => window.removeEventListener(ONBOARDING_RESTART_EVENT, handler);
+  }, []);
+
+  // Cmd/Ctrl+K → open search
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setShowSearch(s => !s);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
 
   const streakData = useMemo(() => {
     if (!profile) return { current: 0, isActive: false, longest: 0 };
@@ -53,7 +88,7 @@ export default function MainLayout() {
 
   return (
     <div className="min-h-screen bg-[#F5F2ED] dark:bg-[#0F0E0C] text-gray-900 dark:text-gray-100">
-      <header className="fixed top-0 left-0 right-0 z-[100] bg-[#F5F2ED] dark:bg-[#0F0E0C]">
+      <header className="fixed top-0 left-0 right-0 z-100 bg-[#F5F2ED] dark:bg-[#0F0E0C]">
         <div className="px-4 h-16 flex items-center justify-between">
           <div className="flex items-center">
             <button
@@ -78,7 +113,8 @@ export default function MainLayout() {
                   KOLO
                 </h1>
 
-                {/* Бейдж с пасхалкой */}
+                {/* Бейдж "Beta" — закомментирован по просьбе пользователя */}
+                {false && (
                 <div className="relative">
                   <span
                     onContextMenu={(e) => {
@@ -105,7 +141,7 @@ export default function MainLayout() {
                         initial={{ opacity: 0, x: 10, scale: 0.8 }}
                         animate={{ opacity: 1, x: 20, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        className="absolute left-full top-0 ml-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-[10px] py-1 px-2 rounded-lg shadow-xl z-[110] font-medium"
+                        className="absolute left-full top-0 ml-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-[10px] py-1 px-2 rounded-lg shadow-xl z-110 font-medium"
                       >
                         <div className="absolute -left-1 top-2 w-2 h-2 bg-black dark:bg-white rotate-45" />
                         Бридж добавил, чтоб не расстраивались, что много багов
@@ -113,11 +149,27 @@ export default function MainLayout() {
                     )}
                   </AnimatePresence>
                 </div>
+                )}
               </div>
             </Link>
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
+            {/* SEARCH BUTTON */}
+            <button
+              onClick={() => setShowSearch(true)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] text-[#7A756E] dark:text-[#8A867F] hover:text-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] transition-all"
+              title="Search cards (⌘K)"
+            >
+              <Search size={16} />
+              <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest">
+                Search
+              </span>
+              <kbd className="hidden md:inline text-[9px] font-bold bg-white dark:bg-[#1A1917] px-1.5 py-0.5 rounded-md border border-[#E0DBD3] dark:border-[#2E2C29] text-[#B5B0A8]">
+                ⌘K
+              </kbd>
+            </button>
+
             {/* STREAK WIDGET */}
             <div className="relative">
               <button
@@ -148,7 +200,7 @@ export default function MainLayout() {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 mt-3 w-72 z-50 overflow-hidden bg-white dark:bg-gray-800 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-gray-700"
+                      className="absolute right-0 mt-3 w-72 z-50 overflow-hidden bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700"
                     >
                       <div
                         className={`p-6 ${streakData.isActive ? "bg-orange-500" : "bg-gray-400"} transition-colors`}
@@ -215,7 +267,8 @@ export default function MainLayout() {
               </AnimatePresence>
             </div>
 
-            {/* Language switcher */}
+            {/* Language switcher — закомментирован по просьбе пользователя */}
+            {false && (
             <div className="relative">
               <button
                 onClick={() => setShowLangMenu(!showLangMenu)}
@@ -271,6 +324,7 @@ export default function MainLayout() {
                 )}
               </AnimatePresence>
             </div>
+            )}
           </div>
         </div>
       </header>
@@ -279,11 +333,19 @@ export default function MainLayout() {
         <Sidebar open={open} />
 
         <main className="flex-1 w-full max-w-5xl mx-auto pb-20 px-5 sm:px-6 lg:px-8 py-6">
+          <VerifyEmailBanner />
           <Outlet />
         </main>
       </div>
 
       <BottomNav />
+
+      <OnboardingModal
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+      />
+
+      <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
     </div>
   );
 }

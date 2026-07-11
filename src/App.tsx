@@ -1,10 +1,15 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { I18nProvider } from "./contexts/I18nContext";
-import { DataProvider } from "./contexts/DataContext";
+import { DataProvider, useData } from "./contexts/DataContext";
+import { Collection } from "./types";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { isDueCard } from "./utils/storage";
+import { getReminderSettings, scheduleReminder, cancelReminder, registerDueCountGetter } from "./utils/notifications";
 
 import AchievementUnlockBanner from "./components/AchievementUnlockBanner";
+import { StreakCelebrationHost } from "./components/StreakCelebration";
 
 // Layouts (небольшие — грузим сразу)
 import MainLayout from "./pages/layouts/MainLayout";
@@ -15,11 +20,21 @@ import NavLayout from "./pages/layouts/NavLayout";
 const LandingPage = lazy(() => import("./pages/auth/LandingPage"));
 const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
+const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPasswordPage"));
 const HomePage = lazy(() => import("./pages/home/HomePage"));
+// Public legal & support pages
+const LegalLayout = lazy(() => import("./pages/legal/LegalLayout"));
+const PrivacyPagePublic = lazy(() => import("./pages/legal/PrivacyPage"));
+const TermsPage = lazy(() => import("./pages/legal/TermsPage"));
+const SupportPagePublic = lazy(() => import("./pages/other/SupportPage"));
 const WordsPage = lazy(() => import("./pages/words/WordsPage"));
 const CollectionEditPage = lazy(() => import("./pages/words/CollectionEditPage"));
 const FlashcardsPage = lazy(() => import("./pages/words/FlashcardsPage"));
+const ReviewPage = lazy(() => import("./pages/words/ReviewPage"));
 const QuizPage = lazy(() => import("./pages/words/QuizPage"));
+const SpeedRoundPage = lazy(() => import("./pages/games/SpeedRoundPage"));
+const SurvivalPage = lazy(() => import("./pages/games/SurvivalPage"));
+const MatchPage = lazy(() => import("./pages/games/MatchPage"));
 const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
 const OtherPage = lazy(() => import("./pages/other/OtherPage"));
 const SettingsPage = lazy(() => import("./pages/other/SettingsPage"));
@@ -28,6 +43,23 @@ const PrivacyPage = lazy(() => import("./pages/other/PrivacyPage"));
 const SystemInfoPage = lazy(() => import("./pages/other/SystemInfoPage"));
 const DataManagementPage = lazy(() => import("./pages/other/DataManagementPage"));
 const SupportPage = lazy(() => import("./pages/other/SupportPage"));
+
+function ReminderScheduler() {
+  const { collections } = useData();
+  // Ref, чтобы не пересоздавать таймер на каждое изменение коллекций:
+  // dueCount вычисляется в момент срабатывания из актуального снапшота
+  const collectionsRef = useRef<Collection[]>(collections);
+  collectionsRef.current = collections;
+
+  useEffect(() => {
+    registerDueCountGetter(() =>
+      collectionsRef.current.reduce((n, col) => n + col.cards.filter(isDueCard).length, 0)
+    );
+    scheduleReminder(getReminderSettings());
+    return cancelReminder;
+  }, []);
+  return null;
+}
 
 // Защищенный маршрут
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -45,8 +77,11 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 
 function AppContent() {
   return (
+    <ErrorBoundary>
+    <ReminderScheduler />
     <Suspense fallback={null}>
     <AchievementUnlockBanner />
+    <StreakCelebrationHost />
     <Routes>
       {/* 1. Группа публичных маршрутов */}
       <Route
@@ -76,6 +111,15 @@ function AppContent() {
         }
       />
 
+      <Route
+        path="/forgot-password"
+        element={
+          <PublicRoute>
+            <ForgotPasswordPage />
+          </PublicRoute>
+        }
+      />
+
       {/* 2. Основное приложение (с Хедером/Футером) */}
       <Route
         element={
@@ -100,6 +144,10 @@ function AppContent() {
       >
         <Route path="/collection/:id/flashcards" element={<FlashcardsPage />} />
         <Route path="/collection/:id/quiz" element={<QuizPage />} />
+        <Route path="/collection/:id/speed" element={<SpeedRoundPage />} />
+        <Route path="/collection/:id/survival" element={<SurvivalPage />} />
+        <Route path="/collection/:id/match" element={<MatchPage />} />
+        <Route path="/review" element={<ReviewPage />} />
       </Route>
 
       <Route
@@ -119,10 +167,18 @@ function AppContent() {
         <Route path="/other/support" element={<SupportPage />} />
       </Route>
 
+      {/* 4. Публичные правовые страницы — доступны всем без авторизации */}
+      <Route element={<LegalLayout />}>
+        <Route path="/privacy" element={<PrivacyPagePublic />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/support" element={<SupportPagePublic />} />
+      </Route>
+
       {/* Редирект для любых неопознанных путей */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
     </Suspense>
+    </ErrorBoundary>
   );
 }
 

@@ -1,0 +1,158 @@
+{
+  "title": "Mitt bibliotek",
+  "koloSets": "Kolo Sets",
+  "addDeck": "Opprett sett",
+  "tabs": {
+    "my": "Mine",
+    "kolo": "Kolo"
+  },
+  "createModal": {
+    "title": "Ny samling",
+    "nameLabel": "Samlingsnavn",
+    "namePlaceholder": "F.eks. Reisefraser",
+    "languageLabel": "Målspråk",
+    "create": "Opprett"
+  },
+  "collectionCard": {
+    "cards": "ord",
+    "lastStudied": "Sist studert",
+    "edit": "Rediger",
+    "study": "Studer",
+    "masteryLevel": "Mestringsnivå",
+    "dueToday": "til gjennomgang",
+    "confirmDelete": "-",
+    "modal": {
+      "chooseMode": "Velg modus",
+      "flashcards": "Flashkort",
+      "flashcardsDesc": "Vend og vurder",
+      "quiz": "Quiz",
+      "quizDesc": "Test kunnskapen din",
+      "quizNeedsMore": "Trenger 4+ kort",
+      "studyDue": "Studer forfallne kort",
+      "studyDueDesc": "Bare kort som skal gjentas",
+      "noDue": "Ingen kort forfaller i dag"
+    }
+  },
+  "editCollection": {
+    "addCard": "Legg til ord",
+    "import": "Importer",
+    "export": "Eksporter",
+    "rename": "Gi nytt navn",
+    "learned": "Lært",
+    "wordList": "Ordliste",
+    "noCards": "Ingen ord i dette settet ennå",
+    "noCardsDesc": "Klikk her for å legge til ditt første ord",
+    "loading": "Laster...",
+    "exportSuccess": "Samling eksportert",
+    "exportError": "Eksport mislyktes",
+    "importSuccess": "Ord importert",
+    "modals": {
+      "editWord": "Rediger ord",
+      "newWord": "Nytt ord",
+      "renameTitle": "Nytt samlingsnavn",
+      "deleteConfirm": "Slett dette ordet?"
+    }
+  },
+  "flashcards": {
+    "shuffle": "Bland",
+    "shuffleConfirm": "Bland kortstokken og start på nytt?",
+    "back": "Tilbake",
+    "explanation": "Forklaring",
+    "example": "Eksempel",
+    "showTranslation": "Vis oversettelse",
+    "hideTranslation": "Skjul oversettelse",
+    "keyboardHint": "Mellomrom for å snu · 1–4 for å vurdere",
+    "dueOnly": "Forfallne kort",
+    "hints": {
+      "clickToFlip": "Trykk på kortet for å snu det",
+      "rateKnowledge": "Hvor godt kjenner du dette ordet?"
+    },
+    "levels": {
+      "dontKnow": "Vet ikke",
+      "forgot": "Glemte",
+      "remember": "Husker",
+      "know": "Kan"
+    },
+    "stats": {
+      "title": "Bra jobbet!",
+      "subtitle": "Sesjonen er fullført. Du gjorde det bra!",
+      "cards": "Kort",
+      "time": "Tid",
+      "restart": "Start på nytt",
+      "exit": "Avslutt",
+      "min": "m",
+      "sec": "s"
+    }
+  },
+  "quiz": {
+    "correct": "Riktig!",
+    "incorrect": "Feil",
+    "correctAnswer": "Riktig svar:",
+    "yourAnswer": "Ditt svar:",
+    "moreInfo": "Mer informasjon",
+    "next": "Neste →",
+    "check": "Sjekk",
+    "placeholder": "Skriv svaret ditt...",
+    "matching": {
+      "title": "Match parene",
+      "hint": "Velg et ord, deretter oversettelsen",
+      "complete": "Runden er fullført!",
+      "progress": "matchet"
+    },
+    "settings": {
+      "title": "Quiz-innstillinger",
+      "subtitle": "Velg oppgavetyper å inkludere",
+      "apply": "Bruk og start på nytt",
+      "cancel": "Avbryt",
+      "tip": "Kombiner ulike typer for bedre resultater!",
+      "minOneType": "Velg minst én oppgavetype",
+      "types": {
+        "word_by_translation": "Ord etter oversettelse",
+        "translation_by_word": "Oversettelse etter ord",
+        "word_by_explanation": "Ord etter beskrivelse",
+        "write_word_by_translation": "Skriv ord etter oversettelse",
+        "write_word_by_explanation": "Skriv ord etter beskrivelse",
+        "matching": "Match parene"
+      },
+      "typeDescs": {
+        "word_by_translation": "Velg riktig ord fra 4 alternativer gitt oversettelsen",
+        "translation_by_word": "Velg riktig oversettelse fra 4 alternativer gitt ordet",
+        "word_by_explanation": "Velg riktig ord fra 4 alternativer gitt beskrivelsen",
+        "write_word_by_translation": "Skriv ordet gitt oversettelsen",
+        "write_word_by_explanation": "Skriv ordet gitt beskrivelsen",
+        "matching": "Match ord med oversettelsene i grupper"
+      }
+    },
+    "stats": {
+      "great": "Utmerket!",
+      "good": "Bra!",
+      "ok": "Ikke verst!",
+      "poor": "Fortsett å øve",
+      "summaryAnswered": "Du svarte på",
+      "summaryIn": "spørsmål på",
+      "total": "Totalt",
+      "correct": "Riktige",
+      "wrong": "Feil",
+      "accuracy": "Nøyaktighet",
+      "mistakes": "Feilene dine",
+      "yourAnswer": "Ditt svar:",
+      "correctAnswer": "Riktig:",
+      "restart": "Prøv igjen",
+      "toCollections": "← Samlinger",
+      "min": "min",
+      "sec": "sek"
+    }
+  },
+  "empty": {
+    "title": "Ingen sett ennå",
+    "description": "Opprett ditt første flashkortsett for å begynne å lære effektivt.",
+    "button": "Opprett første sett"
+  },
+  "toast": {
+    "createSuccess": "Sett opprettet",
+    "deleteSuccess": "Sett slettet",
+    "deleteError": "Sletting mislyktes",
+    "createError": "Feil ved oppretting av samling"
+  },
+  "soon": "Vi jobber allerede med denne seksjonen. Den vil dukke opp her veldig snart."
+}

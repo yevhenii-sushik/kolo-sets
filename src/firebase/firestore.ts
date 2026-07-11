@@ -4,33 +4,48 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  updateDoc,
   deleteDoc,
+  deleteField,
   Timestamp,
   writeBatch,
-  query
+  query,
+  orderBy,
+  limit,
 } from 'firebase/firestore';
 import { db } from './config';
 import { Collection } from '../types';
 import { calcUpdatedStreak } from '../utils/streak';
 
+// Firestore отвергает undefined ('Unsupported field value: undefined').
+// Optional-поля (folderId, isFavorite, order) могут прийти как явный undefined
+// из spread'ов вида {...col, folderId: undefined} — вырезаем такие ключи.
+const stripUndefined = <T extends Record<string, any>>(obj: T): T => {
+  const out: Record<string, any> = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (v !== undefined) out[k] = v;
+  }
+  return out as T;
+};
+
 // Преобразование Collection в формат Firestore
 const collectionToFirestore = (coll: Collection) => {
-  return {
+  return stripUndefined({
     ...coll,
     createdAt: Timestamp.fromDate(coll.createdAt),
     lastStudied: coll.lastStudied ? Timestamp.fromDate(coll.lastStudied) : null,
-    cards: coll.cards.map(card => ({
+    cards: coll.cards.map(card => stripUndefined({
       ...card,
       createdAt: Timestamp.fromDate(card.createdAt),
-      srsData: {
+      srsData: stripUndefined({
         ...card.srsData,
         nextReview: Timestamp.fromDate(card.srsData.nextReview),
         lastReviewed: card.srsData.lastReviewed
           ? Timestamp.fromDate(card.srsData.lastReviewed)
           : null
-      }
+      })
     }))
-  };
+  });
 };
 
 // Преобразование из Firestore в Collection
@@ -82,6 +97,22 @@ export const saveUserCollection = async (
 ): Promise<void> => {
   const docRef = doc(db, 'users', userId, 'collections', coll.id);
   await setDoc(docRef, collectionToFirestore(coll));
+};
+
+// Точечно обновить метаданные коллекции (isFavorite, folderId, ...)
+// без перезаписи всего документа с карточками.
+// undefined в значении поля = удалить поле из документа.
+export const updateUserCollectionFields = async (
+  userId: string,
+  collectionId: string,
+  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language'>>
+): Promise<void> => {
+  const docRef = doc(db, 'users', userId, 'collections', collectionId);
+  const payload: Record<string, any> = {};
+  for (const [k, v] of Object.entries(fields)) {
+    payload[k] = v === undefined ? deleteField() : v;
+  }
+  await updateDoc(docRef, payload);
 };
 
 // Удалить коллекцию
@@ -215,4 +246,102 @@ export const updateQuizStats = (
       stats.perfectQuizzes = (stats.perfectQuizzes || 0) + 1;
     }
   });
+
+// ── Folders (stored in user profile doc as `folders` array) ─────────────
+
+import { Folder } from '../types';
+
+export const getUserFolders = async (userId: string): Promise<Folder[]> => {
+  const docRef = doc(db, 'users', userId);
+  const snap = await getDoc(docRef);
+  if (!snap.exists()) return [];
+  const raw: any[] = snap.data().folders ?? [];
+  return raw.map(f => ({ ...f, createdAt: f.createdAt?.toDate?.() ?? new Date(f.createdAt) }));
+};
+
+export const saveFolders = async (userId: string, folders: Folder[]): Promise<void> => {
+  const docRef = doc(db, 'users', userId);
+  await setDoc(docRef, {
+    folders: folders.map(f => ({ ...f, createdAt: Timestamp.fromDate(f.createdAt) })),
+  }, { merge: true });
+};
+
+// ── Daily Game Leaderboard ────────────────────────────────────────────────
+
+export interface GameScore {
+  userId: string;
+  displayName: string;
+  photoURL: string | null;
+  score: number;
+  wordsFound: number;
+  foundPangram: boolean;
+  timestamp: Date;
+}
+
+export const submitGameScore = async (
+  dateKey: string,
+  userId: string,
+  displayName: string,
+  photoURL: string | null,
+  score: number,
+  wordsFound: number,
+  foundPangram: boolean,
+): Promise<void> => {
+  const docRef = doc(db, 'dailyGame', dateKey, 'scores', userId);
+  const existing = await getDoc(docRef);
+
+  // Only update if new score is higher
+  if (existing.exists() && existing.data().score >= score) return;
+
+  await setDoc(docRef, {
+    userId,
+    displayName,
+    photoURL: photoURL ?? null,
+    score,
+    wordsFound,
+    foundPangram,
+    timestamp: Timestamp.now(),
+  });
+};
+
+export const getGameLeaderboard = async (
+  dateKey: string,
+  topN = 20,
+): Promise<GameScore[]> => {
+  const scoresRef = collection(db, 'dailyGame', dateKey, 'scores');
+  const q = query(scoresRef, orderBy('score', 'desc'), limit(topN));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map(d => {
+    const data = d.data();
+    return {
+      userId: data.userId,
+      displayName: data.displayName,
+      photoURL: data.photoURL,
+      score: data.score,
+      wordsFound: data.wordsFound,
+      foundPangram: data.foundPangram,
+      timestamp: data.timestamp.toDate(),
+    };
+  });
+};
+
+export const getMyGameScore = async (
+  dateKey: string,
+  userId: string,
+): Promise<GameScore | null> => {
+  const docRef = doc(db, 'dailyGame', dateKey, 'scores', userId);
+  const snap = await getDoc(docRef);
+  if (!snap.exists()) return null;
+  const data = snap.data();
+  return {
+    userId: data.userId,
+    displayName: data.displayName,
+    photoURL: data.photoURL,
+    score: data.score,
+    wordsFound: data.wordsFound,
+    foundPangram: data.foundPangram,
+    timestamp: data.timestamp.toDate(),
+  };
+};
 

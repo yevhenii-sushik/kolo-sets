@@ -549,34 +549,44 @@ export default function LandingPage() {
 
       {/* ── Footer ── */}
       <footer className="border-t border-[#E0DBD3] dark:border-[#2E2C29] py-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2.5">
-            <img src="/icon-512.png" className="w-7 h-7 opacity-60" alt="" />
-            <span className="text-sm font-black text-[#7A756E]">
-              Kolo <span className="text-[#FF5733]">Sets</span>
-            </span>
+        <div className="max-w-7xl mx-auto px-6 space-y-6">
+          {/* Top row */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-2.5">
+              <img src="/icon-512.png" className="w-7 h-7 opacity-60" alt="" />
+              <span className="text-sm font-black text-[#7A756E]">
+                Kolo <span className="text-[#FF5733]">Sets</span>
+              </span>
+            </div>
+            <p className="text-[11px] text-[#B5B0A8] tracking-wide text-center">
+              © 2026 Kolo by{" "}
+              <a href="https://dakuta.dev" className="text-[#FF5733] hover:underline">
+                Dakuta
+              </a>{" "}
+              · Euphoria Software
+            </p>
+            <div className="flex gap-5 text-[11px] font-bold text-[#B5B0A8]">
+              <Link to="/login" className="hover:text-[#FF5733] transition-colors">
+                Sign in
+              </Link>
+              <Link to="/register" className="hover:text-[#FF5733] transition-colors">
+                Sign up
+              </Link>
+            </div>
           </div>
-          <p className="text-[11px] text-[#B5B0A8] tracking-wide text-center">
-            © 2026 Kolo by{" "}
-            <a
-              href="https://dakuta.dev"
-              className="text-[#FF5733] hover:underline"
-            >
-              Dakuta
-            </a>
-          </p>
-          <div className="flex gap-5 text-[11px] font-bold text-[#B5B0A8]">
-            <Link
-              to="/login"
-              className="hover:text-[#FF5733] transition-colors"
-            >
-              Войти
+
+          {/* Bottom row — legal links */}
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-4 border-t border-[#E0DBD3]/50 dark:border-[#2E2C29]/50">
+            <Link to="/privacy" className="text-[11px] font-bold text-[#B5B0A8] hover:text-[#FF5733] transition-colors">
+              Privacy Policy
             </Link>
-            <Link
-              to="/register"
-              className="hover:text-[#FF5733] transition-colors"
-            >
-              Регистрация
+            <span className="w-1 h-1 rounded-full bg-[#D0CCC5] dark:bg-[#3A3835]" />
+            <Link to="/terms" className="text-[11px] font-bold text-[#B5B0A8] hover:text-[#FF5733] transition-colors">
+              Terms of Service
+            </Link>
+            <span className="w-1 h-1 rounded-full bg-[#D0CCC5] dark:bg-[#3A3835]" />
+            <Link to="/support" className="text-[11px] font-bold text-[#B5B0A8] hover:text-[#FF5733] transition-colors">
+              Support
             </Link>
           </div>
         </div>

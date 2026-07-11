@@ -1,0 +1,35 @@
+{
+  "hero": {
+    "badge": "LÆR • MESTRE • REPETER •",
+    "quote": "«Språk er ikke bare ord — det er nøkkelen til en ny verden».",
+    "subquote": "Oppdag den smarte måten å lære språk på med det vitenskapelige intervallrepetisjonssystemet.",
+    "startFree": "Start gratis",
+    "login": "Logg inn"
+  },
+  "features": {
+    "aiTitle": "AI-magi",
+    "aiDesc": "Vår AI hjelper deg med å lage perfekte kort på sekunder. Den forstår kontekst og finner de rette nyansene.",
+    "aiBadge": "AI-forslag",
+    "cloudTitle": "Sky",
+    "cloudDesc": "Fremgangen din er alltid med deg. Start på PC, fortsett på farten.",
+    "ttsTitle": "Lytt til språket",
+    "ttsDesc": "Kvalitetsopplest tekst hjelper deg å mestre korrekt uttale fra første dag.",
+    "srsTitle": "Glem aldri",
+    "srsDesc": "SRS-algoritmen beregner nøyaktig øyeblikket du er i ferd med å glemme et ord, og minner deg på det.",
+    "retention": "Hukommelse",
+    "algo": "Algoritme"
+  },
+  "gamification": {
+    "title": "Hold",
+    "highlight": "flammen",
+    "desc": "Prestasjons- og seriessystemet er laget for å motivere deg hver dag. Gjør læring til en vane.",
+    "nextLevel": "Neste nivå"
+  },
+  "cta": {
+    "title": "Din vei til",
+    "highlight": "fri kommunikasjon",
+    "desc": "Bli med brukere som allerede har endret sin læringsprosess.",
+    "button": "Start eventyret",
+    "security": "Trygt • Privat • Gratis"
+  }
+}

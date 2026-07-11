@@ -1,0 +1,42 @@
+{
+  "guestStub": {
+    "title": "Профіль недоступний",
+    "description": "Увійдіть або зареєструйтесь, щоб переглянути прогрес та статистику",
+    "retry": "Спробувати знову",
+    "toLogin": "Увійти"
+  },
+  "cabinet": "Особистий кабінет",
+  "enterImageUrl": "Введіть URL зображення профілю",
+  "usernamePlaceholder": "@ім'я_користувача",
+  "save": "Зберегти",
+  "cancel": "Скасувати",
+  "logoutTitle": "Вийти",
+  "logoutConfirm": "Ви впевнені, що хочете вийти?",
+  "streak": {
+    "title": "Серія",
+    "goalReached": "Денна мета досягнута",
+    "daysInRow": "днів поспіль",
+    "record": "Рекорд",
+    "status": "Статус",
+    "active": "Активна",
+    "waiting": "Очікує",
+    "daysShort": "днів"
+  },
+  "stats": {
+    "totalWords": "Всього слів",
+    "sessions": "Сесії",
+    "quizzes": "Квізи",
+    "inLearning": "У навчанні",
+    "regDate": "Дата реєстрації",
+    "weekTitle": "Тижнева статистика",
+    "cardsStudied": "Вивчено карток",
+    "studyTime": "Час навчання",
+    "activityMatrix": "Матриця активності"
+  },
+  "album": "Альбом",
+  "achievements": "Досягнення",
+  "toast": {
+    "success": "Профіль оновлено!",
+    "error": "Помилка оновлення"
+  }
+}

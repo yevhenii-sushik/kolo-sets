@@ -1,0 +1,147 @@
+{
+  "title": "Kolo",
+  "titleHighlight": "Evolusjon.",
+  "subtitle": "Vi jobber kontinuerlig for å gjøre norskopplæringen din mer produktiv.",
+  "changelog": "Endringslogg",
+  "sidebarTitle": "Versjonstre",
+  "stats": {
+    "intensity": "Intensitet",
+    "intensityVal": "Ukentlig",
+    "intensitySub": "Oppdateringssyklus",
+    "improvements": "Forbedringer",
+    "improvementsSub": "Totale endringer",
+    "status": "Systemstatus",
+    "statusVal": "Online",
+    "statusSub": "Skysynkronisering aktiv",
+    "feedback": "Tilbakemelding",
+    "feedbackVal": "100%",
+    "feedbackSub": "Fellesskapsdrevet"
+  },
+  "footer": {
+    "title": "Dette er bare begynnelsen",
+    "subtitle": "Vi har store planer for 2026: historieintegrasjon, gruppeutfordringer og enda mer nytt innhold.",
+    "button": "Foreslå en funksjon"
+  },
+  "versions": [
+    {
+      "number": "0.2.7",
+      "status": "Siste",
+      "date": "Juli 2026",
+      "type": "Funksjonslansering",
+      "changes": [
+        "Onboarding for nye brukere — 6-trinns interaktiv opplæringsmodal med animerte UI-forhåndsvisninger, starter automatisk ved første besøk; kan startes på nytt når som helst fra Profil-innstillingene",
+        "Streak-feieringsanimasjon — en imponerende fullskjermeffekt med 42 gnistpartikler, sjokkbølgeringer og en gigantisk animert streakteller utløses hver gang en studiedag forlenges",
+        "Rettet en feil der fullføring av en studieøkt ikke krediterte dagen til streaktellingen",
+        "Full lokalisering av grensesnittet til norsk (Bokmål) 🇳🇴 og ukrainsk 🇺🇦 — alle sider, quiz, flashkort, innstillinger og 130+ læringstips er nå fullstendig oversatt"
+      ]
+    },
+    {
+      "number": "0.2.6",
+      "status": "Oppdatering",
+      "date": "Juni 2026",
+      "type": "UI-oppdatering",
+      "changes": [
+        "Global designforbedring på tvers av alle skjermer — tettere mellomrom, renere typografi og forbedret visuelt hierarki",
+        "Oppdatert kortlayout for samling for bedre lesbarhet og raskere interaksjon",
+        "Navigasjons- og layoutpolering i hoved- og profilvisninger"
+      ]
+    },
+    {
+      "number": "0.2.5",
+      "status": "Stabil",
+      "date": "Mars 2026",
+      "type": "UI-oppdatering",
+      "changes": [
+        "Større omstrukturering av navigasjon: Ord-seksjonen er nå et eget administrasjonssenter for vokabularet ditt",
+        "Lansering av oppdatert hjemmeside — nå ditt personlige knutepunkt med nøkkelstatistikk og rask tilgang til fremgang",
+        "Ordbiblioteket inkluderer nå eksklusive ordsamlinger segmentert etter ferdighetsnivå (fra Nybegynner til Avansert)",
+        "Global oppdatering av designkode og grensesnitt for perfekt visuell klarhet og moderne brukeropplevelse"
+      ]
+    },
+    {
+      "number": "0.2.4",
+      "status": "Oppdatering",
+      "date": "Mars 2026",
+      "type": "Vedlikehold",
+      "changes": [
+        "Under rutinemessig overvåking ble det oppdaget en potensiell sårbarhet i konfigurasjonen av API-grensesnitt. For å sikre brukerdatasikkerhet ble et fullstendig sikkerhetsprotokollrevisjon gjennomført, etter at systemdriften ble gjenopprettet til normal modus"
+      ]
+    },
+    {
+      "number": "0.2.3",
+      "status": "Oppdatering",
+      "date": "Februar 2026",
+      "type": "UI-oppdatering",
+      "changes": [
+        "Global endring av design og brukergrensesnitt for et mer moderne og rent utseende",
+        "Lagt til Støtte-side med tilbakemeldingsskjema for utviklingsteamet",
+        "Endret kortimportvinduet til et mer moderne og praktisk grensesnittløsning + AI-hjelpeknapp",
+        "Fikset en feil der et fullført prestasjon kunne vises som ufullstendig"
+      ]
+    },
+    {
+      "number": "0.2.2",
+      "status": "Oppdatering",
+      "date": "Februar 2026",
+      "type": "Funksjonslansering",
+      "changes": [
+        "Endret navigasjon mellom diverse og oppdateringssider for en mer intuitiv opplevelse",
+        "Lagt til velkomstside med funksjonsoversikt for nye brukere",
+        "Fikset en kritisk feil som førte til sidetap under navigasjon",
+        "Fikset en visuell feil med for tidlig kortvisning i studiemodus",
+        "Fikset visuelle feil på mobile enheter",
+        "Redesign i studiemodus for et renere og mer moderne utseende"
+      ]
+    },
+    {
+      "number": "0.2.1",
+      "status": "Oppdatering",
+      "date": "Februar 2026",
+      "type": "Vedlikehold",
+      "changes": [
+        "Forbedret tilgjengelighet og responsivitet for mobile enheter",
+        "Fikset mindre feil og forbedret brukergrensesnitt",
+        "Optimalisert applikasjonsytelse"
+      ]
+    },
+    {
+      "number": "0.2.0",
+      "status": "Minor",
+      "date": "Februar 2026",
+      "type": "Kjerneoppdatering",
+      "changes": [
+        "Lagt til støtte for datasynkronisering via sky (Cloud Sync)",
+        "Implementert kritisk konto- og autorisasjonssystem",
+        "Lagt til støtte for dataeksport og -import i JSON-format",
+        "Lagt til tekst-til-tale (TTS) funksjon for kort",
+        "Lagt til prestasjons- og nivåsystem for motivasjon",
+        "Lagt til seriesystem (Flammer 🔥)",
+        "Støtte for flerspråklig grensesnitt (lokalisering)",
+        "Detaljert statistikk og brukerfremdriftsanalyse"
+      ]
+    },
+    {
+      "number": "0.1.2",
+      "status": "Arv",
+      "date": "Februar 2026",
+      "type": "UI-oppdatering",
+      "changes": [
+        "Full støtte for mørkt tema (Dark Mode)",
+        "Responsivt grensesnitt for mobile enheter",
+        "Nytt side- og bunnmenydesign"
+      ]
+    },
+    {
+      "number": "0.1.0",
+      "status": "Innledende",
+      "date": "Januar 2026",
+      "type": "Funksjonslansering",
+      "changes": [
+        "Første offentlige utgivelse",
+        "Samlinger og kortsystem",
+        "Studiemodus (Flashcards) og Quizmodus",
+        "Lokal datalagring (localStorage)"
+      ]
+    }
+  ]
+}

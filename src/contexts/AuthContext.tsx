@@ -6,7 +6,9 @@ import {
   loginWithEmail,
   loginWithGoogle,
   logout as firebaseLogout,
-  deleteAccount as firebaseDeleteAccount
+  deleteAccount as firebaseDeleteAccount,
+  resetPassword as firebaseResetPassword,
+  resendVerificationEmail as firebaseResendVerification,
 } from '../firebase/auth';
 import { deleteUserData } from '../firebase/firestore';
 import {
@@ -24,6 +26,8 @@ interface AuthContextType {
   logout: () => Promise<void>;
   syncCollections: () => Promise<void>;
   deleteAccount: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
+  sendVerificationEmail: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -102,6 +106,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await firebaseDeleteAccount();
   };
 
+  const resetPassword = async (email: string) => {
+    await firebaseResetPassword(email);
+  };
+
+  const sendVerificationEmail = async () => {
+    await firebaseResendVerification();
+  };
+
   const value = {
     user,
     loading,
@@ -110,7 +122,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     loginGoogle,
     logout,
     syncCollections,
-    deleteAccount
+    deleteAccount,
+    resetPassword,
+    sendVerificationEmail,
   };
 
   return (

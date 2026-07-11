@@ -1,168 +1,211 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  EllipsisVertical,
-  Pencil,
-  Trash2,
-  Layers,
-  Calendar,
-  ChevronRight,
-  Zap,
-  BookOpen,
-  Clock,
-  X,
+  EllipsisVertical, Pencil, Trash2,
+  ChevronRight, ChevronLeft, Zap, BookOpen, Clock, X, Star,
+  Folder, Check, Shield, Link2, Timer,
 } from "lucide-react";
-import { Collection } from "../../types";
+import { Collection, Folder as FolderType } from "../../types";
+import { isDueCard } from "../../utils/storage";
 import { useI18n } from "../../contexts/I18nContext";
 import { motion, AnimatePresence } from "framer-motion";
+
+type MenuView = 'main' | 'folders';
 
 interface CollectionCardProps {
   collection: Collection;
   onDelete: (id: string) => void;
+  onToggleFavorite?: (id: string) => void;
+  folders?: FolderType[];
+  onMoveToFolder?: (folderId: string | undefined) => void;
 }
 
 export default function CollectionCard({
-  collection,
-  onDelete,
+  collection, onDelete, onToggleFavorite, folders = [], onMoveToFolder,
 }: CollectionCardProps) {
   const navigate = useNavigate();
   const { t } = useI18n();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuView, setMenuView] = useState<MenuView>('main');
   const [showModeModal, setShowModeModal] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const closeMenu = () => { setIsMenuOpen(false); setMenuView('main'); };
 
-  const formatDate = (date: any) => {
-    if (!date) return "";
-    const d = new Date(date?.toDate ? date.toDate() : date);
-    return isNaN(d.getTime()) ? "" : d.toLocaleDateString();
-  };
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) closeMenu();
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const isEmpty = collection.cards.length === 0;
   const tooFewQuiz = collection.cards.length < 4;
+  const total = collection.cards.length;
 
-  const dueToday = collection.cards.filter((c) => {
-    if (!c.srsData?.nextReview || c.srsData.interval === 0) return false;
-    const next = c.srsData.nextReview;
-    const d = next instanceof Date ? next : new Date((next as any)?.toDate?.() ?? next);
-    return d <= new Date();
-  }).length;
+  const dueToday = collection.cards.filter(isDueCard).length;
 
   return (
     <>
-      <div className="group relative bg-white dark:bg-[#1A1917] rounded-4xl p-6 border border-[#E0DBD3] dark:border-[#2E2C29] transition-all duration-300 hover:border-[#FF5733]/40 shadow-sm hover:shadow-md flex flex-col h-full">
-        {/* ── Header: Lang & Menu ── */}
-        <div className="flex justify-between items-start mb-4">
-          <div className="flex items-center gap-3">
-            {/* <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-[#F5F2ED] dark:bg-[#242220] text-[#7A756E] dark:text-[#8A867F]">
-              {collection.language || "NO"}
-            </span> */}
-            <h3 className="text-xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tight mb-1 truncate">
-              {collection.name}
+      {/* ── Deck wrapper: pb-3 makes room for the stacked layers ── */}
+      <div className="relative pb-3 group">
+
+        {/* Layer 3 — deepest, widest offset */}
+        <div className="absolute bottom-0 inset-x-4 h-full rounded-4xl bg-[#E3E0D9] dark:bg-[#1C1B19] border border-[#CCC7BF] dark:border-[#232120]" />
+        {/* Layer 2 */}
+        <div className="absolute bottom-1.5 inset-x-2 h-full rounded-4xl bg-[#EDEAE4] dark:bg-[#242220] border border-[#D8D3CC] dark:border-[#2A2825]" />
+
+        {/* ── Main card ── */}
+        <div className="relative bg-white dark:bg-[#1A1917] rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] group-hover:border-[#FF5733]/30 transition-all duration-200 shadow-sm flex flex-col overflow-hidden">
+
+          {/* Top section */}
+          <div className="p-5 pb-4 flex flex-col flex-1">
+
+            {/* Controls row */}
+            <div className="flex items-center justify-between mb-5">
+              <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-[#F5F2ED] dark:bg-[#242220] rounded-full text-[#7A756E] dark:text-[#8A867F]">
+                {total} {total === 1 ? 'card' : 'cards'}
+              </span>
+
+              <div className="flex items-center gap-0.5">
+                {onToggleFavorite && (
+                  <button
+                    onClick={e => { e.stopPropagation(); onToggleFavorite(collection.id); }}
+                    className="p-1.5 rounded-xl hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+                  >
+                    <Star
+                      size={15}
+                      className={collection.isFavorite
+                        ? 'fill-amber-400 text-amber-400'
+                        : 'text-[#D0CBC4] hover:text-amber-400 transition-colors'}
+                    />
+                  </button>
+                )}
+                <div className="relative" ref={menuRef}>
+                  <button
+                    onClick={e => { e.stopPropagation(); setIsMenuOpen(v => !v); }}
+                    className="p-1.5 rounded-xl text-[#B5B0A8] hover:text-[#1A1714] dark:hover:text-[#F0EDE8] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+                  >
+                    <EllipsisVertical size={16} />
+                  </button>
+                  <AnimatePresence>
+                    {isMenuOpen && (
+                      <motion.div
+                        key={menuView}
+                        initial={{ opacity: 0, scale: 0.95, y: -8 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -8 }}
+                        transition={{ duration: 0.12 }}
+                        className="absolute right-0 mt-1.5 w-48 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-2xl shadow-xl z-20 overflow-hidden"
+                      >
+                        {menuView === 'main' ? (
+                          <>
+                            <button
+                              onClick={() => { navigate(`/collection/${collection.id}/edit`); closeMenu(); }}
+                              className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+                            >
+                              <Pencil size={13} /> {t.words.collectionCard.edit}
+                            </button>
+
+                            {folders.length > 0 && (
+                              <button
+                                onClick={() => setMenuView('folders')}
+                                className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+                              >
+                                <Folder size={13} />
+                                <span className="flex-1 text-left">Move to folder</span>
+                                <ChevronRight size={12} className="text-[#B5B0A8]" />
+                              </button>
+                            )}
+
+                            <div className="h-px bg-[#F0EDE8] dark:bg-[#2E2C29] mx-3" />
+
+                            <button
+                              onClick={() => { onDelete(collection.id); closeMenu(); }}
+                              className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
+                            >
+                              <Trash2 size={13} /> {t.delete}
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            {/* Folder sub-menu header */}
+                            <button
+                              onClick={() => setMenuView('main')}
+                              className="w-full flex items-center gap-2 px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] hover:text-[#FF5733] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors border-b border-[#F0EDE8] dark:border-[#2E2C29]"
+                            >
+                              <ChevronLeft size={13} /> Folders
+                            </button>
+
+                            {/* Remove from folder (only if currently in one) */}
+                            {collection.folderId && (
+                              <button
+                                onClick={() => { onMoveToFolder?.(undefined); closeMenu(); }}
+                                className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors border-b border-[#F0EDE8] dark:border-[#2E2C29]"
+                              >
+                                <X size={13} /> No folder
+                              </button>
+                            )}
+
+                            {/* Folder list */}
+                            {folders.map(f => (
+                              <button
+                                key={f.id}
+                                onClick={() => { onMoveToFolder?.(f.id); closeMenu(); }}
+                                className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+                              >
+                                <div className="w-3 h-3 rounded-sm shrink-0" style={{ backgroundColor: f.color }} />
+                                <span className="flex-1 text-left truncate text-[#1A1714] dark:text-[#F0EDE8]">
+                                  {f.name}
+                                </span>
+                                {f.id === collection.folderId && (
+                                  <Check size={12} className="text-[#FF5733] shrink-0" />
+                                )}
+                              </button>
+                            ))}
+                          </>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+
+            {/* Collection name — app's signature italic serif style */}
+            <h3 className="text-2xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight leading-[1.1] line-clamp-2 mb-1">
+              {collection.name}<span className="text-[#FF5733]">.</span>
             </h3>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-[#B5B0A8]">
-              <Layers size={14} />
-              {collection.cards.length}
-            </div>
-          </div>
 
-          <div className="relative" ref={menuRef}>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsMenuOpen(!isMenuOpen);
-              }}
-              className="p-1 text-[#B5B0A8] hover:text-[#1A1714] dark:hover:text-[#F0EDE8] transition-colors"
-            >
-              <EllipsisVertical size={20} />
-            </button>
-
-            <AnimatePresence>
-              {isMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  className="absolute right-0 mt-2 w-40 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-2xl shadow-xl z-20 overflow-hidden"
-                >
-                  <button
-                    onClick={() =>
-                      navigate(`/collection/${collection.id}/edit`)
-                    }
-                    className="w-full flex items-center px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
-                  >
-                    <Pencil size={14} className="mr-2" />{" "}
-                    {t.words.collectionCard.edit}
-                  </button>
-                  <button
-                    onClick={() => {
-                      onDelete(collection.id);
-                      setIsMenuOpen(false);
-                    }}
-                    className="w-full flex items-center px-4 py-3 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
-                  >
-                    <Trash2 size={14} className="mr-2" /> {t.delete}
-                  </button>
-                </motion.div>
+            {/* Due indicator — fixed height h-6, always rendered so card doesn't shift */}
+            <div className="h-6 flex items-center mt-1">
+              {dueToday > 0 && (
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#FF5733]">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#FF5733] shadow-[0_0_6px_#FF5733]" />
+                  {dueToday} {t.words.collectionCard.dueToday}
+                </div>
               )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* ── Content ── */}
-        <div className="flex-1">
-          <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#B5B0A8] mb-2">
-            <Calendar size={12} />
-            {formatDate(collection.createdAt)}
-          </div>
-          {dueToday > 0 && (
-            <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#FF5733] mb-4">
-              <Clock size={12} />
-              {dueToday} {t.words.collectionCard.dueToday}
             </div>
-          )}
-        </div>
-
-        {/* ── Simple SRS Progress ──
-        {collection.cards.length > 0 && (
-          <div className="flex gap-1 mb-6">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className={`h-1 flex-1 rounded-full ${
-                  i < 3 ? "bg-[#FF5733]" : "bg-[#F5F2ED] dark:bg-[#242220]"
-                }`}
-              />
-            ))}
           </div>
-        )} */}
 
-        {/* ── Actions ── */}
-        <div className="flex gap-2">
-          <button
-            onClick={() => !isEmpty && setShowModeModal(true)}
-            disabled={isEmpty}
-            className="flex-3 flex items-center justify-center gap-2 py-3.5 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] text-[11px] font-black uppercase tracking-widest rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-20"
-          >
-            {t.words.collectionCard.study}
-            <ChevronRight size={14} />
-          </button>
-
-          <button
-            onClick={() => navigate(`/collection/${collection.id}/edit`)}
-            className="flex-1 flex items-center justify-center py-3.5 border border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] rounded-2xl hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
-          >
-            <Pencil size={14} />
-          </button>
+          {/* Bottom actions */}
+          <div className="px-5 pb-5 flex gap-2">
+            <button
+              onClick={() => !isEmpty && setShowModeModal(true)}
+              disabled={isEmpty}
+              className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-[#FF5733] dark:hover:bg-[#FF5733] dark:hover:text-white transition-all active:scale-[0.98] disabled:opacity-20"
+            >
+              {t.words.collectionCard.study}
+              <ChevronRight size={13} />
+            </button>
+            <button
+              onClick={() => navigate(`/collection/${collection.id}/edit`)}
+              className="w-12 flex items-center justify-center rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+            >
+              <Pencil size={14} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -177,107 +220,119 @@ export default function CollectionCard({
               onClick={() => setShowModeModal(false)}
               className="absolute inset-0 bg-[#1A1714]/40 backdrop-blur-md"
             />
-
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-sm bg-white dark:bg-[#1A1917] rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-6 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-2xl"
+              className="relative w-full max-w-sm bg-white dark:bg-[#1A1917] rounded-4xl p-5 sm:p-6 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-2xl"
             >
-              <div className="flex justify-between items-start mb-5 sm:mb-6">
+              <div className="flex justify-between items-start mb-5">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#FF5733] mb-1">
                     {t.words.collectionCard.modal.chooseMode}
                   </p>
-                  <h3 className="text-xl sm:text-2xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tight truncate max-w-45 sm:max-w-none">
-                    {collection.name}
+                  <h3 className="text-xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight">
+                    {collection.name}<span className="text-[#FF5733]">.</span>
                   </h3>
                 </div>
                 <button
                   onClick={() => setShowModeModal(false)}
-                  className="p-2 bg-[#F5F2ED] dark:bg-[#242220] rounded-full text-[#7A756E] hover:rotate-90 transition-transform"
+                  className="p-2 bg-[#F5F2ED] dark:bg-[#242220] rounded-full text-[#7A756E] hover:rotate-90 transition-transform shrink-0"
                 >
                   <X size={16} />
                 </button>
               </div>
 
-              <div className="space-y-2 sm:space-y-3">
-                {/* Flashcards Option */}
-                <button
-                  onClick={() => {
-                    setShowModeModal(false);
-                    navigate(`/collection/${collection.id}/flashcards`);
-                  }}
-                  className="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent hover:border-[#FF5733] transition-all group"
-                >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center text-[#FF5733] shadow-sm group-hover:scale-110 transition-transform shrink-0">
-                    <Zap size={18} />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-black text-sm text-[#1A1714] dark:text-[#F0EDE8]">
-                      {t.words.collectionCard.modal.flashcards}
-                    </p>
-                    <p className="text-[10px] font-medium text-[#7A756E]">
-                      {t.words.collectionCard.modal.flashcardsDesc}
-                    </p>
-                  </div>
-                </button>
-
-                {/* Quiz Option */}
-                <button
-                  onClick={() => {
-                    setShowModeModal(false);
-                    navigate(`/collection/${collection.id}/quiz`);
-                  }}
+              <div className="space-y-2">
+                <ModeButton
+                  icon={<Zap size={18} />}
+                  label={t.words.collectionCard.modal.flashcards}
+                  desc={t.words.collectionCard.modal.flashcardsDesc}
+                  onClick={() => { setShowModeModal(false); navigate(`/collection/${collection.id}/flashcards`); }}
+                />
+                <ModeButton
+                  icon={<BookOpen size={18} />}
+                  label={t.words.collectionCard.modal.quiz}
+                  desc={tooFewQuiz ? t.words.collectionCard.modal.quizNeedsMore : t.words.collectionCard.modal.quizDesc}
                   disabled={tooFewQuiz}
-                  className="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent hover:border-[#FF5733] transition-all group disabled:opacity-30 disabled:grayscale"
-                >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center text-[#FF5733] shadow-sm group-hover:scale-110 transition-transform shrink-0">
-                    <BookOpen size={18} />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-black text-sm text-[#1A1714] dark:text-[#F0EDE8]">
-                      {t.words.collectionCard.modal.quiz}
-                    </p>
-                    <p className="text-[10px] font-medium text-[#7A756E]">
-                      {tooFewQuiz
-                        ? t.words.collectionCard.modal.quizNeedsMore
-                        : t.words.collectionCard.modal.quizDesc}
-                    </p>
-                  </div>
-                </button>
-
-                {/* Study Due Option */}
-                <button
-                  onClick={() => {
-                    setShowModeModal(false);
-                    navigate(`/collection/${collection.id}/flashcards?due=1`);
-                  }}
+                  onClick={() => { setShowModeModal(false); navigate(`/collection/${collection.id}/quiz`); }}
+                />
+                <ModeButton
+                  icon={<Clock size={18} />}
+                  label={`${t.words.collectionCard.modal.studyDue}${dueToday > 0 ? ` (${dueToday})` : ''}`}
+                  desc={dueToday === 0 ? t.words.collectionCard.modal.noDue : t.words.collectionCard.modal.studyDueDesc}
                   disabled={dueToday === 0}
-                  className="w-full flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent hover:border-[#FF5733] transition-all group disabled:opacity-30 disabled:grayscale"
-                >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center text-[#FF5733] shadow-sm group-hover:scale-110 transition-transform shrink-0">
-                    <Clock size={18} />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-black text-sm text-[#1A1714] dark:text-[#F0EDE8]">
-                      {t.words.collectionCard.modal.studyDue}
-                      {dueToday > 0 && (
-                        <span className="ml-2 text-[#FF5733]">({dueToday})</span>
-                      )}
-                    </p>
-                    <p className="text-[10px] font-medium text-[#7A756E]">
-                      {dueToday === 0
-                        ? t.words.collectionCard.modal.noDue
-                        : t.words.collectionCard.modal.studyDueDesc}
-                    </p>
-                  </div>
-                </button>
+                  onClick={() => { setShowModeModal(false); navigate(`/collection/${collection.id}/flashcards?due=1`); }}
+                />
+
+                <div className="h-px bg-[#F0EDE8] dark:bg-[#2E2C29] my-1" />
+                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#B5B0A8] px-1">
+                  Game modes
+                </p>
+
+                <ModeButton
+                  icon={<Timer size={18} />}
+                  label="Speed Round"
+                  desc={tooFewQuiz ? "Need at least 4 cards" : "60 seconds · streak multiplier"}
+                  disabled={tooFewQuiz}
+                  accent="orange"
+                  onClick={() => { setShowModeModal(false); navigate(`/collection/${collection.id}/speed`); }}
+                />
+                <ModeButton
+                  icon={<Shield size={18} />}
+                  label="Survival"
+                  desc={tooFewQuiz ? "Need at least 4 cards" : "3 lives · how far can you go?"}
+                  disabled={tooFewQuiz}
+                  accent="red"
+                  onClick={() => { setShowModeModal(false); navigate(`/collection/${collection.id}/survival`); }}
+                />
+                <ModeButton
+                  icon={<Link2 size={18} />}
+                  label="Match"
+                  desc={tooFewQuiz ? "Need at least 4 cards" : "Connect word with translation"}
+                  disabled={tooFewQuiz}
+                  accent="green"
+                  onClick={() => { setShowModeModal(false); navigate(`/collection/${collection.id}/match`); }}
+                />
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+const ACCENT_COLORS = {
+  orange: { border: 'hover:border-[#FF5733]', icon: 'text-[#FF5733]' },
+  red:    { border: 'hover:border-red-500',   icon: 'text-red-500' },
+  green:  { border: 'hover:border-[#22C55E]', icon: 'text-[#22C55E]' },
+};
+
+function ModeButton({
+  icon, label, desc, onClick, disabled, accent = 'orange',
+}: {
+  icon: React.ReactNode;
+  label: string;
+  desc: string;
+  onClick: () => void;
+  disabled?: boolean;
+  accent?: keyof typeof ACCENT_COLORS;
+}) {
+  const { border, icon: iconColor } = ACCENT_COLORS[accent];
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`w-full flex items-center gap-3 p-3.5 rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] border border-transparent ${border} transition-all group disabled:opacity-30 disabled:grayscale`}
+    >
+      <div className={`w-11 h-11 bg-white dark:bg-[#1A1917] rounded-xl flex items-center justify-center ${iconColor} shadow-sm group-hover:scale-110 transition-transform shrink-0`}>
+        {icon}
+      </div>
+      <div className="text-left">
+        <p className="font-black text-sm text-[#1A1714] dark:text-[#F0EDE8]">{label}</p>
+        <p className="text-[10px] font-medium text-[#7A756E]">{desc}</p>
+      </div>
+    </button>
   );
 }

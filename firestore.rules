@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // User profiles and their nested collections — owner only
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      match /collections/{collectionId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Daily game leaderboard:
+    //   - Any signed-in user can read (needed for leaderboard display)
+    //   - Users can only write their own score document
+    match /dailyGame/{dateKey}/scores/{scoreUserId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(scoreUserId);
+    }
+
+    // Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

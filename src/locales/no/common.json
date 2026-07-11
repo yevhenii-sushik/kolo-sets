@@ -1,0 +1,21 @@
+{
+  "appName": "Kolo Sets",
+  "loading": "Laster...",
+  "save": "Lagre",
+  "cancel": "Avbryt",
+  "delete": "Slett",
+  "edit": "Rediger",
+  "create": "Opprett",
+  "back": "Tilbake",
+  "next": "Neste",
+  "finish": "Fullfør",
+  "close": "Lukk",
+  "nav": {
+    "home": "Hjem",
+    "words": "Ord",
+    "stories": "Historier",
+    "dictionary": "Ordbok",
+    "profile": "Profil",
+    "other": "Annet"
+  }
+}

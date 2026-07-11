@@ -73,7 +73,7 @@ export default function LoginPage() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="max-w-[420px] w-full"
+        className="max-w-105 w-full"
       >
         <div className="bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-8 md:p-10 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm">
           {error && (
@@ -124,6 +124,16 @@ export default function LoginPage() {
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+            </div>
+
+            <div className="flex justify-end -mt-1">
+              <button
+                type="button"
+                onClick={() => navigate('/forgot-password')}
+                className="text-[11px] font-bold text-[#B5B0A8] hover:text-[#FF5733] transition-colors"
+              >
+                Forgot password?
+              </button>
             </div>
 
             <button

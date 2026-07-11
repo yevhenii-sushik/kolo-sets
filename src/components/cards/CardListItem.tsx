@@ -90,7 +90,7 @@ export default function CardListItem({
         )}
       </div>
 
-      {/* SRS ИНДИКАТОР: В стиле "Дерева версий" */}
+      {/* SRS ИНДИКАТОР */}
       <div className="mt-6 flex items-center justify-between">
         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5B0A8]">
           {t.words.collectionCard.masteryLevel}
@@ -112,6 +112,30 @@ export default function CardListItem({
           })}
         </div>
       </div>
+
+      {/* Per-word stats — shown only after first review */}
+      {(card.srsData.totalReviews ?? 0) > 0 && (
+        <div className="mt-3 pt-3 border-t border-[#F5F2ED] dark:border-[#2E2C29] flex items-center gap-4 flex-wrap">
+          <span className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8]">
+            {card.srsData.totalReviews} {card.srsData.totalReviews === 1 ? 'review' : 'reviews'}
+          </span>
+          {card.srsData.correctReviews != null && card.srsData.totalReviews != null && (
+            <>
+              <span className="w-1 h-1 rounded-full bg-[#D0CBC4] shrink-0" />
+              {(() => {
+                const acc = Math.round((card.srsData.correctReviews / card.srsData.totalReviews) * 100);
+                return (
+                  <span className={`text-[10px] font-black uppercase tracking-widest ${
+                    acc >= 70 ? 'text-[#22C55E]' : acc >= 40 ? 'text-amber-500' : 'text-red-400'
+                  }`}>
+                    {acc}% accuracy
+                  </span>
+                );
+              })()}
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }

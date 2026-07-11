@@ -31,7 +31,12 @@ import {
   Zap,
   User,
   RefreshCw,
+  BookOpen,
 } from "lucide-react";
+import {
+  ONBOARDING_STORAGE_KEY,
+  ONBOARDING_RESTART_EVENT,
+} from "../../components/OnboardingModal";
 import { motion } from "framer-motion";
 
 export default function ProfilePage() {
@@ -514,6 +519,37 @@ export default function ProfilePage() {
               )}
             />
           ))}
+        </div>
+      </section>
+
+      {/* Settings section */}
+      <section className="pt-2 pb-6">
+        <div className="flex items-center gap-2 px-2 mb-4">
+          <BookOpen size={16} className="text-[#FF5733]" />
+          <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">
+            Настройки
+          </h2>
+        </div>
+        <div className="bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-[2.5rem] p-3">
+          <button
+            onClick={() => {
+              localStorage.removeItem(ONBOARDING_STORAGE_KEY);
+              window.dispatchEvent(new CustomEvent(ONBOARDING_RESTART_EVENT));
+            }}
+            className="w-full flex items-center gap-4 px-4 py-4 rounded-2xl hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors text-left"
+          >
+            <div className="w-11 h-11 bg-[#FFF0ED] dark:bg-[#2A1A15] rounded-xl flex items-center justify-center text-[#FF5733] shrink-0">
+              <RefreshCw size={17} />
+            </div>
+            <div>
+              <p className="text-sm font-black text-[#1A1714] dark:text-[#F0EDE8]">
+                Перезапустить обучение
+              </p>
+              <p className="text-[11px] text-[#7A756E]">
+                Снова посмотреть знакомство с приложением
+              </p>
+            </div>
+          </button>
         </div>
       </section>
 

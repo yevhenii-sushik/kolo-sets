@@ -5,6 +5,7 @@ import {
   getCollection,
   updateCollection,
   updateSRSData,
+  isDueCard,
 } from "../../utils/storage";
 import { updateFlashcardStats } from "../../firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
@@ -17,13 +18,7 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import Flashcard from "../../components/cards/Flashcard";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
-
-function isDueCard(card: Card): boolean {
-  if (!card.srsData?.nextReview || card.srsData.interval === 0) return false;
-  const next = card.srsData.nextReview;
-  const d = next instanceof Date ? next : new Date((next as any)?.toDate?.() ?? next);
-  return d <= new Date();
-}
+import { STREAK_CELEBRATION_EVENT } from "../../components/StreakCelebration";
 
 export default function FlashcardsPage() {
   const { id } = useParams<{ id: string }>();
@@ -32,7 +27,7 @@ export default function FlashcardsPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const { checkAchievements, profile } = useData();
+  const { checkAchievements, profile, refreshProfile, refreshCollections } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
 
   const [collection, setCollection] = useState<Collection | null>(null);
@@ -161,12 +156,30 @@ export default function FlashcardsPage() {
             ? Date.now() - lastStudy.getTime() > 7 * 24 * 60 * 60 * 1000
             : false;
 
+          // Calculate if this is the first study of the day and what the new streak will be
+          const todayMidnight = new Date();
+          todayMidnight.setHours(0, 0, 0, 0);
+          const lastMidnight = lastStudy ? new Date(lastStudy) : null;
+          if (lastMidnight) lastMidnight.setHours(0, 0, 0, 0);
+          const diffDays = lastMidnight
+            ? Math.floor((todayMidnight.getTime() - lastMidnight.getTime()) / 86400000)
+            : null;
+          const isFirstStudyToday = diffDays === null || diffDays > 0;
+
+          // Write to Firebase first
           await updateFlashcardStats(user.uid, cards.length, duration);
-          checkAchievements({
-            duration,
-            allKnow: finalKnow === cards.length,
-            isComeback,
-          });
+          checkAchievements({ duration, allKnow: finalKnow === cards.length, isComeback });
+          refreshProfile(); // sync DataContext so streak counter in header updates
+          refreshCollections(); // sync SRS changes so due-counters (HomePage banner) don't go stale
+
+          // Fire animation only after successful write, with correct streak value
+          if (isFirstStudyToday) {
+            const prevStreak = profile?.currentStreak ?? 0;
+            const newStreak = diffDays === 1 ? prevStreak + 1 : 1;
+            window.dispatchEvent(
+              new CustomEvent(STREAK_CELEBRATION_EVENT, { detail: { streak: newStreak } })
+            );
+          }
         }
 
         playSessionCompleteIfEnabled();

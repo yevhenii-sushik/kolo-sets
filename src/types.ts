@@ -88,6 +88,8 @@ export interface SRSData {
   repetitions: number;      // Количество успешных повторений
   nextReview: Date;         // Дата следующего повторения
   lastReviewed?: Date;      // Дата последнего повторения
+  totalReviews?: number;    // Всего показов этой карточки
+  correctReviews?: number;  // Успешных (quality >= 3)
 }
 
 // Карточка слова
@@ -102,6 +104,14 @@ export interface Card {
   createdAt: Date;
 }
 
+// Папка для группировки коллекций
+export interface Folder {
+  id: string;
+  name: string;
+  color: string; // hex or tailwind token: '#3B82F6', '#22C55E', etc.
+  createdAt: Date;
+}
+
 // Коллекция карточек
 export interface Collection {
   id: string;
@@ -110,6 +120,9 @@ export interface Collection {
   cards: Card[];
   createdAt: Date;
   lastStudied?: Date;
+  isFavorite?: boolean;      // Добавлена в избранное
+  order?: number;            // Позиция для ручной сортировки
+  folderId?: string;         // ID папки (undefined = без папки)
 }
 
 // Настройки Quiz

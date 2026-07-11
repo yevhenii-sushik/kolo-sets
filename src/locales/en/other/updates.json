@@ -24,8 +24,31 @@
   },
   "versions": [
     {
-      "number": "0.2.5",
+      "number": "0.2.7",
       "status": "Latest",
+      "date": "July 2026",
+      "type": "Feature Release",
+      "changes": [
+        "New user onboarding — 6-step interactive tutorial modal with animated UI previews auto-launches on first visit; can be restarted anytime from Profile settings",
+        "Streak celebration animation — full-screen epic effect with 42 spark particles, shockwave rings, and a giant animated streak counter fires every time a study day is extended",
+        "Fixed a bug where completing a study session did not credit the day toward the streak counter",
+        "Full Norwegian (Bokmål) 🇳🇴 and Ukrainian 🇺🇦 interface localization — all pages, quiz, flashcards, settings, and 130+ learning tips are now fully translated"
+      ]
+    },
+    {
+      "number": "0.2.6",
+      "status": "Patch",
+      "date": "June 2026",
+      "type": "UI Update",
+      "changes": [
+        "Global design refinement across all screens — tighter spacing, cleaner typography, and improved visual hierarchy",
+        "Updated collection card layout for better readability and faster interaction",
+        "Navigation and layout polish across main and profile views"
+      ]
+    },
+    {
+      "number": "0.2.5",
+      "status": "Stable",
       "date": "March 2026",
       "type": "UI Update",
       "changes": [

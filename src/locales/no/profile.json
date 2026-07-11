@@ -1,0 +1,42 @@
+{
+  "guestStub": {
+    "title": "Profil utilgjengelig",
+    "description": "Logg inn eller registrer deg for å se fremgangen og statistikken din",
+    "retry": "Prøv igjen",
+    "toLogin": "Logg inn"
+  },
+  "cabinet": "Personlig kabinett",
+  "enterImageUrl": "Skriv inn URL til profilbilde",
+  "usernamePlaceholder": "@brukernavn",
+  "save": "Lagre",
+  "cancel": "Avbryt",
+  "logoutTitle": "Logg ut",
+  "logoutConfirm": "Er du sikker på at du vil logge ut?",
+  "streak": {
+    "title": "Serie",
+    "goalReached": "Dagsmål nådd",
+    "daysInRow": "dager på rad",
+    "record": "Rekord",
+    "status": "Status",
+    "active": "Aktiv",
+    "waiting": "Venter",
+    "daysShort": "dager"
+  },
+  "stats": {
+    "totalWords": "Totalt ord",
+    "sessions": "Sesjoner",
+    "quizzes": "Quiz",
+    "inLearning": "I trening",
+    "regDate": "Registreringsdato",
+    "weekTitle": "Ukentlig statistikk",
+    "cardsStudied": "Kort studert",
+    "studyTime": "Studietid",
+    "activityMatrix": "Aktivitetsmatrise"
+  },
+  "album": "Album",
+  "achievements": "Prestasjoner",
+  "toast": {
+    "success": "Profil oppdatert!",
+    "error": "Oppdateringsfeil"
+  }
+}

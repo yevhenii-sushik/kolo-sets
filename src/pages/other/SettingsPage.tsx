@@ -4,13 +4,18 @@ import { motion } from 'framer-motion';
 import {
   Sun, Moon, Globe, Volume2,
   Download, Upload, Trash2, FileJson,
-  RefreshCw, Terminal, AlertCircle, Settings, Monitor
+  RefreshCw, Terminal, AlertCircle, Settings, Monitor, Target, Bell
 } from 'lucide-react';
 import { useI18n } from '../../contexts/I18nContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useConfirm } from '../../hooks/useConfirm';
 import { useToast } from '../../hooks/useToast';
-import { getThemePref, setTheme as saveTheme, getCollections } from '../../utils/storage';
+import { getThemePref, setTheme as saveTheme, getCollections, getDailyGoal, setDailyGoal } from '../../utils/storage';
+import {
+  getReminderSettings, saveReminderSettings, getNotificationAccess,
+  requestNotificationPermission, scheduleReminder,
+  type ReminderSettings, type NotificationAccess,
+} from '../../utils/notifications';
 import { getSoundEnabled, setSoundEnabled } from '../../utils/sounds';
 import {
   exportCollectionsToJSON,
@@ -81,6 +86,9 @@ export default function SettingsPage() {
 
   const [currentTheme, setCurrentTheme] = useState<'light' | 'dark' | 'system'>(getThemePref());
   const [soundEnabled, setSoundState] = useState(getSoundEnabled());
+  const [dailyGoal, setDailyGoalState] = useState(getDailyGoal);
+  const [reminder, setReminder] = useState<ReminderSettings>(getReminderSettings);
+  const [notifAccess, setNotifAccess] = useState<NotificationAccess>(getNotificationAccess);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -93,6 +101,31 @@ export default function SettingsPage() {
     const next = !soundEnabled;
     setSoundState(next);
     setSoundEnabled(next);
+  };
+
+  const handleEnableNotifications = async () => {
+    const granted = await requestNotificationPermission();
+    setNotifAccess(granted ? 'granted' : 'denied');
+  };
+
+  const handleReminderToggle = () => {
+    const next = { ...reminder, enabled: !reminder.enabled };
+    setReminder(next);
+    saveReminderSettings(next);
+    scheduleReminder(next);
+  };
+
+  const handleTimeChange = (hour: number, minute: number) => {
+    const next = { ...reminder, hour, minute };
+    setReminder(next);
+    saveReminderSettings(next);
+    scheduleReminder(next);
+  };
+
+  const handleGoalChange = (n: number) => {
+    const clamped = Math.max(1, Math.min(200, n));
+    setDailyGoalState(clamped);
+    setDailyGoal(clamped);
   };
 
   const handleExport = async () => {
@@ -245,6 +278,136 @@ export default function SettingsPage() {
           <p className="text-xs text-[#B5B0A8] dark:text-[#5A5652] font-medium leading-relaxed px-1">
             {s.sections.language.recommendation}
           </p>
+        </SectionCard>
+      </motion.div>
+
+      {/* Daily Goal */}
+      <motion.div {...fadeUp(0.13)}>
+        <SectionCard>
+          <SectionTitle icon={Target} label="Daily Study Goal" />
+          <p className="text-xs text-[#B5B0A8] dark:text-[#5A5652] font-medium mb-5">
+            How many cards do you want to review each day? Your streak depends on meeting this goal.
+          </p>
+
+          {/* Preset chips */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {[5, 10, 15, 20, 30, 50].map(n => (
+              <button
+                key={n}
+                onClick={() => handleGoalChange(n)}
+                className={`px-4 py-2 rounded-xl text-sm font-black border-2 transition-all duration-200 ${
+                  dailyGoal === n
+                    ? 'border-[#FF5733] bg-[#FFF0ED] dark:bg-[#2A1A15] text-[#FF5733]'
+                    : 'border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] dark:text-[#8A867F] hover:border-[#FF5733]/40'
+                }`}
+              >
+                {n}
+              </button>
+            ))}
+          </div>
+
+          {/* Custom input */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-black uppercase tracking-widest text-[#B5B0A8]">Custom</span>
+            <input
+              type="number"
+              min={1}
+              max={200}
+              value={dailyGoal}
+              onChange={e => handleGoalChange(Number(e.target.value))}
+              className="w-20 px-3 py-2 text-center bg-[#F5F2ED] dark:bg-[#0F0E0C] border-2 border-[#E0DBD3] dark:border-[#2E2C29] focus:border-[#FF5733] rounded-xl font-black text-[#1A1714] dark:text-[#F0EDE8] outline-none transition-colors text-sm"
+            />
+            <span className="text-xs font-medium text-[#7A756E]">cards / day</span>
+          </div>
+        </SectionCard>
+      </motion.div>
+
+      {/* Daily Reminder */}
+      <motion.div {...fadeUp(0.14)}>
+        <SectionCard>
+          <SectionTitle icon={Bell} label="Daily Reminder" />
+
+          {notifAccess === 'unsupported' && (
+            <div className="flex gap-3 p-4 bg-[#F5F2ED] dark:bg-[#0F0E0C] rounded-2xl">
+              <AlertCircle size={16} className="text-[#B5B0A8] shrink-0 mt-0.5" />
+              <p className="text-sm font-medium text-[#7A756E] dark:text-[#8A867F]">
+                Notifications are not supported in your browser.
+              </p>
+            </div>
+          )}
+
+          {notifAccess === 'denied' && (
+            <div className="flex gap-3 p-4 bg-amber-500/5 border border-amber-500/10 rounded-2xl">
+              <AlertCircle size={16} className="text-amber-500 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-[#1A1714] dark:text-[#F0EDE8] mb-1">Notifications blocked</p>
+                <p className="text-xs text-[#7A756E] dark:text-[#8A867F] font-medium leading-relaxed">
+                  Enable notifications for Kolo Sets in your browser or system settings to use daily reminders.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {notifAccess === 'default' && (
+            <div className="space-y-4">
+              <p className="text-xs text-[#B5B0A8] dark:text-[#5A5652] font-medium leading-relaxed">
+                Get a daily nudge to review your cards. The notification fires even when Kolo Sets isn't the active tab.
+              </p>
+              <button
+                onClick={handleEnableNotifications}
+                className="flex items-center gap-2 px-5 py-3 bg-[#FF5733] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-[#E54D2A] transition-all active:scale-95 shadow-md shadow-[#FF5733]/25"
+              >
+                <Bell size={14} />
+                Enable notifications
+              </button>
+            </div>
+          )}
+
+          {notifAccess === 'granted' && (
+            <div className="space-y-3">
+              <div className={`flex items-center justify-between p-4 rounded-2xl transition-colors ${
+                reminder.enabled ? 'bg-[#F5F2ED] dark:bg-[#0F0E0C]' : 'bg-[#F5F2ED]/50 dark:bg-[#0F0E0C]/50'
+              }`}>
+                <div>
+                  <p className="font-bold text-[#1A1714] dark:text-[#F0EDE8] text-sm">Daily reminder</p>
+                  <p className="text-xs text-[#B5B0A8] mt-0.5 font-medium">Notify me to study every day</p>
+                </div>
+                <Toggle enabled={reminder.enabled} onToggle={handleReminderToggle} />
+              </div>
+
+              {reminder.enabled && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-3 p-4 bg-[#F5F2ED] dark:bg-[#0F0E0C] rounded-2xl"
+                >
+                  <Bell size={15} className="text-[#FF5733] shrink-0" />
+                  <span className="text-sm font-bold text-[#1A1714] dark:text-[#F0EDE8]">Remind me at</span>
+                  <div className="flex items-center gap-2 ml-auto">
+                    <select
+                      value={reminder.hour}
+                      onChange={e => handleTimeChange(Number(e.target.value), reminder.minute)}
+                      className="px-3 py-1.5 bg-white dark:bg-[#1A1917] border-2 border-[#E0DBD3] dark:border-[#2E2C29] focus:border-[#FF5733] rounded-xl font-black text-[13px] text-[#1A1714] dark:text-[#F0EDE8] outline-none transition-colors text-center"
+                    >
+                      {Array.from({ length: 24 }, (_, i) => (
+                        <option key={i} value={i}>{String(i).padStart(2, '0')}</option>
+                      ))}
+                    </select>
+                    <span className="font-black text-[#B5B0A8]">:</span>
+                    <select
+                      value={reminder.minute}
+                      onChange={e => handleTimeChange(reminder.hour, Number(e.target.value))}
+                      className="px-3 py-1.5 bg-white dark:bg-[#1A1917] border-2 border-[#E0DBD3] dark:border-[#2E2C29] focus:border-[#FF5733] rounded-xl font-black text-[13px] text-[#1A1714] dark:text-[#F0EDE8] outline-none transition-colors text-center"
+                    >
+                      {[0, 15, 30, 45].map(m => (
+                        <option key={m} value={m}>{String(m).padStart(2, '0')}</option>
+                      ))}
+                    </select>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          )}
         </SectionCard>
       </motion.div>
 
