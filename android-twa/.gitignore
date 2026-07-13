@@ -1,0 +1,11 @@
+node_modules/
+android.keystore
+keystore.properties
+local.properties
+.gradle/
+build/
+app/build/
+*.apk
+*.apk.idsig
+*.aab
+manifest-checksum.txt
