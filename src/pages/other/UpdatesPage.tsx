@@ -13,9 +13,18 @@ export default function UpdatesPage() {
   const { t } = useI18n();
   const [activeVersion, setActiveVersion] = useState("0.2.5");
 
+  // status переведён в locale-файлах (напр. "Siste"/"Остання" вместо "Latest"),
+  // но здесь используется как ключ для подбора иконки/цвета — без этой
+  // нормализации у NO/UK все версии проваливались в default (серый Terminal),
+  // т.к. их переведённые статусы не совпадали ни с одним case ниже.
+  const STATUS_ALIASES: Record<string, string> = {
+    'Siste': 'Latest', 'Oppdatering': 'Patch', 'Stabil': 'Stable', 'Arv': 'Legacy', 'Innledende': 'Initial',
+    'Остання': 'Latest', 'Патч': 'Patch', 'Стабільна': 'Stable', 'Початковий': 'Initial',
+  };
+
   // Маппинг иконок и стилей, так как их нельзя передать через JSON
   const getVersionMeta = (status: string, number: string) => {
-    switch (status) {
+    switch (STATUS_ALIASES[status] ?? status) {
       case "Latest": return { icon: <Layout size={20} />, badge: "bg-[#FFF0ED] text-[#FF5733] dark:bg-[#2A1A15]" };
       case "Patch": 
         if (number === "0.2.3") return { icon: <Sparkles size={20} />, badge: "bg-purple-100 text-purple-700 dark:bg-purple-900/30" };

@@ -24,8 +24,28 @@
   },
   "versions": [
     {
-      "number": "0.2.7",
+      "number": "0.3.0",
       "status": "Siste",
+      "date": "Juli 2026",
+      "type": "Funksjonslansering",
+      "changes": [
+        "Appen kan nå installeres (PWA) — fungerer som en ekte app på mobilen eller datamaskinen din, uten adressefelt, i fullskjerm, og oppdaterer seg selv automatisk ved hver nye utgivelse",
+        "Tre nye spillmoduser for raskere og mer engasjerende repetisjon — Speed Round (kappløp mot klokken med poengmultiplikator for streak), Survival (tre liv, én feil avslutter runden) og Match (par sammen ord og oversettelser mot klokken)",
+        "Last opp en profilbilde direkte fra enheten din i stedet for å lime inn en lenke — bildet komprimeres automatisk før opplasting slik at det ikke sløser med lagringsplass",
+        "Brukernavn (@handle) er nå en obligatorisk, unik del av hver profil — hver konto har nå en unik identifikator, som legger grunnlaget for kommende venne- og sosiale funksjoner",
+        "Stor mobilredesign av Profil-, Annet- og Hjem-sidene — merkbart mer kompakt, ingen overdimensjonerte kort eller bortkastet padding lenger",
+        "Aktivitetskalenderen på profilen din tilpasser seg nå tilgjengelig bredde og viser alltid hele uker fra mandag til søndag med dagnavn",
+        "Prestasjoner på profilen din kollapser nå til en kompakt forhåndsvisning av de siste du har låst opp, i stedet for en skjerm full av dusinvis av kort",
+        "Rettet en visuell feil der snuing av et flashkort på mobil fikk teksten på for- og baksiden til å overlappe",
+        "Innhold gjemmer seg ikke lenger bak mobilnettleserens verktøylinje — rettet håndtering av skjermhøyde (viewport) i hele appen",
+        "Fjernet unødvendige inngangsanimasjoner på ofte besøkte sider — grensesnittet reagerer nå umiddelbart",
+        "Fane-veksleren «Mine ord» / «Kolo Sets» på samlingssiden er nå i full bredde på mobil — ord til venstre, sett til høyre",
+        "Rettet en rekke opphopede feil: samlinger forsvinner ikke lenger når en mappe slettes, streak-feiringsanimasjonen utløses nå pålitelig, det daglige ordspillet forveksler ikke lenger tidssoner, e-postadresser vises ikke lenger på den offentlige resultattavlen, og daglige påminnelser blir nå korrekt planlagt på nytt for neste dag"
+      ]
+    },
+    {
+      "number": "0.2.7",
+      "status": "Minor",
       "date": "Juli 2026",
       "type": "Funksjonslansering",
       "changes": [
@@ -48,7 +68,7 @@
     },
     {
       "number": "0.2.5",
-      "status": "Stabil",
+      "status": "Minor",
       "date": "Mars 2026",
       "type": "UI-oppdatering",
       "changes": [
@@ -81,7 +101,7 @@
     },
     {
       "number": "0.2.2",
-      "status": "Oppdatering",
+      "status": "Minor",
       "date": "Februar 2026",
       "type": "Funksjonslansering",
       "changes": [
@@ -122,7 +142,7 @@
     },
     {
       "number": "0.1.2",
-      "status": "Arv",
+      "status": "Oppdatering",
       "date": "Februar 2026",
       "type": "UI-oppdatering",
       "changes": [

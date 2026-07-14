@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Plus,
   Sparkles,
+  BookOpen,
   Construction,
   Clock,
   Folder,
@@ -11,7 +12,7 @@ import {
   Star,
   ChevronDown,
   ChevronRight as ChevRight,
-  GripVertical,
+  GripHorizontal,
   X,
   Check,
 } from "lucide-react";
@@ -56,6 +57,12 @@ import { KOLO_SETS_BY_LEVEL, CEFR_ORDER } from "../../data/kolo-sets";
 
 type Tab = "my" | "kolo";
 
+// Kolo Sets (готовые наборы) отложены на неопределённый срок — прячем
+// переключатель вкладок целиком, пока фича не готова. Один флаг вместо
+// закомментированного JSX: легко включить обратно (true), и ничего не
+// ломается из-за "неиспользуемых" импортов/стейта, как было в прошлый раз.
+const KOLO_SETS_ENABLED = false;
+
 const FOLDER_COLORS = [
   "#FF5733",
   "#3B82F6",
@@ -67,12 +74,41 @@ const FOLDER_COLORS = [
   "#6366F1",
 ];
 
+// flex-1 на мобилке — оба таба ровно делят ширину строки (один слева,
+// другой справа), sm:flex-initial возвращает компактный wrap-to-content
+// на десктопе, где переключатель не обязан быть на всю ширину.
+function TabButton({
+  active,
+  onClick,
+  icon,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
+        active
+          ? "bg-[#FF5733] text-white shadow-md shadow-orange-500/20"
+          : "text-[#7A756E] dark:text-[#8A867F] hover:bg-[#F5F2ED] dark:hover:bg-[#242220]"
+      }`}
+    >
+      {icon}
+      {label}
+    </button>
+  );
+}
+
 const CollectionSkeleton = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
     {[1, 2, 3, 4, 5, 6].map((i) => (
       <div
         key={i}
-        className="relative overflow-hidden bg-gray-100 dark:bg-gray-800/50 rounded-3xl p-6 h-48 animate-pulse border border-gray-200 dark:border-gray-700"
+        className="relative overflow-hidden bg-gray-100 dark:bg-gray-800/50 rounded-3xl p-4 sm:p-6 h-44 sm:h-48 animate-pulse border border-gray-200 dark:border-gray-700"
       >
         <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4" />
         <div className="h-4 w-1/2 bg-gray-200 dark:bg-gray-700 rounded-lg mb-8" />
@@ -108,7 +144,7 @@ function CreateFolderModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -120,10 +156,10 @@ function CreateFolderModal({
             initial={{ opacity: 0, scale: 0.92, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 16 }}
-            className="relative w-full max-w-sm bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-6 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-2xl"
+            className="relative w-full max-w-sm bg-white dark:bg-[#1A1917] rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-6 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-2xl"
           >
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black text-[#1A1714] dark:text-[#F0EDE8]">
+            <div className="flex justify-between items-center mb-5 sm:mb-6">
+              <h3 className="text-lg sm:text-xl font-black text-[#1A1714] dark:text-[#F0EDE8]">
                 New folder
               </h3>
               <button
@@ -141,13 +177,13 @@ function CreateFolderModal({
               onChange={(e) => setName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
               placeholder="Folder name…"
-              className="w-full px-4 py-3 rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] text-[#1A1714] dark:text-[#F0EDE8] font-bold placeholder-[#B5B0A8] outline-none focus:ring-2 focus:ring-[#FF5733]/30 mb-5"
+              className="w-full px-4 py-3 rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] text-[#1A1714] dark:text-[#F0EDE8] font-bold placeholder-[#B5B0A8] outline-none focus:ring-2 focus:ring-[#FF5733]/30 mb-4 sm:mb-5"
             />
 
             <p className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] mb-3">
               Color
             </p>
-            <div className="flex gap-2 flex-wrap mb-6">
+            <div className="flex gap-2 flex-wrap mb-5 sm:mb-6">
               {FOLDER_COLORS.map((c) => (
                 <button
                   key={c}
@@ -213,13 +249,17 @@ function SortableCollectionCard({
       }}
       className="relative group/drag"
     >
-      {/* Grip handle — only drag trigger */}
+      {/* Grip handle — only drag trigger. Центр по горизонтали: там пустой
+          зазор между бейджем "N cards" (слева) и избранным/меню (справа),
+          поэтому ничего не перекрывает на десктопе. На мобиле всегда
+          видимый (opacity-70) — hover, на который раньше был завязан
+          показ, на тач-экранах в принципе не срабатывает. */}
       <div
         {...attributes}
         {...listeners}
-        className="absolute top-3 left-3 z-10 opacity-0 group-hover/drag:opacity-100 transition-opacity cursor-grab active:cursor-grabbing p-1.5 rounded-xl bg-white/80 dark:bg-[#1A1917]/80 text-[#B5B0A8] touch-none"
+        className="absolute top-3 left-1/2 -translate-x-1/2 z-20 opacity-70 sm:opacity-0 sm:group-hover/drag:opacity-100 transition-opacity cursor-grab active:cursor-grabbing p-1.5 rounded-xl bg-white/80 dark:bg-[#1A1917]/80 text-[#B5B0A8] touch-none"
       >
-        <GripVertical size={14} />
+        <GripHorizontal size={14} />
       </div>
       <CollectionCard
         collection={collection}
@@ -255,7 +295,7 @@ function FolderSection({
   if (collections.length === 0) return null;
 
   return (
-    <div className="mb-6">
+    <div className="mb-4 sm:mb-6">
       <div className="flex items-center gap-3 mb-3 group">
         <button
           onClick={() => setOpen((o) => !o)}
@@ -306,7 +346,7 @@ function FolderSection({
             className="overflow-hidden"
           >
             <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pl-2 border-l-2 ml-3"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pl-2 border-l-2 ml-3"
               style={{ borderColor: folder.color + "44" }}
             >
               {collections.map((col) => (
@@ -339,11 +379,15 @@ export default function WordsPage() {
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
-  const [activeTab] = useState<Tab>("my");
+  const [activeTab, setActiveTab] = useState<Tab>("my");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [folders, setFolders] = useState<FolderType[]>([]);
+  // Пока папки не загружены, держим скелетон — иначе после сборников
+  // рендерится грид БЕЗ заголовка "All collections" (папок ещё нет), а через
+  // мгновение, когда Firestore ответит, заголовок резко впрыгивает
+  const [foldersLoading, setFoldersLoading] = useState(true);
   const [orderedCollections, setOrderedCollections] = useState<Collection[]>(
     [],
   );
@@ -358,10 +402,15 @@ export default function WordsPage() {
 
   // Load folders from Firestore + apply saved order
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setFoldersLoading(false);
+      return;
+    }
+    setFoldersLoading(true);
     getUserFolders(user.uid)
       .then(setFolders)
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setFoldersLoading(false));
   }, [user]);
 
   useEffect(() => {
@@ -545,26 +594,37 @@ export default function WordsPage() {
 
   return (
     <div>
-      {/* ── Tab bar + action buttons ── */}
-      <div className="flex justify-between items-center mb-8 gap-3 flex-wrap">
-        {/* <div className="flex justify-center items-center gap-2 p-1 bg-white dark:bg-[#1A1917] rounded-2xl w-fit border border-[#E0DBD3] dark:border-[#2E2C29]">
-          <TabButton
-            active={activeTab === "my"}
-            onClick={() => setActiveTab("my")}
-            icon={<BookOpen size={18} />}
-            label={t.words.tabs.my}
-          />
-          <TabButton
-            active={activeTab === "kolo"}
-            onClick={() => setActiveTab("kolo")}
-            icon={<Sparkles size={18} />}
-            label={t.words.tabs.kolo}
-          />
-        </div> */}
-        <div></div>
+      {/* ── Tab bar + action buttons ──
+          Kolo Sets отложены — переключатель вкладок скрыт флагом
+          KOLO_SETS_ENABLED, activeTab остаётся на "my" сам по себе (нет
+          кнопки, чтобы переключить на "kolo"). На мобилке — колонка:
+          переключатель на всю ширину (Words слева, Sets справа, ровно
+          пополам), кнопки действий отдельной строкой под ним. На
+          десктопе — одна строка. */}
+      <div
+        className={`flex flex-col sm:flex-row sm:items-center gap-3 mb-6 sm:mb-8 ${
+          KOLO_SETS_ENABLED ? "sm:justify-between" : "sm:justify-end"
+        }`}
+      >
+        {KOLO_SETS_ENABLED && (
+          <div className="flex items-stretch sm:items-center gap-1 p-1 w-full sm:w-fit bg-white dark:bg-[#1A1917] rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29]">
+            <TabButton
+              active={activeTab === "my"}
+              onClick={() => setActiveTab("my")}
+              icon={<BookOpen size={16} />}
+              label={t.words.tabs.my}
+            />
+            <TabButton
+              active={activeTab === "kolo"}
+              onClick={() => setActiveTab("kolo")}
+              icon={<Sparkles size={16} />}
+              label={t.words.tabs.kolo}
+            />
+          </div>
+        )}
 
         {activeTab === "my" && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-end gap-2">
             <button
               onClick={() => setIsCreateFolderOpen(true)}
               title="New folder"
@@ -590,17 +650,17 @@ export default function WordsPage() {
 
       {/* ── Content ── */}
       <div className="min-h-100">
-        {collectionsLoading ? (
+        {collectionsLoading || foldersLoading ? (
           <CollectionSkeleton />
         ) : activeTab === "my" ? (
           <>
             {collections.length === 0 ? (
-              <div className="text-center py-20 bg-gray-50 dark:bg-gray-800/20 rounded-[40px] border-2 border-dashed border-gray-200 dark:border-gray-700">
-                <div className="text-6xl mb-4">📚</div>
-                <h3 className="text-2xl font-bold mb-2">
+              <div className="text-center py-12 sm:py-20 px-4 bg-gray-50 dark:bg-gray-800/20 rounded-3xl sm:rounded-[2.5rem] border-2 border-dashed border-gray-200 dark:border-gray-700">
+                <div className="text-5xl sm:text-6xl mb-4">📚</div>
+                <h3 className="text-xl sm:text-2xl font-bold mb-2">
                   {t.words.empty.title}
                 </h3>
-                <p className="text-gray-500 max-w-xs mx-auto mb-8">
+                <p className="text-gray-500 max-w-xs mx-auto mb-6 sm:mb-8">
                   {t.words.empty.description}
                 </p>
                 <button
@@ -630,7 +690,7 @@ export default function WordsPage() {
 
                 {/* ── Favorites (pinned, outside folders) ── */}
                 {favoriteCollections.length > 0 && (
-                  <div className="mb-6">
+                  <div className="mb-4 sm:mb-6">
                     <div className="flex items-center gap-2.5 mb-3">
                       <Star
                         size={14}
@@ -643,7 +703,7 @@ export default function WordsPage() {
                         {favoriteCollections.length}
                       </span>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                       {favoriteCollections.map((col) => (
                         <CollectionCard
                           key={col.id}
@@ -683,7 +743,7 @@ export default function WordsPage() {
                         items={regularCollections.map((c) => c.id)}
                         strategy={rectSortingStrategy}
                       >
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                           {regularCollections.map((col) => (
                             <SortableCollectionCard
                               key={col.id}
@@ -702,7 +762,10 @@ export default function WordsPage() {
                         dropAnimation={{ duration: 180, easing: "ease" }}
                       >
                         {draggedCollection ? (
-                          <div className="rotate-1 scale-105 shadow-2xl shadow-black/20 opacity-95 pointer-events-none">
+                          // transform-gpu — форсирует композитный слой (translate3d
+                          // вместо translate), иначе повёрнутые скруглённые углы
+                          // деки рендерятся с "рваными" артефактами по краям
+                          <div className="rotate-1 scale-105 transform-gpu shadow-2xl shadow-black/20 opacity-95 pointer-events-none">
                             <CollectionCard
                               collection={draggedCollection}
                               onDelete={() => {}}
@@ -719,7 +782,7 @@ export default function WordsPage() {
           </>
         ) : (
           /* ── Kolo Sets tab (unchanged) ── */
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div className="flex flex-wrap gap-2 mb-4">
               {availableLevels.map((lvl) => (
                 <button
@@ -740,11 +803,11 @@ export default function WordsPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="relative overflow-hidden w-full p-12 rounded-4xl bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm flex flex-col items-center text-center group"
+              className="relative overflow-hidden w-full p-6 sm:p-12 rounded-3xl sm:rounded-4xl bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm flex flex-col items-center text-center group"
             >
               <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#FF5733]/5 rounded-full blur-3xl group-hover:bg-[#FF5733]/10 transition-colors duration-700" />
-                <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-colors duration-700" />
+                <div className="absolute -top-10 -right-10 w-28 h-28 sm:w-40 sm:h-40 bg-[#FF5733]/5 rounded-full blur-3xl group-hover:bg-[#FF5733]/10 transition-colors duration-700" />
+                <div className="absolute -bottom-10 -left-10 w-28 h-28 sm:w-40 sm:h-40 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-colors duration-700" />
               </div>
               <motion.div
                 animate={{ rotate: [0, -10, 10, -10, 0], scale: [1, 1.05, 1] }}
@@ -753,9 +816,10 @@ export default function WordsPage() {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="relative z-10 w-20 h-20 bg-[#F5F2ED] dark:bg-[#242220] rounded-[2rem] flex items-center justify-center text-[#FF5733] mb-6 border border-[#E0DBD3] dark:border-[#2E2C29]"
+                className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F2ED] dark:bg-[#242220] rounded-3xl sm:rounded-4xl flex items-center justify-center text-[#FF5733] mb-5 sm:mb-6 border border-[#E0DBD3] dark:border-[#2E2C29]"
               >
-                <Construction size={32} strokeWidth={1.5} />
+                <Construction size={26} strokeWidth={1.5} className="sm:hidden" />
+                <Construction size={32} strokeWidth={1.5} className="hidden sm:block" />
                 <motion.div
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
@@ -764,15 +828,15 @@ export default function WordsPage() {
                   <Sparkles size={20} />
                 </motion.div>
               </motion.div>
-              <div className="relative z-10 space-y-3">
-                <h3 className="text-3xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight">
+              <div className="relative z-10 space-y-2 sm:space-y-3">
+                <h3 className="text-2xl sm:text-3xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight">
                   Coming <span className="text-[#FF5733]">Soon.</span>
                 </h3>
                 <p className="text-[#7A756E] dark:text-[#8A867F] max-w-70 mx-auto text-sm font-medium leading-relaxed">
                   {t.words.soon}
                 </p>
               </div>
-              <div className="relative z-10 mt-8 flex items-center gap-2 px-4 py-2 bg-[#F5F2ED] dark:bg-[#242220] rounded-full border border-[#E0DBD3] dark:border-[#2E2C29]">
+              <div className="relative z-10 mt-6 sm:mt-8 flex items-center gap-2 px-4 py-2 bg-[#F5F2ED] dark:bg-[#242220] rounded-full border border-[#E0DBD3] dark:border-[#2E2C29]">
                 <Clock size={14} className="text-[#B5B0A8]" />
                 <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#B5B0A8]">
                   In Development • 2026

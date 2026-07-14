@@ -1,6 +1,6 @@
-import { Link, useNavigate, Outlet } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { Link, useNavigate, Outlet } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function LegalLayout() {
   const { user } = useAuth();
@@ -10,7 +10,7 @@ export default function LegalLayout() {
     if (window.history.length > 2) {
       navigate(-1);
     } else {
-      navigate(user ? '/' : '/welcome');
+      navigate(user ? "/" : "/welcome");
     }
   };
 
@@ -34,10 +34,10 @@ export default function LegalLayout() {
           </Link>
 
           <Link
-            to={user ? '/' : '/register'}
+            to={user ? "/" : "/register"}
             className="text-[11px] font-black uppercase tracking-[0.12em] text-[#FF5733] hover:underline"
           >
-            {user ? 'App →' : 'Sign up →'}
+            {user ? "App →" : "Sign up →"}
           </Link>
         </div>
       </header>
@@ -51,16 +51,33 @@ export default function LegalLayout() {
       <footer className="border-t border-[#E0DBD3] dark:border-[#2E2C29] py-8">
         <div className="max-w-3xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[11px] text-[#B5B0A8]">
-            © 2026 Kolo by{' '}
-            <a href="https://dakuta.dev" className="text-[#FF5733] hover:underline">
+            © 2026 Kolo by{" "}
+            <a
+              href="https://dakuta.dev"
+              className="text-[#FF5733] hover:underline"
+            >
               Dakuta
-            </a>{' '}
-            · Euphoria Software
+            </a>
           </p>
           <div className="flex gap-5 text-[11px] font-bold text-[#B5B0A8]">
-            <Link to="/privacy" className="hover:text-[#FF5733] transition-colors">Privacy</Link>
-            <Link to="/terms" className="hover:text-[#FF5733] transition-colors">Terms</Link>
-            <Link to="/support" className="hover:text-[#FF5733] transition-colors">Support</Link>
+            <Link
+              to="/privacy"
+              className="hover:text-[#FF5733] transition-colors"
+            >
+              Privacy
+            </Link>
+            <Link
+              to="/terms"
+              className="hover:text-[#FF5733] transition-colors"
+            >
+              Terms
+            </Link>
+            <Link
+              to="/support"
+              className="hover:text-[#FF5733] transition-colors"
+            >
+              Support
+            </Link>
           </div>
         </div>
       </footer>

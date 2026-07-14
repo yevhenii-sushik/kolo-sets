@@ -168,6 +168,9 @@ export interface UserProfile {
   uid: string;
   displayName: string;
   email: string;
+  // Обязательное уникальное имя (фундамент для друзей/соц. функций) —
+  // если у аккаунта его не было, авто-назначается на бэкенде при загрузке
+  username: string;
   createdAt: Date;
   stats: UserStats;
   currentStreak: number;

@@ -5,8 +5,8 @@ import { useData } from "../../contexts/DataContext";
 import { TIPS_ICONS } from "../../data/home/tips";
 import DailyGameWidget from "../../components/game/DailyGameWidget";
 import { getDailyGoal, isDueCard } from "../../utils/storage";
+import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import {
-  Flame,
   Play,
   BookOpen,
   Lightbulb,
@@ -15,6 +15,7 @@ import {
   Target,
   ArrowRight,
   Clock,
+  Trophy,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -88,16 +89,14 @@ export default function HomePage() {
     ? Math.min(100, Math.round((totalCards / nextMilestone) * 100))
     : 100;
 
+  const unlockedAchievements = profile?.achievements?.length ?? 0;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-4"
-    >
+    <div className="space-y-3 sm:space-y-4">
       {/* ── TOP BAR ─────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between bg-white/60 dark:bg-[#1A1917]/60 backdrop-blur-xl p-3 pr-5 rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] sticky top-18 z-50 shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-[#EDEAE4] dark:bg-[#242220] flex items-center justify-center">
+      <div className="flex items-center justify-between bg-white/60 dark:bg-[#1A1917]/60 backdrop-blur-xl p-2.5 sm:p-3 pr-4 sm:pr-5 rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] sticky top-18 z-50 shadow-sm">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden shrink-0 bg-[#EDEAE4] dark:bg-[#242220] flex items-center justify-center">
             {profile?.photoURL ? (
               <img
                 src={profile.photoURL}
@@ -112,7 +111,7 @@ export default function HomePage() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.12em] leading-none mb-1.5 text-[#B5B0A8] dark:text-[#4A4742]">
               {greeting}
             </p>
-            <p className="u-title text-[17px] leading-none">
+            <p className="u-title text-[15px] sm:text-[17px] leading-none">
               {profile?.displayName?.split(" ")[0] ||
                 (profileLoading ? "…" : t.home.guest)}
             </p>
@@ -120,21 +119,18 @@ export default function HomePage() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Streak badge */}
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF0ED] dark:bg-[#2A1A15]">
-            <Flame
-              size={15}
-              strokeWidth={0}
-              className={
-                profile?.currentStreak > 0
-                  ? "fill-[#FF5733] text-[#FF5733]"
-                  : "fill-[#B5B0A8] text-[#B5B0A8]"
-              }
-            />
-            <span className="text-[13px] font-bold text-[#FF5733]">
-              {profile?.currentStreak || 0}
+          {/* Achievements teaser — стрик и так всегда виден в хедере,
+              дублировать его здесь незачем; тут даём тизер прогресса по
+              достижениям, которого больше нигде на главной не видно */}
+          <button
+            onClick={() => navigate("/profile")}
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#FFF0ED] dark:bg-[#2A1A15] hover:bg-[#FF5733]/10 transition-colors"
+          >
+            <Trophy size={14} className="text-[#FF5733]" />
+            <span className="text-[12px] sm:text-[13px] font-bold text-[#FF5733]">
+              {unlockedAchievements}/{ALL_ACHIEVEMENTS.length}
             </span>
-          </div>
+          </button>
         </div>
       </div>
 
@@ -154,7 +150,7 @@ export default function HomePage() {
                 whileHover={{ scale: 0.995 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => navigate("/review")}
-                className="w-block flex items-center gap-4 p-5 cursor-pointer border-[#FF5733]/20 bg-[#FFF8F6] dark:bg-[#1F1410]"
+                className="w-block rounded-3xl sm:rounded-[2.5rem] flex items-center gap-4 p-5 cursor-pointer border-[#FF5733]/20 bg-[#FFF8F6] dark:bg-[#1F1410]"
               >
                 <div className="w-12 h-12 rounded-2xl bg-[#FF5733] flex items-center justify-center shrink-0 shadow-lg shadow-[#FF5733]/30">
                   <Clock size={20} className="text-white" />
@@ -181,51 +177,55 @@ export default function HomePage() {
           whileHover={{ scale: 0.99 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => navigate("/words")}
-          className="b-block col-span-12 md:col-span-8 relative overflow-hidden cursor-pointer min-h-55"
+          className="b-block rounded-3xl sm:rounded-[2.5rem] col-span-12 md:col-span-8 relative overflow-hidden cursor-pointer min-h-44 sm:min-h-55"
         >
           <div className="absolute right-[-6%] bottom-[-8%] rotate-12 pointer-events-none opacity-[0.06]">
             <Compass size={200} strokeWidth={1} />
           </div>
-          <div className="relative z-10 flex flex-col h-full justify-between gap-6">
+          <div className="relative z-10 flex flex-col h-full justify-between gap-4 sm:gap-6">
             <div className="space-y-2">
               <span className="inline-block px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em] bg-white/10 dark:bg-black/10">
                 {t.home.hero.badge}
               </span>
-              <h2 className="u-title text-4xl md:text-5xl leading-[0.95]">
+              <h2 className="u-title text-2xl sm:text-4xl md:text-5xl leading-[0.95]">
                 {t.home.hero.titleFirst}
                 <br />
                 {t.home.hero.titleSecond}
               </h2>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center shadow-lg shrink-0 bg-[#FF5733]">
-                <Play size={17} fill="white" color="white" className="ml-0.5" />
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shadow-lg shrink-0 bg-[#FF5733]">
+                <Play size={15} fill="white" color="white" className="ml-0.5 sm:hidden" />
+                <Play size={17} fill="white" color="white" className="ml-0.5 hidden sm:block" />
               </div>
-              <p className="text-[13px] font-medium opacity-60">
+              <p className="text-[12px] sm:text-[13px] font-medium opacity-60">
                 {t.home.hero.description}
               </p>
             </div>
           </div>
         </motion.div>
 
-        {/* Stats — compact 2-col */}
-        <div className="col-span-12 md:col-span-4 flex flex-col gap-4">
-          <div className="g-block flex-1 flex flex-col justify-center items-center text-center p-5">
-            <div className="w-9 h-9 rounded-xl mb-3 flex items-center justify-center bg-white/70 dark:bg-[#1A1917]/70">
-              <BookOpen size={17} className="text-[#3B82F6]" />
+        {/* Stats — на мобилке в строку (слева/справа, есть вся ширина
+            экрана), на md: и выше — колонкой рядом с Hero, как раньше */}
+        <div className="col-span-12 md:col-span-4 flex flex-row md:flex-col gap-3 sm:gap-4">
+          <div className="g-block rounded-3xl sm:rounded-[2.5rem] flex-1 flex flex-col justify-center items-center text-center p-4 sm:p-5">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl mb-2 sm:mb-3 flex items-center justify-center bg-white/70 dark:bg-[#1A1917]/70">
+              <BookOpen size={15} className="text-[#3B82F6] sm:hidden" />
+              <BookOpen size={17} className="text-[#3B82F6] hidden sm:block" />
             </div>
-            <p className="u-title text-[28px] leading-none">
+            <p className="u-title text-2xl sm:text-[28px] leading-none">
               {stats.totalCards}
             </p>
             <p className="text-[10px] font-bold uppercase tracking-widest mt-1.5 text-[#B5B0A8]">
               {t.home.stats.words}
             </p>
           </div>
-          <div className="g-block flex-1 flex flex-col justify-center items-center text-center p-5">
-            <div className="w-9 h-9 rounded-xl mb-3 flex items-center justify-center bg-white/70 dark:bg-[#1A1917]/70">
-              <Target size={17} className="text-[#22C55E]" />
+          <div className="g-block rounded-3xl sm:rounded-[2.5rem] flex-1 flex flex-col justify-center items-center text-center p-4 sm:p-5">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl mb-2 sm:mb-3 flex items-center justify-center bg-white/70 dark:bg-[#1A1917]/70">
+              <Target size={15} className="text-[#22C55E] sm:hidden" />
+              <Target size={17} className="text-[#22C55E] hidden sm:block" />
             </div>
-            <p className="u-title text-[28px] leading-none">
+            <p className="u-title text-2xl sm:text-[28px] leading-none">
               {stats.totalDecks}
             </p>
             <p className="text-[10px] font-bold uppercase tracking-widest mt-1.5 text-[#B5B0A8]">
@@ -234,18 +234,53 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Daily Game Widget */}
-        <div className="col-span-12 md:col-span-5">
+        {/* Daily Game Widget — в паре со Study tip (похожая по контенту
+            высота), а не с более крупной Progress-карточкой: раньше это
+            и создавало пустое место снизу/справа при растяжении по сетке */}
+        <div className="col-span-12 md:col-span-6">
           <DailyGameWidget />
         </div>
 
-        {/* Progress + Daily Goal card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.08 }}
-          className="w-block col-span-12 md:col-span-7 p-6 flex flex-col gap-6"
-        >
+        {/* Study tip */}
+        <div className="w-block rounded-3xl sm:rounded-[2.5rem] col-span-12 md:col-span-6 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-3 sm:mb-5">
+            <div className="flex items-center gap-2">
+              <Lightbulb size={15} className="text-[#FF5733]" />
+              <span className="uc-title">{t.home.tip.title}</span>
+            </div>
+            <button
+              onClick={refreshTip}
+              className="p-2 rounded-full transition-colors text-[#B5B0A8] hover:bg-[#EDEAE4] dark:hover:bg-[#242220]"
+            >
+              <RotateCw size={14} />
+            </button>
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentTip.text}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-start gap-3 sm:gap-4"
+            >
+              <span className="text-3xl sm:text-4xl leading-none">{currentTip.icon}</span>
+              <div>
+                <p className="uc-title text-[8px] mb-1">
+                  {currentTip.category}
+                </p>
+                <p className="text-[13px] sm:text-[14px] font-medium leading-snug">
+                  {currentTip.text}
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Progress + Daily Goal card — самая насыщенная карточка (два
+            раздела), поэтому на всю ширину, а не втиснута в половину сетки */}
+        <div className="w-block rounded-3xl sm:rounded-[2.5rem] col-span-12 p-4 sm:p-6 flex flex-col gap-4 sm:gap-6">
           {/* Daily goal section */}
           <div>
             <div className="flex items-center justify-between mb-3">
@@ -305,50 +340,8 @@ export default function HomePage() {
               </button>
             </div>
           </div>
-        </motion.div>
-
-        {/* Study tip */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.12 }}
-          className="w-block col-span-12 p-6"
-        >
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-2">
-              <Lightbulb size={15} className="text-[#FF5733]" />
-              <span className="uc-title">{t.home.tip.title}</span>
-            </div>
-            <button
-              onClick={refreshTip}
-              className="p-2 rounded-full transition-colors text-[#B5B0A8] hover:bg-[#EDEAE4] dark:hover:bg-[#242220]"
-            >
-              <RotateCw size={14} />
-            </button>
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentTip.text}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-start gap-4"
-            >
-              <span className="text-4xl leading-none">{currentTip.icon}</span>
-              <div>
-                <p className="uc-title text-[8px] mb-1">
-                  {currentTip.category}
-                </p>
-                <p className="text-[14px] font-medium leading-snug">
-                  {currentTip.text}
-                </p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

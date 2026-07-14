@@ -48,22 +48,31 @@ export default function CollectionCard({
 
   return (
     <>
-      {/* ── Deck wrapper: pb-3 makes room for the stacked layers ── */}
+      {/* ── Deck wrapper: pb-3 makes room for the stacked layers ──
+          top-0 + bottom-N (а не bottom-N + h-full) — так высота слоя
+          считается браузером как разница между явными top/bottom, а не
+          через h-full поверх auto-высоты обёртки. Раньше bottom-1.5 + h-full
+          сдвигал bottom вверх, а высота оставалась прежней (full) — из-за
+          этого верх слоя вылезал НАД карточкой на те же 6px. Теперь top
+          всегда точно 0, слой физически не может торчать сверху.
+          Небольшой поворот (origin-bottom) + асимметричные left/right —
+          лёгкий веер вместо ровной стопки, виден только там, где слои
+          выглядывают из-под карточки снизу. */}
       <div className="relative pb-3 group">
 
-        {/* Layer 3 — deepest, widest offset */}
-        <div className="absolute bottom-0 inset-x-4 h-full rounded-4xl bg-[#E3E0D9] dark:bg-[#1C1B19] border border-[#CCC7BF] dark:border-[#232120]" />
-        {/* Layer 2 */}
-        <div className="absolute bottom-1.5 inset-x-2 h-full rounded-4xl bg-[#EDEAE4] dark:bg-[#242220] border border-[#D8D3CC] dark:border-[#2A2825]" />
+        {/* Layer 3 — глубже, сильнее веер и выглядывает больше */}
+        <div className="absolute top-0 bottom-0 left-6 right-2 rounded-4xl bg-[#E3E0D9] dark:bg-[#1C1B19] border border-[#CCC7BF] dark:border-[#232120] -rotate-2 origin-bottom transform-gpu" />
+        {/* Layer 2 — ближе, веер слабее */}
+        <div className="absolute top-0 bottom-1.5 left-4 right-3 rounded-4xl bg-[#EDEAE4] dark:bg-[#242220] border border-[#D8D3CC] dark:border-[#2A2825] -rotate-1 origin-bottom transform-gpu" />
 
         {/* ── Main card ── */}
-        <div className="relative bg-white dark:bg-[#1A1917] rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] group-hover:border-[#FF5733]/30 transition-all duration-200 shadow-sm flex flex-col overflow-hidden">
+        <div className="relative z-10 bg-white dark:bg-[#1A1917] rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] group-hover:border-[#FF5733]/30 transition-all duration-200 shadow-sm flex flex-col overflow-hidden">
 
           {/* Top section */}
-          <div className="p-5 pb-4 flex flex-col flex-1">
+          <div className="p-4 sm:p-5 pb-3 sm:pb-4 flex flex-col flex-1">
 
             {/* Controls row */}
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-3 sm:mb-5">
               <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-[#F5F2ED] dark:bg-[#242220] rounded-full text-[#7A756E] dark:text-[#8A867F]">
                 {total} {total === 1 ? 'card' : 'cards'}
               </span>
@@ -174,7 +183,7 @@ export default function CollectionCard({
             </div>
 
             {/* Collection name — app's signature italic serif style */}
-            <h3 className="text-2xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight leading-[1.1] line-clamp-2 mb-1">
+            <h3 className="text-xl sm:text-2xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight leading-[1.1] line-clamp-2 mb-1">
               {collection.name}<span className="text-[#FF5733]">.</span>
             </h3>
 
@@ -190,18 +199,18 @@ export default function CollectionCard({
           </div>
 
           {/* Bottom actions */}
-          <div className="px-5 pb-5 flex gap-2">
+          <div className="px-4 sm:px-5 pb-4 sm:pb-5 flex gap-2">
             <button
               onClick={() => !isEmpty && setShowModeModal(true)}
               disabled={isEmpty}
-              className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-[#FF5733] dark:hover:bg-[#FF5733] dark:hover:text-white transition-all active:scale-[0.98] disabled:opacity-20"
+              className="flex-1 flex items-center justify-center gap-2 py-3 sm:py-3.5 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] text-[11px] font-black uppercase tracking-widest rounded-2xl hover:bg-[#FF5733] dark:hover:bg-[#FF5733] dark:hover:text-white transition-all active:scale-[0.98] disabled:opacity-20"
             >
               {t.words.collectionCard.study}
               <ChevronRight size={13} />
             </button>
             <button
               onClick={() => navigate(`/collection/${collection.id}/edit`)}
-              className="w-12 flex items-center justify-center rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+              className="w-11 sm:w-12 flex items-center justify-center rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
             >
               <Pencil size={14} />
             </button>

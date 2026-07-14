@@ -39,8 +39,6 @@ const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
 const OtherPage = lazy(() => import("./pages/other/OtherPage"));
 const SettingsPage = lazy(() => import("./pages/other/SettingsPage"));
 const UpdatesPage = lazy(() => import("./pages/other/UpdatesPage"));
-const PrivacyPage = lazy(() => import("./pages/other/PrivacyPage"));
-const SystemInfoPage = lazy(() => import("./pages/other/SystemInfoPage"));
 const DataManagementPage = lazy(() => import("./pages/other/DataManagementPage"));
 const SupportPage = lazy(() => import("./pages/other/SupportPage"));
 
@@ -161,8 +159,6 @@ function AppContent() {
 
         <Route path="/other/settings" element={<SettingsPage />} />
         <Route path="/other/updates" element={<UpdatesPage />} />
-        <Route path="/other/privacy" element={<PrivacyPage />} />
-        <Route path="/other/system-info" element={<SystemInfoPage />} />
         <Route path="/other/data-management" element={<DataManagementPage />} />
         <Route path="/other/support" element={<SupportPage />} />
       </Route>

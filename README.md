@@ -30,7 +30,7 @@
 
 **Kolo Sets** is a minimalist, high-performance language learning application built around the scientifically proven **SM-2 Spaced Repetition algorithm**. Designed primarily for Norwegian language learners, but extensible to any language pair, it combines the efficiency of flashcard systems with the engagement of gamification — streaks, achievements, and progress tracking.
 
-> *"The most efficient way to learn vocabulary is to see it just before you forget it."*
+> _"The most efficient way to learn vocabulary is to see it just before you forget it."_
 
 Kolo Sets puts this principle into practice with a clean, distraction-free interface that gets out of your way and lets you focus on learning.
 
@@ -39,40 +39,47 @@ Kolo Sets puts this principle into practice with a clean, distraction-free inter
 ## ✨ Features
 
 ### 🧠 Core Learning Engine
+
 - **SM-2 Spaced Repetition** — Battle-tested algorithm that optimizes review intervals based on your performance
 - **Flashcard Mode** — Traditional card-flip practice with self-assessment
 - **Quiz Mode** — Active recall testing with multiple-choice challenges
 - **Adaptive Scheduling** — Cards you struggle with appear more frequently; mastered cards less so
 
 ### 🌍 Multilingual Interface
+
 - Full UI in **🇬🇧 English**, **🇳🇴 Norsk**, and **🇷🇺 Русский**
 - Instant language switching — no reload required
 - i18n-ready architecture for easy addition of new languages
 
 ### 🔊 Text-to-Speech (TTS)
+
 - Native pronunciation for **Norwegian Bokmål** and **Nynorsk**
 - **English** (US & UK variants)
 - Configurable TTS language per deck — hear exactly what you're learning
 
 ### 📊 Statistics & Gamification
+
 - **Daily Streaks** — Build and maintain your learning habit
 - **13 Achievement Types** — Milestones that celebrate your progress
 - **Activity Calendar** — GitHub-style contribution graph of your study sessions
 - **Progress Dashboard** — Per-deck mastery percentages, card counts, and session history
 
 ### 🎴 Deck Management
+
 - Create, edit, and delete card decks with custom names and descriptions
 - **Import / Export JSON** — Backup your decks or share them with others
 - Choose TTS language per deck at creation time
 - Quick-access Study and Quiz launch from the deck card
 
 ### 🎨 UI & UX
+
 - **Dark / Light theme** — Respects system preference, toggleable manually
 - **Sound effects** — Subtle audio feedback for correct/incorrect answers and session completion
 - Fully responsive — works on mobile, tablet, and desktop
 - No PWA complexity — always loads the freshest version
 
 ### 🔐 Authentication
+
 - Firebase-powered auth — secure, fast, and scalable
 - User profiles with persistent progress across devices
 
@@ -80,15 +87,15 @@ Kolo Sets puts this principle into practice with a clean, distraction-free inter
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|---|---|
-| **Framework** | React 18 + Vite |
-| **Language** | TypeScript (96%+ coverage) |
-| **Styling** | Tailwind CSS |
-| **Backend / Auth** | Firebase (Auth + Firestore) |
-| **Deployment** | Netlify |
-| **Linting** | ESLint |
-| **i18n** | Custom context-based i18n (`src/utils/i18n.ts`) |
+| Layer              | Technology                                      |
+| ------------------ | ----------------------------------------------- |
+| **Framework**      | React 18 + Vite                                 |
+| **Language**       | TypeScript (96%+ coverage)                      |
+| **Styling**        | Tailwind CSS                                    |
+| **Backend / Auth** | Firebase (Auth + Firestore)                     |
+| **Deployment**     | Netlify                                         |
+| **Linting**        | ESLint                                          |
+| **i18n**           | Custom context-based i18n (`src/utils/i18n.ts`) |
 
 ---
 
@@ -156,7 +163,7 @@ The repository includes a `netlify.toml` with SPA redirect rules pre-configured.
 All UI strings live in `src/utils/i18n.ts`. To switch the interface language programmatically:
 
 ```tsx
-import { useI18n } from '../contexts/I18nContext';
+import { useI18n } from "../contexts/I18nContext";
 
 function MyComponent() {
   const { t, setLanguage } = useI18n();
@@ -164,9 +171,9 @@ function MyComponent() {
   return (
     <div>
       <h1>{t.home.title}</h1>
-      <button onClick={() => setLanguage('no')}>Norsk</button>
-      <button onClick={() => setLanguage('en')}>English</button>
-      <button onClick={() => setLanguage('ru')}>Русский</button>
+      <button onClick={() => setLanguage("no")}>Norsk</button>
+      <button onClick={() => setLanguage("en")}>English</button>
+      <button onClick={() => setLanguage("ru")}>Русский</button>
     </div>
   );
 }
@@ -174,15 +181,15 @@ function MyComponent() {
 
 #### i18n Coverage Status
 
-| Screen | Status |
-|---|---|
-| Home Page | ✅ Complete |
-| Navigation (Sidebar + BottomNav) | ✅ Complete |
-| Deck Creation | ✅ Complete |
+| Screen                            | Status      |
+| --------------------------------- | ----------- |
+| Home Page                         | ✅ Complete |
+| Navigation (Sidebar + BottomNav)  | ✅ Complete |
+| Deck Creation                     | ✅ Complete |
 | Deck Cards (Study / Quiz buttons) | ✅ Complete |
-| Flashcards & Quiz Pages | 🔄 ~20% |
-| Profile | 🔄 ~20% |
-| Modal Dialogs | 🔄 ~30% |
+| Flashcards & Quiz Pages           | 🔄 ~20%     |
+| Profile                           | 🔄 ~20%     |
+| Modal Dialogs                     | 🔄 ~30%     |
 
 ---
 
@@ -264,12 +271,12 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
 
 ## 👨‍💻 Author
 
-Built with ❤️ by **Euphoria Software**
+Built with ❤️ by **Dakuta**
 
 <div align="center">
 
 ---
 
-*If Kolo Sets helps you on your language learning journey, consider giving it a ⭐ — it means a lot!*
+_If Kolo Sets helps you on your language learning journey, consider giving it a ⭐ — it means a lot!_
 
 </div>

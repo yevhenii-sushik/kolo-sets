@@ -24,8 +24,28 @@
   },
   "versions": [
     {
-      "number": "0.2.7",
+      "number": "0.3.0",
       "status": "Latest",
+      "date": "July 2026",
+      "type": "Feature Release",
+      "changes": [
+        "The app is now installable (PWA) — runs like a real app on your phone or computer, no browser address bar, fullscreen, and updates itself automatically on every new release",
+        "Three new game modes for faster, more engaging review — Speed Round (race the clock with a streak score multiplier), Survival (three lives, one mistake ends the run) and Match (pair up words with translations against the clock)",
+        "Upload a profile photo straight from your device instead of pasting a link — the image is automatically compressed before upload so it doesn't waste storage",
+        "Username (@handle) is now a required, unique part of every profile — every account has a unique identifier, laying the foundation for upcoming friends and social features",
+        "Major mobile redesign of the Profile, Other, and Home pages — noticeably more compact, no more oversized cards or wasted padding",
+        "The activity calendar on your profile now adapts to the available width and always shows full Monday-to-Sunday weeks with day labels",
+        "Achievements on your profile now collapse into a compact preview of your most recent unlocks instead of a screen filled with dozens of cards",
+        "Fixed a visual bug where flipping a flashcard on mobile made the front and back text overlap",
+        "Content no longer hides behind the mobile browser's toolbar — fixed viewport-height handling across the whole app",
+        "Removed unnecessary entrance animations on frequently visited pages — the interface now responds instantly",
+        "The \"My Words\" / \"Kolo Sets\" tab switcher on the collections page is now full-width on mobile — words on the left, sets on the right",
+        "Fixed a batch of accumulated bugs: collections no longer disappear when deleting a folder, the streak celebration animation now reliably fires, the daily word game no longer gets confused across timezones, email addresses are no longer exposed on the public leaderboard, and daily reminders now correctly reschedule for the next day"
+      ]
+    },
+    {
+      "number": "0.2.7",
+      "status": "Minor",
       "date": "July 2026",
       "type": "Feature Release",
       "changes": [
@@ -48,7 +68,7 @@
     },
     {
       "number": "0.2.5",
-      "status": "Stable",
+      "status": "Minor",
       "date": "March 2026",
       "type": "UI Update",
       "changes": [
@@ -81,7 +101,7 @@
     },
     {
       "number": "0.2.2",
-      "status": "Patch",
+      "status": "Minor",
       "date": "February 2026",
       "type": "Feature Release",
       "changes": [
@@ -123,7 +143,7 @@
     },
     {
       "number": "0.1.2",
-      "status": "Legacy",
+      "status": "Patch",
       "date": "February 2026",
       "type": "UI Update",
       "changes": [
@@ -134,7 +154,7 @@
     },
     {
       "number": "0.1.1",
-      "status": "Legacy",
+      "status": "Patch",
       "date": "February 2026",
       "type": "UI Update",
       "changes": [

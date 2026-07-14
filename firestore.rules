@@ -27,6 +27,21 @@ service cloud.firestore {
       allow write: if isOwner(scoreUserId);
     }
 
+    // Username uniqueness registry — foundation for friends/social lookup.
+    // Doc id = normalized (lowercase) username, content = { uid }.
+    // No native unique-constraints in Firestore, so the client always claims
+    // via a transaction (see firebase/firestore.ts claimUsername): check the
+    // doc is free, then create it. Only the owning uid may create/update/
+    // delete their own claim — never someone else's.
+    match /usernames/{username} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.uid == request.auth.uid;
+      allow update: if isSignedIn()
+                    && resource.data.uid == request.auth.uid
+                    && request.resource.data.uid == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.uid == request.auth.uid;
+    }
+
     // Deny everything else
     match /{document=**} {
       allow read, write: if false;

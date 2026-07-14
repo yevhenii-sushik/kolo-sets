@@ -79,32 +79,56 @@ export const updateStudyDay = (
   }
 };
 
-// Получить данные для календаря активности (последние N дней)
-export const getActivityCalendarData = (
+// Получить недели (Пн→Вс) для календаря активности: ровно `weeksCount` недель,
+// заканчивая текущей неделей. Недели всегда начинаются с понедельника и
+// заканчиваются воскресеньем — чтобы в сетке верхняя строка всегда была
+// понедельником, а нижняя воскресеньем, независимо от того, какой сегодня
+// день. Дни ПОСЛЕ сегодняшнего (в ещё не закончившейся текущей неделе) — null,
+// компонент рисует их как пустую заглушку, а не "0 занятий".
+export const getActivityWeeks = (
   studyHistory: StudyDay[],
-  days: number = 90
-): StudyDay[] => {
-  const result: StudyDay[] = [];
+  weeksCount: number
+): (StudyDay | null)[][] => {
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
+  // ISO день недели: понедельник = 1 ... воскресенье = 7
+  const isoDayOfWeek = (d: Date) => ((d.getDay() + 6) % 7) + 1;
 
-    const existingDay = studyHistory.find(d => d.date === dateStr);
+  const currentMonday = new Date(today);
+  currentMonday.setDate(currentMonday.getDate() - (isoDayOfWeek(today) - 1));
 
-    result.push(
-      existingDay || {
-        date: dateStr,
-        sessions: 0,
-        cardsStudied: 0,
-        timeSpent: 0
+  const startMonday = new Date(currentMonday);
+  startMonday.setDate(startMonday.getDate() - (weeksCount - 1) * 7);
+
+  const historyByDate = new Map(studyHistory.map(d => [d.date, d]));
+
+  const weeks: (StudyDay | null)[][] = [];
+  for (let w = 0; w < weeksCount; w++) {
+    const week: (StudyDay | null)[] = [];
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(startMonday);
+      date.setDate(date.getDate() + w * 7 + d);
+
+      if (date > today) {
+        week.push(null);
+        continue;
       }
-    );
+
+      const dateStr = date.toISOString().split('T')[0];
+      week.push(
+        historyByDate.get(dateStr) ?? {
+          date: dateStr,
+          sessions: 0,
+          cardsStudied: 0,
+          timeSpent: 0
+        }
+      );
+    }
+    weeks.push(week);
   }
 
-  return result;
+  return weeks;
 };
 
 // Получить интенсивность для календаря (0-4)

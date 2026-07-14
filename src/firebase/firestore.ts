@@ -7,6 +7,7 @@ import {
   updateDoc,
   deleteDoc,
   deleteField,
+  runTransaction,
   Timestamp,
   writeBatch,
   query,
@@ -16,6 +17,7 @@ import {
 import { db } from './config';
 import { Collection } from '../types';
 import { calcUpdatedStreak } from '../utils/streak';
+import { generateUsername, normalizeUsername } from '../utils/username';
 
 // Firestore отвергает undefined ('Unsupported field value: undefined').
 // Optional-поля (folderId, isFavorite, order) могут прийти как явный undefined
@@ -139,17 +141,119 @@ export const syncCollectionsToFirestore = async (
   await batch.commit();
 };
 
-// Получить или создать профиль пользователя
+// ── Username: обязательное уникальное поле профиля ──────────────────────────
+// Уникальность обеспечивается отдельной коллекцией usernames/{usernameLower},
+// где id документа = нормализованное имя, содержимое = { uid }. Firestore не
+// умеет unique-constraints нативно, поэтому резервация всегда идёт через
+// транзакцию: либо usernames/{new} свободен и мы его занимаем, либо кидаем
+// USERNAME_TAKEN.
+
+class UsernameTakenError extends Error {
+  constructor() {
+    super('USERNAME_TAKEN');
+  }
+}
+
+// Атомарно переносит резервацию: снимает старую (если была и отличается от
+// новой) и создаёт новую. Используется и для ручной смены username в
+// профиле, и для авто-бэкфилла у существующих аккаунтов без username.
+export const claimUsername = async (
+  userId: string,
+  newUsername: string,
+  previousUsernameLower?: string,
+): Promise<void> => {
+  const newLower = normalizeUsername(newUsername);
+  const newRef = doc(db, 'usernames', newLower);
+  const userRef = doc(db, 'users', userId);
+
+  await runTransaction(db, async (tx) => {
+    const newSnap = await tx.get(newRef);
+    if (newSnap.exists() && newSnap.data().uid !== userId) {
+      throw new UsernameTakenError();
+    }
+    if (previousUsernameLower && previousUsernameLower !== newLower) {
+      tx.delete(doc(db, 'usernames', previousUsernameLower));
+    }
+    tx.set(newRef, { uid: userId });
+    tx.set(userRef, { username: newUsername, usernameLower: newLower }, { merge: true });
+  });
+};
+
+// Генерирует и резервирует авто-username для аккаунта, у которого его ещё
+// нет (бэкфилл старых пользователей). При коллизии — пробует другой рандом.
+export const assignAutoUsername = async (userId: string): Promise<string> => {
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const candidate = generateUsername();
+    try {
+      await claimUsername(userId, candidate);
+      return candidate;
+    } catch (e) {
+      if (!(e instanceof UsernameTakenError)) throw e;
+    }
+  }
+  throw new Error('Could not assign a unique username after 5 attempts');
+};
+
+// Атомарно создаёт профиль нового пользователя вместе с резервацией username
+// в ОДНОЙ транзакции. Читает users/{userId} первым и абортит без побочных
+// эффектов, если документ уже существует — это защищает от гонки, когда
+// AuthContext и DataContext почти одновременно вызывают getUserProfile для
+// только что созданного аккаунта (иначе оба могли бы создать разные
+// usernames-резервации, и одна осталась бы "осиротевшей").
+const createProfileWithUniqueUsername = async (
+  userId: string,
+  buildProfile: (username: string) => Record<string, any>,
+): Promise<Record<string, any>> => {
+  const userRef = doc(db, 'users', userId);
+
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const username = generateUsername();
+    const usernameRef = doc(db, 'usernames', normalizeUsername(username));
+    const profile = buildProfile(username);
+
+    try {
+      await runTransaction(db, async (tx) => {
+        const userSnap = await tx.get(userRef);
+        if (userSnap.exists()) {
+          throw new Error('PROFILE_ALREADY_EXISTS');
+        }
+        const usernameSnap = await tx.get(usernameRef);
+        if (usernameSnap.exists()) {
+          throw new UsernameTakenError();
+        }
+        tx.set(usernameRef, { uid: userId });
+        tx.set(userRef, profile);
+      });
+      return profile;
+    } catch (e) {
+      if (e instanceof UsernameTakenError) continue;
+      if ((e as Error).message === 'PROFILE_ALREADY_EXISTS') {
+        // Кто-то ещё выиграл гонку создания профиля — просто отдаём его версию
+        const snap = await getDoc(userRef);
+        return snap.data() as Record<string, any>;
+      }
+      throw e;
+    }
+  }
+  throw new Error('Could not create profile with a unique username after 5 attempts');
+};
+
+// Получить или создать профиль пользователя. username гарантированно
+// присутствует на выходе — либо был, либо назначается и резервируется здесь.
 export const getUserProfile = async (userId: string) => {
   const docRef = doc(db, 'users', userId);
   const docSnap = await getDoc(docRef);
-  
+
   if (docSnap.exists()) {
-    return docSnap.data();
+    const data = docSnap.data();
+    if (!data.username) {
+      const username = await assignAutoUsername(userId);
+      return { ...data, username, usernameLower: normalizeUsername(username) };
+    }
+    return data;
   }
-  
-  // Создаем новый профиль
-  const newProfile = {
+
+  return createProfileWithUniqueUsername(userId, (username) => ({
     createdAt: Timestamp.now(),
     currentStreak: 0,
     longestStreak: 0,
@@ -166,11 +270,9 @@ export const getUserProfile = async (userId: string) => {
     },
     photoURL: null,
     displayName: null,
-    username: null
-  };
-  
-  await setDoc(docRef, newProfile);
-  return newProfile;
+    username,
+    usernameLower: normalizeUsername(username),
+  }));
 };
 
 // Обновить профиль пользователя
@@ -227,10 +329,19 @@ export const updateFlashcardStats = (userId: string, cardsCount: number, duratio
 // Удалить все данные пользователя (коллекции + профиль)
 export const deleteUserData = async (userId: string): Promise<void> => {
   const collectionsRef = collection(db, 'users', userId, 'collections');
-  const snapshot = await getDocs(query(collectionsRef));
+  const [snapshot, userSnap] = await Promise.all([
+    getDocs(query(collectionsRef)),
+    getDoc(doc(db, 'users', userId)),
+  ]);
   const batch = writeBatch(db);
   snapshot.docs.forEach(d => batch.delete(d.ref));
   batch.delete(doc(db, 'users', userId));
+  // Освобождаем зарезервированный username, иначе он остаётся навсегда
+  // занятым мёртвым аккаунтом и никто больше не сможет его взять
+  const usernameLower = userSnap.data()?.usernameLower;
+  if (usernameLower) {
+    batch.delete(doc(db, 'usernames', usernameLower));
+  }
   await batch.commit();
 };
 
