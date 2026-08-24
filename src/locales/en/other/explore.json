@@ -1,0 +1,24 @@
+{
+  "title": "More from",
+  "titleAccent": "Dakuta.",
+  "subtitle": "One language, mastered from every angle. Explore the other tools we've built for learning Norwegian.",
+  "visit": "Visit",
+  "comingSoon": "Coming soon",
+  "notifyMe": "Notify me",
+  "woky": {
+    "category": "Norwegian grammar",
+    "tagline": "An interactive Norwegian grammar textbook with exercises and instant feedback.",
+    "sections": "sections",
+    "exercises": "exercises"
+  },
+  "boey": {
+    "tagline": "An interactive dictionary for Norwegian word inflections, gender and conjugation.",
+    "tags": ["Masculine", "Feminine", "Neuter", "Verbs"]
+  },
+  "footer": "New tools ship regularly — this is just the start.",
+  "promo": {
+    "title": "Discover more",
+    "subtitle": "Other apps we've crafted for mastering Norwegian.",
+    "cta": "Explore"
+  }
+}

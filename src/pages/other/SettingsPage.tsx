@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
   Sun, Moon, Globe, Volume2,
   Download, Upload, Trash2, FileJson,
-  RefreshCw, Terminal, AlertCircle, Settings, Monitor, Target, Bell
+  RefreshCw, Terminal, AlertCircle, Monitor, Target, Bell
 } from 'lucide-react';
 import { useI18n } from '../../contexts/I18nContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -27,6 +27,7 @@ import { saveUserCollection } from '../../firebase/firestore';
 import { Language } from '../../locales';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import Toast from '../../components/ui/Toast';
+import { PageHeader, SectionCard, SectionTitle, fadeUp } from '../../components/other/PageSection';
 
 const LANGUAGES: { code: Language; label: string; flag: string }[] = [
   { code: 'en', label: 'English', flag: '🇬🇧' },
@@ -34,29 +35,6 @@ const LANGUAGES: { code: Language; label: string; flag: string }[] = [
   { code: 'no', label: 'Norsk', flag: '🇳🇴' },
   { code: 'uk', label: 'Українська', flag: '🇺🇦' },
 ];
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.4, ease: 'easeOut' as const },
-});
-
-const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-  <div className={`bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-[2.5rem] p-6 md:p-8 ${className}`}>
-    {children}
-  </div>
-);
-
-const SectionTitle = ({ icon: Icon, label }: { icon: any; label: string }) => (
-  <div className="flex items-center gap-3 mb-6">
-    <div className="w-9 h-9 rounded-xl bg-[#FFF0ED] dark:bg-[#2A1A15] flex items-center justify-center text-[#FF5733]">
-      <Icon size={18} />
-    </div>
-    <h2 className="text-base font-black uppercase tracking-[0.12em] text-[#1A1714] dark:text-[#F0EDE8]">
-      {label}
-    </h2>
-  </div>
-);
 
 const Toggle = ({ enabled, onToggle }: { enabled: boolean; onToggle: () => void }) => (
   <button
@@ -197,20 +175,7 @@ export default function SettingsPage() {
     <div className="max-w-2xl mx-auto space-y-5 pb-16">
 
       {/* Header */}
-      <motion.header {...fadeUp(0)} className="mb-8">
-        <div className="flex items-center gap-2 mb-4 px-1 py-1.5 w-fit rounded-full bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm pr-4">
-          <div className="w-7 h-7 rounded-full bg-[#FFF0ED] dark:bg-[#2A1A15] flex items-center justify-center">
-            <Settings size={14} className="text-[#FF5733]" />
-          </div>
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7A756E]">
-            {s.title}
-          </span>
-        </div>
-        <h1 className="text-5xl md:text-6xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] leading-none">
-          {s.title}<span className="text-[#FF5733]">.</span>
-        </h1>
-        <p className="mt-3 text-[#7A756E] dark:text-[#8A867F] font-medium">{s.subtitle}</p>
-      </motion.header>
+      <PageHeader title={s.title} accent="." subtitle={s.subtitle} />
 
       {/* Appearance */}
       <motion.div {...fadeUp(0.05)}>
@@ -492,7 +457,7 @@ export default function SettingsPage() {
             </h2>
           </div>
 
-          <div className="flex items-start gap-4 p-5 bg-white/60 dark:bg-red-950/30 rounded-2xl border border-red-200/40 dark:border-red-900/20">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 bg-white/60 dark:bg-red-950/30 rounded-2xl border border-red-200/40 dark:border-red-900/20">
             <div className="flex-1">
               <p className="font-bold text-[#1A1714] dark:text-[#F0EDE8] text-sm mb-1">
                 {s.sections.dangerZone.delete}
@@ -504,7 +469,7 @@ export default function SettingsPage() {
             <button
               onClick={handleDeleteAccount}
               disabled={isDeleting}
-              className="shrink-0 flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-black text-[11px] uppercase tracking-[0.15em] transition-all active:scale-95 disabled:opacity-60 shadow-sm"
+              className="shrink-0 w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-black text-[11px] uppercase tracking-[0.15em] transition-all active:scale-95 disabled:opacity-60 shadow-sm"
             >
               {isDeleting
                 ? <><RefreshCw size={14} className="animate-spin" />{s.sections.dangerZone.deleting}</>

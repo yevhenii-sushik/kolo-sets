@@ -20,7 +20,7 @@
     "study": "Studer",
     "masteryLevel": "Mestringsnivå",
     "dueToday": "til gjennomgang",
-    "confirmDelete": "-",
+    "confirmDelete": "Denne samlingen og alle kortene i den vil bli slettet permanent. Denne handlingen kan ikke angres.",
     "modal": {
       "chooseMode": "Velg modus",
       "flashcards": "Flashkort",
@@ -49,8 +49,31 @@
     "modals": {
       "editWord": "Rediger ord",
       "newWord": "Nytt ord",
+      "createWord": "Opprett ord",
       "renameTitle": "Nytt samlingsnavn",
-      "deleteConfirm": "Slett dette ordet?"
+      "deleteConfirm": "Slett dette ordet?",
+      "importTitle": "Importer ord",
+      "importSubtitle": "Lim inn en liste — ett ord per linje",
+      "formatPattern": "ord; oversettelse; forklaring; eksempel; ordklasse",
+      "formatHint": "Forklaring, eksempel og ordklasse bør være på språket du lærer (f.eks. norsk)",
+      "copyPrompt": "Kopier AI-prompt",
+      "promptCopied": "Kopiert",
+      "importPlaceholder": "skrive; to write; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
+      "cardsReady": "kort klare",
+      "startImport": "Start import",
+      "aiPrompt": "Lag en ordliste for læring i CSV-format (skilletegn semikolon \";\").\nVIKTIG: ord og oversettelse som vanlig, men FORKLARING, EKSEMPEL og ORDKLASSE må være strengt på språket som læres (f.eks. norsk).\n\nRadformat: ord; oversettelse; forklaring (på målspråket); eksempel (på målspråket); ordklasse (på målspråket).\n\nHer er ordlisten: [LIM INN ORDENE DINE HER]"
+    },
+    "fields": {
+      "word": "Ord",
+      "wordPlaceholder": "f.eks. skrive",
+      "translation": "Oversettelse",
+      "translationPlaceholder": "f.eks. to write",
+      "partOfSpeech": "Ordklasse",
+      "partOfSpeechNone": "Ikke valgt",
+      "explanation": "Forklaring (på norsk)",
+      "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
+      "example": "Eksempelsetning",
+      "examplePlaceholder": "Jeg skriver en bok"
     }
   },
   "flashcards": {

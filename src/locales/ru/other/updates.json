@@ -5,17 +5,14 @@
   "changelog": "Changelog",
   "sidebarTitle": "Дерево версий",
   "stats": {
-    "intensity": "Интенсивность",
-    "intensityVal": "Weekly",
-    "intensitySub": "Цикл обновлений",
+    "releases": "Релизов",
+    "releasesSub": "Уже выпущено",
     "improvements": "Улучшений",
     "improvementsSub": "Всего изменений",
-    "status": "Статус систем",
-    "statusVal": "Online",
-    "statusSub": "Cloud Sync Active",
-    "feedback": "Фидбек",
-    "feedbackVal": "100%",
-    "feedbackSub": "Community Driven"
+    "patches": "Патчей",
+    "patchesSub": "Багфикс-релизов",
+    "languages": "Языков",
+    "languagesSub": "Языки интерфейса"
   },
   "footer": {
     "title": "Это только начало",

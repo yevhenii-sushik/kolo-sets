@@ -65,8 +65,12 @@ export default function CollectionCard({
         {/* Layer 2 — ближе, веер слабее */}
         <div className="absolute top-0 bottom-1.5 left-4 right-3 rounded-4xl bg-[#EDEAE4] dark:bg-[#242220] border border-[#D8D3CC] dark:border-[#2A2825] -rotate-1 origin-bottom transform-gpu" />
 
-        {/* ── Main card ── */}
-        <div className="relative z-10 bg-white dark:bg-[#1A1917] rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] group-hover:border-[#FF5733]/30 transition-all duration-200 shadow-sm flex flex-col overflow-hidden">
+        {/* ── Main card ──
+            overflow-hidden обычно нужен для скруглённых углов деки, но пока
+            меню открыто — переключаем на visible, иначе выпадашка,
+            открывающаяся вверх от нижней кнопки, обрезается по границе
+            карточки. */}
+        <div className={`relative z-10 bg-white dark:bg-[#1A1917] rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] group-hover:border-[#FF5733]/30 transition-all duration-200 shadow-sm flex flex-col ${isMenuOpen ? 'overflow-visible' : 'overflow-hidden'}`}>
 
           {/* Top section */}
           <div className="p-4 sm:p-5 pb-3 sm:pb-4 flex flex-col flex-1">
@@ -91,94 +95,6 @@ export default function CollectionCard({
                     />
                   </button>
                 )}
-                <div className="relative" ref={menuRef}>
-                  <button
-                    onClick={e => { e.stopPropagation(); setIsMenuOpen(v => !v); }}
-                    className="p-1.5 rounded-xl text-[#B5B0A8] hover:text-[#1A1714] dark:hover:text-[#F0EDE8] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
-                  >
-                    <EllipsisVertical size={16} />
-                  </button>
-                  <AnimatePresence>
-                    {isMenuOpen && (
-                      <motion.div
-                        key={menuView}
-                        initial={{ opacity: 0, scale: 0.95, y: -8 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: -8 }}
-                        transition={{ duration: 0.12 }}
-                        className="absolute right-0 mt-1.5 w-48 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-2xl shadow-xl z-20 overflow-hidden"
-                      >
-                        {menuView === 'main' ? (
-                          <>
-                            <button
-                              onClick={() => { navigate(`/collection/${collection.id}/edit`); closeMenu(); }}
-                              className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
-                            >
-                              <Pencil size={13} /> {t.words.collectionCard.edit}
-                            </button>
-
-                            {folders.length > 0 && (
-                              <button
-                                onClick={() => setMenuView('folders')}
-                                className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
-                              >
-                                <Folder size={13} />
-                                <span className="flex-1 text-left">Move to folder</span>
-                                <ChevronRight size={12} className="text-[#B5B0A8]" />
-                              </button>
-                            )}
-
-                            <div className="h-px bg-[#F0EDE8] dark:bg-[#2E2C29] mx-3" />
-
-                            <button
-                              onClick={() => { onDelete(collection.id); closeMenu(); }}
-                              className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
-                            >
-                              <Trash2 size={13} /> {t.delete}
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            {/* Folder sub-menu header */}
-                            <button
-                              onClick={() => setMenuView('main')}
-                              className="w-full flex items-center gap-2 px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] hover:text-[#FF5733] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors border-b border-[#F0EDE8] dark:border-[#2E2C29]"
-                            >
-                              <ChevronLeft size={13} /> Folders
-                            </button>
-
-                            {/* Remove from folder (only if currently in one) */}
-                            {collection.folderId && (
-                              <button
-                                onClick={() => { onMoveToFolder?.(undefined); closeMenu(); }}
-                                className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors border-b border-[#F0EDE8] dark:border-[#2E2C29]"
-                              >
-                                <X size={13} /> No folder
-                              </button>
-                            )}
-
-                            {/* Folder list */}
-                            {folders.map(f => (
-                              <button
-                                key={f.id}
-                                onClick={() => { onMoveToFolder?.(f.id); closeMenu(); }}
-                                className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
-                              >
-                                <div className="w-3 h-3 rounded-sm shrink-0" style={{ backgroundColor: f.color }} />
-                                <span className="flex-1 text-left truncate text-[#1A1714] dark:text-[#F0EDE8]">
-                                  {f.name}
-                                </span>
-                                {f.id === collection.folderId && (
-                                  <Check size={12} className="text-[#FF5733] shrink-0" />
-                                )}
-                              </button>
-                            ))}
-                          </>
-                        )}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
               </div>
             </div>
 
@@ -198,7 +114,11 @@ export default function CollectionCard({
             </div>
           </div>
 
-          {/* Bottom actions */}
+          {/* Bottom actions — Study + single overflow menu (Edit / Move to
+              folder / Delete). Was Study + a separate Edit pencil that
+              duplicated the "Edit" entry already in the ⋮ menu up top;
+              now there's exactly one way in, and the ⋮ trigger lives here
+              instead of the top-right corner. */}
           <div className="px-4 sm:px-5 pb-4 sm:pb-5 flex gap-2">
             <button
               onClick={() => !isEmpty && setShowModeModal(true)}
@@ -208,12 +128,95 @@ export default function CollectionCard({
               {t.words.collectionCard.study}
               <ChevronRight size={13} />
             </button>
-            <button
-              onClick={() => navigate(`/collection/${collection.id}/edit`)}
-              className="w-11 sm:w-12 flex items-center justify-center rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
-            >
-              <Pencil size={14} />
-            </button>
+
+            <div className="relative shrink-0" ref={menuRef}>
+              <button
+                onClick={e => { e.stopPropagation(); setIsMenuOpen(v => !v); }}
+                className="w-11 sm:w-12 h-full flex items-center justify-center rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+              >
+                <EllipsisVertical size={16} />
+              </button>
+              <AnimatePresence>
+                {isMenuOpen && (
+                  <motion.div
+                    key={menuView}
+                    initial={{ opacity: 0, scale: 0.95, y: 8 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 8 }}
+                    transition={{ duration: 0.12 }}
+                    className="absolute right-0 bottom-full mb-1.5 w-48 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-2xl shadow-xl z-20 overflow-hidden"
+                  >
+                    {menuView === 'main' ? (
+                      <>
+                        <button
+                          onClick={() => { navigate(`/collection/${collection.id}/edit`); closeMenu(); }}
+                          className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+                        >
+                          <Pencil size={13} /> {t.words.collectionCard.edit}
+                        </button>
+
+                        {folders.length > 0 && (
+                          <button
+                            onClick={() => setMenuView('folders')}
+                            className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+                          >
+                            <Folder size={13} />
+                            <span className="flex-1 text-left">Move to folder</span>
+                            <ChevronRight size={12} className="text-[#B5B0A8]" />
+                          </button>
+                        )}
+
+                        <div className="h-px bg-[#F0EDE8] dark:bg-[#2E2C29] mx-3" />
+
+                        <button
+                          onClick={() => { onDelete(collection.id); closeMenu(); }}
+                          className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
+                        >
+                          <Trash2 size={13} /> {t.delete}
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        {/* Folder sub-menu header */}
+                        <button
+                          onClick={() => setMenuView('main')}
+                          className="w-full flex items-center gap-2 px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] hover:text-[#FF5733] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors border-b border-[#F0EDE8] dark:border-[#2E2C29]"
+                        >
+                          <ChevronLeft size={13} /> Folders
+                        </button>
+
+                        {/* Remove from folder (only if currently in one) */}
+                        {collection.folderId && (
+                          <button
+                            onClick={() => { onMoveToFolder?.(undefined); closeMenu(); }}
+                            className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors border-b border-[#F0EDE8] dark:border-[#2E2C29]"
+                          >
+                            <X size={13} /> No folder
+                          </button>
+                        )}
+
+                        {/* Folder list */}
+                        {folders.map(f => (
+                          <button
+                            key={f.id}
+                            onClick={() => { onMoveToFolder?.(f.id); closeMenu(); }}
+                            className="w-full flex items-center gap-2.5 px-4 py-3 text-xs font-bold hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
+                          >
+                            <div className="w-3 h-3 rounded-sm shrink-0" style={{ backgroundColor: f.color }} />
+                            <span className="flex-1 text-left truncate text-[#1A1714] dark:text-[#F0EDE8]">
+                              {f.name}
+                            </span>
+                            {f.id === collection.folderId && (
+                              <Check size={12} className="text-[#FF5733] shrink-0" />
+                            )}
+                          </button>
+                        ))}
+                      </>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
@@ -221,7 +224,7 @@ export default function CollectionCard({
       {/* ── Study Mode Modal ── */}
       <AnimatePresence>
         {showModeModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
+          <div className="fixed inset-0 z-110 flex items-center justify-center p-6">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

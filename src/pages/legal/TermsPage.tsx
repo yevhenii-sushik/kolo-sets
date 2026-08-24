@@ -289,9 +289,9 @@ export default function TermsPage() {
           </p>
           <p className="text-[13px] mt-1">
             General support:{" "}
-            <Link to="/support" className="text-[#3B82F6] hover:underline">
-              Support form
-            </Link>
+            <a href="mailto:support@dakuta.dev" className="text-[#3B82F6] hover:underline">
+              support@dakuta.dev
+            </a>
           </p>
         </div>
       </Section>
@@ -310,8 +310,8 @@ export default function TermsPage() {
             Privacy Policy →
           </p>
         </Link>
-        <Link
-          to="/support"
+        <a
+          href="mailto:support@dakuta.dev"
           className="flex-1 p-4 rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29] bg-white dark:bg-[#1A1917] hover:border-[#3B82F6] transition-colors group"
         >
           <p className="text-[10px] font-black uppercase tracking-[0.15em] text-[#B5B0A8] mb-1">
@@ -320,7 +320,7 @@ export default function TermsPage() {
           <p className="font-black text-[14px] text-[#1A1714] dark:text-[#F0EDE8] group-hover:text-[#3B82F6] transition-colors">
             Contact Support →
           </p>
-        </Link>
+        </a>
       </div>
     </div>
   );

@@ -1,0 +1,24 @@
+{
+  "title": "Mer fra",
+  "titleAccent": "Dakuta.",
+  "subtitle": "Ett språk, mestret fra alle vinkler. Utforsk de andre verktøyene vi har bygget for å lære norsk.",
+  "visit": "Besøk",
+  "comingSoon": "Kommer snart",
+  "notifyMe": "Varsle meg",
+  "woky": {
+    "category": "Norsk grammatikk",
+    "tagline": "En interaktiv lærebok i norsk grammatikk med øvelser og umiddelbar tilbakemelding.",
+    "sections": "kapitler",
+    "exercises": "øvelser"
+  },
+  "boey": {
+    "tagline": "En interaktiv ordbok for bøyningsformer, kjønn og konjugering av norske ord.",
+    "tags": ["Hankjønn", "Hunkjønn", "Intetkjønn", "Verb"]
+  },
+  "footer": "Nye verktøy lanseres jevnlig — dette er bare starten.",
+  "promo": {
+    "title": "Se mer",
+    "subtitle": "Andre apper vi har laget for å mestre norsk.",
+    "cta": "Utforsk"
+  }
+}

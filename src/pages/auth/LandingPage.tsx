@@ -599,12 +599,12 @@ export default function LandingPage() {
               Terms of Service
             </Link>
             <span className="w-1 h-1 rounded-full bg-[#D0CCC5] dark:bg-[#3A3835]" />
-            <Link
-              to="/support"
+            <a
+              href="mailto:support@dakuta.dev"
               className="text-[11px] font-bold text-[#B5B0A8] hover:text-[#FF5733] transition-colors"
             >
               Support
-            </Link>
+            </a>
           </div>
         </div>
       </footer>

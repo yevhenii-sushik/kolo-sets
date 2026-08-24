@@ -8,6 +8,7 @@ import enWords from './en/words/words.json';
 import enProfile from './en/profile.json';
 import enOther from './en/other/other.json';
 import enSettings from './en/other/settings.json';
+import enExplore from './en/other/explore.json';
 import enGame from './en/game.json';
 
 import ruCommon from './ru/common.json';
@@ -20,6 +21,7 @@ import ruWords from './ru/words/words.json';
 import ruProfile from './ru/profile.json';
 import ruOther from './ru/other/other.json';
 import ruSettings from './ru/other/settings.json';
+import ruExplore from './ru/other/explore.json';
 import ruGame from './ru/game.json';
 
 import noCommon from './no/common.json';
@@ -32,6 +34,7 @@ import noWords from './no/words/words.json';
 import noProfile from './no/profile.json';
 import noOther from './no/other/other.json';
 import noSettings from './no/other/settings.json';
+import noExplore from './no/other/explore.json';
 import noGame from './no/game.json';
 
 import ukCommon from './uk/common.json';
@@ -44,6 +47,7 @@ import ukWords from './uk/words/words.json';
 import ukProfile from './uk/profile.json';
 import ukOther from './uk/other/other.json';
 import ukSettings from './uk/other/settings.json';
+import ukExplore from './uk/other/explore.json';
 import ukGame from './uk/game.json';
 
 
@@ -58,6 +62,7 @@ const en = {
   profile: enProfile,
   other: enOther,
   settings: enSettings,
+  explore: enExplore,
   game: enGame,
 };
 
@@ -72,6 +77,7 @@ const ru = {
   profile: ruProfile,
   other: ruOther,
   settings: ruSettings,
+  explore: ruExplore,
   game: ruGame,
 };
 
@@ -86,6 +92,7 @@ const no = {
   profile: noProfile,
   other: noOther,
   settings: noSettings,
+  explore: noExplore,
   game: noGame,
 };
 
@@ -100,6 +107,7 @@ const uk = {
   profile: ukProfile,
   other: ukOther,
   settings: ukSettings,
+  explore: ukExplore,
   game: ukGame,
 };
 

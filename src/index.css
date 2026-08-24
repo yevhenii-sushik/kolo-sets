@@ -51,6 +51,15 @@
   .sub-title {
     @apply text-[10px] font-bold uppercase tracking-[0.15em] text-[#B5B0A8] dark:text-[#4A4742];
   }
+
+  /* Скрывает скроллбар у прокручиваемых блоков (напр. дерево версий) */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Стили для флешкарточек.

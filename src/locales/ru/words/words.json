@@ -20,7 +20,7 @@
     "study": "Учить",
     "masteryLevel": "Уровень освоения",
     "dueToday": "на повторение",
-    "confirmDelete": "-",
+    "confirmDelete": "Эта коллекция и все её карточки будут удалены безвозвратно. Это действие нельзя отменить.",
     "modal": {
       "chooseMode": "Выбери режим",
       "flashcards": "Флэшкарты",
@@ -49,8 +49,31 @@
     "modals": {
       "editWord": "Редактировать слово",
       "newWord": "Новое слово",
+      "createWord": "Создать слово",
       "renameTitle": "Новое название набора",
-      "deleteConfirm": "Удалить это слово?"
+      "deleteConfirm": "Удалить это слово?",
+      "importTitle": "Импорт слов",
+      "importSubtitle": "Вставь список целиком — по одному слову в строке",
+      "formatPattern": "слово; перевод; объяснение; пример; часть речи",
+      "formatHint": "Объяснение, пример и часть речи должны быть на изучаемом языке (например, на норвежском)",
+      "copyPrompt": "Копировать AI-промт",
+      "promptCopied": "Скопировано",
+      "importPlaceholder": "skrive; писать; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
+      "cardsReady": "карточек готово",
+      "startImport": "Начать импорт",
+      "aiPrompt": "Создай список слов для изучения в формате CSV (разделитель точка с запятой \";\").\nВАЖНО: слово и перевод — как обычно, но ОБЪЯСНЕНИЕ, ПРИМЕР и ЧАСТЬ РЕЧИ должны быть строго на изучаемом языке (например, на норвежском).\n\nФормат строки: слово; перевод; описание (на изучаемом); пример (на изучаемом); часть речи (на изучаемом).\n\nВот список слов: [ВСТАВЬ СВОИ СЛОВА ЗДЕСЬ]"
+    },
+    "fields": {
+      "word": "Слово",
+      "wordPlaceholder": "например, skrive",
+      "translation": "Перевод",
+      "translationPlaceholder": "например, писать",
+      "partOfSpeech": "Часть речи",
+      "partOfSpeechNone": "Не выбрано",
+      "explanation": "Объяснение (на норвежском)",
+      "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
+      "example": "Пример предложения",
+      "examplePlaceholder": "Jeg skriver en bok"
     }
   },
   "flashcards": {

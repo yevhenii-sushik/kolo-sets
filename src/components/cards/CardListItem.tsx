@@ -1,21 +1,151 @@
+import { useState } from "react";
 import { Card } from "../../types";
 import { useI18n } from "../../contexts/I18nContext";
-import { Edit3, Trash2, Quote, BookOpen, Zap } from "lucide-react";
+import { PARTS_OF_SPEECH } from "../../data/partsOfSpeech";
+import { Edit3, Trash2, Quote, BookOpen, Zap, Check, X } from "lucide-react";
 
 interface CardListItemProps {
   card: Card;
-  onEdit: () => void;
+  onSave: (cardData: Omit<Card, "id" | "srsData" | "createdAt">) => void;
   onDelete: () => void;
 }
 
 export default function CardListItem({
   card,
-  onEdit,
+  onSave,
   onDelete,
 }: CardListItemProps) {
   const { t } = useI18n();
+  const [isEditing, setIsEditing] = useState(false);
+  const [word, setWord] = useState(card.word);
+  const [translation, setTranslation] = useState(card.translation);
+  const [explanation, setExplanation] = useState(card.explanation);
+  const [example, setExample] = useState(card.example);
+  const [partOfSpeech, setPartOfSpeech] = useState(card.partOfSpeech);
+
+  const startEditing = () => {
+    setWord(card.word);
+    setTranslation(card.translation);
+    setExplanation(card.explanation);
+    setExample(card.example);
+    setPartOfSpeech(card.partOfSpeech);
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    if (!word.trim() || !translation.trim()) return;
+    onSave({
+      word: word.trim(),
+      translation: translation.trim(),
+      explanation: explanation.trim(),
+      example: example.trim(),
+      partOfSpeech: partOfSpeech.trim(),
+    });
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => setIsEditing(false);
+
+  const fields = t.words.editCollection.fields;
+
+  if (isEditing) {
+    return (
+      <div
+        onKeyDown={(e) => e.key === "Escape" && handleCancel()}
+        className="bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-6 md:p-8 border-2 border-[#FF5733] shadow-lg shadow-orange-500/10"
+      >
+        <div className="grid sm:grid-cols-2 gap-3 mb-3">
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
+              {fields.word} *
+            </label>
+            <input
+              autoFocus
+              type="text"
+              value={word}
+              onChange={(e) => setWord(e.target.value)}
+              className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-black text-lg italic font-serif"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
+              {fields.translation} *
+            </label>
+            <input
+              type="text"
+              value={translation}
+              onChange={(e) => setTranslation(e.target.value)}
+              className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-bold"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5 mb-3">
+          <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
+            {fields.partOfSpeech}
+          </label>
+          <select
+            value={partOfSpeech}
+            onChange={(e) => setPartOfSpeech(e.target.value)}
+            className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-medium appearance-none"
+          >
+            <option value="">{fields.partOfSpeechNone}</option>
+            {PARTS_OF_SPEECH.map((pos) => (
+              <option key={pos.value} value={pos.value}>
+                {pos.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="space-y-1.5 mb-3">
+          <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
+            {fields.explanation}
+          </label>
+          <textarea
+            value={explanation}
+            onChange={(e) => setExplanation(e.target.value)}
+            rows={2}
+            className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-medium resize-none leading-relaxed"
+          />
+        </div>
+
+        <div className="space-y-1.5 mb-5">
+          <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
+            {fields.example}
+          </label>
+          <textarea
+            value={example}
+            onChange={(e) => setExample(e.target.value)}
+            rows={2}
+            className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-medium italic resize-none leading-relaxed"
+          />
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={handleCancel}
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] dark:text-[#8A867F] font-black text-[11px] uppercase tracking-widest hover:border-[#FF5733]/40 transition-all"
+          >
+            <X size={14} /> {t.cancel}
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={!word.trim() || !translation.trim()}
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-[#FF5733] text-white font-black text-[11px] uppercase tracking-widest hover:bg-[#E54D2A] transition-all active:scale-[0.98] disabled:opacity-40"
+          >
+            <Check size={14} /> {t.save}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="group relative bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-6 md:p-8 border border-[#E0DBD3] dark:border-[#2E2C29] hover:border-[#FF5733] transition-all duration-500 shadow-sm hover:shadow-xl hover:shadow-[#FF5733]/5">
+    <div
+      onClick={startEditing}
+      className="group relative bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-6 md:p-8 border border-[#E0DBD3] dark:border-[#2E2C29] hover:border-[#FF5733] transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-[#FF5733]/5 cursor-pointer active:scale-[0.995]"
+    >
       {/* ВЕРХНЯЯ ЧАСТЬ: Слово и Кнопки */}
       <div className="flex justify-between items-start gap-4 mb-6">
         <div className="flex-1 min-w-0">
@@ -38,25 +168,25 @@ export default function CardListItem({
           </div>
         </div>
 
-        {/* КНОПКИ: В стиле нашего интерфейса */}
-        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
+        {/* КНОПКИ: всегда видны — на тач-экранах hover не работает */}
+        <div className="flex gap-1 shrink-0">
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onEdit();
+              startEditing();
             }}
-            className="p-3 text-[#7A756E] hover:text-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] rounded-2xl transition-all active:scale-90 border border-transparent hover:border-[#FF5733]/20"
+            className="p-2.5 text-[#B5B0A8] hover:text-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] rounded-xl transition-all active:scale-90"
           >
-            <Edit3 size={18} />
+            <Edit3 size={17} />
           </button>
           <button
             onClick={(e) => {
               e.stopPropagation();
               onDelete();
             }}
-            className="p-3 text-[#7A756E] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-2xl transition-all active:scale-90 border border-transparent hover:border-red-500/20"
+            className="p-2.5 text-[#B5B0A8] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all active:scale-90"
           >
-            <Trash2 size={18} />
+            <Trash2 size={17} />
           </button>
         </div>
       </div>
@@ -75,7 +205,7 @@ export default function CardListItem({
         )}
 
         {card.example && (
-          <div className="relative p-5 bg-[#F5F2ED]/50 dark:bg-[#242220]/50 rounded-[2rem] border border-[#E0DBD3] dark:border-[#2E2C29] overflow-hidden">
+          <div className="relative p-5 bg-[#F5F2ED]/50 dark:bg-[#242220]/50 rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] overflow-hidden">
             <Quote
               size={40}
               className="absolute -top-2 -right-2 text-[#FF5733]/5 pointer-events-none"

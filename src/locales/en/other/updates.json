@@ -5,17 +5,14 @@
   "changelog": "Changelog",
   "sidebarTitle": "Version Tree",
   "stats": {
-    "intensity": "Intensity",
-    "intensityVal": "Weekly",
-    "intensitySub": "Update cycle",
+    "releases": "Releases",
+    "releasesSub": "Shipped so far",
     "improvements": "Improvements",
     "improvementsSub": "Total changes",
-    "status": "System Status",
-    "statusVal": "Online",
-    "statusSub": "Cloud Sync Active",
-    "feedback": "Feedback",
-    "feedbackVal": "100%",
-    "feedbackSub": "Community Driven"
+    "patches": "Patches",
+    "patchesSub": "Bug-fix releases",
+    "languages": "Languages",
+    "languagesSub": "Interface languages"
   },
   "footer": {
     "title": "This is only the beginning",

@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import {
   ChevronRight,
+  ArrowRight,
   Rocket,
   PocketKnife,
   SlidersHorizontal,
   ShieldCheck,
   Scale,
+  Compass,
+  Sparkle,
 } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 
@@ -52,6 +55,56 @@ const SettingsRow = ({
   </Link>
 );
 
+// Отдельный премиальный блок под остальными пунктами — не строчка в общем
+// списке, а самостоятельная зазывающая карточка. Тёмный градиент + звёздная
+// россыпь вокруг круглого бейджа — та же идея, что у премиум-иконки
+// Telegram (тёмный кружок с иконкой в окружении звёздочек).
+function ExploreMorePromo() {
+  const { t } = useI18n();
+  const p = t.explore.promo;
+
+  return (
+    <Link
+      to="/other/explore"
+      className="group relative block rounded-4xl overflow-hidden bg-linear-to-br from-[#1A1714] via-[#151312] to-[#0A0908] p-8 sm:p-10 text-center transition-transform active:scale-[0.99]"
+    >
+      {/* лёгкая сетка-текстура на фоне */}
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+
+      {/* звёздная россыпь вокруг бейджа */}
+      <Sparkle size={16} className="absolute top-7 left-[20%] text-white/40 fill-white/15" />
+      <Sparkle size={9} className="absolute top-16 right-[22%] text-white/25 fill-white/10" />
+      <Sparkle size={11} className="absolute bottom-10 left-[26%] text-white/25 fill-white/10" />
+      <Sparkle size={9} className="absolute top-8 right-[32%] text-[#FF5733]/70 fill-[#FF5733]/25" />
+      <Sparkle size={13} className="absolute bottom-14 right-[18%] text-white/30 fill-white/10" />
+
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="w-16 h-16 rounded-full bg-linear-to-b from-[#3A3630] to-[#141210] ring-1 ring-white/10 shadow-2xl flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+          <Compass size={26} className="text-white" strokeWidth={1.75} />
+        </div>
+        <h3 className="text-2xl sm:text-3xl font-black italic font-serif text-white leading-tight mb-2">
+          {p.title}
+          <span className="text-[#FF5733]">.</span>
+        </h3>
+        <p className="text-[13px] text-white/50 font-medium max-w-xs mb-6">
+          {p.subtitle}
+        </p>
+        <span className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-white text-[#1A1714] text-[11px] font-black uppercase tracking-widest group-hover:gap-3 transition-all">
+          {p.cta}
+          <ArrowRight size={13} />
+        </span>
+      </div>
+    </Link>
+  );
+}
+
 export default function OtherPage() {
   const { t } = useI18n();
 
@@ -75,7 +128,7 @@ export default function OtherPage() {
       label: t.other.support,
       sublabel: "Get help or send feedback",
       icon: PocketKnife,
-      path: "/support",
+      path: "/other/support",
     },
   ];
 
@@ -97,40 +150,44 @@ export default function OtherPage() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
-      <div>
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5B0A8] mb-3 ml-1">
-          General
-        </p>
-        <SettingsGroup>
-          {mainLinks.map((link) => (
-            <SettingsRow
-              key={link.id}
-              label={link.label}
-              sublabel={link.sublabel}
-              icon={link.icon}
-              to={link.path}
-            />
-          ))}
-        </SettingsGroup>
+    <div className="space-y-6 md:space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5B0A8] mb-3 ml-1">
+            General
+          </p>
+          <SettingsGroup>
+            {mainLinks.map((link) => (
+              <SettingsRow
+                key={link.id}
+                label={link.label}
+                sublabel={link.sublabel}
+                icon={link.icon}
+                to={link.path}
+              />
+            ))}
+          </SettingsGroup>
+        </div>
+
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5B0A8] mb-3 ml-1">
+            Legal & Docs
+          </p>
+          <SettingsGroup>
+            {legalLinks.map((link) => (
+              <SettingsRow
+                key={link.id}
+                label={link.label}
+                sublabel={link.sublabel}
+                icon={link.icon}
+                to={link.path}
+              />
+            ))}
+          </SettingsGroup>
+        </div>
       </div>
 
-      <div>
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5B0A8] mb-3 ml-1">
-          Legal & Docs
-        </p>
-        <SettingsGroup>
-          {legalLinks.map((link) => (
-            <SettingsRow
-              key={link.id}
-              label={link.label}
-              sublabel={link.sublabel}
-              icon={link.icon}
-              to={link.path}
-            />
-          ))}
-        </SettingsGroup>
-      </div>
+      <ExploreMorePromo />
     </div>
   );
 }

@@ -72,12 +72,12 @@ export default function LegalLayout() {
             >
               Terms
             </Link>
-            <Link
-              to="/support"
+            <a
+              href="mailto:support@dakuta.dev"
               className="hover:text-[#FF5733] transition-colors"
             >
               Support
-            </Link>
+            </a>
           </div>
         </div>
       </footer>

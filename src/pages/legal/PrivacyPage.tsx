@@ -378,10 +378,10 @@ export default function PrivacyPage() {
         <P>If you have questions about this Privacy Policy or your data:</P>
         <div className="p-4 rounded-2xl bg-[#EDEAE4] dark:bg-[#242220]">
           <p className="text-[13px] mt-1">
-            Use the{" "}
-            <Link to="/support" className="text-[#FF5733] hover:underline">
-              in-app support form
-            </Link>{" "}
+            Email us at{" "}
+            <a href="mailto:support@dakuta.dev" className="text-[#FF5733] hover:underline">
+              support@dakuta.dev
+            </a>{" "}
             to reach us directly.
           </p>
         </div>
@@ -401,8 +401,8 @@ export default function PrivacyPage() {
             Terms of Service →
           </p>
         </Link>
-        <Link
-          to="/support"
+        <a
+          href="mailto:support@dakuta.dev"
           className="flex-1 p-4 rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29] bg-white dark:bg-[#1A1917] hover:border-[#FF5733] transition-colors group"
         >
           <p className="text-[10px] font-black uppercase tracking-[0.15em] text-[#B5B0A8] mb-1">
@@ -411,7 +411,7 @@ export default function PrivacyPage() {
           <p className="font-black text-[14px] text-[#1A1714] dark:text-[#F0EDE8] group-hover:text-[#FF5733] transition-colors">
             Contact Support →
           </p>
-        </Link>
+        </a>
       </div>
     </div>
   );

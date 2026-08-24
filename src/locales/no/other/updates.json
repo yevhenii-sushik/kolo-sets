@@ -5,17 +5,14 @@
   "changelog": "Endringslogg",
   "sidebarTitle": "Versjonstre",
   "stats": {
-    "intensity": "Intensitet",
-    "intensityVal": "Ukentlig",
-    "intensitySub": "Oppdateringssyklus",
+    "releases": "Utgivelser",
+    "releasesSub": "Sluppet så langt",
     "improvements": "Forbedringer",
     "improvementsSub": "Totale endringer",
-    "status": "Systemstatus",
-    "statusVal": "Online",
-    "statusSub": "Skysynkronisering aktiv",
-    "feedback": "Tilbakemelding",
-    "feedbackVal": "100%",
-    "feedbackSub": "Fellesskapsdrevet"
+    "patches": "Patcher",
+    "patchesSub": "Feilrettinger",
+    "languages": "Språk",
+    "languagesSub": "Grensesnittspråk"
   },
   "footer": {
     "title": "Dette er bare begynnelsen",

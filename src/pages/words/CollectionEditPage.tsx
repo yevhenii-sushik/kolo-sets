@@ -1,6 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionValueEvent,
+} from "framer-motion";
 import { Card, Collection } from "../../types";
 import {
   getCollection,
@@ -21,6 +28,7 @@ import {
   Layers,
   RefreshCw,
   FileJson,
+  ArrowUp,
 } from "lucide-react";
 import AddCardModal from "../../components/AddCardModal";
 import ImportCardsModal from "../../components/ImportCardsModal";
@@ -45,10 +53,27 @@ export default function CollectionEditPage() {
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
-  const [editingCard, setEditingCard] = useState<Card | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [renameValue, setRenameValue] = useState("");
+
+  // Collapsing header: большой заголовок плавно сжимается/тает по скроллу
+  // и одновременно (та же scroll-позиция, никаких отдельных дискретных
+  // toggle-анимаций — от них и была дёрганность) в компактный докнутый
+  // бар под хедером NavLayout (fixed h-12). scrollY завёрнут в spring —
+  // сглаживает шаг между кадрами скролла, иначе на резких свайпах трансформ
+  // "прыгает". Кнопка "наверх" — отдельный, более глубокий порог.
+  const { scrollY } = useScroll();
+  const smoothScrollY = useSpring(scrollY, { stiffness: 300, damping: 40, restDelta: 0.5 });
+  const headerScale = useTransform(smoothScrollY, [0, 160], [1, 0.85]);
+  const headerScrollOpacity = useTransform(smoothScrollY, [0, 140], [1, 0]);
+  const dockedOpacity = useTransform(smoothScrollY, [70, 150], [0, 1]);
+  const [isDocked, setIsDocked] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsDocked(latest > 110);
+    setShowScrollTop(latest > 500);
+  });
 
   useEffect(() => {
     const loadCollection = async () => {
@@ -111,16 +136,16 @@ export default function CollectionEditPage() {
   };
 
   const handleEditCard = async (
+    cardId: string,
     cardData: Omit<Card, "id" | "srsData" | "createdAt">,
   ) => {
-    if (!editingCard || !collection) return;
+    if (!collection) return;
     const updatedCards = collection.cards.map((card: Card) =>
-      card.id === editingCard.id ? { ...card, ...cardData } : card,
+      card.id === cardId ? { ...card, ...cardData } : card,
     );
     const updated = { ...collection, cards: updatedCards };
     setCollection(updated);
     await updateCollection(updated);
-    setEditingCard(null);
   };
 
   const handleDeleteCard = async (cardId: string) => {
@@ -176,8 +201,14 @@ export default function CollectionEditPage() {
 
   return (
     <div className="max-w-5xl mx-auto pb-24">
-      {/* Editorial header */}
+      {/* Editorial header — shrinks/fades on scroll (style motion values,
+          separate from the mount fadeUp on motion.header itself to avoid
+          both fighting over `opacity`) */}
       <motion.header className="mb-12" {...fadeUp(0)}>
+        <motion.div
+          style={{ scale: headerScale, opacity: headerScrollOpacity }}
+          className="origin-top-left"
+        >
         <div className="flex items-end gap-4 mb-6 group">
           <h1
             className={`text-5xl md:text-7xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] leading-none tracking-tight transition-opacity duration-500 ${loading ? "opacity-20" : "opacity-100"}`}
@@ -220,37 +251,85 @@ export default function CollectionEditPage() {
             </span>
           </div>
         </div>
+        </motion.div>
       </motion.header>
 
-      {/* Action buttons */}
-      <motion.div className="flex flex-wrap gap-3 mb-12" {...fadeUp(0.05)}>
+      {/* Docked compact bar — collection name fades up into this as you
+          scroll, continuously driven by the same scroll value as the big
+          header (no discrete mount/exit animation — that's what caused the
+          jerkiness). Fixed + solid bg, same as NavLayout's own header, so
+          the two visually read as one continuous bar with no seam. */}
+      {!loading && (
+        <motion.div
+          style={{ opacity: dockedOpacity }}
+          className={`fixed top-12 left-0 right-0 z-40 bg-[#F5F2ED] dark:bg-[#0F0E0C] ${isDocked ? "" : "pointer-events-none"}`}
+        >
+          <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
+            <h2 className="text-xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight truncate">
+              {collection?.name?.split(" ").slice(0, -1).join(" ")}{" "}
+              <span className="text-[#FF5733]">
+                {collection?.name?.split(" ").slice(-1)[0]}.
+              </span>
+            </h2>
+            <div className="flex gap-1.5 shrink-0">
+              <button
+                onClick={() => setIsAddModalOpen(true)}
+                className="p-2.5 rounded-xl bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] hover:bg-[#FF5733] dark:hover:bg-[#FF5733] dark:hover:text-white transition-colors active:scale-95"
+              >
+                <Plus size={16} />
+              </button>
+              <button
+                onClick={() => setIsImportModalOpen(true)}
+                className="p-2.5 rounded-xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] hover:border-[#FF5733] hover:text-[#FF5733] transition-colors active:scale-95"
+              >
+                <Upload size={16} />
+              </button>
+              <button
+                onClick={handleExport}
+                disabled={isExporting || !collection || collection.cards.length === 0}
+                className="p-2.5 rounded-xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] hover:border-[#FF5733] hover:text-[#FF5733] transition-colors active:scale-95 disabled:opacity-40 disabled:pointer-events-none"
+              >
+                {isExporting ? (
+                  <RefreshCw size={16} className="animate-spin" />
+                ) : (
+                  <Download size={16} />
+                )}
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Action buttons — icon-only on mobile so the row never wraps;
+          icon+label from md: up, matching WordsPage's action bar */}
+      <motion.div className="flex gap-2 sm:gap-3 mb-12" {...fadeUp(0.05)}>
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:bg-[#FF5733] hover:text-white dark:hover:bg-[#FF5733] dark:hover:text-white transition-all active:scale-[0.98]"
+          className="flex justify-center items-center gap-2 w-12 h-12 md:w-auto md:px-6 md:py-3 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:bg-[#FF5733] hover:text-white dark:hover:bg-[#FF5733] dark:hover:text-white transition-all active:scale-[0.98] shrink-0"
         >
-          <Plus size={16} />
-          {t.words.editCollection.addCard}
+          <Plus size={18} />
+          <span className="hidden md:block">{t.words.editCollection.addCard}</span>
         </button>
 
         <button
           onClick={() => setIsImportModalOpen(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:border-[#FF5733] hover:text-[#FF5733] transition-all active:scale-[0.98]"
+          className="flex justify-center items-center gap-2 w-12 h-12 md:w-auto md:px-6 md:py-3 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:border-[#FF5733] hover:text-[#FF5733] transition-all active:scale-[0.98] shrink-0"
         >
-          <Upload size={16} />
-          {t.words.editCollection.import}
+          <Upload size={18} />
+          <span className="hidden md:block">{t.words.editCollection.import}</span>
         </button>
 
         <button
           onClick={handleExport}
           disabled={isExporting || !collection || collection.cards.length === 0}
-          className="flex items-center gap-2 px-6 py-3 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:border-[#FF5733] hover:text-[#FF5733] transition-all active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none"
+          className="flex justify-center items-center gap-2 w-12 h-12 md:w-auto md:px-6 md:py-3 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:border-[#FF5733] hover:text-[#FF5733] transition-all active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none shrink-0"
         >
           {isExporting ? (
-            <RefreshCw size={16} className="animate-spin" />
+            <RefreshCw size={18} className="animate-spin" />
           ) : (
-            <Download size={16} />
+            <Download size={18} />
           )}
-          {t.words.editCollection.export}
+          <span className="hidden md:block">{t.words.editCollection.export}</span>
         </button>
       </motion.div>
 
@@ -291,7 +370,7 @@ export default function CollectionEditPage() {
               <motion.div key={card.id} {...fadeUp(i * 0.03)}>
                 <CardListItem
                   card={card}
-                  onEdit={() => setEditingCard(card)}
+                  onSave={(cardData) => handleEditCard(card.id, cardData)}
                   onDelete={() => handleDeleteCard(card.id)}
                 />
               </motion.div>
@@ -302,18 +381,9 @@ export default function CollectionEditPage() {
 
       {/* Modals */}
       <AddCardModal
-        isOpen={isAddModalOpen || editingCard !== null}
-        onClose={() => {
-          setIsAddModalOpen(false);
-          setEditingCard(null);
-        }}
-        onSave={editingCard ? handleEditCard : handleAddCard}
-        initialData={editingCard || undefined}
-        title={
-          editingCard
-            ? t.words.editCollection.modals.editWord
-            : t.words.editCollection.modals.newWord
-        }
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={handleAddCard}
       />
 
       <ImportCardsModal
@@ -373,6 +443,23 @@ export default function CollectionEditPage() {
           </div>
         </div>
       )}
+
+      {/* Scroll-to-top — appears once you've scrolled deep into the word list */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="fixed bottom-6 right-5 sm:right-8 z-40 w-12 h-12 rounded-full bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] shadow-xl flex items-center justify-center hover:bg-[#FF5733] dark:hover:bg-[#FF5733] dark:hover:text-white transition-colors active:scale-95"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp size={20} />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

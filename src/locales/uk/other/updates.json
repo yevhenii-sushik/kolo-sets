@@ -5,17 +5,14 @@
   "changelog": "Журнал змін",
   "sidebarTitle": "Дерево версій",
   "stats": {
-    "intensity": "Інтенсивність",
-    "intensityVal": "Щотижня",
-    "intensitySub": "Цикл оновлень",
+    "releases": "Релізів",
+    "releasesSub": "Вже випущено",
     "improvements": "Покращення",
     "improvementsSub": "Загальні зміни",
-    "status": "Статус системи",
-    "statusVal": "Онлайн",
-    "statusSub": "Хмарна синхронізація активна",
-    "feedback": "Відгуки",
-    "feedbackVal": "100%",
-    "feedbackSub": "Спільнота керує"
+    "patches": "Патчів",
+    "patchesSub": "Багфікс-релізів",
+    "languages": "Мов",
+    "languagesSub": "Мови інтерфейсу"
   },
   "footer": {
     "title": "Це лише початок",

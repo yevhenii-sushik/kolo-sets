@@ -20,7 +20,7 @@
     "study": "Study",
     "masteryLevel": "Mastery Level",
     "dueToday": "due today",
-    "confirmDelete": "-",
+    "confirmDelete": "This collection and all its cards will be permanently deleted. This action cannot be undone.",
     "modal": {
       "chooseMode": "Choose mode",
       "flashcards": "Flashcards",
@@ -49,8 +49,31 @@
     "modals": {
       "editWord": "Edit word",
       "newWord": "New word",
+      "createWord": "Create word",
       "renameTitle": "New collection name",
-      "deleteConfirm": "Delete this word?"
+      "deleteConfirm": "Delete this word?",
+      "importTitle": "Import words",
+      "importSubtitle": "Paste a bulk list — one word per line",
+      "formatPattern": "word; translation; explanation; example; part of speech",
+      "formatHint": "Explanation, example and part of speech should be in the language you're learning (e.g. Norwegian)",
+      "copyPrompt": "Copy AI prompt",
+      "promptCopied": "Copied",
+      "importPlaceholder": "skrive; to write; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
+      "cardsReady": "cards ready",
+      "startImport": "Start import",
+      "aiPrompt": "Create a word list for learning in CSV format (semicolon-separated \";\").\nIMPORTANT: word and translation as usual, but the EXPLANATION, EXAMPLE and PART OF SPEECH must be strictly in the language being learned (e.g. Norwegian).\n\nRow format: word; translation; explanation (in the target language); example (in the target language); part of speech (in the target language).\n\nHere's the word list: [PASTE YOUR WORDS HERE]"
+    },
+    "fields": {
+      "word": "Word",
+      "wordPlaceholder": "e.g. skrive",
+      "translation": "Translation",
+      "translationPlaceholder": "e.g. to write",
+      "partOfSpeech": "Part of speech",
+      "partOfSpeechNone": "Not selected",
+      "explanation": "Explanation (in Norwegian)",
+      "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
+      "example": "Example sentence",
+      "examplePlaceholder": "Jeg skriver en bok"
     }
   },
   "flashcards": {

@@ -26,7 +26,6 @@ const HomePage = lazy(() => import("./pages/home/HomePage"));
 const LegalLayout = lazy(() => import("./pages/legal/LegalLayout"));
 const PrivacyPagePublic = lazy(() => import("./pages/legal/PrivacyPage"));
 const TermsPage = lazy(() => import("./pages/legal/TermsPage"));
-const SupportPagePublic = lazy(() => import("./pages/other/SupportPage"));
 const WordsPage = lazy(() => import("./pages/words/WordsPage"));
 const CollectionEditPage = lazy(() => import("./pages/words/CollectionEditPage"));
 const FlashcardsPage = lazy(() => import("./pages/words/FlashcardsPage"));
@@ -41,6 +40,7 @@ const SettingsPage = lazy(() => import("./pages/other/SettingsPage"));
 const UpdatesPage = lazy(() => import("./pages/other/UpdatesPage"));
 const DataManagementPage = lazy(() => import("./pages/other/DataManagementPage"));
 const SupportPage = lazy(() => import("./pages/other/SupportPage"));
+const ExplorePage = lazy(() => import("./pages/other/ExplorePage"));
 
 function ReminderScheduler() {
   const { collections } = useData();
@@ -161,13 +161,13 @@ function AppContent() {
         <Route path="/other/updates" element={<UpdatesPage />} />
         <Route path="/other/data-management" element={<DataManagementPage />} />
         <Route path="/other/support" element={<SupportPage />} />
+        <Route path="/other/explore" element={<ExplorePage />} />
       </Route>
 
       {/* 4. Публичные правовые страницы — доступны всем без авторизации */}
       <Route element={<LegalLayout />}>
         <Route path="/privacy" element={<PrivacyPagePublic />} />
         <Route path="/terms" element={<TermsPage />} />
-        <Route path="/support" element={<SupportPagePublic />} />
       </Route>
 
       {/* Редирект для любых неопознанных путей */}
