@@ -30,7 +30,7 @@ export default function FlashcardsPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const { checkAchievements, profile, refreshProfile, refreshCollections } = useData();
+  const { checkAchievements, profile, refreshProfile, refreshCollections, voiceForCollection } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
 
   const [collection, setCollection] = useState<Collection | null>(null);
@@ -250,6 +250,7 @@ export default function FlashcardsPage() {
         >
           <Flashcard
             card={currentCard}
+            language={voiceForCollection(collection)}
             isFlipped={isFlipped}
             onFlip={() => {
               if (!swipedRef.current) setIsFlipped((f) => !f);

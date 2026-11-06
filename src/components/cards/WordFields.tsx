@@ -1,6 +1,6 @@
 import { Field, Input, Select, Textarea } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
-import { PARTS_OF_SPEECH } from "../../data/partsOfSpeech";
+import { POS_CODES, normalizePos } from "../../data/partsOfSpeech";
 
 export interface WordDraft {
   word: string;
@@ -32,28 +32,33 @@ export default function WordFields({
   return (
     <div className="grid gap-4">
       <div className="grid gap-4 sm:grid-cols-2">
+        {/* dir="auto" — слова на арабском, иврите и т. п. пишутся справа налево */}
         <Field label={`${f.word} *`} htmlFor={id("word")}>
-          <Input id={id("word")} autoFocus={autoFocus} value={value.word} onChange={set("word")} placeholder={f.wordPlaceholder} required />
+          <Input id={id("word")} dir="auto" autoFocus={autoFocus} value={value.word} onChange={set("word")} placeholder={f.wordPlaceholder} required />
         </Field>
         <Field label={`${f.translation} *`} htmlFor={id("translation")}>
-          <Input id={id("translation")} value={value.translation} onChange={set("translation")} placeholder={f.translationPlaceholder} required />
+          <Input id={id("translation")} dir="auto" value={value.translation} onChange={set("translation")} placeholder={f.translationPlaceholder} required />
         </Field>
       </div>
       <Field label={f.partOfSpeech} htmlFor={id("pos")}>
         <Select id={id("pos")} value={value.partOfSpeech} onChange={set("partOfSpeech")}>
           <option value="">{f.partOfSpeechNone}</option>
-          {PARTS_OF_SPEECH.map((pos) => (
-            <option key={pos.value} value={pos.value}>
-              {pos.label}
+          {POS_CODES.map((code) => (
+            <option key={code} value={code}>
+              {t.words.pos[code]}
             </option>
           ))}
+          {/* Значение не из списка (например, из импорта) — показываем, чтобы оно не потерялось */}
+          {value.partOfSpeech && !(POS_CODES as readonly string[]).includes(value.partOfSpeech) && (
+            <option value={value.partOfSpeech}>{value.partOfSpeech}</option>
+          )}
         </Select>
       </Field>
       <Field label={f.explanation} htmlFor={id("explanation")}>
-        <Textarea id={id("explanation")} rows={2} value={value.explanation} onChange={set("explanation")} placeholder={f.explanationPlaceholder} />
+        <Textarea id={id("explanation")} dir="auto" rows={2} value={value.explanation} onChange={set("explanation")} placeholder={f.explanationPlaceholder} />
       </Field>
       <Field label={f.example} htmlFor={id("example")}>
-        <Textarea id={id("example")} rows={2} value={value.example} onChange={set("example")} placeholder={f.examplePlaceholder} />
+        <Textarea id={id("example")} dir="auto" rows={2} value={value.example} onChange={set("example")} placeholder={f.examplePlaceholder} />
       </Field>
     </div>
   );
@@ -63,7 +68,7 @@ export default function WordFields({
 export const trimWord = (w: WordDraft): WordDraft => ({
   word: w.word.trim(),
   translation: w.translation.trim(),
-  partOfSpeech: w.partOfSpeech.trim(),
+  partOfSpeech: normalizePos(w.partOfSpeech),
   explanation: w.explanation.trim(),
   example: w.example.trim(),
 });

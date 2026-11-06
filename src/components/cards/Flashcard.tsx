@@ -4,6 +4,7 @@ import { Card } from "../../types";
 import { speak, isTTSSupported } from "../../utils/tts";
 import { useI18n } from "../../contexts/I18nContext";
 import { IconButton } from "../../ui";
+import { posLabel } from "../../data/partsOfSpeech";
 
 interface FlashcardProps {
   card: Card;
@@ -33,9 +34,9 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
         {/* Лицо: слово */}
         <div className="flip-card-front absolute h-full w-full">
           <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-4xl bg-fg p-8 text-on-inverse shadow-xl">
-            <h2 className="text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{card.word}</h2>
+            <h2 dir="auto" className="text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{card.word}</h2>
             {card.partOfSpeech && (
-              <span className="rounded-full bg-on-inverse/10 px-3 py-1 text-sm font-medium text-on-inverse/80">{card.partOfSpeech}</span>
+              <span className="rounded-full bg-on-inverse/10 px-3 py-1 text-sm font-medium text-on-inverse/80">{posLabel(card.partOfSpeech, t.words.pos)}</span>
             )}
           </div>
         </div>
@@ -62,9 +63,9 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
 
             <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center gap-6 pt-10 text-center">
               <div className="grid gap-2">
-                <h3 className="font-display text-3xl font-extrabold text-fg md:text-4xl">{card.word}</h3>
-                {card.partOfSpeech && <p className="text-sm text-faint">{card.partOfSpeech}</p>}
-                {showTranslation && <p className="text-2xl font-semibold text-accent-ink md:text-3xl">{card.translation}</p>}
+                <h3 dir="auto" className="font-display text-3xl font-extrabold text-fg md:text-4xl">{card.word}</h3>
+                {card.partOfSpeech && <p className="text-sm text-faint">{posLabel(card.partOfSpeech, t.words.pos)}</p>}
+                {showTranslation && <p dir="auto" className="text-2xl font-semibold text-accent-ink md:text-3xl">{card.translation}</p>}
               </div>
 
               {card.explanation && (
@@ -73,7 +74,7 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
                     <BookOpen size={14} />
                     {f.explanation}
                   </p>
-                  <p className="text-base leading-relaxed text-fg md:text-lg">{card.explanation}</p>
+                  <p dir="auto" className="text-base leading-relaxed text-fg md:text-lg">{card.explanation}</p>
                 </div>
               )}
 
@@ -83,7 +84,7 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
                     <Quote size={14} />
                     {f.example}
                   </p>
-                  <p className="text-base italic leading-snug text-muted">{card.example}</p>
+                  <p dir="auto" className="text-base italic leading-snug text-muted">{card.example}</p>
                 </div>
               )}
             </div>

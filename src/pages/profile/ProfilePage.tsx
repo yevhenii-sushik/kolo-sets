@@ -46,7 +46,8 @@ export default function ProfilePage() {
   const locale = getLanguageInfo(language).htmlLang;
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const { profile: rawProfile, totalCards, collections, profileLoading, refreshProfile } = useData();
+  // Профиль — про весь аккаунт: слова и наборы всех курсов
+  const { profile: rawProfile, allTotalCards: totalCards, allCollections: collections, profileLoading, refreshProfile } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 

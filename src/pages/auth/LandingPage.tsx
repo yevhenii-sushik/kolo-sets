@@ -362,10 +362,10 @@ export default function LandingPage() {
           {/* ── Привычка ── */}
           <section id="habit" className="scroll-mt-16 py-20 md:py-28">
             <Container>
-              <SectionHeader title={l.habit.title} text={l.habit.text} />
-              <div className="mt-14 grid gap-4 md:grid-cols-3">
+              <SectionHeader title={l.habit.title} text={FEATURES.dailyGame ? l.habit.textWithDaily : l.habit.text} />
+              <div className={cx("mt-14 grid gap-4", FEATURES.dailyGame ? "md:grid-cols-3" : "md:grid-cols-2")}>
                 <PreviewCard {...l.habit.streak} preview={<StreakPreview />} />
-                <PreviewCard {...l.habit.daily} preview={<DailyPreview />} />
+                {FEATURES.dailyGame && <PreviewCard {...l.habit.daily} preview={<DailyPreview />} />}
                 <PreviewCard {...l.habit.achievements} preview={<AchievementPreview />} />
               </div>
             </Container>

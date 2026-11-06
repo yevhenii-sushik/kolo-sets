@@ -122,7 +122,8 @@
   },
   "habit": {
     "title": "Eine Gewohnheit, die du nicht brechen willst",
-    "text": "Deine Serie wächst mit jedem Tag, an dem du übst. Das Spiel des Tages und Erfolge geben dir einen Grund, morgen wiederzukommen.",
+    "text": "Deine Serie wächst mit jedem Tag, an dem du übst, und Erfolge geben dir einen Grund, morgen wiederzukommen.",
+    "textWithDaily": "Deine Serie wächst mit jedem Tag, an dem du übst. Das Spiel des Tages und Erfolge geben dir einen Grund, morgen wiederzukommen.",
     "streak": {
       "title": "Tagesserie",
       "text": "Jeder Übungstag verlängert sie."

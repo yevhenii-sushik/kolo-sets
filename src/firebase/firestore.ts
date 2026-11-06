@@ -107,7 +107,7 @@ export const saveUserCollection = async (
 export const updateUserCollectionFields = async (
   userId: string,
   collectionId: string,
-  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language'>>
+  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language' | 'courseId'>>
 ): Promise<void> => {
   const docRef = doc(db, 'users', userId, 'collections', collectionId);
   const payload: Record<string, any> = {};
@@ -368,21 +368,52 @@ export const updateQuizStats = (
 
 // ── Folders (stored in user profile doc as `folders` array) ─────────────
 
-import { Folder } from '../types';
+import { Course, Folder } from '../types';
+
+// Дата из Timestamp, из кэша профиля ({ seconds }) или из строки
+const toDate = (v: any): Date =>
+  v?.toDate?.() ?? (typeof v?.seconds === 'number' ? new Date(v.seconds * 1000) : v ? new Date(v) : new Date());
+
+export const parseFolders = (raw: unknown): Folder[] =>
+  Array.isArray(raw) ? raw.map((f: any) => ({ ...f, createdAt: toDate(f.createdAt) })) : [];
 
 export const getUserFolders = async (userId: string): Promise<Folder[]> => {
   const docRef = doc(db, 'users', userId);
   const snap = await getDoc(docRef);
   if (!snap.exists()) return [];
-  const raw: any[] = snap.data().folders ?? [];
-  return raw.map(f => ({ ...f, createdAt: f.createdAt?.toDate?.() ?? new Date(f.createdAt) }));
+  return parseFolders(snap.data().folders);
 };
+
+const serializeFolders = (folders: Folder[]) =>
+  folders.map(f => stripUndefined({ ...f, createdAt: Timestamp.fromDate(f.createdAt) }));
 
 export const saveFolders = async (userId: string, folders: Folder[]): Promise<void> => {
   const docRef = doc(db, 'users', userId);
-  await setDoc(docRef, {
-    folders: folders.map(f => ({ ...f, createdAt: Timestamp.fromDate(f.createdAt) })),
-  }, { merge: true });
+  await setDoc(docRef, { folders: serializeFolders(folders) }, { merge: true });
+};
+
+// ── Courses (в профиле: courses, activeCourseId, coursesVersion — docs/specs/01-courses.md) ──
+
+export const parseCourses = (raw: unknown): Course[] =>
+  Array.isArray(raw)
+    ? raw
+        .filter((c: any) => c && typeof c.id === 'string')
+        .map((c: any) => ({ id: c.id, voice: typeof c.voice === 'string' ? c.voice : c.id, addedAt: toDate(c.addedAt) }))
+    : [];
+
+// Пишет только переданные поля; массивы заменяются целиком
+export const saveCoursesState = async (
+  userId: string,
+  data: { courses?: Course[]; activeCourseId?: string | null; folders?: Folder[]; coursesVersion?: number },
+): Promise<void> => {
+  const payload: Record<string, unknown> = {};
+  if (data.courses) {
+    payload.courses = data.courses.map(c => ({ id: c.id, voice: c.voice, addedAt: Timestamp.fromDate(c.addedAt) }));
+  }
+  if (data.activeCourseId !== undefined) payload.activeCourseId = data.activeCourseId;
+  if (data.folders) payload.folders = serializeFolders(data.folders);
+  if (data.coursesVersion !== undefined) payload.coursesVersion = data.coursesVersion;
+  await setDoc(doc(db, 'users', userId), payload, { merge: true });
 };
 
 // ── Daily Game Leaderboard ────────────────────────────────────────────────

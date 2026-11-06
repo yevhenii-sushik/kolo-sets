@@ -122,7 +122,8 @@
   },
   "habit": {
     "title": "Une habitude que tu n'auras pas envie de rompre",
-    "text": "Ta série grandit à chaque jour d'entraînement. Le jeu du jour et les succès te donnent une raison de revenir demain.",
+    "text": "Ta série grandit à chaque jour d'entraînement, et les succès te donnent une raison de revenir demain.",
+    "textWithDaily": "Ta série grandit à chaque jour d'entraînement. Le jeu du jour et les succès te donnent une raison de revenir demain.",
     "streak": {
       "title": "Série de jours",
       "text": "Chaque jour d'entraînement la prolonge."

@@ -6,6 +6,7 @@ import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { Badge, Button, IconButton, cx } from "../../ui";
 import WordFields, { WordDraft, trimWord } from "./WordFields";
+import { normalizePos, posLabel } from "../../data/partsOfSpeech";
 
 interface CardListItemProps {
   card: Card;
@@ -24,7 +25,7 @@ export default function CardListItem({ card, onSave, onDelete }: CardListItemPro
     setDraft({
       word: card.word,
       translation: card.translation,
-      partOfSpeech: card.partOfSpeech,
+      partOfSpeech: normalizePos(card.partOfSpeech),
       explanation: card.explanation,
       example: card.example,
     });
@@ -68,10 +69,10 @@ export default function CardListItem({ card, onSave, onDelete }: CardListItemPro
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-display text-xl font-extrabold text-fg">{card.word}</h3>
-            {card.partOfSpeech && <Badge>{card.partOfSpeech}</Badge>}
+            <h3 dir="auto" className="font-display text-xl font-extrabold text-fg">{card.word}</h3>
+            {card.partOfSpeech && <Badge>{posLabel(card.partOfSpeech, t.words.pos)}</Badge>}
           </div>
-          <p className="mt-0.5 text-base font-medium text-accent-ink">{card.translation}</p>
+          <p dir="auto" className="mt-0.5 text-base font-medium text-accent-ink">{card.translation}</p>
         </div>
         <div className="flex shrink-0 gap-0.5" onClick={(ev) => ev.stopPropagation()}>
           <IconButton size="sm" label={t.edit} onClick={startEditing}>
@@ -85,8 +86,8 @@ export default function CardListItem({ card, onSave, onDelete }: CardListItemPro
 
       {(card.explanation || card.example) && (
         <div className="mt-3 grid gap-1 text-sm leading-relaxed">
-          {card.explanation && <p className="text-muted">{card.explanation}</p>}
-          {card.example && <p className="italic text-fg">{card.example}</p>}
+          {card.explanation && <p dir="auto" className="text-muted">{card.explanation}</p>}
+          {card.example && <p dir="auto" className="italic text-fg">{card.example}</p>}
         </div>
       )}
 

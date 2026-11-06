@@ -122,7 +122,8 @@
   },
   "habit": {
     "title": "A habit you won't want to break",
-    "text": "Your streak grows with every day you practise. The daily puzzle and achievements give you a reason to come back tomorrow.",
+    "text": "Your streak grows with every day you practise, and achievements give you a reason to come back tomorrow.",
+    "textWithDaily": "Your streak grows with every day you practise. The daily puzzle and achievements give you a reason to come back tomorrow.",
     "streak": {
       "title": "Day streak",
       "text": "Every day of practice extends it."

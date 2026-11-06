@@ -8,6 +8,7 @@ import {
   Clock,
   EllipsisVertical,
   Folder,
+  Languages,
   Link2,
   Pencil,
   Shield,
@@ -24,8 +25,11 @@ import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { Button, IconButton, Modal, cx } from "../../ui";
+import { useData } from "../../contexts/DataContext";
+import { courseName } from "../../courses/languages";
+import CourseFlag from "../courses/CourseFlag";
 
-type MenuView = "main" | "folders";
+type MenuView = "main" | "folders" | "courses";
 
 interface CollectionCardProps {
   collection: Collection;
@@ -33,16 +37,19 @@ interface CollectionCardProps {
   onToggleFavorite?: (id: string) => void;
   folders?: FolderType[];
   onMoveToFolder?: (folderId: string | undefined) => void;
+  onMoveToCourse?: (courseId: string) => void; // пункт «Перенести в курс» — если курсов больше одного
   dragHandle?: ReactNode; // ручка перетаскивания — слева от «Учить» (передаёт сортируемая обёртка)
 }
 
 const MENU_ITEM = "flex w-full items-center gap-2.5 px-4 py-2.5 text-sm font-medium transition-colors";
 
-export default function CollectionCard({ collection, onDelete, onToggleFavorite, folders = [], onMoveToFolder, dragHandle }: CollectionCardProps) {
+export default function CollectionCard({ collection, onDelete, onToggleFavorite, folders = [], onMoveToFolder, onMoveToCourse, dragHandle }: CollectionCardProps) {
   const navigate = useNavigate();
   const { t, language } = useI18n();
   const c = t.words.collectionCard;
   const m = c.modal;
+  const { courses } = useData();
+  const otherCourses = onMoveToCourse ? courses.filter((x) => x.id !== collection.courseId) : [];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuView, setMenuView] = useState<MenuView>("main");
   const [showModeModal, setShowModeModal] = useState(false);
@@ -156,6 +163,13 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
                           <ChevronRight size={14} className="text-faint" />
                         </button>
                       )}
+                      {otherCourses.length > 0 && (
+                        <button type="button" onClick={() => setMenuView("courses")} className={cx(MENU_ITEM, "text-fg hover:bg-inset")}>
+                          <Languages size={16} className="text-muted" />
+                          <span className="flex-1 text-left">{t.courses.moveTo}</span>
+                          <ChevronRight size={14} className="text-faint" />
+                        </button>
+                      )}
                       <div className="mx-3 my-1 h-px bg-line" />
                       <button
                         type="button"
@@ -167,6 +181,30 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
                       >
                         <Trash2 size={16} /> {t.delete}
                       </button>
+                    </>
+                  ) : menuView === "courses" ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setMenuView("main")}
+                        className={cx(MENU_ITEM, "border-b border-line pb-3 text-muted hover:text-fg")}
+                      >
+                        <ChevronLeft size={16} /> {t.courses.moveTo}
+                      </button>
+                      {otherCourses.map((course) => (
+                        <button
+                          key={course.id}
+                          type="button"
+                          onClick={() => {
+                            onMoveToCourse?.(course.id);
+                            closeMenu();
+                          }}
+                          className={cx(MENU_ITEM, "text-fg hover:bg-inset")}
+                        >
+                          <CourseFlag code={course.id} voice={course.voice} size="sm" />
+                          <span className="flex-1 truncate text-left">{courseName(course.id, getLanguageInfo(language).htmlLang)}</span>
+                        </button>
+                      ))}
                     </>
                   ) : (
                     <>

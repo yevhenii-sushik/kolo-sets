@@ -7,11 +7,12 @@ import { useData } from "../../contexts/DataContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { TIPS_ICONS } from "../../data/home/tips";
 import DailyGameWidget from "../../components/game/DailyGameWidget";
+import { FEATURES } from "../../config/features";
 import { getDailyGoal, isDueCard } from "../../utils/storage";
 import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural, type PluralForms } from "../../utils/plural";
-import { ButtonLink, Card, Heading, IconButton, Ring, Text } from "../../ui";
+import { ButtonLink, Card, Heading, IconButton, Ring, Text, cx } from "../../ui";
 
 const MILESTONES = [10, 25, 50, 100, 200, 500];
 
@@ -144,8 +145,8 @@ export default function HomePage() {
       </div>
 
       {/* ── Игра дня и совет ── */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <DailyGameWidget />
+      <div className={cx("grid gap-4", FEATURES.dailyGame && "md:grid-cols-2")}>
+        {FEATURES.dailyGame && <DailyGameWidget />}
         <Card className="grid content-start gap-4">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">

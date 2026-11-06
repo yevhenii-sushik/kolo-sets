@@ -122,7 +122,8 @@
   },
   "habit": {
     "title": "Un hábito que no querrás romper",
-    "text": "Tu racha crece con cada día de práctica. El juego del día y los logros te dan un motivo para volver mañana.",
+    "text": "Tu racha crece con cada día de práctica, y los logros te dan un motivo para volver mañana.",
+    "textWithDaily": "Tu racha crece con cada día de práctica. El juego del día y los logros te dan un motivo para volver mañana.",
     "streak": {
       "title": "Racha de días",
       "text": "Cada día de práctica la alarga."

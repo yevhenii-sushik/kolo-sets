@@ -122,5 +122,35 @@
         "fisk"
       ]
     }
+  },
+  "courses": {
+    "switcher": "Course: {name}",
+    "menuTitle": "Your courses",
+    "add": "Add a course",
+    "manage": "Manage courses",
+    "pickTitle": "What language do you want to learn?",
+    "pickSubtitle": "You can add more languages later. Each one gets its own sets and folders.",
+    "addTitle": "New course",
+    "search": "Search languages",
+    "popular": "Popular",
+    "all": "All languages",
+    "noResults": "No language matches “{q}”",
+    "added": "Already added",
+    "noVoice": "This device has no voice for this language, so cards won't be read aloud.",
+    "pronunciation": "Pronunciation",
+    "start": "Start learning",
+    "addButton": "Add course",
+    "title": "Courses",
+    "subtitle": "Each language has its own sets and folders. Your streak and achievements are shared.",
+    "current": "Current",
+    "switchTo": "Switch to",
+    "remove": "Delete course",
+    "removeTitle": "Delete the {name} course?",
+    "removeText": "{sets} and all the words in them will be deleted for good. You can download a backup first in Data & account.",
+    "removeEmpty": "The course is empty — only the course itself will be removed.",
+    "removeError": "Couldn't delete the course — try again",
+    "moveTo": "Move to course",
+    "moved": "Moved to {name}",
+    "moveError": "Couldn't move the set — try again"
   }
 }

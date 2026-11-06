@@ -77,11 +77,13 @@ export const getCollection = async (id: string): Promise<Collection | undefined>
 };
 
 // Создать новую коллекцию
-export const createCollection = async (name: string, language: string = 'nb-NO'): Promise<Collection> => {
+// courseId — курс, в котором создаётся набор; language — голос озвучки курса
+export const createCollection = async (name: string, language: string = 'nb-NO', courseId?: string): Promise<Collection> => {
   const newCollection: Collection = {
     id: crypto.randomUUID(),
     name,
     language,
+    ...(courseId ? { courseId } : {}),
     cards: [],
     createdAt: new Date()
   };
@@ -125,7 +127,7 @@ export const updateCollection = async (updatedCollection: Collection): Promise<v
 // undefined = удалить поле. Для гостей — обычное локальное обновление.
 export const updateCollectionMeta = async (
   coll: Collection,
-  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language'>>
+  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language' | 'courseId'>>
 ): Promise<void> => {
   const user = auth.currentUser;
 

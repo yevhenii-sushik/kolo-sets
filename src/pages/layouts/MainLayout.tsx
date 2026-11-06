@@ -2,7 +2,7 @@ import Sidebar from "../../components/ui/Sidebar";
 import { IconButton, Logo, cx } from "../../ui";
 import { APP_LANGUAGES } from "../../locales/languages";
 import BottomNav from "../../components/ui/BottomNav";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, Navigate } from "react-router-dom";
 import { Menu, Languages, Flame, Trophy, ChevronRight, Search } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import { useI18n } from "../../contexts/I18nContext";
@@ -17,6 +17,7 @@ import OnboardingModal, {
 import VerifyEmailBanner from "../../components/VerifyEmailBanner";
 import InstallPrompt from "../../components/InstallPrompt";
 import SearchModal from "../../components/SearchModal";
+import CourseSwitcher from "../../components/courses/CourseSwitcher";
 
 const SIDEBAR_KEY = "sidebar-open";
 
@@ -24,7 +25,7 @@ export default function MainLayout() {
   const { t, language, setLanguage } = useI18n();
   const sh = t.shell;
   const days = (n: number) => plural(getLanguageInfo(language).htmlLang, n, sh.streak.days);
-  const { profile } = useData();
+  const { profile, courses, coursesReady } = useData();
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [showStreakCard, setShowStreakCard] = useState(false);
@@ -85,6 +86,9 @@ export default function MainLayout() {
     };
   }, [profile]);
 
+  // Без курса приложение начинается с выбора языка
+  if (coursesReady && courses.length === 0) return <Navigate to="/start" replace />;
+
   return (
     <div className="min-h-dvh bg-bg text-fg">
       <header className="fixed inset-x-0 top-0 z-100 border-b border-line bg-bg/85 backdrop-blur-xl">
@@ -143,6 +147,8 @@ export default function MainLayout() {
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
+            <CourseSwitcher />
+
             {/* Поиск по карточкам */}
             <button
               type="button"

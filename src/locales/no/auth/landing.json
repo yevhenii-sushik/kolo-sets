@@ -122,7 +122,8 @@
   },
   "habit": {
     "title": "En vane du ikke vil bryte",
-    "text": "Rekken vokser for hver dag du øver. Dagens spill og prestasjoner gir deg en grunn til å komme tilbake i morgen.",
+    "text": "Rekken vokser for hver dag du øver, og prestasjoner gir deg en grunn til å komme tilbake i morgen.",
+    "textWithDaily": "Rekken vokser for hver dag du øver. Dagens spill og prestasjoner gir deg en grunn til å komme tilbake i morgen.",
     "streak": {
       "title": "Dagsrekke",
       "text": "Hver dag du øver, forlenger den."

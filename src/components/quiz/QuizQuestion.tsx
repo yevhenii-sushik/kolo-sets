@@ -5,6 +5,7 @@ import { QuizQuestion } from "../../utils/quizGenerator";
 import { useI18n } from "../../contexts/I18nContext";
 import { Button, Card, Input, cx } from "../../ui";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
+import { posLabel } from "../../data/partsOfSpeech";
 import MatchingExercise from "./MatchingExercise";
 
 interface QuizQuestionProps {
@@ -135,7 +136,7 @@ export default function QuizQuestionComponent({ question, userAnswer, showFeedba
             <p className="text-xs font-semibold text-muted">{q.moreInfo}</p>
             <p className="font-semibold text-fg">
               {question.card.word}
-              {question.card.partOfSpeech && <span className="ml-2 text-sm font-normal text-faint">{question.card.partOfSpeech}</span>}
+              {question.card.partOfSpeech && <span className="ml-2 text-sm font-normal text-faint">{posLabel(question.card.partOfSpeech, t.words.pos)}</span>}
             </p>
             <p className="text-sm text-accent-ink">{question.card.translation}</p>
             {question.card.explanation && <p className="text-sm text-muted">{question.card.explanation}</p>}

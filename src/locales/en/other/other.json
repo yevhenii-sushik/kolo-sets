@@ -14,7 +14,8 @@
     "support": "Report a bug or suggest an idea",
     "privacy": "How we handle your data",
     "terms": "Rules for using Kolo",
-    "cookies": "What we store in your browser"
+    "cookies": "What we store in your browser",
+    "courses": "Languages you're learning"
   },
   "version": "Version {v}",
   "supportPage": {
@@ -46,5 +47,6 @@
     "sentText": "Your message is with the Kolo team. We read every one — if you left an email, we'll reply there.",
     "sentHome": "Back to home",
     "sentAgain": "Write another"
-  }
+  },
+  "courses": "Courses"
 }

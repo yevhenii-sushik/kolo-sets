@@ -5,12 +5,9 @@ import { Button, Field, Input, Modal } from "../ui";
 interface CreateCollectionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (name: string, language: string) => void;
+  // Набор создаётся в активном курсе — язык спрашивать не нужно
+  onCreate: (name: string) => void;
 }
-
-// Коллекция всегда учит норвежский — language здесь только для TTS-фолбэка
-// в старом коде (storage.ts/exportImport.ts), пользователю выбор не нужен.
-const COLLECTION_LANGUAGE = "nb-NO";
 
 export default function CreateCollectionModal({ isOpen, onClose, onCreate }: CreateCollectionModalProps) {
   const { t } = useI18n();
@@ -20,7 +17,7 @@ export default function CreateCollectionModal({ isOpen, onClose, onCreate }: Cre
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
-    onCreate(name.trim(), COLLECTION_LANGUAGE);
+    onCreate(name.trim());
     setName("");
   };
 

@@ -44,9 +44,13 @@ const UpdatesPage = lazy(() => import("./pages/other/UpdatesPage"));
 const DataManagementPage = lazy(() => import("./pages/other/DataManagementPage"));
 const SupportPage = lazy(() => import("./pages/other/SupportPage"));
 const ExplorePage = lazy(() => import("./pages/other/ExplorePage"));
+const StartPage = lazy(() => import("./pages/courses/StartPage"));
+const CoursesPage = lazy(() => import("./pages/courses/CoursesPage"));
+const AddCoursePage = lazy(() => import("./pages/courses/AddCoursePage"));
 
 function ReminderScheduler() {
-  const { collections } = useData();
+  // Напоминание считает карточки всех курсов
+  const { allCollections: collections } = useData();
   // Ref, чтобы не пересоздавать таймер на каждое изменение коллекций:
   // dueCount вычисляется в момент срабатывания из актуального снапшота
   const collectionsRef = useRef<Collection[]>(collections);
@@ -122,6 +126,16 @@ function AppContent() {
         }
       />
 
+      {/* Первый вход: выбор языка — без шапки и меню (docs/specs/01-courses.md) */}
+      <Route
+        path="/start"
+        element={
+          <ProtectedRoute>
+            <StartPage />
+          </ProtectedRoute>
+        }
+      />
+
       {/* 2. Основное приложение (с Хедером/Футером) */}
       <Route
         element={
@@ -160,6 +174,8 @@ function AppContent() {
         }
       >
         <Route path="/collection/:id/edit" element={<CollectionEditPage />} />
+        <Route path="/courses" element={<CoursesPage />} />
+        <Route path="/courses/new" element={<AddCoursePage />} />
 
         <Route path="/other/settings" element={<SettingsPage />} />
         <Route path="/other/updates" element={<UpdatesPage />} />

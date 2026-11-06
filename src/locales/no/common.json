@@ -122,5 +122,35 @@
         "fish"
       ]
     }
+  },
+  "courses": {
+    "switcher": "Kurs: {name}",
+    "menuTitle": "Kursene dine",
+    "add": "Legg til et kurs",
+    "manage": "Administrer kurs",
+    "pickTitle": "Hvilket språk vil du lære?",
+    "pickSubtitle": "Du kan legge til flere språk senere. Hvert språk får egne sett og mapper.",
+    "addTitle": "Nytt kurs",
+    "search": "Søk etter språk",
+    "popular": "Populære",
+    "all": "Alle språk",
+    "noResults": "Fant ikke noe språk for «{q}»",
+    "added": "Allerede lagt til",
+    "noVoice": "Denne enheten har ingen stemme for dette språket, så kortene blir ikke lest opp.",
+    "pronunciation": "Uttale",
+    "start": "Kom i gang",
+    "addButton": "Legg til kurs",
+    "title": "Kurs",
+    "subtitle": "Hvert språk har egne sett og mapper. Dagsrekke og prestasjoner er felles.",
+    "current": "Gjeldende",
+    "switchTo": "Bytt til",
+    "remove": "Slett kurs",
+    "removeTitle": "Slette kurset {name}?",
+    "removeText": "{sets} og alle ordene i dem slettes for godt. Du kan laste ned en sikkerhetskopi først under Data og konto.",
+    "removeEmpty": "Kurset er tomt – bare selve kurset slettes.",
+    "removeError": "Kunne ikke slette kurset – prøv igjen",
+    "moveTo": "Flytt til kurs",
+    "moved": "Flyttet til {name}",
+    "moveError": "Kunne ikke flytte settet – prøv igjen"
   }
 }

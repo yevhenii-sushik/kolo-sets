@@ -13,6 +13,7 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import Flashcard from "../../components/cards/Flashcard";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import { STREAK_CELEBRATION_EVENT } from "../../components/StreakCelebration";
+import { courseCodeFromLanguage } from "../../courses/languages";
 
 interface ReviewCard {
   card: Card;
@@ -24,7 +25,7 @@ export default function ReviewPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const { checkAchievements, profile, refreshProfile, refreshCollections } = useData();
+  const { checkAchievements, profile, refreshProfile, refreshCollections, activeCourse, coursesReady, voiceForCollection } = useData();
 
   const [reviewCards, setReviewCards] = useState<ReviewCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -43,9 +44,13 @@ export default function ReviewPage() {
   const dragX = useMotionValue(0);
   const dragRotate = useTransform(dragX, [-160, 0, 160], [-6, 0, 6]);
 
+  // Повторение — только карточки активного курса; набор старой версии без courseId относим к курсу по языку
   const loadData = async () => {
+    if (!activeCourse) { navigate("/"); return; }
     collectionsMapRef.current.clear();
-    const allCollections = await getCollections();
+    const allCollections = (await getCollections()).filter(
+      (c) => (c.courseId ?? courseCodeFromLanguage(c.language)) === activeCourse.id,
+    );
     if (allCollections.length === 0) { navigate("/"); return; }
 
     allCollections.forEach(col => collectionsMapRef.current.set(col.id, col));
@@ -70,7 +75,13 @@ export default function ReviewPage() {
     setLoaded(true);
   };
 
-  useEffect(() => { loadData(); }, []);
+  // Ждём, пока станет известен активный курс; дальше не перезагружаем, чтобы не сбить сессию
+  const startedRef = useRef(false);
+  useEffect(() => {
+    if (!coursesReady || startedRef.current) return;
+    startedRef.current = true;
+    loadData();
+  }, [coursesReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -198,6 +209,7 @@ export default function ReviewPage() {
         >
           <Flashcard
             card={currentReview.card}
+            language={collectionsMapRef.current.get(currentReview.collectionId) ? voiceForCollection(collectionsMapRef.current.get(currentReview.collectionId)!) : undefined}
             isFlipped={isFlipped}
             onFlip={() => {
               if (!swipedRef.current) setIsFlipped((f) => !f);

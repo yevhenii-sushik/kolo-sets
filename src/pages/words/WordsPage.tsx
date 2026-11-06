@@ -17,6 +17,8 @@ import {
 import { Badge, Button, Card, Field, Heading, IconButton, Input, Modal, Text, cx } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
+import { courseName } from "../../courses/languages";
+import CourseFlag from "../../components/courses/CourseFlag";
 import {
   createCollection,
   deleteCollection,
@@ -29,7 +31,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
-import { saveFolders, getUserFolders } from "../../firebase/firestore";
 import { Folder as FolderType, Collection } from "../../types";
 import CollectionCard from "../../components/cards/CollectionCard";
 import CreateCollectionModal from "../../components/CreateCollectionModal";
@@ -181,12 +182,14 @@ function SortableCollectionCard({
   onToggleFavorite,
   folders,
   onMoveToFolder,
+  onMoveToCourse,
 }: {
   collection: Collection;
   onDelete: (id: string) => void;
   onToggleFavorite: (id: string) => void;
   folders: FolderType[];
   onMoveToFolder: (folderId: string | undefined) => void;
+  onMoveToCourse: (courseId: string) => void;
 }) {
   const { t } = useI18n();
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: collection.id });
@@ -208,6 +211,7 @@ function SortableCollectionCard({
         onToggleFavorite={onToggleFavorite}
         folders={folders}
         onMoveToFolder={onMoveToFolder}
+        onMoveToCourse={onMoveToCourse}
         dragHandle={
           <span
             {...attributes}
@@ -289,8 +293,18 @@ export default function WordsPage() {
   const lib = t.words.library;
   const setsCount = (n: number) => plural(getLanguageInfo(language).htmlLang, n, lib.setsCount);
   const { user } = useAuth();
-  const { collections, collectionsLoading, setCollections, checkAchievements } =
-    useData();
+  const {
+    collections,
+    collectionsLoading,
+    coursesReady,
+    setCollections,
+    checkAchievements,
+    activeCourse,
+    folders,
+    createFolder,
+    deleteFolder,
+    moveCollectionToCourse,
+  } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
@@ -300,11 +314,6 @@ export default function WordsPage() {
   // Finder-style навигация: null = корень "My Library", иначе — id открытой папки
   const [openFolderId, setOpenFolderId] = useState<string | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
-  const [folders, setFolders] = useState<FolderType[]>([]);
-  // Пока папки не загружены, держим скелетон — иначе после сборников
-  // рендерится грид БЕЗ заголовка "All collections" (папок ещё нет), а через
-  // мгновение, когда Firestore ответит, заголовок резко впрыгивает
-  const [foldersLoading, setFoldersLoading] = useState(true);
   const [orderedCollections, setOrderedCollections] = useState<Collection[]>(
     [],
   );
@@ -317,19 +326,6 @@ export default function WordsPage() {
     }),
   );
 
-  // Load folders from Firestore + apply saved order
-  useEffect(() => {
-    if (!user) {
-      setFoldersLoading(false);
-      return;
-    }
-    setFoldersLoading(true);
-    getUserFolders(user.uid)
-      .then(setFolders)
-      .catch(() => {})
-      .finally(() => setFoldersLoading(false));
-  }, [user]);
-
   useEffect(() => {
     if (!user) return;
     setOrderedCollections(applyCollectionOrder(collections, user.uid));
@@ -337,17 +333,18 @@ export default function WordsPage() {
 
   // ── Handlers ────────────────────────────────────────────────────────────────
 
-  const handleCreateCollection = async (name: string, language: string) => {
+  const handleCreateCollection = async (name: string) => {
+    if (!activeCourse) return;
     try {
-      const newCollection = await createCollection(name, language);
+      const newCollection = await createCollection(name, activeCourse.voice, activeCourse.id);
       // Создаём "внутри" открытой папки — как в Finder, новый файл
       // появляется в текущей директории, а не в корне
       if (openFolderId) {
         await updateCollectionMeta(newCollection, { folderId: openFolderId });
         newCollection.folderId = openFolderId;
       }
-      const updated = [newCollection, ...collections];
-      setCollections(updated);
+      // Функциональный апдейт по полному списку: в контексте лежат наборы всех курсов
+      setCollections((prev) => [newCollection, ...prev]);
       setIsCreateModalOpen(false);
       success(`${t.words.toast.createSuccess}: "${name}"`);
       checkAchievements();
@@ -368,13 +365,12 @@ export default function WordsPage() {
       cancelText: t.cancel,
     });
     if (!confirmed) return;
-    const rollback = [...collections];
-    setCollections(collections.filter((c) => c.id !== id));
+    setCollections((prev) => prev.filter((c) => c.id !== id));
     try {
       await deleteCollection(id);
       success(`"${target.name}" ${t.words.toast.deleteSuccess}`);
     } catch {
-      setCollections(rollback);
+      setCollections((prev) => [target, ...prev]);
       error(t.words.toast.deleteError);
     }
   };
@@ -436,40 +432,18 @@ export default function WordsPage() {
   };
 
   const handleCreateFolder = async (name: string, color: string) => {
-    if (!user) return;
-    const newFolder: FolderType = {
-      id: crypto.randomUUID(),
-      name,
-      color,
-      createdAt: new Date(),
-    };
-    const updated = [...folders, newFolder];
-    setFolders(updated);
     setIsCreateFolderOpen(false);
     try {
-      await saveFolders(user.uid, updated);
+      await createFolder(name, color);
     } catch {
-      setFolders(folders);
       error(t.words.toast.createError);
     }
   };
 
   const handleDeleteFolder = async (folderId: string) => {
-    if (!user) return;
-    // Move all collections out of this folder
-    const affected = collections.filter((c) => c.folderId === folderId);
-    setCollections((prev) =>
-      prev.map((c) =>
-        c.folderId === folderId ? { ...c, folderId: undefined } : c,
-      ),
-    );
-    const updatedFolders = folders.filter((f) => f.id !== folderId);
-    setFolders(updatedFolders);
-    const results = await Promise.allSettled([
-      saveFolders(user.uid, updatedFolders),
-      ...affected.map((c) => updateCollectionMeta(c, { folderId: undefined })),
-    ]);
-    if (results.some((r) => r.status === "rejected")) {
+    try {
+      await deleteFolder(folderId);
+    } catch {
       error(t.words.toast.deleteError);
     }
   };
@@ -492,6 +466,15 @@ export default function WordsPage() {
         ),
       );
       error(t.words.toast.createError);
+    }
+  };
+
+  const handleMoveToCourse = async (collectionId: string, courseId: string) => {
+    try {
+      await moveCollectionToCourse(collectionId, courseId);
+      success(t.courses.moved.replace("{name}", courseName(courseId, getLanguageInfo(language).htmlLang)));
+    } catch {
+      error(t.courses.moveError);
     }
   };
 
@@ -531,13 +514,19 @@ export default function WordsPage() {
     <div>
       {/* ── Шапка: заголовок и действия. Вкладка Kolo Sets спрятана флагом KOLO_SETS_ENABLED ── */}
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4 sm:mb-8">
-        <div className="grid gap-1">
-          <Heading size={1}>{t.words.title}</Heading>
-          {!collectionsLoading && collections.length > 0 && (
-            <Text size="sm" tone="muted">
-              {setsCount(collections.length)}
-            </Text>
-          )}
+        {/* Заголовок — курс: на этой странице только его наборы и папки */}
+        <div className="flex min-w-0 items-center gap-3">
+          {activeCourse && <CourseFlag code={activeCourse.id} voice={activeCourse.voice} size="lg" />}
+          <div className="grid min-w-0 gap-1">
+            <Heading size={1} className="break-words">
+              {activeCourse ? courseName(activeCourse.id, getLanguageInfo(language).htmlLang) : t.words.title}
+            </Heading>
+            {!collectionsLoading && collections.length > 0 && (
+              <Text size="sm" tone="muted">
+                {setsCount(collections.length)}
+              </Text>
+            )}
+          </div>
         </div>
 
         {KOLO_SETS_ENABLED && (
@@ -563,7 +552,7 @@ export default function WordsPage() {
 
       {/* ── Content ── */}
       <div className="min-h-100">
-        {collectionsLoading || foldersLoading ? (
+        {collectionsLoading || !coursesReady ? (
           <CollectionSkeleton />
         ) : activeTab === "my" ? (
           <>
@@ -638,6 +627,7 @@ export default function WordsPage() {
                                 onMoveToFolder={(folderId) =>
                                   handleMoveToFolder(col.id, folderId)
                                 }
+                                onMoveToCourse={(courseId) => handleMoveToCourse(col.id, courseId)}
                               />
                             ))}
                           </div>
@@ -709,6 +699,7 @@ export default function WordsPage() {
                             onMoveToFolder={(folderId) =>
                               handleMoveToFolder(col.id, folderId)
                             }
+                            onMoveToCourse={(courseId) => handleMoveToCourse(col.id, courseId)}
                           />
                         ))}
                       </div>
@@ -737,6 +728,7 @@ export default function WordsPage() {
                               onMoveToFolder={(folderId) =>
                                 handleMoveToFolder(col.id, folderId)
                               }
+                              onMoveToCourse={(courseId) => handleMoveToCourse(col.id, courseId)}
                             />
                           ))}
                         </div>

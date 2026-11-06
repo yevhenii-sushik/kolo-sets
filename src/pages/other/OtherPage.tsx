@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronRight, Cookie, Database, LifeBuoy, Rocket, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
+import { ArrowRight, ChevronRight, Cookie, Database, Languages, LifeBuoy, Rocket, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import type { ElementType } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { Card, Heading, Text } from "../../ui";
@@ -50,6 +50,7 @@ export default function OtherPage() {
 
       <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2">
         <Group title={o.groups.app}>
+          <Row to="/courses" icon={Languages} label={o.courses} hint={o.hints.courses} />
           <Row to="/other/settings" icon={SlidersHorizontal} label={o.settings} hint={o.hints.settings} />
           <Row to="/other/data-management" icon={Database} label={o.dataManagement} hint={o.hints.data} />
           <Row to="/other/updates" icon={Rocket} label={o.updates} hint={o.hints.updates} />

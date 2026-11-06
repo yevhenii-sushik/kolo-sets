@@ -108,6 +108,14 @@ export interface Folder {
   name: string;
   color: string; // hex or tailwind token: '#3B82F6', '#22C55E', etc.
   createdAt: Date;
+  courseId?: string; // курс, к которому относится папка (docs/specs/01-courses.md)
+}
+
+// Курс — изучаемый язык: свои наборы и папки. id — код языка ('nb', 'en'…), см. src/courses/languages.ts
+export interface Course {
+  id: string;
+  voice: string; // вариант произношения для озвучки: 'en-GB', 'pt-BR'…
+  addedAt: Date;
 }
 
 // Коллекция карточек
@@ -121,6 +129,7 @@ export interface Collection {
   isFavorite?: boolean;      // Добавлена в избранное
   order?: number;            // Позиция для ручной сортировки
   folderId?: string;         // ID папки (undefined = без папки)
+  courseId?: string;         // ID курса; у старых наборов нет — проставляется при загрузке
 }
 
 // Настройки Quiz

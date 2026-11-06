@@ -190,9 +190,9 @@
     }
   },
   "empty": {
-    "title": "Ingen sett ennå",
-    "description": "Opprett ditt første flashkortsett for å begynne å lære effektivt.",
-    "button": "Opprett første sett"
+    "title": "Ingen sett i dette kurset ennå",
+    "description": "Lag et sett og legg til ordene du vil lære – eller lim inn en hel liste på en gang.",
+    "button": "Lag første sett"
   },
   "toast": {
     "createSuccess": "Sett opprettet",
@@ -252,5 +252,17 @@
     "rate": "Hvor godt kan du ordet?",
     "settings": "Innstillinger"
   },
-  "soonTitle": "Kommer snart"
+  "soonTitle": "Kommer snart",
+  "pos": {
+    "noun": "substantiv",
+    "verb": "verb",
+    "adjective": "adjektiv",
+    "adverb": "adverb",
+    "pronoun": "pronomen",
+    "preposition": "preposisjon",
+    "conjunction": "konjunksjon",
+    "interjection": "interjeksjon",
+    "numeral": "tallord",
+    "phrase": "frase"
+  }
 }

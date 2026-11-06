@@ -122,7 +122,8 @@
   },
   "habit": {
     "title": "Um hábito que você não vai querer quebrar",
-    "text": "Sua sequência cresce a cada dia de prática. O jogo do dia e as conquistas dão um motivo para voltar amanhã.",
+    "text": "Sua sequência cresce a cada dia de prática, e as conquistas dão um motivo para voltar amanhã.",
+    "textWithDaily": "Sua sequência cresce a cada dia de prática. O jogo do dia e as conquistas dão um motivo para voltar amanhã.",
     "streak": {
       "title": "Sequência de dias",
       "text": "Cada dia de prática a aumenta."
