@@ -38,9 +38,9 @@
 
 ## Типографика
 
-- **Шрифты:** `font-display` (Unbounded) — только заголовки экранов и секций; всё остальное — Onest (по умолчанию).
+- **Шрифты:** `font-display` (Nunito, вес `font-extrabold`) — заголовки экранов и секций, крупные цифры и логотип; всё остальное — Onest (по умолчанию).
 - **Размеры:** только шкала `text-2xs` (11px, для плотных меток) · `text-xs` (12) · `text-sm` · `text-base` · `text-lg` · `text-xl` … Основной минимум — `text-xs`.
-- **Начертания:** `font-medium`, `font-semibold`, `font-bold`. Без `font-black`.
+- **Начертания:** текст Onest — `font-medium`, `font-semibold`, `font-bold`; заголовки Nunito — `font-extrabold`. Без `font-black`.
 - **Капс** — только в `Eyebrow` (короткая метка над заголовком). Кнопки, подписи полей и заголовки — обычным регистром.
 - Заголовки — через `Heading` (`size="display" | 1 | 2 | 3 | 4`, `tone="inverse"` на `bg-fg`), текст — через `Text` (`tone`, `size`; `tone="inverse"` — второстепенный текст на `bg-fg`).
 

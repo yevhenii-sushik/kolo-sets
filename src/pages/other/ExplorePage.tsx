@@ -56,17 +56,17 @@ export default function ExplorePage() {
         }
       >
         <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-[#A5B4FC]">{e.woky.category}</span>
-        <p className="font-display text-4xl font-bold leading-none sm:text-5xl">
+        <p className="font-display text-4xl font-extrabold leading-none sm:text-5xl">
           <span className="text-[#A5B4FC]">Norsk</span> <span className="text-white">Grammatikk</span>
         </p>
         <p className="max-w-sm text-sm leading-relaxed text-white/70">{e.woky.tagline}</p>
         <div className="mt-2 flex gap-8">
           <div>
-            <p className="font-display text-2xl font-semibold">10</p>
+            <p className="font-display text-2xl font-extrabold">10</p>
             <p className="text-xs text-white/60">{e.woky.sections}</p>
           </div>
           <div>
-            <p className="font-display text-2xl font-semibold">97</p>
+            <p className="font-display text-2xl font-extrabold">97</p>
             <p className="text-xs text-white/60">{e.woky.exercises}</p>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function ExplorePage() {
         }
       >
         <span className="rounded-full bg-[#C0553B]/10 px-3 py-1 text-xs font-semibold text-[#C0553B]">{e.comingSoon}</span>
-        <p className="font-display text-4xl font-bold leading-none sm:text-5xl">
+        <p className="font-display text-4xl font-extrabold leading-none sm:text-5xl">
           Bøy<span className="text-[#C0553B]">!</span>
         </p>
         <p className="max-w-sm text-sm leading-relaxed text-[#1E1915]/70">{e.boey.tagline}</p>

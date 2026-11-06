@@ -61,7 +61,7 @@ export function Logo({ size = "md", tone = "brand", className }: { size?: keyof 
   return (
     <span
       className={cx(
-        "inline-flex items-center font-display font-semibold tracking-tight leading-none whitespace-nowrap",
+        "inline-flex items-center font-display font-extrabold tracking-tight leading-none whitespace-nowrap",
         s.gap,
         s.text,
         TEXT[tone],

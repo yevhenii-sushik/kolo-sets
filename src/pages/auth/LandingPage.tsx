@@ -304,7 +304,7 @@ export default function LandingPage() {
                   >
                     <div aria-hidden className="rounded-full bg-band p-1.5">
                       <Ring value={(i + 1) / l.how.steps.length} size={60} stroke={6} label={step.title}>
-                        <span className="font-display text-xl font-semibold text-fg">{i + 1}</span>
+                        <span className="font-display text-xl font-extrabold text-fg">{i + 1}</span>
                       </Ring>
                     </div>
                     <Heading size={3}>{step.title}</Heading>
@@ -488,7 +488,7 @@ export default function LandingPage() {
                 className="group flex items-start gap-4 rounded-3xl bg-[#13121B] p-5 text-white"
               >
                 <span className="grid flex-1 gap-1">
-                  <span className="font-display text-xl font-semibold">Woky</span>
+                  <span className="font-display text-xl font-extrabold">Woky</span>
                   <span className="text-sm text-white/65">{e.woky.tagline}</span>
                 </span>
                 <ArrowUpRight size={18} className="shrink-0 text-[#A5B4FC] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -501,7 +501,7 @@ export default function LandingPage() {
               >
                 <span className="grid flex-1 gap-1">
                   <span className="flex items-center gap-2">
-                    <span className="font-display text-xl font-semibold text-fg">
+                    <span className="font-display text-xl font-extrabold text-fg">
                       Bøy<span className="text-[#C0553B]">!</span>
                     </span>
                     <Badge tone="warning">{e.comingSoon}</Badge>

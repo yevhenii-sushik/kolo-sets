@@ -68,7 +68,7 @@ export default function CardListItem({ card, onSave, onDelete }: CardListItemPro
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-display text-xl font-semibold text-fg">{card.word}</h3>
+            <h3 className="font-display text-xl font-extrabold text-fg">{card.word}</h3>
             {card.partOfSpeech && <Badge>{card.partOfSpeech}</Badge>}
           </div>
           <p className="mt-0.5 text-base font-medium text-accent-ink">{card.translation}</p>

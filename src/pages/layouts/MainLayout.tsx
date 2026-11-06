@@ -199,7 +199,7 @@ export default function MainLayout() {
                         </span>
                         <div>
                           <p className="text-sm text-muted">{sh.streak.label}</p>
-                          <p className="font-display text-xl font-semibold text-fg">{days(streakData.current)}</p>
+                          <p className="font-display text-xl font-extrabold text-fg">{days(streakData.current)}</p>
                         </div>
                       </div>
                       <div className="flex items-center justify-between text-sm">

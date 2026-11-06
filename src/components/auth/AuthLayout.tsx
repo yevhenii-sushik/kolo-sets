@@ -57,7 +57,7 @@ function BrandPanel() {
         </div>
       </div>
       <div className="relative grid max-w-md gap-5">
-        <h2 className="font-display text-4xl font-semibold leading-tight text-balance">{l.how.title}</h2>
+        <h2 className="font-display text-4xl font-extrabold leading-tight text-balance">{l.how.title}</h2>
         <p className="text-lg text-white/70">{l.how.text}</p>
         <ul className="grid gap-2 pt-2">
           {l.hero.promises.map((promise) => (

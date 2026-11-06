@@ -3,11 +3,11 @@ import { cx } from "./cx";
 
 type HeadingSize = "display" | 1 | 2 | 3 | 4;
 
-// display и 1–2 — Unbounded (заголовки экранов и секций); 3–4 — Onest (заголовки карточек и групп)
+// display и 1–2 — Nunito (заголовки экранов и секций); 3–4 — Onest (заголовки карточек и групп)
 const HEADING: Record<HeadingSize, string> = {
-  display: "font-display font-bold text-4xl sm:text-5xl leading-[1.08] tracking-tight",
-  1: "font-display font-bold text-3xl sm:text-4xl leading-tight tracking-tight",
-  2: "font-display font-semibold text-2xl sm:text-3xl leading-tight",
+  display: "font-display font-extrabold text-4xl sm:text-5xl leading-[1.08] tracking-tight",
+  1: "font-display font-extrabold text-3xl sm:text-4xl leading-tight tracking-tight",
+  2: "font-display font-extrabold text-2xl sm:text-3xl leading-tight",
   3: "font-semibold text-lg leading-snug",
   4: "font-semibold text-base leading-snug",
 };

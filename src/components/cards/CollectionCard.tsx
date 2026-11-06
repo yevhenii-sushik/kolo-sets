@@ -82,7 +82,7 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="font-display text-xl font-semibold leading-tight text-fg line-clamp-2">{collection.name}</h3>
+            <h3 className="font-display text-xl font-extrabold leading-tight text-fg line-clamp-2">{collection.name}</h3>
             <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
               {plural(getLanguageInfo(language).htmlLang, total, c.words)}
               {dueToday > 0 && (

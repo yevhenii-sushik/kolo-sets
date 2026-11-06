@@ -37,7 +37,7 @@ export default function SessionShell({
               <X size={22} />
             </IconButton>
             <div className="min-w-0 flex-1">
-              <h1 className="truncate font-display text-lg font-semibold text-fg">{title}</h1>
+              <h1 className="truncate font-display text-lg font-extrabold text-fg">{title}</h1>
               {subtitle && <p className="truncate text-sm text-muted">{subtitle}</p>}
             </div>
             {action}

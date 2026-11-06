@@ -163,7 +163,7 @@ export function HeroPhone() {
                   <Badge>{card.pos}</Badge>
                 </div>
                 <div className="flex-1 grid content-center gap-1.5">
-                  <div className="font-display text-3xl font-semibold text-fg">{card.word}</div>
+                  <div className="font-display text-3xl font-extrabold text-fg">{card.word}</div>
                   <div className="text-lg font-semibold text-accent-ink">{card.translation}</div>
                   <div className="text-xs text-faint leading-snug">{card.example}</div>
                 </div>
@@ -174,13 +174,14 @@ export function HeroPhone() {
             </AnimatePresence>
           </div>
 
-          <div className="grid grid-cols-4 gap-1.5 mt-4">
+          {/* Два ряда по две — в четыре колонки длинные оценки («Забылось», «Remember») не помещаются */}
+          <div className="grid grid-cols-2 gap-1.5 mt-4">
             {h.ratings.map((label, i) => (
               <motion.div
                 key={label}
                 animate={i === HERO_RATINGS[index] ? { scale: [1, 0.92, 1.04, 1] } : { scale: 1 }}
                 transition={{ duration: 0.5, delay: 2 }}
-                className={cx("py-2 px-0.5 rounded-xl text-2xs leading-tight font-semibold text-center hyphens-auto", RATING_TONES[i])}
+                className={cx("truncate rounded-xl px-1 py-1.5 text-center text-2xs font-semibold leading-tight", RATING_TONES[i])}
               >
                 {label}
               </motion.div>
@@ -219,13 +220,13 @@ export function FlashcardsPreview() {
         >
           {flipped ? (
             <>
-              <div className="font-display text-2xl font-semibold text-accent-ink">{card.translation}</div>
+              <div className="font-display text-2xl font-extrabold text-accent-ink">{card.translation}</div>
               <div className="text-xs text-faint leading-snug">{card.example}</div>
             </>
           ) : (
             <>
               <span className="text-2xl leading-none">{card.flag}</span>
-              <div className="font-display text-4xl font-semibold text-fg">{card.word}</div>
+              <div className="font-display text-4xl font-extrabold text-fg">{card.word}</div>
             </>
           )}
         </motion.div>
@@ -240,7 +241,7 @@ export function ReviewPreview() {
   return (
     <div className="flex items-center gap-6 px-5">
       <Ring value={0.4} size={88} stroke={8} label={`${cards.length} ${t.landing.modes.preview.due}`}>
-        <span className="font-display text-2xl font-semibold text-fg">{cards.length}</span>
+        <span className="font-display text-2xl font-extrabold text-fg">{cards.length}</span>
       </Ring>
       <div className="grid gap-2 w-44">
         {cards.map((c, i) => (
@@ -262,7 +263,7 @@ export function QuizPreview() {
     <div className="grid gap-1.5 w-full max-w-56 px-4">
       <div className="text-center pb-1">
         <div className="text-2xs text-faint">{t.landing.modes.preview.question}</div>
-        <div className="font-display text-lg font-semibold text-fg">{cards[1].word}</div>
+        <div className="font-display text-lg font-extrabold text-fg">{cards[1].word}</div>
       </div>
       {cards.map((c, i) => (
         <div
@@ -285,10 +286,10 @@ export function SpeedPreview() {
   return (
     <div className="flex items-center gap-5">
       <Ring value={42 / 60} size={92} stroke={8} label="0:42">
-        <span className="font-display text-lg font-semibold text-fg tabular-nums">0:42</span>
+        <span className="font-display text-lg font-extrabold text-fg tabular-nums">0:42</span>
       </Ring>
       <div>
-        <div className="font-display text-3xl font-semibold text-fg">12</div>
+        <div className="font-display text-3xl font-extrabold text-fg">12</div>
         <div className="text-xs text-faint">{t.landing.modes.preview.score}</div>
       </div>
     </div>
@@ -305,7 +306,7 @@ export function SurvivalPreview() {
           <Heart key={i} size={30} className={i < 2 ? "text-danger fill-danger" : "text-track fill-track"} />
         ))}
       </div>
-      <span className="rounded-full bg-surface border border-line px-4 py-1.5 font-display text-base font-semibold text-fg">
+      <span className="rounded-full bg-surface border border-line px-4 py-1.5 font-display text-base font-extrabold text-fg">
         {card.word}
       </span>
     </div>
@@ -489,7 +490,7 @@ export function StreakPreview() {
     <div className="grid gap-4 w-full max-w-64 px-4">
       <div className="flex items-end justify-center gap-2">
         <Flame size={30} className="text-accent fill-accent self-center" />
-        <span className="font-display text-4xl font-semibold leading-none text-fg">14</span>
+        <span className="font-display text-4xl font-extrabold leading-none text-fg">14</span>
         <span className="text-sm text-faint">{h.days}</span>
       </div>
       <div className="grid grid-cols-7 gap-1">
@@ -526,7 +527,7 @@ export function DailyPreview() {
               key={letter}
               style={{ clipPath: HEX }}
               className={cx(
-                "w-11 h-12 grid place-items-center font-display text-base font-semibold",
+                "w-11 h-12 grid place-items-center font-display text-base font-extrabold",
                 letter === "E" ? "bg-accent text-on-accent" : "bg-surface text-fg",
               )}
             >
@@ -617,7 +618,7 @@ export function AudioPreview() {
   return (
     <div className="grid justify-items-center gap-5 px-4 text-center">
       <div>
-        <div className="font-display text-4xl font-semibold text-fg">uttale</div>
+        <div className="font-display text-4xl font-extrabold text-fg">uttale</div>
         <div className="mt-1 text-base font-semibold text-accent-ink">{t.landing.words.audioTranslation}</div>
       </div>
       <div className="flex items-center gap-4">

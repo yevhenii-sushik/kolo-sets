@@ -55,7 +55,7 @@ export default function ConfirmDialog({
           <Icon size={22} />
         </span>
         <div className="grid gap-2">
-          <h2 className="font-display text-xl font-semibold text-fg">{title}</h2>
+          <h2 className="font-display text-xl font-extrabold text-fg">{title}</h2>
           <Text size="sm" tone="muted">
             {message}
           </Text>

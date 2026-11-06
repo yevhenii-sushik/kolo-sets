@@ -63,7 +63,7 @@ export default function SessionResult({
     >
       <div className="grid justify-items-center gap-3 pt-2 text-center">
         <span className={cx("grid h-14 w-14 place-items-center rounded-2xl", TILE_TONES[tone])}>{icon}</span>
-        <h2 className="font-display text-3xl font-semibold text-fg">{title}</h2>
+        <h2 className="font-display text-3xl font-extrabold text-fg">{title}</h2>
         {subtitle && (
           <Text size="sm" tone="muted">
             {subtitle}
@@ -73,7 +73,7 @@ export default function SessionResult({
       <div className={cx("mt-6 grid gap-2", metrics.length >= 4 ? "grid-cols-2 sm:grid-cols-4" : metrics.length === 3 ? "grid-cols-3" : "grid-cols-2")}>
         {metrics.map((m) => (
           <div key={m.label} className="rounded-2xl bg-inset px-3 py-3 text-center">
-            <p className={cx("font-display text-2xl font-semibold tabular-nums", VALUE_TONES[m.tone ?? "default"])}>{m.value}</p>
+            <p className={cx("font-display text-2xl font-extrabold tabular-nums", VALUE_TONES[m.tone ?? "default"])}>{m.value}</p>
             <p className="mt-0.5 text-xs text-muted">{m.label}</p>
           </div>
         ))}

@@ -145,7 +145,7 @@ export default function DesignPage() {
           </div>
         </Section>
 
-        <Section title="Типографика" note="Unbounded — заголовки экранов и секций, Onest — всё остальное. Капс — только Eyebrow.">
+        <Section title="Типографика" note="Nunito — заголовки экранов и секций, крупные цифры и логотип; Onest — всё остальное. Капс — только Eyebrow.">
           <div className="grid gap-4">
             <Eyebrow>Eyebrow — метка над заголовком</Eyebrow>
             <Heading size="display">Display · Каждое слово идёт по кругу</Heading>
@@ -286,7 +286,7 @@ export default function DesignPage() {
               <span className="text-xs font-semibold text-success">100%</span>
             </Ring>
             <Ring value={0.5} size={96} stroke={9} tone="info" label="Выучено 50%">
-              <span className="font-display font-bold text-xl text-fg">50</span>
+              <span className="font-display font-extrabold text-xl text-fg">50</span>
             </Ring>
           </div>
         </Section>

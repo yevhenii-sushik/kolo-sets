@@ -293,7 +293,7 @@ export default function DailyGameModal({ onClose }: Props) {
               {/* Набранное слово; центральная буква — оранжевая */}
               <div className="mb-6 flex min-h-12 items-center justify-center text-center">
                 {current ? (
-                  <span className="font-display text-3xl font-semibold tracking-wider text-fg">
+                  <span className="font-display text-3xl font-extrabold tracking-wider text-fg">
                     {current.split('').map((ch, i) => (
                       <span key={i} className={ch === puzzle.center ? 'text-accent-ink' : undefined}>
                         {ch}
@@ -331,7 +331,7 @@ export default function DailyGameModal({ onClose }: Props) {
                     className="mt-6 grid w-full gap-1 rounded-3xl bg-inset p-4"
                   >
                     <p className="text-xs font-semibold text-muted">{tg.wordDefinition}</p>
-                    <p className="font-display text-lg font-semibold text-fg">{selectedWordDef.word}</p>
+                    <p className="font-display text-lg font-extrabold text-fg">{selectedWordDef.word}</p>
                     <p className="text-sm leading-snug text-muted">{selectedWordDef.def.no}</p>
                     {language !== 'no' && (
                       <p className="text-sm italic leading-snug text-faint">
@@ -416,7 +416,7 @@ export default function DailyGameModal({ onClose }: Props) {
                             {row.foundPangram && ` · ${tg.pangramBadge}`}
                           </p>
                         </div>
-                        <span className="font-display text-base font-semibold tabular-nums text-accent-ink">{row.score}</span>
+                        <span className="font-display text-base font-extrabold tabular-nums text-accent-ink">{row.score}</span>
                       </li>
                     );
                   })}
@@ -450,7 +450,7 @@ function HoneyComb({ letters, center, onPress }: {
       type="button"
       aria-label={letter}
       className={cx(
-        'flex h-17 w-17 select-none items-center justify-center rounded-3xl font-display text-xl font-semibold uppercase transition-colors',
+        'flex h-17 w-17 select-none items-center justify-center rounded-3xl font-display text-xl font-extrabold uppercase transition-colors',
         isCenter ? 'bg-accent text-on-accent' : 'bg-inset text-fg hover:bg-track',
       )}
     >

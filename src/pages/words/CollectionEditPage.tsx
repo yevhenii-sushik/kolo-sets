@@ -243,7 +243,7 @@ export default function CollectionEditPage() {
           className={`fixed inset-x-0 top-14 z-40 border-b border-line bg-bg/90 backdrop-blur-xl ${isDocked ? "" : "pointer-events-none"}`}
         >
           <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-5 py-2.5 sm:px-6 lg:px-8">
-            <p className="truncate font-display text-lg font-semibold text-fg">{collection?.name}</p>
+            <p className="truncate font-display text-lg font-extrabold text-fg">{collection?.name}</p>
             <div className="flex shrink-0 gap-1.5">{actions(true)}</div>
           </div>
         </motion.div>

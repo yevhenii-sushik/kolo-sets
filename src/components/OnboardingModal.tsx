@@ -78,7 +78,7 @@ function FlashcardsIll() {
           </div>
         </div>
         <motion.div {...pop(0)} className="rounded-2xl border border-line bg-surface p-3 text-center shadow-sm">
-          <p className="font-display text-xl font-semibold text-fg">{sample.word}</p>
+          <p className="font-display text-xl font-extrabold text-fg">{sample.word}</p>
           <p className="text-sm font-semibold text-accent-ink">{sample.translation}</p>
           <p className="mt-1 text-2xs italic text-faint">“{sample.example}”</p>
         </motion.div>

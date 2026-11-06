@@ -69,7 +69,7 @@ export default function DailyGameWidget() {
             <span
               key={i}
               className={cx(
-                'grid h-8 w-8 place-items-center rounded-lg font-display text-sm font-semibold uppercase',
+                'grid h-8 w-8 place-items-center rounded-lg font-display text-sm font-extrabold uppercase',
                 letter === puzzle.center ? 'bg-accent text-on-accent' : 'bg-inset text-fg',
               )}
             >

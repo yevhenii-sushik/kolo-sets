@@ -179,7 +179,7 @@ export default function SpeedRoundPage() {
             className="w-full max-w-lg text-center"
           >
             <p className="text-sm font-medium text-muted">{ss.translate}</p>
-            <h2 className="mt-2 font-display text-4xl font-semibold leading-tight text-fg md:text-5xl">{currentCard.word}</h2>
+            <h2 className="mt-2 font-display text-4xl font-extrabold leading-tight text-fg md:text-5xl">{currentCard.word}</h2>
           </motion.div>
         </AnimatePresence>
 

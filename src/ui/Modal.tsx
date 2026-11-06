@@ -61,7 +61,7 @@ export function Modal({
               <X size={18} />
             </IconButton>
             {title && (
-              <h2 id={titleId} className="pr-10 mb-4 font-display font-semibold text-xl text-fg text-balance">
+              <h2 id={titleId} className="pr-10 mb-4 font-display font-extrabold text-xl text-fg text-balance">
                 {title}
               </h2>
             )}

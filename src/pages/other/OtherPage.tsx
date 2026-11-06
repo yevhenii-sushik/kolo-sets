@@ -70,7 +70,7 @@ export default function OtherPage() {
       >
         <div className="grid justify-items-start gap-3">
           <DakutaLogo size={36} />
-          <p className="font-display text-2xl font-semibold leading-tight sm:text-3xl">{promo.title}</p>
+          <p className="font-display text-2xl font-extrabold leading-tight sm:text-3xl">{promo.title}</p>
           <p className="max-w-md text-sm text-white/70">{promo.subtitle}</p>
         </div>
         <span className="inline-flex h-11 items-center gap-2 justify-self-start rounded-full bg-white px-5 text-sm font-semibold text-brand-night transition-[gap] group-hover:gap-3">

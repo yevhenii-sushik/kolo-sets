@@ -86,7 +86,7 @@ export default function MatchingExercise({ pairs, onComplete }: MatchingExercise
     <div className="relative mx-auto max-w-2xl">
       {/* Заголовок и подсказка: сначала слово, потом перевод */}
       <div className="mb-5 grid gap-1 text-center">
-        <h2 className="font-display text-2xl font-semibold text-fg">{t.words.quiz.matching.title}</h2>
+        <h2 className="font-display text-2xl font-extrabold text-fg">{t.words.quiz.matching.title}</h2>
         <p className="text-sm text-muted">
           {selectedWord
             ? t.words.quiz.matching.hint.split(',')[1]?.trim() || t.words.quiz.matching.hint
@@ -153,7 +153,7 @@ export default function MatchingExercise({ pairs, onComplete }: MatchingExercise
         >
           <div className="text-center">
             <CheckCircle2 size={48} className="text-success mx-auto mb-3" />
-            <p className="font-display text-xl font-semibold text-success">
+            <p className="font-display text-xl font-extrabold text-success">
               {t.words.quiz.matching.complete}
             </p>
           </div>

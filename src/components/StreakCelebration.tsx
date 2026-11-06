@@ -75,12 +75,12 @@ export default function StreakCelebration({ isOpen, streak, onClose }: Props) {
             <Ring value={filled ? 1 : 0} size={148} stroke={10} label={plural(getLanguageInfo(language).htmlLang, streak, st.days)}>
               <span className="grid justify-items-center">
                 <Flame size={26} className="fill-accent text-accent" />
-                <span className="font-display text-5xl font-semibold leading-none text-fg">{streak}</span>
+                <span className="font-display text-5xl font-extrabold leading-none text-fg">{streak}</span>
               </span>
             </Ring>
             <div className="grid gap-1">
               <p className="text-sm font-semibold text-accent-ink">{st.extended}</p>
-              <h2 className="font-display text-2xl font-semibold text-fg">{plural(getLanguageInfo(language).htmlLang, streak, st.days)}</h2>
+              <h2 className="font-display text-2xl font-extrabold text-fg">{plural(getLanguageInfo(language).htmlLang, streak, st.days)}</h2>
               <p className="text-sm text-muted">{cheer}</p>
             </div>
             <p className="text-xs text-faint">{st.tap}</p>

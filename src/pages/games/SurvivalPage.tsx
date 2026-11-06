@@ -168,7 +168,7 @@ export default function SurvivalPage() {
             className="w-full max-w-lg text-center"
           >
             <p className="text-sm font-medium text-muted">{ss.translate}</p>
-            <h2 className="mt-2 font-display text-4xl font-semibold leading-tight text-fg md:text-5xl">{currentCard.word}</h2>
+            <h2 className="mt-2 font-display text-4xl font-extrabold leading-tight text-fg md:text-5xl">{currentCard.word}</h2>
             {currentCard.explanation && <p className="mt-3 line-clamp-2 text-sm italic leading-snug text-muted">{currentCard.explanation}</p>}
           </motion.div>
         </AnimatePresence>

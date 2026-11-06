@@ -47,7 +47,7 @@ const RULES = [
   },
   {
     id: "font",
-    hint: "шрифты: font-sans (Onest) и font-display (Unbounded); вес не выше font-bold",
+    hint: "шрифты: font-sans (Onest) и font-display (Nunito); font-black и засечки не используем",
     re: new RegExp(`${B}(?:[\\w-]+:)*font-(?:black|serif)(?![\\w-])`, "g"),
   },
 ];

@@ -66,7 +66,7 @@ export default function HomePage() {
           {profile?.photoURL || user?.photoURL ? (
             <img src={profile?.photoURL || user?.photoURL || ""} alt="" className="h-12 w-12 shrink-0 rounded-full object-cover" />
           ) : (
-            <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-accent-soft font-display text-lg font-semibold text-accent-ink">
+            <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-accent-soft font-display text-lg font-extrabold text-accent-ink">
               {name.charAt(0).toUpperCase()}
             </span>
           )}
@@ -104,7 +104,7 @@ export default function HomePage() {
             track="inverse"
             label={`${h.goal.label}: ${todayStudied} / ${dailyGoal}`}
           >
-            <span className="font-display text-2xl font-semibold text-on-inverse">
+            <span className="font-display text-2xl font-extrabold text-on-inverse">
               {todayStudied}
               <span className="text-base text-on-inverse/50">/{dailyGoal}</span>
             </span>
@@ -187,7 +187,7 @@ function StatCard({ icon, value, label }: { icon: React.ReactNode; value: number
     <Card className="grid content-between gap-6">
       <span className="grid h-9 w-9 place-items-center rounded-xl bg-inset text-muted">{icon}</span>
       <div>
-        <p className="font-display text-3xl font-semibold leading-none text-fg tabular-nums">{value}</p>
+        <p className="font-display text-3xl font-extrabold leading-none text-fg tabular-nums">{value}</p>
         <p className="mt-1.5 text-sm text-muted">{label}</p>
       </div>
     </Card>

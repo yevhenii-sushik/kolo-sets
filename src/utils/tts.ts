@@ -62,9 +62,6 @@ export const speak = (
     utterance.voice = voice;
   }
   
-  // Для отладки - покажем какой голос используется
-  console.log('Using TTS voice:', voice ? `${voice.name} (${voice.lang})` : 'default');
-  
   window.speechSynthesis.speak(utterance);
 };
 

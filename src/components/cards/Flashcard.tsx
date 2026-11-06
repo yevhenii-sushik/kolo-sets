@@ -33,7 +33,7 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
         {/* Лицо: слово */}
         <div className="flip-card-front absolute h-full w-full">
           <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-4xl bg-fg p-8 text-on-inverse shadow-xl">
-            <h2 className="text-center font-display text-4xl font-semibold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{card.word}</h2>
+            <h2 className="text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{card.word}</h2>
             {card.partOfSpeech && (
               <span className="rounded-full bg-on-inverse/10 px-3 py-1 text-sm font-medium text-on-inverse/80">{card.partOfSpeech}</span>
             )}
@@ -62,7 +62,7 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
 
             <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center gap-6 pt-10 text-center">
               <div className="grid gap-2">
-                <h3 className="font-display text-3xl font-semibold text-fg md:text-4xl">{card.word}</h3>
+                <h3 className="font-display text-3xl font-extrabold text-fg md:text-4xl">{card.word}</h3>
                 {card.partOfSpeech && <p className="text-sm text-faint">{card.partOfSpeech}</p>}
                 {showTranslation && <p className="text-2xl font-semibold text-accent-ink md:text-3xl">{card.translation}</p>}
               </div>

@@ -285,7 +285,7 @@ export default function ProfilePage() {
                 <div
                   draggable // чтобы пасхалка срабатывала и без фото
                   onDragStart={handleAvatarEasterEgg}
-                  className="grid h-full w-full place-items-center font-display text-3xl font-semibold text-accent-ink sm:text-4xl"
+                  className="grid h-full w-full place-items-center font-display text-3xl font-extrabold text-accent-ink sm:text-4xl"
                 >
                   {profile.displayName.charAt(0).toUpperCase()}
                 </div>
@@ -423,7 +423,7 @@ export default function ProfilePage() {
           <div>
             <p
               className={cx(
-                "font-display text-6xl font-semibold leading-none tabular-nums sm:text-7xl",
+                "font-display text-6xl font-extrabold leading-none tabular-nums sm:text-7xl",
                 isTodayActive ? "text-on-inverse" : "text-fg",
               )}
             >
@@ -461,7 +461,7 @@ export default function ProfilePage() {
               ].map((row) => (
                 <div key={row.label} className="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0">
                   <dt className="text-sm text-muted">{row.label}</dt>
-                  <dd className="font-display text-xl font-semibold tabular-nums text-fg">{row.value}</dd>
+                  <dd className="font-display text-xl font-extrabold tabular-nums text-fg">{row.value}</dd>
                 </div>
               ))}
             </dl>
@@ -571,7 +571,7 @@ function Stat({ icon, value, label }: { icon: ReactNode; value: ReactNode; label
     <div className="grid content-start gap-3">
       <span className="grid h-9 w-9 place-items-center rounded-xl bg-inset text-muted">{icon}</span>
       <div>
-        <p className="font-display text-2xl font-semibold leading-tight tabular-nums text-fg sm:text-3xl">{value}</p>
+        <p className="font-display text-2xl font-extrabold leading-tight tabular-nums text-fg sm:text-3xl">{value}</p>
         <p className="mt-1 text-sm text-muted">{label}</p>
       </div>
     </div>

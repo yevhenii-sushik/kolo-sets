@@ -63,7 +63,7 @@ export default function QuizQuestionComponent({ question, userAnswer, showFeedba
     <div className="mx-auto grid max-w-2xl gap-5">
       <div className="grid gap-2 text-center">
         <p className="text-sm font-medium text-muted">{q.settings.types[question.type as keyof typeof q.settings.types]}</p>
-        <h2 className="font-display text-2xl font-semibold text-fg sm:text-3xl">{question.question}</h2>
+        <h2 className="font-display text-2xl font-extrabold text-fg sm:text-3xl">{question.question}</h2>
       </div>
 
       {question.options && !isWriteType && (
