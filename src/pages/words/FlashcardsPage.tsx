@@ -76,6 +76,7 @@ export default function FlashcardsPage() {
     setIsFlipped(false);
     setStartTime(Date.now());
     setShowStats(false);
+    ratingLockRef.current = false;
   };
 
   useEffect(() => {
@@ -110,8 +111,13 @@ export default function FlashcardsPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFlipped, showStats, collection]);
 
+  // Одна оценка на карточку: пока сохраняем и переходим дальше, повторные нажатия игнорируем —
+  // иначе двойное нажатие на последней карточке завершило бы тренировку дважды
+  const ratingLockRef = useRef(false);
+
   const handleRating = async (level: KnowledgeLevel) => {
-    if (!isFlipped || showStats) return;
+    if (!isFlipped || showStats || ratingLockRef.current) return;
+    ratingLockRef.current = true;
 
     const currentCard = cards[currentIndex];
     const updatedCard = updateSRSData(currentCard, level);
@@ -140,10 +146,15 @@ export default function FlashcardsPage() {
     setTimeout(async () => {
       if (currentIndex < cards.length - 1) {
         setCurrentIndex((prev) => prev + 1);
+        ratingLockRef.current = false;
       } else {
         const duration = Math.floor((Date.now() - startTime) / 1000);
         const finalKnow = stats.know + (level === KnowledgeLevel.KNOW ? 1 : 0);
         setStats((prev) => ({ ...prev, duration }));
+
+        // Итоги показываем сразу; прогресс уходит на сервер в фоне, празднование — по его ответу
+        playSessionCompleteIfEnabled();
+        setShowStats(true);
 
         if (user && collection) {
           // Прогресс, серию и достижения начисляет сервер; празднование — по его ответу
@@ -157,8 +168,6 @@ export default function FlashcardsPage() {
           refreshCollections(); // интервалы повторения изменились — счётчики «к повторению» на главной
         }
 
-        playSessionCompleteIfEnabled();
-        setShowStats(true);
       }
     }, 200);
   };

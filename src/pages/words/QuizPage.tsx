@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Collection, TaskType, QuizStats, QuizSettings } from "../../types";
 import { getCollection, updateCollection } from "../../utils/storage";
@@ -134,6 +134,9 @@ export default function QuizPage() {
     });
   };
 
+  // Тест завершается один раз, даже если «Далее» нажали дважды
+  const finishedRef = useRef(false);
+
   const handleNext = async () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -141,6 +144,8 @@ export default function QuizPage() {
       setShowFeedback(false);
       setIsCorrect(false);
     } else {
+      if (finishedRef.current) return;
+      finishedRef.current = true;
       // Quiz завершен
       const duration = Math.floor((Date.now() - startTime) / 1000);
       const updatedCollection = {
@@ -152,7 +157,10 @@ export default function QuizPage() {
       const finalStats = { ...stats, duration };
       setStats(finalStats);
 
-      // Прогресс, серию и достижения начисляет сервер
+      // Итоги — сразу; прогресс, серию и достижения начисляет сервер в фоне
+      playSessionCompleteIfEnabled();
+      setShowStats(true);
+
       if (user && collection) {
         await reportSession({
           kind: "quiz",
@@ -163,14 +171,11 @@ export default function QuizPage() {
         });
       }
 
-      // Воспроизводим звук завершения квиза
-      playSessionCompleteIfEnabled();
-
-      setShowStats(true);
     }
   };
 
   const handleRestart = () => {
+    finishedRef.current = false;
     initializeQuiz(collection, settings);
     setCurrentIndex(0);
     setUserAnswer("");
@@ -188,6 +193,7 @@ export default function QuizPage() {
   };
 
   const handleSettingsChange = (newSettings: QuizSettings) => {
+    finishedRef.current = false;
     setSettings(newSettings);
     setShowSettings(false);
     initializeQuiz(collection, newSettings);

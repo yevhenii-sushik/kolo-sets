@@ -70,6 +70,7 @@ export default function ReviewPage() {
     setIsFlipped(false);
     setShowStats(false);
     startTimeRef.current = Date.now();
+    ratingLockRef.current = false;
     setLoaded(true);
   };
 
@@ -97,8 +98,13 @@ export default function ReviewPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFlipped, showStats, loaded]);
 
+  // Одна оценка на карточку: пока сохраняем и переходим дальше, повторные нажатия игнорируем —
+  // иначе двойное нажатие на последней карточке завершило бы тренировку дважды
+  const ratingLockRef = useRef(false);
+
   const handleRating = async (level: KnowledgeLevel) => {
-    if (!isFlipped || showStats) return;
+    if (!isFlipped || showStats || ratingLockRef.current) return;
+    ratingLockRef.current = true;
 
     const { card, collectionId } = reviewCards[currentIndex];
     const updatedCard = updateSRSData(card, level);
@@ -127,10 +133,15 @@ export default function ReviewPage() {
     setTimeout(async () => {
       if (currentIndex < reviewCards.length - 1) {
         setCurrentIndex(prev => prev + 1);
+        ratingLockRef.current = false;
       } else {
         const duration = Math.floor((Date.now() - startTimeRef.current) / 1000);
         const finalKnow = stats.know + (level === KnowledgeLevel.KNOW ? 1 : 0);
         setStats(prev => ({ ...prev, duration }));
+
+        // Итоги показываем сразу; прогресс уходит на сервер в фоне, празднование — по его ответу
+        playSessionCompleteIfEnabled();
+        setShowStats(true);
 
         if (user) {
           await reportSession({
@@ -143,8 +154,6 @@ export default function ReviewPage() {
           refreshCollections();
         }
 
-        playSessionCompleteIfEnabled();
-        setShowStats(true);
       }
     }, 200);
   };
