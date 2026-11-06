@@ -1,87 +1,8 @@
 import { StudyDay } from '../types';
 
-// Получить сегодняшнюю дату в формате YYYY-MM-DD
-export const getTodayString = (): string => {
-  const today = new Date();
-  return today.toISOString().split('T')[0];
-};
-
-// Получить вчерашнюю дату в формате YYYY-MM-DD
-export const getYesterdayString = (): string => {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  return yesterday.toISOString().split('T')[0];
-};
-
 // YYYY-MM-DD по местной дате (toISOString дал бы дату по UTC — в UTC+ это вчера)
-const localDateKey = (d: Date): string =>
+export const localDateKey = (d: Date): string =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-
-// Рассчитать текущий стрик
-export const calculateStreak = (studyHistory: StudyDay[]): number => {
-  if (studyHistory.length === 0) return 0;
-
-  // Сортируем историю по дате (от новых к старым)
-  const sorted = [...studyHistory].sort((a, b) => b.date.localeCompare(a.date));
-
-  const today = getTodayString();
-  const yesterday = getYesterdayString();
-
-  // Если сегодня не занимались и вчера тоже - стрик = 0
-  if (sorted[0].date !== today && sorted[0].date !== yesterday) {
-    return 0;
-  }
-
-  let streak = 0;
-  let currentDate = new Date();
-
-  // Считаем дни подряд с сегодня (или вчера) назад
-  for (const day of sorted) {
-    const expectedDate = currentDate.toISOString().split('T')[0];
-    
-    if (day.date === expectedDate) {
-      streak++;
-      currentDate.setDate(currentDate.getDate() - 1);
-    } else {
-      break;
-    }
-  }
-
-  return streak;
-};
-
-// Обновить или добавить день изучения
-export const updateStudyDay = (
-  studyHistory: StudyDay[],
-  cardsStudied: number,
-  timeSpent: number
-): StudyDay[] => {
-  const today = getTodayString();
-  const existingDayIndex = studyHistory.findIndex(d => d.date === today);
-
-  if (existingDayIndex >= 0) {
-    // Обновляем существующий день
-    const updated = [...studyHistory];
-    updated[existingDayIndex] = {
-      ...updated[existingDayIndex],
-      sessions: updated[existingDayIndex].sessions + 1,
-      cardsStudied: updated[existingDayIndex].cardsStudied + cardsStudied,
-      timeSpent: updated[existingDayIndex].timeSpent + timeSpent
-    };
-    return updated;
-  } else {
-    // Добавляем новый день
-    return [
-      ...studyHistory,
-      {
-        date: today,
-        sessions: 1,
-        cardsStudied,
-        timeSpent
-      }
-    ];
-  }
-};
 
 // Получить недели (Пн→Вс) для календаря активности: ровно `weeksCount` недель,
 // заканчивая текущей неделей. Недели всегда начинаются с понедельника и

@@ -3,6 +3,13 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  // Локально функций нет: /api проксируем на развёрнутые (по умолчанию — рабочий сайт).
+  // Для тестовой ветки: KOLO_API_TARGET=https://feature-server--dakuta-kolo.netlify.app npm run dev
+  server: {
+    proxy: {
+      '/api': { target: process.env.KOLO_API_TARGET ?? 'https://kolo.dakuta.dev', changeOrigin: true },
+    },
+  },
   plugins: [
     react(),
     VitePWA({
@@ -39,7 +46,7 @@ export default defineConfig({
         clientsClaim: true,
         skipWaiting: true,
         // Firebase (Auth/Firestore) не проксируем через SW — только статика
-        navigateFallbackDenylist: [/^\/__/],
+        navigateFallbackDenylist: [/^\/__/, /^\/api\//],
       },
       devOptions: {
         // Не включаем SW в dev-режиме — избегаем кэш-сюрпризов при разработке

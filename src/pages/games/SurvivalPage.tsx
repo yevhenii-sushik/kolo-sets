@@ -14,6 +14,7 @@ import {
   playIncorrectIfEnabled,
   playSessionCompleteIfEnabled,
 } from "../../utils/sounds";
+import { useRoundReport } from "../../components/session/useRoundReport";
 
 const MAX_LIVES = 3;
 
@@ -40,6 +41,23 @@ export default function SurvivalPage() {
   const [shakingLives, setShakingLives] = useState(false);
 
   const answeredRef = useRef(false);
+  const startedAtRef = useRef(Date.now());
+
+  useEffect(() => {
+    if (phase === "playing") startedAtRef.current = Date.now();
+  }, [phase]);
+
+  useRoundReport(phase === "gameover", () =>
+    collection
+      ? {
+          kind: "survival",
+          collectionIds: [collection.id],
+          cards: correct + (MAX_LIVES - lives),
+          correct,
+          durationSec: (Date.now() - startedAtRef.current) / 1000,
+        }
+      : null,
+  );
 
   useEffect(() => {
     if (!id) return;

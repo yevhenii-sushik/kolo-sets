@@ -28,3 +28,7 @@ md
 
 # Local Netlify folder
 .netlify
+
+# Логи эмуляторов Firebase
+firebase-debug.log*
+firestore-debug.log*

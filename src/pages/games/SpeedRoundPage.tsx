@@ -15,6 +15,7 @@ import {
   playIncorrectIfEnabled,
   playSessionCompleteIfEnabled,
 } from "../../utils/sounds";
+import { useRoundReport } from "../../components/session/useRoundReport";
 
 const ROUND_DURATION = 60;
 
@@ -49,6 +50,10 @@ export default function SpeedRoundPage() {
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const answeredRef = useRef(false);
+
+  useRoundReport(phase === "finished", () =>
+    collection ? { kind: "speed", collectionIds: [collection.id], cards: total, correct, durationSec: ROUND_DURATION - timeLeft } : null,
+  );
 
   useEffect(() => {
     if (!id) return;

@@ -46,21 +46,24 @@ export const ALL_ACHIEVEMENTS: Achievement[] = [
   { id: AchievementType.COMEBACK, icon: '🔄' },
 ];
 
+// Какие достижения открылись. «За тренировку» (сова, марафон, без ошибок…) проверяются,
+// только если передан session — иначе создание набора ночью открыло бы «Сову».
 export const checkAndUnlockAchievements = (
   profile: any,
   totalCards: number,
-  extras?: SessionExtras & { collectionsCount?: number }
+  options: { collectionsCount?: number; session?: SessionExtras } = {}
 ): AchievementType[] => {
   const newAchievements: AchievementType[] = [];
   const unlockedSet = new Set<string>(profile.achievements ?? []);
   const stats = profile.stats ?? {};
+  const extras = options.session;
   const isFromSession = extras !== undefined;
 
   const check = (id: AchievementType, condition: boolean) => {
     if (condition && !unlockedSet.has(id)) newAchievements.push(id);
   };
 
-  const collectionsCount = extras?.collectionsCount ?? 0;
+  const collectionsCount = options.collectionsCount ?? 0;
   const streak = profile.currentStreak ?? 0;
   const flashcardSessions = stats.flashcardSessions ?? 0;
   const quizzesTaken = stats.quizzesTaken ?? 0;
@@ -110,7 +113,7 @@ export const checkAndUnlockAchievements = (
 
   // Session-specific achievements (only when called from a session)
   if (isFromSession) {
-    const hour = new Date().getHours();
+    const hour = extras?.hour ?? new Date().getHours();
     check(AchievementType.NIGHT_OWL, hour >= 0 && hour < 5);
     check(AchievementType.EARLY_BIRD, hour >= 5 && hour < 7);
 

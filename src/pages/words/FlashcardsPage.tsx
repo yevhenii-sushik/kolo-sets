@@ -7,7 +7,6 @@ import {
   updateSRSData,
   isDueCard,
 } from "../../utils/storage";
-import { updateFlashcardStats } from "../../firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
@@ -21,7 +20,6 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import Flashcard from "../../components/cards/Flashcard";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
-import { STREAK_CELEBRATION_EVENT } from "../../components/StreakCelebration";
 
 export default function FlashcardsPage() {
   const { id } = useParams<{ id: string }>();
@@ -30,7 +28,7 @@ export default function FlashcardsPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const { checkAchievements, profile, refreshProfile, refreshCollections, voiceForCollection } = useData();
+  const { reportSession, refreshCollections, voiceForCollection } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
 
   const [collection, setCollection] = useState<Collection | null>(null);
@@ -147,42 +145,16 @@ export default function FlashcardsPage() {
         const finalKnow = stats.know + (level === KnowledgeLevel.KNOW ? 1 : 0);
         setStats((prev) => ({ ...prev, duration }));
 
-        if (user) {
-          const lastStudy = profile?.lastStudyDate
-            ? new Date(
-                typeof profile.lastStudyDate.toDate === "function"
-                  ? profile.lastStudyDate.toDate()
-                  : profile.lastStudyDate,
-              )
-            : null;
-          const isComeback = lastStudy
-            ? Date.now() - lastStudy.getTime() > 7 * 24 * 60 * 60 * 1000
-            : false;
-
-          // Calculate if this is the first study of the day and what the new streak will be
-          const todayMidnight = new Date();
-          todayMidnight.setHours(0, 0, 0, 0);
-          const lastMidnight = lastStudy ? new Date(lastStudy) : null;
-          if (lastMidnight) lastMidnight.setHours(0, 0, 0, 0);
-          const diffDays = lastMidnight
-            ? Math.floor((todayMidnight.getTime() - lastMidnight.getTime()) / 86400000)
-            : null;
-          const isFirstStudyToday = diffDays === null || diffDays > 0;
-
-          // Write to Firebase first
-          await updateFlashcardStats(user.uid, cards.length, duration);
-          checkAchievements({ duration, allKnow: finalKnow === cards.length, isComeback });
-          refreshProfile(); // sync DataContext so streak counter in header updates
-          refreshCollections(); // sync SRS changes so due-counters (HomePage banner) don't go stale
-
-          // Fire animation only after successful write, with correct streak value
-          if (isFirstStudyToday) {
-            const prevStreak = profile?.currentStreak ?? 0;
-            const newStreak = diffDays === 1 ? prevStreak + 1 : 1;
-            window.dispatchEvent(
-              new CustomEvent(STREAK_CELEBRATION_EVENT, { detail: { streak: newStreak } })
-            );
-          }
+        if (user && collection) {
+          // Прогресс, серию и достижения начисляет сервер; празднование — по его ответу
+          await reportSession({
+            kind: "flashcards",
+            collectionIds: [collection.id],
+            cards: cards.length,
+            allKnow: finalKnow === cards.length,
+            durationSec: duration,
+          });
+          refreshCollections(); // интервалы повторения изменились — счётчики «к повторению» на главной
         }
 
         playSessionCompleteIfEnabled();

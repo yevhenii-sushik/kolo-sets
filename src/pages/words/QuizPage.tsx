@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Collection, TaskType, QuizStats, QuizSettings } from "../../types";
 import { getCollection, updateCollection } from "../../utils/storage";
-import { updateQuizStats } from "../../firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import {
@@ -24,7 +23,7 @@ export default function QuizPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const { checkAchievements, profile } = useData();
+  const { reportSession } = useData();
   const [collection, setCollection] = useState<Collection | null>(null);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -153,34 +152,15 @@ export default function QuizPage() {
       const finalStats = { ...stats, duration };
       setStats(finalStats);
 
-      // Сохраняем статистику и проверяем достижения
-      if (user) {
-        try {
-          const lastStudy = profile?.lastStudyDate
-            ? new Date(
-                typeof profile.lastStudyDate.toDate === 'function'
-                  ? profile.lastStudyDate.toDate()
-                  : profile.lastStudyDate
-              )
-            : null;
-          const isComeback = lastStudy
-            ? Date.now() - lastStudy.getTime() > 7 * 24 * 60 * 60 * 1000
-            : false;
-
-          await updateQuizStats(
-            user.uid,
-            finalStats.totalQuestions,
-            finalStats.correctAnswers,
-            duration,
-          );
-          checkAchievements({
-            duration,
-            quizQuestions: finalStats.totalQuestions,
-            isComeback,
-          });
-        } catch (error) {
-          console.error("Error updating quiz stats:", error);
-        }
+      // Прогресс, серию и достижения начисляет сервер
+      if (user && collection) {
+        await reportSession({
+          kind: "quiz",
+          collectionIds: [collection.id],
+          cards: finalStats.totalQuestions,
+          correct: finalStats.correctAnswers,
+          durationSec: duration,
+        });
       }
 
       // Воспроизводим звук завершения квиза

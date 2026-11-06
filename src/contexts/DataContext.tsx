@@ -11,7 +11,6 @@ import {
 import { useAuth } from './AuthContext';
 import {
   getUserProfile,
-  updateUserProfile,
   updateUserCollectionFields,
   parseCourses,
   parseFolders,
@@ -19,13 +18,18 @@ import {
 } from '../firebase/firestore';
 import { getCollections, deleteCollection, updateCollectionMeta } from '../utils/storage';
 import { getDisplayStreak } from '../utils/streak';
-import { Achievement, AchievementType, Collection, Course, Folder, SessionExtras } from '../types';
+import { Achievement, AchievementType, Collection, Course, Folder } from '../types';
 import { COURSES_VERSION, planCourses } from '../courses/plan';
 import { courseCodeFromLanguage, defaultVoice } from '../courses/languages';
+import { ALL_ACHIEVEMENTS } from '../utils/achievements';
 import {
-  ALL_ACHIEVEMENTS,
-  checkAndUnlockAchievements as computeNewAchievements,
-} from '../utils/achievements';
+  flushPendingSessions,
+  recheckAchievements,
+  submitSession,
+  type SessionPayload,
+  type SessionReply,
+} from '../api/progress';
+import { STREAK_CELEBRATION_EVENT } from '../components/StreakCelebration';
 
 interface DataContextType {
   profile: any | null;
@@ -65,8 +69,10 @@ interface DataContextType {
   pendingUnlocks: Achievement[];
   /** Убрать первое достижение из очереди */
   dismissUnlock: (id: AchievementType) => void;
-  /** Проверить достижения после сессии или события */
-  checkAchievements: (extras?: SessionExtras) => Promise<void>;
+  /** Тренировка завершена: прогресс начисляет сервер, празднование серии и баннеры — по его ответу */
+  reportSession: (payload: SessionPayload) => Promise<void>;
+  /** Достижения за наборы и слова — после создания набора, импорта или добавления слов */
+  checkAchievements: () => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -162,42 +168,31 @@ export function DataProvider({ children }: { children: ReactNode }) {
     setPendingUnlocks(prev => prev.filter(a => a.id !== id));
   }, []);
 
-  const checkAchievements = useCallback(async (extras?: SessionExtras) => {
-    if (!user) return;
-    try {
-      // Всегда читаем свежий профиль из Firestore для точности
-      const freshProfile = await getUserProfile(user.uid);
-      if (!freshProfile) return;
+  const showUnlocks = useCallback((ids: AchievementType[]) => {
+    const unlocked = ids.map(id => ALL_ACHIEVEMENTS.find(a => a.id === id)).filter(Boolean) as Achievement[];
+    if (unlocked.length > 0) setPendingUnlocks(prev => [...prev, ...unlocked]);
+  }, []);
 
-      const currentCollections = collectionsRef.current;
-      const currentTotalCards = currentCollections.reduce((s, c) => s + c.cards.length, 0);
-
-      // Всегда синхронизируем контекст со свежим профилем (обновляет стрик в шапке)
-      setProfile(freshProfile, user.uid);
-
-      const newIds = computeNewAchievements(freshProfile, currentTotalCards, {
-        collectionsCount: currentCollections.length,
-        ...extras,
-      });
-
-      if (newIds.length === 0) return;
-
-      const existingIds: AchievementType[] = freshProfile.achievements ?? [];
-      await updateUserProfile(user.uid, {
-        achievements: [...existingIds, ...newIds],
-      });
-
-      const newAchievements = newIds
-        .map(id => ALL_ACHIEVEMENTS.find(a => a.id === id))
-        .filter(Boolean) as Achievement[];
-
-      setPendingUnlocks(prev => [...prev, ...newAchievements]);
-
-      setProfile({ ...freshProfile, achievements: [...existingIds, ...newIds] }, user.uid);
-    } catch (err) {
-      console.error('Achievement check failed:', err);
+  const applyReply = useCallback((reply: SessionReply, celebrate: boolean) => {
+    showUnlocks(reply.newAchievements);
+    if (celebrate && reply.streak.extendedToday && !reply.duplicate) {
+      window.dispatchEvent(new CustomEvent(STREAK_CELEBRATION_EVENT, { detail: { streak: reply.streak.current } }));
     }
-  }, [user, setProfile]);
+  }, [showUnlocks]);
+
+  const reportSession = useCallback(async (payload: SessionPayload) => {
+    const reply = await submitSession(payload);
+    if (reply) applyReply(reply, true);
+    await refreshProfile(); // серия в шапке и цифры профиля — уже с сервера
+  }, [applyReply, refreshProfile]);
+
+  const checkAchievements = useCallback(async () => {
+    const ids = await recheckAchievements();
+    if (ids.length > 0) {
+      showUnlocks(ids);
+      await refreshProfile();
+    }
+  }, [showUnlocks, refreshProfile]);
 
   useEffect(() => {
     if (!user?.uid) {
@@ -302,6 +297,19 @@ export function DataProvider({ children }: { children: ReactNode }) {
       }
     })();
   }, [user, coursesReady, plan, setCollections, patchProfile]);
+
+  // Тренировки, не дошедшие до сервера (не было сети), — отправляем при запуске.
+  // Празднование не показываем: оно было бы про вчерашнюю тренировку
+  const flushedRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!user || !coursesReady || flushedRef.current === user.uid) return;
+    flushedRef.current = user.uid;
+    flushPendingSessions().then(replies => {
+      if (replies.length === 0) return;
+      replies.forEach(r => applyReply(r, false));
+      refreshProfile();
+    });
+  }, [user, coursesReady, applyReply, refreshProfile]);
 
   // Курсы и папки всегда пишем полным списком: отфильтрованный по курсу стёр бы остальные
   const saveCourses = useCallback(
@@ -424,6 +432,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         setCollections,
         pendingUnlocks,
         dismissUnlock,
+        reportSession,
         checkAchievements,
       }}
     >

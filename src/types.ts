@@ -70,6 +70,7 @@ export interface SessionExtras {
   allKnow?: boolean;       // all cards rated KNOW — for ALL_KNOW
   quizQuestions?: number;  // question count — for SPEED_DEMON check
   isComeback?: boolean;    // returning after 7+ day gap — for COMEBACK
+  hour?: number;           // час тренировки в часовом поясе пользователя — для NIGHT_OWL / EARLY_BIRD
 }
 
 // Достижение

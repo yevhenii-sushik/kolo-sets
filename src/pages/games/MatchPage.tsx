@@ -15,6 +15,7 @@ import {
   playIncorrectIfEnabled,
   playSessionCompleteIfEnabled,
 } from "../../utils/sounds";
+import { useRoundReport } from "../../components/session/useRoundReport";
 
 const PAIRS_PER_ROUND = 6;
 
@@ -78,6 +79,12 @@ export default function MatchPage() {
   const [mistakes, setMistakes] = useState(0);
   const [elapsed, setElapsed] = useState(0);
   const [checking, setChecking] = useState(false);
+
+  useRoundReport(phase === "finished", () =>
+    collection
+      ? { kind: "match", collectionIds: [collection.id], cards: roundCards.length, correct: roundCards.length, durationSec: Math.max(elapsed, 1) }
+      : null,
+  );
 
   const pickRound = (col: Collection) => {
     const picked = pickRoundCards(col.cards, PAIRS_PER_ROUND);

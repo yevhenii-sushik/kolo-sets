@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Collection, Card, KnowledgeLevel, FlashcardStats } from "../../types";
 import { getCollections, updateCollection, updateSRSData, isDueCard } from "../../utils/storage";
-import { updateFlashcardStats } from "../../firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
@@ -12,7 +11,6 @@ import RatingBar from "../../components/session/RatingBar";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import Flashcard from "../../components/cards/Flashcard";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
-import { STREAK_CELEBRATION_EVENT } from "../../components/StreakCelebration";
 import { courseCodeFromLanguage } from "../../courses/languages";
 
 interface ReviewCard {
@@ -25,7 +23,7 @@ export default function ReviewPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const { checkAchievements, profile, refreshProfile, refreshCollections, activeCourse, coursesReady, voiceForCollection } = useData();
+  const { reportSession, refreshCollections, activeCourse, coursesReady, voiceForCollection } = useData();
 
   const [reviewCards, setReviewCards] = useState<ReviewCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -135,32 +133,14 @@ export default function ReviewPage() {
         setStats(prev => ({ ...prev, duration }));
 
         if (user) {
-          const lastStudy = profile?.lastStudyDate
-            ? new Date(typeof profile.lastStudyDate.toDate === "function"
-                ? profile.lastStudyDate.toDate()
-                : profile.lastStudyDate)
-            : null;
-          const isComeback = lastStudy
-            ? Date.now() - lastStudy.getTime() > 7 * 24 * 60 * 60 * 1000
-            : false;
-          const todayMidnight = new Date(); todayMidnight.setHours(0, 0, 0, 0);
-          const lastMidnight = lastStudy ? new Date(lastStudy) : null;
-          if (lastMidnight) lastMidnight.setHours(0, 0, 0, 0);
-          const diffDays = lastMidnight
-            ? Math.floor((todayMidnight.getTime() - lastMidnight.getTime()) / 86400000)
-            : null;
-          const isFirstStudyToday = diffDays === null || diffDays > 0;
-
-          await updateFlashcardStats(user.uid, reviewCards.length, duration);
-          checkAchievements({ duration, allKnow: finalKnow === reviewCards.length, isComeback });
-          refreshProfile();
+          await reportSession({
+            kind: "review",
+            collectionIds: [...new Set(reviewCards.map((r) => r.collectionId))],
+            cards: reviewCards.length,
+            allKnow: finalKnow === reviewCards.length,
+            durationSec: duration,
+          });
           refreshCollections();
-
-          if (isFirstStudyToday) {
-            const prevStreak = profile?.currentStreak ?? 0;
-            const newStreak = diffDays === 1 ? prevStreak + 1 : 1;
-            window.dispatchEvent(new CustomEvent(STREAK_CELEBRATION_EVENT, { detail: { streak: newStreak } }));
-          }
         }
 
         playSessionCompleteIfEnabled();

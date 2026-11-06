@@ -9,6 +9,7 @@ import { TIPS_ICONS } from "../../data/home/tips";
 import DailyGameWidget from "../../components/game/DailyGameWidget";
 import { FEATURES } from "../../config/features";
 import { getDailyGoal, isDueCard } from "../../utils/storage";
+import { localDateKey } from "../../utils/progress";
 import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural, type PluralForms } from "../../utils/plural";
@@ -39,7 +40,8 @@ export default function HomePage() {
   const dueCount = useMemo(() => collections.reduce((n, col) => n + col.cards.filter(isDueCard).length, 0), [collections]);
   const dailyGoal = getDailyGoal();
   const todayStudied = useMemo(() => {
-    const today = new Date().toISOString().split("T")[0];
+    // Ключ дня — по местному времени: так сервер записывает историю (docs/specs/00-server.md)
+    const today = localDateKey(new Date());
     return profile?.studyHistory?.find((d: any) => d.date === today)?.cardsStudied ?? 0;
   }, [profile?.studyHistory]);
   const goalMet = todayStudied >= dailyGoal;

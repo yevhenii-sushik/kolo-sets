@@ -10,12 +10,50 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    // User profiles and their nested collections — owner only
-    match /users/{userId} {
-      allow read, write: if isOwner(userId);
+    // Прогресс начисляет сервер (docs/specs/00-server.md): эти поля профиля клиент менять не может
+    function serverOwnedFields() {
+      return ['stats', 'currentStreak', 'longestStreak', 'lastStudyDate', 'lastStudyDay',
+              'studyHistory', 'achievements', 'timezone'];
+    }
 
+    function zeroOrAbsent(m, key) {
+      return !(key in m) || m[key] == 0;
+    }
+
+    function statsAreZero(stats) {
+      return stats.keys().hasOnly(['totalCards', 'cardsLearned', 'quizzesTaken', 'flashcardSessions',
+                                   'totalStudyTime', 'perfectQuizzes', 'gamesPlayed'])
+        && zeroOrAbsent(stats, 'totalCards') && zeroOrAbsent(stats, 'cardsLearned')
+        && zeroOrAbsent(stats, 'quizzesTaken') && zeroOrAbsent(stats, 'flashcardSessions')
+        && zeroOrAbsent(stats, 'totalStudyTime') && zeroOrAbsent(stats, 'perfectQuizzes')
+        && zeroOrAbsent(stats, 'gamesPlayed');
+    }
+
+    // Новый профиль клиент создаёт сам, но только «с нуля»
+    function isBlankProfile(d) {
+      return zeroOrAbsent(d, 'currentStreak') && zeroOrAbsent(d, 'longestStreak')
+        && (!('achievements' in d) || d.achievements.size() == 0)
+        && (!('studyHistory' in d) || d.studyHistory.size() == 0)
+        && (!('lastStudyDate' in d) || d.lastStudyDate == null)
+        && !('lastStudyDay' in d) && !('timezone' in d)
+        && (!('stats' in d) || statsAreZero(d.stats));
+    }
+
+    // Профиль: владелец читает и меняет своё (имя, фото, курсы, папки…), кроме полей сервера
+    match /users/{userId} {
+      allow read, delete: if isOwner(userId);
+      allow create: if isOwner(userId) && isBlankProfile(request.resource.data);
+      allow update: if isOwner(userId)
+                    && !request.resource.data.diff(resource.data).affectedKeys().hasAny(serverOwnedFields());
+
+      // Наборы и карточки (включая интервалы повторения) — личные данные владельца
       match /collections/{collectionId} {
         allow read, write: if isOwner(userId);
+      }
+
+      // Журнал тренировок пишет только сервер; владелец читает и удаляет (удаление аккаунта)
+      match /sessions/{sessionId} {
+        allow read, delete: if isOwner(userId);
       }
     }
 

@@ -16,7 +16,6 @@ import {
 } from 'firebase/firestore';
 import { db } from './config';
 import { Collection } from '../types';
-import { calcUpdatedStreak } from '../utils/streak';
 import { generateUsername, normalizeUsername } from '../utils/username';
 
 // Firestore отвергает undefined ('Unsupported field value: undefined').
@@ -289,53 +288,17 @@ export const recordLegalAcceptance = async (userId: string, version: string) => 
   await updateUserProfile(userId, { legalAcceptance: { version, acceptedAt: Timestamp.now() } });
 };
 
-// Общий хелпер для обновления статистики учебной сессии
-const updateStudySession = async (
-  userId: string,
-  count: number,
-  duration: number,
-  statsUpdate: (stats: any) => void
-) => {
-  const docRef = doc(db, 'users', userId);
-  const docSnap = await getDoc(docRef);
-  if (!docSnap.exists()) return;
-
-  const profile = docSnap.data();
-  const today = new Date().toISOString().split('T')[0];
-
-  const studyHistory = profile.studyHistory || [];
-  const todayIndex = studyHistory.findIndex((d: any) => d.date === today);
-  if (todayIndex >= 0) {
-    studyHistory[todayIndex].sessions += 1;
-    studyHistory[todayIndex].cardsStudied += count;
-    studyHistory[todayIndex].timeSpent += duration;
-  } else {
-    studyHistory.push({ date: today, sessions: 1, cardsStudied: count, timeSpent: duration });
-  }
-
-  const currentStreak = calcUpdatedStreak(profile.currentStreak || 0, profile.lastStudyDate);
-  const longestStreak = Math.max(currentStreak, profile.longestStreak || 0);
-
-  const stats = { ...(profile.stats || {}) };
-  stats.totalStudyTime = (stats.totalStudyTime || 0) + duration;
-  statsUpdate(stats);
-
-  await updateUserProfile(userId, {
-    studyHistory,
-    currentStreak,
-    longestStreak,
-    lastStudyDate: Timestamp.now(),
-    stats
-  });
-};
-
-export const updateFlashcardStats = (userId: string, cardsCount: number, duration: number) =>
-  updateStudySession(userId, cardsCount, duration, (stats) => {
-    stats.flashcardSessions = (stats.flashcardSessions || 0) + 1;
-  });
-
 // Удалить все данные пользователя (коллекции + профиль)
 export const deleteUserData = async (userId: string): Promise<void> => {
+  // Журнал тренировок (users/{uid}/sessions, пишет сервер) — тоже личные данные; удаляем частями,
+  // в пакете Firestore не больше 500 операций
+  const sessions = await getDocs(query(collection(db, 'users', userId, 'sessions')));
+  for (let i = 0; i < sessions.docs.length; i += 400) {
+    const chunk = writeBatch(db);
+    sessions.docs.slice(i, i + 400).forEach(d => chunk.delete(d.ref));
+    await chunk.commit();
+  }
+
   const collectionsRef = collection(db, 'users', userId, 'collections');
   const [snapshot, userSnap] = await Promise.all([
     getDocs(query(collectionsRef)),
@@ -352,19 +315,6 @@ export const deleteUserData = async (userId: string): Promise<void> => {
   }
   await batch.commit();
 };
-
-export const updateQuizStats = (
-  userId: string,
-  questionsCount: number,
-  correctAnswers: number,
-  duration: number
-) =>
-  updateStudySession(userId, questionsCount, duration, (stats) => {
-    stats.quizzesTaken = (stats.quizzesTaken || 0) + 1;
-    if (correctAnswers === questionsCount) {
-      stats.perfectQuizzes = (stats.perfectQuizzes || 0) + 1;
-    }
-  });
 
 // ── Folders (stored in user profile doc as `folders` array) ─────────────
 
