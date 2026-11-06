@@ -7,9 +7,25 @@ import {
   deleteUser,
   sendPasswordResetEmail,
   sendEmailVerification,
+  ActionCodeSettings,
   User
 } from 'firebase/auth';
 import { auth, googleProvider } from './config';
+
+// После подтверждения почты или сброса пароля кнопка «Продолжить» на странице Firebase ведёт обратно в Kolo.
+// Адрес должен быть в разрешённых доменах Firebase Auth; если нет (например, тестовая выкладка Netlify),
+// отправляем письмо без кнопки, а не теряем его.
+async function withContinueUrl(send: (settings?: ActionCodeSettings) => Promise<void>): Promise<void> {
+  try {
+    await send({ url: `${window.location.origin}/` });
+  } catch (err: any) {
+    if (err?.code === 'auth/unauthorized-continue-uri' || err?.code === 'auth/invalid-continue-uri') {
+      await send();
+    } else {
+      throw err;
+    }
+  }
+}
 
 export const registerWithEmail = async (
   email: string,
@@ -20,7 +36,7 @@ export const registerWithEmail = async (
 
   if (userCredential.user) {
     await updateProfile(userCredential.user, { displayName });
-    sendEmailVerification(userCredential.user).catch(() => {});
+    withContinueUrl((settings) => sendEmailVerification(userCredential.user, settings)).catch(() => {});
   }
 
   return userCredential.user;
@@ -54,11 +70,11 @@ export const getCurrentUser = (): User | null => {
 };
 
 export const resetPassword = async (email: string): Promise<void> => {
-  await sendPasswordResetEmail(auth, email);
+  await withContinueUrl((settings) => sendPasswordResetEmail(auth, email, settings));
 };
 
 export const resendVerificationEmail = async (): Promise<void> => {
   const user = auth.currentUser;
   if (!user) throw new Error('No user signed in');
-  await sendEmailVerification(user);
+  await withContinueUrl((settings) => sendEmailVerification(user, settings));
 };

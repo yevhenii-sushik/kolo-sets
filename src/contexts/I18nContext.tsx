@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { Language, Translations, translations, getCurrentLanguage, setLanguage as saveLanguage } from '../locales';
 import { getLanguageInfo } from '../locales/languages';
+import { auth } from '../firebase/config';
 
 interface I18nContextType {
   language: Language;
@@ -14,9 +15,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(getCurrentLanguage());
   const [t, setT] = useState<Translations>(translations[language]);
 
-  // <html lang> — для скринридеров, переносов и автоперевода браузера
+  // <html lang> — для скринридеров, переносов и автоперевода браузера.
+  // auth.languageCode — язык писем Firebase (подтверждение почты, сброс пароля); норвежский у Firebase — 'no'
   useEffect(() => {
     document.documentElement.lang = getLanguageInfo(language).htmlLang;
+    auth.languageCode = language;
   }, [language]);
 
   const setLanguage = (lang: Language) => {
