@@ -1,0 +1,502 @@
+{
+  "privacy": {
+    "title": "Personvernerklæring",
+    "scope": "Gjelder nettstedet og webappen Kolo Sets",
+    "summary": [
+      "Ingen reklame, ingen sporing, og vi selger aldri dataene dine.",
+      "Vi lagrer det appen trenger: kontoen din, ordsettene dine og læringsfremgangen din.",
+      "Du kan eksportere settene dine eller slette kontoen i appen når som helst."
+    ],
+    "sections": [
+      {
+        "id": "who",
+        "title": "Hvem vi er",
+        "blocks": [
+          "Kolo Sets («Kolo», «vi») er en webapp for å lære gloser på fremmedspråk med flashkort, repetisjon med mellomrom og spill. Den er tilgjengelig på **{site}**.",
+          "Behandlingsansvarlig for personopplysningene dine er **{operator}**. Kontakt oss om alt i denne erklæringen på {email.privacy}."
+        ]
+      },
+      {
+        "id": "data",
+        "title": "Hva vi samler inn og hvorfor",
+        "blocks": [
+          "Vi samler bare inn det som trengs for å drive Kolo:",
+          {
+            "table": {
+              "columns": [
+                "Opplysninger",
+                "Hvorfor",
+                "Rettslig grunnlag"
+              ],
+              "rows": [
+                [
+                  "**Konto:** e-postadresse, passord (lagres bare som en sikker hash hos Firebase Authentication — vi ser det aldri), visningsnavn. Ved innlogging med Google: navn, e-post og profilbilde fra Google-kontoen din.",
+                  "Opprette kontoen din, logge deg inn og holde den sikker.",
+                  "Avtale (personvernforordningen art. 6(1)(b))"
+                ],
+                [
+                  "**Brukernavn** (tildeles automatisk, du kan endre det).",
+                  "Vise deg på topplisten for dagens spill.",
+                  "Avtale"
+                ],
+                [
+                  "**Profilbilde**, hvis du laster opp et.",
+                  "Vise avataren din i appen.",
+                  "Avtale"
+                ],
+                [
+                  "**Læringsdata:** ordsett og kort, repetisjonsplan, studiehistorikk, statistikk, rekker, prestasjoner og dagsmål.",
+                  "Drive treningsmodusene, planlegge repetisjoner og synkronisere fremgangen mellom enheter.",
+                  "Avtale"
+                ],
+                [
+                  "**Resultater i dagens spill** sammen med brukernavnet ditt.",
+                  "Vise topplisten til andre innloggede brukere.",
+                  "Avtale"
+                ],
+                [
+                  "**Henvendelser til støtte:** emne, melding, e-posten du oppgir (valgfritt) og konto-e-posten din hvis du er logget inn.",
+                  "Svare på henvendelsen og rette problemene du melder.",
+                  "Berettiget interesse (personvernforordningen art. 6(1)(f))"
+                ],
+                [
+                  "**Registrering av aksept:** hvilken versjon av vilkårene og denne erklæringen du godtok, og når.",
+                  "Kunne vise hva du har godtatt.",
+                  "Berettiget interesse"
+                ],
+                [
+                  "**Tekniske data:** IP-adresse, nettleser- og enhetsinformasjon.",
+                  "Beskytte kontoer (Firebase Authentication) og levere nettstedet (hosting).",
+                  "Berettiget interesse"
+                ]
+              ]
+            }
+          },
+          "Kolo lagrer også noen data i nettleseren din — innloggingsøkten, innstillinger og en lokal kopi av settene dine. Se [Retningslinjer for informasjonskapsler](/cookies)."
+        ]
+      },
+      {
+        "id": "dont",
+        "title": "Hva vi ikke gjør",
+        "blocks": [
+          {
+            "list": [
+              "Vi viser ikke reklame og bruker ikke annonse-ID-er.",
+              "Vi bruker ikke analyse- eller sporingsverktøy. Hvis vi en gang legger til analyse, kjører den bare etter at du har samtykket, og vi oppdaterer denne erklæringen først.",
+              "Vi selger eller leier ikke ut personopplysningene dine, og vi bruker dem ikke til profilering.",
+              "Vi samler ikke inn presis posisjon, kontakter eller biometriske data."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Hvem som kan se eller behandle dataene dine",
+        "blocks": [
+          "Vi bruker noen få tjenesteleverandører. Hver av dem behandler data bare for å levere sin tjeneste:",
+          {
+            "list": [
+              "**Google** (Firebase Authentication, Cloud Firestore, Cloud Storage) — kontoer, database og profilbilder. [Personvern hos Firebase](https://firebase.google.com/support/privacy)",
+              "**Netlify** — hosting og levering av nettstedet. [Personvern hos Netlify](https://www.netlify.com/privacy/)",
+              "**Telegram** — leverer meldinger du sender via støtteskjemaet til teamets private chat. [Personvern hos Telegram](https://telegram.org/privacy)",
+              "**Google-innlogging** — bare hvis du velger å logge inn med Google.",
+              "**Nettleserens talemotor** — opplesning bruker talesyntesen som er innebygd i nettleseren din. Avhengig av nettleseren kan teksten behandles av nettleser- eller operativsystemleverandøren (noen stemmer i Chrome er nettbaserte Google-stemmer). Kolo mottar ingen lyd."
+            ]
+          },
+          {
+            "note": "**Synlig for andre brukere:** brukernavnet ditt og resultatene dine i dagens spill vises på topplisten for innloggede brukere, og et opplastet profilbilde kan åpnes av alle som har lenken. Ordsettene og fremgangen din forblir private."
+          }
+        ]
+      },
+      {
+        "id": "transfers",
+        "title": "Overføring til utlandet",
+        "blocks": [
+          "Noen leverandører behandler data utenfor EØS, blant annet i USA. Slike overføringer bygger på garantier etter kapittel V i personvernforordningen, for eksempel EU–U.S. Data Privacy Framework for sertifiserte leverandører eller EU-kommisjonens standardavtaler."
+        ]
+      },
+      {
+        "id": "security",
+        "title": "Sikkerhet",
+        "blocks": [
+          {
+            "list": [
+              "All trafikk mellom enheten din og Kolo er kryptert (HTTPS/TLS).",
+              "Google krypterer data som lagres i Firebase.",
+              "Databasereglene gjør at bare du kan lese og endre din egen profil og dine ordsett.",
+              "Passord håndteres av Firebase Authentication; vi har aldri tilgang til dem."
+            ]
+          },
+          "Ingen systemer er helt sikre, men vi jobber for å beskytte dataene dine og varsler deg slik loven krever hvis et brudd rammer deg."
+        ]
+      },
+      {
+        "id": "retention",
+        "title": "Hvor lenge vi lagrer data",
+        "blocks": [
+          {
+            "list": [
+              "Konto og læringsdata: så lenge kontoen din finnes.",
+              "Når du sletter kontoen i appen («Annet → Data og konto»), slettes innlogging, profil, ordsett og brukernavn med en gang.",
+              "Resultater i dagens spill og et opplastet profilbilde **fjernes ennå ikke automatisk** når du sletter kontoen. Send e-post til {email.privacy}, så sletter vi dem innen 30 dager.",
+              "Henvendelser til støtte: så lenge det trengs for å håndtere saken din. Du kan be oss slette dem.",
+              "Tekniske logger hos leverandørene: etter deres lagringstider.",
+              "Data i nettleseren: til du sletter dem eller logger ut."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Rettighetene dine",
+        "blocks": [
+          "Etter personvernforordningen har du rett til å:",
+          {
+            "list": [
+              "Få innsyn i personopplysningene vi har om deg.",
+              "Rette uriktige opplysninger — navn, brukernavn og bilde endrer du i profilen.",
+              "Slette dataene dine — kontoen sletter du under «Annet → Data og konto».",
+              "Ta med deg dataene — ordsettene eksporterer du under «Annet → Data og konto».",
+              "Begrense eller protestere mot behandling som bygger på vår berettigede interesse.",
+              "Trekke tilbake samtykke når som helst der vi bygger på det, for eksempel i innstillingene for informasjonskapsler."
+            ]
+          },
+          "Bruk verktøyene i appen eller send e-post til {email.privacy}. Vi svarer innen én måned.",
+          "Du kan også klage til [Datatilsynet](https://www.datatilsynet.no/) eller til tilsynsmyndigheten i landet der du bor."
+        ]
+      },
+      {
+        "id": "children",
+        "title": "Barn",
+        "blocks": [
+          "Kolo er ikke beregnet på barn under 13 år. Du må være minst 13 år — eller eldre hvis loven i landet ditt krever det for å samtykke selv — for å opprette en konto. Hvis du tror at et barn har gitt oss personopplysninger, kontakt {email.privacy}, så sletter vi dem."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Endringer i erklæringen",
+        "blocks": [
+          "Hvis vi endrer erklæringen, oppdaterer vi ikrafttredelsesdatoen. Ved vesentlige endringer varsler vi deg også i appen før de trer i kraft."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Kontakt",
+        "blocks": [
+          "Spørsmål og forespørsler om personvern: {email.privacy}. Generell støtte: {email.support}."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Vilkår for bruk",
+    "scope": "Gjelder nettstedet og webappen Kolo Sets",
+    "summary": [
+      "All læring er gratis. Eventuelle betalte tillegg blir valgfrie.",
+      "Ordsettene dine tilhører deg. Eksporter eller slett dem når du vil.",
+      "Vis respekt: ingen støtende brukernavn eller bilder, ingen misbruk av tjenesten."
+    ],
+    "sections": [
+      {
+        "id": "agreement",
+        "title": "Avtale",
+        "blocks": [
+          "Disse vilkårene for bruk («vilkårene») er en avtale mellom deg og **{operator}** («vi») om bruken av Kolo Sets («Kolo»). Ved å opprette en konto eller bruke Kolo godtar du vilkårene. Hvis du ikke er enig, ber vi deg la være å bruke Kolo.",
+          "Hvordan vi behandler personopplysninger, står i [personvernerklæringen](/privacy) og [retningslinjene for informasjonskapsler](/cookies)."
+        ]
+      },
+      {
+        "id": "service",
+        "title": "Tjenesten",
+        "blocks": [
+          "Kolo er en webapp for å lære gloser på fremmedspråk med flashkort, repetisjon med mellomrom (SM-2), quizer, spill og fremdriftssporing.",
+          "Alle læringsfunksjoner er gratis. Vi kan innføre valgfrie betalte tillegg i fremtiden. Kolo forblir fullt brukbar for læring uten dem, og pris og vilkår for et tillegg vises før du kjøper. Refusjon er omtalt i [refusjonsreglene](/refund)."
+        ]
+      },
+      {
+        "id": "account",
+        "title": "Kontoen din",
+        "blocks": [
+          {
+            "list": [
+              "Du må være minst 13 år, eller eldre hvis loven i landet ditt krever det for å godta vilkårene selv.",
+              "Oppgi riktige opplysninger når du registrerer deg, og hold innloggingsopplysningene dine trygge.",
+              "Du er ansvarlig for aktivitet på kontoen din. Si fra til oss med en gang hvis du mistenker uautorisert bruk."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "public",
+        "title": "Brukernavn, bilder og topplisten",
+        "blocks": [
+          "Brukernavnet ditt og resultatene i dagens spill er synlige for andre innloggede brukere, og et profilbilde du laster opp kan åpnes av alle som har lenken. Ikke velg brukernavn eller bilder som er støtende, villedende, utgir seg for å være noen andre eller krenker andres rettigheter. Vi kan endre eller fjerne brukernavn eller bilder som bryter disse reglene."
+        ]
+      },
+      {
+        "id": "use",
+        "title": "Akseptabel bruk",
+        "blocks": [
+          "Du forplikter deg til ikke å:",
+          {
+            "list": [
+              "prøve å skaffe deg uautorisert tilgang til Kolo, andres kontoer eller infrastrukturen vår;",
+              "bruke Kolo til å spre spam, skadevare eller ulovlig innhold;",
+              "bruke boter eller skript som overbelaster Kolo eller manipulerer topplisten;",
+              "utgi deg for å være en annen person eller organisasjon;",
+              "laste opp innhold som bryter loven eller andres rettigheter."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "content",
+        "title": "Innholdet ditt",
+        "blocks": [
+          {
+            "list": [
+              "Du eier ordsettene, kortene og annet innhold du lager.",
+              "Du gir oss en begrenset, ikke-eksklusiv lisens til å lagre, behandle og vise innholdet ditt bare for å levere Kolo — for eksempel for å synkronisere settene dine og vise brukernavnet ditt på topplisten.",
+              "Du er ansvarlig for at innholdet ditt ikke krenker opphavsrett eller andre rettigheter.",
+              "Du kan eksportere settene dine eller slette kontoen når som helst under «Annet → Data og konto»."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ip",
+        "title": "Vårt innhold",
+        "blocks": [
+          "Kolo-appen, koden, designet, logoen og merkevaren, samt ordsettene vi publiserer, tilhører oss eller våre lisensgivere. Du kan bruke dem til personlig, ikke-kommersiell læring. Ikke kopier, videreselg eller distribuer dem uten vår tillatelse."
+        ]
+      },
+      {
+        "id": "disclaimer",
+        "title": "Tilgjengelighet og ansvarsbegrensning",
+        "blocks": [
+          {
+            "list": [
+              "Vi jobber for at Kolo skal fungere, men kan ikke love at tjenesten alltid er tilgjengelig eller feilfri.",
+              "Vi kan endre, legge til eller fjerne funksjoner. Hvis vi bestemmer oss for å legge ned Kolo, prøver vi å varsle i god tid slik at du kan eksportere dataene dine.",
+              "Vi anbefaler at du eksporterer settene dine jevnlig som sikkerhetskopi.",
+              "Kolo er et læringsverktøy; vi kan ikke garantere bestemte læringsresultater."
+            ]
+          },
+          {
+            "note": "Ingenting i disse vilkårene begrenser rettighetene dine som forbruker etter ufravikelig lov, eller vårt ansvar der loven ikke tillater at det begrenses."
+          }
+        ]
+      },
+      {
+        "id": "termination",
+        "title": "Avslutning av avtalen",
+        "blocks": [
+          "**Fra din side:** du kan når som helst slutte å bruke Kolo og slette kontoen under «Annet → Data og konto».",
+          "**Fra vår side:** vi kan suspendere eller stenge en konto som alvorlig eller gjentatte ganger bryter vilkårene. Der det er rimelig, advarer vi deg først og forklarer hvorfor."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Endringer i vilkårene",
+        "blocks": [
+          "Vi kan oppdatere vilkårene. Vi endrer ikrafttredelsesdatoen og varsler deg i appen før vesentlige endringer trer i kraft. Hvis du ikke godtar de nye vilkårene, kan du slette kontoen før de gjelder."
+        ]
+      },
+      {
+        "id": "law",
+        "title": "Lovvalg",
+        "blocks": [
+          "Vilkårene er underlagt norsk rett, og tvister behandles av norske domstoler. Er du forbruker i EU/EØS, beholder du vernet etter ufravikelige forbrukerregler i landet ditt og kan reise sak der du bor."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Kontakt",
+        "blocks": [
+          "Juridiske spørsmål: {email.legal}. Generell støtte: {email.support}."
+        ]
+      }
+    ]
+  },
+  "cookies": {
+    "title": "Retningslinjer for informasjonskapsler",
+    "scope": "Gjelder nettstedet og webappen Kolo Sets",
+    "summary": [
+      "Ingen informasjonskapsler for reklame eller sporing.",
+      "Vi lagrer bare det Kolo trenger for å fungere og huske innstillingene dine.",
+      "Du kan når som helst se over valget ditt i innstillingene for informasjonskapsler."
+    ],
+    "sections": [
+      {
+        "id": "what",
+        "title": "Informasjonskapsler og lignende teknologi",
+        "blocks": [
+          "Informasjonskapsler er små filer som et nettsted lagrer i nettleseren din. Lignende teknologi omfatter **localStorage**, **IndexedDB** og **Cache Storage**, som brukes av installerbare webapper. I disse retningslinjene dekker «informasjonskapsler» alt dette.",
+          "Etter EU/EØS-reglene — i Norge ekomloven — krever lagring som er strengt nødvendig for en tjeneste du ber om, ikke samtykke. Alt annet krever samtykket ditt først."
+        ]
+      },
+      {
+        "id": "necessary",
+        "title": "Strengt nødvendig lagring",
+        "blocks": [
+          "Kolo bruker bare egen (førsteparts) lagring av denne typen:",
+          {
+            "table": {
+              "columns": [
+                "Navn",
+                "Formål",
+                "Lagres"
+              ],
+              "rows": [
+                [
+                  "`firebaseLocalStorageDb` (IndexedDB)",
+                  "Holder deg innlogget (Firebase Authentication).",
+                  "Til du logger ut"
+                ],
+                [
+                  "`kolo_cookie_consent`",
+                  "Husker innstillingene dine for informasjonskapsler.",
+                  "12 måneder, så spør vi igjen"
+                ],
+                [
+                  "`workbox-precache-…`",
+                  "Cache Storage for den installerbare appen: raskere lasting og frakoblet bruk.",
+                  "Til appen oppdateres eller du sletter det"
+                ],
+                [
+                  "`appLanguage`",
+                  "Grensesnittspråket du valgte.",
+                  "Til du sletter det"
+                ],
+                [
+                  "`language_cards_theme`",
+                  "Lyst eller mørkt tema.",
+                  "Til du sletter det"
+                ],
+                [
+                  "`language_cards_collections` `profile_cache_…` `collections_synced_…` `kolo_col_order_…`",
+                  "En lokal kopi av ordsettene og profilen din for fart og frakoblet bruk, synkroniseringsstatus og rekkefølgen på settene.",
+                  "Til du sletter det"
+                ],
+                [
+                  "`kolo_game_…`",
+                  "Fremgangen din i dagens spill.",
+                  "Til du sletter det"
+                ],
+                [
+                  "`kolo_daily_goal` `kolo_reminder_v1` `soundEnabled` `sidebar-open`",
+                  "Dagsmål, påminnelser, lyd og oppsett.",
+                  "Til du sletter det"
+                ],
+                [
+                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed`",
+                  "Husker at du har sett velkomstomvisningen eller lukket et varsel.",
+                  "Til du sletter det"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "thirdparty",
+        "title": "Tredjeparts informasjonskapsler",
+        "blocks": [
+          "Hvis du velger **Logg inn med Google**, setter Google sine egne informasjonskapsler på innloggingssidene sine (for eksempel accounts.google.com og Firebase-innloggingsdomenet kolo-sets.firebaseapp.com) for å logge deg trygt inn. Disse reguleres av [Googles retningslinjer for informasjonskapsler](https://policies.google.com/technologies/cookies). Kolo setter ingen andre tredjeparts informasjonskapsler."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Analyse og reklame",
+        "blocks": [
+          {
+            "note": "Kolo bruker i dag **ingen informasjonskapsler for analyse eller reklame**."
+          },
+          "Hvis vi legger til analyse i fremtiden (for eksempel Google Analytics for Firebase), kjører den bare etter at du har tillatt det i innstillingene for informasjonskapsler, og vi oppdaterer disse retningslinjene før den starter."
+        ]
+      },
+      {
+        "id": "manage",
+        "title": "Slik styrer du valgene dine",
+        "blocks": [
+          {
+            "list": [
+              "Endre eller trekk tilbake samtykket når som helst: [åpne innstillingene for informasjonskapsler](#cookie-settings). Samme lenke finnes nederst på siden.",
+              "Du kan også slette Kolos data i nettleserens nettstedsinnstillinger. Da blir du logget ut, og alt som bare er lagret på denne enheten, for eksempel usynkroniserte sett, forsvinner."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Endringer",
+        "blocks": [
+          "Hvis vi endrer hvordan Kolo bruker informasjonskapsler, oppdaterer vi denne siden og spør deg på nytt der det kreves samtykke."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Kontakt",
+        "blocks": [
+          "Spørsmål om informasjonskapsler: {email.privacy}. Mer om personopplysninger i [personvernerklæringen](/privacy)."
+        ]
+      }
+    ]
+  },
+  "refund": {
+    "title": "Refusjonsregler",
+    "scope": "Gjelder alle betalinger knyttet til Kolo Sets",
+    "summary": [
+      "Kolo er gratis. Det er ingenting å betale for nå — og dermed ingenting å refundere.",
+      "Hvis betalte tillegg kommer, ser du pris og refusjonsvilkår før du kjøper.",
+      "Dine lovfestede forbrukerrettigheter gjelder alltid."
+    ],
+    "sections": [
+      {
+        "id": "free",
+        "title": "Kolo er gratis",
+        "blocks": [
+          "Kolo har i dag **ingen betalte funksjoner, abonnementer eller kjøp i appen**. Vi tar ikke imot betaling, så det er ingenting å refundere.",
+          {
+            "note": "Kolo ber aldri om betalingsopplysninger. Hvis noen ber deg betale for Kolo, er det ikke oss — si gjerne fra på {email.support}."
+          }
+        ]
+      },
+      {
+        "id": "future",
+        "title": "Hvis vi innfører betalte tillegg",
+        "blocks": [
+          "Vi kan tilby valgfrie betalte tillegg i fremtiden. Det vil fortsatt være fullt mulig å lære i Kolo uten dem (se [vilkårene for bruk](/terms)). Før et tillegg legges ut for salg, oppdaterer vi disse reglene med de nøyaktige refusjonsvilkårene. Uansett gjelder:",
+          {
+            "list": [
+              "Før du betaler, ser du prisen, hva som er inkludert og — for abonnementer — hvordan du sier opp.",
+              "Er du forbruker i EU/EØS, også i Norge, har du som regel 14 dagers angrerett på kjøp gjort på nett.",
+              "For digitalt innhold eller tjenester som starter med en gang, kan angreretten bare falle bort eller begrenses hvis du uttrykkelig ber om umiddelbar tilgang og bekrefter i kassen at du forstår dette."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stores",
+        "title": "Kjøp i appbutikker",
+        "blocks": [
+          "Hvis betalte tillegg noen gang selges gjennom Apple App Store eller Google Play, håndteres refusjon for slike kjøp av butikken etter dens egne regler."
+        ]
+      },
+      {
+        "id": "problem",
+        "title": "Noe gikk galt?",
+        "blocks": [
+          "Hvis du mener at du er belastet i forbindelse med Kolo, skriv til {email.support} og beskriv hva som skjedde. Vi ser på saken og kommer tilbake til deg."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Kontakt",
+        "blocks": [
+          "Spørsmål om betaling eller refusjon: {email.support}."
+        ]
+      }
+    ]
+  }
+}

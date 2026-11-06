@@ -1,234 +1,167 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Mail, User } from 'lucide-react';
+import { Alert, Button, Checkbox, Field, Input } from '../../ui';
 import { useAuth } from '../../contexts/AuthContext';
-import { Mail, Lock, ArrowRight, User, Eye, EyeOff } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useI18n } from '../../contexts/I18nContext';
+import { auth } from '../../firebase/config';
+import { recordLegalAcceptance } from '../../firebase/firestore';
+import ConsentText from '../../components/legal/ConsentText';
+import { LEGAL } from '../legal/legalInfo';
+import AuthLayout, { AuthDivider } from '../../components/auth/AuthLayout';
+import GoogleButton from '../../components/auth/GoogleButton';
+import PasswordField from '../../components/auth/PasswordField';
+
+// Коды Firebase Auth → ключи переведённых ошибок
+const AUTH_ERRORS: Record<string, 'emailInUse' | 'invalidEmail' | 'weakPassword' | 'wrongCredentials' | 'tooManyRequests'> = {
+  'auth/email-already-in-use': 'emailInUse',
+  'auth/invalid-email': 'invalidEmail',
+  'auth/weak-password': 'weakPassword',
+  'auth/user-not-found': 'wrongCredentials',
+  'auth/wrong-password': 'wrongCredentials',
+  'auth/invalid-credential': 'wrongCredentials',
+  'auth/too-many-requests': 'tooManyRequests',
+};
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { register, loginGoogle } = useAuth();
-  
+  const { t } = useI18n();
+  const c = t.legal.consent;
+  const a = t.auth;
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
-  const [showPass, setShowPass] = useState(false);
-  const [showConfirmPass, setShowConfirmPass] = useState(false);
-  
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [accepted, setAccepted] = useState(false);
+
+  // Сохраняем факт согласия; сбой записи не должен мешать регистрации
+  const saveAcceptance = async () => {
+    const uid = auth.currentUser?.uid;
+    if (!uid) return;
+    try {
+      await recordLegalAcceptance(uid, LEGAL.version);
+    } catch (err) {
+      console.error('Failed to record legal acceptance', err);
+    }
+  };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (password !== confirmPassword) {
-      setError('Пароли не совпадают');
+    if (!accepted) {
+      setError(c.required);
       return;
     }
-
+    if (password !== confirmPassword) {
+      setError(a.errors.passwordsDontMatch);
+      return;
+    }
     if (password.length < 6) {
-      setError('Пароль должен быть минимум 6 символов');
+      setError(a.errors.passwordTooShort);
       return;
     }
 
     setLoading(true);
     try {
       await register(email, password, name);
+      await saveAcceptance();
       navigate('/');
     } catch (err: any) {
-      setError(getErrorMessage(err.code));
+      setError(a.errors[AUTH_ERRORS[err.code] ?? 'generic']);
     } finally {
       setLoading(false);
     }
   };
 
+  // Согласие обязательно и для Google: флажок стоит над обеими кнопками
   const handleGoogleRegister = async () => {
     setError('');
+    if (!accepted) {
+      setError(c.required);
+      return;
+    }
     setLoading(true);
     try {
       await loginGoogle();
+      await saveAcceptance();
       navigate('/');
-    } catch (err: any) {
-      setError('Ошибка регистрации через Google');
+    } catch {
+      setError(a.errors.google);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const getErrorMessage = (code: string): string => {
-    switch (code) {
-      case 'auth/email-already-in-use': return 'Этот email уже занят';
-      case 'auth/invalid-email': return 'Неверный формат email';
-      case 'auth/weak-password': return 'Слишком слабый пароль';
-      default: return 'Ошибка регистрации';
     }
   };
 
   return (
-    <div className="min-h-dvh flex flex-col items-center justify-center bg-[#F5F2ED] dark:bg-[#0F0E0C] px-4 py-12 transition-colors duration-500">
-      
-      {/* Логотип и Название */}
-      <motion.div 
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-4 mb-10"
-      >
-        <img src="/icon-512.png" alt="Kolo Logo" className="w-12 h-12 object-contain" />
-        <div className="flex flex-col">
-          <h1 className="text-4xl text-[#1A1714] dark:text-[#F0EDE8] font-black tracking-tighter leading-none">
-            Kolo <span className="text-[#FF5733]">Sets</span>
-          </h1>
-        </div>
-      </motion.div>
+    <AuthLayout
+      title={a.register.title}
+      subtitle={a.register.subtitle}
+      footer={
+        <>
+          {a.register.haveAccount}{' '}
+          <Link to="/login" className="font-semibold text-accent-ink hover:underline underline-offset-2">
+            {a.register.login}
+          </Link>
+        </>
+      }
+    >
+      <div className="grid gap-6">
+        {error && <Alert>{error}</Alert>}
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="max-w-[440px] w-full"
-      >
-        <div className="bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-8 md:p-10 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm">
-          {error && (
-            <div className="mb-6 p-4 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-2xl text-red-600 dark:text-red-400 text-[10px] font-black uppercase tracking-wider text-center">
-              {error}
-            </div>
-          )}
+        <form onSubmit={handleRegister} className="grid gap-4">
+          <Field label={a.register.name} htmlFor="name">
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoComplete="name"
+              placeholder={a.register.namePlaceholder}
+              required
+              iconLeft={<User size={18} />}
+            />
+          </Field>
+          <Field label={a.email} htmlFor="email">
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              placeholder={a.emailPlaceholder}
+              required
+              iconLeft={<Mail size={18} />}
+            />
+          </Field>
+          <PasswordField id="password" label={a.password} value={password} onChange={setPassword} autoComplete="new-password" />
+          <PasswordField
+            id="confirm-password"
+            label={a.register.confirm}
+            value={confirmPassword}
+            onChange={setConfirmPassword}
+            autoComplete="new-password"
+          />
+          <Checkbox
+            checked={accepted}
+            onChange={(e) => setAccepted(e.target.checked)}
+            className="pt-1"
+            label={<ConsentText template={c.agree} labels={c.labels} />}
+          />
+          <Button type="submit" size="lg" fullWidth loading={loading}>
+            {loading ? a.register.loading : a.register.submit}
+          </Button>
+        </form>
 
-          <form onSubmit={handleRegister} className="space-y-4">
-            {/* Поле Имя */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-[0.2em] ml-4">
-                Name
-              </label>
-              <div className="relative">
-                <User className="absolute left-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742]" size={18} />
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-14 pr-4 py-4 bg-[#F5F2ED] dark:bg-[#242220] border-none rounded-2xl focus:ring-2 ring-[#FF5733] transition-all text-[#1A1714] dark:text-[#F0EDE8] placeholder-[#B5B0A8]/50 outline-none"
-                  placeholder="Alex Smith"
-                  required
-                />
-              </div>
-            </div>
+        <AuthDivider>{a.or}</AuthDivider>
 
-            {/* Поле Email */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-[0.2em] ml-4">
-                Email
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742]" size={18} />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-14 pr-4 py-4 bg-[#F5F2ED] dark:bg-[#242220] border-none rounded-2xl focus:ring-2 ring-[#FF5733] transition-all text-[#1A1714] dark:text-[#F0EDE8] placeholder-[#B5B0A8]/50 outline-none"
-                  placeholder="name@example.com"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Поле Пароля */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-[0.2em] ml-4">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742]" size={18} />
-                <input
-                  type={showPass ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-14 pr-14 py-4 bg-[#F5F2ED] dark:bg-[#242220] border-none rounded-2xl focus:ring-2 ring-[#FF5733] transition-all text-[#1A1714] dark:text-[#F0EDE8] placeholder-[#B5B0A8]/50 outline-none"
-                  placeholder="••••••••"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPass(!showPass)}
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742] hover:text-[#FF5733]"
-                >
-                  {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-            </div>
-
-            {/* Подтверждение пароля */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-[0.2em] ml-4">
-                Repeat password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742]" size={18} />
-                <input
-                  type={showConfirmPass ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full pl-14 pr-14 py-4 bg-[#F5F2ED] dark:bg-[#242220] border-none rounded-2xl focus:ring-2 ring-[#FF5733] transition-all text-[#1A1714] dark:text-[#F0EDE8] placeholder-[#B5B0A8]/50 outline-none"
-                  placeholder="••••••••"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPass(!showConfirmPass)}
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#B5B0A8] dark:text-[#4A4742] hover:text-[#FF5733]"
-                >
-                  {showConfirmPass ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="group w-full flex items-center justify-center gap-3 px-4 py-4 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] font-black text-[11px] uppercase tracking-[0.2em] rounded-2xl transition-all hover:opacity-95 active:scale-[0.98] disabled:opacity-50 mt-6 shadow-lg shadow-[#FF5733]/10"
-            >
-              {loading ? 'Создание...' : (
-                <>
-                  Register <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="relative my-8 text-center">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#E0DBD3] dark:border-[#2E2C29]"></div>
-            </div>
-            <span className="relative px-4 bg-white dark:bg-[#1A1917] text-[10px] font-black text-[#B5B0A8] dark:text-[#4A4742] uppercase tracking-widest">
-              Social
-            </span>
-          </div>
-
-          <button
-            onClick={handleGoogleRegister}
-            disabled={loading}
-            className="w-full flex items-center justify-center gap-3 px-4 py-4 bg-white dark:bg-transparent border-2 border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] font-black text-[10px] uppercase tracking-[0.2em] rounded-2xl hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-all"
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Google
-          </button>
-        </div>
-
-        <p className="mt-8 text-center text-[#7A756E] dark:text-[#8A867F] font-bold text-[11px] uppercase tracking-widest">
-          Already have an account?{' '}
-          <button
-            onClick={() => navigate('/login')}
-            className="text-[#FF5733] hover:underline transition-all ml-1"
-          >
-            Log in
-          </button>
-        </p>
-      </motion.div>
-    </div>
+        <GoogleButton onClick={handleGoogleRegister} disabled={loading}>
+          {a.google}
+        </GoogleButton>
+      </div>
+    </AuthLayout>
   );
 }

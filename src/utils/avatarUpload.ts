@@ -9,7 +9,14 @@ const MAX_RAW_FILE_BYTES = 8 * 1024 * 1024;
 const MAX_DIMENSION = 512;
 const JPEG_QUALITY = 0.82;
 
-export class AvatarUploadError extends Error {}
+// code — ключ перевода в t.profile.errors, текст показывает страница профиля
+export type AvatarErrorCode = 'avatarType' | 'avatarSize' | 'avatarDecode' | 'avatarUnsupported' | 'avatarCompress';
+
+export class AvatarUploadError extends Error {
+  constructor(public code: AvatarErrorCode) {
+    super(code);
+  }
+}
 
 // Сжимает изображение на клиенте (макс. сторона 512px, JPEG ~0.82) перед
 // загрузкой — не зависит от того, что выбрал пользователь: хоть RAW с
@@ -20,9 +27,7 @@ async function compressImage(file: File): Promise<Blob> {
   try {
     bitmap = await createImageBitmap(file);
   } catch {
-    throw new AvatarUploadError(
-      'Не удалось обработать изображение. Попробуйте JPEG или PNG.',
-    );
+    throw new AvatarUploadError('avatarDecode');
   }
 
   const scale = Math.min(1, MAX_DIMENSION / Math.max(bitmap.width, bitmap.height));
@@ -33,13 +38,13 @@ async function compressImage(file: File): Promise<Blob> {
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext('2d');
-  if (!ctx) throw new AvatarUploadError('Браузер не поддерживает обработку изображений');
+  if (!ctx) throw new AvatarUploadError('avatarUnsupported');
   ctx.drawImage(bitmap, 0, 0, width, height);
   bitmap.close();
 
   return new Promise((resolve, reject) => {
     canvas.toBlob(
-      (blob) => (blob ? resolve(blob) : reject(new AvatarUploadError('Не удалось сжать изображение'))),
+      (blob) => (blob ? resolve(blob) : reject(new AvatarUploadError('avatarCompress'))),
       'image/jpeg',
       JPEG_QUALITY,
     );
@@ -51,10 +56,10 @@ async function compressImage(file: File): Promise<Blob> {
 // старую, в Storage не копятся файлы от прошлых аватаров.
 export async function uploadAvatar(userId: string, file: File): Promise<string> {
   if (!file.type.startsWith('image/')) {
-    throw new AvatarUploadError('Выберите файл изображения');
+    throw new AvatarUploadError('avatarType');
   }
   if (file.size > MAX_RAW_FILE_BYTES) {
-    throw new AvatarUploadError('Файл слишком большой (максимум 8 МБ)');
+    throw new AvatarUploadError('avatarSize');
   }
 
   const compressed = await compressImage(file);

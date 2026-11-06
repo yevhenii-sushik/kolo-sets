@@ -1,43 +1,70 @@
 {
   "title": "Innstillinger",
-  "subtitle": "Tilpass Kolo-opplevelsen din",
-  "sections": {
-    "appearance": {
-      "title": "Utseende",
-      "light": "Lyst",
-      "dark": "Mørkt",
-      "system": "System"
-    },
-    "language": {
-      "title": "Grensesnittspråk",
-      "recommendation": "Velg appens grensesnittspråk. Det påvirker ikke språket i ordsamlingene dine."
-    },
-    "sound": {
-      "title": "Lyd",
-      "effects": "Lydeffekter",
-      "effectsDesc": "Tilbakemeldingslyder for riktige/gale svar og fullføring av sesjoner"
-    },
-    "data": {
-      "title": "Databehandling",
-      "export": "Eksporter sikkerhetskopi",
-      "exportDesc": "Lagre alle samlingene dine som en .json-fil for lokal lagring",
-      "import": "Importer data",
-      "importDesc": "Gjenopprett samlinger fra en Kolo .json-sikkerhetskopifil",
-      "exportSuccess": "Sikkerhetskopi opprettet",
-      "exportError": "Eksport mislyktes",
-      "importSuccess": "Importert",
-      "importError": "Ugyldig filformat",
-      "noCollections": "Ingen samlinger å eksportere"
-    },
-    "dangerZone": {
-      "title": "Faresone",
-      "delete": "Slett konto",
-      "deleteDesc": "Alle samlingene, fremgangen og prestasjonene dine vil bli permanent slettet. Denne handlingen kan ikke angres.",
-      "confirmTitle": "Slett konto?",
-      "confirmMessage": "Dette vil permanent slette kontoen din, alle samlinger og fremgangen. Er du sikker?",
-      "deleteSuccess": "Konto slettet",
-      "deleteError": "Klarte ikke å slette kontoen. Logg ut og inn igjen, og prøv på nytt.",
-      "deleting": "Sletter..."
+  "subtitle": "Tilpass Kolo slik du vil ha det",
+  "appearance": {
+    "title": "Utseende",
+    "light": "Lyst",
+    "system": "Som systemet",
+    "dark": "Mørkt"
+  },
+  "language": {
+    "title": "Språk i appen",
+    "hint": "Endrer bare språket i appen – ordsettene dine forblir som de er."
+  },
+  "goal": {
+    "title": "Dagsmål",
+    "hint": "Hvor mange kort du vil repetere hver dag. Målringen på forsiden fylles opp mot dette tallet.",
+    "custom": "Eget tall",
+    "unit": {
+      "one": "kort om dagen",
+      "other": "kort om dagen"
     }
+  },
+  "reminder": {
+    "title": "Påminnelse",
+    "unsupported": "Nettleseren støtter ikke varsler.",
+    "blockedTitle": "Varsler er blokkert",
+    "blockedText": "Tillat varsler for Kolo i nettleser- eller systeminnstillingene for å få påminnelser.",
+    "intro": "En kort påminnelse hver dag om å repetere ordene.",
+    "enable": "Slå på varsler",
+    "toggle": "Påminn meg hver dag",
+    "time": "Tidspunkt",
+    "hour": "Timer",
+    "minute": "Minutter"
+  },
+  "sound": {
+    "title": "Lyd",
+    "effects": "Lydeffekter",
+    "effectsDesc": "Lyder for riktige og gale svar og fullførte økter"
+  },
+  "data": {
+    "title": "Data og konto",
+    "subtitle": "Ta sikkerhetskopi av settene, gjenopprett dem fra fil eller slett kontoen.",
+    "backup": "Sikkerhetskopi",
+    "export": "Last ned sikkerhetskopi",
+    "exportDesc": "Alle settene og ordene dine i én .json-fil",
+    "exportButton": "Last ned",
+    "import": "Gjenopprett fra fil",
+    "importDesc": "Nye sett legges til, og sett du allerede har, erstattes med versjonen fra filen",
+    "importButton": "Velg fil",
+    "importNote": "Bare sikkerhetskopifiler fra Kolo (.json) støttes.",
+    "exportSuccess": "Sikkerhetskopien er lastet ned",
+    "exportError": "Kunne ikke lage sikkerhetskopi",
+    "importSuccess": {
+      "one": "{n} sett gjenopprettet",
+      "other": "{n} sett gjenopprettet"
+    },
+    "importError": "Denne filen er ikke en sikkerhetskopi fra Kolo",
+    "noCollections": "Du har ingen sett å ta kopi av ennå",
+    "signInToImport": "Logg inn for å gjenopprette sett"
+  },
+  "account": {
+    "title": "Konto",
+    "delete": "Slett konto",
+    "deleteDesc": "Kontoen, settene, fremgangen og prestasjonene slettes for godt. Dette kan ikke angres.",
+    "confirmTitle": "Slette kontoen?",
+    "confirmMessage": "Kontoen, alle sett og all fremgang slettes for godt.",
+    "deleteError": "Kunne ikke slette kontoen. Logg ut, logg inn igjen og prøv på nytt.",
+    "deleting": "Sletter…"
   }
 }

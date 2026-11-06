@@ -4,17 +4,19 @@ import {
   Plus,
   Sparkles,
   BookOpen,
-  Construction,
-  Clock,
   Folder,
   FolderOpen,
   FolderPlus,
   Star,
   ArrowLeft,
-  GripHorizontal,
+  GripVertical,
   X,
   Check,
+  Layers,
 } from "lucide-react";
+import { Badge, Button, Card, Field, Heading, IconButton, Input, Modal, Text, cx } from "../../ui";
+import { getLanguageInfo } from "../../locales/languages";
+import { plural } from "../../utils/plural";
 import {
   createCollection,
   deleteCollection,
@@ -33,7 +35,6 @@ import CollectionCard from "../../components/cards/CollectionCard";
 import CreateCollectionModal from "../../components/CreateCollectionModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   DndContext,
   DragEndEvent,
@@ -63,8 +64,9 @@ type Tab = "my" | "kolo";
 // ломается из-за "неиспользуемых" импортов/стейта, как было в прошлый раз.
 const KOLO_SETS_ENABLED = false;
 
+// Цвет папки выбирает пользователь и он хранится в её данных, поэтому это значения, а не токены
 const FOLDER_COLORS = [
-  "#FF5733",
+  "#FF5A1F",
   "#3B82F6",
   "#22C55E",
   "#A855F7",
@@ -91,10 +93,10 @@ function TabButton({
   return (
     <button
       onClick={onClick}
-      className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
+      className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
         active
-          ? "bg-[#FF5733] text-white shadow-md shadow-orange-500/20"
-          : "text-[#7A756E] dark:text-[#8A867F] hover:bg-[#F5F2ED] dark:hover:bg-[#242220]"
+          ? "bg-accent text-on-accent shadow-md shadow-accent/20"
+          : "text-muted hover:bg-inset "
       }`}
     >
       {icon}
@@ -104,24 +106,17 @@ function TabButton({
 }
 
 const CollectionSkeleton = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
     {[1, 2, 3, 4, 5, 6].map((i) => (
-      <div
-        key={i}
-        className="relative overflow-hidden bg-gray-100 dark:bg-gray-800/50 rounded-3xl p-4 sm:p-6 h-44 sm:h-48 animate-pulse border border-gray-200 dark:border-gray-700"
-      >
-        <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4" />
-        <div className="h-4 w-1/2 bg-gray-200 dark:bg-gray-700 rounded-lg mb-8" />
-        <div className="flex justify-between items-center mt-auto">
-          <div className="h-10 w-24 bg-gray-200 dark:bg-gray-700 rounded-xl" />
-          <div className="h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-xl" />
-        </div>
+      <div key={i} className="h-44 animate-pulse rounded-4xl border border-line bg-surface p-5">
+        <div className="mb-3 h-6 w-3/4 rounded-lg bg-inset" />
+        <div className="h-4 w-1/3 rounded-lg bg-inset" />
       </div>
     ))}
   </div>
 );
 
-// ── Create Folder Modal ───────────────────────────────────────────────────────
+// ── Окно новой папки ──
 function CreateFolderModal({
   isOpen,
   onClose,
@@ -131,10 +126,13 @@ function CreateFolderModal({
   onClose: () => void;
   onCreate: (name: string, color: string) => void;
 }) {
+  const { t } = useI18n();
+  const f = t.words.folderModal;
   const [name, setName] = useState("");
   const [color, setColor] = useState(FOLDER_COLORS[1]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!name.trim()) return;
     onCreate(name.trim(), color);
     setName("");
@@ -142,77 +140,41 @@ function CreateFolderModal({
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-110 flex items-center justify-center p-4 sm:p-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="absolute inset-0 bg-[#1A1714]/40 backdrop-blur-md"
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 16 }}
-            className="relative w-full max-w-sm bg-white dark:bg-[#1A1917] rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-6 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-2xl"
-          >
-            <div className="flex justify-between items-center mb-5 sm:mb-6">
-              <h3 className="text-lg sm:text-xl font-black text-[#1A1714] dark:text-[#F0EDE8]">
-                New folder
-              </h3>
+    <Modal open={isOpen} onClose={onClose} title={f.title} size="sm">
+      <form onSubmit={handleSubmit} className="grid gap-5">
+        <Field label={f.name} htmlFor="folder-name">
+          <Input id="folder-name" autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder={f.placeholder} />
+        </Field>
+        <fieldset className="grid gap-2">
+          <legend className="mb-1.5 text-sm font-medium text-fg">{f.color}</legend>
+          <div className="flex flex-wrap gap-2">
+            {FOLDER_COLORS.map((c) => (
               <button
-                onClick={onClose}
-                className="p-2 rounded-full bg-[#F5F2ED] dark:bg-[#242220] text-[#7A756E]"
+                key={c}
+                type="button"
+                onClick={() => setColor(c)}
+                aria-label={c}
+                aria-pressed={color === c}
+                style={{ backgroundColor: c }}
+                className={cx(
+                  "grid h-9 w-9 place-items-center rounded-xl transition-transform hover:scale-105",
+                  color === c && "ring-2 ring-fg ring-offset-2 ring-offset-surface",
+                )}
               >
-                <X size={16} />
+                {color === c && <Check size={16} className="text-white" strokeWidth={3} />}
               </button>
-            </div>
-
-            <input
-              autoFocus
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-              placeholder="Folder name…"
-              className="w-full px-4 py-3 rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] text-[#1A1714] dark:text-[#F0EDE8] font-bold placeholder-[#B5B0A8] outline-none focus:ring-2 focus:ring-[#FF5733]/30 mb-4 sm:mb-5"
-            />
-
-            <p className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] mb-3">
-              Color
-            </p>
-            <div className="flex gap-2 flex-wrap mb-5 sm:mb-6">
-              {FOLDER_COLORS.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setColor(c)}
-                  style={{ backgroundColor: c }}
-                  className="w-8 h-8 rounded-xl transition-transform hover:scale-110 active:scale-95 flex items-center justify-center"
-                >
-                  {color === c && (
-                    <Check size={14} className="text-white" strokeWidth={3} />
-                  )}
-                </button>
-              ))}
-            </div>
-
-            <button
-              onClick={handleSubmit}
-              disabled={!name.trim()}
-              className="w-full py-3.5 bg-[#FF5733] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-[#E54D2A] transition-all active:scale-95 disabled:opacity-40"
-            >
-              Create folder
-            </button>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+            ))}
+          </div>
+        </fieldset>
+        <Button type="submit" size="lg" fullWidth disabled={!name.trim()}>
+          {f.create}
+        </Button>
+      </form>
+    </Modal>
   );
 }
 
-// ── Sortable collection card (dnd-kit) ───────────────────────────────────────
+// ── Сортируемая карточка (dnd-kit): тянуть можно только за ручку ──
 function SortableCollectionCard({
   collection,
   onDelete,
@@ -226,16 +188,8 @@ function SortableCollectionCard({
   folders: FolderType[];
   onMoveToFolder: (folderId: string | undefined) => void;
 }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: collection.id,
-  });
+  const { t } = useI18n();
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: collection.id });
 
   return (
     <div
@@ -247,33 +201,30 @@ function SortableCollectionCard({
         position: "relative",
         zIndex: isDragging ? 1 : "auto",
       }}
-      className="relative group/drag"
     >
-      {/* Grip handle — only drag trigger. Центр по горизонтали: там пустой
-          зазор между бейджем "N cards" (слева) и избранным/меню (справа),
-          поэтому ничего не перекрывает на десктопе. На мобиле всегда
-          видимый (opacity-70) — hover, на который раньше был завязан
-          показ, на тач-экранах в принципе не срабатывает. */}
-      <div
-        {...attributes}
-        {...listeners}
-        className="absolute top-3 left-1/2 -translate-x-1/2 z-20 opacity-70 sm:opacity-0 sm:group-hover/drag:opacity-100 transition-opacity cursor-grab active:cursor-grabbing p-1.5 rounded-xl bg-white/80 dark:bg-[#1A1917]/80 text-[#B5B0A8] touch-none"
-      >
-        <GripHorizontal size={14} />
-      </div>
       <CollectionCard
         collection={collection}
         onDelete={onDelete}
         onToggleFavorite={onToggleFavorite}
         folders={folders}
         onMoveToFolder={onMoveToFolder}
+        dragHandle={
+          <span
+            {...attributes}
+            {...listeners}
+            aria-label={t.words.library.drag}
+            title={t.words.library.drag}
+            className="grid w-8 shrink-0 cursor-grab touch-none place-items-center rounded-full text-faint transition-colors hover:bg-inset hover:text-muted active:cursor-grabbing"
+          >
+            <GripVertical size={18} />
+          </span>
+        }
       />
     </div>
   );
 }
 
-// ── Folder tile — closed "folder", Finder-style: click opens it, drag a
-//    collection card onto it to file that collection into the folder. ──
+// ── Плитка папки, как в Finder: клик открывает, на неё можно перетащить набор ──
 function FolderTile({
   folder,
   count,
@@ -285,44 +236,48 @@ function FolderTile({
   onOpen: () => void;
   onDelete: () => void;
 }) {
+  const { t } = useI18n();
   const { setNodeRef, isOver } = useDroppable({ id: `folder-${folder.id}` });
 
   return (
     <div
       ref={setNodeRef}
       onClick={onOpen}
-      className={`group relative flex flex-col items-center gap-1.5 p-2.5 rounded-2xl cursor-pointer transition-all duration-150 ${
-        isOver
-          ? "bg-[#FFF0ED] dark:bg-[#2A1A15] scale-105"
-          : "hover:bg-black/3 dark:hover:bg-white/4"
-      }`}
+      className={cx(
+        "group relative flex cursor-pointer items-center gap-3 rounded-2xl border p-3 transition-colors",
+        isOver ? "border-accent bg-accent-soft" : "border-line bg-surface hover:border-accent/30",
+      )}
     >
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onDelete();
-        }}
-        className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-full bg-white dark:bg-[#1A1917] text-[#D0CBC4] hover:text-red-400 shadow-sm"
-        title="Delete folder"
-      >
-        <X size={11} />
-      </button>
-      <div
-        className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-        style={{ backgroundColor: folder.color + "1F", color: folder.color }}
-      >
-        {isOver ? (
-          <FolderOpen size={22} fill={folder.color + "33"} />
-        ) : (
-          <Folder size={22} fill={folder.color + "33"} />
-        )}
-      </div>
-      <span className="text-[11px] font-bold text-[#1A1714] dark:text-[#F0EDE8] truncate max-w-full leading-tight">
-        {folder.name}
+      {/* Цвет — из данных папки */}
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl" style={{ backgroundColor: folder.color + "1F", color: folder.color }}>
+        {isOver ? <FolderOpen size={20} /> : <Folder size={20} />}
       </span>
-      <span className="text-[9px] font-bold text-[#B5B0A8] leading-none">
-        {count}
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-sm font-semibold text-fg">{folder.name}</span>
+        <span className="block text-xs text-faint">{count}</span>
       </span>
+      <span className="opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+        <IconButton
+          size="sm"
+          label={t.words.library.deleteFolder}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+        >
+          <X size={15} />
+        </IconButton>
+      </span>
+    </div>
+  );
+}
+
+function SectionLabel({ children, count, icon }: { children: React.ReactNode; count: number; icon?: React.ReactNode }) {
+  return (
+    <div className="mb-3 flex items-center gap-2">
+      {icon}
+      <h2 className="text-sm font-semibold text-fg">{children}</h2>
+      <Badge>{count}</Badge>
     </div>
   );
 }
@@ -330,7 +285,9 @@ function FolderTile({
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function WordsPage() {
   const navigate = useNavigate();
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const lib = t.words.library;
+  const setsCount = (n: number) => plural(getLanguageInfo(language).htmlLang, n, lib.setsCount);
   const { user } = useAuth();
   const { collections, collectionsLoading, setCollections, checkAchievements } =
     useData();
@@ -572,58 +529,34 @@ export default function WordsPage() {
 
   return (
     <div>
-      {/* ── Tab bar + action buttons ──
-          Kolo Sets отложены — переключатель вкладок скрыт флагом
-          KOLO_SETS_ENABLED, activeTab остаётся на "my" сам по себе (нет
-          кнопки, чтобы переключить на "kolo"). На мобилке — колонка:
-          переключатель на всю ширину (Words слева, Sets справа, ровно
-          пополам), кнопки действий отдельной строкой под ним. На
-          десктопе — одна строка. */}
-      <div
-        className={`flex flex-col sm:flex-row sm:items-center gap-3 mb-6 sm:mb-8 ${
-          KOLO_SETS_ENABLED ? "sm:justify-between" : "sm:justify-end"
-        }`}
-      >
+      {/* ── Шапка: заголовок и действия. Вкладка Kolo Sets спрятана флагом KOLO_SETS_ENABLED ── */}
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4 sm:mb-8">
+        <div className="grid gap-1">
+          <Heading size={1}>{t.words.title}</Heading>
+          {!collectionsLoading && collections.length > 0 && (
+            <Text size="sm" tone="muted">
+              {setsCount(collections.length)}
+            </Text>
+          )}
+        </div>
+
         {KOLO_SETS_ENABLED && (
-          <div className="flex items-stretch sm:items-center gap-1 p-1 w-full sm:w-fit bg-white dark:bg-[#1A1917] rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29]">
-            <TabButton
-              active={activeTab === "my"}
-              onClick={() => setActiveTab("my")}
-              icon={<BookOpen size={16} />}
-              label={t.words.tabs.my}
-            />
-            <TabButton
-              active={activeTab === "kolo"}
-              onClick={() => setActiveTab("kolo")}
-              icon={<Sparkles size={16} />}
-              label={t.words.tabs.kolo}
-            />
+          <div className="flex w-full items-stretch gap-1 rounded-2xl border border-line bg-surface p-1 sm:w-fit sm:items-center">
+            <TabButton active={activeTab === "my"} onClick={() => setActiveTab("my")} icon={<BookOpen size={16} />} label={t.words.tabs.my} />
+            <TabButton active={activeTab === "kolo"} onClick={() => setActiveTab("kolo")} icon={<Sparkles size={16} />} label={t.words.tabs.kolo} />
           </div>
         )}
 
         {activeTab === "my" && (
-          <div className="flex items-center justify-end gap-2">
+          <div className="flex items-center gap-2">
             {!openFolderId && (
-              <button
-                onClick={() => setIsCreateFolderOpen(true)}
-                title="New folder"
-                className="flex items-center justify-center gap-2 w-12 h-12 md:w-auto md:px-4 md:py-3 rounded-2xl border-2 border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] dark:text-[#8A867F] hover:border-[#FF5733]/40 hover:text-[#FF5733] transition-all"
-              >
-                <FolderPlus size={20} />
-                <span className="hidden md:block font-bold text-sm">
-                  New folder
-                </span>
-              </button>
+              <Button variant="secondary" iconLeft={<FolderPlus size={18} />} onClick={() => setIsCreateFolderOpen(true)} aria-label={lib.newFolder}>
+                <span className="hidden sm:inline">{lib.newFolder}</span>
+              </Button>
             )}
-            <button
-              onClick={() => setIsCreateModalOpen(true)}
-              className="flex justify-center items-center gap-2 bg-[#FF5733] dark:bg-[#FF6B47] text-white shadow-lg shadow-orange-500/20 active:scale-95 w-12 h-12 md:w-auto md:px-6 md:py-3 rounded-2xl transition-all"
-            >
-              <Plus size={24} strokeWidth={2.5} />
-              <span className="hidden md:block font-bold">
-                {t.words.addDeck}
-              </span>
-            </button>
+            <Button iconLeft={<Plus size={18} />} onClick={() => setIsCreateModalOpen(true)}>
+              {t.words.addDeck}
+            </Button>
           </div>
         )}
       </div>
@@ -635,21 +568,22 @@ export default function WordsPage() {
         ) : activeTab === "my" ? (
           <>
             {collections.length === 0 && folders.length === 0 ? (
-              <div className="text-center py-12 sm:py-20 px-4 bg-gray-50 dark:bg-gray-800/20 rounded-3xl sm:rounded-[2.5rem] border-2 border-dashed border-gray-200 dark:border-gray-700">
-                <div className="text-5xl sm:text-6xl mb-4">📚</div>
-                <h3 className="text-xl sm:text-2xl font-bold mb-2">
-                  {t.words.empty.title}
-                </h3>
-                <p className="text-gray-500 max-w-xs mx-auto mb-6 sm:mb-8">
-                  {t.words.empty.description}
-                </p>
-                <button
-                  onClick={() => setIsCreateModalOpen(true)}
-                  className="px-8 py-3 bg-[#FF5733] text-white font-bold rounded-2xl"
-                >
+              <Card tone="inset" padding="lg" className="grid justify-items-center gap-4 py-14 text-center">
+                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-surface text-accent-ink">
+                  <Layers size={26} />
+                </span>
+                <div className="grid max-w-sm gap-2">
+                  <Heading size={3} as="h2">
+                    {t.words.empty.title}
+                  </Heading>
+                  <Text size="sm" tone="muted">
+                    {t.words.empty.description}
+                  </Text>
+                </div>
+                <Button iconLeft={<Plus size={18} />} onClick={() => setIsCreateModalOpen(true)}>
                   {t.words.empty.button}
-                </button>
-              </div>
+                </Button>
+              </Card>
             ) : openFolderId ? (
               /* ── Folder detail view (Finder-style: opened folder) ── */
               (() => {
@@ -660,45 +594,28 @@ export default function WordsPage() {
                 if (!openFolder) return null;
                 return (
                   <div>
-                    <div className="flex items-center gap-3 mb-4 sm:mb-6">
-                      <button
-                        onClick={() => setOpenFolderId(null)}
-                        className="p-2.5 rounded-2xl border-2 border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] dark:text-[#8A867F] hover:border-[#FF5733]/40 hover:text-[#FF5733] transition-all shrink-0"
-                      >
+                    <div className="mb-5 flex items-center gap-3">
+                      <IconButton variant="surface" label={lib.back} onClick={() => setOpenFolderId(null)}>
                         <ArrowLeft size={18} />
-                      </button>
-                      <div
-                        className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                        style={{
-                          backgroundColor: openFolder.color + "22",
-                          color: openFolder.color,
-                        }}
+                      </IconButton>
+                      <span
+                        className="grid h-10 w-10 shrink-0 place-items-center rounded-xl"
+                        style={{ backgroundColor: openFolder.color + "1F", color: openFolder.color }}
                       >
-                        <FolderOpen size={16} />
-                      </div>
+                        <FolderOpen size={20} />
+                      </span>
                       <div className="min-w-0">
-                        <h2
-                          className="text-lg font-black truncate"
-                          style={{ color: openFolder.color }}
-                        >
-                          {openFolder.name}
-                        </h2>
-                        <p className="text-[11px] font-bold text-[#B5B0A8]">
-                          {folderCollections.length}{" "}
-                          {folderCollections.length === 1
-                            ? "collection"
-                            : "collections"}
-                        </p>
+                        <h2 className="truncate text-lg font-semibold text-fg">{openFolder.name}</h2>
+                        <p className="text-sm text-muted">{setsCount(folderCollections.length)}</p>
                       </div>
                     </div>
 
                     {folderCollections.length === 0 ? (
-                      <div className="text-center py-12 sm:py-16 px-4 border-2 border-dashed border-[#E0DBD3] dark:border-[#2E2C29] rounded-3xl sm:rounded-[2.5rem]">
-                        <p className="text-sm text-[#B5B0A8] dark:text-[#5A5652] font-medium">
-                          This folder is empty — create a new collection or
-                          drag one in from "My Library".
-                        </p>
-                      </div>
+                      <Card tone="inset" className="py-12 text-center">
+                        <Text size="sm" tone="muted" className="mx-auto max-w-sm">
+                          {lib.emptyFolder}
+                        </Text>
+                      </Card>
                     ) : (
                       <DndContext
                         sensors={sensors}
@@ -710,7 +627,7 @@ export default function WordsPage() {
                           items={folderCollections.map((c) => c.id)}
                           strategy={rectSortingStrategy}
                         >
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                             {folderCollections.map((col) => (
                               <SortableCollectionCard
                                 key={col.id}
@@ -729,7 +646,7 @@ export default function WordsPage() {
                           dropAnimation={{ duration: 180, easing: "ease" }}
                         >
                           {draggedCollection ? (
-                            <div className="rotate-1 scale-105 transform-gpu shadow-2xl shadow-black/20 opacity-95 pointer-events-none">
+                            <div className="pointer-events-none rotate-1 scale-[1.02] transform-gpu rounded-4xl opacity-95 shadow-2xl">
                               <CollectionCard
                                 collection={draggedCollection}
                                 onDelete={() => {}}
@@ -755,16 +672,9 @@ export default function WordsPage() {
                 <div>
                   {/* ── Folders (closed tiles — click opens, drag-drop files) ── */}
                   {folders.length > 0 && (
-                    <div className="mb-4 sm:mb-6">
-                      <div className="flex items-center gap-2.5 mb-3">
-                        <span className="text-[13px] font-black uppercase tracking-widest text-[#B5B0A8]">
-                          Folders
-                        </span>
-                        <span className="text-[10px] font-bold text-[#B5B0A8]">
-                          {folders.length}
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-1">
+                    <div className="mb-8">
+                      <SectionLabel count={folders.length}>{lib.folders}</SectionLabel>
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
                         {folders.map((folder) => (
                           <FolderTile
                             key={folder.id}
@@ -784,20 +694,11 @@ export default function WordsPage() {
 
                   {/* ── Favorites (pinned, outside folders) ── */}
                   {favoriteCollections.length > 0 && (
-                    <div className="mb-4 sm:mb-6">
-                      <div className="flex items-center gap-2.5 mb-3">
-                        <Star
-                          size={14}
-                          className="fill-amber-400 text-amber-400"
-                        />
-                        <span className="text-[13px] font-black uppercase tracking-widest text-amber-500">
-                          Favorites
-                        </span>
-                        <span className="text-[10px] font-bold text-[#B5B0A8]">
-                          {favoriteCollections.length}
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="mb-8">
+                      <SectionLabel count={favoriteCollections.length} icon={<Star size={16} className="fill-warning text-warning" />}>
+                        {lib.favorites}
+                      </SectionLabel>
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {favoriteCollections.map((col) => (
                           <CollectionCard
                             key={col.id}
@@ -819,20 +720,13 @@ export default function WordsPage() {
                     <div>
                       {(folders.length > 0 ||
                         favoriteCollections.length > 0) && (
-                        <div className="flex items-center gap-2.5 mb-3">
-                          <span className="text-[13px] font-black uppercase tracking-widest text-[#B5B0A8]">
-                            All collections
-                          </span>
-                          <span className="text-[10px] font-bold text-[#B5B0A8]">
-                            {regularCollections.length}
-                          </span>
-                        </div>
+                        <SectionLabel count={regularCollections.length}>{lib.all}</SectionLabel>
                       )}
                       <SortableContext
                         items={regularCollections.map((c) => c.id)}
                         strategy={rectSortingStrategy}
                       >
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                           {regularCollections.map((col) => (
                             <SortableCollectionCard
                               key={col.id}
@@ -856,7 +750,7 @@ export default function WordsPage() {
                     // transform-gpu — форсирует композитный слой (translate3d
                     // вместо translate), иначе повёрнутые скруглённые углы
                     // деки рендерятся с "рваными" артефактами по краям
-                    <div className="rotate-1 scale-105 transform-gpu shadow-2xl shadow-black/20 opacity-95 pointer-events-none">
+                    <div className="pointer-events-none rotate-1 scale-[1.02] transform-gpu rounded-4xl opacity-95 shadow-2xl">
                       <CollectionCard
                         collection={draggedCollection}
                         onDelete={() => {}}
@@ -869,68 +763,33 @@ export default function WordsPage() {
             )}
           </>
         ) : (
-          /* ── Kolo Sets tab (unchanged) ── */
-          <div className="space-y-4 sm:space-y-6">
-            <div className="flex flex-wrap gap-2 mb-4">
+          /* ── Вкладка Kolo Sets (спрятана флагом KOLO_SETS_ENABLED): уровни и заглушка «Скоро» ── */
+          <div className="grid gap-4">
+            <div className="flex flex-wrap gap-2">
               {availableLevels.map((lvl) => (
                 <button
                   key={lvl}
-                  onClick={() =>
-                    setSelectedLevel(lvl === activeLevel ? null : lvl)
-                  }
-                  className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
-                    lvl === activeLevel
-                      ? "bg-[#FF5733] dark:bg-[#FF6B47] text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200"
-                  }`}
+                  type="button"
+                  aria-pressed={lvl === activeLevel}
+                  onClick={() => setSelectedLevel(lvl === activeLevel ? null : lvl)}
+                  className={cx(
+                    "h-9 rounded-full px-4 text-sm font-semibold transition-colors",
+                    lvl === activeLevel ? "bg-accent text-on-accent" : "bg-inset text-muted hover:text-fg",
+                  )}
                 >
                   {lvl}
                 </button>
               ))}
             </div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="relative overflow-hidden w-full p-6 sm:p-12 rounded-3xl sm:rounded-4xl bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm flex flex-col items-center text-center group"
-            >
-              <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute -top-10 -right-10 w-28 h-28 sm:w-40 sm:h-40 bg-[#FF5733]/5 rounded-full blur-3xl group-hover:bg-[#FF5733]/10 transition-colors duration-700" />
-                <div className="absolute -bottom-10 -left-10 w-28 h-28 sm:w-40 sm:h-40 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-colors duration-700" />
-              </div>
-              <motion.div
-                animate={{ rotate: [0, -10, 10, -10, 0], scale: [1, 1.05, 1] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 bg-[#F5F2ED] dark:bg-[#242220] rounded-3xl sm:rounded-4xl flex items-center justify-center text-[#FF5733] mb-5 sm:mb-6 border border-[#E0DBD3] dark:border-[#2E2C29]"
-              >
-                <Construction size={26} strokeWidth={1.5} className="sm:hidden" />
-                <Construction size={32} strokeWidth={1.5} className="hidden sm:block" />
-                <motion.div
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute -top-1 -right-1 text-purple-500"
-                >
-                  <Sparkles size={20} />
-                </motion.div>
-              </motion.div>
-              <div className="relative z-10 space-y-2 sm:space-y-3">
-                <h3 className="text-2xl sm:text-3xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight">
-                  Coming <span className="text-[#FF5733]">Soon.</span>
-                </h3>
-                <p className="text-[#7A756E] dark:text-[#8A867F] max-w-70 mx-auto text-sm font-medium leading-relaxed">
-                  {t.words.soon}
-                </p>
-              </div>
-              <div className="relative z-10 mt-6 sm:mt-8 flex items-center gap-2 px-4 py-2 bg-[#F5F2ED] dark:bg-[#242220] rounded-full border border-[#E0DBD3] dark:border-[#2E2C29]">
-                <Clock size={14} className="text-[#B5B0A8]" />
-                <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#B5B0A8]">
-                  In Development • 2026
-                </span>
-              </div>
-            </motion.div>
+            <Card padding="lg" className="grid justify-items-center gap-3 py-12 text-center">
+              <span className="mb-2 grid h-16 w-16 place-items-center rounded-full bg-accent-soft text-accent-ink">
+                <Sparkles size={28} />
+              </span>
+              <Heading size={2}>{t.words.soonTitle}</Heading>
+              <Text tone="muted" className="max-w-sm">
+                {t.words.soon}
+              </Text>
+            </Card>
           </div>
         )}
       </div>

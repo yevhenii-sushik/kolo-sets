@@ -1,0 +1,502 @@
+{
+  "privacy": {
+    "title": "Privacy Policy",
+    "scope": "Applies to the Kolo Sets website and web app",
+    "summary": [
+      "No ads, no tracking, and we never sell your data.",
+      "We store what the app needs: your account, your word sets and your learning progress.",
+      "You can export your sets or delete your account from the app at any time."
+    ],
+    "sections": [
+      {
+        "id": "who",
+        "title": "Who we are",
+        "blocks": [
+          "Kolo Sets (“Kolo”, “we”, “us”) is a web application for learning vocabulary in foreign languages with flashcards, spaced repetition and games, available at **{site}**.",
+          "The data controller responsible for your personal data is **{operator}**. Contact us about anything in this policy at {email.privacy}."
+        ]
+      },
+      {
+        "id": "data",
+        "title": "What we collect and why",
+        "blocks": [
+          "We only collect what is needed to run Kolo:",
+          {
+            "table": {
+              "columns": [
+                "Data",
+                "Why we use it",
+                "Legal basis"
+              ],
+              "rows": [
+                [
+                  "**Account:** email address, password (stored only as a secure hash by Firebase Authentication — we never see it), display name. With Google sign-in: name, email and profile picture from your Google account.",
+                  "Create your account, sign you in and keep it secure.",
+                  "Contract (GDPR Art. 6(1)(b))"
+                ],
+                [
+                  "**Username** (assigned automatically, you can change it).",
+                  "Identify you on the daily puzzle leaderboard.",
+                  "Contract"
+                ],
+                [
+                  "**Profile photo**, if you upload one.",
+                  "Show your avatar in the app.",
+                  "Contract"
+                ],
+                [
+                  "**Learning data:** word sets and cards, review schedule, study history, statistics, streaks, achievements and daily goal.",
+                  "Run the training modes, schedule reviews and sync your progress between devices.",
+                  "Contract"
+                ],
+                [
+                  "**Daily puzzle scores** with your username.",
+                  "Show the leaderboard to other signed-in users.",
+                  "Contract"
+                ],
+                [
+                  "**Support messages:** subject, message, the email you enter (optional) and your account email if you are signed in.",
+                  "Answer your request and fix the problems you report.",
+                  "Legitimate interests (GDPR Art. 6(1)(f))"
+                ],
+                [
+                  "**Record of acceptance:** which version of the Terms and this policy you accepted, and when.",
+                  "Be able to show what you agreed to.",
+                  "Legitimate interests"
+                ],
+                [
+                  "**Technical data:** IP address, browser and device information.",
+                  "Protect accounts (Firebase Authentication) and deliver the website (hosting).",
+                  "Legitimate interests"
+                ]
+              ]
+            }
+          },
+          "Kolo also keeps some data in your browser — your sign-in session, settings and a local copy of your sets. See the [Cookie Policy](/cookies)."
+        ]
+      },
+      {
+        "id": "dont",
+        "title": "What we don't do",
+        "blocks": [
+          {
+            "list": [
+              "We don't show ads or use advertising identifiers.",
+              "We don't use analytics or tracking tools. If we ever add analytics, it will run only after you opt in, and we will update this policy first.",
+              "We don't sell or rent your personal data, and we don't use it for profiling.",
+              "We don't collect precise location, contacts or biometric data."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Who can see or process your data",
+        "blocks": [
+          "We use a few service providers. Each processes data only to provide its service:",
+          {
+            "list": [
+              "**Google** (Firebase Authentication, Cloud Firestore, Cloud Storage) — accounts, database and profile photos. [Firebase privacy](https://firebase.google.com/support/privacy)",
+              "**Netlify** — hosting and delivery of the website. [Netlify privacy](https://www.netlify.com/privacy/)",
+              "**Telegram** — delivers messages you send through the support form to our team's private chat. [Telegram privacy](https://telegram.org/privacy)",
+              "**Google Sign-In** — only if you choose to sign in with Google.",
+              "**Your browser's speech engine** — pronunciation uses the speech synthesis built into your browser. Depending on the browser, the text may be processed by your browser or operating system vendor (some voices in Chrome are online Google voices). Kolo receives no audio."
+            ]
+          },
+          {
+            "note": "**Visible to other users:** your username and daily puzzle scores appear on the leaderboard for signed-in users, and an uploaded profile photo can be opened by anyone who has its link. Your word sets and progress stay private."
+          }
+        ]
+      },
+      {
+        "id": "transfers",
+        "title": "International transfers",
+        "blocks": [
+          "Some providers process data outside the European Economic Area, including in the United States. These transfers rely on safeguards under Chapter V of the GDPR, such as the EU–U.S. Data Privacy Framework for certified providers or the European Commission's Standard Contractual Clauses."
+        ]
+      },
+      {
+        "id": "security",
+        "title": "Security",
+        "blocks": [
+          {
+            "list": [
+              "All traffic between your device and Kolo is encrypted (HTTPS/TLS).",
+              "Google encrypts data stored in Firebase at rest.",
+              "Database rules let only you read and change your own profile and word sets.",
+              "Passwords are handled by Firebase Authentication; we never have access to them."
+            ]
+          },
+          "No system is perfectly secure, but we work to protect your data and will inform you as required by law if a breach affects you."
+        ]
+      },
+      {
+        "id": "retention",
+        "title": "How long we keep data",
+        "blocks": [
+          {
+            "list": [
+              "Account and learning data: as long as your account exists.",
+              "When you delete your account in the app (Other → Data & account), your login, profile, word sets and username are deleted right away.",
+              "Daily puzzle scores and an uploaded profile photo are **not yet removed automatically** when you delete your account. Email {email.privacy} and we will delete them within 30 days.",
+              "Support messages: as long as needed to handle your request. You can ask us to delete them.",
+              "Technical logs at our providers: according to their retention periods.",
+              "Data in your browser: until you clear it or sign out."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Your rights",
+        "blocks": [
+          "Under the GDPR you have the right to:",
+          {
+            "list": [
+              "Access the personal data we hold about you.",
+              "Correct inaccurate data — you can edit your name, username and photo in your profile.",
+              "Delete your data — you can delete your account in Other → Data & account.",
+              "Take your data with you — you can export your word sets in Other → Data & account.",
+              "Restrict or object to processing based on our legitimate interests.",
+              "Withdraw consent at any time where we rely on it, for example in Cookie settings."
+            ]
+          },
+          "Use the tools in the app or email {email.privacy}. We reply within one month.",
+          "You can also complain to the Norwegian Data Protection Authority, [Datatilsynet](https://www.datatilsynet.no/en/), or to the data protection authority in the country where you live."
+        ]
+      },
+      {
+        "id": "children",
+        "title": "Children",
+        "blocks": [
+          "Kolo is not intended for children under 13. You must be at least 13 — or older if the law in your country requires it to agree on your own — to create an account. If you believe a child has given us personal data, contact {email.privacy} and we will delete it."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Changes to this policy",
+        "blocks": [
+          "If we change this policy, we will update the effective date. For material changes we will also notify you in the app before they take effect."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contact",
+        "blocks": [
+          "Privacy questions and requests: {email.privacy}. General support: {email.support}."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "scope": "Applies to the Kolo Sets website and web app",
+    "summary": [
+      "All learning features are free. Paid extras, if they ever appear, will be optional.",
+      "Your word sets belong to you. Export or delete them whenever you want.",
+      "Be respectful: no offensive usernames or photos, no abuse of the service."
+    ],
+    "sections": [
+      {
+        "id": "agreement",
+        "title": "Agreement",
+        "blocks": [
+          "These Terms of Use (“Terms”) are an agreement between you and **{operator}** (“we”, “us”) about your use of Kolo Sets (“Kolo”). By creating an account or using Kolo, you accept these Terms. If you don't agree, please don't use Kolo.",
+          "How we handle personal data is explained in the [Privacy Policy](/privacy) and the [Cookie Policy](/cookies)."
+        ]
+      },
+      {
+        "id": "service",
+        "title": "The service",
+        "blocks": [
+          "Kolo is a web application for learning vocabulary in foreign languages with flashcards, spaced repetition (SM-2), quizzes, games and progress tracking.",
+          "All learning features are free of charge. We may introduce optional paid add-ons in the future. Kolo will remain fully usable for learning without them, and the price and terms of any add-on will be shown before you buy. Refunds are covered by the [Refund Policy](/refund)."
+        ]
+      },
+      {
+        "id": "account",
+        "title": "Your account",
+        "blocks": [
+          {
+            "list": [
+              "You must be at least 13 years old, or older if the law in your country requires it to accept these Terms on your own.",
+              "Give accurate information when you sign up and keep your login details safe.",
+              "You are responsible for activity under your account. Tell us right away if you suspect unauthorized use."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "public",
+        "title": "Usernames, photos and the leaderboard",
+        "blocks": [
+          "Your username and daily puzzle scores are visible to other signed-in users, and a profile photo you upload can be opened by anyone who has its link. Don't choose a username or photo that is offensive, misleading, impersonates someone or infringes anyone's rights. We may change or remove a username or photo that breaks these rules."
+        ]
+      },
+      {
+        "id": "use",
+        "title": "Acceptable use",
+        "blocks": [
+          "You agree not to:",
+          {
+            "list": [
+              "Try to gain unauthorized access to Kolo, other accounts or our infrastructure.",
+              "Use Kolo to distribute spam, malware or illegal content.",
+              "Use bots or scripts that overload Kolo or manipulate the leaderboard.",
+              "Impersonate another person or organization.",
+              "Upload content that violates the law or the rights of others."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "content",
+        "title": "Your content",
+        "blocks": [
+          {
+            "list": [
+              "You own the word sets, cards and other content you create.",
+              "You give us a limited, non-exclusive license to store, process and display your content only to provide Kolo — for example, to sync your sets and show your username on the leaderboard.",
+              "You are responsible for making sure your content doesn't infringe copyrights or other rights.",
+              "You can export your sets or delete your account at any time in Other → Data & account."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ip",
+        "title": "Our content",
+        "blocks": [
+          "The Kolo app, its code, design, logo and brand, and the word sets we publish belong to us or our licensors. You may use them for personal, non-commercial learning. Please don't copy, resell or redistribute them without our permission."
+        ]
+      },
+      {
+        "id": "disclaimer",
+        "title": "Availability and disclaimer",
+        "blocks": [
+          {
+            "list": [
+              "We work to keep Kolo running, but we can't promise it will always be available or free of errors.",
+              "We may change, add or remove features. If we decide to shut Kolo down, we will try to give advance notice so you can export your data.",
+              "We recommend exporting your sets regularly as a backup.",
+              "Kolo is a learning tool; we can't guarantee specific learning results."
+            ]
+          },
+          {
+            "note": "Nothing in these Terms limits your rights as a consumer under mandatory law, or our liability where the law does not allow it to be limited."
+          }
+        ]
+      },
+      {
+        "id": "termination",
+        "title": "Ending the agreement",
+        "blocks": [
+          "**By you:** you can stop using Kolo and delete your account at any time in Other → Data & account.",
+          "**By us:** we may suspend or close an account that seriously or repeatedly breaks these Terms. Where reasonable, we will warn you first and explain why."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Changes to these Terms",
+        "blocks": [
+          "We may update these Terms. We will change the effective date and, for material changes, notify you in the app before they take effect. If you don't agree with the new Terms, you can delete your account before they apply."
+        ]
+      },
+      {
+        "id": "law",
+        "title": "Governing law",
+        "blocks": [
+          "These Terms are governed by the laws of Norway, and disputes go to the courts of Norway. If you are a consumer in the EU/EEA, you keep the protection of the mandatory consumer laws of your country and may bring a claim where you live."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contact",
+        "blocks": [
+          "Legal questions: {email.legal}. General support: {email.support}."
+        ]
+      }
+    ]
+  },
+  "cookies": {
+    "title": "Cookie Policy",
+    "scope": "Applies to the Kolo Sets website and web app",
+    "summary": [
+      "No advertising or tracking cookies.",
+      "We only store what Kolo needs to work and to remember your settings.",
+      "You can review your choice at any time in Cookie settings."
+    ],
+    "sections": [
+      {
+        "id": "what",
+        "title": "Cookies and similar technologies",
+        "blocks": [
+          "Cookies are small files a website stores in your browser. Similar technologies include **localStorage**, **IndexedDB** and the **Cache Storage** used by installable web apps. In this policy, “cookies” covers all of them.",
+          "Under EU/EEA rules — in Norway, the Electronic Communications Act — storage that is strictly necessary for a service you ask for doesn't require consent. Anything else needs your consent first."
+        ]
+      },
+      {
+        "id": "necessary",
+        "title": "Strictly necessary storage",
+        "blocks": [
+          "Kolo uses only first-party storage of this kind:",
+          {
+            "table": {
+              "columns": [
+                "Name",
+                "Purpose",
+                "Kept"
+              ],
+              "rows": [
+                [
+                  "`firebaseLocalStorageDb` (IndexedDB)",
+                  "Keeps you signed in (Firebase Authentication).",
+                  "Until you sign out"
+                ],
+                [
+                  "`kolo_cookie_consent`",
+                  "Remembers your Cookie settings.",
+                  "12 months, then we ask again"
+                ],
+                [
+                  "`workbox-precache-…`",
+                  "Cache Storage of the installable app: faster loading and offline use.",
+                  "Until the app updates or you clear it"
+                ],
+                [
+                  "`appLanguage`",
+                  "The interface language you chose.",
+                  "Until you clear it"
+                ],
+                [
+                  "`language_cards_theme`",
+                  "Light or dark theme.",
+                  "Until you clear it"
+                ],
+                [
+                  "`language_cards_collections` `profile_cache_…` `collections_synced_…` `kolo_col_order_…`",
+                  "A local copy of your word sets and profile for speed and offline use, sync status and the order of your sets.",
+                  "Until you clear it"
+                ],
+                [
+                  "`kolo_game_…`",
+                  "Your progress in the daily puzzle.",
+                  "Until you clear it"
+                ],
+                [
+                  "`kolo_daily_goal` `kolo_reminder_v1` `soundEnabled` `sidebar-open`",
+                  "Your daily goal, reminder, sound and layout preferences.",
+                  "Until you clear it"
+                ],
+                [
+                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed`",
+                  "Remembers that you've seen the welcome tour or closed a notice.",
+                  "Until you clear it"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "thirdparty",
+        "title": "Third-party cookies",
+        "blocks": [
+          "If you choose **Sign in with Google**, Google sets its own cookies on its sign-in pages (for example, accounts.google.com and the Firebase sign-in domain kolo-sets.firebaseapp.com) to sign you in securely. They are governed by [Google's cookie policy](https://policies.google.com/technologies/cookies). Kolo sets no other third-party cookies."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Analytics and advertising",
+        "blocks": [
+          {
+            "note": "Kolo currently uses **no analytics and no advertising cookies**."
+          },
+          "If we add analytics in the future (for example, Google Analytics for Firebase), it will run only after you allow it in Cookie settings, and we will update this policy before it starts."
+        ]
+      },
+      {
+        "id": "manage",
+        "title": "Managing your choices",
+        "blocks": [
+          {
+            "list": [
+              "Change or withdraw your consent at any time: [open Cookie settings](#cookie-settings). The same link is in the footer.",
+              "You can also delete Kolo's data in your browser's site settings. This signs you out and removes anything stored only on this device, such as unsynced sets."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Changes",
+        "blocks": [
+          "If we change how Kolo uses cookies, we will update this page and, where consent is needed, ask you again."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contact",
+        "blocks": [
+          "Questions about cookies: {email.privacy}. More about personal data in the [Privacy Policy](/privacy)."
+        ]
+      }
+    ]
+  },
+  "refund": {
+    "title": "Refund Policy",
+    "scope": "Applies to any payments related to Kolo Sets",
+    "summary": [
+      "Kolo is free. There is nothing to pay for right now — and so nothing to refund.",
+      "If paid extras appear, you will see the price and refund terms before buying.",
+      "Your statutory consumer rights always apply."
+    ],
+    "sections": [
+      {
+        "id": "free",
+        "title": "Kolo is free",
+        "blocks": [
+          "Kolo currently has **no paid features, subscriptions or in-app purchases**. We don't take payments, so there is nothing to refund.",
+          {
+            "note": "Kolo never asks for payment details. If someone asks you to pay for Kolo, it isn't us — please tell us at {email.support}."
+          }
+        ]
+      },
+      {
+        "id": "future",
+        "title": "If we introduce paid extras",
+        "blocks": [
+          "We may offer optional paid add-ons in the future. Learning in Kolo will remain fully possible without them (see the [Terms of Use](/terms)). Before any add-on goes on sale, we will update this policy with its exact refund terms. In any case:",
+          {
+            "list": [
+              "Before you pay, you will see the price, what is included and, for subscriptions, how to cancel.",
+              "If you are a consumer in the EU/EEA, including Norway, you generally have a 14-day right of withdrawal for purchases made online.",
+              "For digital content or services that start immediately, this right can only be lost or reduced if you expressly ask for immediate access and confirm at checkout that you understand this."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stores",
+        "title": "Purchases through app stores",
+        "blocks": [
+          "If paid add-ons are ever sold through the Apple App Store or Google Play, refunds for those purchases are handled by the store under its own refund policy."
+        ]
+      },
+      {
+        "id": "problem",
+        "title": "Something went wrong?",
+        "blocks": [
+          "If you believe you were charged in connection with Kolo, write to {email.support} and describe what happened. We will look into it and get back to you."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contact",
+        "blocks": [
+          "Questions about payments or refunds: {email.support}."
+        ]
+      }
+    ]
+  }
+}

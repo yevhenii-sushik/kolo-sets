@@ -3,6 +3,7 @@
   "loading": "Loading...",
   "save": "Save",
   "cancel": "Cancel",
+  "confirm": "Confirm",
   "delete": "Delete",
   "edit": "Edit",
   "create": "Create",
@@ -17,5 +18,109 @@
     "dictionary": "Dictionary",
     "profile": "Profile",
     "other": "Other"
+  },
+  "shell": {
+    "menu": "Show or hide menu",
+    "search": "Search",
+    "searchHint": "Search cards (⌘K)",
+    "streak": {
+      "label": "Day streak",
+      "days": {
+        "one": "{n} day",
+        "other": "{n} days"
+      },
+      "best": "Best",
+      "active": "You've practised today — your streak is safe. See you tomorrow!",
+      "inactive": "Practise today to keep your streak going.",
+      "more": "More in your profile",
+      "extended": "Streak extended",
+      "tier30": "Incredible — you're a legend.",
+      "tier14": "You're on fire. Keep going!",
+      "tier7": "A great week. Keep it up!",
+      "tier1": "Keep it going!",
+      "tap": "Tap to close"
+    },
+    "verify": {
+      "text": "Confirm your email to secure your account.",
+      "resend": "Send the email again",
+      "sending": "Sending…",
+      "sent": "Email sent — check your inbox.",
+      "dismiss": "Hide"
+    },
+    "achievement": {
+      "unlocked": "New achievement"
+    },
+    "searchPanel": {
+      "placeholder": "Search words, translations, explanations",
+      "empty": "Start typing to search all your cards",
+      "inSets": {
+        "one": "in {n} set",
+        "other": "in {n} sets"
+      },
+      "noResults": "Nothing found",
+      "noResultsText": "No cards match “{q}”",
+      "limit": "Showing the first 50 — refine your search",
+      "clear": "Clear"
+    },
+    "install": {
+      "title": "Install Kolo",
+      "text": "Open it from your home screen, without the address bar",
+      "ios": "Tap {share} and choose {add} “Add to Home Screen”",
+      "install": "Install"
+    }
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "back": "Back",
+    "next": "Next",
+    "start": "Let's go",
+    "step": "{n} of {total}",
+    "ready": "Ready for take-off",
+    "steps": [
+      {
+        "title": "Welcome to Kolo",
+        "text": "Word sets and smart review. This tour takes less than a minute."
+      },
+      {
+        "title": "Create a set",
+        "text": "Tap “Create Set” and add words with a translation, explanation and example — or import a ready-made list.",
+        "tip": "A quiz needs at least 4 words in a set."
+      },
+      {
+        "title": "Learn with flashcards",
+        "text": "Flip a card and rate how well you remember the word. Perigee, our review engine, decides when to show it again.",
+        "tip": "On a keyboard: Space flips, 1–4 rates. On a phone: swipe right if you know it, left if you don't."
+      },
+      {
+        "title": "Test yourself",
+        "text": "Six kinds of quiz tasks — from picking a translation to writing the word — plus three games: Speed round, Survival and Match pairs.",
+        "tip": "In quiz settings you can keep only the tasks you need."
+      },
+      {
+        "title": "Watch your progress",
+        "text": "Day streaks, achievements and stats. Come back every day — Kolo shows only the words that are due.",
+        "tip": "Your profile has an activity calendar and every achievement."
+      },
+      {
+        "title": "All set!",
+        "text": "Create your first set and start learning."
+      }
+    ],
+    "sample": {
+      "sets": [
+        "Everyday words",
+        "Travel"
+      ],
+      "study": "Study",
+      "word": "hund",
+      "translation": "dog",
+      "example": "Hunden min heter Max",
+      "options": [
+        "hund",
+        "katt",
+        "fugl",
+        "fisk"
+      ]
+    }
   }
 }

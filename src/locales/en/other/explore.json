@@ -1,6 +1,6 @@
 {
   "title": "More from",
-  "titleAccent": "Dakuta.",
+  "titleAccent": "Dakuta",
   "subtitle": "One language, mastered from every angle. Explore the other tools we've built for learning Norwegian.",
   "visit": "Visit",
   "comingSoon": "Coming soon",
@@ -13,7 +13,12 @@
   },
   "boey": {
     "tagline": "An interactive dictionary for Norwegian word inflections, gender and conjugation.",
-    "tags": ["Masculine", "Feminine", "Neuter", "Verbs"]
+    "tags": [
+      "Masculine",
+      "Feminine",
+      "Neuter",
+      "Verbs"
+    ]
   },
   "footer": "New tools ship regularly — this is just the start.",
   "promo": {

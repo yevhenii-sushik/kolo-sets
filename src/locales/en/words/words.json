@@ -30,8 +30,25 @@
       "quizNeedsMore": "Need 4+ cards",
       "studyDue": "Study due cards",
       "studyDueDesc": "Only cards due for review",
-      "noDue": "No cards due today"
-    }
+      "noDue": "No cards due today",
+      "games": "Games",
+      "speed": "Speed round",
+      "speedDesc": "60 seconds, streak multiplier",
+      "survival": "Survival",
+      "survivalDesc": "Three lives — how far can you go?",
+      "match": "Match pairs",
+      "matchDesc": "Connect words with their translations",
+      "needMore": "Needs at least 4 words"
+    },
+    "words": {
+      "one": "{n} word",
+      "other": "{n} words"
+    },
+    "favoriteAdd": "Add to favourites",
+    "favoriteRemove": "Remove from favourites",
+    "actions": "Set actions",
+    "moveTo": "Move to folder",
+    "noFolder": "No folder"
   },
   "editCollection": {
     "addCard": "Add word",
@@ -74,7 +91,13 @@
       "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
       "example": "Example sentence",
       "examplePlaceholder": "Jeg skriver en bok"
-    }
+    },
+    "reviews": {
+      "one": "{n} review",
+      "other": "{n} reviews"
+    },
+    "accuracy": "{n}% correct",
+    "scrollTop": "Back to top"
   },
   "flashcards": {
     "shuffle": "Shuffle",
@@ -123,7 +146,7 @@
       "progress": "matched"
     },
     "settings": {
-      "title": "Quiz Settings",
+      "title": "Quiz settings",
       "subtitle": "Choose exercise types to include",
       "apply": "Apply & restart",
       "cancel": "Cancel",
@@ -177,5 +200,57 @@
     "deleteError": "Delete failed",
     "createError": "Error creating collection"
   },
-  "soon": "We're already working on this section. It'll be up here very soon."
+  "soon": "We're already working on this section. It'll be up here very soon.",
+  "library": {
+    "newFolder": "New folder",
+    "folders": "Folders",
+    "favorites": "Favourites",
+    "all": "All sets",
+    "back": "Back to all sets",
+    "setsCount": {
+      "one": "{n} set",
+      "other": "{n} sets"
+    },
+    "emptyFolder": "This folder is empty — create a set here or drag one in from your library.",
+    "drag": "Drag to reorder or move into a folder",
+    "deleteFolder": "Delete folder"
+  },
+  "folderModal": {
+    "title": "New folder",
+    "name": "Name",
+    "placeholder": "e.g. Travel",
+    "color": "Colour",
+    "create": "Create folder"
+  },
+  "session": {
+    "showAnswer": "Show answer",
+    "translate": "Translate",
+    "score": "Score",
+    "seconds": "{n} s",
+    "correct": "Correct",
+    "answers": "Answers",
+    "bestStreak": "Best streak",
+    "exit": "Exit",
+    "again": "Play again",
+    "newRound": "New round",
+    "timeUp": "Time's up!",
+    "gameOver": "Out of lives",
+    "matchDone": "All pairs found",
+    "time": "Time",
+    "pairs": "Pairs",
+    "mistakes": "Mistakes",
+    "perfect": "No mistakes!",
+    "mistakesCount": {
+      "one": "{n} mistake",
+      "other": "{n} mistakes"
+    },
+    "word": "Word",
+    "translation": "Translation",
+    "lives": "Lives",
+    "streak": "Streak",
+    "review": "Review",
+    "rate": "How well do you know it?",
+    "settings": "Settings"
+  },
+  "soonTitle": "Coming soon"
 }

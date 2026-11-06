@@ -1,0 +1,125 @@
+/*
+ * Дизайн-токены Kolo — единственный источник цветов, шрифтов, скруглений и теней.
+ *
+ * Компоненты используют только семантические имена (text-fg, bg-surface,
+ * border-line, bg-accent/10, text-danger…), а не hex. Тема и ребрендинг
+ * меняются правкой значений здесь, без поиска по файлам.
+ *
+ * Тёмная тема — те же переменные, переопределённые под .dark
+ * (класс ставит скрипт темы в index.html на <html>).
+ *
+ * Направление «Орбита»: ночной синий + оранжевый Kolo.
+ * Текст на оранжевом — тёмный (on-accent), оранжевый текст на светлом — accent-ink:
+ * так контраст не ниже 4,5 : 1.
+ */
+@theme {
+  /* Поверхности */
+  --color-bg: #F5F6FA; /* фон страницы */
+  --color-band: #ECEEF4; /* чередующиеся полосы на страницах */
+  --color-surface: #FFFFFF; /* карточки, модалки, меню */
+  --color-inset: #EFF1F6; /* поля ввода и «колодцы» внутри карточек */
+  --color-subtle: #ECEEF4; /* приглушённые блоки */
+  --color-track: #E6E9F1; /* дорожки прогресса, орбиты, выключенные переключатели */
+  --color-line: #E1E4EC; /* рамки и разделители */
+  --color-scrim: #101426; /* затемнение под модалками (с прозрачностью: bg-scrim/50) */
+
+  /* Текст */
+  --color-fg: #101426; /* основной текст; он же фон инверсных блоков */
+  --color-on-inverse: #FFFFFF; /* текст на инверсных блоках (bg-fg) */
+  --color-muted: #4E5568; /* второстепенный текст */
+  --color-faint: #666D81; /* подписи, метки */
+  --color-hint: #8A90A3; /* плейсхолдеры, декоративные подписи */
+
+  /* Акцент */
+  --color-accent: #FF5A1F; /* фирменный оранжевый: заливки, иконки, кольца */
+  --color-accent-hover: #FF7240;
+  --color-accent-deep: #C93C0C; /* «дно» объёмных кнопок */
+  --color-on-accent: #101426; /* текст на оранжевом */
+  --color-accent-ink: #C2410C; /* оранжевый текст и ссылки на светлом фоне */
+  --color-accent-soft: #FFEEE6; /* мягкая подложка под акцентом */
+
+  /* Бренд — цвета знака на иконке приложения; в тёмной теме не меняются */
+  --color-brand-night: #101426;
+  --color-brand-orange: #FF5A1F;
+
+  /* Состояния: основной цвет — текст, иконки, заливки; -soft — подложки */
+  --color-danger: #DC2626;
+  --color-danger-soft: #FEF2F2;
+  --color-success: #15803D;
+  --color-success-soft: #ECFDF3;
+  --color-warning: #D97706;
+  --color-warning-soft: #FFF7E6;
+  --color-info: #2563EB; /* «выучено», ссылки на справку */
+  --color-info-soft: #EEF4FF;
+  --color-special: #7C3AED; /* витрина наборов Kolo Sets */
+  --color-special-soft: #F3EEFF;
+
+  /* Шрифты: Onest — интерфейс и текст, Unbounded — заголовки (раздаются с нашего сервера) */
+  --font-sans: "Onest Variable", "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Unbounded Variable", "Unbounded", "Onest Variable", system-ui, sans-serif;
+
+  /* Самый мелкий размер — только для плотных меток; основной минимум — text-xs (12px) */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+
+  /* Скругления: сжатая шкала вместо «подушек» по 40px */
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.25rem;
+  --radius-4xl: 1.5rem;
+  /* Корпус и экран телефона в макетах (лендинг): скругление настоящего iPhone */
+  --radius-phone: 2.75rem;
+  --radius-phone-screen: 2.125rem;
+
+  /* Движение: оборот по орбите — спутник знака, слова на лендинге */
+  --animate-orbit: orbit-spin 60s linear infinite;
+  --animate-orbit-reverse: orbit-spin 60s linear infinite reverse;
+  @keyframes orbit-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Тени: мягкие, с оттенком ночного синего */
+  --shadow-xs: 0 1px 2px rgb(16 20 38 / 0.05);
+  --shadow-sm: 0 1px 3px rgb(16 20 38 / 0.08), 0 1px 2px -1px rgb(16 20 38 / 0.06);
+  --shadow-md: 0 4px 10px -2px rgb(16 20 38 / 0.08), 0 2px 4px -2px rgb(16 20 38 / 0.05);
+  --shadow-lg: 0 12px 24px -8px rgb(16 20 38 / 0.12), 0 4px 8px -4px rgb(16 20 38 / 0.06);
+  --shadow-xl: 0 20px 40px -14px rgb(16 20 38 / 0.18);
+  --shadow-2xl: 0 28px 60px -20px rgb(16 20 38 / 0.25);
+}
+
+.dark {
+  --color-bg: #0B0E19;
+  --color-band: #0F1220;
+  --color-surface: #141827;
+  --color-inset: #1B2031;
+  --color-subtle: #1B2031;
+  --color-track: #252B3F;
+  --color-line: #252B3F;
+  --color-scrim: #000000;
+
+  --color-fg: #ECEEF5;
+  --color-on-inverse: #101426;
+  --color-muted: #A3A9BD;
+  --color-faint: #8A91A8;
+  --color-hint: #646B82;
+
+  --color-accent: #FF6A33;
+  --color-accent-hover: #FF8457;
+  --color-accent-deep: #B8360A;
+  --color-accent-ink: #FF8A5C;
+  --color-accent-soft: #2A1A16;
+
+  --color-danger: #F87171;
+  --color-danger-soft: #2A1416;
+  --color-success: #4ADE80;
+  --color-success-soft: #0F2A1B;
+  --color-warning: #FBBF24;
+  --color-warning-soft: #2A2010;
+  --color-info: #60A5FA;
+  --color-info-soft: #12203B;
+  --color-special: #A78BFA;
+  --color-special-soft: #1F1734;
+}

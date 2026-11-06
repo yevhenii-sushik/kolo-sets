@@ -1,0 +1,11 @@
+{
+  "title": "Algo se rompió",
+  "text": "Se produjo un error inesperado. Inténtalo de nuevo y, si se repite, avísanos.",
+  "retry": "Reintentar",
+  "home": "Ir al inicio",
+  "details": "Detalles del error",
+  "contact": "support@dakuta.dev",
+  "notFoundTitle": "Esta página se salió de órbita",
+  "notFoundText": "Puede que el enlace esté desactualizado o tenga un error. Vuelve al inicio: tus palabras te esperan.",
+  "back": "Volver"
+}

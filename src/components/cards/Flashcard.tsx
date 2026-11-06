@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { BookOpen, Eye, EyeOff, Quote, Volume2 } from "lucide-react";
 import { Card } from "../../types";
 import { speak, isTTSSupported } from "../../utils/tts";
 import { useI18n } from "../../contexts/I18nContext";
-import { Volume2, Eye, EyeOff, BookOpen, Quote } from "lucide-react";
+import { IconButton } from "../../ui";
 
 interface FlashcardProps {
   card: Card;
@@ -11,128 +12,81 @@ interface FlashcardProps {
   onFlip: () => void;
 }
 
-export default function Flashcard({
-  card,
-  isFlipped,
-  language = "nb-NO",
-  onFlip,
-}: FlashcardProps) {
+// Флэшкарта с переворотом (стили .flip-card в index.css): лицо — слово на тёмном, оборот — объяснение и пример
+export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip }: FlashcardProps) {
   const { t } = useI18n();
+  const f = t.words.flashcards;
   const [showTranslation, setShowTranslation] = useState(false);
 
   useEffect(() => {
     if (!isFlipped) setShowTranslation(false);
   }, [isFlipped, card.id]);
 
-  const handleSpeak = (e: React.MouseEvent) => {
+  const stop = (fn: () => void) => (e: React.MouseEvent) => {
     e.stopPropagation();
-    speak(card.word, language);
+    fn();
   };
-
-  const toggleTranslation = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowTranslation(v => !v);
-  };
-
-  const ttsSupported = isTTSSupported();
 
   return (
-    <div
-      className={`flip-card w-full min-h-70 h-[min(52vh,400px)] sm:h-[min(58vh,460px)] md:h-[min(62vh,500px)] ${isFlipped ? "flipped" : ""}`}
-      onClick={onFlip}
-    >
-      <div className="flip-card-inner relative w-full h-full cursor-pointer select-none">
-
-        {/* FRONT: word */}
-        <div className="flip-card-front absolute w-full h-full">
-          <div className="b-block w-full h-full flex flex-col items-center justify-center p-8 shadow-xl relative overflow-hidden">
-            <div className="absolute right-[-6%] bottom-[-8%] rotate-12 pointer-events-none opacity-[0.06]">
-              <BookOpen size={180} strokeWidth={1} className="text-current" />
-            </div>
-            <div className="text-center space-y-4 relative z-10">
-              <h2 className="u-title text-4xl sm:text-5xl md:text-7xl font-black tracking-tight wrap-break-word leading-tight">
-                {card.word}
-              </h2>
-              {card.partOfSpeech && (
-                <span className="inline-block px-4 py-1.5 bg-white/10 dark:bg-black/10 rounded-full text-[10px] font-black uppercase tracking-[0.15em]">
-                  {card.partOfSpeech}
-                </span>
-              )}
-            </div>
-            {/* Subtle tap hint */}
-            <p className="absolute bottom-5 left-0 right-0 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-current opacity-30">
-              {t.words.flashcards.hints.clickToFlip}
-            </p>
+    <div className={`flip-card h-[min(52vh,400px)] min-h-70 w-full sm:h-[min(58vh,460px)] md:h-[min(60vh,480px)] ${isFlipped ? "flipped" : ""}`} onClick={onFlip}>
+      <div className="flip-card-inner relative h-full w-full cursor-pointer select-none">
+        {/* Лицо: слово */}
+        <div className="flip-card-front absolute h-full w-full">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-4xl bg-fg p-8 text-on-inverse shadow-xl">
+            <h2 className="text-center font-display text-4xl font-semibold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{card.word}</h2>
+            {card.partOfSpeech && (
+              <span className="rounded-full bg-on-inverse/10 px-3 py-1 text-sm font-medium text-on-inverse/80">{card.partOfSpeech}</span>
+            )}
           </div>
         </div>
 
-        {/* BACK: explanation */}
-        <div className="flip-card-back absolute w-full h-full">
-          <div className="w-block w-full h-full p-6 md:p-10 flex flex-col relative overflow-hidden shadow-xl">
-
-            {/* TTS button */}
-            {ttsSupported && (
-              <button
-                onClick={handleSpeak}
-                aria-label={card.word}
-                className="absolute top-5 left-5 p-3 rounded-2xl bg-[#FFF0ED] dark:bg-[#2A1A15] text-[#FF5733] hover:scale-110 transition-all z-10"
+        {/* Оборот: перевод по кнопке, объяснение, пример */}
+        <div className="flip-card-back absolute h-full w-full">
+          <div className="relative flex h-full w-full flex-col overflow-y-auto rounded-4xl border border-line bg-surface p-6 shadow-xl md:p-10">
+            <div className="absolute left-4 top-4 right-4 flex justify-between" onClick={(e) => e.stopPropagation()}>
+              {isTTSSupported() ? (
+                <IconButton variant="soft" label={card.word} onClick={stop(() => speak(card.word, language))}>
+                  <Volume2 size={20} />
+                </IconButton>
+              ) : (
+                <span />
+              )}
+              <IconButton
+                variant="surface"
+                label={showTranslation ? f.hideTranslation : f.showTranslation}
+                onClick={stop(() => setShowTranslation((v) => !v))}
               >
-                <Volume2 size={22} />
-              </button>
-            )}
+                {showTranslation ? <EyeOff size={20} /> : <Eye size={20} />}
+              </IconButton>
+            </div>
 
-            {/* Show/hide translation */}
-            <button
-              onClick={toggleTranslation}
-              aria-label={showTranslation ? t.words.flashcards.hideTranslation : t.words.flashcards.showTranslation}
-              className="absolute top-5 right-5 p-3 rounded-2xl bg-[#EDEAE4] dark:bg-[#242220] text-[#7A756E] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] hover:text-[#FF5733] transition-all z-10"
-            >
-              {showTranslation ? <EyeOff size={22} /> : <Eye size={22} />}
-            </button>
-
-            {/* Content */}
-            <div className="flex-1 flex flex-col justify-center items-center text-center space-y-6 max-w-2xl mx-auto w-full pt-8">
-              <div className="space-y-2">
-                <h3 className="u-title text-3xl md:text-4xl font-black text-[#1A1714] dark:text-[#F0EDE8]">
-                  {card.word}
-                </h3>
-                {showTranslation && (
-                  <p className="o-title text-2xl md:text-3xl font-bold animate-in fade-in slide-in-from-top-2 duration-200">
-                    {card.translation}
-                  </p>
-                )}
+            <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center gap-6 pt-10 text-center">
+              <div className="grid gap-2">
+                <h3 className="font-display text-3xl font-semibold text-fg md:text-4xl">{card.word}</h3>
+                {card.partOfSpeech && <p className="text-sm text-faint">{card.partOfSpeech}</p>}
+                {showTranslation && <p className="text-2xl font-semibold text-accent-ink md:text-3xl">{card.translation}</p>}
               </div>
 
               {card.explanation && (
-                <div className="space-y-1.5 w-full">
-                  <div className="uc-title flex items-center justify-center gap-2">
-                    <BookOpen size={13} />
-                    {t.words.flashcards.explanation}
-                  </div>
-                  <p className="text-base md:text-lg text-[#1A1714] dark:text-[#F0EDE8] leading-relaxed font-medium opacity-90">
-                    {card.explanation}
+                <div className="grid w-full gap-1.5">
+                  <p className="flex items-center justify-center gap-1.5 text-xs font-semibold text-muted">
+                    <BookOpen size={14} />
+                    {f.explanation}
                   </p>
+                  <p className="text-base leading-relaxed text-fg md:text-lg">{card.explanation}</p>
                 </div>
               )}
 
               {card.example && (
-                <div className="space-y-1.5 w-full pt-3">
-                  <div className="sub-title flex items-center justify-center gap-2">
-                    <Quote size={13} />
-                    {t.words.flashcards.example}
-                  </div>
-                  <p className="text-sm md:text-base italic text-[#7A756E] leading-snug">
-                    "{card.example}"
+                <div className="grid w-full gap-1.5">
+                  <p className="flex items-center justify-center gap-1.5 text-xs font-semibold text-muted">
+                    <Quote size={14} />
+                    {f.example}
                   </p>
+                  <p className="text-base italic leading-snug text-muted">{card.example}</p>
                 </div>
               )}
             </div>
-
-            {card.partOfSpeech && (
-              <div className="mt-auto pt-4 text-center">
-                <span className="sub-title">{card.partOfSpeech}</span>
-              </div>
-            )}
           </div>
         </div>
       </div>

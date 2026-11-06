@@ -1,23 +1,12 @@
 {
-  "title": "Kolo",
-  "titleHighlight": "Evolusjon.",
-  "subtitle": "Vi jobber kontinuerlig for å gjøre norskopplæringen din mer produktiv.",
-  "changelog": "Endringslogg",
-  "sidebarTitle": "Versjonstre",
-  "stats": {
-    "releases": "Utgivelser",
-    "releasesSub": "Sluppet så langt",
-    "improvements": "Forbedringer",
-    "improvementsSub": "Totale endringer",
-    "patches": "Patcher",
-    "patchesSub": "Feilrettinger",
-    "languages": "Språk",
-    "languagesSub": "Grensesnittspråk"
-  },
+  "title": "Hva er nytt",
+  "subtitle": "Alle Kolo-versjoner – fra den første til i dag.",
+  "sidebarTitle": "Versjoner",
+  "latest": "Gjeldende",
   "footer": {
-    "title": "Dette er bare begynnelsen",
-    "subtitle": "Vi har store planer for 2026: historieintegrasjon, gruppeutfordringer og enda mer nytt innhold.",
-    "button": "Foreslå en funksjon"
+    "title": "Har du en idé til Kolo?",
+    "subtitle": "Fortell oss hva du savner – vi leser alle meldinger.",
+    "button": "Foreslå en idé"
   },
   "versions": [
     {

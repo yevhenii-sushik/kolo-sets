@@ -1,13 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-  useSpring,
-  useMotionValueEvent,
-} from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { Card, Collection } from "../../types";
 import {
   getCollection,
@@ -19,17 +12,10 @@ import { exportCollectionToJSON, downloadJSON } from "../../utils/exportImport";
 import { useI18n } from "../../contexts/I18nContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
-import {
-  Plus,
-  Upload,
-  Download,
-  Edit3,
-  BookOpen,
-  Layers,
-  RefreshCw,
-  FileJson,
-  ArrowUp,
-} from "lucide-react";
+import { Plus, Upload, Download, Pencil, ArrowUp, Layers } from "lucide-react";
+import { Button, Card as UiCard, Field, Heading, IconButton, Input, Modal, Text } from "../../ui";
+import { getLanguageInfo } from "../../locales/languages";
+import { plural } from "../../utils/plural";
 import AddCardModal from "../../components/AddCardModal";
 import ImportCardsModal from "../../components/ImportCardsModal";
 import CardListItem from "../../components/cards/CardListItem";
@@ -45,7 +31,8 @@ const fadeUp = (delay = 0) => ({
 export default function CollectionEditPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const e = t.words.editCollection;
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
@@ -57,17 +44,12 @@ export default function CollectionEditPage() {
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [renameValue, setRenameValue] = useState("");
 
-  // Collapsing header: большой заголовок плавно сжимается/тает по скроллу
-  // и одновременно (та же scroll-позиция, никаких отдельных дискретных
-  // toggle-анимаций — от них и была дёрганность) в компактный докнутый
-  // бар под хедером NavLayout (fixed h-12). scrollY завёрнут в spring —
-  // сглаживает шаг между кадрами скролла, иначе на резких свайпах трансформ
-  // "прыгает". Кнопка "наверх" — отдельный, более глубокий порог.
+  // Большой заголовок тает по прокрутке, и в то же время (одна и та же позиция прокрутки, без
+  // отдельных анимаций — от них была дёрганность) проявляется закреплённая полоса под шапкой
+  // NavLayout. Кнопка «наверх» — на более глубоком пороге.
   const { scrollY } = useScroll();
-  const smoothScrollY = useSpring(scrollY, { stiffness: 300, damping: 40, restDelta: 0.5 });
-  const headerScale = useTransform(smoothScrollY, [0, 160], [1, 0.85]);
-  const headerScrollOpacity = useTransform(smoothScrollY, [0, 140], [1, 0]);
-  const dockedOpacity = useTransform(smoothScrollY, [70, 150], [0, 1]);
+  const headerScrollOpacity = useTransform(scrollY, [0, 140], [1, 0]);
+  const dockedOpacity = useTransform(scrollY, [90, 150], [0, 1]);
   const [isDocked, setIsDocked] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -199,205 +181,112 @@ export default function CollectionEditPage() {
     }
   };
 
-  return (
-    <div className="max-w-5xl mx-auto pb-24">
-      {/* Editorial header — shrinks/fades on scroll (style motion values,
-          separate from the mount fadeUp on motion.header itself to avoid
-          both fighting over `opacity`) */}
-      <motion.header className="mb-12" {...fadeUp(0)}>
-        <motion.div
-          style={{ scale: headerScale, opacity: headerScrollOpacity }}
-          className="origin-top-left"
-        >
-        <div className="flex items-end gap-4 mb-6 group">
-          <h1
-            className={`text-5xl md:text-7xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] leading-none tracking-tight transition-opacity duration-500 ${loading ? "opacity-20" : "opacity-100"}`}
-          >
-            {loading ? (
-              t.words.editCollection.loading
-            ) : (
-              <>
-                {collection?.name?.split(" ").slice(0, -1).join(" ")}{" "}
-                <span className="text-[#FF5733]">
-                  {collection?.name?.split(" ").slice(-1)[0]}.
-                </span>
-              </>
-            )}
-          </h1>
-          {!loading && (
-            <button
-              onClick={handleRenameCollection}
-              className="mb-2 p-2 text-[#B5B0A8] hover:text-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] rounded-xl transition-all opacity-0 group-hover:opacity-100"
-            >
-              <Edit3 size={20} />
-            </button>
-          )}
-        </div>
+  const cardCount = collection?.cards.length ?? 0;
+  const actions = (compact: boolean) => (
+    <>
+      {compact ? (
+        <>
+          <IconButton variant="soft" label={e.addCard} onClick={() => setIsAddModalOpen(true)}>
+            <Plus size={18} />
+          </IconButton>
+          <IconButton variant="surface" label={e.import} onClick={() => setIsImportModalOpen(true)}>
+            <Upload size={18} />
+          </IconButton>
+          <IconButton variant="surface" label={e.export} onClick={handleExport} disabled={isExporting || cardCount === 0}>
+            <Download size={18} />
+          </IconButton>
+        </>
+      ) : (
+        <>
+          <Button iconLeft={<Plus size={18} />} onClick={() => setIsAddModalOpen(true)}>
+            {e.addCard}
+          </Button>
+          <Button variant="secondary" iconLeft={<Upload size={18} />} onClick={() => setIsImportModalOpen(true)}>
+            {e.import}
+          </Button>
+          <Button variant="secondary" iconLeft={<Download size={18} />} loading={isExporting} disabled={cardCount === 0} onClick={handleExport}>
+            {e.export}
+          </Button>
+        </>
+      )}
+    </>
+  );
 
-        {/* Stats row */}
-        <div
-          className={`flex flex-wrap gap-3 transition-opacity duration-500 ${loading ? "opacity-0" : "opacity-100"}`}
-        >
-          <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-full shadow-sm">
-            <Layers size={13} className="text-[#FF5733]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#7A756E]">
-              {collection?.cards.length || 0} {t.words.collectionCard.cards}
-            </span>
+  return (
+    <div className="mx-auto max-w-3xl pb-24">
+      {/* ── Шапка набора: тает по прокрутке ── */}
+      <motion.header className="mb-10 grid gap-5" {...fadeUp(0)}>
+        <motion.div style={{ opacity: headerScrollOpacity }} className="grid gap-2">
+          <div className="flex items-start gap-1">
+            <Heading size="display" className={loading ? "opacity-20" : undefined}>
+              {loading ? e.loading : collection?.name}
+            </Heading>
+            {!loading && (
+              <IconButton label={e.rename} onClick={handleRenameCollection} className="mt-0.5 sm:mt-2">
+                <Pencil size={20} />
+              </IconButton>
+            )}
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-full shadow-sm">
-            <BookOpen size={13} className="text-[#FF5733]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#7A756E]">
-              {learnedCount} {t.words.editCollection.learned}
-            </span>
-          </div>
-        </div>
+          {!loading && (
+            <Text tone="muted">
+              {plural(getLanguageInfo(language).htmlLang, cardCount, t.words.collectionCard.words)} · {e.learned}: {learnedCount}
+            </Text>
+          )}
         </motion.div>
+        <div className="flex flex-wrap gap-2">{actions(false)}</div>
       </motion.header>
 
-      {/* Docked compact bar — collection name fades up into this as you
-          scroll, continuously driven by the same scroll value as the big
-          header (no discrete mount/exit animation — that's what caused the
-          jerkiness). Fixed + solid bg, same as NavLayout's own header, so
-          the two visually read as one continuous bar with no seam. */}
+      {/* ── Закреплённая полоса: появляется, когда заголовок ушёл вверх ── */}
       {!loading && (
         <motion.div
           style={{ opacity: dockedOpacity }}
-          className={`fixed top-12 left-0 right-0 z-40 bg-[#F5F2ED] dark:bg-[#0F0E0C] ${isDocked ? "" : "pointer-events-none"}`}
+          className={`fixed inset-x-0 top-14 z-40 border-b border-line bg-bg/90 backdrop-blur-xl ${isDocked ? "" : "pointer-events-none"}`}
         >
-          <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
-            <h2 className="text-xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight truncate">
-              {collection?.name?.split(" ").slice(0, -1).join(" ")}{" "}
-              <span className="text-[#FF5733]">
-                {collection?.name?.split(" ").slice(-1)[0]}.
-              </span>
-            </h2>
-            <div className="flex gap-1.5 shrink-0">
-              <button
-                onClick={() => setIsAddModalOpen(true)}
-                className="p-2.5 rounded-xl bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] hover:bg-[#FF5733] dark:hover:bg-[#FF5733] dark:hover:text-white transition-colors active:scale-95"
-              >
-                <Plus size={16} />
-              </button>
-              <button
-                onClick={() => setIsImportModalOpen(true)}
-                className="p-2.5 rounded-xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] hover:border-[#FF5733] hover:text-[#FF5733] transition-colors active:scale-95"
-              >
-                <Upload size={16} />
-              </button>
-              <button
-                onClick={handleExport}
-                disabled={isExporting || !collection || collection.cards.length === 0}
-                className="p-2.5 rounded-xl border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] hover:border-[#FF5733] hover:text-[#FF5733] transition-colors active:scale-95 disabled:opacity-40 disabled:pointer-events-none"
-              >
-                {isExporting ? (
-                  <RefreshCw size={16} className="animate-spin" />
-                ) : (
-                  <Download size={16} />
-                )}
-              </button>
-            </div>
+          <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-5 py-2.5 sm:px-6 lg:px-8">
+            <p className="truncate font-display text-lg font-semibold text-fg">{collection?.name}</p>
+            <div className="flex shrink-0 gap-1.5">{actions(true)}</div>
           </div>
         </motion.div>
       )}
 
-      {/* Action buttons — icon-only on mobile so the row never wraps;
-          icon+label from md: up, matching WordsPage's action bar */}
-      <motion.div className="flex gap-2 sm:gap-3 mb-12" {...fadeUp(0.05)}>
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="flex justify-center items-center gap-2 w-12 h-12 md:w-auto md:px-6 md:py-3 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:bg-[#FF5733] hover:text-white dark:hover:bg-[#FF5733] dark:hover:text-white transition-all active:scale-[0.98] shrink-0"
-        >
-          <Plus size={18} />
-          <span className="hidden md:block">{t.words.editCollection.addCard}</span>
-        </button>
-
-        <button
-          onClick={() => setIsImportModalOpen(true)}
-          className="flex justify-center items-center gap-2 w-12 h-12 md:w-auto md:px-6 md:py-3 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:border-[#FF5733] hover:text-[#FF5733] transition-all active:scale-[0.98] shrink-0"
-        >
-          <Upload size={18} />
-          <span className="hidden md:block">{t.words.editCollection.import}</span>
-        </button>
-
-        <button
-          onClick={handleExport}
-          disabled={isExporting || !collection || collection.cards.length === 0}
-          className="flex justify-center items-center gap-2 w-12 h-12 md:w-auto md:px-6 md:py-3 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:border-[#FF5733] hover:text-[#FF5733] transition-all active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none shrink-0"
-        >
-          {isExporting ? (
-            <RefreshCw size={18} className="animate-spin" />
-          ) : (
-            <Download size={18} />
-          )}
-          <span className="hidden md:block">{t.words.editCollection.export}</span>
-        </button>
-      </motion.div>
-
-      {/* Word list */}
-      <motion.section {...fadeUp(0.1)}>
-        <p className="sub-title mb-6 px-1">{t.words.editCollection.wordList}</p>
+      {/* ── Список слов ── */}
+      <motion.section {...fadeUp(0.05)}>
+        <h2 className="mb-4 text-sm font-semibold text-fg">{e.wordList}</h2>
 
         {loading ? (
-          <div className="space-y-4">
+          <div className="grid gap-3">
             {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="h-32 bg-white dark:bg-[#1A1917] rounded-[2.5rem] animate-pulse border border-[#E0DBD3] dark:border-[#2E2C29]"
-              />
+              <div key={i} className="h-36 animate-pulse rounded-3xl border border-line bg-surface" />
             ))}
           </div>
         ) : !collection || collection.cards.length === 0 ? (
-          <div
-            onClick={() => setIsAddModalOpen(true)}
-            className="group cursor-pointer flex flex-col items-center justify-center py-24 bg-white dark:bg-[#1A1917] rounded-[2.5rem] border-2 border-dashed border-[#E0DBD3] dark:border-[#2E2C29] hover:border-[#FF5733] dark:hover:border-[#FF5733] transition-all duration-300"
-          >
-            <div className="w-16 h-16 bg-[#F5F2ED] dark:bg-[#242220] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#FFF0ED] dark:group-hover:bg-[#2A1A15] transition-colors">
-              <FileJson
-                size={28}
-                className="text-[#B5B0A8] group-hover:text-[#FF5733] transition-colors"
-              />
+          <UiCard tone="inset" padding="lg" className="grid justify-items-center gap-4 py-14 text-center">
+            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-surface text-accent-ink">
+              <Layers size={26} />
+            </span>
+            <div className="grid gap-1">
+              <Heading size={3} as="h3">
+                {e.noCards}
+              </Heading>
             </div>
-            <h3 className="text-xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] mb-2">
-              {t.words.editCollection.noCards}
-            </h3>
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5B0A8]">
-              {t.words.editCollection.noCardsDesc}
-            </p>
-          </div>
+            <Button iconLeft={<Plus size={18} />} onClick={() => setIsAddModalOpen(true)}>
+              {e.addCard}
+            </Button>
+          </UiCard>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-3">
             {collection.cards.map((card: Card, i: number) => (
-              <motion.div key={card.id} {...fadeUp(i * 0.03)}>
-                <CardListItem
-                  card={card}
-                  onSave={(cardData) => handleEditCard(card.id, cardData)}
-                  onDelete={() => handleDeleteCard(card.id)}
-                />
+              <motion.div key={card.id} {...fadeUp(Math.min(i, 10) * 0.03)}>
+                <CardListItem card={card} onSave={(cardData) => handleEditCard(card.id, cardData)} onDelete={() => handleDeleteCard(card.id)} />
               </motion.div>
             ))}
           </div>
         )}
       </motion.section>
 
-      {/* Modals */}
-      <AddCardModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onSave={handleAddCard}
-      />
-
-      <ImportCardsModal
-        isOpen={isImportModalOpen}
-        onClose={() => setIsImportModalOpen(false)}
-        onImport={handleImportCards}
-      />
-
-      <ConfirmDialog
-        {...confirmState}
-        onConfirm={handleConfirm}
-        onCancel={handleCancel}
-      />
-
+      <AddCardModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSave={handleAddCard} />
+      <ImportCardsModal isOpen={isImportModalOpen} onClose={() => setIsImportModalOpen(false)} onImport={handleImportCards} />
+      <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
       <Toast
         isOpen={toastState.isOpen}
         message={toastState.message}
@@ -406,55 +295,47 @@ export default function CollectionEditPage() {
         onClose={hideToast}
       />
 
-      {/* Inline rename modal */}
-      {showRenameModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-[#1A1714]/40 dark:bg-black/50 backdrop-blur-xl"
-            onClick={() => setShowRenameModal(false)}
+      {/* ── Переименование ── */}
+      <Modal
+        open={showRenameModal}
+        onClose={() => setShowRenameModal(false)}
+        title={e.modals.renameTitle}
+        size="sm"
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setShowRenameModal(false)}>
+              {t.cancel}
+            </Button>
+            <Button onClick={handleRenameSubmit} disabled={!renameValue.trim()}>
+              {t.save}
+            </Button>
+          </>
+        }
+      >
+        <Field label={t.words.createModal.nameLabel} htmlFor="rename-collection">
+          <Input
+            id="rename-collection"
+            autoFocus
+            value={renameValue}
+            onChange={(ev) => setRenameValue(ev.target.value)}
+            onKeyDown={(ev) => ev.key === "Enter" && handleRenameSubmit()}
           />
-          <div className="relative w-block max-w-md w-full p-6 shadow-xl">
-            <h3 className="u-title text-xl font-bold text-[#1A1714] dark:text-[#F0EDE8] mb-4">
-              {t.words.editCollection.modals.renameTitle}
-            </h3>
-            <input
-              type="text"
-              value={renameValue}
-              onChange={(e) => setRenameValue(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleRenameSubmit()}
-              autoFocus
-              className="w-full px-4 py-3 border-2 border-[#E0DBD3] dark:border-[#2E2C29] rounded-2xl focus:border-[#FF5733] outline-none bg-white dark:bg-[#141312] text-[#1A1714] dark:text-[#F0EDE8] mb-4 transition-colors"
-            />
-            <div className="flex gap-3 justify-end">
-              <button
-                onClick={() => setShowRenameModal(false)}
-                className="px-5 py-2.5 text-[#7A756E] hover:bg-[#EDEAE4] dark:hover:bg-[#242220] rounded-xl font-bold text-sm transition-colors"
-              >
-                {t.cancel}
-              </button>
-              <button
-                onClick={handleRenameSubmit}
-                disabled={!renameValue.trim()}
-                className="px-5 py-2.5 bg-[#FF5733] hover:bg-[#E54D2A] disabled:bg-[#B5B0A8] text-white rounded-xl font-bold text-sm transition-colors disabled:cursor-not-allowed"
-              >
-                {t.save}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+        </Field>
+      </Modal>
 
-      {/* Scroll-to-top — appears once you've scrolled deep into the word list */}
+      {/* ── Наверх: когда ушли глубоко в список ── */}
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
+            type="button"
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 10 }}
             transition={{ duration: 0.2 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="fixed bottom-6 right-5 sm:right-8 z-40 w-12 h-12 rounded-full bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] shadow-xl flex items-center justify-center hover:bg-[#FF5733] dark:hover:bg-[#FF5733] dark:hover:text-white transition-colors active:scale-95"
-            aria-label="Scroll to top"
+            aria-label={e.scrollTop}
+            title={e.scrollTop}
+            className="fixed bottom-6 right-5 z-40 grid h-12 w-12 place-items-center rounded-full bg-fg text-on-inverse shadow-xl transition-opacity hover:opacity-90 sm:right-8"
           >
             <ArrowUp size={20} />
           </motion.button>

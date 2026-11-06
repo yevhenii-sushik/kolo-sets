@@ -1,0 +1,11 @@
+{
+  "title": "Something broke",
+  "text": "An unexpected error occurred. Try again, and if it keeps happening, let us know.",
+  "retry": "Try again",
+  "home": "Go home",
+  "details": "Error details",
+  "contact": "support@dakuta.dev",
+  "notFoundTitle": "This page drifted off orbit",
+  "notFoundText": "The link may be outdated or contain a typo. Head back home — your words are waiting.",
+  "back": "Go back"
+}

@@ -1,11 +1,13 @@
 // import { Home, Layers, User, Shapes, BookOpen, BookMarked } from 'lucide-react';
-import { Home, Layers, User, Shapes } from 'lucide-react';
+import { Home, Layers, User, Shapes, type LucideIcon } from 'lucide-react';
+import type { Translations } from './locales';
 
-export const navItems = [
-  { to: '/', labelKey: 'nav.home', icon: Home },
-  { to: '/words', labelKey: 'nav.words', icon: Layers },
-  // { to: '/stories', labelKey: 'nav.stories', icon: BookOpen },
-  // { to: '/dictionary', labelKey: 'nav.dictionary', icon: BookMarked },
-  { to: '/profile', labelKey: 'nav.profile', icon: User },
-  { to: '/other', labelKey: 'nav.other', icon: Shapes },
+// Разделы приложения в боковом меню и нижней навигации; labelKey — ключ подписи в t.nav
+export const navItems: { to: string; labelKey: keyof Translations['nav']; icon: LucideIcon }[] = [
+  { to: '/', labelKey: 'home', icon: Home },
+  { to: '/words', labelKey: 'words', icon: Layers },
+  // { to: '/stories', labelKey: 'stories', icon: BookOpen },
+  // { to: '/dictionary', labelKey: 'dictionary', icon: BookMarked },
+  { to: '/profile', labelKey: 'profile', icon: User },
+  { to: '/other', labelKey: 'other', icon: Shapes },
 ];

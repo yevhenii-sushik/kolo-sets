@@ -1,59 +1,85 @@
-import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
-import { LucideIcon } from 'lucide-react';
+import { ReactNode } from "react";
+import { Card, Heading, Text, cx } from "../../ui";
 
-// Общий визуальный язык для страниц Settings/Updates/Support — единый
-// хедер, единая карточка-секция. Держим здесь, чтобы все три страницы
-// физически не могли разъехаться по дизайну.
+// Общие блоки внутренних страниц «Другого» (настройки, данные, поддержка, обновления, Dakuta) —
+// чтобы страницы не могли разъехаться по виду.
 
-export const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.4, ease: 'easeOut' as const },
-});
+export function PageHeader({ title, subtitle }: { title: ReactNode; subtitle?: ReactNode }) {
+  return (
+    <header className="grid gap-2">
+      <Heading size={1}>{title}</Heading>
+      {subtitle && <Text tone="muted">{subtitle}</Text>}
+    </header>
+  );
+}
 
-type IconType = LucideIcon;
-
-// Бейдж-пилюля (иконка+название) теперь живёт в фиксированной шапке
-// NavLayout (см. PAGE_META там же) — виден сразу, без скролла, на всех
-// трёх страницах. Здесь остаётся только заголовок и подзаголовок.
-export function PageHeader({
+// Карточка-секция: заголовок, пояснение, содержимое
+export function Section({
   title,
-  accent,
-  subtitle,
+  description,
+  className,
+  children,
 }: {
   title: ReactNode;
-  accent?: ReactNode;
-  subtitle: ReactNode;
+  description?: ReactNode;
+  className?: string;
+  children: ReactNode;
 }) {
   return (
-    <motion.header {...fadeUp(0)} className="mb-8">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] leading-none">
-        {title}
-        {accent && <span className="text-[#FF5733]">{accent}</span>}
-      </h1>
-      <p className="mt-3 text-[#7A756E] dark:text-[#8A867F] font-medium">{subtitle}</p>
-    </motion.header>
-  );
-}
-
-export function SectionCard({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return (
-    <div className={`bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-[2.5rem] p-6 md:p-8 ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-export function SectionTitle({ icon: Icon, label }: { icon: IconType; label: ReactNode }) {
-  return (
-    <div className="flex items-center gap-3 mb-6">
-      <div className="w-9 h-9 rounded-xl bg-[#FFF0ED] dark:bg-[#2A1A15] flex items-center justify-center text-[#FF5733]">
-        <Icon size={18} />
+    <Card padding="lg" className={cx("grid grid-cols-1 gap-5", className)}>
+      <div className="grid gap-1">
+        <Heading size={3} as="h2">
+          {title}
+        </Heading>
+        {description && (
+          <Text size="sm" tone="muted">
+            {description}
+          </Text>
+        )}
       </div>
-      <h2 className="text-base font-black uppercase tracking-[0.12em] text-[#1A1714] dark:text-[#F0EDE8]">
-        {label}
-      </h2>
+      {children}
+    </Card>
+  );
+}
+
+// Строка «текст слева — переключатель или кнопка справа»
+export function SettingRow({ title, description, control }: { title: ReactNode; description?: ReactNode; control: ReactNode }) {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <div className="grid min-w-0 gap-0.5">
+        <p className="font-semibold text-fg">{title}</p>
+        {description && <p className="text-sm text-muted">{description}</p>}
+      </div>
+      <div className="shrink-0">{control}</div>
     </div>
+  );
+}
+
+// Плитка выбора одного варианта: тема, язык, цель, тема обращения
+export function OptionButton({
+  active,
+  onClick,
+  className,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={active}
+      onClick={onClick}
+      className={cx(
+        "rounded-2xl border text-sm font-semibold transition-colors",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+        active ? "border-accent bg-accent-soft text-accent-ink" : "border-line bg-surface text-muted hover:bg-inset hover:text-fg",
+        className,
+      )}
+    >
+      {children}
+    </button>
   );
 }

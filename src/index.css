@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./design/tokens.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
@@ -6,52 +7,11 @@
     color-scheme: light dark;
   }
   body {
-    /* Основной фон приложения из твоего конфига */
-    @apply bg-[#F5F2ED] dark:bg-[#0F0E0C] text-[#1A1714] dark:text-[#F0EDE8] transition-colors duration-300;
+    @apply bg-bg text-fg transition-colors duration-300;
   }
 }
 
 @layer components {
-  /* --- БЛОКИ (Blocks) --- */
-
-  /* .w-block: Белый блок (White) с бордером */
-  .w-block {
-    @apply bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-[2.5rem] p-8 shadow-sm;
-  }
-
-  /* .g-block: Серый блок (Gray/Beige) */
-  .g-block {
-    @apply bg-[#EDEAE4] dark:bg-[#242220] rounded-[2.5rem] p-8;
-  }
-
-  /* .b-block: Черный блок (Black), который в темной теме становится белым */
-  .b-block {
-    @apply bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] rounded-[2.5rem] p-8;
-  }
-
-  /* --- ТИТЛЫ (Titles) --- */
-
-  /* .u-title: Обычный (Usual) serif-курсив. 
-     Размер не фиксируем жестко (через text-current), либо ставим базу. */
-  .u-title {
-    @apply font-serif italic tracking-tight;
-  }
-
-  /* .o-title: Оранжевый (Orange) акцентный курсив */
-  .o-title {
-    @apply font-serif italic text-[#FF5733] dark:text-[#FF6B47];
-  }
-
-  /* .uc-title: Uppercase акцентный (для "СОВЕТ ДНЯ", "КАБИНЕТ") */
-  .uc-title {
-    @apply text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF5733] dark:text-[#FF6B47];
-  }
-
-  /* Доп. класс для подписей (как в твоем коде) */
-  .sub-title {
-    @apply text-[10px] font-bold uppercase tracking-[0.15em] text-[#B5B0A8] dark:text-[#4A4742];
-  }
-
   /* Скрывает скроллбар у прокручиваемых блоков (напр. дерево версий) */
   .no-scrollbar {
     scrollbar-width: none;

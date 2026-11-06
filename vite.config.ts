@@ -14,9 +14,9 @@ export default defineConfig({
         name: 'Kolo Sets',
         short_name: 'Kolo',
         description:
-          'Learn Norwegian with spaced repetition. Build flashcard collections, track your streak, and let the SM-2 algorithm surface the right words at the right time.',
-        theme_color: '#FF5733',
-        background_color: '#F5F2ED',
+          'Learn words in almost any language with spaced repetition. Build flashcard collections, track your streak, and let Kolo bring each word back right before you forget it.',
+        theme_color: '#F5F6FA',
+        background_color: '#F5F6FA',
         display: 'standalone',
         start_url: '/',
         scope: '/',
@@ -24,7 +24,7 @@ export default defineConfig({
           { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
           {
-            src: '/icon-512.png',
+            src: '/icon-maskable-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',

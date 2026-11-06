@@ -7,7 +7,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { playSessionCompleteIfEnabled } from "../../utils/sounds";
-import { Clock, X } from "lucide-react";
+import SessionShell from "../../components/session/SessionShell";
+import RatingBar from "../../components/session/RatingBar";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import Flashcard from "../../components/cards/Flashcard";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
@@ -88,7 +89,7 @@ export default function ReviewPage() {
   }, [isFlipped, showStats, loaded]);
 
   const handleRating = async (level: KnowledgeLevel) => {
-    if (!isFlipped) return;
+    if (!isFlipped || showStats) return;
 
     const { card, collectionId } = reviewCards[currentIndex];
     const updatedCard = updateSRSData(card, level);
@@ -160,114 +161,52 @@ export default function ReviewPage() {
   if (!loaded || reviewCards.length === 0) return null;
 
   const currentReview = reviewCards[currentIndex];
-  const progress = ((currentIndex + 1) / reviewCards.length) * 100;
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-[#F5F2ED] dark:bg-[#0F0E0C] flex flex-col overflow-hidden"
+    <SessionShell
+      title={t.words.session.review}
+      subtitle={currentReview.collectionName}
+      onClose={() => navigate("/")}
+      progress={(currentIndex + 1) / reviewCards.length}
+      meta={`${currentIndex + 1} / ${reviewCards.length}`}
     >
-      {/* Header */}
-      <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
-        <div className="max-w-6xl mx-auto flex items-center justify-between bg-white/60 dark:bg-[#1A1917]/60 backdrop-blur-xl p-2 sm:p-3 pr-4 sm:pr-5 rounded-xl sm:rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] shadow-sm">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate("/")}
-              className="p-2 hover:bg-[#EDEAE4] dark:hover:bg-[#242220] rounded-xl transition-colors shrink-0 text-[#1A1714] dark:text-[#F0EDE8]"
-            >
-              <X size={20} />
-            </button>
-            <div className="min-w-0">
-              <h1 className="u-title text-lg md:text-xl text-[#1A1714] dark:text-[#F0EDE8] leading-none">
-                Review Queue
-              </h1>
-              <p className="text-[11px] text-[#B5B0A8] font-medium mt-0.5 truncate">
-                {currentReview.collectionName}
-              </p>
-            </div>
-          </div>
-
-          <span className="flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-black text-[#FF5733] bg-[#FFF0ED] dark:bg-[#2A1A15] rounded-full shrink-0">
-            <Clock size={11} />
-            Due today
-          </span>
-        </div>
-      </div>
-
-      {/* Progress bar */}
-      <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
-        <div className="max-w-6xl mx-auto flex items-center gap-4">
-          <div className="sub-title min-w-10 text-center">{currentIndex + 1} / {reviewCards.length}</div>
-          <div className="flex-1 bg-[#EDEAE4] dark:bg-[#242220] rounded-full h-3.5 overflow-hidden">
-            <div
-              className="bg-[#FF5733] rounded-full h-full transition-all duration-500 ease-out"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="uc-title min-w-10 text-center">{Math.round(progress)}%</div>
-        </div>
-      </div>
-
-      {/* Card */}
-      <main className="flex-1 min-h-0 flex items-center justify-center px-4 sm:px-6 py-3 sm:py-4 overflow-auto">
+      {/* Карточка — свайп: до переворота переворачивает, после — вправо «знаю», влево «не знаю» */}
+      <main className="flex min-h-0 flex-1 items-center justify-center overflow-auto px-4 py-4 sm:px-6">
         <motion.div
-          className="w-full max-w-5xl shrink-0 touch-pan-y"
+          className="w-full max-w-3xl shrink-0 touch-pan-y"
           style={{ x: dragX, rotate: dragRotate }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.25}
           dragMomentum={false}
-          onDragStart={() => { swipedRef.current = false; }}
-          onDrag={(_, info) => { if (Math.abs(info.offset.x) > 8) swipedRef.current = true; }}
+          onDragStart={() => {
+            swipedRef.current = false;
+          }}
+          onDrag={(_, info) => {
+            if (Math.abs(info.offset.x) > 8) swipedRef.current = true;
+          }}
           onDragEnd={(_, info) => {
             const didSwipe = swipedRef.current;
-            setTimeout(() => { swipedRef.current = false; }, 80);
+            setTimeout(() => {
+              swipedRef.current = false;
+            }, 80);
             if (!didSwipe || Math.abs(info.offset.x) < 60) return;
-            if (!isFlipped) { setIsFlipped(true); return; }
-            if (info.offset.x > 0) handleRating(KnowledgeLevel.KNOW);
+            if (!isFlipped) setIsFlipped(true);
+            else if (info.offset.x > 0) handleRating(KnowledgeLevel.KNOW);
             else handleRating(KnowledgeLevel.DONT_KNOW);
           }}
         >
           <Flashcard
             card={currentReview.card}
             isFlipped={isFlipped}
-            onFlip={() => { if (!swipedRef.current) setIsFlipped(f => !f); }}
+            onFlip={() => {
+              if (!swipedRef.current) setIsFlipped((f) => !f);
+            }}
           />
         </motion.div>
       </main>
 
-      {/* Rating buttons */}
-      <div className="shrink-0 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-8 px-4 sm:px-6">
-        <p className="text-center text-[11px] sm:text-[13px] font-medium text-[#B5B0A8] dark:text-[#4A4742] mb-2 sm:mb-4">
-          {isFlipped ? t.words.flashcards.hints.rateKnowledge : t.words.flashcards.hints.clickToFlip}
-        </p>
-        <div className="max-w-3xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
-          {[
-            { level: KnowledgeLevel.DONT_KNOW, label: t.words.flashcards.levels.dontKnow, emoji: "😕", color: "bg-red-600 hover:bg-red-700" },
-            { level: KnowledgeLevel.FORGOT,    label: t.words.flashcards.levels.forgot,   emoji: "🤔", color: "bg-[#FF5733] hover:bg-[#E54D2A]" },
-            { level: KnowledgeLevel.REMEMBER,  label: t.words.flashcards.levels.remember, emoji: "🙂", color: "bg-blue-600 hover:bg-blue-700" },
-            { level: KnowledgeLevel.KNOW,      label: t.words.flashcards.levels.know,     emoji: "😊", color: "bg-[#22C55E] hover:bg-[#16A34A]" },
-          ].map(btn => (
-            <button
-              key={btn.level}
-              disabled={!isFlipped}
-              onClick={() => handleRating(btn.level)}
-              className={`flex flex-col items-center justify-center py-3 sm:py-4 rounded-xl sm:rounded-4xl transition-all active:scale-95 ${
-                isFlipped
-                  ? `${btn.color} text-white scale-100 border border-transparent shadow-lg`
-                  : "bg-[#EDEAE4] dark:bg-[#242220] text-[#B5B0A8] opacity-60 scale-95 grayscale cursor-not-allowed border border-[#E0DBD3] dark:border-[#2E2C29]"
-              }`}
-            >
-              <span className="text-lg sm:text-xl md:text-2xl mb-0.5 sm:mb-1">{btn.emoji}</span>
-              <span className="text-[10px] sm:text-xs md:text-sm font-semibold leading-tight">{btn.label}</span>
-            </button>
-          ))}
-        </div>
-        <p className="hidden md:block text-center sub-title mt-3 opacity-60">
-          {t.words.flashcards.keyboardHint}
-        </p>
-      </div>
+      <RatingBar isFlipped={isFlipped} onFlip={() => setIsFlipped(true)} onRate={handleRating} />
 
       <FlashcardStatsModal
         isOpen={showStats}
@@ -275,6 +214,6 @@ export default function ReviewPage() {
         onClose={() => navigate("/")}
         onRestart={loadData}
       />
-    </motion.div>
+    </SessionShell>
   );
 }

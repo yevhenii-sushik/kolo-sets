@@ -14,8 +14,9 @@ import { generateQuizQuestions, QuizQuestion } from "../../utils/quizGenerator";
 import QuizQuestionComponent from "../../components/quiz/QuizQuestion";
 import QuizStatsModal from "../../components/quiz/QuizStatsModal";
 import QuizSettingsModal from "../../components/quiz/QuizSettingsModal";
-import { X, Settings } from "lucide-react";
-import { motion } from "framer-motion";
+import { Check, Settings, X } from "lucide-react";
+import { IconButton } from "../../ui";
+import SessionShell from "../../components/session/SessionShell";
 import { useI18n } from "../../contexts/I18nContext";
 
 export default function QuizPage() {
@@ -77,14 +78,11 @@ export default function QuizPage() {
 
   if (!collection || questions.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="u-title text-xl text-[#7A756E]">{t.loading}</div>
-      </div>
+      <div className="flex h-64 items-center justify-center text-muted">{t.loading}</div>
     );
   }
 
   const currentQuestion = questions[currentIndex];
-  const progress = ((currentIndex + 1) / questions.length) * 100;
 
   const handleAnswer = (answer: string) => {
     // Matching completes its own UI flow — just update stats silently
@@ -228,90 +226,42 @@ export default function QuizPage() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-[#F5F2ED] dark:bg-[#0F0E0C] flex flex-col overflow-hidden"
-    >
-      {/* Header — идентично FlashcardsPage */}
-      <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-3">
-        <div
-          className="max-w-6xl mx-auto flex items-center justify-between
-                   bg-white/60 dark:bg-[#1A1917]/60 backdrop-blur-xl 
-                   p-2 sm:p-3 pr-4 sm:pr-5 rounded-full shadow-sm
-                   border border-[#E0DBD3] dark:border-[#2E2C29]"
-        >
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate(-1)}
-              className="p-2 hover:bg-[#EDEAE4] dark:hover:bg-[#242220] rounded-xl transition-colors shrink-0 text-[#1A1714] dark:text-[#F0EDE8]"
-              title="Назад"
-            >
-              <X size={20} />
-            </button>
-            <h1 className="u-title text-lg md:text-xl text-[#1A1714] dark:text-[#F0EDE8] truncate">
-              {collection.name}
-            </h1>
-          </div>
-
-          <button
-            onClick={() => setShowSettings(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FFF0ED] dark:bg-[#2A1A15] text-[#FF5733] hover:bg-[#FF5733] hover:text-white transition-colors"
-            title={t.words.quiz.settings.title}
-          >
-            <Settings size={18} />
-            <span className="hidden md:inline text-[13px] font-bold">
-              {t.words.quiz.settings.title}
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* Progress bar — идентично FlashcardsPage */}
-      <div className="shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-1">
-        <div className="max-w-6xl mx-auto flex items-center gap-4">
-          <div className="sub-title min-w-10 text-center">
+    <SessionShell
+      title={collection.name}
+      onClose={() => navigate(-1)}
+      action={
+        <IconButton label={t.words.quiz.settings.title} onClick={() => setShowSettings(true)}>
+          <Settings size={20} />
+        </IconButton>
+      }
+      progress={(currentIndex + 1) / questions.length}
+      meta={
+        <>
+          <span>
             {currentIndex + 1} / {questions.length}
-          </div>
-          <div className="flex-1 bg-[#EDEAE4] dark:bg-[#242220] rounded-full h-3.5 overflow-hidden">
-            <div
-              className="bg-[#FF5733] rounded-full h-full transition-all duration-500 ease-out"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="uc-title min-w-10 text-center">
-            {Math.round(progress)}%
-          </div>
-
-          {/* Correct / wrong counters */}
-          <div className="shrink-0 flex gap-2">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#EDEAE4] dark:bg-[#242220] rounded-full">
-              <span className="text-sm text-[#22C55E] font-black">✓</span>
-              <span className="u-title font-bold text-[#22C55E] text-base">
-                {stats.correctAnswers}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#EDEAE4] dark:bg-[#242220] rounded-full">
-              <span className="text-sm text-red-500 font-black">✗</span>
-              <span className="u-title font-bold text-red-500 text-base">
-                {stats.wrongAnswers}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Вопрос */}
-      <main className="flex-1 min-h-0 overflow-auto px-4 sm:px-6 py-3 sm:py-4">
-        <div className="max-w-3xl mx-auto">
-          <QuizQuestionComponent
-            question={currentQuestion}
-            userAnswer={userAnswer}
-            showFeedback={showFeedback}
-            isCorrect={isCorrect}
-            onAnswer={handleAnswer}
-            onNext={handleNext}
-          />
+          </span>
+          <span className="flex items-center gap-1 text-success">
+            <Check size={15} strokeWidth={3} />
+            {stats.correctAnswers}
+          </span>
+          <span className="flex items-center gap-1 text-danger">
+            <X size={15} strokeWidth={3} />
+            {stats.wrongAnswers}
+          </span>
+        </>
+      }
+    >
+      {/* my-auto — по центру, пока помещается; иначе прокрутка */}
+      <main className="flex min-h-0 flex-1 flex-col overflow-auto px-4 py-6 sm:px-6">
+        <div className="my-auto">
+        <QuizQuestionComponent
+          question={currentQuestion}
+          userAnswer={userAnswer}
+          showFeedback={showFeedback}
+          isCorrect={isCorrect}
+          onAnswer={handleAnswer}
+          onNext={handleNext}
+        />
         </div>
       </main>
 
@@ -328,6 +278,6 @@ export default function QuizPage() {
         onClose={() => setShowSettings(false)}
         onSave={handleSettingsChange}
       />
-    </motion.div>
+    </SessionShell>
   );
 }

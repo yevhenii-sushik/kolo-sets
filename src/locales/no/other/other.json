@@ -1,8 +1,50 @@
 {
   "settings": "Innstillinger",
-  "updates": "Oppdateringer",
-  "privacy": "Personvern",
-  "systemInfo": "Systeminformasjon",
-  "dataManagement": "Datakjerne",
-  "support": "Support"
+  "dataManagement": "Data og konto",
+  "updates": "Hva er nytt",
+  "support": "Støtte",
+  "groups": {
+    "app": "Appen",
+    "docs": "Dokumenter"
+  },
+  "hints": {
+    "settings": "Tema, språk, dagsmål, påminnelser",
+    "data": "Sikkerhetskopi og sletting av konto",
+    "updates": "Alle Kolo-versjoner",
+    "support": "Meld fra om en feil eller foreslå en idé",
+    "privacy": "Hvordan vi behandler dataene dine",
+    "terms": "Regler for bruk av Kolo",
+    "cookies": "Hva vi lagrer i nettleseren"
+  },
+  "version": "Versjon {v}",
+  "supportPage": {
+    "title": "Støtte",
+    "subtitle": "Noe som ikke virker, eller har du en idé? Meldingen går rett til Kolo-teamet.",
+    "typeTitle": "Hva gjelder det?",
+    "types": {
+      "bug": "Feil",
+      "feature": "Idé",
+      "change": "Forbedring",
+      "review": "Tilbakemelding"
+    },
+    "typeHints": {
+      "bug": "Noe virker ikke",
+      "feature": "En ny funksjon",
+      "change": "Gjøre noe bedre",
+      "review": "Del inntrykkene dine"
+    },
+    "pickType": "Velg et emne for å åpne skjemaet.",
+    "subject": "Emne",
+    "subjectPlaceholder": "Med noen få ord",
+    "email": "E-post for svar",
+    "emailHint": "Valgfritt – fyll ut hvis du vil ha svar",
+    "message": "Melding",
+    "messagePlaceholder": "Jo flere detaljer, jo raskere kan vi hjelpe",
+    "send": "Send",
+    "sendError": "Kunne ikke sende meldingen. Prøv igjen litt senere.",
+    "sentTitle": "Takk!",
+    "sentText": "Meldingen er hos Kolo-teamet. Vi leser alle – har du oppgitt e-post, svarer vi der.",
+    "sentHome": "Til forsiden",
+    "sentAgain": "Skriv en til"
+  }
 }

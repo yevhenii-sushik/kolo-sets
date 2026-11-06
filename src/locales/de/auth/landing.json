@@ -1,0 +1,275 @@
+{
+  "nav": {
+    "siteLanguage": "Website-Sprache",
+    "login": "Anmelden",
+    "start": "Loslegen",
+    "how": "So funktioniert's",
+    "modes": "Modi",
+    "faq": "FAQ",
+    "sections": "Abschnitte der Seite"
+  },
+  "hero": {
+    "title": "Der einfache Weg, Vokabeln in jeder Sprache zu lernen – und sie nicht zu vergessen.",
+    "subtitle": "Füge deine eigenen Wörter hinzu, übe ein paar Minuten am Tag – und Kolo bringt jedes Wort genau dann zurück, wenn du es gerade zu vergessen beginnst.",
+    "start": "Jetzt lernen",
+    "login": "Ich habe schon ein Konto",
+    "promises": [
+      "Keine Werbung",
+      "Lernen komplett kostenlos",
+      "Im Browser und auf dem Handy"
+    ],
+    "ratings": [
+      "Weiß nicht",
+      "Vergessen",
+      "Erinnert",
+      "Gewusst"
+    ],
+    "cards": [
+      {
+        "flag": "🇳🇴",
+        "pos": "Subst.",
+        "word": "bok",
+        "translation": "Buch",
+        "example": "Jeg leser en interessant bok."
+      },
+      {
+        "flag": "🇮🇹",
+        "pos": "Subst.",
+        "word": "amico",
+        "translation": "Freund",
+        "example": "Lui è il mio migliore amico."
+      },
+      {
+        "flag": "🇯🇵",
+        "pos": "Subst.",
+        "word": "旅行",
+        "translation": "Reise",
+        "example": "夏に京都へ旅行します。"
+      }
+    ]
+  },
+  "languages": {
+    "label": "Sprachen, die du mit Kolo lernen kannst",
+    "more": "und fast jede andere"
+  },
+  "how": {
+    "title": "Jedes Wort auf seiner eigenen Umlaufbahn",
+    "text": "Kolo merkt sich, wie gut du jedes Wort kannst, und entscheidet, wann du es wiedersehen solltest.",
+    "steps": [
+      {
+        "title": "Wörter hinzufügen",
+        "text": "Deine eigenen – aus Büchern, Serien und Gesprächen. Füge eine ganze Liste auf einmal ein."
+      },
+      {
+        "title": "Ein bisschen üben",
+        "text": "Karteikarten, Quiz und Spiele. Schon fünf Minuten am Tag zählen."
+      },
+      {
+        "title": "Kolo bringt sie zurück",
+        "text": "Schwierige Wörter kommen morgen wieder, bekannte in einer Woche oder einem Monat. Du wiederholst genau das, was fällig ist."
+      }
+    ]
+  },
+  "modes": {
+    "title": "Sechs Wege, damit ein Wort hängen bleibt",
+    "text": "Dieselben Wörter in verschiedenen Formaten – wähl den Modus, der zu deiner Laune passt.",
+    "items": {
+      "flashcards": {
+        "name": "Karteikarten",
+        "text": "Vorne das Wort, hinten die Übersetzung. Markiere, wie gut du es wusstest."
+      },
+      "review": {
+        "name": "Wiederholen",
+        "text": "Nur die Wörter, die heute fällig sind."
+      },
+      "quiz": {
+        "name": "Quiz",
+        "text": "Wähle die richtige Antwort, tippe das Wort oder ordne Paare zu."
+      },
+      "speed": {
+        "name": "Gegen die Uhr",
+        "text": "So viele Antworten wie möglich in 60 Sekunden."
+      },
+      "survival": {
+        "name": "Überleben",
+        "text": "Drei Leben. Jeder Fehler kostet eins."
+      },
+      "match": {
+        "name": "Paare finden",
+        "text": "Verbinde sechs Wörter mit ihren Übersetzungen – auf Zeit."
+      }
+    },
+    "preview": {
+      "question": "Wähle die Übersetzung",
+      "due": "heute fällig",
+      "score": "Antworten",
+      "best": "Rekord"
+    }
+  },
+  "method": {
+    "title": "Perigee weiß, wann ein Wort zurückkommt",
+    "text": "Perigee ist die Wiederholungs-Engine von Kolo. Das Perigäum ist der Punkt einer Umlaufbahn, an dem ein Satellit am nächsten ist – genau dann bringt Perigee ein Wort zurück, kurz bevor es verblasst. Nach jeder Karte markierst du, wie gut du es kannst: Schwierige Wörter kommen früher wieder, und die Abstände wachsen, sobald ein Wort sitzt. Dahinter steckt SM-2, eine bewährte Methode der verteilten Wiederholung.",
+    "memory": "Gedächtnis",
+    "time": "Zeit",
+    "withKolo": "Mit Kolo",
+    "without": "Ohne Wiederholung",
+    "intervals": [
+      "+1 T",
+      "+3 T",
+      "+7 T"
+    ],
+    "schematic": "Schematische Darstellung"
+  },
+  "habit": {
+    "title": "Eine Gewohnheit, die du nicht brechen willst",
+    "text": "Deine Serie wächst mit jedem Tag, an dem du übst. Das Spiel des Tages und Erfolge geben dir einen Grund, morgen wiederzukommen.",
+    "streak": {
+      "title": "Tagesserie",
+      "text": "Jeder Übungstag verlängert sie."
+    },
+    "daily": {
+      "title": "Spiel des Tages",
+      "text": "Bilde Wörter aus sieben Buchstaben und vergleiche deine Punkte mit anderen Spielern."
+    },
+    "achievements": {
+      "title": "Erfolge",
+      "text": "Für Serien, gelernte Wörter und fehlerfreie Quiz."
+    },
+    "days": "Tage",
+    "week": [
+      "M",
+      "D",
+      "M",
+      "D",
+      "F",
+      "S",
+      "S"
+    ],
+    "achievementName": "Zwei Wochen am Stück"
+  },
+  "words": {
+    "title": "Deine Wörter, dein Tempo",
+    "text": "Lerne die Wörter, die dir wirklich begegnen – in Büchern, Serien und Gesprächen.",
+    "sets": {
+      "title": "Sets und Ordner",
+      "text": "Sortiere Wörter in Sets und Ordner. Füge eine ganze Liste ein – sie wird auf einmal importiert."
+    },
+    "audio": {
+      "title": "Aussprache",
+      "text": "Tippe, um ein Wort und sein Beispiel zu hören. Audio gibt es heute für Norwegisch, weitere Sprachen folgen."
+    },
+    "folder": "Meine Sprachen",
+    "setList": [
+      {
+        "flag": "🇳🇴",
+        "name": "Norwegisch · Essen",
+        "count": "24 Wörter"
+      },
+      {
+        "flag": "🇮🇹",
+        "name": "Italienisch · Reisen",
+        "count": "18 Wörter"
+      },
+      {
+        "flag": "🇯🇵",
+        "name": "Japanisch · Grundlagen",
+        "count": "31 Wörter"
+      }
+    ],
+    "import": "Liste einfügen – auf einen Schlag importiert",
+    "importLines": [
+      "skrive; schreiben",
+      "lese; lesen",
+      "snakke; sprechen"
+    ],
+    "audioTranslation": "Aussprache"
+  },
+  "team": {
+    "title": "Mit ❤️ gemacht vom Kolo-Team",
+    "text": "Kolo ist ein Produkt des Studios Dakuta. Das Kolo-Team aus Design und Entwicklung baut es auf drei Prinzipien: echter Lernnutzen, sorgfältiger Umgang mit deinen Daten und ein ehrliches Modell – ohne Werbung und ohne Bezahlschranken.",
+    "link": "Über Dakuta"
+  },
+  "app": {
+    "title": "Lerne, wann und wo du willst",
+    "text": "Kolo läuft in jedem Browser und lässt sich wie eine normale App aufs Handy installieren – mit eigenem Symbol und im Vollbild. Dein Fortschritt wird zwischen deinen Geräten synchronisiert.",
+    "ios": {
+      "title": "iPhone & iPad",
+      "hint": "Safari → Teilen → Zum Home-Bildschirm"
+    },
+    "android": {
+      "title": "Android",
+      "hint": "Chrome → Menü → App installieren"
+    },
+    "desktop": {
+      "title": "Computer",
+      "hint": "Jeder moderne Browser, kein Download nötig"
+    },
+    "native": {
+      "title": "Apps für iOS und Android",
+      "badge": "In Arbeit",
+      "text": "Wir bauen das Team auf und sammeln Mittel für den Start. Bis dahin installierst du Kolo aus dem Browser."
+    }
+  },
+  "faq": {
+    "title": "Fragen & Antworten",
+    "askTitle": "Noch Fragen?",
+    "askText": "Schreib uns – wir antworten per E-Mail.",
+    "askButton": "Support kontaktieren",
+    "items": [
+      {
+        "q": "Für wen ist Kolo?",
+        "a": "Für alle, die eine Fremdsprache lernen – von absoluten Anfängern bis zu denen, die schon sprechen und ihren Wortschatz erweitern wollen. Deine Sets stellst du aus den Wörtern zusammen, die du wirklich brauchst."
+      },
+      {
+        "q": "Welche Sprachen kann ich lernen?",
+        "a": "Fast jede: Die Karten funktionieren mit jedem Alphabet und jeder Schrift, du kannst also Wörter auf Spanisch, Japanisch oder Norwegisch hinzufügen. Aussprache gibt es heute für Norwegisch, Stimmen für weitere Sprachen kommen bald."
+      },
+      {
+        "q": "Wie funktioniert verteilte Wiederholung?",
+        "a": "Nach jeder Karte markierst du, wie gut du das Wort wusstest. Perigee, die Wiederholungs-Engine von Kolo auf Basis des SM-2-Algorithmus, plant damit die nächste Wiederholung: Schwierige Wörter kommen früher zurück, bekannte später."
+      },
+      {
+        "q": "Muss ich etwas installieren?",
+        "a": "Nein. Kolo läuft im Browser. Wenn du willst, legst du es auf den Home-Bildschirm – dann öffnet es sich wie eine normale App."
+      },
+      {
+        "q": "Wird mein Fortschritt gespeichert?",
+        "a": "Ja. Mit einem Konto werden deine Sets und Statistiken in der Cloud gespeichert und zwischen Handy, Tablet und Computer synchronisiert."
+      },
+      {
+        "q": "In welchen Sprachen gibt es Kolo?",
+        "a": "Die App gibt es auf: {appLanguages}. Diese Website gibt es außerdem auf: {siteOnlyLanguages} – die Übersetzung der App in diese Sprachen ist in Arbeit."
+      }
+    ]
+  },
+  "more": {
+    "title": "Du lernst Norwegisch?",
+    "text": "Zwei weitere Tools von Dakuta – für Grammatik und Wortformen."
+  },
+  "cta": {
+    "title": "Lerne jede Sprache mit Kolo",
+    "text": "Erstelle ein Konto und füge deine ersten Wörter hinzu – das dauert nur ein paar Minuten.",
+    "button": "Jetzt lernen"
+  },
+  "footer": {
+    "tagline": "Vokabeln in jeder Sprache lernen – und behalten.",
+    "how": "So funktioniert's",
+    "modes": "Trainingsmodi",
+    "engine": "Perigee-Engine",
+    "help": "Hilfe",
+    "faq": "Fragen & Antworten",
+    "contact": "Support kontaktieren",
+    "install": "Aufs Handy installieren",
+    "about": "Über das Studio",
+    "woky": "Woky – Grammatik",
+    "boey": "Bøy! – Beugung",
+    "soon": "bald",
+    "legal": "Rechtliches",
+    "siteLanguage": "Website-Sprache:"
+  },
+  "alt": {
+    "hero": "Kolo auf einem Handy: eine Karteikarte mit Wort, Übersetzung und Beispiel, umkreist von Wörtern in anderen Sprachen.",
+    "curve": "Schema: Ohne Wiederholung wird ein Wort schnell vergessen; mit jeder Wiederholung in Kolo langsamer, und die Abstände wachsen.",
+    "homeScreen": "Kolo auf dem Startbildschirm eines Handys neben anderen Apps."
+  }
+}

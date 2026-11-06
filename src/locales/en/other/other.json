@@ -1,8 +1,50 @@
 {
   "settings": "Settings",
-  "updates": "Updates",
-  "privacy": "Privacy",
-  "systemInfo": "Systeam Info",
-  "dataManagement": "Data Core",
-  "support": "Support"
+  "dataManagement": "Data & account",
+  "updates": "What's new",
+  "support": "Support",
+  "groups": {
+    "app": "App",
+    "docs": "Documents"
+  },
+  "hints": {
+    "settings": "Theme, language, daily goal, reminders",
+    "data": "Backup and account deletion",
+    "updates": "Every Kolo release",
+    "support": "Report a bug or suggest an idea",
+    "privacy": "How we handle your data",
+    "terms": "Rules for using Kolo",
+    "cookies": "What we store in your browser"
+  },
+  "version": "Version {v}",
+  "supportPage": {
+    "title": "Support",
+    "subtitle": "Something not working, or have an idea? Your message goes straight to the Kolo team.",
+    "typeTitle": "What's it about?",
+    "types": {
+      "bug": "Bug",
+      "feature": "Idea",
+      "change": "Improvement",
+      "review": "Feedback"
+    },
+    "typeHints": {
+      "bug": "Something doesn't work",
+      "feature": "A new feature",
+      "change": "Make something better",
+      "review": "Share your impressions"
+    },
+    "pickType": "Choose a topic to open the form.",
+    "subject": "Subject",
+    "subjectPlaceholder": "In a few words",
+    "email": "Email for a reply",
+    "emailHint": "Optional — leave it if you'd like an answer",
+    "message": "Message",
+    "messagePlaceholder": "The more detail, the faster we can help",
+    "send": "Send",
+    "sendError": "Couldn't send the message. Try again a little later.",
+    "sentTitle": "Thank you!",
+    "sentText": "Your message is with the Kolo team. We read every one — if you left an email, we'll reply there.",
+    "sentHome": "Back to home",
+    "sentAgain": "Write another"
+  }
 }

@@ -1,0 +1,57 @@
+{
+  "docs": {
+    "privacy": "Personvernerklæring",
+    "terms": "Vilkår for bruk",
+    "cookies": "Retningslinjer for informasjonskapsler",
+    "refund": "Refusjonsregler"
+  },
+  "cookies": {
+    "title": "Informasjonskapsler og personvern",
+    "text": "Kolo lagrer bare det som trengs på enheten din: innlogging, innstillinger og en frakoblet kopi av settene dine. Ingen reklame, ingen sporing.",
+    "more": "Les mer: {cookies}.",
+    "acceptAll": "Godta alle",
+    "necessaryOnly": "Bare nødvendige",
+    "customize": "Tilpass",
+    "save": "Lagre valg",
+    "necessary": "Nødvendige",
+    "necessaryDesc": "Innlogging, språk, tema, frakoblet modus og fremgang på denne enheten. Kolo fungerer ikke uten dem.",
+    "alwaysOn": "Alltid på",
+    "analytics": "Analyse",
+    "analyticsDesc": "Anonym bruksstatistikk som hjelper oss å forbedre Kolo. Brukes ikke ennå — slås bare på med ditt samtykke.",
+    "settings": "Innstillinger for informasjonskapsler"
+  },
+  "consent": {
+    "agree": "Jeg godtar {terms} og bekrefter at jeg har lest {privacy}.",
+    "labels": {
+      "terms": "vilkårene for bruk",
+      "privacy": "personvernerklæringen"
+    },
+    "required": "Du må godta vilkårene for bruk for å opprette en konto.",
+    "google": "Ved å fortsette med Google godtar du {terms} og bekrefter at du har lest {privacy}.",
+    "support": "Meldingen sendes til Kolo-teamet via Telegram. Les mer: {privacy}."
+  },
+  "page": {
+    "effective": "Gjelder fra {date}",
+    "shortVersion": "Kort fortalt",
+    "contents": "Innhold",
+    "docsNav": "Juridiske dokumenter",
+    "signUp": "Registrer deg",
+    "openApp": "Åpne appen",
+    "translationNote": "Dette er en oversettelse for enkelhets skyld. Hvis den avviker fra den engelske originalen, gjelder den engelske versjonen.",
+    "originalNote": "Du leser den engelske originalen.",
+    "showOriginal": "Vis engelsk original",
+    "showTranslation": "Tilbake til oversettelsen",
+    "linkToSection": "Lenke til denne delen",
+    "questionsTitle": "Spørsmål om dette dokumentet?",
+    "questionsText": "Skriv til oss, så svarer vi.",
+    "alsoRead": "Les også",
+    "support": "Støtte",
+    "backToTop": "Til toppen"
+  },
+  "tabs": {
+    "privacy": "Personvern",
+    "terms": "Vilkår",
+    "cookies": "Informasjonskapsler",
+    "refund": "Refusjon"
+  }
+}

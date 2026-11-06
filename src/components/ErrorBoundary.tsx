@@ -1,5 +1,7 @@
 import React from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { useI18n } from '../contexts/I18nContext';
+import { Button, Heading, Text } from '../ui';
 
 interface State {
   hasError: boolean;
@@ -40,42 +42,43 @@ export default class ErrorBoundary extends React.Component<Props, State> {
 }
 
 function ErrorFallback({ error, onReset }: { error: Error | null; onReset: () => void }) {
+  const { t } = useI18n();
+  const e = t.error;
   return (
-    <div className="min-h-dvh flex flex-col items-center justify-center bg-[#F5F2ED] dark:bg-[#0F0E0C] px-6 text-center">
-      <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mb-6">
-        <AlertTriangle size={28} className="text-red-500" />
+    <div className="min-h-dvh grid place-items-center bg-bg px-4 py-16">
+      <div className="grid max-w-md justify-items-center gap-6 text-center">
+        <span className="grid h-14 w-14 place-items-center rounded-2xl bg-danger-soft text-danger">
+          <AlertTriangle size={26} />
+        </span>
+        <div className="grid gap-3">
+          <Heading size={1}>{e.title}</Heading>
+          <Text tone="muted">
+            {e.text}{' '}
+            <a href={`mailto:${e.contact}`} className="font-semibold text-accent-ink hover:underline underline-offset-2">
+              {e.contact}
+            </a>
+          </Text>
+        </div>
+        <div className="flex flex-wrap justify-center gap-3">
+          <Button size="lg" iconLeft={<RefreshCw size={18} />} onClick={onReset}>
+            {e.retry}
+          </Button>
+          {/* Полная перезагрузка: состояние после ошибки могло испортиться */}
+          <Button size="lg" variant="secondary" onClick={() => { window.location.href = '/'; }}>
+            {e.home}
+          </Button>
+        </div>
+        {error && (
+          <details className="w-full text-left">
+            <summary className="cursor-pointer text-center text-sm font-medium text-faint transition-colors hover:text-muted">
+              {e.details}
+            </summary>
+            <pre className="mt-3 overflow-auto whitespace-pre-wrap rounded-2xl border border-line bg-surface p-4 text-xs leading-relaxed text-muted">
+              {error.message}
+            </pre>
+          </details>
+        )}
       </div>
-      <h1 className="text-4xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] tracking-tight mb-3">
-        Something broke<span className="text-[#FF5733]">.</span>
-      </h1>
-      <p className="text-[14px] text-[#7A756E] dark:text-[#8A867F] font-medium max-w-sm mb-8 leading-relaxed">
-        An unexpected error occurred. Your data is safe — this is just a display issue.
-      </p>
-      <div className="flex gap-3">
-        <button
-          onClick={onReset}
-          className="flex items-center gap-2 px-6 py-3 bg-[#FF5733] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-[#E54D2A] transition-colors shadow-lg shadow-[#FF5733]/25"
-        >
-          <RefreshCw size={14} />
-          Try again
-        </button>
-        <button
-          onClick={() => { window.location.href = '/'; }}
-          className="px-6 py-3 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#0F0E0C] rounded-2xl font-black text-[11px] uppercase tracking-widest hover:opacity-90 transition-opacity"
-        >
-          Go home
-        </button>
-      </div>
-      {error && (
-        <details className="mt-8 max-w-md text-left">
-          <summary className="text-[11px] font-bold uppercase tracking-widest text-[#B5B0A8] cursor-pointer hover:text-[#7A756E] transition-colors">
-            Error details
-          </summary>
-          <pre className="mt-3 p-4 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-2xl text-[10px] text-[#7A756E] overflow-auto leading-relaxed whitespace-pre-wrap">
-            {error.message}
-          </pre>
-        </details>
-      )}
     </div>
   );
 }

@@ -10,6 +10,8 @@ import enOther from './en/other/other.json';
 import enSettings from './en/other/settings.json';
 import enExplore from './en/other/explore.json';
 import enGame from './en/game.json';
+import enLegal from './en/legal.json';
+import enError from './en/error.json';
 
 import ruCommon from './ru/common.json';
 import ruAuth from './ru/auth.json';
@@ -23,6 +25,8 @@ import ruOther from './ru/other/other.json';
 import ruSettings from './ru/other/settings.json';
 import ruExplore from './ru/other/explore.json';
 import ruGame from './ru/game.json';
+import ruLegal from './ru/legal.json';
+import ruError from './ru/error.json';
 
 import noCommon from './no/common.json';
 import noAuth from './no/auth.json';
@@ -36,6 +40,8 @@ import noOther from './no/other/other.json';
 import noSettings from './no/other/settings.json';
 import noExplore from './no/other/explore.json';
 import noGame from './no/game.json';
+import noLegal from './no/legal.json';
+import noError from './no/error.json';
 
 import ukCommon from './uk/common.json';
 import ukAuth from './uk/auth.json';
@@ -49,6 +55,33 @@ import ukOther from './uk/other/other.json';
 import ukSettings from './uk/other/settings.json';
 import ukExplore from './uk/other/explore.json';
 import ukGame from './uk/game.json';
+import ukLegal from './uk/legal.json';
+import ukError from './uk/error.json';
+
+// Языки, у которых пока переведены только публичные страницы: лендинг, вход/регистрация, юр. тексты и Explore
+import esLanding from './es/auth/landing.json';
+import esExplore from './es/other/explore.json';
+import deLanding from './de/auth/landing.json';
+import deExplore from './de/other/explore.json';
+import frLanding from './fr/auth/landing.json';
+import frExplore from './fr/other/explore.json';
+import ptBRLanding from './pt-BR/auth/landing.json';
+import ptBRExplore from './pt-BR/other/explore.json';
+import esLegal from './es/legal.json';
+import deLegal from './de/legal.json';
+import frLegal from './fr/legal.json';
+import ptBRLegal from './pt-BR/legal.json';
+import esAuth from './es/auth.json';
+import deAuth from './de/auth.json';
+import frAuth from './fr/auth.json';
+import ptBRAuth from './pt-BR/auth.json';
+import esError from './es/error.json';
+import deError from './de/error.json';
+import frError from './fr/error.json';
+import ptBRError from './pt-BR/error.json';
+import { LANGUAGES, Language, detectBrowserLanguage } from './languages';
+
+export type { Language } from './languages';
 
 
 const en = {
@@ -64,6 +97,8 @@ const en = {
   settings: enSettings,
   explore: enExplore,
   game: enGame,
+  legal: enLegal,
+  error: enError,
 };
 
 const ru = {
@@ -79,6 +114,8 @@ const ru = {
   settings: ruSettings,
   explore: ruExplore,
   game: ruGame,
+  legal: ruLegal,
+  error: ruError,
 };
 
 const no = {
@@ -94,6 +131,8 @@ const no = {
   settings: noSettings,
   explore: noExplore,
   game: noGame,
+  legal: noLegal,
+  error: noError,
 };
 
 const uk = {
@@ -109,21 +148,33 @@ const uk = {
   settings: ukSettings,
   explore: ukExplore,
   game: ukGame,
+  legal: ukLegal,
+  error: ukError,
 };
 
 export type Translations = typeof en;
-export type Language = 'en' | 'ru' | 'no' | 'uk';
+
+// Непереведённые разделы берутся из английского
+const es: Translations = { ...en, landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError };
+const de: Translations = { ...en, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError };
+const fr: Translations = { ...en, landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError };
+const ptBR: Translations = { ...en, landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError };
 
 export const translations: Record<Language, Translations> = {
   en,
+  es,
+  de,
+  fr,
+  'pt-BR': ptBR,
   ru,
+  uk,
   no,
-  uk
 };
 
 export const getCurrentLanguage = (): Language => {
-  const saved = localStorage.getItem('appLanguage') as Language;
-  return saved || 'en';
+  const saved = localStorage.getItem('appLanguage');
+  const known = LANGUAGES.find((l) => l.code === saved);
+  return known ? known.code : detectBrowserLanguage();
 };
 
 export const setLanguage = (lang: Language): void => {

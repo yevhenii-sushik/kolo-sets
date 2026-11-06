@@ -2,11 +2,12 @@
 <html lang="no">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/icon-192.png" />
-    <link rel="apple-touch-icon" href="/icon-512.png" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Learn Norwegian with spaced repetition. Build flashcard collections, track your streak, and let the SM-2 algorithm surface the right words at the right time." />
-    <meta name="theme-color" content="#FF5733" />
+    <meta name="description" content="Learn words in almost any language with spaced repetition. Build flashcard collections, track your streak, and let Kolo bring each word back right before you forget it." />
+    <meta name="theme-color" content="#F5F6FA" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Kolo Sets" />
@@ -14,17 +15,19 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Kolo Sets" />
-    <meta property="og:title" content="Kolo Sets — Learn Norwegian with Spaced Repetition" />
-    <meta property="og:description" content="Build flashcard collections, track your streak, and let the SM-2 algorithm surface the right words at the right time." />
-    <meta property="og:image" content="/icon-512.png" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
+    <meta property="og:title" content="Kolo Sets — Learn Any Language with Spaced Repetition" />
+    <meta property="og:description" content="Build flashcard collections, track your streak, and let Kolo bring each word back right before you forget it." />
+    <meta property="og:url" content="https://kolo.dakuta.dev/" />
+    <meta property="og:image" content="https://kolo.dakuta.dev/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Kolo — learn words in almost any language" />
 
     <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Kolo Sets — Learn Norwegian with Spaced Repetition" />
-    <meta name="twitter:description" content="Build flashcard collections, track your streak, and let the SM-2 algorithm surface the right words at the right time." />
-    <meta name="twitter:image" content="/icon-512.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kolo Sets — Learn Any Language with Spaced Repetition" />
+    <meta name="twitter:description" content="Build flashcard collections, track your streak, and let Kolo bring each word back right before you forget it." />
+    <meta name="twitter:image" content="https://kolo.dakuta.dev/og-image.png" />
 
     <title>Kolo Sets</title>
     <script>
@@ -32,6 +35,8 @@
         var t = localStorage.getItem('language_cards_theme');
         if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.classList.add('dark');
+          // Адресная строка — под фон тёмной темы (--color-bg в .dark)
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0B0E19');
         }
       })();
     </script>

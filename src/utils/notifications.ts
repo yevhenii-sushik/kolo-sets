@@ -74,7 +74,7 @@ export const scheduleReminder = (settings: ReminderSettings): void => {
           ? `You have ${dueCount} cards due for review. Keep your streak alive!`
           : 'Time to study! Open Kolo Sets to keep your streak going.',
         icon: '/icon-192.png',
-        badge: '/icon-192.png',
+        badge: '/badge-96.png', // белый силуэт знака: Android сам красит значок
         tag: 'kolo-daily-reminder',
       });
     } catch {

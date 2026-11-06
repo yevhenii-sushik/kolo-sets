@@ -3,7 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card, Collection } from "../../types";
 import { getCollection } from "../../utils/storage";
 import { shuffle, makeChoices } from "../../utils/gameUtils";
-import { X, Heart, RotateCcw, Shield } from "lucide-react";
+import { Check, Flame, Heart } from "lucide-react";
+import { useI18n } from "../../contexts/I18nContext";
+import SessionShell from "../../components/session/SessionShell";
+import SessionResult from "../../components/session/SessionResult";
+import ChoiceButton, { choiceState } from "../../components/session/ChoiceButton";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   playCorrectIfEnabled,
@@ -19,6 +23,8 @@ interface Feedback { chosen: string; correct: boolean; }
 export default function SurvivalPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useI18n();
+  const ss = t.words.session;
 
   const [phase, setPhase] = useState<Phase>("playing");
   const [collection, setCollection] = useState<Collection | null>(null);
@@ -130,60 +136,28 @@ export default function SurvivalPage() {
   const currentCard = queue[qIdx];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-[#F5F2ED] dark:bg-[#0F0E0C] flex flex-col overflow-hidden"
+    <SessionShell
+      title={t.words.collectionCard.modal.survival}
+      subtitle={collection.name}
+      onClose={() => navigate(-1)}
+      action={
+        <motion.div
+          animate={shakingLives ? { x: [0, -5, 5, -4, 4, 0] } : {}}
+          transition={{ duration: 0.35 }}
+          className="flex items-center gap-1"
+          role="img"
+          aria-label={`${ss.lives}: ${lives}/${MAX_LIVES}`}
+        >
+          {Array.from({ length: MAX_LIVES }).map((_, i) => (
+            <motion.span key={i} animate={{ scale: i < lives ? 1 : 0.7 }} transition={{ type: "spring", stiffness: 400, damping: 15 }}>
+              <Heart size={20} className={i < lives ? "fill-danger text-danger" : "fill-track text-track"} />
+            </motion.span>
+          ))}
+        </motion.div>
+      }
+      meta={<span className="text-fg">{ss.score}: {score}</span>}
     >
-      {/* ── Header ── */}
-      <div className="shrink-0 px-4 pt-4 pb-3">
-        <div className="max-w-2xl mx-auto flex items-center gap-3 bg-white/70 dark:bg-[#1A1917]/70 backdrop-blur-xl rounded-4xl px-4 py-3 border border-[#E0DBD3] dark:border-[#2E2C29]">
-          <button
-            onClick={() => navigate(-1)}
-            className="p-1.5 rounded-xl hover:bg-[#F0EDE8] dark:hover:bg-[#242220] text-[#7A756E] transition-colors shrink-0"
-          >
-            <X size={18} />
-          </button>
-
-          <div className="flex items-center gap-1.5">
-            <Shield size={15} className="text-[#FF5733]" />
-            <span className="text-[11px] font-black uppercase tracking-widest text-[#7A756E]">
-              Survival
-            </span>
-          </div>
-
-          {/* ── Lives ── */}
-          <motion.div
-            animate={shakingLives ? { x: [0, -5, 5, -4, 4, 0] } : {}}
-            transition={{ duration: 0.35 }}
-            className="flex items-center gap-1"
-          >
-            {Array.from({ length: MAX_LIVES }).map((_, i) => (
-              <motion.div
-                key={i}
-                animate={{ scale: i < lives ? 1 : 0.65 }}
-                transition={{ type: "spring", stiffness: 400, damping: 15 }}
-              >
-                <Heart
-                  size={18}
-                  className={
-                    i < lives
-                      ? "fill-red-500 text-red-500"
-                      : "text-[#D0CBC4] fill-[#D0CBC4]"
-                  }
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <span className="ml-auto text-sm font-black text-[#1A1714] dark:text-[#F0EDE8]">
-            {score}
-          </span>
-        </div>
-      </div>
-
-      {/* ── Question ── */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8 overflow-hidden">
+      <main className="flex flex-1 flex-col items-center justify-center gap-8 overflow-hidden px-4 sm:px-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={qIdx}
@@ -193,124 +167,51 @@ export default function SurvivalPage() {
             transition={{ duration: 0.18 }}
             className="w-full max-w-lg text-center"
           >
-            <p className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] mb-3">
-              Translate
-            </p>
-            <h2 className="text-4xl md:text-5xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] leading-tight">
-              {currentCard.word}
-              <span className="text-[#FF5733]">.</span>
-            </h2>
-            {currentCard.explanation && (
-              <p className="mt-3 text-sm text-[#7A756E] italic leading-snug line-clamp-2">
-                {currentCard.explanation}
-              </p>
-            )}
+            <p className="text-sm font-medium text-muted">{ss.translate}</p>
+            <h2 className="mt-2 font-display text-4xl font-semibold leading-tight text-fg md:text-5xl">{currentCard.word}</h2>
+            {currentCard.explanation && <p className="mt-3 line-clamp-2 text-sm italic leading-snug text-muted">{currentCard.explanation}</p>}
           </motion.div>
         </AnimatePresence>
 
-        {/* ── Choices ── */}
-        <div className="w-full max-w-lg grid grid-cols-2 gap-3">
-          {choices.map((choice, i) => {
-            const isChosen = feedback?.chosen === choice;
-            const isCorrectChoice = choice === currentCard.translation;
-
-            let cls =
-              "bg-white dark:bg-[#1A1917] border-[#E0DBD3] dark:border-[#2E2C29] hover:border-[#FF5733]/40 text-[#1A1714] dark:text-[#F0EDE8]";
-            if (isChosen && feedback?.correct)
-              cls = "bg-[#22C55E] border-[#22C55E] text-white";
-            else if (isChosen && !feedback?.correct)
-              cls = "bg-red-500 border-red-500 text-white";
-            else if (feedback && isCorrectChoice && !feedback.correct)
-              cls = "bg-[#22C55E]/15 border-[#22C55E] text-[#1A1714] dark:text-[#F0EDE8]";
-
-            return (
-              <motion.button
-                key={`${qIdx}-${i}`}
-                onClick={() => handleAnswer(choice)}
-                whileTap={feedback ? {} : { scale: 0.97 }}
-                className={`relative py-4 px-4 rounded-2xl border-2 text-left font-bold text-sm transition-all ${cls} ${
-                  feedback ? "pointer-events-none" : ""
-                }`}
-              >
-                <span className="absolute top-1.5 left-2.5 text-[9px] font-black text-current opacity-40">
-                  {i + 1}
-                </span>
-                <span className="block pt-1">{choice}</span>
-              </motion.button>
-            );
-          })}
+        <div className="grid w-full max-w-lg gap-2 sm:grid-cols-2">
+          {choices.map((choice, i) => (
+            <ChoiceButton
+              key={`${qIdx}-${i}`}
+              label={choice}
+              hint={String(i + 1)}
+              state={choiceState(choice, feedback?.chosen ?? null, currentCard.translation)}
+              onClick={() => handleAnswer(choice)}
+            />
+          ))}
         </div>
 
-        <div className="flex items-center gap-5 text-[11px] font-bold text-[#B5B0A8]">
-          <span>✓ {correct}</span>
-          {streak > 1 && <span className="text-[#FF5733]">🔥 {streak}</span>}
+        <div className="flex items-center gap-5 text-sm font-medium text-muted">
+          <span className="flex items-center gap-1.5">
+            <Check size={16} /> {correct}
+          </span>
+          {streak > 1 && (
+            <span className="flex items-center gap-1.5 text-accent-ink">
+              <Flame size={16} /> {streak}
+            </span>
+          )}
         </div>
-      </div>
+      </main>
 
-      {/* ── Game over overlay ── */}
-      <AnimatePresence>
-        {phase === "gameover" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-[#1A1714]/60 backdrop-blur-sm"
-          >
-            <motion.div
-              initial={{ scale: 0.88, y: 24 }}
-              animate={{ scale: 1, y: 0 }}
-              className="w-full max-w-sm bg-white dark:bg-[#1A1917] rounded-4xl p-7 border border-[#E0DBD3] dark:border-[#2E2C29] shadow-2xl text-center"
-            >
-              <div className="flex justify-center gap-2 mb-5">
-                {Array.from({ length: MAX_LIVES }).map((_, i) => (
-                  <Heart key={i} size={22} className="fill-[#E0DBD3] text-[#E0DBD3]" />
-                ))}
-              </div>
-
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] mb-1">
-                Score
-              </p>
-              <h2 className="text-5xl font-black italic font-serif text-[#1A1714] dark:text-[#F0EDE8] mb-6">
-                {score}
-                <span className="text-[#FF5733]">.</span>
-              </h2>
-
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                {[
-                  { label: "Correct", value: correct },
-                  { label: "Best streak", value: maxStreak },
-                ].map(s => (
-                  <div
-                    key={s.label}
-                    className="bg-[#F5F2ED] dark:bg-[#242220] rounded-2xl p-3"
-                  >
-                    <div className="text-xl font-black text-[#1A1714] dark:text-[#F0EDE8]">
-                      {s.value}
-                    </div>
-                    <div className="text-[9px] font-black uppercase tracking-widest text-[#B5B0A8] mt-0.5">
-                      {s.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={() => navigate(-1)}
-                  className="flex-1 py-3 rounded-2xl border border-[#E0DBD3] dark:border-[#2E2C29] text-xs font-black uppercase tracking-widest text-[#7A756E] hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors"
-                >
-                  Exit
-                </button>
-                <button
-                  onClick={restart}
-                  className="flex-1 py-3 rounded-2xl bg-[#FF5733] text-white text-xs font-black uppercase tracking-widest hover:bg-[#E54D2A] transition-colors flex items-center justify-center gap-1.5"
-                >
-                  <RotateCcw size={13} /> Try again
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      <SessionResult
+        open={phase === "gameover"}
+        icon={<Heart size={26} />}
+        tone="danger"
+        title={ss.gameOver}
+        metrics={[
+          { label: ss.score, value: score, tone: "accent" },
+          { label: ss.correct, value: correct, tone: "success" },
+          { label: ss.bestStreak, value: maxStreak },
+        ]}
+        againLabel={ss.again}
+        exitLabel={ss.exit}
+        onAgain={restart}
+        onExit={() => navigate(-1)}
+      />
+    </SessionShell>
   );
 }

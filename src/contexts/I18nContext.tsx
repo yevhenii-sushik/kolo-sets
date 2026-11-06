@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { Language, Translations, translations, getCurrentLanguage, setLanguage as saveLanguage } from '../locales';
+import { getLanguageInfo } from '../locales/languages';
 
 interface I18nContextType {
   language: Language;
@@ -12,6 +13,11 @@ const I18nContext = createContext<I18nContextType | undefined>(undefined);
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(getCurrentLanguage());
   const [t, setT] = useState<Translations>(translations[language]);
+
+  // <html lang> — для скринридеров, переносов и автоперевода браузера
+  useEffect(() => {
+    document.documentElement.lang = getLanguageInfo(language).htmlLang;
+  }, [language]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

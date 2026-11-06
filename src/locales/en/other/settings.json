@@ -1,43 +1,70 @@
 {
   "title": "Settings",
-  "subtitle": "Customize your Kolo experience",
-  "sections": {
-    "appearance": {
-      "title": "Appearance",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System"
-    },
-    "language": {
-      "title": "Interface Language",
-      "recommendation": "Choose the language of the app interface. It does not affect the language of your word collections."
-    },
-    "sound": {
-      "title": "Sound",
-      "effects": "Sound Effects",
-      "effectsDesc": "Feedback sounds for correct/incorrect answers and session completion"
-    },
-    "data": {
-      "title": "Data Management",
-      "export": "Export Backup",
-      "exportDesc": "Save all your collections as a .json file for local storage",
-      "import": "Import Data",
-      "importDesc": "Restore collections from a Kolo .json backup file",
-      "exportSuccess": "Backup created",
-      "exportError": "Export failed",
-      "importSuccess": "Imported",
-      "importError": "Invalid file format",
-      "noCollections": "No collections to export"
-    },
-    "dangerZone": {
-      "title": "Danger Zone",
-      "delete": "Delete Account",
-      "deleteDesc": "All your collections, progress and achievements will be permanently deleted. This action cannot be undone.",
-      "confirmTitle": "Delete account?",
-      "confirmMessage": "This will permanently delete your account, all collections and progress. Are you sure?",
-      "deleteSuccess": "Account deleted",
-      "deleteError": "Failed to delete account. Please sign out and sign in again, then try again.",
-      "deleting": "Deleting..."
+  "subtitle": "Make Kolo work the way you like",
+  "appearance": {
+    "title": "Appearance",
+    "light": "Light",
+    "system": "System",
+    "dark": "Dark"
+  },
+  "language": {
+    "title": "Interface language",
+    "hint": "Changes only the app's language — your word sets stay as they are."
+  },
+  "goal": {
+    "title": "Daily goal",
+    "hint": "How many cards you want to review each day. The goal ring on the home screen fills up towards this number.",
+    "custom": "Your number",
+    "unit": {
+      "one": "card a day",
+      "other": "cards a day"
     }
+  },
+  "reminder": {
+    "title": "Daily reminder",
+    "unsupported": "Your browser doesn't support notifications.",
+    "blockedTitle": "Notifications are blocked",
+    "blockedText": "Allow notifications for Kolo in your browser or system settings to get reminders.",
+    "intro": "A short daily nudge to review your words.",
+    "enable": "Turn on notifications",
+    "toggle": "Remind me every day",
+    "time": "Time",
+    "hour": "Hour",
+    "minute": "Minutes"
+  },
+  "sound": {
+    "title": "Sound",
+    "effects": "Sound effects",
+    "effectsDesc": "Sounds for right and wrong answers and finished sessions"
+  },
+  "data": {
+    "title": "Data & account",
+    "subtitle": "Back up your sets, restore them from a file or delete your account.",
+    "backup": "Backup",
+    "export": "Download a backup",
+    "exportDesc": "All your sets and words in one .json file",
+    "exportButton": "Download",
+    "import": "Restore from file",
+    "importDesc": "New sets are added; sets you already have are replaced with the version from the file",
+    "importButton": "Choose file",
+    "importNote": "Only Kolo backup files (.json) are supported.",
+    "exportSuccess": "Backup downloaded",
+    "exportError": "Couldn't create the backup",
+    "importSuccess": {
+      "one": "{n} set restored",
+      "other": "{n} sets restored"
+    },
+    "importError": "This file isn't a Kolo backup",
+    "noCollections": "You don't have any sets to back up yet",
+    "signInToImport": "Sign in to restore sets"
+  },
+  "account": {
+    "title": "Account",
+    "delete": "Delete account",
+    "deleteDesc": "Your account, sets, progress and achievements will be deleted for good. This can't be undone.",
+    "confirmTitle": "Delete your account?",
+    "confirmMessage": "Your account, all sets and progress will be deleted for good.",
+    "deleteError": "Couldn't delete your account. Sign out, sign back in and try again.",
+    "deleting": "Deleting…"
   }
 }

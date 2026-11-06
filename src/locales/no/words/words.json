@@ -30,8 +30,25 @@
       "quizNeedsMore": "Trenger 4+ kort",
       "studyDue": "Studer forfallne kort",
       "studyDueDesc": "Bare kort som skal gjentas",
-      "noDue": "Ingen kort forfaller i dag"
-    }
+      "noDue": "Ingen kort forfaller i dag",
+      "games": "Spill",
+      "speed": "Hurtigrunde",
+      "speedDesc": "60 sekunder, multiplikator for rekker",
+      "survival": "Overlevelse",
+      "survivalDesc": "Tre liv – hvor langt kommer du?",
+      "match": "Finn par",
+      "matchDesc": "Koble ord med oversettelsene",
+      "needMore": "Trenger minst 4 ord"
+    },
+    "words": {
+      "one": "{n} ord",
+      "other": "{n} ord"
+    },
+    "favoriteAdd": "Legg til i favoritter",
+    "favoriteRemove": "Fjern fra favoritter",
+    "actions": "Handlinger for settet",
+    "moveTo": "Flytt til mappe",
+    "noFolder": "Ingen mappe"
   },
   "editCollection": {
     "addCard": "Legg til ord",
@@ -74,7 +91,13 @@
       "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
       "example": "Eksempelsetning",
       "examplePlaceholder": "Jeg skriver en bok"
-    }
+    },
+    "reviews": {
+      "one": "{n} repetisjon",
+      "other": "{n} repetisjoner"
+    },
+    "accuracy": "{n} % riktig",
+    "scrollTop": "Til toppen"
   },
   "flashcards": {
     "shuffle": "Bland",
@@ -177,5 +200,57 @@
     "deleteError": "Sletting mislyktes",
     "createError": "Feil ved oppretting av samling"
   },
-  "soon": "Vi jobber allerede med denne seksjonen. Den vil dukke opp her veldig snart."
+  "soon": "Vi jobber allerede med denne seksjonen. Den vil dukke opp her veldig snart.",
+  "library": {
+    "newFolder": "Ny mappe",
+    "folders": "Mapper",
+    "favorites": "Favoritter",
+    "all": "Alle sett",
+    "back": "Tilbake til alle sett",
+    "setsCount": {
+      "one": "{n} sett",
+      "other": "{n} sett"
+    },
+    "emptyFolder": "Mappen er tom – lag et sett her eller dra et inn fra biblioteket.",
+    "drag": "Dra for å endre rekkefølgen eller flytte til en mappe",
+    "deleteFolder": "Slett mappe"
+  },
+  "folderModal": {
+    "title": "Ny mappe",
+    "name": "Navn",
+    "placeholder": "F.eks. Reise",
+    "color": "Farge",
+    "create": "Opprett mappe"
+  },
+  "session": {
+    "showAnswer": "Vis svaret",
+    "translate": "Oversett",
+    "score": "Poeng",
+    "seconds": "{n} s",
+    "correct": "Riktig",
+    "answers": "Svar",
+    "bestStreak": "Beste rekke",
+    "exit": "Avslutt",
+    "again": "Spill igjen",
+    "newRound": "Ny runde",
+    "timeUp": "Tiden er ute!",
+    "gameOver": "Tom for liv",
+    "matchDone": "Alle par funnet",
+    "time": "Tid",
+    "pairs": "Par",
+    "mistakes": "Feil",
+    "perfect": "Ingen feil!",
+    "mistakesCount": {
+      "one": "{n} feil",
+      "other": "{n} feil"
+    },
+    "word": "Ord",
+    "translation": "Oversettelse",
+    "lives": "Liv",
+    "streak": "Rekke",
+    "review": "Repetisjon",
+    "rate": "Hvor godt kan du ordet?",
+    "settings": "Innstillinger"
+  },
+  "soonTitle": "Kommer snart"
 }

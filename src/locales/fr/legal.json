@@ -1,0 +1,57 @@
+{
+  "docs": {
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "cookies": "Politique relative aux cookies",
+    "refund": "Politique de remboursement"
+  },
+  "cookies": {
+    "title": "Cookies et confidentialité",
+    "text": "Kolo n'enregistre sur ton appareil que l'essentiel : ta connexion, tes réglages et une copie hors ligne de tes sets. Pas de publicité, pas de pistage.",
+    "more": "En savoir plus : {cookies}.",
+    "acceptAll": "Tout accepter",
+    "necessaryOnly": "Uniquement nécessaires",
+    "customize": "Personnaliser",
+    "save": "Enregistrer",
+    "necessary": "Nécessaires",
+    "necessaryDesc": "Connexion, langue, thème, mode hors ligne et progression sur cet appareil. Kolo ne fonctionne pas sans eux.",
+    "alwaysOn": "Toujours actifs",
+    "analytics": "Mesure d'audience",
+    "analyticsDesc": "Statistiques d'utilisation anonymes pour améliorer Kolo. Pas encore utilisées — elles ne seront activées qu'avec ton accord.",
+    "settings": "Paramètres des cookies"
+  },
+  "consent": {
+    "agree": "J'accepte les {terms} et j'ai lu la {privacy}.",
+    "labels": {
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité"
+    },
+    "required": "Accepte les Conditions d'utilisation pour créer un compte.",
+    "google": "En continuant avec Google, tu acceptes les {terms} et confirmes avoir lu la {privacy}.",
+    "support": "Ton message est transmis à l'équipe Kolo via Telegram. En savoir plus : {privacy}."
+  },
+  "page": {
+    "effective": "En vigueur depuis le {date}",
+    "shortVersion": "En bref",
+    "contents": "Sommaire",
+    "docsNav": "Documents juridiques",
+    "signUp": "S'inscrire",
+    "openApp": "Ouvrir l'appli",
+    "translationNote": "Ceci est une traduction fournie pour plus de commodité. En cas de divergence avec l'original anglais, la version anglaise prévaut.",
+    "originalNote": "Tu lis l'original en anglais.",
+    "showOriginal": "Voir l'original en anglais",
+    "showTranslation": "Revenir à la traduction",
+    "linkToSection": "Lien vers cette section",
+    "questionsTitle": "Une question sur ce document ?",
+    "questionsText": "Écris-nous, nous te répondrons.",
+    "alsoRead": "À lire aussi",
+    "support": "Assistance",
+    "backToTop": "Haut de page"
+  },
+  "tabs": {
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "cookies": "Cookies",
+    "refund": "Remboursement"
+  }
+}

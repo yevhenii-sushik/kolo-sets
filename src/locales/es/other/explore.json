@@ -1,0 +1,29 @@
+{
+  "title": "Más de",
+  "titleAccent": "Dakuta",
+  "subtitle": "Un idioma, dominado desde todos los ángulos. Descubre las otras herramientas que hemos creado para aprender noruego.",
+  "visit": "Visitar",
+  "comingSoon": "Próximamente",
+  "notifyMe": "Avisarme",
+  "woky": {
+    "category": "Gramática noruega",
+    "tagline": "Un libro de gramática noruega interactivo, con ejercicios y corrección al instante.",
+    "sections": "secciones",
+    "exercises": "ejercicios"
+  },
+  "boey": {
+    "tagline": "Un diccionario interactivo de flexiones del noruego: género, declinación y conjugación.",
+    "tags": [
+      "Masculino",
+      "Femenino",
+      "Neutro",
+      "Verbos"
+    ]
+  },
+  "footer": "Lanzamos herramientas nuevas con regularidad: esto es solo el comienzo.",
+  "promo": {
+    "title": "Descubre más",
+    "subtitle": "Otras apps que hemos creado para dominar el noruego.",
+    "cta": "Explorar"
+  }
+}

@@ -35,5 +35,19 @@
   "noScoresYet": "Сегодня ещё нет результатов",
   "loadingLeaderboard": "Загрузка…",
   "shareText": "Я набрал(а) {score} очков в Kolo Daily Puzzle! 🇳🇴",
-  "pointsSuffix": " оч."
+  "pointsSuffix": " оч.",
+  "widgetNew": "Новая",
+  "widgetPlayed": "Сыграно",
+  "widgetWords": {
+    "one": "{n} слово",
+    "few": "{n} слова",
+    "many": "{n} слов",
+    "other": "{n} слова"
+  },
+  "tabs": {
+    "play": "Игра",
+    "words": "Слова",
+    "top": "Рейтинг"
+  },
+  "noWordsYet": "Пока ни одного слова — начни во вкладке «Игра»"
 }

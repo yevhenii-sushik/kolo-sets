@@ -1,0 +1,502 @@
+{
+  "privacy": {
+    "title": "Política de privacidad",
+    "scope": "Se aplica al sitio web y a la aplicación web Kolo Sets",
+    "summary": [
+      "Sin anuncios ni rastreo, y nunca vendemos tus datos.",
+      "Guardamos lo que la app necesita: tu cuenta, tus sets de palabras y tu progreso.",
+      "Puedes exportar tus sets o eliminar tu cuenta desde la app en cualquier momento."
+    ],
+    "sections": [
+      {
+        "id": "who",
+        "title": "Quiénes somos",
+        "blocks": [
+          "Kolo Sets («Kolo», «nosotros») es una aplicación web para aprender vocabulario de idiomas extranjeros con tarjetas, repaso espaciado y juegos, disponible en **{site}**.",
+          "El responsable del tratamiento de tus datos personales es **{operator}**. Para cualquier consulta sobre esta política, escríbenos a {email.privacy}."
+        ]
+      },
+      {
+        "id": "data",
+        "title": "Qué datos recogemos y para qué",
+        "blocks": [
+          "Solo recogemos lo necesario para que Kolo funcione:",
+          {
+            "table": {
+              "columns": [
+                "Datos",
+                "Para qué los usamos",
+                "Base jurídica"
+              ],
+              "rows": [
+                [
+                  "**Cuenta:** correo electrónico, contraseña (Firebase Authentication solo la guarda como un hash seguro; nunca la vemos) y nombre visible. Con inicio de sesión de Google: nombre, correo y foto de perfil de tu cuenta de Google.",
+                  "Crear tu cuenta, iniciar tu sesión y mantenerla segura.",
+                  "Contrato (art. 6.1.b del RGPD)"
+                ],
+                [
+                  "**Nombre de usuario** (se asigna automáticamente y puedes cambiarlo).",
+                  "Identificarte en la clasificación del juego del día.",
+                  "Contrato"
+                ],
+                [
+                  "**Foto de perfil**, si subes una.",
+                  "Mostrar tu avatar en la app.",
+                  "Contrato"
+                ],
+                [
+                  "**Datos de aprendizaje:** sets de palabras y tarjetas, calendario de repasos, historial de estudio, estadísticas, rachas, logros y objetivo diario.",
+                  "Hacer funcionar los modos de práctica, programar repasos y sincronizar tu progreso entre dispositivos.",
+                  "Contrato"
+                ],
+                [
+                  "**Puntuaciones del juego del día** junto con tu nombre de usuario.",
+                  "Mostrar la clasificación a otros usuarios con sesión iniciada.",
+                  "Contrato"
+                ],
+                [
+                  "**Mensajes al soporte:** asunto, mensaje, el correo que indiques (opcional) y el correo de tu cuenta si has iniciado sesión.",
+                  "Responder a tu solicitud y corregir los problemas que nos comuniques.",
+                  "Interés legítimo (art. 6.1.f del RGPD)"
+                ],
+                [
+                  "**Registro de aceptación:** qué versión de los Términos y de esta política aceptaste y cuándo.",
+                  "Poder acreditar lo que aceptaste.",
+                  "Interés legítimo"
+                ],
+                [
+                  "**Datos técnicos:** dirección IP e información del navegador y del dispositivo.",
+                  "Proteger las cuentas (Firebase Authentication) y servir el sitio web (alojamiento).",
+                  "Interés legítimo"
+                ]
+              ]
+            }
+          },
+          "Kolo también guarda algunos datos en tu navegador: tu sesión, tus ajustes y una copia local de tus sets. Consulta la [Política de cookies](/cookies)."
+        ]
+      },
+      {
+        "id": "dont",
+        "title": "Lo que no hacemos",
+        "blocks": [
+          {
+            "list": [
+              "No mostramos anuncios ni usamos identificadores publicitarios.",
+              "No usamos herramientas de analítica ni de rastreo. Si algún día añadimos analítica, solo funcionará después de que des tu consentimiento, y antes actualizaremos esta política.",
+              "No vendemos ni alquilamos tus datos personales ni los usamos para elaborar perfiles.",
+              "No recogemos tu ubicación precisa, tus contactos ni datos biométricos."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "recipients",
+        "title": "Quién puede ver o tratar tus datos",
+        "blocks": [
+          "Trabajamos con pocos proveedores. Cada uno trata los datos solo para prestar su servicio:",
+          {
+            "list": [
+              "**Google** (Firebase Authentication, Cloud Firestore, Cloud Storage): cuentas, base de datos y fotos de perfil. [Privacidad de Firebase](https://firebase.google.com/support/privacy)",
+              "**Netlify**: alojamiento y entrega del sitio web. [Privacidad de Netlify](https://www.netlify.com/privacy/)",
+              "**Telegram**: entrega los mensajes que envías desde el formulario de soporte al chat privado de nuestro equipo. [Privacidad de Telegram](https://telegram.org/privacy)",
+              "**Inicio de sesión con Google**: solo si eliges entrar con Google.",
+              "**El motor de voz de tu navegador**: la pronunciación usa la síntesis de voz integrada en tu navegador. Según el navegador, el texto puede ser tratado por el fabricante del navegador o del sistema operativo (algunas voces de Chrome son voces en línea de Google). Kolo no recibe ningún audio."
+            ]
+          },
+          {
+            "note": "**Visible para otros usuarios:** tu nombre de usuario y tus puntuaciones del juego del día aparecen en la clasificación para los usuarios con sesión iniciada, y cualquiera que tenga el enlace puede abrir la foto de perfil que subas. Tus sets y tu progreso son privados."
+          }
+        ]
+      },
+      {
+        "id": "transfers",
+        "title": "Transferencias internacionales",
+        "blocks": [
+          "Algunos proveedores tratan datos fuera del Espacio Económico Europeo, incluido Estados Unidos. Estas transferencias se basan en las garantías del capítulo V del RGPD, como el Marco de Privacidad de Datos UE-EE. UU. para proveedores certificados o las cláusulas contractuales tipo de la Comisión Europea."
+        ]
+      },
+      {
+        "id": "security",
+        "title": "Seguridad",
+        "blocks": [
+          {
+            "list": [
+              "Todo el tráfico entre tu dispositivo y Kolo está cifrado (HTTPS/TLS).",
+              "Google cifra los datos almacenados en Firebase.",
+              "Las reglas de la base de datos solo te permiten a ti leer y modificar tu perfil y tus sets.",
+              "Las contraseñas las gestiona Firebase Authentication; nunca tenemos acceso a ellas."
+            ]
+          },
+          "Ningún sistema es totalmente seguro, pero trabajamos para proteger tus datos y te informaremos, como exige la ley, si una brecha te afecta."
+        ]
+      },
+      {
+        "id": "retention",
+        "title": "Cuánto tiempo conservamos los datos",
+        "blocks": [
+          {
+            "list": [
+              "Cuenta y datos de aprendizaje: mientras exista tu cuenta.",
+              "Cuando eliminas tu cuenta en la app («Other → Data & account»), tu acceso, perfil, sets y nombre de usuario se eliminan de inmediato.",
+              "Las puntuaciones del juego del día y la foto de perfil que hayas subido **todavía no se eliminan automáticamente** al borrar la cuenta. Escribe a {email.privacy} y las eliminaremos en un plazo de 30 días.",
+              "Mensajes al soporte: el tiempo necesario para atender tu solicitud. Puedes pedirnos que los eliminemos.",
+              "Registros técnicos de nuestros proveedores: según sus plazos de conservación.",
+              "Datos en tu navegador: hasta que los borres o cierres sesión."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "Tus derechos",
+        "blocks": [
+          "Según el RGPD, tienes derecho a:",
+          {
+            "list": [
+              "Acceder a los datos personales que tenemos sobre ti.",
+              "Rectificar datos inexactos: puedes editar tu nombre, nombre de usuario y foto en tu perfil.",
+              "Suprimir tus datos: puedes eliminar tu cuenta en «Other → Data & account».",
+              "Llevarte tus datos: puedes exportar tus sets en «Other → Data & account».",
+              "Limitar el tratamiento u oponerte al que se basa en nuestro interés legítimo.",
+              "Retirar tu consentimiento en cualquier momento cuando nos basemos en él, por ejemplo en la configuración de cookies."
+            ]
+          },
+          "Usa las herramientas de la app o escribe a {email.privacy}. Responderemos en el plazo de un mes.",
+          "También puedes reclamar ante la autoridad noruega de protección de datos, [Datatilsynet](https://www.datatilsynet.no/en/), o ante la autoridad del país donde vives."
+        ]
+      },
+      {
+        "id": "children",
+        "title": "Menores",
+        "blocks": [
+          "Kolo no está dirigido a menores de 13 años. Para crear una cuenta debes tener al menos 13 años, o más si la ley de tu país lo exige para dar tu consentimiento por tu cuenta. Si crees que un menor nos ha facilitado datos personales, escribe a {email.privacy} y los eliminaremos."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Cambios en esta política",
+        "blocks": [
+          "Si cambiamos esta política, actualizaremos la fecha de entrada en vigor. Si los cambios son importantes, también te avisaremos en la app antes de que se apliquen."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contacto",
+        "blocks": [
+          "Consultas y solicitudes de privacidad: {email.privacy}. Soporte general: {email.support}."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Términos de uso",
+    "scope": "Se aplican al sitio web y a la aplicación web Kolo Sets",
+    "summary": [
+      "Todo el aprendizaje es gratis. Los extras de pago, si llegan, serán opcionales.",
+      "Tus sets de palabras son tuyos. Expórtalos o elimínalos cuando quieras.",
+      "Respeto ante todo: nada de nombres o fotos ofensivos ni abusos del servicio."
+    ],
+    "sections": [
+      {
+        "id": "agreement",
+        "title": "Acuerdo",
+        "blocks": [
+          "Estos Términos de uso («Términos») son un acuerdo entre tú y **{operator}** («nosotros») sobre el uso de Kolo Sets («Kolo»). Al crear una cuenta o usar Kolo, aceptas estos Términos. Si no estás de acuerdo, no uses Kolo.",
+          "Cómo tratamos los datos personales se explica en la [Política de privacidad](/privacy) y en la [Política de cookies](/cookies)."
+        ]
+      },
+      {
+        "id": "service",
+        "title": "El servicio",
+        "blocks": [
+          "Kolo es una aplicación web para aprender vocabulario de idiomas extranjeros con tarjetas, repaso espaciado (SM-2), tests, juegos y seguimiento del progreso.",
+          "Todas las funciones de aprendizaje son gratuitas. En el futuro podríamos añadir extras de pago opcionales. Kolo seguirá siendo plenamente útil para aprender sin ellos, y verás el precio y las condiciones de cualquier extra antes de comprarlo. Los reembolsos se rigen por la [Política de reembolsos](/refund)."
+        ]
+      },
+      {
+        "id": "account",
+        "title": "Tu cuenta",
+        "blocks": [
+          {
+            "list": [
+              "Debes tener al menos 13 años, o más si la ley de tu país lo exige para aceptar estos Términos por tu cuenta.",
+              "Da información veraz al registrarte y mantén seguros tus datos de acceso.",
+              "Eres responsable de la actividad de tu cuenta. Avísanos enseguida si sospechas de un uso no autorizado."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "public",
+        "title": "Nombres de usuario, fotos y clasificación",
+        "blocks": [
+          "Tu nombre de usuario y tus puntuaciones del juego del día son visibles para otros usuarios con sesión iniciada, y cualquiera que tenga el enlace puede abrir la foto de perfil que subas. No elijas nombres ni fotos ofensivos o engañosos, que suplanten a otras personas o que vulneren derechos ajenos. Podemos cambiar o eliminar un nombre o una foto que incumpla estas normas."
+        ]
+      },
+      {
+        "id": "use",
+        "title": "Uso aceptable",
+        "blocks": [
+          "Te comprometes a no:",
+          {
+            "list": [
+              "intentar acceder sin autorización a Kolo, a otras cuentas o a nuestra infraestructura;",
+              "usar Kolo para difundir spam, malware o contenido ilegal;",
+              "usar bots o scripts que sobrecarguen Kolo o manipulen la clasificación;",
+              "hacerte pasar por otra persona u organización;",
+              "subir contenido que infrinja la ley o los derechos de terceros."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "content",
+        "title": "Tu contenido",
+        "blocks": [
+          {
+            "list": [
+              "Los sets de palabras, tarjetas y demás contenido que creas son tuyos.",
+              "Nos concedes una licencia limitada y no exclusiva para almacenar, tratar y mostrar tu contenido solo para prestar Kolo; por ejemplo, para sincronizar tus sets y mostrar tu nombre de usuario en la clasificación.",
+              "Eres responsable de que tu contenido no infrinja derechos de autor ni otros derechos.",
+              "Puedes exportar tus sets o eliminar tu cuenta en cualquier momento en «Other → Data & account»."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ip",
+        "title": "Nuestro contenido",
+        "blocks": [
+          "La app Kolo, su código, diseño, logotipo y marca, así como los sets de palabras que publicamos, nos pertenecen a nosotros o a nuestros licenciantes. Puedes usarlos para tu aprendizaje personal y no comercial. No los copies, revendas ni redistribuyas sin nuestro permiso."
+        ]
+      },
+      {
+        "id": "disclaimer",
+        "title": "Disponibilidad y exención de responsabilidad",
+        "blocks": [
+          {
+            "list": [
+              "Trabajamos para que Kolo funcione, pero no podemos prometer que esté siempre disponible ni libre de errores.",
+              "Podemos cambiar, añadir o quitar funciones. Si decidimos cerrar Kolo, intentaremos avisar con antelación para que puedas exportar tus datos.",
+              "Te recomendamos exportar tus sets con regularidad como copia de seguridad.",
+              "Kolo es una herramienta de aprendizaje; no podemos garantizar resultados concretos."
+            ]
+          },
+          {
+            "note": "Nada de lo dispuesto en estos Términos limita tus derechos como consumidor según las normas imperativas, ni nuestra responsabilidad cuando la ley no permite limitarla."
+          }
+        ]
+      },
+      {
+        "id": "termination",
+        "title": "Fin del acuerdo",
+        "blocks": [
+          "**Por tu parte:** puedes dejar de usar Kolo y eliminar tu cuenta en cualquier momento en «Other → Data & account».",
+          "**Por la nuestra:** podemos suspender o cerrar una cuenta que incumpla estos Términos de forma grave o reiterada. Cuando sea razonable, te avisaremos antes y te explicaremos el motivo."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Cambios en estos Términos",
+        "blocks": [
+          "Podemos actualizar estos Términos. Cambiaremos la fecha de entrada en vigor y, si los cambios son importantes, te avisaremos en la app antes de que se apliquen. Si no estás de acuerdo con los nuevos Términos, puedes eliminar tu cuenta antes de que entren en vigor."
+        ]
+      },
+      {
+        "id": "law",
+        "title": "Legislación aplicable",
+        "blocks": [
+          "Estos Términos se rigen por la legislación de Noruega y las disputas se someten a sus tribunales. Si eres consumidor en la UE/EEE, conservas la protección de las normas imperativas de consumo de tu país y puedes presentar una reclamación donde vives."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contacto",
+        "blocks": [
+          "Consultas legales: {email.legal}. Soporte general: {email.support}."
+        ]
+      }
+    ]
+  },
+  "cookies": {
+    "title": "Política de cookies",
+    "scope": "Se aplica al sitio web y a la aplicación web Kolo Sets",
+    "summary": [
+      "Sin cookies publicitarias ni de rastreo.",
+      "Solo guardamos lo que Kolo necesita para funcionar y recordar tus ajustes.",
+      "Puedes revisar tu elección cuando quieras en la configuración de cookies."
+    ],
+    "sections": [
+      {
+        "id": "what",
+        "title": "Cookies y tecnologías similares",
+        "blocks": [
+          "Las cookies son pequeños archivos que un sitio web guarda en tu navegador. Entre las tecnologías similares están **localStorage**, **IndexedDB** y la **Cache Storage** que usan las aplicaciones web instalables. En esta política, «cookies» se refiere a todas ellas.",
+          "Según las normas de la UE/EEE —en Noruega, la Ley de Comunicaciones Electrónicas—, el almacenamiento estrictamente necesario para un servicio que solicitas no requiere consentimiento. Todo lo demás necesita antes tu consentimiento."
+        ]
+      },
+      {
+        "id": "necessary",
+        "title": "Almacenamiento estrictamente necesario",
+        "blocks": [
+          "Kolo solo usa almacenamiento propio de este tipo:",
+          {
+            "table": {
+              "columns": [
+                "Nombre",
+                "Finalidad",
+                "Duración"
+              ],
+              "rows": [
+                [
+                  "`firebaseLocalStorageDb` (IndexedDB)",
+                  "Mantiene tu sesión iniciada (Firebase Authentication).",
+                  "Hasta que cierres sesión"
+                ],
+                [
+                  "`kolo_cookie_consent`",
+                  "Recuerda tu configuración de cookies.",
+                  "12 meses; después volvemos a preguntar"
+                ],
+                [
+                  "`workbox-precache-…`",
+                  "Cache Storage de la app instalable: carga más rápida y uso sin conexión.",
+                  "Hasta que la app se actualice o la borres"
+                ],
+                [
+                  "`appLanguage`",
+                  "El idioma de la interfaz que elegiste.",
+                  "Hasta que lo borres"
+                ],
+                [
+                  "`language_cards_theme`",
+                  "Tema claro u oscuro.",
+                  "Hasta que lo borres"
+                ],
+                [
+                  "`language_cards_collections` `profile_cache_…` `collections_synced_…` `kolo_col_order_…`",
+                  "Copia local de tus sets y tu perfil para mayor rapidez y uso sin conexión, estado de sincronización y orden de tus sets.",
+                  "Hasta que lo borres"
+                ],
+                [
+                  "`kolo_game_…`",
+                  "Tu progreso en el juego del día.",
+                  "Hasta que lo borres"
+                ],
+                [
+                  "`kolo_daily_goal` `kolo_reminder_v1` `soundEnabled` `sidebar-open`",
+                  "Tu objetivo diario, recordatorios, sonido y preferencias de diseño.",
+                  "Hasta que lo borres"
+                ],
+                [
+                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed`",
+                  "Recuerda que ya viste el recorrido de bienvenida o cerraste un aviso.",
+                  "Hasta que lo borres"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "thirdparty",
+        "title": "Cookies de terceros",
+        "blocks": [
+          "Si eliges **Iniciar sesión con Google**, Google instala sus propias cookies en sus páginas de acceso (por ejemplo, accounts.google.com y el dominio de inicio de sesión de Firebase kolo-sets.firebaseapp.com) para identificarte de forma segura. Se rigen por la [política de cookies de Google](https://policies.google.com/technologies/cookies). Kolo no instala otras cookies de terceros."
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Analítica y publicidad",
+        "blocks": [
+          {
+            "note": "Actualmente Kolo **no usa cookies de analítica ni de publicidad**."
+          },
+          "Si en el futuro añadimos analítica (por ejemplo, Google Analytics para Firebase), solo funcionará después de que la permitas en la configuración de cookies, y antes actualizaremos esta política."
+        ]
+      },
+      {
+        "id": "manage",
+        "title": "Cómo gestionar tus preferencias",
+        "blocks": [
+          {
+            "list": [
+              "Cambia o retira tu consentimiento en cualquier momento: [abrir la configuración de cookies](#cookie-settings). El mismo enlace está en el pie de página.",
+              "También puedes borrar los datos de Kolo en la configuración del sitio de tu navegador. Así cerrarás sesión y se eliminará todo lo guardado solo en este dispositivo, como los sets sin sincronizar."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "Cambios",
+        "blocks": [
+          "Si cambiamos la forma en que Kolo usa las cookies, actualizaremos esta página y, cuando haga falta consentimiento, volveremos a preguntarte."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contacto",
+        "blocks": [
+          "Preguntas sobre cookies: {email.privacy}. Más sobre datos personales en la [Política de privacidad](/privacy)."
+        ]
+      }
+    ]
+  },
+  "refund": {
+    "title": "Política de reembolsos",
+    "scope": "Se aplica a cualquier pago relacionado con Kolo Sets",
+    "summary": [
+      "Kolo es gratis. Ahora mismo no hay nada que pagar, así que tampoco nada que reembolsar.",
+      "Si llegan extras de pago, verás el precio y las condiciones de reembolso antes de comprar.",
+      "Tus derechos legales como consumidor se aplican siempre."
+    ],
+    "sections": [
+      {
+        "id": "free",
+        "title": "Kolo es gratis",
+        "blocks": [
+          "Actualmente Kolo **no tiene funciones de pago, suscripciones ni compras dentro de la app**. No cobramos nada, así que no hay nada que reembolsar.",
+          {
+            "note": "Kolo nunca te pide datos de pago. Si alguien te pide pagar por Kolo, no somos nosotros: avísanos en {email.support}."
+          }
+        ]
+      },
+      {
+        "id": "future",
+        "title": "Si añadimos extras de pago",
+        "blocks": [
+          "En el futuro podríamos ofrecer extras de pago opcionales. Seguirá siendo posible aprender plenamente en Kolo sin ellos (consulta los [Términos de uso](/terms)). Antes de poner a la venta cualquier extra, actualizaremos esta política con sus condiciones de reembolso exactas. En cualquier caso:",
+          {
+            "list": [
+              "Antes de pagar verás el precio, qué incluye y, en las suscripciones, cómo cancelarlas.",
+              "Si eres consumidor en la UE/EEE, incluida Noruega, por lo general tienes 14 días para desistir de las compras hechas en línea.",
+              "En el caso de contenidos o servicios digitales que empiezan de inmediato, este derecho solo puede perderse o limitarse si pides expresamente el acceso inmediato y confirmas al pagar que lo entiendes."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stores",
+        "title": "Compras en tiendas de aplicaciones",
+        "blocks": [
+          "Si algún día se venden extras de pago a través de Apple App Store o Google Play, los reembolsos de esas compras los gestiona la tienda según su propia política."
+        ]
+      },
+      {
+        "id": "problem",
+        "title": "¿Algo salió mal?",
+        "blocks": [
+          "Si crees que te han cobrado algo relacionado con Kolo, escribe a {email.support} y cuéntanos qué pasó. Lo revisaremos y te responderemos."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "Contacto",
+        "blocks": [
+          "Preguntas sobre pagos o reembolsos: {email.support}."
+        ]
+      }
+    ]
+  }
+}

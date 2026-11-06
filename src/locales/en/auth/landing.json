@@ -1,35 +1,275 @@
 {
+  "nav": {
+    "siteLanguage": "Site language",
+    "login": "Log in",
+    "start": "Get started",
+    "how": "How it works",
+    "modes": "Modes",
+    "faq": "FAQ",
+    "sections": "Page sections"
+  },
   "hero": {
-    "badge": "УЧИ • МАСТЕР • ПОВТОРЯЙ •",
-    "quote": "«Язык — это не просто слова, это ключ к новому миру».",
-    "subquote": "Открой для себя умный способ освоения языков с помощью научной системы интервальных повторений.",
-    "startFree": "Начать бесплатно",
-    "login": "Войти"
+    "title": "The simple way to learn words in any language — and remember them.",
+    "subtitle": "Add your own words, practise a few minutes a day, and Kolo brings each one back right when you're about to forget it.",
+    "start": "Start learning",
+    "login": "I already have an account",
+    "promises": [
+      "No ads",
+      "All learning is free",
+      "In your browser and on your phone"
+    ],
+    "ratings": [
+      "Don't know",
+      "Forgot",
+      "Remember",
+      "Know"
+    ],
+    "cards": [
+      {
+        "flag": "🇳🇴",
+        "pos": "noun",
+        "word": "bok",
+        "translation": "book",
+        "example": "Jeg leser en interessant bok."
+      },
+      {
+        "flag": "🇮🇹",
+        "pos": "noun",
+        "word": "amico",
+        "translation": "friend",
+        "example": "Lui è il mio migliore amico."
+      },
+      {
+        "flag": "🇯🇵",
+        "pos": "noun",
+        "word": "旅行",
+        "translation": "travel",
+        "example": "夏に京都へ旅行します。"
+      }
+    ]
   },
-  "features": {
-    "aiTitle": "Магия AI",
-    "aiDesc": "Наш ИИ поможет создать идеальные карточки за секунды. Он понимает контекст и подбирает нужные нюансы языка.",
-    "aiBadge": "AI Предложение",
-    "cloudTitle": "Облако",
-    "cloudDesc": "Ваш прогресс всегда с вами. Начните на ПК, продолжайте в пути.",
-    "ttsTitle": "Слушай язык",
-    "ttsDesc": "Качественная озвучка текста поможет освоить правильное произношение с первого дня.",
-    "srsTitle": "Никогда не забывай",
-    "srsDesc": "Алгоритм SRS точно рассчитывает момент, когда вы вот-вот забудете слово, и напоминает о нем.",
-    "retention": "Удержание",
-    "algo": "Алгоритм"
+  "languages": {
+    "label": "Languages you can learn with Kolo",
+    "more": "and almost any other"
   },
-  "gamification": {
-    "title": "Поддерживай",
-    "highlight": "огонь",
-    "desc": "Система достижений и серий занятий создана, чтобы мотивировать тебя каждый день. Преврати учебу в привычку.",
-    "nextLevel": "Следующий уровень"
+  "how": {
+    "title": "Every word on its own orbit",
+    "text": "Kolo keeps track of how well you know each word and decides when it's time to see it again.",
+    "steps": [
+      {
+        "title": "Add words",
+        "text": "Your own — from books, shows and conversations. Paste a whole list in one go."
+      },
+      {
+        "title": "Practise a little",
+        "text": "Flashcards, quizzes and games. Even five minutes a day counts."
+      },
+      {
+        "title": "Kolo brings them back",
+        "text": "Hard words return tomorrow, familiar ones in a week or a month. You review exactly what's due."
+      }
+    ]
+  },
+  "modes": {
+    "title": "Six ways to make a word stick",
+    "text": "The same words in different formats — pick the mode that suits your mood.",
+    "items": {
+      "flashcards": {
+        "name": "Flashcards",
+        "text": "The word on one side, the translation on the other. Mark how well you knew it."
+      },
+      "review": {
+        "name": "Daily review",
+        "text": "Only the words that are due today."
+      },
+      "quiz": {
+        "name": "Quiz",
+        "text": "Pick the right answer, type the word or match pairs."
+      },
+      "speed": {
+        "name": "Speed round",
+        "text": "As many answers as you can in 60 seconds."
+      },
+      "survival": {
+        "name": "Survival",
+        "text": "Three lives. Every mistake costs one."
+      },
+      "match": {
+        "name": "Match pairs",
+        "text": "Connect six words with their translations against the clock."
+      }
+    },
+    "preview": {
+      "question": "Choose the translation",
+      "due": "due today",
+      "score": "answers",
+      "best": "best"
+    }
+  },
+  "method": {
+    "title": "Perigee knows when to bring a word back",
+    "text": "Perigee is Kolo's review engine. In orbit, the perigee is the point where a satellite comes closest — and that's the moment Perigee brings a word back, just before it fades. After each card you mark how well you know it: hard words return sooner, and the gaps grow as a word settles in. Under the hood is SM-2, a proven spaced-repetition method.",
+    "memory": "Memory",
+    "time": "Time",
+    "withKolo": "With Kolo",
+    "without": "Without review",
+    "intervals": [
+      "+1 d",
+      "+3 d",
+      "+7 d"
+    ],
+    "schematic": "Schematic illustration"
+  },
+  "habit": {
+    "title": "A habit you won't want to break",
+    "text": "Your streak grows with every day you practise. The daily puzzle and achievements give you a reason to come back tomorrow.",
+    "streak": {
+      "title": "Day streak",
+      "text": "Every day of practice extends it."
+    },
+    "daily": {
+      "title": "Daily puzzle",
+      "text": "Make words from seven letters and compare your score with other players."
+    },
+    "achievements": {
+      "title": "Achievements",
+      "text": "For streaks, words learned and perfect quizzes."
+    },
+    "days": "days",
+    "week": [
+      "M",
+      "T",
+      "W",
+      "T",
+      "F",
+      "S",
+      "S"
+    ],
+    "achievementName": "Two weeks strong"
+  },
+  "words": {
+    "title": "Your words, your pace",
+    "text": "Learn the words you actually come across — in books, shows and conversations.",
+    "sets": {
+      "title": "Sets and folders",
+      "text": "Sort words into sets and folders. Paste a whole list and it's imported in one go."
+    },
+    "audio": {
+      "title": "Pronunciation",
+      "text": "Tap to hear a word and its example. Audio works for Norwegian today; other languages are on the way."
+    },
+    "folder": "My languages",
+    "setList": [
+      {
+        "flag": "🇳🇴",
+        "name": "Norwegian · Food",
+        "count": "24 words"
+      },
+      {
+        "flag": "🇮🇹",
+        "name": "Italian · Travel",
+        "count": "18 words"
+      },
+      {
+        "flag": "🇯🇵",
+        "name": "Japanese · Basics",
+        "count": "31 words"
+      }
+    ],
+    "import": "Paste a list — imported in one go",
+    "importLines": [
+      "skrive; to write",
+      "lese; to read",
+      "snakke; to speak"
+    ],
+    "audioTranslation": "pronunciation"
+  },
+  "team": {
+    "title": "Built with ❤️ by the Kolo team",
+    "text": "Kolo is a product of Dakuta studio. The designers and developers on the Kolo team build it on three principles: real learning value, careful handling of your data, and an honest model — no ads, no paywalls.",
+    "link": "About Dakuta"
+  },
+  "app": {
+    "title": "Learn anytime, anywhere",
+    "text": "Kolo works in any browser and installs on your phone like a regular app — with its own icon, in full screen. Your progress syncs across your devices.",
+    "ios": {
+      "title": "iPhone & iPad",
+      "hint": "Safari → Share → Add to Home Screen"
+    },
+    "android": {
+      "title": "Android",
+      "hint": "Chrome → menu → Install app"
+    },
+    "desktop": {
+      "title": "Computer",
+      "hint": "Any modern browser, nothing to download"
+    },
+    "native": {
+      "title": "Native iOS and Android apps",
+      "badge": "In progress",
+      "text": "We're building the team and raising the funds to release them. Until then, install Kolo from the browser."
+    }
+  },
+  "faq": {
+    "title": "Questions & answers",
+    "askTitle": "Still have questions?",
+    "askText": "Write to us and we'll reply by email.",
+    "askButton": "Contact support",
+    "items": [
+      {
+        "q": "Who is Kolo for?",
+        "a": "For anyone learning a foreign language — from complete beginners to people who already speak and want a bigger vocabulary. You build sets from the words you actually need."
+      },
+      {
+        "q": "Which languages can I learn?",
+        "a": "Almost any: cards work with any alphabet or script, so you can add words in Spanish, Japanese or Norwegian. Pronunciation is available for Norwegian today; voices for other languages are coming soon."
+      },
+      {
+        "q": "How does spaced repetition work?",
+        "a": "After each card you mark how well you knew it. Perigee, Kolo's review engine built on the SM-2 algorithm, uses that to schedule the next review: hard words come back sooner, familiar ones later."
+      },
+      {
+        "q": "Do I need to install anything?",
+        "a": "No. Kolo runs in the browser. If you like, add it to your home screen and it opens like a regular app."
+      },
+      {
+        "q": "Will my progress be saved?",
+        "a": "Yes. With an account, your sets and statistics are stored in the cloud and sync between your phone, tablet and computer."
+      },
+      {
+        "q": "Which interface languages are available?",
+        "a": "The app is available in: {appLanguages}. This website is also available in: {siteOnlyLanguages} — translating the app into these languages is in progress."
+      }
+    ]
+  },
+  "more": {
+    "title": "Learning Norwegian?",
+    "text": "Two more tools from Dakuta — for grammar and word forms."
   },
   "cta": {
-    "title": "Твой путь к",
-    "highlight": "свободе общения",
-    "desc": "Присоединяйся к пользователям, которые уже изменили свой процесс обучения.",
-    "button": "Начать приключение",
-    "security": "Безопасно • Приватно • Бесплатно"
+    "title": "Learn any language with Kolo",
+    "text": "Create an account and add your first words — it takes a couple of minutes.",
+    "button": "Start learning"
+  },
+  "footer": {
+    "tagline": "Learn words in any language — and remember them.",
+    "how": "How it works",
+    "modes": "Training modes",
+    "engine": "Perigee engine",
+    "help": "Help",
+    "faq": "FAQ",
+    "contact": "Contact support",
+    "install": "Install on your phone",
+    "about": "About the studio",
+    "woky": "Woky — grammar",
+    "boey": "Bøy! — inflections",
+    "soon": "soon",
+    "legal": "Legal",
+    "siteLanguage": "Site language:"
+  },
+  "alt": {
+    "hero": "Kolo on a phone: a flashcard with a word, its translation and an example, with words in other languages circling around it on orbits.",
+    "curve": "Schematic chart: without reviews, memory of a word fades quickly; with each review in Kolo it fades more slowly and the intervals grow.",
+    "homeScreen": "Kolo installed on a phone's home screen next to other apps."
   }
 }

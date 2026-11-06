@@ -35,5 +35,17 @@
   "noScoresYet": "No scores yet today",
   "loadingLeaderboard": "Loading…",
   "shareText": "I scored {score} pts on Kolo Daily Puzzle! 🇳🇴",
-  "pointsSuffix": " pts"
+  "pointsSuffix": " pts",
+  "widgetNew": "New",
+  "widgetPlayed": "Played",
+  "widgetWords": {
+    "one": "{n} word",
+    "other": "{n} words"
+  },
+  "tabs": {
+    "play": "Play",
+    "words": "Words",
+    "top": "Leaderboard"
+  },
+  "noWordsYet": "No words yet — start in the Play tab"
 }

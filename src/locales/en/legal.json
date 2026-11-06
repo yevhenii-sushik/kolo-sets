@@ -1,0 +1,57 @@
+{
+  "docs": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "cookies": "Cookie Policy",
+    "refund": "Refund Policy"
+  },
+  "cookies": {
+    "title": "Cookies & your privacy",
+    "text": "Kolo only stores what it needs on your device: your sign-in, settings and an offline copy of your sets. No ads, no tracking.",
+    "more": "Details in the {cookies}.",
+    "acceptAll": "Accept all",
+    "necessaryOnly": "Necessary only",
+    "customize": "Customize",
+    "save": "Save choices",
+    "necessary": "Necessary",
+    "necessaryDesc": "Sign-in, language, theme, offline mode and progress on this device. Kolo can't work without them.",
+    "alwaysOn": "Always on",
+    "analytics": "Analytics",
+    "analyticsDesc": "Anonymous usage statistics to help us improve Kolo. Not in use yet — it will only start with your permission.",
+    "settings": "Cookie settings"
+  },
+  "consent": {
+    "agree": "I accept the {terms} and have read the {privacy}.",
+    "labels": {
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy"
+    },
+    "required": "Please accept the Terms of Use to create an account.",
+    "google": "By continuing with Google, you accept the {terms} and confirm you have read the {privacy}.",
+    "support": "Your message goes to the Kolo team via Telegram. Details in the {privacy}."
+  },
+  "page": {
+    "effective": "Effective {date}",
+    "shortVersion": "In short",
+    "contents": "Contents",
+    "docsNav": "Legal documents",
+    "signUp": "Sign up",
+    "openApp": "Open app",
+    "translationNote": "This is a translation for your convenience. If it differs from the English original, the English version applies.",
+    "originalNote": "You're reading the English original.",
+    "showOriginal": "Show English original",
+    "showTranslation": "Back to translation",
+    "linkToSection": "Link to this section",
+    "questionsTitle": "Questions about this document?",
+    "questionsText": "Write to us and we'll get back to you.",
+    "alsoRead": "Also read",
+    "support": "Support",
+    "backToTop": "Back to top"
+  },
+  "tabs": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "refund": "Refunds"
+  }
+}

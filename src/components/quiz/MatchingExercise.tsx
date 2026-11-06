@@ -65,10 +65,10 @@ export default function MatchingExercise({ pairs, onComplete }: MatchingExercise
     const isSelected = selectedWord === word;
     const isWrong = wrongWord === word;
 
-    if (isMatched) return 'border-[#22C55E] bg-[#22C55E]/10 text-[#22C55E] opacity-40 cursor-default';
-    if (isWrong) return 'border-red-500 bg-red-500/10 text-red-500';
-    if (isSelected) return 'border-[#FF5733] bg-[#FFF0ED] dark:bg-[#2A1A15] text-[#FF5733]';
-    return 'border-[#E0DBD3] dark:border-[#2E2C29] bg-white dark:bg-[#1A1917] text-[#1A1714] dark:text-[#F0EDE8] hover:border-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] cursor-pointer';
+    if (isMatched) return 'border-success bg-success-soft text-success opacity-50 cursor-default';
+    if (isWrong) return 'border-danger bg-danger-soft text-danger';
+    if (isSelected) return 'border-accent bg-accent-soft text-accent-ink';
+    return 'border-line bg-surface text-fg hover:border-accent/50 cursor-pointer';
   };
 
   const translationClass = (pairWord: string, translation: string) => {
@@ -76,20 +76,18 @@ export default function MatchingExercise({ pairs, onComplete }: MatchingExercise
     const isWrong = wrongTranslation === translation;
     const canInteract = !!selectedWord && !isMatched;
 
-    if (isMatched) return 'border-[#22C55E] bg-[#22C55E]/10 text-[#22C55E] opacity-40 cursor-default';
-    if (isWrong) return 'border-red-500 bg-red-500/10 text-red-500';
-    if (!canInteract) return 'border-[#E0DBD3] dark:border-[#2E2C29] bg-white dark:bg-[#1A1917] text-[#B5B0A8] cursor-default';
-    return 'border-[#E0DBD3] dark:border-[#2E2C29] bg-white dark:bg-[#1A1917] text-[#1A1714] dark:text-[#F0EDE8] hover:border-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] cursor-pointer';
+    if (isMatched) return 'border-success bg-success-soft text-success opacity-50 cursor-default';
+    if (isWrong) return 'border-danger bg-danger-soft text-danger';
+    if (!canInteract) return 'border-line bg-surface text-muted cursor-default';
+    return 'border-line bg-surface text-fg hover:border-accent/50 cursor-pointer';
   };
 
   return (
-    <div className="relative w-block p-4 sm:p-6 md:p-8">
-      {/* Header */}
-      <div className="text-center mb-6">
-        <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFF0ED] dark:bg-[#2A1A15] text-[#FF5733] rounded-full text-[11px] font-black uppercase tracking-[0.12em]">
-          🎯 {t.words.quiz.matching.title}
-        </span>
-        <p className="text-xs font-medium text-[#B5B0A8] mt-2">
+    <div className="relative mx-auto max-w-2xl">
+      {/* Заголовок и подсказка: сначала слово, потом перевод */}
+      <div className="mb-5 grid gap-1 text-center">
+        <h2 className="font-display text-2xl font-semibold text-fg">{t.words.quiz.matching.title}</h2>
+        <p className="text-sm text-muted">
           {selectedWord
             ? t.words.quiz.matching.hint.split(',')[1]?.trim() || t.words.quiz.matching.hint
             : t.words.quiz.matching.hint.split(',')[0]?.trim() || t.words.quiz.matching.hint}
@@ -107,7 +105,7 @@ export default function MatchingExercise({ pairs, onComplete }: MatchingExercise
               disabled={matchedWords.has(word) || isComplete}
               animate={wrongWord === word ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 }}
               transition={{ duration: 0.4 }}
-              className={`min-h-11 w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl border-2 text-sm sm:text-base font-bold text-left leading-tight transition-colors ${wordClass(word)}`}
+              className={`min-h-12 w-full rounded-2xl border-2 px-4 py-3 text-left text-base font-semibold leading-tight transition-colors ${wordClass(word)}`}
             >
               {word}
             </motion.button>
@@ -123,7 +121,7 @@ export default function MatchingExercise({ pairs, onComplete }: MatchingExercise
               disabled={matchedWords.has(pairWord) || isComplete}
               animate={wrongTranslation === translation ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 }}
               transition={{ duration: 0.4 }}
-              className={`min-h-11 w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl border-2 text-sm sm:text-base font-bold text-left leading-tight transition-colors ${translationClass(pairWord, translation)}`}
+              className={`min-h-12 w-full rounded-2xl border-2 px-4 py-3 text-left text-base font-semibold leading-tight transition-colors ${translationClass(pairWord, translation)}`}
             >
               {translation}
             </motion.button>
@@ -137,11 +135,11 @@ export default function MatchingExercise({ pairs, onComplete }: MatchingExercise
           {pairs.map((_, i) => (
             <div
               key={i}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i < matchedWords.size ? 'w-5 bg-[#22C55E]' : 'w-1.5 bg-[#E0DBD3] dark:bg-[#2E2C29]'}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i < matchedWords.size ? 'w-5 bg-success' : 'w-1.5 bg-track'}`}
             />
           ))}
         </div>
-        <span className="sub-title">
+        <span className="text-sm text-muted tabular-nums">
           {matchedWords.size} / {pairs.length} {t.words.quiz.matching.progress}
         </span>
       </div>
@@ -151,11 +149,11 @@ export default function MatchingExercise({ pairs, onComplete }: MatchingExercise
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-[#1A1917]/80 backdrop-blur-sm rounded-[2.5rem]"
+          className="absolute inset-0 flex items-center justify-center rounded-4xl bg-bg/80 backdrop-blur-sm"
         >
           <div className="text-center">
-            <CheckCircle2 size={48} className="text-[#22C55E] mx-auto mb-3" />
-            <p className="u-title text-xl font-black text-[#22C55E]">
+            <CheckCircle2 size={48} className="text-success mx-auto mb-3" />
+            <p className="font-display text-xl font-semibold text-success">
               {t.words.quiz.matching.complete}
             </p>
           </div>

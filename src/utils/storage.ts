@@ -313,6 +313,12 @@ export const getTheme = (): 'light' | 'dark' => {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
+// Цвет адресной строки и строки состояния — под фон текущей темы (токен --color-bg)
+const syncThemeColor = (): void => {
+  const bg = getComputedStyle(document.documentElement).getPropertyValue('--color-bg').trim();
+  if (bg) document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
+};
+
 export const setTheme = (theme: 'light' | 'dark' | 'system'): void => {
   if (theme === 'system') {
     localStorage.removeItem(THEME_KEY);
@@ -330,4 +336,5 @@ export const setTheme = (theme: 'light' | 'dark' | 'system'): void => {
       document.documentElement.classList.remove('dark');
     }
   }
+  syncThemeColor();
 };

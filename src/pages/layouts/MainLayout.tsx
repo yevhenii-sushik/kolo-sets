@@ -1,11 +1,14 @@
 import Sidebar from "../../components/ui/Sidebar";
+import { IconButton, Logo, cx } from "../../ui";
+import { APP_LANGUAGES } from "../../locales/languages";
 import BottomNav from "../../components/ui/BottomNav";
 import { Outlet, Link } from "react-router-dom";
 import { Menu, Languages, Flame, Trophy, ChevronRight, Search } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import { useI18n } from "../../contexts/I18nContext";
-import { Language } from "../../locales";
 import { useData } from "../../contexts/DataContext";
+import { getLanguageInfo } from "../../locales/languages";
+import { plural } from "../../utils/plural";
 import { motion, AnimatePresence } from "framer-motion";
 import OnboardingModal, {
   ONBOARDING_STORAGE_KEY,
@@ -18,7 +21,9 @@ import SearchModal from "../../components/SearchModal";
 const SIDEBAR_KEY = "sidebar-open";
 
 export default function MainLayout() {
-  const { language, setLanguage } = useI18n();
+  const { t, language, setLanguage } = useI18n();
+  const sh = t.shell;
+  const days = (n: number) => plural(getLanguageInfo(language).htmlLang, n, sh.streak.days);
   const { profile } = useData();
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
@@ -80,39 +85,21 @@ export default function MainLayout() {
     };
   }, [profile]);
 
-  const languageNames = {
-    en: "🇬🇧 English (UK)",
-    no: "🇳🇴 Norsk (Bokmål)",
-    ru: "🇷🇺 Русский",
-    uk: "🇺🇦 Українстька",
-  };
-
   return (
-    <div className="min-h-dvh bg-[#F5F2ED] dark:bg-[#0F0E0C] text-gray-900 dark:text-gray-100">
-      <header className="fixed top-0 left-0 right-0 z-100 bg-[#F5F2ED] dark:bg-[#0F0E0C]">
+    <div className="min-h-dvh bg-bg text-fg">
+      <header className="fixed inset-x-0 top-0 z-100 border-b border-line bg-bg/85 backdrop-blur-xl">
         <div className="px-4 h-16 flex items-center justify-between">
           <div className="flex items-center">
-            <button
-              onClick={toggleSidebar}
-              className="hidden md:flex p-2 mr-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all active:scale-90"
-            >
-              <Menu size={22} />
-            </button>
+            <span className="hidden md:contents">
+              <IconButton label={sh.menu} onClick={toggleSidebar} className="mr-3">
+                <Menu size={22} />
+              </IconButton>
+            </span>
 
             <Link to="/" className="flex items-center gap-2 group relative">
-              {/* Иконка */}
-              <div className="p-1.5 bg-[#FF5733] rounded-lg group-hover:rotate-12 transition-transform shadow-lg shadow-orange-500/25 shrink-0">
-                <img
-                  src="/icon-192.png"
-                  alt="logo"
-                  className="w-5 h-5 brightness-0 invert"
-                />
-              </div>
 
-              <div className="flex items-baseline gap-1.5 relative">
-                <h1 className="text-xl font-black tracking-tighter leading-none">
-                  KOLO
-                </h1>
+              <div className="flex items-center gap-1.5 relative">
+                <Logo />
 
                 {/* Бейдж "Beta" — закомментирован по просьбе пользователя */}
                 {false && (
@@ -130,7 +117,7 @@ export default function MainLayout() {
                         setTimeout(() => setShowEasterEgg(false), 3000);
                       }
                     }}
-                    className="cursor-help select-none px-1.5 py-0.5 rounded-md bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 text-[9px] font-bold uppercase tracking-widest leading-none active:scale-90 transition-transform"
+                    className="cursor-help select-none px-1.5 py-0.5 rounded-md bg-inset border border-line text-muted text-2xs font-semibold uppercase tracking-widest leading-none active:scale-90 transition-transform"
                   >
                     Beta
                   </span>
@@ -142,7 +129,7 @@ export default function MainLayout() {
                         initial={{ opacity: 0, x: 10, scale: 0.8 }}
                         animate={{ opacity: 1, x: 20, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        className="absolute left-full top-0 ml-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-[10px] py-1 px-2 rounded-lg shadow-xl z-110 font-medium"
+                        className="absolute left-full top-0 ml-2 whitespace-nowrap bg-black dark:bg-white text-on-inverse text-2xs py-1 px-2 rounded-lg shadow-xl z-110 font-medium"
                       >
                         <div className="absolute -left-1 top-2 w-2 h-2 bg-black dark:bg-white rotate-45" />
                         Бридж добавил, чтоб не расстраивались, что много багов
@@ -156,17 +143,17 @@ export default function MainLayout() {
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
-            {/* SEARCH BUTTON */}
+            {/* Поиск по карточкам */}
             <button
+              type="button"
               onClick={() => setShowSearch(true)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-[#F5F2ED] dark:bg-[#242220] text-[#7A756E] dark:text-[#8A867F] hover:text-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] transition-all"
-              title="Search cards (⌘K)"
+              title={sh.searchHint}
+              aria-label={sh.searchHint}
+              className="flex h-9 items-center gap-2 rounded-full bg-inset px-3 text-sm font-medium text-muted transition-colors hover:text-fg"
             >
               <Search size={16} />
-              <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest">
-                Search
-              </span>
-              <kbd className="hidden md:inline text-[9px] font-bold bg-white dark:bg-[#1A1917] px-1.5 py-0.5 rounded-md border border-[#E0DBD3] dark:border-[#2E2C29] text-[#B5B0A8]">
+              <span className="hidden sm:inline">{sh.search}</span>
+              <kbd className="hidden rounded-md border border-line bg-surface px-1.5 py-0.5 text-2xs font-semibold text-faint md:inline">
                 ⌘K
               </kbd>
             </button>
@@ -174,19 +161,17 @@ export default function MainLayout() {
             {/* STREAK WIDGET */}
             <div className="relative">
               <button
+                type="button"
                 onClick={() => setShowStreakCard(!showStreakCard)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-2xl transition-all duration-500 ${
-                  streakData.isActive
-                    ? "bg-orange-500 text-white shadow-lg shadow-orange-500/30"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-400 opacity-70 hover:opacity-100"
-                }`}
+                aria-expanded={showStreakCard}
+                aria-label={`${sh.streak.label}: ${days(streakData.current)}`}
+                className={cx(
+                  "flex h-9 items-center gap-1.5 rounded-full px-3 text-sm font-semibold tabular-nums transition-colors",
+                  streakData.isActive ? "bg-accent-soft text-accent-ink" : "bg-inset text-muted hover:text-fg",
+                )}
               >
-                <Flame
-                  size={18}
-                  fill={streakData.isActive ? "currentColor" : "none"}
-                  className={streakData.isActive ? "animate-pulse" : ""}
-                />
-                <span className="font-black text-sm">{streakData.current}</span>
+                <Flame size={17} className={streakData.isActive ? "fill-accent text-accent" : ""} />
+                {streakData.current}
               </button>
 
               {/* STREAK DROP CARD */}
@@ -198,70 +183,48 @@ export default function MainLayout() {
                       onClick={() => setShowStreakCard(false)}
                     />
                     <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      initial={{ opacity: 0, y: 8, scale: 0.97 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 mt-3 w-72 z-50 overflow-hidden bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700"
+                      exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                      className="absolute right-0 z-50 mt-3 grid w-72 gap-4 rounded-3xl border border-line bg-surface p-5 shadow-xl"
                     >
-                      <div
-                        className={`p-6 ${streakData.isActive ? "bg-orange-500" : "bg-gray-400"} transition-colors`}
-                      >
-                        <div className="flex justify-between items-start text-white">
-                          <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest opacity-80">
-                              Ваш ударный режим
-                            </p>
-                            <h3 className="text-3xl font-black">
-                              {streakData.current} дн.
-                            </h3>
-                          </div>
-                          <Flame
-                            size={32}
-                            fill="white"
-                            className={
-                              streakData.isActive
-                                ? "animate-bounce"
-                                : "opacity-50"
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className="p-5 space-y-4">
-                        <div className="flex items-center justify-between text-sm">
-                          <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                            <Trophy size={14} />
-                            <span>Рекорд</span>
-                          </div>
-                          <span className="font-bold">
-                            {streakData.longest} дн.
-                          </span>
-                        </div>
-
-                        {!streakData.isActive ? (
-                          <div className="p-3 bg-orange-50 dark:bg-orange-900/20 rounded-xl border border-orange-100 dark:border-orange-800/30">
-                            <p className="text-xs text-orange-600 dark:text-orange-400 leading-relaxed">
-                              Упс! Ваш огонек потух. Пройдите урок сегодня,
-                              чтобы зажечь его снова!
-                            </p>
-                          </div>
-                        ) : (
-                          <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-100 dark:border-green-800/30">
-                            <p className="text-xs text-green-600 dark:text-green-400 leading-relaxed">
-                              Вы сегодня молодец! Огонек горит ярко.
-                              Возвращайтесь завтра.
-                            </p>
-                          </div>
-                        )}
-
-                        <Link
-                          to="/profile"
-                          onClick={() => setShowStreakCard(false)}
-                          className="flex items-center justify-between w-full p-3 bg-gray-50 dark:bg-gray-900/50 rounded-xl text-xs font-bold hover:bg-gray-100 transition-colors"
+                      <div className="flex items-center gap-3">
+                        <span
+                          className={cx(
+                            "grid h-11 w-11 shrink-0 place-items-center rounded-2xl",
+                            streakData.isActive ? "bg-accent-soft text-accent" : "bg-inset text-faint",
+                          )}
                         >
-                          Подробнее в профиле
-                          <ChevronRight size={14} />
-                        </Link>
+                          <Flame size={22} className={streakData.isActive ? "fill-accent" : ""} />
+                        </span>
+                        <div>
+                          <p className="text-sm text-muted">{sh.streak.label}</p>
+                          <p className="font-display text-xl font-semibold text-fg">{days(streakData.current)}</p>
+                        </div>
                       </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="flex items-center gap-2 text-muted">
+                          <Trophy size={15} />
+                          {sh.streak.best}
+                        </span>
+                        <span className="font-semibold text-fg">{days(streakData.longest)}</span>
+                      </div>
+                      <p
+                        className={cx(
+                          "rounded-2xl px-3.5 py-3 text-sm leading-snug",
+                          streakData.isActive ? "bg-success-soft text-success" : "bg-accent-soft text-accent-ink",
+                        )}
+                      >
+                        {streakData.isActive ? sh.streak.active : sh.streak.inactive}
+                      </p>
+                      <Link
+                        to="/profile"
+                        onClick={() => setShowStreakCard(false)}
+                        className="flex items-center justify-between rounded-2xl bg-inset px-3.5 py-3 text-sm font-medium text-fg transition-colors hover:bg-track"
+                      >
+                        {sh.streak.more}
+                        <ChevronRight size={16} />
+                      </Link>
                     </motion.div>
                   </>
                 )}
@@ -273,15 +236,15 @@ export default function MainLayout() {
             <div className="relative">
               <button
                 onClick={() => setShowLangMenu(!showLangMenu)}
-                className="flex items-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all active:scale-95"
+                className="flex items-center gap-2 p-2 hover:bg-inset rounded-xl transition-all active:scale-95"
               >
-                <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                <div className="w-8 h-8 rounded-full bg-inset flex items-center justify-center border border-line">
                   <Languages
                     size={16}
-                    className="text-gray-600 dark:text-gray-400"
+                    className="text-muted"
                   />
                 </div>
-                <span className="hidden lg:inline text-xs font-black uppercase tracking-widest">
+                <span className="hidden lg:inline text-xs font-bold uppercase tracking-widest">
                   {language}
                 </span>
               </button>
@@ -297,23 +260,23 @@ export default function MainLayout() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 py-2 z-50 overflow-hidden"
+                      className="absolute right-0 mt-2 w-56 bg-surface rounded-2xl shadow-2xl border border-line py-2 z-50 overflow-hidden"
                     >
-                      {(Object.keys(languageNames) as Language[]).map(
-                        (lang) => (
+                      {APP_LANGUAGES.map(
+                        ({ code: lang, flag, label }) => (
                           <button
                             key={lang}
                             onClick={() => {
                               setLanguage(lang);
                               setShowLangMenu(false);
                             }}
-                            className={`w-full px-5 py-3 text-left text-sm font-bold flex items-center justify-between transition-colors ${
+                            className={`w-full px-5 py-3 text-left text-sm font-semibold flex items-center justify-between transition-colors ${
                               language === lang
-                                ? "bg-purple-600 text-white"
-                                : "hover:bg-gray-50 dark:hover:bg-gray-700"
+                                ? "bg-special text-white"
+                                : "hover:bg-inset "
                             }`}
                           >
-                            {languageNames[lang]}
+                            {flag} {label}
                             {language === lang && (
                               <div className="w-1.5 h-1.5 bg-white rounded-full" />
                             )}

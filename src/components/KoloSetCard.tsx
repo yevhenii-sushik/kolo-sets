@@ -23,13 +23,13 @@ interface KoloSetCardProps {
 }
 
 const LEVEL_COLORS: Record<CEFRLevel, string> = {
-  A0: "bg-gray-100 text-gray-600 dark:bg-gray-700/60 dark:text-gray-300",
-  A1: "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-  A2: "bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400",
-  B1: "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  B2: "bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400",
-  C1: "bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
-  C2: "bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400",
+  A0: "bg-inset text-muted ",
+  A1: "bg-success-soft text-success ",
+  A2: "bg-success-soft text-success ",
+  B1: "bg-info-soft text-info ",
+  B2: "bg-info-soft text-info ",
+  C1: "bg-special-soft text-special ",
+  C2: "bg-danger-soft text-danger ",
 };
 
 // Создаёт коллекцию с карточками через createCollection + updateCollection
@@ -90,33 +90,33 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
   return (
     <>
       {/* ── Card ──────────────────────────────────────────────────────────── */}
-      <div className="group bg-white/60 dark:bg-gray-800/40 backdrop-blur-sm rounded-[2rem] p-5 border border-white/20 dark:border-gray-700/30 hover:shadow-xl hover:shadow-purple-500/5 transition-all duration-300 flex flex-col gap-4">
+      <div className="group bg-surface/60 backdrop-blur-sm rounded-4xl p-5 border border-white/20 dark:border-faint/30 hover:shadow-xl hover:shadow-special/5 transition-all duration-300 flex flex-col gap-4">
         {/* Header */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1.5">
               <span
-                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${LEVEL_COLORS[set.level]}`}
+                className={`px-2.5 py-0.5 rounded-full text-2xs font-semibold uppercase tracking-widest ${LEVEL_COLORS[set.level]}`}
               >
                 {set.level}
               </span>
-              <span className="text-[11px] text-gray-400 dark:text-gray-500">
+              <span className="text-xs text-faint">
                 {set.topic}
               </span>
             </div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight">
+            <h3 className="text-lg font-semibold text-fg leading-tight">
               {set.title}
             </h3>
           </div>
 
-          <div className="flex items-center gap-1 text-gray-400 dark:text-gray-500 shrink-0">
+          <div className="flex items-center gap-1 text-faint shrink-0">
             <Layers size={14} />
             <span className="text-sm font-medium">{set.cardCount}</span>
           </div>
         </div>
 
         {/* Description */}
-        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed flex-1">
+        <p className="text-sm text-muted leading-relaxed flex-1">
           {set.description}
         </p>
 
@@ -125,13 +125,13 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
           {set.cards.slice(0, 5).map((card) => (
             <span
               key={card.word}
-              className="px-2.5 py-1 bg-gray-100/80 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 rounded-lg text-xs font-medium"
+              className="px-2.5 py-1 bg-inset/80 text-muted rounded-lg text-xs font-medium"
             >
               {card.word}
             </span>
           ))}
           {set.cards.length > 5 && (
-            <span className="px-2.5 py-1 text-gray-400 text-xs">
+            <span className="px-2.5 py-1 text-faint text-xs">
               +{set.cards.length - 5}
             </span>
           )}
@@ -141,7 +141,7 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
         <div className="flex gap-2 pt-1">
           <button
             onClick={() => setShowModeModal(true)}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold rounded-xl transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-special hover:bg-special text-white text-sm font-semibold rounded-xl transition-colors"
           >
             Учить
             <ChevronRight size={15} />
@@ -149,7 +149,7 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
 
           <button
             onClick={() => setShowWordsModal(true)}
-            className="px-3 py-2.5 border border-gray-200 dark:border-gray-600 hover:border-purple-400 text-gray-600 dark:text-gray-300 hover:text-purple-600 rounded-xl transition-colors"
+            className="px-3 py-2.5 border border-line hover:border-special text-muted hover:text-special rounded-xl transition-colors"
             title="Все слова"
           >
             <BookOpen size={16} />
@@ -161,8 +161,8 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
             title={added ? "Добавлено" : "Добавить в мои коллекции"}
             className={`px-3 py-2.5 rounded-xl border transition-colors ${
               added
-                ? "border-green-400 text-green-500 bg-green-50 dark:bg-green-900/20 cursor-default"
-                : "border-gray-200 dark:border-gray-600 hover:border-purple-400 text-gray-600 dark:text-gray-300 hover:text-purple-600"
+                ? "border-success text-success bg-success-soft cursor-default"
+                : "border-line hover:border-special text-muted hover:text-special"
             }`}
           >
             {added ? <Check size={16} /> : <Plus size={16} />}
@@ -173,47 +173,47 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
       {/* ── Study Mode Picker ─────────────────────────────────────────────── */}
       {showModeModal && (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-[#1A1714]/40 dark:bg-black/50 backdrop-blur-xl"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-scrim/40 backdrop-blur-xl"
           onClick={() => setShowModeModal(false)}
         >
           <div
-            className="bg-white dark:bg-[#1A1917] rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-6 w-full max-w-sm shadow-2xl border border-[#E0DBD3] dark:border-[#2E2C29]"
+            className="bg-surface rounded-2xl sm:rounded-4xl p-4 sm:p-6 w-full max-w-sm shadow-2xl border border-line"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-start mb-1 sm:mb-2">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF5733] mb-1">
+                <p className="text-2xs font-semibold uppercase tracking-[0.2em] text-accent-ink mb-1">
                   Выбери режим
                 </p>
-                <h3 className="text-xl font-bold text-[#1A1714] dark:text-[#F0EDE8]">
+                <h3 className="text-xl font-semibold text-fg">
                   {set.title}
                 </h3>
               </div>
               <button
                 onClick={() => setShowModeModal(false)}
-                className="p-1.5 text-[#7A756E] hover:bg-[#EDEAE4] dark:hover:bg-[#242220] rounded-xl transition-colors"
+                className="p-1.5 text-muted hover:bg-subtle rounded-xl transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <p className="text-[12px] sm:text-[13px] font-medium text-[#7A756E] mb-4 sm:mb-5">
+            <p className="text-xs sm:text-sm font-medium text-muted mb-4 sm:mb-5">
               {set.cardCount} слов · {set.level}
             </p>
 
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <button
                 onClick={() => handleStartStudy("flashcards")}
-                className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#FFF0ED] dark:bg-[#2A1A15] border-2 border-[#FF5733]/30 hover:border-[#FF5733] transition-all group"
+                className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-accent-soft border-2 border-accent/30 hover:border-accent transition-all group"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#FF5733] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <Zap size={20} className="text-white sm:w-[22px] sm:h-[22px]" />
                 </div>
                 <div className="text-center">
-                  <p className="font-bold text-[#1A1714] dark:text-[#F0EDE8] text-sm">
+                  <p className="font-semibold text-fg text-sm">
                     Флэшкарты
                   </p>
-                  <p className="text-[11px] font-medium text-[#7A756E] mt-0.5">
+                  <p className="text-xs font-medium text-muted mt-0.5">
                     Переворачивай и оценивай
                   </p>
                 </div>
@@ -221,16 +221,16 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
 
               <button
                 onClick={() => handleStartStudy("quiz")}
-                className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#FFF0ED] dark:bg-[#2A1A15] border-2 border-[#FF5733]/30 hover:border-[#FF5733] transition-all group"
+                className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-accent-soft border-2 border-accent/30 hover:border-accent transition-all group"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#FF5733] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <BookOpen size={20} className="text-white sm:w-[22px] sm:h-[22px]" />
                 </div>
                 <div className="text-center">
-                  <p className="font-bold text-[#1A1714] dark:text-[#F0EDE8] text-sm">
+                  <p className="font-semibold text-fg text-sm">
                     Quiz
                   </p>
-                  <p className="text-[11px] font-medium text-[#7A756E] mt-0.5">
+                  <p className="text-xs font-medium text-muted mt-0.5">
                     Проверяй знания
                   </p>
                 </div>
@@ -247,30 +247,30 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
           onClick={() => setShowWordsModal(false)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-[2rem] w-full max-w-lg shadow-2xl flex flex-col max-h-[85dvh]"
+            className="bg-surface rounded-4xl w-full max-w-lg shadow-2xl flex flex-col max-h-[85dvh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal header */}
-            <div className="flex justify-between items-start p-6 border-b border-gray-100 dark:border-gray-700/50 shrink-0">
+            <div className="flex justify-between items-start p-6 border-b border-line shrink-0">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span
-                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${LEVEL_COLORS[set.level]}`}
+                    className={`px-2.5 py-0.5 rounded-full text-2xs font-semibold uppercase tracking-widest ${LEVEL_COLORS[set.level]}`}
                   >
                     {set.level}
                   </span>
-                  <span className="text-xs text-gray-400">{set.topic}</span>
+                  <span className="text-xs text-faint">{set.topic}</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold text-fg">
                   {set.title}
                 </h3>
-                <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">
+                <p className="text-sm text-faint mt-0.5">
                   {set.cardCount} слов
                 </p>
               </div>
               <button
                 onClick={() => setShowWordsModal(false)}
-                className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-xl transition-colors"
+                className="p-2 text-faint hover:text-muted rounded-xl transition-colors"
               >
                 <X size={20} />
               </button>
@@ -281,33 +281,33 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
               {set.cards.map((card, i) => (
                 <div
                   key={card.word}
-                  className="bg-gray-50/80 dark:bg-gray-700/40 rounded-2xl p-4"
+                  className="bg-inset/80 rounded-2xl p-4"
                 >
                   <div className="flex items-start justify-between gap-3 mb-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-base font-bold text-gray-900 dark:text-white">
+                      <span className="text-base font-semibold text-fg">
                         {card.word}
                       </span>
                       {card.partOfSpeech && (
-                        <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full">
+                        <span className="px-2 py-0.5 text-2xs font-semibold uppercase tracking-widest bg-special-soft text-special rounded-full">
                           {card.partOfSpeech}
                         </span>
                       )}
                     </div>
-                    <span className="text-xs text-gray-400 shrink-0">
+                    <span className="text-xs text-faint shrink-0">
                       #{i + 1}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                    <div className="w-1.5 h-1.5 rounded-full bg-special shrink-0" />
+                    <span className="text-sm font-medium text-fg">
                       {card.translation}
                     </span>
                   </div>
 
                   {card.explanation && (
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1.5 pl-3.5">
+                    <p className="text-xs text-muted mb-1.5 pl-3.5">
                       {card.explanation}
                     </p>
                   )}
@@ -316,9 +316,9 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
                     <div className="flex gap-2 pl-3.5">
                       <Quote
                         size={12}
-                        className="text-purple-400 mt-0.5 shrink-0"
+                        className="text-special mt-0.5 shrink-0"
                       />
-                      <p className="text-xs text-gray-500 dark:text-gray-400 italic">
+                      <p className="text-xs text-muted italic">
                         {card.example}
                       </p>
                     </div>
@@ -328,13 +328,13 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
             </div>
 
             {/* Modal footer */}
-            <div className="p-4 border-t border-gray-100 dark:border-gray-700/50 shrink-0 flex gap-2">
+            <div className="p-4 border-t border-line shrink-0 flex gap-2">
               <button
                 onClick={() => {
                   setShowWordsModal(false);
                   setShowModeModal(true);
                 }}
-                className="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold rounded-xl transition-colors"
+                className="flex-1 py-3 bg-special hover:bg-special text-white text-sm font-semibold rounded-xl transition-colors"
               >
                 Учить этот набор
               </button>
@@ -344,8 +344,8 @@ export default function KoloSetCard({ set }: KoloSetCardProps) {
                 title={added ? "Уже добавлено" : "Добавить в мои"}
                 className={`px-4 py-3 rounded-xl border text-sm font-medium transition-colors flex items-center gap-1.5 ${
                   added
-                    ? "border-green-400 text-green-500 bg-green-50 dark:bg-green-900/20"
-                    : "border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-purple-400 hover:text-purple-600"
+                    ? "border-success text-success bg-success-soft "
+                    : "border-line text-muted hover:border-special hover:text-special"
                 }`}
               >
                 {added ? (

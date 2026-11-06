@@ -1,0 +1,11 @@
+{
+  "title": "Etwas ist kaputtgegangen",
+  "text": "Ein unerwarteter Fehler ist aufgetreten. Versuch es noch einmal – und sag uns Bescheid, wenn es wieder passiert.",
+  "retry": "Erneut versuchen",
+  "home": "Zur Startseite",
+  "details": "Fehlerdetails",
+  "contact": "support@dakuta.dev",
+  "notFoundTitle": "Diese Seite ist aus der Umlaufbahn geraten",
+  "notFoundText": "Der Link ist vielleicht veraltet oder enthält einen Tippfehler. Geh zurück zur Startseite – deine Wörter warten.",
+  "back": "Zurück"
+}

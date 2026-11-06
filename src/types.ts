@@ -75,8 +75,6 @@ export interface SessionExtras {
 // Достижение
 export interface Achievement {
   id: AchievementType;
-  name: string;
-  description: string;
   icon: string;
   unlockedAt?: Date;
 }

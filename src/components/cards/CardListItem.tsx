@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { Pencil, Trash2 } from "lucide-react";
 import { Card } from "../../types";
 import { useI18n } from "../../contexts/I18nContext";
-import { PARTS_OF_SPEECH } from "../../data/partsOfSpeech";
-import { Edit3, Trash2, Quote, BookOpen, Zap, Check, X } from "lucide-react";
+import { getLanguageInfo } from "../../locales/languages";
+import { plural } from "../../utils/plural";
+import { Badge, Button, IconButton, cx } from "../../ui";
+import WordFields, { WordDraft, trimWord } from "./WordFields";
 
 interface CardListItemProps {
   card: Card;
@@ -10,262 +13,103 @@ interface CardListItemProps {
   onDelete: () => void;
 }
 
-export default function CardListItem({
-  card,
-  onSave,
-  onDelete,
-}: CardListItemProps) {
-  const { t } = useI18n();
-  const [isEditing, setIsEditing] = useState(false);
-  const [word, setWord] = useState(card.word);
-  const [translation, setTranslation] = useState(card.translation);
-  const [explanation, setExplanation] = useState(card.explanation);
-  const [example, setExample] = useState(card.example);
-  const [partOfSpeech, setPartOfSpeech] = useState(card.partOfSpeech);
+// Слово в списке набора: компактно — слово, часть речи, перевод, объяснение, пример, освоение.
+// По клику (или карандашу) превращается в форму правки.
+export default function CardListItem({ card, onSave, onDelete }: CardListItemProps) {
+  const { t, language } = useI18n();
+  const e = t.words.editCollection;
+  const [draft, setDraft] = useState<WordDraft | null>(null);
 
-  const startEditing = () => {
-    setWord(card.word);
-    setTranslation(card.translation);
-    setExplanation(card.explanation);
-    setExample(card.example);
-    setPartOfSpeech(card.partOfSpeech);
-    setIsEditing(true);
-  };
-
-  const handleSave = () => {
-    if (!word.trim() || !translation.trim()) return;
-    onSave({
-      word: word.trim(),
-      translation: translation.trim(),
-      explanation: explanation.trim(),
-      example: example.trim(),
-      partOfSpeech: partOfSpeech.trim(),
+  const startEditing = () =>
+    setDraft({
+      word: card.word,
+      translation: card.translation,
+      partOfSpeech: card.partOfSpeech,
+      explanation: card.explanation,
+      example: card.example,
     });
-    setIsEditing(false);
-  };
 
-  const handleCancel = () => setIsEditing(false);
-
-  const fields = t.words.editCollection.fields;
-
-  if (isEditing) {
+  if (draft) {
+    const valid = draft.word.trim() && draft.translation.trim();
     return (
-      <div
-        onKeyDown={(e) => e.key === "Escape" && handleCancel()}
-        className="bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-6 md:p-8 border-2 border-[#FF5733] shadow-lg shadow-orange-500/10"
+      <form
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          if (!valid) return;
+          onSave(trimWord(draft));
+          setDraft(null);
+        }}
+        onKeyDown={(ev) => ev.key === "Escape" && setDraft(null)}
+        className="grid gap-5 rounded-3xl border border-accent bg-surface p-5"
       >
-        <div className="grid sm:grid-cols-2 gap-3 mb-3">
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
-              {fields.word} *
-            </label>
-            <input
-              autoFocus
-              type="text"
-              value={word}
-              onChange={(e) => setWord(e.target.value)}
-              className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-black text-lg italic font-serif"
-            />
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
-              {fields.translation} *
-            </label>
-            <input
-              type="text"
-              value={translation}
-              onChange={(e) => setTranslation(e.target.value)}
-              className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-bold"
-            />
-          </div>
+        <WordFields value={draft} onChange={setDraft} idPrefix={`edit-${card.id}`} autoFocus />
+        <div className="flex justify-end gap-2">
+          <Button variant="secondary" onClick={() => setDraft(null)}>
+            {t.cancel}
+          </Button>
+          <Button type="submit" disabled={!valid}>
+            {t.save}
+          </Button>
         </div>
-
-        <div className="space-y-1.5 mb-3">
-          <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
-            {fields.partOfSpeech}
-          </label>
-          <select
-            value={partOfSpeech}
-            onChange={(e) => setPartOfSpeech(e.target.value)}
-            className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-medium appearance-none"
-          >
-            <option value="">{fields.partOfSpeechNone}</option>
-            {PARTS_OF_SPEECH.map((pos) => (
-              <option key={pos.value} value={pos.value}>
-                {pos.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="space-y-1.5 mb-3">
-          <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
-            {fields.explanation}
-          </label>
-          <textarea
-            value={explanation}
-            onChange={(e) => setExplanation(e.target.value)}
-            rows={2}
-            className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-medium resize-none leading-relaxed"
-          />
-        </div>
-
-        <div className="space-y-1.5 mb-5">
-          <label className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8] ml-1">
-            {fields.example}
-          </label>
-          <textarea
-            value={example}
-            onChange={(e) => setExample(e.target.value)}
-            rows={2}
-            className="w-full px-4 py-3 bg-[#F5F2ED] dark:bg-[#242220] border-2 border-transparent focus:border-[#FF5733] rounded-2xl outline-none transition-colors text-[#1A1714] dark:text-[#F0EDE8] font-medium italic resize-none leading-relaxed"
-          />
-        </div>
-
-        <div className="flex gap-2">
-          <button
-            onClick={handleCancel}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-[#E0DBD3] dark:border-[#2E2C29] text-[#7A756E] dark:text-[#8A867F] font-black text-[11px] uppercase tracking-widest hover:border-[#FF5733]/40 transition-all"
-          >
-            <X size={14} /> {t.cancel}
-          </button>
-          <button
-            onClick={handleSave}
-            disabled={!word.trim() || !translation.trim()}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-[#FF5733] text-white font-black text-[11px] uppercase tracking-widest hover:bg-[#E54D2A] transition-all active:scale-[0.98] disabled:opacity-40"
-          >
-            <Check size={14} /> {t.save}
-          </button>
-        </div>
-      </div>
+      </form>
     );
   }
+
+  // Освоение — по интервалу повторения, максимум 5 делений
+  const level = Math.min(5, card.srsData?.interval || 0);
+  const total = card.srsData.totalReviews ?? 0;
+  const accuracy = total > 0 && card.srsData.correctReviews != null ? Math.round((card.srsData.correctReviews / total) * 100) : null;
 
   return (
     <div
       onClick={startEditing}
-      className="group relative bg-white dark:bg-[#1A1917] rounded-[2.5rem] p-6 md:p-8 border border-[#E0DBD3] dark:border-[#2E2C29] hover:border-[#FF5733] transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-[#FF5733]/5 cursor-pointer active:scale-[0.995]"
+      className="group cursor-pointer rounded-3xl border border-line bg-surface p-5 transition-colors hover:border-accent/40"
     >
-      {/* ВЕРХНЯЯ ЧАСТЬ: Слово и Кнопки */}
-      <div className="flex justify-between items-start gap-4 mb-6">
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-3 mb-2">
-            <h3 className="text-2xl md:text-3xl font-black text-[#1A1714] dark:text-[#F0EDE8] tracking-tighter italic font-serif">
-              {card.word}
-            </h3>
-            {card.partOfSpeech && (
-              <span className="px-3 py-1 text-[10px] font-black uppercase tracking-[0.15em] bg-[#F5F2ED] dark:bg-[#242220] text-[#7A756E] dark:text-[#8A867F] rounded-full border border-[#E0DBD3] dark:border-[#2E2C29]">
-                {card.partOfSpeech}
-              </span>
-            )}
+      <div className="flex items-start gap-3">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="font-display text-xl font-semibold text-fg">{card.word}</h3>
+            {card.partOfSpeech && <Badge>{card.partOfSpeech}</Badge>}
           </div>
-
-          <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-[#FF5733] shadow-[0_0_10px_#FF5733]" />
-            <p className="text-lg font-bold text-[#7A756E] dark:text-[#8A867F] leading-tight">
-              {card.translation}
-            </p>
-          </div>
+          <p className="mt-0.5 text-base font-medium text-accent-ink">{card.translation}</p>
         </div>
-
-        {/* КНОПКИ: всегда видны — на тач-экранах hover не работает */}
-        <div className="flex gap-1 shrink-0">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              startEditing();
-            }}
-            className="p-2.5 text-[#B5B0A8] hover:text-[#FF5733] hover:bg-[#FFF0ED] dark:hover:bg-[#2A1A15] rounded-xl transition-all active:scale-90"
-          >
-            <Edit3 size={17} />
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete();
-            }}
-            className="p-2.5 text-[#B5B0A8] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all active:scale-90"
-          >
-            <Trash2 size={17} />
-          </button>
+        <div className="flex shrink-0 gap-0.5" onClick={(ev) => ev.stopPropagation()}>
+          <IconButton size="sm" label={t.edit} onClick={startEditing}>
+            <Pencil size={16} />
+          </IconButton>
+          <IconButton size="sm" label={t.delete} onClick={onDelete}>
+            <Trash2 size={16} />
+          </IconButton>
         </div>
       </div>
 
-      {/* КОНТЕНТ: Описание и Пример */}
-      <div className="space-y-4 pt-6 border-t border-[#F5F2ED] dark:border-[#2E2C29]">
-        {card.explanation && (
-          <div className="flex gap-4 items-start">
-            <div className="mt-1 p-2 bg-[#F5F2ED] dark:bg-[#242220] rounded-xl text-[#B5B0A8]">
-              <BookOpen size={14} />
-            </div>
-            <p className="text-sm font-medium text-[#7A756E] dark:text-[#8A867F] leading-relaxed">
-              {card.explanation}
-            </p>
-          </div>
-        )}
-
-        {card.example && (
-          <div className="relative p-5 bg-[#F5F2ED]/50 dark:bg-[#242220]/50 rounded-4xl border border-[#E0DBD3] dark:border-[#2E2C29] overflow-hidden">
-            <Quote
-              size={40}
-              className="absolute -top-2 -right-2 text-[#FF5733]/5 pointer-events-none"
-            />
-            <div className="flex gap-4 items-start relative z-10">
-              <Zap size={14} className="text-[#FF5733] mt-1 shrink-0" />
-              <p className="text-sm font-bold text-[#1A1714] dark:text-[#F0EDE8] italic leading-relaxed">
-                {card.example}
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* SRS ИНДИКАТОР */}
-      <div className="mt-6 flex items-center justify-between">
-        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B5B0A8]">
-          {t.words.collectionCard.masteryLevel}
-        </span>
-        <div className="flex gap-1.5">
-          {[...Array(5)].map((_, i) => {
-            const level = card.srsData?.interval || 0;
-            const isActive = i < level;
-            return (
-              <div
-                key={i}
-                className={`h-1.5 rounded-full transition-all duration-700 ${
-                  isActive
-                    ? "w-6 bg-[#FF5733] shadow-[0_0_8px_#FF5733]"
-                    : "w-1.5 bg-[#E0DBD3] dark:bg-[#2E2C29]"
-                }`}
-              />
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Per-word stats — shown only after first review */}
-      {(card.srsData.totalReviews ?? 0) > 0 && (
-        <div className="mt-3 pt-3 border-t border-[#F5F2ED] dark:border-[#2E2C29] flex items-center gap-4 flex-wrap">
-          <span className="text-[10px] font-black uppercase tracking-widest text-[#B5B0A8]">
-            {card.srsData.totalReviews} {card.srsData.totalReviews === 1 ? 'review' : 'reviews'}
-          </span>
-          {card.srsData.correctReviews != null && card.srsData.totalReviews != null && (
-            <>
-              <span className="w-1 h-1 rounded-full bg-[#D0CBC4] shrink-0" />
-              {(() => {
-                const acc = Math.round((card.srsData.correctReviews / card.srsData.totalReviews) * 100);
-                return (
-                  <span className={`text-[10px] font-black uppercase tracking-widest ${
-                    acc >= 70 ? 'text-[#22C55E]' : acc >= 40 ? 'text-amber-500' : 'text-red-400'
-                  }`}>
-                    {acc}% accuracy
-                  </span>
-                );
-              })()}
-            </>
-          )}
+      {(card.explanation || card.example) && (
+        <div className="mt-3 grid gap-1 text-sm leading-relaxed">
+          {card.explanation && <p className="text-muted">{card.explanation}</p>}
+          {card.example && <p className="italic text-fg">{card.example}</p>}
         </div>
       )}
+
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-line pt-3">
+        <div className="flex items-center gap-1" title={t.words.collectionCard.masteryLevel} aria-label={`${t.words.collectionCard.masteryLevel}: ${level}/5`}>
+          {[0, 1, 2, 3, 4].map((i) => (
+            <span key={i} className={cx("h-1.5 w-5 rounded-full", i < level ? "bg-accent" : "bg-track")} />
+          ))}
+        </div>
+        {total > 0 && (
+          <p className="text-xs text-faint">
+            {plural(getLanguageInfo(language).htmlLang, total, e.reviews)}
+            {accuracy !== null && (
+              <>
+                {" · "}
+                <span className={cx("font-semibold", accuracy >= 70 ? "text-success" : accuracy >= 40 ? "text-warning" : "text-danger")}>
+                  {e.accuracy.replace("{n}", String(accuracy))}
+                </span>
+              </>
+            )}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

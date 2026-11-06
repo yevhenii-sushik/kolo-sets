@@ -1,0 +1,57 @@
+{
+  "docs": {
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Uso",
+    "cookies": "Política de Cookies",
+    "refund": "Política de Reembolso"
+  },
+  "cookies": {
+    "title": "Cookies e privacidade",
+    "text": "O Kolo guarda no seu dispositivo só o necessário: seu login, suas configurações e uma cópia offline dos seus sets. Sem anúncios, sem rastreamento.",
+    "more": "Saiba mais na {cookies}.",
+    "acceptAll": "Aceitar todos",
+    "necessaryOnly": "Só os necessários",
+    "customize": "Personalizar",
+    "save": "Salvar escolhas",
+    "necessary": "Necessários",
+    "necessaryDesc": "Login, idioma, tema, modo offline e progresso neste dispositivo. O Kolo não funciona sem eles.",
+    "alwaysOn": "Sempre ativos",
+    "analytics": "Análise",
+    "analyticsDesc": "Estatísticas de uso anônimas para melhorar o Kolo. Ainda não usadas — só serão ativadas com a sua permissão.",
+    "settings": "Configurações de cookies"
+  },
+  "consent": {
+    "agree": "Aceito os {terms} e li a {privacy}.",
+    "labels": {
+      "terms": "Termos de Uso",
+      "privacy": "Política de Privacidade"
+    },
+    "required": "Aceite os Termos de Uso para criar uma conta.",
+    "google": "Ao continuar com o Google, você aceita os {terms} e confirma que leu a {privacy}.",
+    "support": "Sua mensagem vai para a equipe do Kolo pelo Telegram. Saiba mais na {privacy}."
+  },
+  "page": {
+    "effective": "Em vigor desde {date}",
+    "shortVersion": "Em resumo",
+    "contents": "Sumário",
+    "docsNav": "Documentos legais",
+    "signUp": "Criar conta",
+    "openApp": "Abrir o app",
+    "translationNote": "Esta é uma tradução para sua conveniência. Se houver diferença em relação ao original em inglês, vale a versão em inglês.",
+    "originalNote": "Você está lendo o original em inglês.",
+    "showOriginal": "Ver original em inglês",
+    "showTranslation": "Voltar à tradução",
+    "linkToSection": "Link para esta seção",
+    "questionsTitle": "Dúvidas sobre este documento?",
+    "questionsText": "Escreva para nós e responderemos.",
+    "alsoRead": "Leia também",
+    "support": "Suporte",
+    "backToTop": "Voltar ao topo"
+  },
+  "tabs": {
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "cookies": "Cookies",
+    "refund": "Reembolso"
+  }
+}

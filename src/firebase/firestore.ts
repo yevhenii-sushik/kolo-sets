@@ -281,6 +281,14 @@ export const updateUserProfile = async (userId: string, data: any) => {
   await setDoc(docRef, data, { merge: true });
 };
 
+// Фиксируем, какую версию Условий и Политики пользователь принял и когда.
+// Сначала getUserProfile — он создаёт профиль, если его ещё нет: иначе запись
+// одного поля превратила бы пустой документ в «существующий», но неполный профиль.
+export const recordLegalAcceptance = async (userId: string, version: string) => {
+  await getUserProfile(userId);
+  await updateUserProfile(userId, { legalAcceptance: { version, acceptedAt: Timestamp.now() } });
+};
+
 // Общий хелпер для обновления статистики учебной сессии
 const updateStudySession = async (
   userId: string,

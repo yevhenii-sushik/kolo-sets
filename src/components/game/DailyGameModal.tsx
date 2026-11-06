@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, BookOpen, Shuffle, Delete, ChevronRight } from 'lucide-react';
+import { X, BookOpen, Shuffle, Delete, ChevronRight, HelpCircle } from 'lucide-react';
 import { useI18n } from '../../contexts/I18nContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useData } from '../../contexts/DataContext';
@@ -15,6 +15,9 @@ import {
   getGameLeaderboard,
   type GameScore,
 } from '../../firebase/firestore';
+import { getLanguageInfo } from '../../locales/languages';
+import { plural } from '../../utils/plural';
+import { Badge, Button, Heading, IconButton, Spinner, cx } from '../../ui';
 
 interface Props {
   onClose: () => void;
@@ -176,104 +179,110 @@ export default function DailyGameModal({ onClose }: Props) {
 
   const level = getLevelLabel(score, maxScore, tg as unknown as Record<string, string>);
   const allLetters = [puzzle.center, ...shuffled];
+  const locale = getLanguageInfo(language).htmlLang;
 
-  const feedbackColor = feedback === 'pangram' ? '#FFB800'
-    : feedback === 'correct' ? '#22C55E'
-    : '#FF5733';
+  const feedbackTone =
+    feedback === 'pangram' ? 'bg-warning-soft text-warning' : feedback === 'correct' ? 'bg-success-soft text-success' : 'bg-danger-soft text-danger';
 
   const feedbackMessage = feedback === 'pangram' ? tg.pangramBadge
-    : feedback === 'correct' ? `+${foundWords.length > 0 ? (wordMap.get(feedbackWord)?.points ?? '') : ''} ${tg.correctWord}`
+    : feedback === 'correct' ? `+${wordMap.get(feedbackWord)?.points ?? ''} ${tg.correctWord}`
     : feedback === 'already' ? tg.alreadyFound
     : feedback === 'short' ? tg.tooShort
     : feedback === 'noCenter' ? tg.missingCenter
     : feedback === 'invalid' ? tg.notAWord
     : '';
 
+  const TABS: { id: Tab; label: string }[] = [
+    { id: 'game', label: tg.tabs.play },
+    { id: 'words', label: tg.tabs.words },
+    { id: 'leaderboard', label: tg.tabs.top },
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4"
-      onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="daily-game-title"
+      className="fixed inset-0 z-200 flex items-end justify-center sm:items-center sm:p-4"
     >
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-scrim/50 backdrop-blur-sm" onClick={onClose} />
 
       <motion.div
         initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 60, opacity: 0 }}
         transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-        className="relative w-full sm:max-w-md bg-[#FAF8F5] dark:bg-[#1A1917] rounded-t-[2rem] sm:rounded-[2rem] overflow-hidden flex flex-col max-h-[96dvh] sm:max-h-[90dvh]"
+        className="relative flex max-h-[96dvh] w-full flex-col overflow-hidden rounded-t-4xl border border-line bg-surface shadow-2xl sm:max-h-[90dvh] sm:max-w-md sm:rounded-4xl"
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 flex-shrink-0">
-          <div>
-            <h2 className="u-title text-[22px] leading-tight">{tg.modalTitle}</h2>
-            <p className="text-[11px] font-semibold text-[#B5B0A8] mt-0.5">{level} · {score}{tg.pointsSuffix}</p>
+        {/* Шапка: название, уровень и счёт, правила, закрыть */}
+        <div className="flex shrink-0 items-start justify-between gap-3 px-6 pb-4 pt-6">
+          <div className="min-w-0">
+            <Heading size={3} as="h2" id="daily-game-title">
+              {tg.modalTitle}
+            </Heading>
+            <p className="mt-0.5 text-sm text-muted tabular-nums">
+              {level} · {score}
+              {tg.pointsSuffix}
+            </p>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setShowRules(r => !r)}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[#B5B0A8] hover:bg-[#EDEAE4] dark:hover:bg-[#242220] transition-colors text-[11px] font-bold"
-            >
-              ?
-            </button>
-            <button
-              onClick={onClose}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[#B5B0A8] hover:bg-[#EDEAE4] dark:hover:bg-[#242220] transition-colors"
-            >
-              <X size={16} />
-            </button>
+          <div className="-mr-2 -mt-1 flex items-center">
+            <IconButton label={tg.modalRules} aria-expanded={showRules} onClick={() => setShowRules((r) => !r)}>
+              <HelpCircle size={20} />
+            </IconButton>
+            <IconButton label={t.close} onClick={onClose}>
+              <X size={20} />
+            </IconButton>
           </div>
         </div>
 
-        {/* Rules tooltip */}
         <AnimatePresence>
           {showRules && (
-            <motion.div
+            <motion.p
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
-              className="mx-6 mb-4 p-4 rounded-2xl bg-[#FF5733]/10 text-[12px] text-[#FF5733] leading-relaxed font-medium flex-shrink-0"
+              className="mx-6 mb-4 shrink-0 rounded-2xl bg-accent-soft p-4 text-sm leading-relaxed text-accent-ink"
             >
               {tg.rulesText}
-            </motion.div>
+            </motion.p>
           )}
         </AnimatePresence>
 
-        {/* Tabs */}
-        <div className="flex gap-1 mx-6 mb-4 p-1 rounded-xl bg-[#EDEAE4] dark:bg-[#242220] flex-shrink-0">
-          {(['game', 'words', 'leaderboard'] as Tab[]).map(tabId => (
+        {/* Вкладки */}
+        <div role="tablist" className="mx-6 mb-4 grid shrink-0 grid-cols-3 gap-1 rounded-full bg-inset p-1">
+          {TABS.map(({ id, label }) => (
             <button
-              key={tabId}
-              onClick={() => setTab(tabId)}
-              className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all ${
-                tab === tabId
-                  ? 'bg-white dark:bg-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] shadow-sm'
-                  : 'text-[#B5B0A8]'
-              }`}
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              onClick={() => setTab(id)}
+              className={cx(
+                'h-9 truncate rounded-full px-2 text-sm font-semibold transition-colors',
+                tab === id ? 'bg-surface text-fg shadow-sm' : 'text-muted hover:text-fg',
+              )}
             >
-              {tabId === 'game' ? '🎮' : tabId === 'words' ? '📖' : '🏆'}
+              {label}
             </button>
           ))}
         </div>
 
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto px-6 pb-6">
           {tab === 'game' && (
-            <div className="px-6 pb-6">
-              {/* Feedback toast */}
-              <div className="h-8 flex items-center justify-center mb-2">
+            <div className="grid justify-items-center">
+              {/* Отклик на слово */}
+              <div className="mb-2 flex h-8 items-center justify-center">
                 <AnimatePresence>
                   {feedback && (
                     <motion.span
                       key={feedback}
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.85 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="text-[13px] font-bold px-4 py-1.5 rounded-full"
-                      style={{ background: `${feedbackColor}20`, color: feedbackColor }}
+                      exit={{ opacity: 0, scale: 0.85 }}
+                      className={cx('rounded-full px-4 py-1.5 text-sm font-semibold', feedbackTone)}
                     >
                       {feedbackMessage}
                     </motion.span>
@@ -281,74 +290,52 @@ export default function DailyGameModal({ onClose }: Props) {
                 </AnimatePresence>
               </div>
 
-              {/* Current word display */}
-              <div className="text-center mb-6">
-                <div className="min-h-[48px] flex items-center justify-center">
-                  {current ? (
-                    <span className="u-title text-[32px] tracking-[0.1em]">
-                      {current.split('').map((ch, i) => (
-                        <span
-                          key={i}
-                          style={{ color: ch === puzzle.center ? '#FF5733' : undefined }}
-                        >
-                          {ch}
-                        </span>
-                      ))}
-                    </span>
-                  ) : (
-                    <span className="text-[#B5B0A8] text-[14px] font-medium">{tg.modalCenterHint}</span>
-                  )}
-                </div>
+              {/* Набранное слово; центральная буква — оранжевая */}
+              <div className="mb-6 flex min-h-12 items-center justify-center text-center">
+                {current ? (
+                  <span className="font-display text-3xl font-semibold tracking-wider text-fg">
+                    {current.split('').map((ch, i) => (
+                      <span key={i} className={ch === puzzle.center ? 'text-accent-ink' : undefined}>
+                        {ch}
+                      </span>
+                    ))}
+                  </span>
+                ) : (
+                  <span className="text-sm text-muted">{tg.modalCenterHint}</span>
+                )}
               </div>
 
-              {/* Honeycomb */}
-              <div className="flex justify-center mb-6">
-                <HoneyComb
-                  letters={allLetters}
-                  center={puzzle.center}
-                  onPress={addLetter}
-                />
+              <div className="mb-6">
+                <HoneyComb letters={allLetters} center={puzzle.center} onPress={addLetter} />
               </div>
 
-              {/* Controls */}
-              <div className="flex items-center justify-center gap-3">
-                <button
-                  onClick={deleteLetter}
-                  disabled={!current}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[12px] font-bold border border-[#E0DBD3] dark:border-[#2E2C29] disabled:opacity-30 transition-opacity"
-                >
-                  <Delete size={14} /> {tg.modalDeleteBtn}
-                </button>
-                <button
-                  onClick={shuffle}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center border border-[#E0DBD3] dark:border-[#2E2C29]"
-                >
-                  <Shuffle size={16} className="text-[#B5B0A8]" />
-                </button>
-                <button
-                  onClick={submitWord}
-                  disabled={!current}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[12px] font-bold bg-[#FF5733] text-white disabled:opacity-30 transition-opacity"
-                >
-                  {tg.modalSubmitBtn} <ChevronRight size={14} />
-                </button>
+              <div className="flex items-center justify-center gap-2">
+                <Button variant="secondary" iconLeft={<Delete size={16} />} onClick={deleteLetter} disabled={!current}>
+                  {tg.modalDeleteBtn}
+                </Button>
+                <IconButton variant="surface" label={tg.modalShuffleBtn} onClick={shuffle}>
+                  <Shuffle size={18} />
+                </IconButton>
+                <Button iconRight={<ChevronRight size={16} />} onClick={submitWord} disabled={!current}>
+                  {tg.modalSubmitBtn}
+                </Button>
               </div>
 
-              {/* Recent find definition */}
+              {/* Значение только что найденного слова */}
               <AnimatePresence>
                 {selectedWordDef && feedback === null && (
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="mt-5 p-4 rounded-2xl bg-[#EDEAE4] dark:bg-[#242220]"
+                    className="mt-6 grid w-full gap-1 rounded-3xl bg-inset p-4"
                   >
-                    <p className="text-[10px] font-black uppercase tracking-[0.15em] text-[#B5B0A8] mb-1">{tg.wordDefinition}</p>
-                    <p className="u-title text-[18px] mb-1">{selectedWordDef.word}</p>
-                    <p className="text-[12px] font-medium text-[#5A5650] dark:text-[#9A9590] leading-snug">{selectedWordDef.def.no}</p>
+                    <p className="text-xs font-semibold text-muted">{tg.wordDefinition}</p>
+                    <p className="font-display text-lg font-semibold text-fg">{selectedWordDef.word}</p>
+                    <p className="text-sm leading-snug text-muted">{selectedWordDef.def.no}</p>
                     {language !== 'no' && (
-                      <p className="text-[12px] font-medium text-[#B5B0A8] mt-1 leading-snug italic">
-                        {selectedWordDef.def[language as 'en' | 'ru' | 'uk']}
+                      <p className="text-sm italic leading-snug text-faint">
+                        {selectedWordDef.def[language as 'en' | 'ru' | 'uk'] ?? selectedWordDef.def.en}
                       </p>
                     )}
                   </motion.div>
@@ -358,43 +345,38 @@ export default function DailyGameModal({ onClose }: Props) {
           )}
 
           {tab === 'words' && (
-            <div className="px-6 pb-6">
-              <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#B5B0A8] mb-4">
+            <div className="grid gap-3">
+              <p className="text-sm text-muted tabular-nums">
                 {tg.modalFoundWords} · {foundWords.length}/{puzzle.words.length}
               </p>
               {foundWords.length === 0 ? (
-                <p className="text-[13px] text-[#B5B0A8] text-center py-8">—</p>
+                <p className="py-8 text-center text-sm text-muted">{tg.noWordsYet}</p>
               ) : (
-                <div className="space-y-2">
-                  {foundWords.map(w => {
+                <div className="grid gap-2">
+                  {foundWords.map((w) => {
                     const entry = wordMap.get(w);
                     const isPangram = entry?.isPangram || calcPangramBonus(w, puzzle);
+                    const open = selectedWordDef?.word === w;
                     return (
-                      <motion.button
+                      <button
                         key={w}
-                        initial={{ opacity: 0, x: -8 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        onClick={() => setSelectedWordDef(entry ?? null)}
-                        className="w-full flex items-center justify-between p-3 rounded-2xl bg-[#EDEAE4] dark:bg-[#242220] text-left"
+                        type="button"
+                        aria-expanded={open}
+                        onClick={() => setSelectedWordDef(open ? null : entry ?? null)}
+                        className="flex w-full items-start justify-between gap-3 rounded-2xl bg-inset p-3 text-left transition-colors hover:bg-track"
                       >
-                        <div>
-                          <span className="font-bold text-[15px]">{w}</span>
-                          {isPangram && (
-                            <span className="ml-2 text-[9px] font-black px-2 py-0.5 rounded-full bg-[#FFB800] text-white uppercase">
-                              {tg.pangramBadge}
-                            </span>
-                          )}
-                          {selectedWordDef?.word === w && (
-                            <p className="text-[11px] text-[#7A756E] mt-0.5">{entry?.def.no}</p>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-bold text-[#B5B0A8]">
-                            +{entry ? entry.points + (isPangram ? 7 : 0) : '?'}
+                        <div className="grid min-w-0 gap-1">
+                          <span className="flex flex-wrap items-center gap-2">
+                            <span className="font-semibold text-fg">{w}</span>
+                            {isPangram && <Badge tone="warning">{tg.pangramBadge}</Badge>}
                           </span>
-                          <BookOpen size={13} className="text-[#B5B0A8]" />
+                          {open && <span className="text-sm text-muted">{entry?.def.no}</span>}
                         </div>
-                      </motion.button>
+                        <span className="flex shrink-0 items-center gap-2 text-sm font-semibold tabular-nums text-muted">
+                          +{entry ? entry.points + (isPangram ? 7 : 0) : '?'}
+                          <BookOpen size={14} className="text-faint" />
+                        </span>
+                      </button>
                     );
                   })}
                 </div>
@@ -403,49 +385,42 @@ export default function DailyGameModal({ onClose }: Props) {
           )}
 
           {tab === 'leaderboard' && (
-            <div className="px-6 pb-6">
-              <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#B5B0A8] mb-4">{tg.modalLeaderboard}</p>
+            <div className="grid gap-3">
+              <p className="text-sm text-muted">{tg.modalLeaderboard}</p>
               {leaderboardLoading ? (
-                <p className="text-[13px] text-[#B5B0A8] text-center py-8">{tg.loadingLeaderboard}</p>
+                <div className="grid place-items-center py-8 text-muted">
+                  <Spinner size={20} />
+                  <span className="sr-only">{tg.loadingLeaderboard}</span>
+                </div>
               ) : leaderboard.length === 0 ? (
-                <p className="text-[13px] text-[#B5B0A8] text-center py-8">{tg.noScoresYet}</p>
+                <p className="py-8 text-center text-sm text-muted">{tg.noScoresYet}</p>
               ) : (
-                <div className="space-y-2">
+                <ol className="grid gap-2">
                   {leaderboard.map((row, i) => {
                     const isMe = user?.uid === row.userId;
                     return (
-                      <div
-                        key={row.userId}
-                        className={`flex items-center gap-3 p-3 rounded-2xl ${
-                          isMe
-                            ? 'bg-[#FF5733]/10 border border-[#FF5733]/20'
-                            : 'bg-[#EDEAE4] dark:bg-[#242220]'
-                        }`}
-                      >
-                        <span className="text-[13px] font-black w-6 text-center text-[#B5B0A8]">
-                          {i + 1 <= 3 ? ['🥇', '🥈', '🥉'][i] : i + 1}
+                      <li key={row.userId} className={cx('flex items-center gap-3 rounded-2xl p-3', isMe ? 'bg-accent-soft' : 'bg-inset')}>
+                        <span className="w-6 text-center text-sm font-semibold tabular-nums text-muted">
+                          {i < 3 ? ['🥇', '🥈', '🥉'][i] : i + 1}
                         </span>
-                        <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-[#EDEAE4] dark:bg-[#2E2C29] flex items-center justify-center">
-                          {row.photoURL ? (
-                            <img src={row.photoURL} className="w-full h-full object-cover" alt="" />
-                          ) : (
-                            <span className="text-sm">🧑</span>
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[13px] font-bold truncate">
+                        <span className="grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-full bg-surface text-sm font-semibold text-accent-ink">
+                          {row.photoURL ? <img src={row.photoURL} className="h-full w-full object-cover" alt="" /> : row.displayName.charAt(0).toUpperCase()}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-semibold text-fg">
                             {row.displayName}
-                            {isMe && <span className="ml-1 text-[10px] text-[#FF5733] font-black">({tg.modalYou})</span>}
+                            {isMe && <span className="ml-1 font-normal text-accent-ink">({tg.modalYou})</span>}
                           </p>
-                          <p className="text-[10px] text-[#B5B0A8]">
-                            {row.wordsFound} words{row.foundPangram ? ' · 🌟 Pangram' : ''}
+                          <p className="text-xs text-muted">
+                            {plural(locale, row.wordsFound, tg.widgetWords)}
+                            {row.foundPangram && ` · ${tg.pangramBadge}`}
                           </p>
                         </div>
-                        <span className="text-[15px] font-black text-[#FF5733]">{row.score}</span>
-                      </div>
+                        <span className="font-display text-base font-semibold tabular-nums text-accent-ink">{row.score}</span>
+                      </li>
                     );
                   })}
-                </div>
+                </ol>
               )}
             </div>
           )}
@@ -472,11 +447,12 @@ function HoneyComb({ letters, center, onPress }: {
     <motion.button
       whileTap={{ scale: 0.92 }}
       onClick={() => onPress(letter)}
-      className={`w-17 h-17 flex items-center justify-center rounded-[20px] select-none font-black text-[22px] uppercase transition-colors ${
-        isCenter
-          ? 'bg-[#FF5733] text-white shadow-lg'
-          : 'bg-[#EDEAE4] dark:bg-[#2E2C29] text-[#1A1714] dark:text-[#F0EDE8] hover:bg-[#E0DBD3] dark:hover:bg-[#3A3836]'
-      }`}
+      type="button"
+      aria-label={letter}
+      className={cx(
+        'flex h-17 w-17 select-none items-center justify-center rounded-3xl font-display text-xl font-semibold uppercase transition-colors',
+        isCenter ? 'bg-accent text-on-accent' : 'bg-inset text-fg hover:bg-track',
+      )}
     >
       {letter}
     </motion.button>

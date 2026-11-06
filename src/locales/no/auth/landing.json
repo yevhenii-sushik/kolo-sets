@@ -1,35 +1,275 @@
 {
+  "nav": {
+    "siteLanguage": "Nettstedsspråk",
+    "login": "Logg inn",
+    "start": "Kom i gang",
+    "how": "Slik fungerer det",
+    "modes": "Moduser",
+    "faq": "Spørsmål",
+    "sections": "Deler av siden"
+  },
   "hero": {
-    "badge": "LÆR • MESTRE • REPETER •",
-    "quote": "«Språk er ikke bare ord — det er nøkkelen til en ny verden».",
-    "subquote": "Oppdag den smarte måten å lære språk på med det vitenskapelige intervallrepetisjonssystemet.",
-    "startFree": "Start gratis",
-    "login": "Logg inn"
+    "title": "Den enkle måten å lære ord på hvilket som helst språk — og huske dem.",
+    "subtitle": "Legg til dine egne ord, øv noen minutter om dagen – og Kolo henter fram hvert ord akkurat når du er i ferd med å glemme det.",
+    "start": "Begynn å lære",
+    "login": "Jeg har allerede en konto",
+    "promises": [
+      "Ingen reklame",
+      "All læring er gratis",
+      "I nettleseren og på mobilen"
+    ],
+    "ratings": [
+      "Vet ikke",
+      "Glemte",
+      "Husker",
+      "Kan"
+    ],
+    "cards": [
+      {
+        "flag": "🇩🇪",
+        "pos": "subst.",
+        "word": "Buch",
+        "translation": "bok",
+        "example": "Ich lese ein spannendes Buch."
+      },
+      {
+        "flag": "🇮🇹",
+        "pos": "subst.",
+        "word": "amico",
+        "translation": "venn",
+        "example": "Lui è il mio migliore amico."
+      },
+      {
+        "flag": "🇯🇵",
+        "pos": "subst.",
+        "word": "旅行",
+        "translation": "reise",
+        "example": "夏に京都へ旅行します。"
+      }
+    ]
   },
-  "features": {
-    "aiTitle": "AI-magi",
-    "aiDesc": "Vår AI hjelper deg med å lage perfekte kort på sekunder. Den forstår kontekst og finner de rette nyansene.",
-    "aiBadge": "AI-forslag",
-    "cloudTitle": "Sky",
-    "cloudDesc": "Fremgangen din er alltid med deg. Start på PC, fortsett på farten.",
-    "ttsTitle": "Lytt til språket",
-    "ttsDesc": "Kvalitetsopplest tekst hjelper deg å mestre korrekt uttale fra første dag.",
-    "srsTitle": "Glem aldri",
-    "srsDesc": "SRS-algoritmen beregner nøyaktig øyeblikket du er i ferd med å glemme et ord, og minner deg på det.",
-    "retention": "Hukommelse",
-    "algo": "Algoritme"
+  "languages": {
+    "label": "Språk du kan lære med Kolo",
+    "more": "og nesten alle andre"
   },
-  "gamification": {
-    "title": "Hold",
-    "highlight": "flammen",
-    "desc": "Prestasjons- og seriessystemet er laget for å motivere deg hver dag. Gjør læring til en vane.",
-    "nextLevel": "Neste nivå"
+  "how": {
+    "title": "Hvert ord i sin egen bane",
+    "text": "Kolo holder oversikt over hvor godt du kan hvert ord, og bestemmer når det er tid for å se det igjen.",
+    "steps": [
+      {
+        "title": "Legg til ord",
+        "text": "Dine egne – fra bøker, serier og samtaler. Lim inn en hel liste på én gang."
+      },
+      {
+        "title": "Øv litt",
+        "text": "Kort, quizer og spill. Selv fem minutter om dagen teller."
+      },
+      {
+        "title": "Kolo henter dem fram igjen",
+        "text": "Vanskelige ord kommer tilbake i morgen, kjente om en uke eller en måned. Du repeterer akkurat det som er på tide."
+      }
+    ]
+  },
+  "modes": {
+    "title": "Seks måter å få et ord til å sitte på",
+    "text": "De samme ordene i ulike formater – velg modusen som passer humøret.",
+    "items": {
+      "flashcards": {
+        "name": "Flashkort",
+        "text": "Ordet på den ene siden, oversettelsen på den andre. Marker hvor godt du husket det."
+      },
+      "review": {
+        "name": "Dagens repetisjon",
+        "text": "Bare ordene som skal repeteres i dag."
+      },
+      "quiz": {
+        "name": "Quiz",
+        "text": "Velg riktig svar, skriv ordet eller sett sammen par."
+      },
+      "speed": {
+        "name": "Hurtigrunde",
+        "text": "Så mange svar du klarer på 60 sekunder."
+      },
+      "survival": {
+        "name": "Overlevelse",
+        "text": "Tre liv. Hver feil koster ett."
+      },
+      "match": {
+        "name": "Finn par",
+        "text": "Koble seks ord med oversettelsene sine på tid."
+      }
+    },
+    "preview": {
+      "question": "Velg oversettelsen",
+      "due": "i dag",
+      "score": "svar",
+      "best": "rekord"
+    }
+  },
+  "method": {
+    "title": "Perigee vet når et ord skal komme tilbake",
+    "text": "Perigee er repetisjonsmotoren i Kolo. Perigeum er punktet i banen der en satellitt er nærmest – og akkurat da henter Perigee fram et ord, rett før det glemmes. Etter hvert kort markerer du hvor godt du kan ordet: vanskelige ord kommer tidligere tilbake, og avstanden øker etter hvert som ordet sitter. Under panseret ligger SM-2, en velprøvd metode for repetisjon med mellomrom.",
+    "memory": "Hukommelse",
+    "time": "Tid",
+    "withKolo": "Med Kolo",
+    "without": "Uten repetisjon",
+    "intervals": [
+      "+1 d",
+      "+3 d",
+      "+7 d"
+    ],
+    "schematic": "Skjematisk illustrasjon"
+  },
+  "habit": {
+    "title": "En vane du ikke vil bryte",
+    "text": "Rekken vokser for hver dag du øver. Dagens spill og prestasjoner gir deg en grunn til å komme tilbake i morgen.",
+    "streak": {
+      "title": "Dagsrekke",
+      "text": "Hver dag du øver, forlenger den."
+    },
+    "daily": {
+      "title": "Dagens spill",
+      "text": "Lag ord av sju bokstaver og sammenlign poengsummen med andre spillere."
+    },
+    "achievements": {
+      "title": "Prestasjoner",
+      "text": "For rekker, lærte ord og feilfrie quizer."
+    },
+    "days": "dager",
+    "week": [
+      "M",
+      "T",
+      "O",
+      "T",
+      "F",
+      "L",
+      "S"
+    ],
+    "achievementName": "To uker uten pause"
+  },
+  "words": {
+    "title": "Dine ord. Ditt tempo.",
+    "text": "Lær ordene du faktisk møter – i bøker, serier og samtaler.",
+    "sets": {
+      "title": "Sett og mapper",
+      "text": "Sorter ord i sett og mapper. Lim inn en hel liste, så importeres den på én gang."
+    },
+    "audio": {
+      "title": "Uttale",
+      "text": "Trykk for å høre ordet og eksempelet. Lyd fungerer for norsk i dag – andre språk er på vei."
+    },
+    "folder": "Mine språk",
+    "setList": [
+      {
+        "flag": "🇪🇸",
+        "name": "Spansk · Mat",
+        "count": "24 ord"
+      },
+      {
+        "flag": "🇮🇹",
+        "name": "Italiensk · Reise",
+        "count": "18 ord"
+      },
+      {
+        "flag": "🇯🇵",
+        "name": "Japansk · Grunnlag",
+        "count": "31 ord"
+      }
+    ],
+    "import": "Lim inn en liste — importert på én gang",
+    "importLines": [
+      "escribir; skrive",
+      "leer; lese",
+      "hablar; snakke"
+    ],
+    "audioTranslation": "uttale"
+  },
+  "team": {
+    "title": "Laget med ❤️ av Kolo-teamet",
+    "text": "Kolo er et produkt fra studioet Dakuta. Designerne og utviklerne i Kolo-teamet bygger det på tre prinsipper: reell læringsverdi, varsom omgang med dataene dine og en ærlig modell – uten reklame og betalingsmurer.",
+    "link": "Om Dakuta"
+  },
+  "app": {
+    "title": "Lær når og hvor som helst",
+    "text": "Kolo fungerer i alle nettlesere og kan installeres på mobilen som en vanlig app – med eget ikon og i fullskjerm. Fremgangen synkroniseres mellom enhetene dine.",
+    "ios": {
+      "title": "iPhone og iPad",
+      "hint": "Safari → Del → Legg til på Hjem-skjerm"
+    },
+    "android": {
+      "title": "Android",
+      "hint": "Chrome → meny → Installer app"
+    },
+    "desktop": {
+      "title": "Datamaskin",
+      "hint": "Alle moderne nettlesere, ingenting å laste ned"
+    },
+    "native": {
+      "title": "Apper for iOS og Android",
+      "badge": "Under arbeid",
+      "text": "Vi bygger teamet og samler midler for å lansere dem. Inntil da installerer du Kolo fra nettleseren."
+    }
+  },
+  "faq": {
+    "title": "Spørsmål og svar",
+    "askTitle": "Har du flere spørsmål?",
+    "askText": "Skriv til oss, så svarer vi på e-post.",
+    "askButton": "Kontakt brukerstøtte",
+    "items": [
+      {
+        "q": "Hvem er Kolo for?",
+        "a": "For alle som lærer et fremmedspråk — fra helt nybegynnere til dem som allerede snakker og vil utvide ordforrådet. Du lager sett av ordene du faktisk trenger."
+      },
+      {
+        "q": "Hvilke språk kan jeg lære?",
+        "a": "Nesten alle: kortene fungerer med alle alfabeter og skriftsystemer, så du kan legge til ord på spansk, japansk eller norsk. Uttale finnes for norsk i dag, og stemmer for andre språk kommer snart."
+      },
+      {
+        "q": "Hvordan fungerer repetisjon med mellomrom?",
+        "a": "Etter hvert kort markerer du hvor godt du kunne ordet. Perigee – repetisjonsmotoren i Kolo, bygget på SM-2-algoritmen – bruker det til å planlegge neste repetisjon: vanskelige ord kommer tilbake tidligere, kjente senere."
+      },
+      {
+        "q": "Må jeg installere noe?",
+        "a": "Nei. Kolo kjører i nettleseren. Hvis du vil, kan du legge den til på hjemskjermen, så åpnes den som en vanlig app."
+      },
+      {
+        "q": "Blir fremgangen min lagret?",
+        "a": "Ja. Med en konto lagres settene og statistikken i skyen og synkroniseres mellom mobil, nettbrett og datamaskin."
+      },
+      {
+        "q": "Hvilke språk finnes grensesnittet på?",
+        "a": "Appen finnes på: {appLanguages}. Denne nettsiden finnes også på: {siteOnlyLanguages} — oversettelsen av appen til disse språkene er i gang."
+      }
+    ]
+  },
+  "more": {
+    "title": "Lærer du norsk?",
+    "text": "To verktøy til fra Dakuta – for grammatikk og bøyningsformer."
   },
   "cta": {
-    "title": "Din vei til",
-    "highlight": "fri kommunikasjon",
-    "desc": "Bli med brukere som allerede har endret sin læringsprosess.",
-    "button": "Start eventyret",
-    "security": "Trygt • Privat • Gratis"
+    "title": "Lær nye språk med Kolo",
+    "text": "Lag en konto og legg til de første ordene – det tar et par minutter.",
+    "button": "Begynn å lære"
+  },
+  "footer": {
+    "tagline": "Lær ord på hvilket som helst språk — og husk dem.",
+    "how": "Slik fungerer det",
+    "modes": "Treningsmoduser",
+    "engine": "Perigee-motoren",
+    "help": "Hjelp",
+    "faq": "Spørsmål og svar",
+    "contact": "Kontakt støtte",
+    "install": "Installer på mobilen",
+    "about": "Om studioet",
+    "woky": "Woky — grammatikk",
+    "boey": "Bøy! — bøyninger",
+    "soon": "snart",
+    "legal": "Juridisk",
+    "siteLanguage": "Nettstedsspråk:"
+  },
+  "alt": {
+    "hero": "Kolo på en mobil: et kort med et ord, oversettelse og eksempel, og rundt det kretser ord på andre språk i baner.",
+    "curve": "Skjematisk diagram: uten repetisjon glemmes et ord raskt; for hver repetisjon i Kolo glemmes det saktere, og intervallene blir lengre.",
+    "homeScreen": "Kolo installert på hjemskjermen på en mobil ved siden av andre apper."
   }
 }

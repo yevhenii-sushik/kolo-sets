@@ -1,0 +1,57 @@
+{
+  "docs": {
+    "privacy": "Datenschutzerklärung",
+    "terms": "Nutzungsbedingungen",
+    "cookies": "Cookie-Richtlinie",
+    "refund": "Erstattungsrichtlinie"
+  },
+  "cookies": {
+    "title": "Cookies & Datenschutz",
+    "text": "Kolo speichert auf deinem Gerät nur das Nötigste: deine Anmeldung, Einstellungen und eine Offline-Kopie deiner Sets. Keine Werbung, kein Tracking.",
+    "more": "Mehr dazu in der {cookies}.",
+    "acceptAll": "Alle akzeptieren",
+    "necessaryOnly": "Nur notwendige",
+    "customize": "Anpassen",
+    "save": "Auswahl speichern",
+    "necessary": "Notwendig",
+    "necessaryDesc": "Anmeldung, Sprache, Design, Offline-Modus und Fortschritt auf diesem Gerät. Ohne sie funktioniert Kolo nicht.",
+    "alwaysOn": "Immer aktiv",
+    "analytics": "Statistik",
+    "analyticsDesc": "Anonyme Nutzungsstatistiken, um Kolo zu verbessern. Noch nicht im Einsatz – wird nur mit deiner Zustimmung aktiviert.",
+    "settings": "Cookie-Einstellungen"
+  },
+  "consent": {
+    "agree": "Ich akzeptiere die {terms} und habe die {privacy} gelesen.",
+    "labels": {
+      "terms": "Nutzungsbedingungen",
+      "privacy": "Datenschutzerklärung"
+    },
+    "required": "Bitte akzeptiere die Nutzungsbedingungen, um ein Konto zu erstellen.",
+    "google": "Wenn du mit Google fortfährst, akzeptierst du die {terms} und bestätigst, dass du die {privacy} gelesen hast.",
+    "support": "Deine Nachricht geht über Telegram an das Kolo-Team. Mehr dazu in der {privacy}."
+  },
+  "page": {
+    "effective": "Gültig ab {date}",
+    "shortVersion": "Kurz gesagt",
+    "contents": "Inhalt",
+    "docsNav": "Rechtliche Dokumente",
+    "signUp": "Registrieren",
+    "openApp": "App öffnen",
+    "translationNote": "Dies ist eine Übersetzung zu deiner Information. Bei Abweichungen gilt das englische Original.",
+    "originalNote": "Du liest das englische Original.",
+    "showOriginal": "Englisches Original anzeigen",
+    "showTranslation": "Zurück zur Übersetzung",
+    "linkToSection": "Link zu diesem Abschnitt",
+    "questionsTitle": "Fragen zu diesem Dokument?",
+    "questionsText": "Schreib uns, wir melden uns.",
+    "alsoRead": "Lies auch",
+    "support": "Support",
+    "backToTop": "Nach oben"
+  },
+  "tabs": {
+    "privacy": "Datenschutz",
+    "terms": "Bedingungen",
+    "cookies": "Cookies",
+    "refund": "Erstattung"
+  }
+}

@@ -3,6 +3,7 @@
   "loading": "Laster...",
   "save": "Lagre",
   "cancel": "Avbryt",
+  "confirm": "Bekreft",
   "delete": "Slett",
   "edit": "Rediger",
   "create": "Opprett",
@@ -17,5 +18,109 @@
     "dictionary": "Ordbok",
     "profile": "Profil",
     "other": "Annet"
+  },
+  "shell": {
+    "menu": "Vis eller skjul menyen",
+    "search": "Søk",
+    "searchHint": "Søk i kort (⌘K)",
+    "streak": {
+      "label": "Dagsrekke",
+      "days": {
+        "one": "{n} dag",
+        "other": "{n} dager"
+      },
+      "best": "Rekord",
+      "active": "Du har øvd i dag – rekken er trygg. Vi ses i morgen!",
+      "inactive": "Øv i dag for å holde rekken i gang.",
+      "more": "Mer i profilen",
+      "extended": "Rekken er forlenget",
+      "tier30": "Utrolig – du er en legende.",
+      "tier14": "Du er i storform. Fortsett!",
+      "tier7": "En flott uke. Bare fortsett!",
+      "tier1": "Fortsett sånn!",
+      "tap": "Trykk for å lukke"
+    },
+    "verify": {
+      "text": "Bekreft e-posten din for å sikre kontoen.",
+      "resend": "Send e-posten på nytt",
+      "sending": "Sender…",
+      "sent": "E-posten er sendt – sjekk innboksen.",
+      "dismiss": "Skjul"
+    },
+    "achievement": {
+      "unlocked": "Ny prestasjon"
+    },
+    "searchPanel": {
+      "placeholder": "Ord, oversettelser, forklaringer",
+      "empty": "Begynn å skrive for å søke i alle kortene",
+      "inSets": {
+        "one": "i {n} sett",
+        "other": "i {n} sett"
+      },
+      "noResults": "Ingen treff",
+      "noResultsText": "Ingen kort samsvarer med «{q}»",
+      "limit": "Viser de første 50 – avgrens søket",
+      "clear": "Tøm"
+    },
+    "install": {
+      "title": "Installer Kolo",
+      "text": "Åpne fra Hjem-skjermen, uten adressefelt",
+      "ios": "Trykk på {share} og velg {add} «Legg til på Hjem-skjerm»",
+      "install": "Installer"
+    }
+  },
+  "onboarding": {
+    "skip": "Hopp over",
+    "back": "Tilbake",
+    "next": "Neste",
+    "start": "Kom i gang",
+    "step": "{n} av {total}",
+    "ready": "Klar for start",
+    "steps": [
+      {
+        "title": "Hei! Dette er Kolo",
+        "text": "Ordsett og smart repetisjon. Omvisningen tar under ett minutt."
+      },
+      {
+        "title": "Lag et sett",
+        "text": "Trykk «Opprett sett» og legg til ord med oversettelse, forklaring og eksempel – eller importer en ferdig liste.",
+        "tip": "En quiz trenger minst 4 ord i settet."
+      },
+      {
+        "title": "Lær med flashkort",
+        "text": "Snu kortet og vurder hvor godt du husker ordet. Perigee, repetisjonsmotoren vår, bestemmer når det skal vises igjen.",
+        "tip": "På tastatur: mellomrom snur, 1–4 vurderer. På mobil: sveip til høyre hvis du kan ordet, til venstre hvis ikke."
+      },
+      {
+        "title": "Test deg selv",
+        "text": "Seks oppgavetyper i quizen – fra å velge oversettelse til å skrive ordet – og tre spill: Hurtigrunde, Overlevelse og Finn par.",
+        "tip": "I quizinnstillingene kan du beholde bare oppgavene du trenger."
+      },
+      {
+        "title": "Følg fremgangen",
+        "text": "Dagsrekke, prestasjoner og statistikk. Kom tilbake hver dag – Kolo viser bare ordene som skal repeteres.",
+        "tip": "I profilen finner du aktivitetskalenderen og alle prestasjonene."
+      },
+      {
+        "title": "Alt klart!",
+        "text": "Lag ditt første sett og begynn å lære."
+      }
+    ],
+    "sample": {
+      "sets": [
+        "Hverdagsord",
+        "Reise"
+      ],
+      "study": "Lær",
+      "word": "dog",
+      "translation": "hund",
+      "example": "My dog is called Max",
+      "options": [
+        "dog",
+        "cat",
+        "bird",
+        "fish"
+      ]
+    }
   }
 }

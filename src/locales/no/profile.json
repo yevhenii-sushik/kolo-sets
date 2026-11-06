@@ -1,42 +1,211 @@
 {
   "guestStub": {
-    "title": "Profil utilgjengelig",
-    "description": "Logg inn eller registrer deg for å se fremgangen og statistikken din",
+    "title": "Profilen er utilgjengelig",
+    "description": "Logg inn eller opprett en konto for å se fremgangen og statistikken din",
     "retry": "Prøv igjen",
     "toLogin": "Logg inn"
   },
-  "cabinet": "Personlig kabinett",
-  "enterImageUrl": "Skriv inn URL til profilbilde",
-  "usernamePlaceholder": "@brukernavn",
+  "usernamePlaceholder": "brukernavn",
   "save": "Lagre",
   "cancel": "Avbryt",
+  "edit": "Rediger profilen",
   "logoutTitle": "Logg ut",
-  "logoutConfirm": "Er du sikker på at du vil logge ut?",
+  "logoutConfirm": "Logge ut av Kolo på denne enheten?",
+  "nameLabel": "Navn",
+  "usernameLabel": "Brukernavn",
+  "usernameHint": "3–20 tegn: latinske bokstaver, tall, _",
+  "changePhoto": "Bytt bilde",
+  "memberSince": "Medlem siden {date}",
+  "toast": {
+    "success": "Profilen er oppdatert",
+    "error": "Kunne ikke lagre profilen – prøv igjen"
+  },
+  "errors": {
+    "usernameRequired": "Velg et brukernavn – det er påkrevd",
+    "usernameInvalid": "Brukernavn: 3–20 tegn – latinske bokstaver, tall eller _",
+    "usernameTaken": "Dette brukernavnet er allerede tatt",
+    "avatarType": "Velg en bildefil",
+    "avatarSize": "Filen er for stor (maks 8 MB)",
+    "avatarDecode": "Kunne ikke behandle bildet. Prøv JPEG eller PNG.",
+    "avatarUnsupported": "Nettleseren kan ikke behandle bilder",
+    "avatarCompress": "Kunne ikke komprimere bildet",
+    "avatarGeneric": "Kunne ikke laste opp bildet – prøv igjen"
+  },
+  "easterEgg": "Såkalt «hemmelig» innhold lastes…",
   "streak": {
-    "title": "Serie",
-    "goalReached": "Dagsmål nådd",
-    "daysInRow": "dager på rad",
-    "record": "Rekord",
-    "status": "Status",
-    "active": "Aktiv",
-    "waiting": "Venter",
-    "daysShort": "dager"
+    "title": "Dagsrekke",
+    "inRow": {
+      "one": "dag på rad",
+      "other": "dager på rad"
+    },
+    "record": "Rekord"
   },
   "stats": {
-    "totalWords": "Totalt ord",
-    "sessions": "Sesjoner",
-    "quizzes": "Quiz",
-    "inLearning": "I trening",
-    "regDate": "Registreringsdato",
-    "weekTitle": "Ukentlig statistikk",
-    "cardsStudied": "Kort studert",
-    "studyTime": "Studietid",
-    "activityMatrix": "Aktivitetsmatrise"
+    "totalWords": "Ord",
+    "sessions": "Flashkortøkter",
+    "quizzes": "Quizer",
+    "inLearning": "Øvingstid",
+    "weekTitle": "Siste 7 dager",
+    "weekSessions": "Økter",
+    "cardsStudied": "Kort",
+    "studyTime": "Tid"
   },
-  "album": "Album",
+  "activity": "Aktivitet",
+  "calendar": {
+    "less": "Mindre",
+    "more": "Mer",
+    "sessions": {
+      "one": "{n} økt",
+      "other": "{n} økter"
+    },
+    "cards": {
+      "one": "{n} kort",
+      "other": "{n} kort"
+    }
+  },
   "achievements": "Prestasjoner",
-  "toast": {
-    "success": "Profil oppdatert!",
-    "error": "Oppdateringsfeil"
+  "showAll": "Vis alle ({n})",
+  "showLess": "Vis færre",
+  "unlocked": "Låst opp",
+  "settingsTitle": "Innstillinger",
+  "restartTour": "Spill av introduksjonen på nytt",
+  "restartTourText": "Se omvisningen i appen igjen",
+  "achievementsList": {
+    "first_collection": {
+      "name": "Første steg",
+      "description": "Lag ditt første sett"
+    },
+    "first_study": {
+      "name": "Reisen begynner",
+      "description": "Fullfør din første økt"
+    },
+    "streak_3": {
+      "name": "Tre på rad",
+      "description": "Øv 3 dager på rad"
+    },
+    "streak_7": {
+      "name": "Sterk uke",
+      "description": "Øv 7 dager på rad"
+    },
+    "streak_14": {
+      "name": "To uker",
+      "description": "Øv 14 dager på rad"
+    },
+    "streak_30": {
+      "name": "En måned med pågangsmot",
+      "description": "Øv 30 dager på rad"
+    },
+    "streak_60": {
+      "name": "To måneder",
+      "description": "Øv 60 dager på rad"
+    },
+    "streak_100": {
+      "name": "Hundre dager",
+      "description": "Øv 100 dager på rad"
+    },
+    "cards_10": {
+      "name": "De første ordene",
+      "description": "Legg til 10 ord"
+    },
+    "cards_25": {
+      "name": "Spirende ordforråd",
+      "description": "Legg til 25 ord"
+    },
+    "cards_50": {
+      "name": "Samler",
+      "description": "Legg til 50 ord"
+    },
+    "cards_100": {
+      "name": "Kortmester",
+      "description": "Legg til 100 ord"
+    },
+    "cards_200": {
+      "name": "Leksikograf",
+      "description": "Legg til 200 ord"
+    },
+    "cards_500": {
+      "name": "Legende",
+      "description": "Legg til 500 ord"
+    },
+    "cards_1000": {
+      "name": "Vandrende ordbok",
+      "description": "Legg til 1000 ord"
+    },
+    "flashcards_1": {
+      "name": "Første møte",
+      "description": "Fullfør din første økt med flashkort"
+    },
+    "flashcards_10": {
+      "name": "Flashkort-nybegynner",
+      "description": "Fullfør 10 økter med flashkort"
+    },
+    "flashcards_50": {
+      "name": "Flashkort-mester",
+      "description": "Fullfør 50 økter med flashkort"
+    },
+    "flashcards_100": {
+      "name": "Flashkort-ess",
+      "description": "Fullfør 100 økter med flashkort"
+    },
+    "quiz_1": {
+      "name": "Første eksamen",
+      "description": "Fullfør din første quiz"
+    },
+    "quiz_10": {
+      "name": "Tester",
+      "description": "Fullfør 10 quizer"
+    },
+    "quiz_50": {
+      "name": "Quizekspert",
+      "description": "Fullfør 50 quizer"
+    },
+    "quiz_100": {
+      "name": "Quizmester",
+      "description": "Fullfør 100 quizer"
+    },
+    "perfect_quiz": {
+      "name": "Perfekt!",
+      "description": "Fullfør en quiz uten en eneste feil"
+    },
+    "perfect_quizzes_3": {
+      "name": "Perfeksjonist",
+      "description": "Fullfør 3 quizer uten feil"
+    },
+    "perfect_quizzes_10": {
+      "name": "Maskin",
+      "description": "Fullfør 10 quizer uten feil"
+    },
+    "collections_3": {
+      "name": "Bibliotekar",
+      "description": "Lag 3 sett"
+    },
+    "collections_5": {
+      "name": "Arkivar",
+      "description": "Lag 5 sett"
+    },
+    "night_owl": {
+      "name": "Nattugle",
+      "description": "Øv etter midnatt"
+    },
+    "early_bird": {
+      "name": "A-menneske",
+      "description": "Øv før klokka 7"
+    },
+    "marathon": {
+      "name": "Maratonløper",
+      "description": "Øv i mer enn 30 minutter i én økt"
+    },
+    "speed_demon": {
+      "name": "Lynrask",
+      "description": "Svar på alle spørsmålene i en quiz på under 5 sekunder hver"
+    },
+    "all_know": {
+      "name": "Kan alt!",
+      "description": "Gi alle kortene «Kan» i én økt"
+    },
+    "comeback": {
+      "name": "Comeback",
+      "description": "Kom tilbake etter en pause på 7+ dager"
+    }
   }
 }

@@ -1,42 +1,211 @@
 {
   "guestStub": {
     "title": "Profile unavailable",
-    "description": "Sign in or register to view your progress and stats",
-    "retry": "Retry",
+    "description": "Sign in or create an account to see your progress and stats",
+    "retry": "Try again",
     "toLogin": "Sign in"
   },
-  "cabinet": "Personal Cabinet",
-  "enterImageUrl": "Enter profile image URL",
-  "usernamePlaceholder": "@username",
+  "usernamePlaceholder": "username",
   "save": "Save",
   "cancel": "Cancel",
-  "logoutTitle": "Logout",
-  "logoutConfirm": "Are you sure you want to logout?",
+  "edit": "Edit profile",
+  "logoutTitle": "Log out",
+  "logoutConfirm": "Log out of Kolo on this device?",
+  "nameLabel": "Name",
+  "usernameLabel": "Username",
+  "usernameHint": "3–20 characters: Latin letters, digits, _",
+  "changePhoto": "Change photo",
+  "memberSince": "Member since {date}",
+  "toast": {
+    "success": "Profile updated",
+    "error": "Couldn't save your profile — try again"
+  },
+  "errors": {
+    "usernameRequired": "Choose a username — it's required",
+    "usernameInvalid": "Username: 3–20 characters — Latin letters, digits or _",
+    "usernameTaken": "This username is already taken",
+    "avatarType": "Choose an image file",
+    "avatarSize": "The file is too large (8 MB max)",
+    "avatarDecode": "Couldn't process the image. Try JPEG or PNG.",
+    "avatarUnsupported": "Your browser can't process images",
+    "avatarCompress": "Couldn't compress the image",
+    "avatarGeneric": "Couldn't upload the photo — try again"
+  },
+  "easterEgg": "So-called “secret” content is loading…",
   "streak": {
-    "title": "Streak",
-    "goalReached": "Daily goal reached",
-    "daysInRow": "days in a row",
-    "record": "Record",
-    "status": "Status",
-    "active": "Active",
-    "waiting": "Waiting",
-    "daysShort": "days"
+    "title": "Day streak",
+    "inRow": {
+      "one": "day in a row",
+      "other": "days in a row"
+    },
+    "record": "Best"
   },
   "stats": {
-    "totalWords": "Total words",
-    "sessions": "Sessions",
+    "totalWords": "Words",
+    "sessions": "Flashcard sessions",
     "quizzes": "Quizzes",
-    "inLearning": "In training",
-    "regDate": "Registration date",
-    "weekTitle": "Weekly statistics",
-    "cardsStudied": "Cards studied",
-    "studyTime": "Study time",
-    "activityMatrix": "Activity matrix"
+    "inLearning": "Time practising",
+    "weekTitle": "Last 7 days",
+    "weekSessions": "Sessions",
+    "cardsStudied": "Cards",
+    "studyTime": "Time"
   },
-  "album": "Album",
+  "activity": "Activity",
+  "calendar": {
+    "less": "Less",
+    "more": "More",
+    "sessions": {
+      "one": "{n} session",
+      "other": "{n} sessions"
+    },
+    "cards": {
+      "one": "{n} card",
+      "other": "{n} cards"
+    }
+  },
   "achievements": "Achievements",
-  "toast": {
-    "success": "Profile updated!",
-    "error": "Update error"
+  "showAll": "Show all ({n})",
+  "showLess": "Show less",
+  "unlocked": "Unlocked",
+  "settingsTitle": "Settings",
+  "restartTour": "Replay the introduction",
+  "restartTourText": "See the app tour again",
+  "achievementsList": {
+    "first_collection": {
+      "name": "First step",
+      "description": "Create your first set"
+    },
+    "first_study": {
+      "name": "The journey begins",
+      "description": "Finish your first practice session"
+    },
+    "streak_3": {
+      "name": "Three in a row",
+      "description": "Practise 3 days in a row"
+    },
+    "streak_7": {
+      "name": "Week of strength",
+      "description": "Practise 7 days in a row"
+    },
+    "streak_14": {
+      "name": "Two weeks",
+      "description": "Practise 14 days in a row"
+    },
+    "streak_30": {
+      "name": "Month of grit",
+      "description": "Practise 30 days in a row"
+    },
+    "streak_60": {
+      "name": "Two months",
+      "description": "Practise 60 days in a row"
+    },
+    "streak_100": {
+      "name": "A hundred days",
+      "description": "Practise 100 days in a row"
+    },
+    "cards_10": {
+      "name": "First words",
+      "description": "Add 10 words"
+    },
+    "cards_25": {
+      "name": "Budding vocabulary",
+      "description": "Add 25 words"
+    },
+    "cards_50": {
+      "name": "Collector",
+      "description": "Add 50 words"
+    },
+    "cards_100": {
+      "name": "Card master",
+      "description": "Add 100 words"
+    },
+    "cards_200": {
+      "name": "Encyclopedist",
+      "description": "Add 200 words"
+    },
+    "cards_500": {
+      "name": "Legend",
+      "description": "Add 500 words"
+    },
+    "cards_1000": {
+      "name": "Walking dictionary",
+      "description": "Add 1,000 words"
+    },
+    "flashcards_1": {
+      "name": "First encounter",
+      "description": "Finish your first flashcard session"
+    },
+    "flashcards_10": {
+      "name": "Flashcard rookie",
+      "description": "Finish 10 flashcard sessions"
+    },
+    "flashcards_50": {
+      "name": "Flashcard master",
+      "description": "Finish 50 flashcard sessions"
+    },
+    "flashcards_100": {
+      "name": "Flashcard ace",
+      "description": "Finish 100 flashcard sessions"
+    },
+    "quiz_1": {
+      "name": "First exam",
+      "description": "Complete your first quiz"
+    },
+    "quiz_10": {
+      "name": "Tester",
+      "description": "Complete 10 quizzes"
+    },
+    "quiz_50": {
+      "name": "Quiz master",
+      "description": "Complete 50 quizzes"
+    },
+    "quiz_100": {
+      "name": "Quiz champion",
+      "description": "Complete 100 quizzes"
+    },
+    "perfect_quiz": {
+      "name": "Perfect!",
+      "description": "Complete a quiz without a single mistake"
+    },
+    "perfect_quizzes_3": {
+      "name": "Perfectionist",
+      "description": "Complete 3 quizzes without mistakes"
+    },
+    "perfect_quizzes_10": {
+      "name": "Machine",
+      "description": "Complete 10 quizzes without mistakes"
+    },
+    "collections_3": {
+      "name": "Librarian",
+      "description": "Create 3 sets"
+    },
+    "collections_5": {
+      "name": "Archivist",
+      "description": "Create 5 sets"
+    },
+    "night_owl": {
+      "name": "Night owl",
+      "description": "Practise after midnight"
+    },
+    "early_bird": {
+      "name": "Early bird",
+      "description": "Practise before 7 a.m."
+    },
+    "marathon": {
+      "name": "Marathoner",
+      "description": "Practise for more than 30 minutes in one session"
+    },
+    "speed_demon": {
+      "name": "Speed demon",
+      "description": "Answer every quiz question in under 5 seconds"
+    },
+    "all_know": {
+      "name": "Know it all!",
+      "description": "Rate every card “Know” in one session"
+    },
+    "comeback": {
+      "name": "Comeback",
+      "description": "Return to learning after a break of 7+ days"
+    }
   }
 }

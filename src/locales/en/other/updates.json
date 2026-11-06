@@ -1,23 +1,12 @@
 {
-  "title": "Kolo",
-  "titleHighlight": "Evolution.",
-  "subtitle": "We are constantly working to make your Norwegian language learning more productive.",
-  "changelog": "Changelog",
-  "sidebarTitle": "Version Tree",
-  "stats": {
-    "releases": "Releases",
-    "releasesSub": "Shipped so far",
-    "improvements": "Improvements",
-    "improvementsSub": "Total changes",
-    "patches": "Patches",
-    "patchesSub": "Bug-fix releases",
-    "languages": "Languages",
-    "languagesSub": "Interface languages"
-  },
+  "title": "What's new",
+  "subtitle": "Every Kolo release — from the first version to today.",
+  "sidebarTitle": "Versions",
+  "latest": "Latest",
   "footer": {
-    "title": "This is only the beginning",
-    "subtitle": "We have big plans for 2026: story integration, group challenges and even more new content.",
-    "button": "Suggest a feature"
+    "title": "Have an idea for Kolo?",
+    "subtitle": "Tell us what you're missing — we read every message.",
+    "button": "Suggest an idea"
   },
   "versions": [
     {

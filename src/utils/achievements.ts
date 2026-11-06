@@ -1,225 +1,49 @@
 import { Achievement, AchievementType, SessionExtras } from '../types';
 
+// Названия и описания — в переводах: t.profile.achievementsList[id]
 export const ALL_ACHIEVEMENTS: Achievement[] = [
   // --- First steps ---
-  {
-    id: AchievementType.FIRST_COLLECTION,
-    name: 'Первый шаг',
-    description: 'Создайте первую коллекцию карточек',
-    icon: '📚',
-  },
-  {
-    id: AchievementType.FIRST_STUDY,
-    name: 'Начало пути',
-    description: 'Завершите первую сессию изучения',
-    icon: '🎯',
-  },
-
+  { id: AchievementType.FIRST_COLLECTION, icon: '📚' },
+  { id: AchievementType.FIRST_STUDY, icon: '🎯' },
   // --- Streak milestones ---
-  {
-    id: AchievementType.STREAK_3,
-    name: 'Три дня подряд',
-    description: 'Занимайтесь 3 дня подряд',
-    icon: '🔥',
-  },
-  {
-    id: AchievementType.STREAK_7,
-    name: 'Неделя силы',
-    description: 'Занимайтесь 7 дней подряд',
-    icon: '💪',
-  },
-  {
-    id: AchievementType.STREAK_14,
-    name: 'Две недели',
-    description: 'Занимайтесь 14 дней подряд',
-    icon: '💎',
-  },
-  {
-    id: AchievementType.STREAK_30,
-    name: 'Месяц упорства',
-    description: 'Занимайтесь 30 дней подряд',
-    icon: '👑',
-  },
-  {
-    id: AchievementType.STREAK_60,
-    name: 'Два месяца',
-    description: 'Занимайтесь 60 дней подряд',
-    icon: '🌙',
-  },
-  {
-    id: AchievementType.STREAK_100,
-    name: 'Сто дней',
-    description: 'Занимайтесь 100 дней подряд',
-    icon: '🏆',
-  },
-
+  { id: AchievementType.STREAK_3, icon: '🔥' },
+  { id: AchievementType.STREAK_7, icon: '💪' },
+  { id: AchievementType.STREAK_14, icon: '💎' },
+  { id: AchievementType.STREAK_30, icon: '👑' },
+  { id: AchievementType.STREAK_60, icon: '🌙' },
+  { id: AchievementType.STREAK_100, icon: '🏆' },
   // --- Card count milestones ---
-  {
-    id: AchievementType.CARDS_10,
-    name: 'Первые слова',
-    description: 'Добавьте 10 карточек',
-    icon: '📖',
-  },
-  {
-    id: AchievementType.CARDS_25,
-    name: 'Росток знаний',
-    description: 'Добавьте 25 карточек',
-    icon: '🌱',
-  },
-  {
-    id: AchievementType.CARDS_50,
-    name: 'Коллекционер',
-    description: 'Добавьте 50 карточек',
-    icon: '🎴',
-  },
-  {
-    id: AchievementType.CARDS_100,
-    name: 'Мастер карточек',
-    description: 'Добавьте 100 карточек',
-    icon: '🏅',
-  },
-  {
-    id: AchievementType.CARDS_200,
-    name: 'Энциклопедист',
-    description: 'Добавьте 200 карточек',
-    icon: '📚',
-  },
-  {
-    id: AchievementType.CARDS_500,
-    name: 'Легенда',
-    description: 'Добавьте 500 карточек',
-    icon: '⭐',
-  },
-  {
-    id: AchievementType.CARDS_1000,
-    name: 'Ходячая энциклопедия',
-    description: 'Добавьте 1000 карточек',
-    icon: '🧠',
-  },
-
+  { id: AchievementType.CARDS_10, icon: '📖' },
+  { id: AchievementType.CARDS_25, icon: '🌱' },
+  { id: AchievementType.CARDS_50, icon: '🎴' },
+  { id: AchievementType.CARDS_100, icon: '🏅' },
+  { id: AchievementType.CARDS_200, icon: '📚' },
+  { id: AchievementType.CARDS_500, icon: '⭐' },
+  { id: AchievementType.CARDS_1000, icon: '🧠' },
   // --- Flashcard sessions ---
-  {
-    id: AchievementType.FLASHCARDS_1,
-    name: 'Первое знакомство',
-    description: 'Завершите первую сессию флешкарточек',
-    icon: '🃏',
-  },
-  {
-    id: AchievementType.FLASHCARDS_10,
-    name: 'Флешкарт-новичок',
-    description: 'Завершите 10 сессий флешкарточек',
-    icon: '🎴',
-  },
-  {
-    id: AchievementType.FLASHCARDS_50,
-    name: 'Флешкарт-мастер',
-    description: 'Завершите 50 сессий флешкарточек',
-    icon: '🌟',
-  },
-  {
-    id: AchievementType.FLASHCARDS_100,
-    name: 'Флешкарт-ас',
-    description: 'Завершите 100 сессий флешкарточек',
-    icon: '🦅',
-  },
-
+  { id: AchievementType.FLASHCARDS_1, icon: '🃏' },
+  { id: AchievementType.FLASHCARDS_10, icon: '🎴' },
+  { id: AchievementType.FLASHCARDS_50, icon: '🌟' },
+  { id: AchievementType.FLASHCARDS_100, icon: '🦅' },
   // --- Quiz sessions ---
-  {
-    id: AchievementType.QUIZ_1,
-    name: 'Первый экзамен',
-    description: 'Пройдите первый квиз',
-    icon: '❓',
-  },
-  {
-    id: AchievementType.QUIZ_10,
-    name: 'Тестировщик',
-    description: 'Пройдите 10 квизов',
-    icon: '📊',
-  },
-  {
-    id: AchievementType.QUIZ_50,
-    name: 'Мастер квизов',
-    description: 'Пройдите 50 квизов',
-    icon: '🎓',
-  },
-  {
-    id: AchievementType.QUIZ_100,
-    name: 'Квиз-чемпион',
-    description: 'Пройдите 100 квизов',
-    icon: '🏆',
-  },
-
+  { id: AchievementType.QUIZ_1, icon: '❓' },
+  { id: AchievementType.QUIZ_10, icon: '📊' },
+  { id: AchievementType.QUIZ_50, icon: '🎓' },
+  { id: AchievementType.QUIZ_100, icon: '🏆' },
   // --- Perfect quizzes ---
-  {
-    id: AchievementType.PERFECT_QUIZ,
-    name: 'Идеально!',
-    description: 'Пройдите квиз без единой ошибки',
-    icon: '💯',
-  },
-  {
-    id: AchievementType.PERFECT_QUIZZES_3,
-    name: 'Перфекционист',
-    description: 'Пройдите 3 квиза без ошибок',
-    icon: '✨',
-  },
-  {
-    id: AchievementType.PERFECT_QUIZZES_10,
-    name: 'Машина',
-    description: 'Пройдите 10 квизов без ошибок',
-    icon: '🤖',
-  },
-
+  { id: AchievementType.PERFECT_QUIZ, icon: '💯' },
+  { id: AchievementType.PERFECT_QUIZZES_3, icon: '✨' },
+  { id: AchievementType.PERFECT_QUIZZES_10, icon: '🤖' },
   // --- Collections ---
-  {
-    id: AchievementType.COLLECTIONS_3,
-    name: 'Библиотекарь',
-    description: 'Создайте 3 коллекции',
-    icon: '📂',
-  },
-  {
-    id: AchievementType.COLLECTIONS_5,
-    name: 'Архивариус',
-    description: 'Создайте 5 коллекций',
-    icon: '🗂️',
-  },
-
-  // --- Special session achievements ---
-  {
-    id: AchievementType.NIGHT_OWL,
-    name: 'Сова',
-    description: 'Позанимайтесь после полуночи',
-    icon: '🦉',
-  },
-  {
-    id: AchievementType.EARLY_BIRD,
-    name: 'Жаворонок',
-    description: 'Позанимайтесь до 7 утра',
-    icon: '🌅',
-  },
-  {
-    id: AchievementType.MARATHON,
-    name: 'Марафонец',
-    description: 'Занимайтесь более 30 минут за одну сессию',
-    icon: '🏃',
-  },
-  {
-    id: AchievementType.SPEED_DEMON,
-    name: 'Скоростной демон',
-    description: 'Ответьте на все вопросы квиза менее чем за 5 секунд каждый',
-    icon: '⚡',
-  },
-  {
-    id: AchievementType.ALL_KNOW,
-    name: 'Знаю всё!',
-    description: 'Оцените все карточки как «Знаю» в одной сессии',
-    icon: '🌈',
-  },
-  {
-    id: AchievementType.COMEBACK,
-    name: 'Возвращение',
-    description: 'Вернитесь к учёбе после перерыва в 7+ дней',
-    icon: '🔄',
-  },
+  { id: AchievementType.COLLECTIONS_3, icon: '📂' },
+  { id: AchievementType.COLLECTIONS_5, icon: '🗂️' },
+  // --- Special session-based ---
+  { id: AchievementType.NIGHT_OWL, icon: '🦉' },
+  { id: AchievementType.EARLY_BIRD, icon: '🌅' },
+  { id: AchievementType.MARATHON, icon: '🏃' },
+  { id: AchievementType.SPEED_DEMON, icon: '⚡' },
+  { id: AchievementType.ALL_KNOW, icon: '🌈' },
+  { id: AchievementType.COMEBACK, icon: '🔄' },
 ];
 
 export const checkAndUnlockAchievements = (

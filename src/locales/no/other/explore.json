@@ -1,6 +1,6 @@
 {
   "title": "Mer fra",
-  "titleAccent": "Dakuta.",
+  "titleAccent": "Dakuta",
   "subtitle": "Ett språk, mestret fra alle vinkler. Utforsk de andre verktøyene vi har bygget for å lære norsk.",
   "visit": "Besøk",
   "comingSoon": "Kommer snart",
@@ -13,7 +13,12 @@
   },
   "boey": {
     "tagline": "En interaktiv ordbok for bøyningsformer, kjønn og konjugering av norske ord.",
-    "tags": ["Hankjønn", "Hunkjønn", "Intetkjønn", "Verb"]
+    "tags": [
+      "Hankjønn",
+      "Hunkjønn",
+      "Intetkjønn",
+      "Verb"
+    ]
   },
   "footer": "Nye verktøy lanseres jevnlig — dette er bare starten.",
   "promo": {

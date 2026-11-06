@@ -1,0 +1,29 @@
+{
+  "title": "Plus de",
+  "titleAccent": "Dakuta",
+  "subtitle": "Une langue, maîtrisée sous tous les angles. Découvre nos autres outils pour apprendre le norvégien.",
+  "visit": "Visiter",
+  "comingSoon": "Bientôt",
+  "notifyMe": "Me prévenir",
+  "woky": {
+    "category": "Grammaire norvégienne",
+    "tagline": "Un manuel interactif de grammaire norvégienne, avec exercices et correction instantanée.",
+    "sections": "sections",
+    "exercises": "exercices"
+  },
+  "boey": {
+    "tagline": "Un dictionnaire interactif des flexions norvégiennes : genre, déclinaison et conjugaison.",
+    "tags": [
+      "Masculin",
+      "Féminin",
+      "Neutre",
+      "Verbes"
+    ]
+  },
+  "footer": "De nouveaux outils arrivent régulièrement — ce n'est que le début.",
+  "promo": {
+    "title": "Découvrir plus",
+    "subtitle": "D'autres applis que nous avons conçues pour maîtriser le norvégien.",
+    "cta": "Explorer"
+  }
+}

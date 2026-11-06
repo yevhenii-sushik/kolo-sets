@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, type FormEvent, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
@@ -6,55 +6,47 @@ import { useData } from "../../contexts/DataContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
 import { UserProfile, Achievement } from "../../types";
-import {
-  ALL_ACHIEVEMENTS,
-  getAchievementProgress,
-} from "../../utils/achievements";
-import {
-  formatTime,
-  getWeekStats,
-} from "../../utils/progress";
+import { ALL_ACHIEVEMENTS, getAchievementProgress } from "../../utils/achievements";
+import { formatDuration, getWeekStats } from "../../utils/progress";
 import { updateUserProfile, claimUsername } from "../../firebase/firestore";
 import { isValidUsername, normalizeUsername } from "../../utils/username";
 import { uploadAvatar, AvatarUploadError } from "../../utils/avatarUpload";
+import { getLanguageInfo } from "../../locales/languages";
+import { plural } from "../../utils/plural";
 import { updateProfile } from "firebase/auth";
 import ActivityCalendar from "../../components/ActivityCalendar";
 import AchievementCard from "../../components/AchievementCard";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
 import {
-  Flame,
-  Edit2,
-  LogOut,
-  Camera,
-  Calendar,
-  Award,
-  Zap,
-  User,
-  RefreshCw,
+  AtSign,
   BookOpen,
+  Camera,
   ChevronDown,
-  Check,
-  X,
-  Loader2,
+  ChevronRight,
+  Clock,
+  Flame,
+  GalleryVerticalEnd,
+  ListChecks,
+  LogOut,
+  Pencil,
+  RefreshCw,
+  User,
 } from "lucide-react";
-import {
-  ONBOARDING_STORAGE_KEY,
-  ONBOARDING_RESTART_EVENT,
-} from "../../components/OnboardingModal";
+import { ONBOARDING_STORAGE_KEY, ONBOARDING_RESTART_EVENT } from "../../components/OnboardingModal";
 import { motion, AnimatePresence } from "framer-motion";
+import { Badge, Button, Card, Field, Heading, IconButton, Input, Spinner, Text, cx } from "../../ui";
 
+const ACHIEVEMENTS_PREVIEW_COUNT = 3;
+
+// Профиль: кто ты → серия и цифры → неделя и календарь → достижения → перезапуск знакомства
 export default function ProfilePage() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const p = t.profile;
+  const locale = getLanguageInfo(language).htmlLang;
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const {
-    profile: rawProfile,
-    totalCards,
-    collections,
-    profileLoading,
-    refreshProfile,
-  } = useData();
+  const { profile: rawProfile, totalCards, collections, profileLoading, refreshProfile } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
@@ -62,20 +54,24 @@ export default function ProfilePage() {
   const profile = useMemo<UserProfile | null>(() => {
     if (!rawProfile || !user) return null;
     const lastStudyDate =
-      typeof rawProfile.lastStudyDate?.toDate === 'function'
+      typeof rawProfile.lastStudyDate?.toDate === "function"
         ? rawProfile.lastStudyDate.toDate()
         : rawProfile.lastStudyDate
-        ? new Date(rawProfile.lastStudyDate)
-        : null;
+          ? new Date(rawProfile.lastStudyDate)
+          : null;
     return {
       uid: user.uid,
-      displayName: user.displayName || rawProfile.displayName || 'User',
-      email: user.email || '',
-      username: rawProfile.username ?? '',
+      displayName: user.displayName || rawProfile.displayName || "User",
+      email: user.email || "",
+      username: rawProfile.username ?? "",
       createdAt: rawProfile.createdAt?.toDate?.() ?? new Date(rawProfile.createdAt ?? Date.now()),
       stats: rawProfile.stats ?? {
-        totalCards: 0, cardsLearned: 0, quizzesTaken: 0,
-        flashcardSessions: 0, totalStudyTime: 0, perfectQuizzes: 0,
+        totalCards: 0,
+        cardsLearned: 0,
+        quizzesTaken: 0,
+        flashcardSessions: 0,
+        totalStudyTime: 0,
+        perfectQuizzes: 0,
       },
       currentStreak: rawProfile.currentStreak ?? 0,
       longestStreak: rawProfile.longestStreak ?? 0,
@@ -86,11 +82,8 @@ export default function ProfilePage() {
   }, [rawProfile, user]);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editForm, setEditForm] = useState({
-    displayName: '',
-    username: '',
-    photoURL: '',
-  });
+  const [isSaving, setIsSaving] = useState(false);
+  const [editForm, setEditForm] = useState({ displayName: "", username: "", photoURL: "" });
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
@@ -98,20 +91,20 @@ export default function ProfilePage() {
   useEffect(() => {
     if (rawProfile && user) {
       setEditForm({
-        displayName: user.displayName || rawProfile.displayName || '',
-        username: rawProfile.username || '',
-        photoURL: user.photoURL || rawProfile.photoURL || '',
+        displayName: user.displayName || rawProfile.displayName || "",
+        username: rawProfile.username || "",
+        photoURL: user.photoURL || rawProfile.photoURL || "",
       });
     }
   }, [rawProfile, user]);
 
-  const isTodayActive =
-    profile?.lastStudyDate &&
-    new Date(profile.lastStudyDate).toDateString() === new Date().toDateString();
+  const isTodayActive = Boolean(
+    profile?.lastStudyDate && new Date(profile.lastStudyDate).toDateString() === new Date().toDateString(),
+  );
 
   const handleAvatarEasterEgg = (e: React.DragEvent) => {
     e.preventDefault();
-    success("Так называемый 'секретный' контент загружается...");
+    success(p.easterEgg);
     setTimeout(() => {
       window.open("https://youtu.be/3MyecXEKBlo?si=Xj8Ih-GwndYy0Zok&t=27s", "_blank");
     }, 2000);
@@ -119,7 +112,7 @@ export default function ProfilePage() {
 
   const handleAvatarFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    e.target.value = ''; // сброс — иначе повторный выбор того же файла не сработает
+    e.target.value = ""; // сброс — иначе повторный выбор того же файла не сработает
     if (!file || !user) return;
 
     setIsUploadingAvatar(true);
@@ -127,17 +120,25 @@ export default function ProfilePage() {
       const url = await uploadAvatar(user.uid, file);
       setEditForm((prev) => ({ ...prev, photoURL: url }));
     } catch (err) {
-      error(
-        err instanceof AvatarUploadError
-          ? err.message
-          : 'Не удалось загрузить фото — попробуйте ещё раз',
-      );
+      error(err instanceof AvatarUploadError ? p.errors[err.code] : p.errors.avatarGeneric);
     } finally {
       setIsUploadingAvatar(false);
     }
   };
 
-  const handleSaveProfile = async () => {
+  // Отмена возвращает имя и username к сохранённым; фото уже лежит в Storage
+  // по тому же пути, поэтому его оставляем как есть
+  const cancelEditing = () => {
+    setEditForm((prev) => ({
+      ...prev,
+      displayName: user?.displayName || rawProfile?.displayName || "",
+      username: rawProfile?.username || "",
+    }));
+    setIsEditing(false);
+  };
+
+  const handleSaveProfile = async (e: FormEvent) => {
+    e.preventDefault();
     if (!user || !profile) return;
 
     // username обязателен и уникален — валидируем формат до записи,
@@ -146,14 +147,15 @@ export default function ProfilePage() {
     const normalizedNew = normalizeUsername(trimmedUsername);
 
     if (!trimmedUsername) {
-      error('Придумайте имя пользователя — оно обязательно');
+      error(p.errors.usernameRequired);
       return;
     }
     if (!isValidUsername(normalizedNew)) {
-      error('Имя пользователя: 3–20 символов, латиница/цифры/подчёркивание');
+      error(p.errors.usernameInvalid);
       return;
     }
 
+    setIsSaving(true);
     try {
       await updateProfile(user, {
         displayName: editForm.displayName,
@@ -172,36 +174,24 @@ export default function ProfilePage() {
       });
       await refreshProfile();
       setIsEditing(false);
-      success(t.profile.toast.success);
+      success(p.toast.success);
     } catch (err) {
-      if (err instanceof Error && err.message === 'USERNAME_TAKEN') {
-        error('Это имя пользователя уже занято');
-      } else {
-        error(t.profile.toast.error);
-      }
+      error(err instanceof Error && err.message === "USERNAME_TAKEN" ? p.errors.usernameTaken : p.toast.error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const handleLogout = async () => {
-    if (
-      await confirm({
-        title: t.profile.logoutTitle,
-        message: t.profile.logoutConfirm,
-        type: "warning",
-      })
-    ) {
+    if (await confirm({ title: p.logoutTitle, message: p.logoutConfirm, type: "warning" })) {
       await logout();
       navigate("/login");
     }
   };
 
-  const weekStats = useMemo(
-    () => (profile ? getWeekStats(profile.studyHistory) : null),
-    [profile],
-  );
+  const weekStats = useMemo(() => (profile ? getWeekStats(profile.studyHistory) : null), [profile]);
 
   const [achievementsOpen, setAchievementsOpen] = useState(false);
-  const ACHIEVEMENTS_PREVIEW_COUNT = 3;
 
   // Последние разблокированные (achievements хранится в хронологическом
   // порядке — новые добавляются в конец, поэтому reverse даёт "последние").
@@ -219,21 +209,15 @@ export default function ProfilePage() {
       return unlocked.slice(0, ACHIEVEMENTS_PREVIEW_COUNT);
     }
 
-    const lockedByProgress = ALL_ACHIEVEMENTS.filter(
-      (a) => !profile.achievements.includes(a.id),
-    )
+    const lockedByProgress = ALL_ACHIEVEMENTS.filter((a) => !profile.achievements.includes(a.id))
       .map((a) => ({
         a,
-        pct: getAchievementProgress(a, profile, totalCards, collections.length)
-          .percentage,
+        pct: getAchievementProgress(a, profile, totalCards, collections.length).percentage,
       }))
       .sort((x, y) => y.pct - x.pct)
       .map((x) => x.a);
 
-    return [...unlocked, ...lockedByProgress].slice(
-      0,
-      ACHIEVEMENTS_PREVIEW_COUNT,
-    );
+    return [...unlocked, ...lockedByProgress].slice(0, ACHIEVEMENTS_PREVIEW_COUNT);
   }, [profile, totalCards, collections.length]);
 
   // Всё, что не попало в превью — раскрывается плавно под ним по клику,
@@ -245,11 +229,11 @@ export default function ProfilePage() {
 
   if (profileLoading && !profile)
     return (
-      <div className="max-w-5xl mx-auto space-y-6 pb-32 pt-4 px-4 animate-pulse">
-        <div className="h-48 bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29]" />
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 md:col-span-7 h-80 bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29]" />
-          <div className="col-span-12 md:col-span-5 h-80 bg-[#EDEAE4] dark:bg-[#242220] rounded-[2.5rem]" />
+      <div className="grid animate-pulse gap-4 sm:gap-5">
+        <div className="h-40 rounded-4xl border border-line bg-surface" />
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-[7fr_5fr]">
+          <div className="h-64 rounded-4xl bg-inset" />
+          <div className="h-64 rounded-4xl border border-line bg-surface" />
         </div>
       </div>
     );
@@ -257,393 +241,258 @@ export default function ProfilePage() {
   // Заглушка когда профиль не загрузился
   if (!profile && !profileLoading) {
     return (
-      <div className="space-y-5 pb-32">
-        <section className="bg-white dark:bg-[#1A1917] rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29] p-8 md:p-12 text-center">
-          <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-[#EDEAE4] dark:bg-[#242220] flex items-center justify-center">
-            <User size={36} className="text-[#B5B0A8]" />
-          </div>
-          <h2 className="text-2xl font-serif italic text-[#1A1714] dark:text-[#F0EDE8] mb-3">
-            {t.profile.guestStub.title}
-          </h2>
-          <p className="text-sm text-[#7A756E] dark:text-[#B5B0A8] mb-8 max-w-sm mx-auto">
-            {t.profile.guestStub.description}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button
-              onClick={refreshProfile}
-              className="px-6 py-3 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] rounded-2xl font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2"
-            >
-              <RefreshCw size={16} />
-              {t.profile.guestStub.retry}
-            </button>
-            <button
-              onClick={() => navigate("/login")}
-              className="px-6 py-3 bg-[#FFF0ED] dark:bg-[#2A1A15] border border-[#FF5733]/20 text-[#FF5733] rounded-2xl font-bold text-xs uppercase tracking-widest"
-            >
-              {t.profile.guestStub.toLogin}
-            </button>
-          </div>
-        </section>
-      </div>
+      <Card padding="lg" className="grid justify-items-center gap-3 py-12 text-center">
+        <span className="mb-2 grid h-16 w-16 place-items-center rounded-full bg-inset text-faint">
+          <User size={28} />
+        </span>
+        <Heading size={2}>{p.guestStub.title}</Heading>
+        <Text tone="muted" className="max-w-sm">
+          {p.guestStub.description}
+        </Text>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+          <Button variant="secondary" iconLeft={<RefreshCw size={16} />} onClick={refreshProfile}>
+            {p.guestStub.retry}
+          </Button>
+          <Button onClick={() => navigate("/login")}>{p.guestStub.toLogin}</Button>
+        </div>
+      </Card>
     );
   }
 
   if (!profile) return null;
 
+  const unlockedCount = ALL_ACHIEVEMENTS.filter((a) => profile.achievements.includes(a.id)).length;
+  const days = (n: number) => plural(locale, n, t.shell.streak.days);
+  const memberSince = new Date(profile.createdAt).toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" });
+
+  // grid-cols-1 = minmax(0, 1fr): без него обрезаемый текст (длинный email) растягивает колонку шире экрана
   return (
-    <div className="space-y-3 sm:space-y-5">
-      {/* 1. HERO SECTION — одна строка на всех брейкпоинтах, размеры/паддинги
-          скейлятся через sm:/md:, чтобы на мобилке было плотно, а на десктопе
-          сохранялся прежний более просторный вид */}
-      <section className="bg-white dark:bg-[#1A1917] rounded-3xl sm:rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29] p-4 sm:p-8 md:p-10">
-        <div className="flex items-center gap-3 sm:gap-6 md:gap-8">
-          <div className="relative group shrink-0">
-            <div className="w-16 h-16 sm:w-28 sm:h-28 md:w-40 md:h-40 rounded-2xl sm:rounded-4xl md:rounded-[3rem] bg-[#EDEAE4] dark:bg-[#242220] overflow-hidden border-2 sm:border-4 border-white dark:border-[#1A1917] shadow-md sm:shadow-xl">
+    <div className="grid grid-cols-1 gap-4 sm:gap-5">
+      {/* ── Кто ты ── */}
+      <Card padding="lg" className="grid grid-cols-1 gap-6">
+        {/* На телефоне: аватар и кнопки — первой строкой, имя и данные — второй во всю ширину */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-5 sm:flex-nowrap sm:gap-6">
+          <div className="relative shrink-0">
+            <div className="h-20 w-20 overflow-hidden rounded-full bg-accent-soft sm:h-28 sm:w-28">
               {editForm.photoURL ? (
                 <img
                   src={editForm.photoURL}
-                  alt="Profile"
-                  className="w-full h-full object-cover cursor-grab active:cursor-grabbing"
-                  onDragStart={handleAvatarEasterEgg} // ВОТ ОНА, ТВОЯ ПАСХАЛКА
+                  alt=""
+                  className="h-full w-full cursor-grab object-cover active:cursor-grabbing"
+                  onDragStart={handleAvatarEasterEgg} // пасхалка: перетащи аватар
                 />
               ) : (
                 <div
-                  className="w-full h-full flex items-center justify-center text-[#1A1714] dark:text-[#F0EDE8] text-xl sm:text-3xl md:text-5xl font-serif italic cursor-help"
-                  onDragStart={handleAvatarEasterEgg} // И здесь тоже, если фото нет
-                  draggable // Делаем div перетаскиваемым для срабатывания
+                  draggable // чтобы пасхалка срабатывала и без фото
+                  onDragStart={handleAvatarEasterEgg}
+                  className="grid h-full w-full place-items-center font-display text-3xl font-semibold text-accent-ink sm:text-4xl"
                 >
-                  {profile.displayName.charAt(0)}
+                  {profile.displayName.charAt(0).toUpperCase()}
                 </div>
               )}
             </div>
 
             {/* Затемнение + спиннер поверх аватара во время загрузки/сжатия */}
             {isUploadingAvatar && (
-              <div className="absolute inset-0 rounded-2xl sm:rounded-4xl md:rounded-[3rem] bg-black/50 flex items-center justify-center">
-                <Loader2 size={20} className="text-white animate-spin" />
+              <div className="absolute inset-0 grid place-items-center rounded-full bg-scrim/50 text-on-accent">
+                <Spinner size={22} />
               </div>
             )}
 
             {isEditing && (
               <>
-                <input
-                  ref={avatarInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleAvatarFileSelect}
-                />
-                <button
+                <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarFileSelect} />
+                <IconButton
+                  size="sm"
+                  variant="surface"
+                  label={p.changePhoto}
                   onClick={() => avatarInputRef.current?.click()}
                   disabled={isUploadingAvatar}
-                  className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-[#FF5733] text-white rounded-lg sm:rounded-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-all disabled:opacity-60 disabled:hover:scale-100"
+                  className="absolute -bottom-1 -right-1 shadow-md"
                 >
-                  <Camera size={14} className="sm:hidden" />
-                  <Camera size={18} className="hidden sm:block" />
-                </button>
+                  <Camera size={16} />
+                </IconButton>
               </>
             )}
           </div>
 
-          <div className="flex-1 min-w-0 text-left">
-            <p className="hidden sm:block text-[10px] font-bold text-[#FF5733] uppercase tracking-[0.3em]">
-              {t.profile.cabinet}
-            </p>
+          <div className={cx("min-w-0 flex-1", !isEditing && "order-last basis-full sm:order-none sm:basis-auto")}>
             {isEditing ? (
-              <div className="space-y-2 sm:space-y-4 max-w-sm">
-                <input
-                  type="text"
-                  value={editForm.displayName}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, displayName: e.target.value })
-                  }
-                  className="text-base sm:text-2xl md:text-3xl font-serif italic bg-[#F5F2ED] dark:bg-[#141312] border border-[#E0DBD3] dark:border-[#2E2C29] px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl w-full focus:outline-none"
-                />
-                <div>
-                  <input
-                    type="text"
-                    required
-                    value={editForm.username}
-                    onChange={(e) =>
-                      setEditForm({
-                        ...editForm,
-                        // Только допустимые символы, сразу в нижнем регистре —
-                        // меньше шансов словить ошибку валидации при сохранении
-                        username: e.target.value
-                          .toLowerCase()
-                          .replace(/[^a-z0-9_]/g, ''),
-                      })
-                    }
-                    className="text-xs sm:text-sm font-bold bg-[#F5F2ED] dark:bg-[#141312] border border-[#E0DBD3] dark:border-[#2E2C29] px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl w-full"
-                    placeholder={t.profile.usernamePlaceholder}
-                  />
-                  <p className="text-[10px] text-[#B5B0A8] mt-1 px-1">
-                    3–20 символов: латиница, цифры, _
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <h1 className="text-lg sm:text-3xl md:text-5xl my-0 sm:my-2 md:my-6 font-serif italic tracking-tight text-[#1A1714] dark:text-[#F0EDE8] truncate">
-                  {profile.displayName}
-                </h1>
-                <div className="flex flex-wrap gap-x-3 gap-y-0.5 sm:gap-4 mt-0.5 sm:mt-3">
-                  {editForm.username && (
-                    <span className="text-[11px] sm:text-sm font-bold text-[#7A756E]">
-                      @{editForm.username}
-                    </span>
-                  )}
-                  <span className="text-[11px] sm:text-sm text-[#B5B0A8] font-medium truncate">
-                    {profile.email}
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Единый визуальный язык для всех кнопок блока: одинаковые
-              квадратные icon-only кнопки (размер/скругление/паддинги), меняются
-              местами по режиму. В edit-режиме Save/Cancel складываются в
-              столбец на мобилке (места по горизонтали в этой строке мало —
-              раньше текстовые "Сохранить"/"Отмена" не влезали и распирали
-              весь блок), а Logout вообще не рендерится — незачем во время
-              редактирования. */}
-          <div className="flex gap-1.5 sm:gap-3 shrink-0">
-            {isEditing ? (
-              <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-3">
-                <button
-                  onClick={handleSaveProfile}
-                  disabled={
-                    isUploadingAvatar ||
-                    !isValidUsername(normalizeUsername(editForm.username))
-                  }
-                  title={t.profile.save}
-                  className="p-2.5 sm:p-4 bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714] rounded-xl sm:rounded-2xl transition-all disabled:opacity-40"
-                >
-                  <Check size={16} className="sm:hidden" />
-                  <Check size={20} className="hidden sm:block" />
-                </button>
-                <button
-                  onClick={() => setIsEditing(false)}
-                  title={t.profile.cancel}
-                  className="p-2.5 sm:p-4 bg-[#EDEAE4] dark:bg-[#242220] rounded-xl sm:rounded-2xl hover:bg-[#E0DBD3] dark:hover:bg-[#2E2C29] transition-all"
-                >
-                  <X size={16} className="sm:hidden" />
-                  <X size={20} className="hidden sm:block" />
-                </button>
-              </div>
+              <Heading size={3} as="h1">
+                {p.edit}
+              </Heading>
             ) : (
               <>
-                <button
-                  onClick={() => setIsEditing(true)}
-                  title="Edit"
-                  className="p-2.5 sm:p-4 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-xl sm:rounded-2xl hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-all"
-                >
-                  <Edit2 size={16} className="text-[#7A756E] sm:hidden" />
-                  <Edit2 size={20} className="text-[#7A756E] hidden sm:block" />
-                </button>
-                <button
-                  onClick={handleLogout}
-                  title={t.profile.logoutTitle}
-                  className="p-2.5 sm:p-4 bg-[#FFF0ED] dark:bg-[#2A1A15] border border-[#FF5733]/10 rounded-xl sm:rounded-2xl text-[#FF5733] hover:bg-[#FF5733] hover:text-white transition-all"
-                >
-                  <LogOut size={16} className="sm:hidden" />
-                  <LogOut size={20} className="hidden sm:block" />
-                </button>
+                <Heading size={1} className="break-words">
+                  {profile.displayName}
+                </Heading>
+                <p className="mt-1 truncate text-sm text-muted">
+                  {editForm.username && <span className="font-semibold text-fg">@{editForm.username}</span>}
+                  {editForm.username && profile.email && " · "}
+                  {profile.email}
+                </p>
+                <p className="mt-0.5 text-sm text-faint">{p.memberSince.replace("{date}", memberSince)}</p>
               </>
             )}
           </div>
-        </div>
-      </section>
 
-      <div className="grid grid-cols-12 gap-4 sm:gap-6">
-        {/* 2. STREAK CARD */}
-        <section
-          className={`col-span-12 md:col-span-7 relative overflow-hidden rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-10 transition-all duration-700 ${
-            isTodayActive
-              ? "bg-[#1A1714] dark:bg-[#F0EDE8] text-white dark:text-[#1A1714]"
-              : "bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29]"
-          }`}
-        >
-          <div className="absolute right-[-20px] bottom-[-20px] opacity-10 rotate-12 pointer-events-none">
-            <Zap size={180} strokeWidth={1} />
-          </div>
-          <div className="relative z-10 space-y-3 sm:space-y-6">
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <div
-                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center ${isTodayActive ? "bg-[#FF5733]" : "bg-[#EDEAE4] dark:bg-[#242220]"}`}
+          {!isEditing && (
+            <div className="ml-auto flex shrink-0 items-center gap-1">
+              <span className="hidden sm:contents">
+                <Button variant="secondary" size="sm" iconLeft={<Pencil size={15} />} onClick={() => setIsEditing(true)}>
+                  {p.edit}
+                </Button>
+              </span>
+              <span className="sm:hidden">
+                <IconButton variant="surface" label={p.edit} onClick={() => setIsEditing(true)}>
+                  <Pencil size={18} />
+                </IconButton>
+              </span>
+              <IconButton label={p.logoutTitle} onClick={handleLogout}>
+                <LogOut size={18} />
+              </IconButton>
+            </div>
+          )}
+        </div>
+
+        {isEditing && (
+          <form onSubmit={handleSaveProfile} className="grid gap-4 sm:grid-cols-2">
+            <Field label={p.nameLabel} htmlFor="profile-name">
+              <Input
+                id="profile-name"
+                autoComplete="name"
+                value={editForm.displayName}
+                onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
+              />
+            </Field>
+            <Field label={p.usernameLabel} hint={p.usernameHint} htmlFor="profile-username">
+              <Input
+                id="profile-username"
+                required
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
+                iconLeft={<AtSign size={16} />}
+                placeholder={p.usernamePlaceholder}
+                value={editForm.username}
+                onChange={(e) =>
+                  setEditForm({
+                    ...editForm,
+                    // Только допустимые символы, сразу в нижнем регистре —
+                    // меньше шансов словить ошибку валидации при сохранении
+                    username: e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ""),
+                  })
+                }
+              />
+            </Field>
+            <div className="flex flex-wrap justify-end gap-3 sm:col-span-2">
+              <Button variant="secondary" onClick={cancelEditing} disabled={isSaving}>
+                {p.cancel}
+              </Button>
+              <Button
+                type="submit"
+                loading={isSaving}
+                disabled={isSaving || isUploadingAvatar || !isValidUsername(normalizeUsername(editForm.username))}
               >
-                <Flame
-                  size={16}
-                  className={isTodayActive ? "text-white" : "text-[#B5B0A8]"}
-                  fill={isTodayActive ? "currentColor" : "none"}
-                />
-              </div>
-              <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em]">
-                {isTodayActive
-                  ? t.profile.streak.goalReached
-                  : t.profile.streak.title}
-              </span>
+                {p.save}
+              </Button>
             </div>
-            <div className="flex items-end gap-2 sm:gap-4">
-              <span className="text-5xl sm:text-7xl md:text-8xl font-serif italic leading-none">
-                {profile.currentStreak}
-              </span>
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-60 mb-1 sm:mb-2">
-                {t.profile.streak.daysInRow}
-              </span>
-            </div>
-            <div className="pt-3 sm:pt-6 border-t border-white/10 dark:border-black/10 flex gap-6 sm:gap-10">
-              <div>
-                <p className="text-[9px] sm:text-[10px] font-bold uppercase opacity-50 mb-0.5 sm:mb-1">
-                  {t.profile.streak.record}
-                </p>
-                <p className="text-lg sm:text-2xl font-serif italic">
-                  {profile.longestStreak} {t.profile.streak.daysShort}
-                </p>
-              </div>
-              <div>
-                <p className="text-[9px] sm:text-[10px] font-bold uppercase opacity-50 mb-0.5 sm:mb-1">
-                  {t.profile.streak.status}
-                </p>
-                <p className="text-lg sm:text-2xl font-serif italic">
-                  {isTodayActive
-                    ? t.profile.streak.active
-                    : t.profile.streak.waiting}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </form>
+        )}
+      </Card>
 
-        {/* 3. QUICK STATS */}
-        <section className="col-span-12 md:col-span-5 bg-[#EDEAE4] dark:bg-[#242220] rounded-3xl sm:rounded-[2.5rem] border border-[#E0DBD3] dark:border-[#2E2C29] p-5 sm:p-8 flex flex-col justify-between">
-          <div className="grid grid-cols-2 gap-4 sm:gap-6">
-            {[
-              {
-                label: t.profile.stats.totalWords,
-                val: totalCards,
-                icon: Award,
-              },
-              {
-                label: t.profile.stats.sessions,
-                val: profile.stats.flashcardSessions,
-                icon: Zap,
-              },
-              {
-                label: t.profile.stats.quizzes,
-                val: profile.stats.quizzesTaken,
-                icon: Award,
-              },
-              {
-                label: t.profile.stats.inLearning,
-                val: formatTime(profile.stats.totalStudyTime),
-                icon: Calendar,
-              },
-            ].map((s, i) => (
-              <div key={i} className="space-y-0.5 sm:space-y-1">
-                <p className="text-xl sm:text-3xl font-serif italic text-[#1A1714] dark:text-[#F0EDE8]">
-                  {s.val}
-                </p>
-                <p className="text-[9px] font-bold text-[#7A756E] uppercase tracking-widest leading-tight">
-                  {s.label}
-                </p>
-              </div>
-            ))}
+      {/* ── Серия и цифры ── */}
+      <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-[7fr_5fr]">
+        <Card tone={isTodayActive ? "inverse" : "surface"} padding="lg" className="grid content-between gap-8">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <span
+                className={cx(
+                  "grid h-10 w-10 place-items-center rounded-full",
+                  isTodayActive ? "bg-accent text-on-accent" : "bg-inset text-faint",
+                )}
+              >
+                <Flame size={20} fill={isTodayActive ? "currentColor" : "none"} />
+              </span>
+              <p className={cx("font-semibold", isTodayActive ? "text-on-inverse" : "text-fg")}>{p.streak.title}</p>
+            </div>
+            <Text size="sm" tone={isTodayActive ? "inverse" : "muted"} className="tabular-nums">
+              {p.streak.record}: {days(profile.longestStreak)}
+            </Text>
           </div>
-          <div className="mt-5 sm:mt-8 pt-4 sm:pt-6 border-t border-[#D6D0C5] dark:border-[#2E2C29]">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[#B5B0A8]">
-              {t.profile.stats.regDate}
+          <div>
+            <p
+              className={cx(
+                "font-display text-6xl font-semibold leading-none tabular-nums sm:text-7xl",
+                isTodayActive ? "text-on-inverse" : "text-fg",
+              )}
+            >
+              {profile.currentStreak}
             </p>
-            <p className="text-sm font-medium mt-1">
-              {new Date(profile.createdAt).toLocaleDateString()}
-            </p>
+            <Text tone={isTodayActive ? "inverse" : "muted"} className="mt-2">
+              {plural(locale, profile.currentStreak, p.streak.inRow)}
+            </Text>
           </div>
-        </section>
+          <Text size="sm" tone={isTodayActive ? "inverse" : "muted"}>
+            {isTodayActive ? t.shell.streak.active : t.shell.streak.inactive}
+          </Text>
+        </Card>
 
-        {/* 4. WEEK STATS */}
-        <div className="col-span-12 lg:col-span-4 space-y-4">
-          <div className="bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-8 lg:min-h-70">
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8] mb-3 sm:mb-4">
-              {t.profile.stats.weekTitle}
-            </h2>
-            <div className="space-y-3 sm:space-y-6">
-              {weekStats &&
-                [
-                  {
-                    label: t.profile.stats.sessions,
-                    value: weekStats.totalSessions,
-                    color: "text-blue-500",
-                  },
-                  {
-                    label: t.profile.stats.cardsStudied,
-                    value: weekStats.totalCards,
-                    color: "text-green-500",
-                  },
-                  {
-                    label: t.profile.stats.studyTime,
-                    value: formatTime(weekStats.totalTime),
-                    color: "text-[#FF5733]",
-                  },
-                ].map((stat, i) => (
-                  <div
-                    key={i}
-                    className="flex justify-between items-end border-b border-[#F5F2ED] dark:border-[#242220] pb-2 sm:pb-3 last:border-0 last:pb-0"
-                  >
-                    <span className="text-[10px] font-bold text-[#7A756E] uppercase">
-                      {stat.label}
-                    </span>
-                    <span
-                      className={`text-xl sm:text-3xl font-serif italic ${stat.color}`}
-                    >
-                      {stat.value}
-                    </span>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-
-        {/* 5. CALENDAR */}
-        <div className="col-span-12 lg:col-span-8 bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-8 lg:min-h-70">
-          <div className="flex items-center justify-between mb-4 sm:mb-8">
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">
-              {t.profile.stats.activityMatrix}
-            </h2>
-            <Calendar size={16} className="text-[#B5B0A8]" />
-          </div>
-          <ActivityCalendar studyHistory={profile.studyHistory} />
-        </div>
+        <Card padding="lg" className="grid grid-cols-2 gap-x-4 gap-y-6">
+          <Stat icon={<BookOpen size={18} />} value={totalCards} label={p.stats.totalWords} />
+          <Stat icon={<GalleryVerticalEnd size={18} />} value={profile.stats.flashcardSessions} label={p.stats.sessions} />
+          <Stat icon={<ListChecks size={18} />} value={profile.stats.quizzesTaken} label={p.stats.quizzes} />
+          <Stat icon={<Clock size={18} />} value={formatDuration(locale, profile.stats.totalStudyTime)} label={p.stats.inLearning} />
+        </Card>
       </div>
 
-      {/* 6. ACHIEVEMENTS — превью из 3 (последние разблокированные, или
-          ближайшие к разблокировке, если открытых меньше 3) всегда на
-          месте; остальные плавно раскрываются/схлопываются по высоте под
-          ним, а не свапаются мгновенно — весь список никогда не
-          перемонтируется целиком. */}
-      <section className="space-y-3 sm:space-y-6 pt-4 sm:pt-6">
-        <div className="flex items-center justify-between px-2">
-          <div className="flex items-center gap-2">
-            <Award size={18} className="text-[#FF5733]" />
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">
-              {t.profile.achievements} ({profile.achievements.length}/
-              {ALL_ACHIEVEMENTS.length})
-            </h2>
-          </div>
+      {/* ── Неделя и календарь ── */}
+      <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_2fr]">
+        <Card padding="lg" className="grid content-start gap-4">
+          <Heading size={4} as="h2">
+            {p.stats.weekTitle}
+          </Heading>
+          {weekStats && (
+            <dl className="grid divide-y divide-line">
+              {[
+                { label: p.stats.weekSessions, value: weekStats.totalSessions },
+                { label: p.stats.cardsStudied, value: weekStats.totalCards },
+                { label: p.stats.studyTime, value: formatDuration(locale, weekStats.totalTime) },
+              ].map((row) => (
+                <div key={row.label} className="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0">
+                  <dt className="text-sm text-muted">{row.label}</dt>
+                  <dd className="font-display text-xl font-semibold tabular-nums text-fg">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </Card>
+
+        <Card padding="lg" className="grid content-start gap-4">
+          <Heading size={4} as="h2">
+            {p.activity}
+          </Heading>
+          <ActivityCalendar studyHistory={profile.studyHistory} />
+        </Card>
+      </div>
+
+      {/* ── Достижения: превью из 3 (последние разблокированные или ближайшие
+          к разблокировке) всегда на месте; остальные плавно раскрываются под ним ── */}
+      <section className="mt-4 grid gap-4">
+        <div className="flex items-center justify-between gap-3">
+          <Heading size={2}>{p.achievements}</Heading>
+          <Badge tone="accent" className="tabular-nums">
+            {unlockedCount} / {ALL_ACHIEVEMENTS.length}
+          </Badge>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {previewAchievements.map((achievement) => (
             <AchievementCard
               key={achievement.id}
               achievement={achievement}
               isUnlocked={profile.achievements.includes(achievement.id)}
-              progress={getAchievementProgress(
-                achievement,
-                profile,
-                totalCards,
-                collections.length,
-              )}
+              progress={getAchievementProgress(achievement, profile, totalCards, collections.length)}
             />
           ))}
         </div>
@@ -656,20 +505,15 @@ export default function ProfilePage() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-              className="overflow-hidden"
+              className="-mt-1 overflow-hidden"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 pt-3 sm:pt-4">
+              <div className="grid gap-3 pt-1 md:grid-cols-2 lg:grid-cols-3">
                 {restAchievements.map((achievement) => (
                   <AchievementCard
                     key={achievement.id}
                     achievement={achievement}
                     isUnlocked={profile.achievements.includes(achievement.id)}
-                    progress={getAchievementProgress(
-                      achievement,
-                      profile,
-                      totalCards,
-                      collections.length,
-                    )}
+                    progress={getAchievementProgress(achievement, profile, totalCards, collections.length)}
                   />
                 ))}
               </div>
@@ -677,59 +521,59 @@ export default function ProfilePage() {
           )}
         </AnimatePresence>
 
-        <button
+        <Button
+          variant="secondary"
+          fullWidth
+          aria-expanded={achievementsOpen}
           onClick={() => setAchievementsOpen((o) => !o)}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border border-dashed border-[#E0DBD3] dark:border-[#2E2C29] text-[11px] font-black uppercase tracking-widest text-[#7A756E] hover:text-[#FF5733] hover:border-[#FF5733]/40 transition-colors"
+          iconRight={
+            <motion.span animate={{ rotate: achievementsOpen ? 180 : 0 }} transition={{ duration: 0.25 }} className="flex">
+              <ChevronDown size={16} />
+            </motion.span>
+          }
         >
-          {achievementsOpen ? "Свернуть" : `Показать все (${ALL_ACHIEVEMENTS.length})`}
-          <motion.span
-            animate={{ rotate: achievementsOpen ? 180 : 0 }}
-            transition={{ duration: 0.25 }}
-            className="flex items-center"
-          >
-            <ChevronDown size={14} />
-          </motion.span>
-        </button>
+          {achievementsOpen ? p.showLess : p.showAll.replace("{n}", String(ALL_ACHIEVEMENTS.length))}
+        </Button>
       </section>
 
-      {/* Settings section */}
-      <section className="pt-1 sm:pt-2 pb-6">
-        <div className="flex items-center gap-2 px-2 mb-3 sm:mb-4">
-          <BookOpen size={16} className="text-[#FF5733]" />
-          <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B5B0A8]">
-            Настройки
-          </h2>
-        </div>
-        <div className="bg-white dark:bg-[#1A1917] border border-[#E0DBD3] dark:border-[#2E2C29] rounded-3xl sm:rounded-[2.5rem] p-3">
+      {/* ── Настройки ── */}
+      <section className="mt-4 grid gap-4">
+        <Heading size={2}>{p.settingsTitle}</Heading>
+        <Card padding="none" className="p-2">
           <button
+            type="button"
             onClick={() => {
               localStorage.removeItem(ONBOARDING_STORAGE_KEY);
               window.dispatchEvent(new CustomEvent(ONBOARDING_RESTART_EVENT));
             }}
-            className="w-full flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-3 sm:py-4 rounded-2xl hover:bg-[#F5F2ED] dark:hover:bg-[#242220] transition-colors text-left"
+            className="flex w-full items-center gap-4 rounded-3xl px-4 py-3 text-left transition-colors hover:bg-inset focus-visible:outline-2 focus-visible:outline-accent"
           >
-            <div className="w-9 h-9 sm:w-11 sm:h-11 bg-[#FFF0ED] dark:bg-[#2A1A15] rounded-xl flex items-center justify-center text-[#FF5733] shrink-0">
-              <RefreshCw size={15} className="sm:hidden" />
-              <RefreshCw size={17} className="hidden sm:block" />
-            </div>
-            <div>
-              <p className="text-sm font-black text-[#1A1714] dark:text-[#F0EDE8]">
-                Перезапустить обучение
-              </p>
-              <p className="text-[11px] text-[#7A756E]">
-                Снова посмотреть знакомство с приложением
-              </p>
-            </div>
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent-soft text-accent-ink">
+              <RefreshCw size={18} />
+            </span>
+            <span className="grid min-w-0 flex-1 gap-0.5">
+              <span className="font-semibold text-fg">{p.restartTour}</span>
+              <span className="text-sm text-muted">{p.restartTourText}</span>
+            </span>
+            <ChevronRight size={18} className="shrink-0 text-faint" />
           </button>
-        </div>
+        </Card>
       </section>
 
-      <ConfirmDialog
-        {...confirmState}
-        onConfirm={handleConfirm}
-        onCancel={handleCancel}
-      />
+      <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
       <Toast {...toastState} onClose={hideToast} />
+    </div>
+  );
+}
+
+function Stat({ icon, value, label }: { icon: ReactNode; value: ReactNode; label: string }) {
+  return (
+    <div className="grid content-start gap-3">
+      <span className="grid h-9 w-9 place-items-center rounded-xl bg-inset text-muted">{icon}</span>
+      <div>
+        <p className="font-display text-2xl font-semibold leading-tight tabular-nums text-fg sm:text-3xl">{value}</p>
+        <p className="mt-1 text-sm text-muted">{label}</p>
+      </div>
     </div>
   );
 }

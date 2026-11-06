@@ -1,0 +1,11 @@
+{
+  "title": "Quelque chose a cassé",
+  "text": "Une erreur inattendue s'est produite. Réessaie et, si elle se reproduit, préviens-nous.",
+  "retry": "Réessayer",
+  "home": "Accueil",
+  "details": "Détails de l'erreur",
+  "contact": "support@dakuta.dev",
+  "notFoundTitle": "Cette page est sortie de son orbite",
+  "notFoundText": "Le lien est peut-être obsolète ou contient une faute de frappe. Reviens à l'accueil : tes mots t'attendent.",
+  "back": "Retour"
+}

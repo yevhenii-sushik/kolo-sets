@@ -1,0 +1,11 @@
+{
+  "title": "Noe gikk i stykker",
+  "text": "Det oppstod en uventet feil. Prøv igjen, og si fra til oss hvis det skjer igjen.",
+  "retry": "Prøv igjen",
+  "home": "Til forsiden",
+  "details": "Feildetaljer",
+  "contact": "support@dakuta.dev",
+  "notFoundTitle": "Denne siden har falt ut av bane",
+  "notFoundText": "Lenken kan være utdatert eller ha en skrivefeil. Gå tilbake til forsiden – ordene venter.",
+  "back": "Tilbake"
+}

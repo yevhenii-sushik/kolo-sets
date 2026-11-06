@@ -1,0 +1,275 @@
+{
+  "nav": {
+    "siteLanguage": "Idioma do site",
+    "login": "Entrar",
+    "start": "Começar",
+    "how": "Como funciona",
+    "modes": "Modos",
+    "faq": "Perguntas",
+    "sections": "Seções da página"
+  },
+  "hero": {
+    "title": "O jeito simples de aprender palavras em qualquer idioma — e não esquecer mais.",
+    "subtitle": "Adicione suas próprias palavras, pratique alguns minutos por dia e o Kolo traz cada uma de volta bem na hora em que você começa a esquecê-la.",
+    "start": "Começar a aprender",
+    "login": "Já tenho uma conta",
+    "promises": [
+      "Sem anúncios",
+      "Todo o aprendizado é gratuito",
+      "No navegador e no celular"
+    ],
+    "ratings": [
+      "Não sei",
+      "Esqueci",
+      "Lembro",
+      "Sei"
+    ],
+    "cards": [
+      {
+        "flag": "🇳🇴",
+        "pos": "subst.",
+        "word": "bok",
+        "translation": "livro",
+        "example": "Jeg leser en interessant bok."
+      },
+      {
+        "flag": "🇮🇹",
+        "pos": "subst.",
+        "word": "amico",
+        "translation": "amigo",
+        "example": "Lui è il mio migliore amico."
+      },
+      {
+        "flag": "🇯🇵",
+        "pos": "subst.",
+        "word": "旅行",
+        "translation": "viagem",
+        "example": "夏に京都へ旅行します。"
+      }
+    ]
+  },
+  "languages": {
+    "label": "Idiomas que você pode aprender com o Kolo",
+    "more": "e quase qualquer outro"
+  },
+  "how": {
+    "title": "Cada palavra na sua própria órbita",
+    "text": "O Kolo acompanha o quanto você conhece cada palavra e decide quando é hora de vê-la de novo.",
+    "steps": [
+      {
+        "title": "Adicione palavras",
+        "text": "As suas — de livros, séries e conversas. Cole uma lista inteira de uma vez."
+      },
+      {
+        "title": "Pratique um pouco",
+        "text": "Flashcards, testes e jogos. Até cinco minutos por dia contam."
+      },
+      {
+        "title": "O Kolo traz de volta",
+        "text": "Palavras difíceis voltam amanhã; as conhecidas, em uma semana ou um mês. Você revisa exatamente o que está na hora."
+      }
+    ]
+  },
+  "modes": {
+    "title": "Seis jeitos de fixar uma palavra",
+    "text": "As mesmas palavras em formatos diferentes — escolha o modo de acordo com o seu humor.",
+    "items": {
+      "flashcards": {
+        "name": "Flashcards",
+        "text": "A palavra de um lado, a tradução do outro. Marque o quanto você lembrava."
+      },
+      "review": {
+        "name": "Revisão do dia",
+        "text": "Só as palavras que estão na hora de revisar hoje."
+      },
+      "quiz": {
+        "name": "Quiz",
+        "text": "Escolha a resposta, digite a palavra ou ligue os pares."
+      },
+      "speed": {
+        "name": "Contra o relógio",
+        "text": "O máximo de respostas que conseguir em 60 segundos."
+      },
+      "survival": {
+        "name": "Sobrevivência",
+        "text": "Três vidas. Cada erro custa uma."
+      },
+      "match": {
+        "name": "Pares",
+        "text": "Ligue seis palavras às traduções contra o relógio."
+      }
+    },
+    "preview": {
+      "question": "Escolha a tradução",
+      "due": "para hoje",
+      "score": "respostas",
+      "best": "recorde"
+    }
+  },
+  "method": {
+    "title": "O Perigee sabe quando trazer uma palavra de volta",
+    "text": "O Perigee é o motor de revisão do Kolo. O perigeu é o ponto da órbita em que um satélite fica mais perto — e é nesse momento que o Perigee traz uma palavra de volta, logo antes de ela ser esquecida. Depois de cada card, você marca o quanto conhece a palavra: as difíceis voltam antes, e os intervalos aumentam conforme a palavra se fixa. Por trás está o SM-2, um método comprovado de repetição espaçada.",
+    "memory": "Memória",
+    "time": "Tempo",
+    "withKolo": "Com o Kolo",
+    "without": "Sem revisão",
+    "intervals": [
+      "+1 d",
+      "+3 d",
+      "+7 d"
+    ],
+    "schematic": "Ilustração esquemática"
+  },
+  "habit": {
+    "title": "Um hábito que você não vai querer quebrar",
+    "text": "Sua sequência cresce a cada dia de prática. O jogo do dia e as conquistas dão um motivo para voltar amanhã.",
+    "streak": {
+      "title": "Sequência de dias",
+      "text": "Cada dia de prática a aumenta."
+    },
+    "daily": {
+      "title": "Jogo do dia",
+      "text": "Forme palavras com sete letras e compare sua pontuação com outros jogadores."
+    },
+    "achievements": {
+      "title": "Conquistas",
+      "text": "Por sequências, palavras aprendidas e testes sem erros."
+    },
+    "days": "dias",
+    "week": [
+      "S",
+      "T",
+      "Q",
+      "Q",
+      "S",
+      "S",
+      "D"
+    ],
+    "achievementName": "Duas semanas sem falhar"
+  },
+  "words": {
+    "title": "Suas palavras, seu ritmo",
+    "text": "Aprenda as palavras que você realmente encontra — em livros, séries e conversas.",
+    "sets": {
+      "title": "Sets e pastas",
+      "text": "Organize as palavras em sets e pastas. Cole uma lista inteira e ela é importada de uma vez."
+    },
+    "audio": {
+      "title": "Pronúncia",
+      "text": "Toque para ouvir a palavra e o exemplo. O áudio já funciona em norueguês; outros idiomas estão a caminho."
+    },
+    "folder": "Meus idiomas",
+    "setList": [
+      {
+        "flag": "🇳🇴",
+        "name": "Norueguês · Comida",
+        "count": "24 palavras"
+      },
+      {
+        "flag": "🇮🇹",
+        "name": "Italiano · Viagens",
+        "count": "18 palavras"
+      },
+      {
+        "flag": "🇯🇵",
+        "name": "Japonês · Básico",
+        "count": "31 palavras"
+      }
+    ],
+    "import": "Cole uma lista — importada de uma vez",
+    "importLines": [
+      "skrive; escrever",
+      "lese; ler",
+      "snakke; falar"
+    ],
+    "audioTranslation": "pronúncia"
+  },
+  "team": {
+    "title": "Feito com ❤️ pela equipe do Kolo",
+    "text": "O Kolo é um produto do estúdio Dakuta. A equipe de design e desenvolvimento do Kolo o constrói sobre três princípios: utilidade real para aprender, cuidado com os seus dados e um modelo honesto — sem anúncios e sem paywall.",
+    "link": "Sobre a Dakuta"
+  },
+  "app": {
+    "title": "Aprenda quando e onde quiser",
+    "text": "O Kolo funciona em qualquer navegador e pode ser instalado no celular como um app comum — com ícone próprio e em tela cheia. Seu progresso é sincronizado entre os seus dispositivos.",
+    "ios": {
+      "title": "iPhone e iPad",
+      "hint": "Safari → Compartilhar → Adicionar à Tela de Início"
+    },
+    "android": {
+      "title": "Android",
+      "hint": "Chrome → menu → Instalar app"
+    },
+    "desktop": {
+      "title": "Computador",
+      "hint": "Qualquer navegador moderno, nada para baixar"
+    },
+    "native": {
+      "title": "Apps para iOS e Android",
+      "badge": "Em desenvolvimento",
+      "text": "Estamos montando a equipe e reunindo recursos para lançá-los. Enquanto isso, instale o Kolo pelo navegador."
+    }
+  },
+  "faq": {
+    "title": "Perguntas frequentes",
+    "askTitle": "Ainda tem dúvidas?",
+    "askText": "Escreva para a gente e respondemos por e-mail.",
+    "askButton": "Falar com o suporte",
+    "items": [
+      {
+        "q": "Para quem é o Kolo?",
+        "a": "Para quem está aprendendo um idioma estrangeiro: de iniciantes absolutos a quem já fala e quer ampliar o vocabulário. Você monta sets com as palavras de que realmente precisa."
+      },
+      {
+        "q": "Quais idiomas posso aprender?",
+        "a": "Quase qualquer um: os cards funcionam com qualquer alfabeto ou sistema de escrita, então você pode adicionar palavras em espanhol, japonês ou norueguês. A pronúncia já está disponível em norueguês, e vozes para outros idiomas chegam em breve."
+      },
+      {
+        "q": "Como funciona a repetição espaçada?",
+        "a": "Depois de cada card, você marca o quanto lembrava. O Perigee, o motor de revisão do Kolo baseado no algoritmo SM-2, usa essa avaliação para agendar a próxima revisão: palavras difíceis voltam antes, as conhecidas depois."
+      },
+      {
+        "q": "Preciso instalar alguma coisa?",
+        "a": "Não. O Kolo roda no navegador. Se quiser, adicione-o à tela de início e ele vai abrir como um app comum."
+      },
+      {
+        "q": "Meu progresso fica salvo?",
+        "a": "Sim. Com uma conta, seus sets e estatísticas ficam salvos na nuvem e sincronizados entre celular, tablet e computador."
+      },
+      {
+        "q": "Em quais idiomas o Kolo está disponível?",
+        "a": "O app está disponível em: {appLanguages}. Este site também está em: {siteOnlyLanguages} — a tradução do app para esses idiomas já está em andamento."
+      }
+    ]
+  },
+  "more": {
+    "title": "Está aprendendo norueguês?",
+    "text": "Mais duas ferramentas da Dakuta — para gramática e formas das palavras."
+  },
+  "cta": {
+    "title": "Aprenda qualquer idioma com o Kolo",
+    "text": "Crie uma conta e adicione suas primeiras palavras — leva só alguns minutos.",
+    "button": "Começar a aprender"
+  },
+  "footer": {
+    "tagline": "Aprenda palavras em qualquer idioma e não esqueça mais.",
+    "how": "Como funciona",
+    "modes": "Modos de treino",
+    "engine": "Motor Perigee",
+    "help": "Ajuda",
+    "faq": "Perguntas frequentes",
+    "contact": "Falar com o suporte",
+    "install": "Instalar no celular",
+    "about": "Sobre o estúdio",
+    "woky": "Woky — gramática",
+    "boey": "Bøy! — flexões",
+    "soon": "em breve",
+    "legal": "Termos e políticas",
+    "siteLanguage": "Idioma do site:"
+  },
+  "alt": {
+    "hero": "O Kolo em um celular: um card com uma palavra, a tradução e um exemplo, cercado por palavras em outros idiomas girando em órbitas.",
+    "curve": "Esquema: sem revisão, uma palavra é esquecida rápido; a cada revisão no Kolo ela é esquecida mais devagar e os intervalos aumentam.",
+    "homeScreen": "Kolo instalado na tela inicial de um celular, ao lado de outros apps."
+  }
+}

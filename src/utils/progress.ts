@@ -13,6 +13,10 @@ export const getYesterdayString = (): string => {
   return yesterday.toISOString().split('T')[0];
 };
 
+// YYYY-MM-DD по местной дате (toISOString дал бы дату по UTC — в UTC+ это вчера)
+const localDateKey = (d: Date): string =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
 // Рассчитать текущий стрик
 export const calculateStreak = (studyHistory: StudyDay[]): number => {
   if (studyHistory.length === 0) return 0;
@@ -115,7 +119,7 @@ export const getActivityWeeks = (
         continue;
       }
 
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = localDateKey(date);
       week.push(
         historyByDate.get(dateStr) ?? {
           date: dateStr,
@@ -140,23 +144,18 @@ export const getActivityIntensity = (sessions: number): number => {
   return 4;
 };
 
-// Форматировать время
-export const formatTime = (seconds: number): string => {
-  if (seconds < 60) {
-    return `${seconds}с`;
-  }
-  
+// Длительность на языке интерфейса: «45 s», «12 мин», «1 t 5 min»
+export const formatDuration = (locale: string, seconds: number): string => {
+  const unit = (value: number, unit: 'second' | 'minute' | 'hour') =>
+    new Intl.NumberFormat(locale, { style: 'unit', unit, unitDisplay: 'short' }).format(value);
+  if (seconds < 60) return unit(Math.round(seconds), 'second');
   const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) {
-    return `${minutes}м`;
-  }
-  
+  if (minutes < 60) return unit(minutes, 'minute');
   const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  return `${hours}ч ${remainingMinutes}м`;
+  const rest = minutes % 60;
+  return rest ? `${unit(hours, 'hour')} ${unit(rest, 'minute')}` : unit(hours, 'hour');
 };
 
-// Получить статистику за неделю
 export const getWeekStats = (studyHistory: StudyDay[]): {
   totalSessions: number;
   totalCards: number;

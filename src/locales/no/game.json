@@ -35,5 +35,17 @@
   "noScoresYet": "Ingen resultater i dag ennå",
   "loadingLeaderboard": "Laster…",
   "shareText": "Jeg fikk {score} poeng i Kolo Daglig Gåte! 🇳🇴",
-  "pointsSuffix": " p."
+  "pointsSuffix": " p.",
+  "widgetNew": "Ny",
+  "widgetPlayed": "Spilt",
+  "widgetWords": {
+    "one": "{n} ord",
+    "other": "{n} ord"
+  },
+  "tabs": {
+    "play": "Spill",
+    "words": "Ord",
+    "top": "Toppliste"
+  },
+  "noWordsYet": "Ingen ord ennå – start i fanen «Spill»"
 }

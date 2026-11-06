@@ -10,6 +10,7 @@ import { getReminderSettings, scheduleReminder, cancelReminder, registerDueCount
 
 import AchievementUnlockBanner from "./components/AchievementUnlockBanner";
 import { StreakCelebrationHost } from "./components/StreakCelebration";
+import CookieConsentBanner from "./components/legal/CookieConsentBanner";
 
 // Layouts (небольшие — грузим сразу)
 import MainLayout from "./pages/layouts/MainLayout";
@@ -24,8 +25,10 @@ const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPasswordPage"))
 const HomePage = lazy(() => import("./pages/home/HomePage"));
 // Public legal & support pages
 const LegalLayout = lazy(() => import("./pages/legal/LegalLayout"));
-const PrivacyPagePublic = lazy(() => import("./pages/legal/PrivacyPage"));
-const TermsPage = lazy(() => import("./pages/legal/TermsPage"));
+const LegalDocumentPage = lazy(() => import("./pages/legal/LegalDocumentPage"));
+// Витрина дизайн-системы — только в режиме разработки, в продакшен-сборку не попадает
+const DesignPage = import.meta.env.DEV ? lazy(() => import("./pages/design/DesignPage")) : null;
+const NotFoundPage = lazy(() => import("./pages/error/NotFoundPage"));
 const WordsPage = lazy(() => import("./pages/words/WordsPage"));
 const CollectionEditPage = lazy(() => import("./pages/words/CollectionEditPage"));
 const FlashcardsPage = lazy(() => import("./pages/words/FlashcardsPage"));
@@ -80,6 +83,7 @@ function AppContent() {
     <Suspense fallback={null}>
     <AchievementUnlockBanner />
     <StreakCelebrationHost />
+    <CookieConsentBanner />
     <Routes>
       {/* 1. Группа публичных маршрутов */}
       <Route
@@ -166,12 +170,16 @@ function AppContent() {
 
       {/* 4. Публичные правовые страницы — доступны всем без авторизации */}
       <Route element={<LegalLayout />}>
-        <Route path="/privacy" element={<PrivacyPagePublic />} />
-        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<LegalDocumentPage doc="privacy" />} />
+        <Route path="/terms" element={<LegalDocumentPage doc="terms" />} />
+        <Route path="/cookies" element={<LegalDocumentPage doc="cookies" />} />
+        <Route path="/refund" element={<LegalDocumentPage doc="refund" />} />
       </Route>
 
-      {/* Редирект для любых неопознанных путей */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {DesignPage && <Route path="/design" element={<DesignPage />} />}
+
+      {/* Неизвестный адрес — своя страница 404 вместо молчаливого перехода на главную */}
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
     </Suspense>
     </ErrorBoundary>
