@@ -17,6 +17,9 @@ import { updateProfile } from "firebase/auth";
 import ActivityCalendar from "../../components/ActivityCalendar";
 import AchievementCard from "../../components/AchievementCard";
 import ConfirmDialog from "../../components/ConfirmDialog";
+import { OrbitRing } from "../../components/progress/OrbitRing";
+import { RepairLine, Shields, WeekDays, WeekStatus } from "../../components/progress/WeekOrbit";
+import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
 import Toast from "../../components/ui/Toast";
 import {
   AtSign,
@@ -30,14 +33,15 @@ import {
   LogOut,
   Pencil,
   RefreshCw,
+  Target,
   User,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Badge, Button, Card, Field, Heading, IconButton, Input, Spinner, Text, cx } from "../../ui";
+import { Badge, Button, Card, Field, Heading, IconButton, Input, Ring, Spinner, Text, cx } from "../../ui";
 
 const ACHIEVEMENTS_PREVIEW_COUNT = 3;
 
-// Профиль: кто ты → серия и цифры → неделя и календарь → достижения
+// Профиль (docs/specs/02-progression.md): кто ты и твой уровень → орбита недели → медали | статистика
 export default function ProfilePage() {
   const { t, language } = useI18n();
   const p = t.profile;
@@ -45,7 +49,19 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   // Профиль — про весь аккаунт: слова и наборы всех курсов
-  const { profile: rawProfile, allTotalCards: totalCards, allCollections: collections, profileLoading, refreshProfile } = useData();
+  const {
+    profile: rawProfile,
+    allTotalCards: totalCards,
+    allCollections: collections,
+    profileLoading,
+    refreshProfile,
+    progression,
+  } = useData();
+  const orbit = progression?.orbit;
+  const level = progression?.xp ?? null;
+  const legacyFlames: number | null = typeof rawProfile?.legacyFlames === "number" ? rawProfile.legacyFlames : null;
+  const [tab, setTab] = useState<"medals" | "stats">("medals");
+  const [goalOpen, setGoalOpen] = useState(false);
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
@@ -96,10 +112,6 @@ export default function ProfilePage() {
       });
     }
   }, [rawProfile, user]);
-
-  const isTodayActive = Boolean(
-    profile?.lastStudyDate && new Date(profile.lastStudyDate).toDateString() === new Date().toDateString(),
-  );
 
   const handleAvatarEasterEgg = (e: React.DragEvent) => {
     e.preventDefault();
@@ -272,7 +284,14 @@ export default function ProfilePage() {
         {/* На телефоне: аватар и кнопки — первой строкой, имя и данные — второй во всю ширину */}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-5 sm:flex-nowrap sm:gap-6">
           <div className="relative shrink-0">
-            <div className="h-20 w-20 overflow-hidden rounded-full bg-accent-soft sm:h-28 sm:w-28">
+            <Ring
+              value={level ? level.into / level.next : 0}
+              size={112}
+              stroke={5}
+              tone="special"
+              label={level ? `${p.level.label.replace("{n}", String(level.level))}: ${level.into} / ${level.next}` : p.edit}
+            >
+            <div className="h-24 w-24 overflow-hidden rounded-full bg-accent-soft">
               {editForm.photoURL ? (
                 <img
                   src={editForm.photoURL}
@@ -284,16 +303,26 @@ export default function ProfilePage() {
                 <div
                   draggable // чтобы пасхалка срабатывала и без фото
                   onDragStart={handleAvatarEasterEgg}
-                  className="grid h-full w-full place-items-center font-display text-3xl font-extrabold text-accent-ink sm:text-4xl"
+                  className="grid h-full w-full place-items-center font-display text-4xl font-extrabold text-accent-ink"
                 >
                   {profile.displayName.charAt(0).toUpperCase()}
                 </div>
               )}
             </div>
+            </Ring>
+
+            {level && !isEditing && (
+              <span
+                aria-hidden
+                className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full border-2 border-surface bg-fg px-2.5 py-0.5 font-display text-sm font-extrabold tabular-nums text-on-inverse"
+              >
+                {level.level}
+              </span>
+            )}
 
             {/* Затемнение + спиннер поверх аватара во время загрузки/сжатия */}
             {isUploadingAvatar && (
-              <div className="absolute inset-0 grid place-items-center rounded-full bg-scrim/50 text-on-accent">
+              <div className="absolute inset-2 grid place-items-center rounded-full bg-scrim/50 text-on-accent">
                 <Spinner size={22} />
               </div>
             )}
@@ -354,6 +383,26 @@ export default function ProfilePage() {
           )}
         </div>
 
+        {level && !isEditing && (
+          <div className="grid gap-2">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <p className="font-display text-xl font-extrabold text-fg">{p.level.label.replace("{n}", String(level.level))}</p>
+              <p className="text-sm text-muted">
+                {p.level.total}: <span className="font-semibold tabular-nums text-fg">{level.total.toLocaleString(locale)}</span>
+              </p>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-track">
+              <div
+                className="h-full rounded-full bg-special transition-[width] duration-700 ease-out"
+                style={{ width: `${Math.round((level.into / level.next) * 100)}%` }}
+              />
+            </div>
+            <p className="text-sm text-muted">
+              {p.level.toNext.replace("{into}", String(level.into)).replace("{next}", String(level.next))}
+            </p>
+          </div>
+        )}
+
         {isEditing && (
           <form onSubmit={handleSaveProfile} className="grid gap-4 sm:grid-cols-2">
             <Field label={p.nameLabel} htmlFor="profile-name">
@@ -400,90 +449,136 @@ export default function ProfilePage() {
         )}
       </Card>
 
-      {/* ── Серия и цифры ── */}
-      <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-[7fr_5fr]">
-        <Card tone={isTodayActive ? "inverse" : "surface"} padding="lg" className="grid content-between gap-8">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <span
-                className={cx(
-                  "grid h-10 w-10 place-items-center rounded-full",
-                  isTodayActive ? "bg-accent text-on-accent" : "bg-inset text-faint",
-                )}
-              >
-                <Flame size={20} fill={isTodayActive ? "currentColor" : "none"} />
-              </span>
-              <p className={cx("font-semibold", isTodayActive ? "text-on-inverse" : "text-fg")}>{p.streak.title}</p>
+      {/* ── Орбита недели ── */}
+      {orbit && (
+        <Card padding="lg" className="grid grid-cols-1 gap-5">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <OrbitRing goal={orbit.goal} done={orbit.days.length} closed={orbit.closed} size={64}>
+                <span className="font-display text-xl font-extrabold tabular-nums text-fg">{orbit.streak}</span>
+              </OrbitRing>
+              <div>
+                <Heading size={4} as="h2">
+                  {p.orbit.title}
+                </Heading>
+                <p className="text-sm text-muted">{plural(locale, orbit.streak, t.orbit.inRow)}</p>
+              </div>
             </div>
-            <Text size="sm" tone={isTodayActive ? "inverse" : "muted"} className="tabular-nums">
-              {p.streak.record}: {days(profile.longestStreak)}
-            </Text>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted">
+                {p.orbit.goal}: <span className="font-semibold text-fg">{plural(locale, orbit.goal, t.orbit.goal.perWeek)}</span>
+              </span>
+              <Button variant="secondary" size="sm" iconLeft={<Target size={15} />} onClick={() => setGoalOpen(true)}>
+                {p.orbit.change}
+              </Button>
+            </div>
           </div>
-          <div>
-            <p
-              className={cx(
-                "font-display text-6xl font-extrabold leading-none tabular-nums sm:text-7xl",
-                isTodayActive ? "text-on-inverse" : "text-fg",
-              )}
-            >
-              {profile.currentStreak}
+
+          <WeekDays orbit={orbit} />
+          <RepairLine orbit={orbit} />
+          <WeekStatus orbit={orbit} />
+
+          <dl className="grid grid-cols-2 gap-4 border-t border-line pt-5 sm:grid-cols-3">
+            <div>
+              <dt className="text-sm text-muted">{p.orbit.record}</dt>
+              <dd className="font-display text-2xl font-extrabold tabular-nums text-fg">{orbit.longest}</dd>
+            </div>
+            <div title={t.orbit.shieldsHint}>
+              <dt className="text-sm text-muted">{p.orbit.shields}</dt>
+              <dd className="mt-1.5">
+                <Shields count={orbit.shields} label={p.orbit.shields} />
+              </dd>
+            </div>
+          </dl>
+          {orbit.nextGoal !== undefined && (
+            <p className="text-sm text-faint">
+              {p.orbit.next.replace("{value}", plural(locale, orbit.nextGoal, t.orbit.goal.perWeek))}
             </p>
-            <Text tone={isTodayActive ? "inverse" : "muted"} className="mt-2">
-              {plural(locale, profile.currentStreak, p.streak.inRow)}
-            </Text>
-          </div>
-          <Text size="sm" tone={isTodayActive ? "inverse" : "muted"}>
-            {isTodayActive ? t.shell.streak.active : t.shell.streak.inactive}
-          </Text>
-        </Card>
-
-        <Card padding="lg" className="grid grid-cols-2 gap-x-4 gap-y-6">
-          <Stat icon={<BookOpen size={18} />} value={totalCards} label={p.stats.totalWords} />
-          <Stat icon={<GalleryVerticalEnd size={18} />} value={profile.stats.flashcardSessions} label={p.stats.sessions} />
-          <Stat icon={<ListChecks size={18} />} value={profile.stats.quizzesTaken} label={p.stats.quizzes} />
-          <Stat icon={<Clock size={18} />} value={formatDuration(locale, profile.stats.totalStudyTime)} label={p.stats.inLearning} />
-        </Card>
-      </div>
-
-      {/* ── Неделя и календарь ── */}
-      <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_2fr]">
-        <Card padding="lg" className="grid content-start gap-4">
-          <Heading size={4} as="h2">
-            {p.stats.weekTitle}
-          </Heading>
-          {weekStats && (
-            <dl className="grid divide-y divide-line">
-              {[
-                { label: p.stats.weekSessions, value: weekStats.totalSessions },
-                { label: p.stats.cardsStudied, value: weekStats.totalCards },
-                { label: p.stats.studyTime, value: formatDuration(locale, weekStats.totalTime) },
-              ].map((row) => (
-                <div key={row.label} className="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0">
-                  <dt className="text-sm text-muted">{row.label}</dt>
-                  <dd className="font-display text-xl font-extrabold tabular-nums text-fg">{row.value}</dd>
-                </div>
-              ))}
-            </dl>
           )}
         </Card>
+      )}
 
-        <Card padding="lg" className="grid content-start gap-4">
-          <Heading size={4} as="h2">
-            {p.activity}
-          </Heading>
-          <ActivityCalendar studyHistory={profile.studyHistory} />
-        </Card>
+      {/* ── Медали | Статистика ── */}
+      <div className="mt-2 flex items-center justify-between gap-3">
+        <div role="tablist" aria-label={p.tabs.medals} className="flex w-fit gap-1 rounded-full bg-inset p-1">
+          {(["medals", "stats"] as const).map((id) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              onClick={() => setTab(id)}
+              className={cx(
+                "rounded-full px-4 py-2 text-sm font-semibold transition-colors",
+                tab === id ? "bg-surface text-fg shadow-sm" : "text-muted hover:text-fg",
+              )}
+            >
+              {p.tabs[id]}
+            </button>
+          ))}
+        </div>
+        {tab === "medals" && (
+          <Badge tone="accent" className="tabular-nums">
+            {unlockedCount + (legacyFlames ? 1 : 0)} / {ALL_ACHIEVEMENTS.length + (legacyFlames ? 1 : 0)}
+          </Badge>
+        )}
       </div>
 
-      {/* ── Достижения: превью из 3 (последние разблокированные или ближайшие
-          к разблокировке) всегда на месте; остальные плавно раскрываются под ним ── */}
-      <section className="mt-4 grid gap-4">
-        <div className="flex items-center justify-between gap-3">
-          <Heading size={2}>{p.achievements}</Heading>
-          <Badge tone="accent" className="tabular-nums">
-            {unlockedCount} / {ALL_ACHIEVEMENTS.length}
-          </Badge>
-        </div>
+      {tab === "stats" && (
+        <>
+          <Card padding="lg" className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4">
+            <Stat icon={<BookOpen size={18} />} value={totalCards} label={p.stats.totalWords} />
+            <Stat icon={<GalleryVerticalEnd size={18} />} value={profile.stats.flashcardSessions} label={p.stats.sessions} />
+            <Stat icon={<ListChecks size={18} />} value={profile.stats.quizzesTaken} label={p.stats.quizzes} />
+            <Stat icon={<Clock size={18} />} value={formatDuration(locale, profile.stats.totalStudyTime)} label={p.stats.inLearning} />
+          </Card>
+
+          <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[1fr_2fr]">
+            <Card padding="lg" className="grid content-start gap-4">
+              <Heading size={4} as="h2">
+                {p.stats.weekTitle}
+              </Heading>
+              {weekStats && (
+                <dl className="grid divide-y divide-line">
+                  {[
+                    { label: p.stats.weekSessions, value: weekStats.totalSessions },
+                    { label: p.stats.cardsStudied, value: weekStats.totalCards },
+                    { label: p.stats.studyTime, value: formatDuration(locale, weekStats.totalTime) },
+                  ].map((row) => (
+                    <div key={row.label} className="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0">
+                      <dt className="text-sm text-muted">{row.label}</dt>
+                      <dd className="font-display text-xl font-extrabold tabular-nums text-fg">{row.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+            </Card>
+
+            <Card padding="lg" className="grid content-start gap-4">
+              <Heading size={4} as="h2">
+                {p.activity}
+              </Heading>
+              <ActivityCalendar studyHistory={profile.studyHistory} />
+            </Card>
+          </div>
+        </>
+      )}
+
+      {/* ── Медали: памятная за старые огоньки, превью из 3 достижений (последние или ближайшие),
+          остальные плавно раскрываются под ним ── */}
+      {tab === "medals" && (
+      <section className="grid gap-4" aria-label={p.tabs.medals}>
+        {legacyFlames && (
+          <Card padding="sm" radius="lg" className="flex items-center gap-4 bg-accent-soft">
+            <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-surface">
+              <Flame size={24} className="fill-accent text-accent" />
+            </span>
+            <div className="grid min-w-0 gap-0.5">
+              <h3 className="font-semibold leading-snug text-fg">{p.legacyFlames.name}</h3>
+              <p className="text-sm leading-snug text-muted">{p.legacyFlames.description.replace("{days}", days(legacyFlames))}</p>
+            </div>
+          </Card>
+        )}
 
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {previewAchievements.map((achievement) => (
@@ -534,6 +629,9 @@ export default function ProfilePage() {
           {achievementsOpen ? p.showLess : p.showAll.replace("{n}", String(ALL_ACHIEVEMENTS.length))}
         </Button>
       </section>
+      )}
+
+      <OrbitGoalModal open={goalOpen} onClose={() => setGoalOpen(false)} />
 
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
       <Toast {...toastState} onClose={hideToast} />

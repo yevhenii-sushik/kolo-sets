@@ -2,6 +2,11 @@
 // Если сеть пропала или сервер временно недоступен, тренировка ждёт в очереди и уйдёт при следующем запуске.
 import { auth } from "../firebase/config";
 import type { AchievementType } from "../types";
+import type { ProgressionView } from "../../server/core/progression";
+
+// Опыт и орбита недели — как их отдаёт сервер (docs/specs/02-progression.md)
+export type Progression = ProgressionView;
+export type OrbitEventName = Progression["events"][number];
 
 export type SessionKind = "flashcards" | "review" | "quiz" | "speed" | "survival" | "match";
 
@@ -17,6 +22,7 @@ export interface SessionPayload {
 export interface SessionReply {
   streak: { current: number; longest: number; extendedToday: boolean };
   newAchievements: AchievementType[];
+  progression?: Progression; // нет у тренировок, записанных до этапа 2
   duplicate?: boolean;
 }
 
@@ -107,4 +113,18 @@ export async function recheckAchievements(): Promise<AchievementType[]> {
   } catch {
     return [];
   }
+}
+
+// При открытии приложения: итоги прошедших недель. null — сервер недоступен, остаётся то, что было
+export async function syncProgress(): Promise<Progression | null> {
+  try {
+    return (await post<{ progression: Progression }>("/api/progress-sync", { timezone: timeZone() })).progression;
+  } catch {
+    return null;
+  }
+}
+
+// Цель недели 3–7; ошибку показывает тот, кто вызвал
+export async function setOrbitGoal(goal: number): Promise<Progression> {
+  return (await post<{ progression: Progression }>("/api/orbit-goal", { goal, timezone: timeZone() })).progression;
 }

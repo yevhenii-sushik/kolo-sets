@@ -35,6 +35,8 @@ describe("профиль", () => {
     await assertFails(setDoc(doc(as("bob"), "users/bob"), { ...blank, currentStreak: 1000 }));
     await assertFails(setDoc(doc(as("bob"), "users/bob"), { ...blank, achievements: ["streak_100"] }));
     await assertFails(setDoc(doc(as("bob"), "users/bob"), { ...blank, stats: { ...blank.stats, quizzesTaken: 50 } }));
+    await assertFails(setDoc(doc(as("bob"), "users/bob"), { ...blank, xp: 0 }));
+    await assertFails(setDoc(doc(as("bob"), "users/bob"), { ...blank, inventory: {} }));
   });
 
   it("владелец меняет имя, курсы и папки, но не прогресс", async () => {
@@ -50,6 +52,19 @@ describe("профиль", () => {
       lastStudyDay: "2026-11-06",
       timezone: "UTC",
       "stats.flashcardSessions": 100,
+      xp: 100000,
+      level: 50,
+      xpDay: { day: "2026-11-06", amount: 0 },
+      weekXp: { week: "2026-11-02", amount: 9999 },
+      "orbit.streak": 99,
+      "orbit.shields": 2,
+      legacyFlames: 365,
+      capsules: 99,
+      pity: 0,
+      dust: 99999,
+      "inventory.sat_gold": { n: 1 },
+      "equipped.title": "legend",
+      medals: ["legacy_flames"],
     })) {
       await assertFails(updateDoc(doc(me, "users/alice"), { [field]: value }));
     }

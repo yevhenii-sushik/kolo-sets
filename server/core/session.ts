@@ -4,6 +4,9 @@
 import { AchievementType } from "../../src/types";
 import { checkAndUnlockAchievements } from "../../src/utils/achievements";
 import { addDays, dayKey, daysBetween, hourIn, safeTimeZone } from "./time";
+import { achievementXp, capDaily, FIRST_SESSION_BONUS, levelFromXp, ORBIT_BONUS, sessionXp } from "./xp";
+import { recordSession, type OrbitEvent } from "./orbit";
+import { addWeekXp, prepare, view, type ProgressionPatch, type ProgressionState, type ProgressionView } from "./progression";
 
 export const SESSION_KINDS = ["flashcards", "review", "quiz", "speed", "survival", "match"] as const;
 export type SessionKind = (typeof SESSION_KINDS)[number];
@@ -37,8 +40,8 @@ export interface Stats {
   gamesPlayed: number;
 }
 
-// Профиль — только поля, которые считает сервер
-export interface ProgressState {
+// Профиль — только поля, которые считает сервер (этап 0 + опыт и орбиты этапа 2)
+export interface ProgressState extends Omit<ProgressionState, "studyHistory"> {
   stats?: Partial<Stats>;
   currentStreak?: number;
   longestStreak?: number;
@@ -59,9 +62,11 @@ export interface SessionResult {
   streak: { current: number; longest: number; extendedToday: boolean };
   newAchievements: AchievementType[];
   day: string;
+  progression: ProgressionView;
 }
 
-export interface ProgressPatch {
+export interface ProgressPatch extends ProgressionPatch {
+  xpDay: { day: string; amount: number };
   stats: Stats;
   currentStreak: number;
   longestStreak: number;
@@ -146,6 +151,11 @@ export function applySession(
   const today = dayKey(now, tz);
   const lastDay = state.lastStudyDay ?? (state.lastStudyDate ? dayKey(state.lastStudyDate, tz) : null);
 
+  // ── Орбиты и опыт: переход со старых огоньков (по истории ДО этой тренировки) и итоги прошедших недель
+  const prep = prepare({ ...state, studyHistory: state.studyHistory }, today);
+  const levelBefore = levelFromXp(prep.xp).level;
+  const events: OrbitEvent[] = [...prep.events];
+
   // ── Серия: тот же день — без изменений; вчера — +1; раньше или никогда — 1.
   // Если «последний день» позже сегодняшнего (человек улетел на запад), серию не трогаем.
   const prevStreak = state.currentStreak ?? 0;
@@ -167,6 +177,7 @@ export function applySession(
   // ── История дней
   const history = [...(state.studyHistory ?? [])];
   const idx = history.findIndex((d) => d.date === today);
+  const firstToday = idx < 0;
   if (idx >= 0) {
     const d = history[idx];
     history[idx] = { ...d, sessions: d.sessions + 1, cardsStudied: d.cardsStudied + s.cards, timeSpent: d.timeSpent + s.durationSec };
@@ -197,8 +208,24 @@ export function applySession(
     },
   });
 
+  // ── Орбита недели и опыт: тренировка (до дневного потолка) + бонусы сверх потолка
+  const orbit = recordSession(prep.orbit, today, events);
+  const capped = capDaily(sessionXp(s.kind, s.cards, s.correct), state.xpDay, today);
+  const gained =
+    capped.gained +
+    (firstToday ? FIRST_SESSION_BONUS : 0) +
+    (events.includes("orbitClosed") ? ORBIT_BONUS : 0) +
+    newAchievements.reduce((n, id) => n + achievementXp(id), 0);
+  const xp = prep.xp + gained;
+
   return {
     patch: {
+      xp,
+      level: levelFromXp(xp).level,
+      xpDay: capped.xpDay,
+      weekXp: addWeekXp(state.weekXp, prep.currentWeek, gained),
+      orbit,
+      ...(prep.legacyFlames !== undefined ? { legacyFlames: prep.legacyFlames } : {}),
       stats,
       currentStreak: current,
       longestStreak: longest,
@@ -208,7 +235,12 @@ export function applySession(
       achievements: [...achievements, ...newAchievements],
       timezone: tz,
     },
-    result: { streak: { current, longest, extendedToday }, newAchievements, day: today },
+    result: {
+      streak: { current, longest, extendedToday },
+      newAchievements,
+      day: today,
+      progression: view(orbit, xp, gained, levelBefore, today, events),
+    },
   };
 }
 

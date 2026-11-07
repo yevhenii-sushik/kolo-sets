@@ -32,13 +32,30 @@
     "avatarGeneric": "Couldn't upload the photo — try again"
   },
   "easterEgg": "So-called “secret” content is loading…",
-  "streak": {
-    "title": "Day streak",
+  "legacyFlames": {
+    "name": "Flames",
+    "description": "Your daily streak record before orbits: {days}."
+  },
+  "tabs": {
+    "medals": "Medals",
+    "stats": "Stats"
+  },
+  "orbit": {
+    "title": "Weekly orbit",
     "inRow": {
-      "one": "day in a row",
-      "other": "days in a row"
+      "one": "orbit in a row",
+      "other": "orbits in a row"
     },
-    "record": "Best"
+    "record": "Best",
+    "shields": "Shields",
+    "goal": "Goal",
+    "change": "Change",
+    "next": "From Monday: {value}"
+  },
+  "level": {
+    "label": "Level {n}",
+    "toNext": "{into} of {next} XP to the next level",
+    "total": "Total XP"
   },
   "stats": {
     "totalWords": "Words",

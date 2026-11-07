@@ -25,11 +25,15 @@ import { ALL_ACHIEVEMENTS } from '../utils/achievements';
 import {
   flushPendingSessions,
   recheckAchievements,
+  setOrbitGoal,
   submitSession,
+  syncProgress,
+  type Progression,
   type SessionPayload,
   type SessionReply,
 } from '../api/progress';
-import { STREAK_CELEBRATION_EVENT } from '../components/StreakCelebration';
+import { announceProgress } from '../components/progress/ProgressMoments';
+import { localDateKey } from '../utils/progress';
 
 interface DataContextType {
   profile: any | null;
@@ -73,6 +77,10 @@ interface DataContextType {
   reportSession: (payload: SessionPayload) => Promise<void>;
   /** Достижения за наборы и слова — после создания набора, импорта или добавления слов */
   checkAchievements: () => Promise<void>;
+  /** Опыт и орбита недели (docs/specs/02-progression.md); null — сервер ещё не ответил ни разу */
+  progression: Progression | null;
+  /** Цель недели 3–7: первый выбор — сразу, дальше — с понедельника. Ошибку сети пробрасывает */
+  setWeeklyGoal: (goal: number) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -83,19 +91,25 @@ export function useData(): DataContextType {
   return ctx;
 }
 
-function readProfileCache(uid: string): any | null {
+function readCache(key: string): any | null {
   try {
-    return JSON.parse(localStorage.getItem(`profile_cache_${uid}`) ?? 'null');
+    return JSON.parse(localStorage.getItem(key) ?? 'null');
   } catch {
     return null;
   }
 }
 
-function writeProfileCache(uid: string, profile: any) {
+function writeCache(key: string, value: unknown) {
   try {
-    localStorage.setItem(`profile_cache_${uid}`, JSON.stringify(profile));
+    localStorage.setItem(key, JSON.stringify(value));
   } catch {}
 }
+
+const profileCacheKey = (uid: string) => `profile_cache_${uid}`;
+// Шапка показывает орбиту сразу, не дожидаясь сервера
+const progressionCacheKey = (uid: string) => `progression_cache_${uid}`;
+const readProfileCache = (uid: string) => readCache(profileCacheKey(uid));
+const writeProfileCache = (uid: string, profile: any) => writeCache(profileCacheKey(uid), profile);
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
@@ -107,6 +121,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [profileLoading, setProfileLoading] = useState(true);
   const [collectionsLoading, setCollectionsLoading] = useState(true);
   const [pendingUnlocks, setPendingUnlocks] = useState<Achievement[]>([]);
+  const [progression, setProgressionState] = useState<Progression | null>(() =>
+    user?.uid ? readCache(progressionCacheKey(user.uid)) : null
+  );
   // Профиль загружен с сервера (не из кэша) — только тогда можно мигрировать курсы
   const [profileFresh, setProfileFresh] = useState(false);
 
@@ -173,12 +190,23 @@ export function DataProvider({ children }: { children: ReactNode }) {
     if (unlocked.length > 0) setPendingUnlocks(prev => [...prev, ...unlocked]);
   }, []);
 
+  // Празднуем то, что сообщил сервер: орбита замкнута, уровень, починка, щит
+  const applyProgression = useCallback((p: Progression | null | undefined, celebrate: boolean) => {
+    if (!p || !user) return;
+    setProgressionState(p);
+    writeCache(progressionCacheKey(user.uid), p);
+    if (celebrate) announceProgress(p);
+  }, [user]);
+
   const applyReply = useCallback((reply: SessionReply, celebrate: boolean) => {
     showUnlocks(reply.newAchievements);
-    if (celebrate && reply.streak.extendedToday && !reply.duplicate) {
-      window.dispatchEvent(new CustomEvent(STREAK_CELEBRATION_EVENT, { detail: { streak: reply.streak.current } }));
-    }
-  }, [showUnlocks]);
+    // Повтор возвращает старый ответ — его орбита уже устарела
+    if (!reply.duplicate) applyProgression(reply.progression, celebrate);
+  }, [showUnlocks, applyProgression]);
+
+  const setWeeklyGoal = useCallback(async (goal: number) => {
+    applyProgression(await setOrbitGoal(goal), true);
+  }, [applyProgression]);
 
   const reportSession = useCallback(async (payload: SessionPayload) => {
     const reply = await submitSession(payload);
@@ -197,6 +225,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!user?.uid) {
       setProfileState(null);
+      setProgressionState(null);
       setCollections([]);
       setPendingUnlocks([]);
       setProfileLoading(false);
@@ -206,6 +235,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
     const cached = readProfileCache(user.uid);
     setProfileState(cached);
+    setProgressionState(readCache(progressionCacheKey(user.uid)));
     setCollections([]);
     setProfileFresh(false);
     setProfileLoading(!cached);
@@ -298,18 +328,34 @@ export function DataProvider({ children }: { children: ReactNode }) {
     })();
   }, [user, coursesReady, plan, setCollections, patchProfile]);
 
-  // Тренировки, не дошедшие до сервера (не было сети), — отправляем при запуске.
-  // Празднование не показываем: оно было бы про вчерашнюю тренировку
+  // При запуске: тренировки, не дошедшие до сервера (не было сети), — без празднования, оно было бы
+  // про вчерашнюю тренировку; затем итоги прошедших недель (щит сработал, серию можно починить)
   const flushedRef = useRef<string | null>(null);
+  const syncedDayRef = useRef<string | null>(null);
   useEffect(() => {
     if (!user || !coursesReady || flushedRef.current === user.uid) return;
     flushedRef.current = user.uid;
-    flushPendingSessions().then(replies => {
-      if (replies.length === 0) return;
+    syncedDayRef.current = localDateKey(new Date());
+    (async () => {
+      const replies = await flushPendingSessions();
       replies.forEach(r => applyReply(r, false));
-      refreshProfile();
-    });
-  }, [user, coursesReady, applyReply, refreshProfile]);
+      applyProgression(await syncProgress(), true);
+      if (replies.length > 0) refreshProfile();
+    })();
+  }, [user, coursesReady, applyReply, applyProgression, refreshProfile]);
+
+  // Приложение осталось открытым до следующего дня (или недели) — подводим итоги заново
+  useEffect(() => {
+    if (!user || !coursesReady) return;
+    const onVisible = () => {
+      const today = localDateKey(new Date());
+      if (document.visibilityState !== 'visible' || syncedDayRef.current === today) return;
+      syncedDayRef.current = today;
+      syncProgress().then(p => applyProgression(p, true));
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  }, [user, coursesReady, applyProgression]);
 
   // Курсы и папки всегда пишем полным списком: отфильтрованный по курсу стёр бы остальные
   const saveCourses = useCallback(
@@ -434,6 +480,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
         dismissUnlock,
         reportSession,
         checkAchievements,
+        progression,
+        setWeeklyGoal,
       }}
     >
       {children}

@@ -2,6 +2,9 @@
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import type { AchievementType } from "../src/types";
 import { applySession, checkPlausibility, collectionAchievements, type ProgressState, type SessionInput } from "./core/session";
+import { applyGoal, syncProgress } from "./core/progression";
+import type { OrbitState } from "./core/orbit";
+import { dayKey, safeTimeZone } from "./core/time";
 import { db } from "./admin";
 
 export interface Reply {
@@ -13,6 +16,28 @@ const RATE_WINDOW_MS = 60_000;
 const RATE_MAX = 6;
 
 const toDate = (v: unknown): Date | null => (v instanceof Timestamp ? v.toDate() : v instanceof Date ? v : null);
+const num = (v: unknown) => (typeof v === "number" && Number.isFinite(v) ? v : undefined);
+// { day | week, amount } — опыт за день или неделю
+const tally = <K extends "day" | "week">(v: unknown, key: K) => {
+  const o = v as Record<string, unknown> | null;
+  return o && typeof o === "object" && typeof o[key] === "string" && num(o.amount) !== undefined
+    ? ({ [key]: o[key], amount: o.amount } as Record<K, string> & { amount: number })
+    : undefined;
+};
+
+// Орбиту пишет только сервер; на чужую форму не опираемся — считаем, что её нет
+function orbitOf(v: unknown): OrbitState | undefined {
+  if (!v || typeof v !== "object") return undefined;
+  const o = v as Record<string, unknown>;
+  const ok =
+    typeof o.week === "string" &&
+    Array.isArray(o.days) &&
+    o.days.every((d) => typeof d === "string") &&
+    typeof o.closed === "boolean" &&
+    typeof o.goalSet === "boolean" &&
+    [o.goal, o.streak, o.longest, o.shields].every((n) => num(n) !== undefined);
+  return ok ? (o as unknown as OrbitState) : undefined;
+}
 
 // Поля профиля, которые считает сервер, — в виде, понятном ядру
 function progressState(data: FirebaseFirestore.DocumentData | undefined): ProgressState {
@@ -24,8 +49,25 @@ function progressState(data: FirebaseFirestore.DocumentData | undefined): Progre
     lastStudyDay: typeof data?.lastStudyDay === "string" ? data.lastStudyDay : null,
     studyHistory: Array.isArray(data?.studyHistory) ? data.studyHistory : [],
     achievements: Array.isArray(data?.achievements) ? data.achievements : [],
+    xp: num(data?.xp),
+    level: num(data?.level),
+    xpDay: tally(data?.xpDay, "day"),
+    weekXp: tally(data?.weekXp, "week"),
+    orbit: orbitOf(data?.orbit),
+    legacyFlames: num(data?.legacyFlames),
   };
 }
+
+// Поля сервера заменяются целиком: при merge Firestore слил бы вложенные объекты, и, например,
+// закрытая починка осталась бы в orbit
+const writeProfile = (tx: FirebaseFirestore.Transaction, ref: FirebaseFirestore.DocumentReference, patch: object) =>
+  tx.set(ref, patch, { mergeFields: Object.keys(patch) });
+
+// Часовой пояс: из запроса, иначе последний известный из профиля
+const todayFor = (requested: unknown, data: FirebaseFirestore.DocumentData | undefined, now: Date) => {
+  const tz = safeTimeZone(requested ?? data?.timezone);
+  return { tz, today: dayKey(now, tz) };
+};
 
 const cardCount = (data: FirebaseFirestore.DocumentData | undefined) => (Array.isArray(data?.cards) ? data.cards.length : 0);
 
@@ -64,7 +106,7 @@ export async function recordSession(uid: string, s: SessionInput, now = new Date
     }
 
     const { patch, result } = applySession(progressState(profile.data()), s, info, now);
-    tx.set(userRef, patch, { merge: true });
+    writeProfile(tx, userRef, patch);
     tx.set(sessionRef, {
       kind: s.kind,
       collectionIds: s.collectionIds,
@@ -98,4 +140,33 @@ export async function recheckCollectionAchievements(uid: string): Promise<Reply>
     await userRef.update({ achievements: FieldValue.arrayUnion(...newAchievements) });
   }
   return { status: 200, body: { newAchievements } };
+}
+
+// POST /api/progress-sync — при открытии приложения: итоги прошедших недель и однократный переход со старых огоньков
+export async function syncUserProgress(uid: string, timezone: unknown, now = new Date()): Promise<Reply> {
+  const store = db();
+  const userRef = store.doc(`users/${uid}`);
+  return store.runTransaction(async (tx) => {
+    const profile = await tx.get(userRef);
+    if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
+    const { tz, today } = todayFor(timezone, profile.data(), now);
+    const { patch, result } = syncProgress(progressState(profile.data()), today);
+    // Ничего не изменилось — не пишем: синхронизация идёт при каждом открытии
+    if (patch) writeProfile(tx, userRef, { ...patch, timezone: tz });
+    return { status: 200, body: { progression: result } };
+  });
+}
+
+// POST /api/orbit-goal — цель недели 3–7
+export async function setOrbitGoal(uid: string, goal: number, timezone: unknown, now = new Date()): Promise<Reply> {
+  const store = db();
+  const userRef = store.doc(`users/${uid}`);
+  return store.runTransaction(async (tx) => {
+    const profile = await tx.get(userRef);
+    if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
+    const { tz, today } = todayFor(timezone, profile.data(), now);
+    const { patch, result } = applyGoal(progressState(profile.data()), goal, today);
+    writeProfile(tx, userRef, { ...patch, timezone: tz });
+    return { status: 200, body: { progression: result } };
+  });
 }

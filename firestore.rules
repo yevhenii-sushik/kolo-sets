@@ -13,7 +13,13 @@ service cloud.firestore {
     // Прогресс начисляет сервер (docs/specs/00-server.md): эти поля профиля клиент менять не может
     function serverOwnedFields() {
       return ['stats', 'currentStreak', 'longestStreak', 'lastStudyDate', 'lastStudyDay',
-              'studyHistory', 'achievements', 'timezone'];
+              'studyHistory', 'achievements', 'timezone'].concat(progressionFields());
+    }
+
+    // Опыт, орбиты, капсулы и предметы (docs/specs/02-progression.md) — только сервер, даже при создании
+    function progressionFields() {
+      return ['xp', 'level', 'xpDay', 'weekXp', 'orbit', 'legacyFlames',
+              'capsules', 'pity', 'dust', 'inventory', 'equipped', 'medals'];
     }
 
     function zeroOrAbsent(m, key) {
@@ -36,6 +42,7 @@ service cloud.firestore {
         && (!('studyHistory' in d) || d.studyHistory.size() == 0)
         && (!('lastStudyDate' in d) || d.lastStudyDate == null)
         && !('lastStudyDay' in d) && !('timezone' in d)
+        && !d.keys().hasAny(progressionFields())
         && (!('stats' in d) || statsAreZero(d.stats));
     }
 

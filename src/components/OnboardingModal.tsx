@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Flame, Lightbulb } from "lucide-react";
+import { ArrowRight, Lightbulb } from "lucide-react";
 import { useI18n } from "../contexts/I18nContext";
 import { getLanguageInfo } from "../locales/languages";
 import { plural } from "../utils/plural";
 import { formatDuration } from "../utils/progress";
 import { Button, Heading, Logo, Text, cx } from "../ui";
+import { OrbitRing } from "./progress/OrbitRing";
 
 export const ONBOARDING_STORAGE_KEY = "kolo_onboarding_v1";
 
@@ -124,20 +125,17 @@ function QuizIll() {
 
 function ProgressIll() {
   const { t, locale } = useStrings();
-  const days = (n: number) => plural(locale, n, t.shell.streak.days);
   const list = t.profile.achievementsList;
   return (
     <div className="grid h-full place-items-center px-6">
       <div className="grid w-full max-w-60 gap-2">
         <motion.div {...pop(0)} className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-3 py-2.5 shadow-sm">
-          <span className="flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-sm font-semibold text-on-accent">
-            <Flame size={13} className="fill-current" />7
-          </span>
+          <OrbitRing goal={3} done={2} closed={false} size={36}>
+            <span className="font-display text-xs font-extrabold text-fg">4</span>
+          </OrbitRing>
           <div className="min-w-0">
-            <p className="truncate text-xs font-semibold text-fg">{days(7)}</p>
-            <p className="truncate text-2xs text-muted">
-              {t.profile.streak.record}: {days(14)}
-            </p>
+            <p className="truncate text-xs font-semibold text-fg">{plural(locale, 4, t.orbit.inRow)}</p>
+            <p className="truncate text-2xs text-muted">{t.orbit.daysOf.replace("{done}", "2").replace("{goal}", "3")}</p>
           </div>
         </motion.div>
         <div className="grid grid-cols-3 gap-1.5">

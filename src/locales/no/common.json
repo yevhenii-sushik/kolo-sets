@@ -24,21 +24,10 @@
     "search": "Søk",
     "searchHint": "Søk i kort (⌘K)",
     "streak": {
-      "label": "Dagsrekke",
       "days": {
         "one": "{n} dag",
         "other": "{n} dager"
-      },
-      "best": "Rekord",
-      "active": "Du har øvd i dag – rekken er trygg. Vi ses i morgen!",
-      "inactive": "Øv i dag for å holde rekken i gang.",
-      "more": "Mer i profilen",
-      "extended": "Rekken er forlenget",
-      "tier30": "Utrolig – du er en legende.",
-      "tier14": "Du er i storform. Fortsett!",
-      "tier7": "En flott uke. Bare fortsett!",
-      "tier1": "Fortsett sånn!",
-      "tap": "Trykk for å lukke"
+      }
     },
     "verify": {
       "text": "Bekreft e-posten din for å sikre kontoen.",
@@ -67,6 +56,72 @@
       "text": "Åpne fra Hjem-skjermen, uten adressefelt",
       "ios": "Trykk på {share} og velg {add} «Legg til på Hjem-skjerm»",
       "install": "Installer"
+    }
+  },
+  "orbit": {
+    "label": "Ukens bane",
+    "inRow": {
+      "one": "{n} bane på rad",
+      "other": "{n} baner på rad"
+    },
+    "daysOf": "{done} av {goal} dager",
+    "best": "Rekord",
+    "shields": "Skjold",
+    "shieldsHint": "Et skjold lukker uka for deg hvis du ikke rekker det. Du får ett for hver fjerde bane på rad.",
+    "status": {
+      "closed": "Banen er lukket! Den neste starter på mandag.",
+      "onTrack": {
+        "one": "{n} dag til, så er banen lukket.",
+        "other": "{n} dager til, så er banen lukket."
+      },
+      "atRisk": "For å lukke banen må du øve hver dag fram til søndag.",
+      "lostShield": "Denne uka rekker du ikke lenger – et skjold redder rekken din.",
+      "lostRepair": "Denne uka rekker du ikke lenger. Tidlig neste uke kan du reparere rekken.",
+      "lostNew": "Denne uka rekker du ikke lenger – neste uke starter en ny rekke."
+    },
+    "repair": "Reparasjon av rekken: {done} av {total} økter innen onsdag kveld",
+    "more": "Mer i profilen",
+    "today": "I dag",
+    "goal": {
+      "title": "Ukerytmen din",
+      "intro": "Daglige flammer i Kolo er byttet ut med ukentlige baner. Velg hvor mange dager i uka du vil øve: når du når det, lukkes banen og rekken din vokser. En glemt dag ødelegger ingenting.",
+      "migrated": {
+        "one": "Vi har regnet om historikken din: rekken er {n} bane.",
+        "other": "Vi har regnet om historikken din: rekken er {n} baner."
+      },
+      "legacy": "Flammerekorden din – {days} – er bevart som en medalje i profilen.",
+      "perWeek": {
+        "one": "{n} dag i uka",
+        "other": "{n} dager i uka"
+      },
+      "levels": {
+        "3": "Rolig",
+        "4": "Stødig",
+        "5": "Seriøst",
+        "6": "Nesten hver dag",
+        "7": "Hver dag"
+      },
+      "hint": "Du kan endre målet i profilen – et nytt mål gjelder fra mandag.",
+      "nextWeek": "Det nye målet gjelder fra mandag.",
+      "start": "Start",
+      "save": "Lagre",
+      "error": "Kunne ikke lagre målet. Sjekk nettet og prøv igjen."
+    },
+    "moments": {
+      "orbitTitle": "Banen er lukket!",
+      "xp": "+{n} XP",
+      "shieldEarned": "Og et skjold i reserve: det lukker uka for deg hvis du ikke rekker det.",
+      "levelTitle": "Nytt nivå!",
+      "level": "Nivå {n}",
+      "repairedTitle": "Rekken er reparert",
+      "shieldUsedTitle": "Et skjold reddet rekken",
+      "shieldUsedText": "Forrige ukes bane ble ikke lukket, men et skjold dekket den – rekken er hel.",
+      "repairTitle": "Du kan reparere rekken",
+      "repairText": {
+        "one": "Forrige uke glapp. Fullfør {n} økt innen onsdag kveld, så er rekken tilbake.",
+        "other": "Forrige uke glapp. Fullfør {n} økter innen onsdag kveld, så er rekken tilbake."
+      },
+      "tap": "Trykk for å lukke"
     }
   },
   "onboarding": {
@@ -98,8 +153,8 @@
       },
       {
         "title": "Følg fremgangen",
-        "text": "Dagsrekke, prestasjoner og statistikk. Kom tilbake hver dag – Kolo viser bare ordene som skal repeteres.",
-        "tip": "I profilen finner du aktivitetskalenderen og alle prestasjonene."
+        "text": "XP og nivåer, ukens bane og medaljer. Velg hvor mange dager i uka du vil øve, og lukk banene dine – Kolo viser bare ordene som skal repeteres.",
+        "tip": "I profilen finner du nivå, ukens bane, medaljer og statistikk."
       },
       {
         "title": "Alt klart!",
@@ -141,7 +196,7 @@
     "start": "Kom i gang",
     "addButton": "Legg til kurs",
     "title": "Kurs",
-    "subtitle": "Hvert språk har egne sett og mapper. Dagsrekke og prestasjoner er felles.",
+    "subtitle": "Hvert språk har egne sett og mapper. Nivå, bane og medaljer er felles.",
     "current": "Gjeldende",
     "switchTo": "Bytt til",
     "remove": "Slett kurs",

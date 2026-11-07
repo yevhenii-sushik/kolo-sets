@@ -24,21 +24,10 @@
     "search": "Search",
     "searchHint": "Search cards (⌘K)",
     "streak": {
-      "label": "Day streak",
       "days": {
         "one": "{n} day",
         "other": "{n} days"
-      },
-      "best": "Best",
-      "active": "You've practised today — your streak is safe. See you tomorrow!",
-      "inactive": "Practise today to keep your streak going.",
-      "more": "More in your profile",
-      "extended": "Streak extended",
-      "tier30": "Incredible — you're a legend.",
-      "tier14": "You're on fire. Keep going!",
-      "tier7": "A great week. Keep it up!",
-      "tier1": "Keep it going!",
-      "tap": "Tap to close"
+      }
     },
     "verify": {
       "text": "Confirm your email to secure your account.",
@@ -67,6 +56,72 @@
       "text": "Open it from your home screen, without the address bar",
       "ios": "Tap {share} and choose {add} “Add to Home Screen”",
       "install": "Install"
+    }
+  },
+  "orbit": {
+    "label": "Weekly orbit",
+    "inRow": {
+      "one": "{n} orbit in a row",
+      "other": "{n} orbits in a row"
+    },
+    "daysOf": "{done} of {goal} days",
+    "best": "Best",
+    "shields": "Shields",
+    "shieldsHint": "A shield closes a week for you if you fall short. You earn one for every 4 orbits in a row.",
+    "status": {
+      "closed": "Orbit closed! The next one starts on Monday.",
+      "onTrack": {
+        "one": "{n} more day and the orbit is closed.",
+        "other": "{n} more days and the orbit is closed."
+      },
+      "atRisk": "To close the orbit, practise every day until Sunday.",
+      "lostShield": "This week can't be closed any more — a shield will save your streak.",
+      "lostRepair": "This week can't be closed any more. Early next week you'll be able to repair your streak.",
+      "lostNew": "This week can't be closed any more — a new streak starts next week."
+    },
+    "repair": "Streak repair: {done} of {total} sessions by the end of Wednesday",
+    "more": "More in your profile",
+    "today": "Today",
+    "goal": {
+      "title": "Your weekly rhythm",
+      "intro": "Daily flames in Kolo are now weekly orbits. Choose how many days a week you want to practise: reach that and the orbit closes, and your orbit streak grows. Missing a day doesn't break anything.",
+      "migrated": {
+        "one": "We've recalculated your history: your streak is {n} orbit.",
+        "other": "We've recalculated your history: your streak is {n} orbits."
+      },
+      "legacy": "Your flame record — {days} — is kept as a medal in your profile.",
+      "perWeek": {
+        "one": "{n} day a week",
+        "other": "{n} days a week"
+      },
+      "levels": {
+        "3": "Relaxed",
+        "4": "Steady",
+        "5": "Serious",
+        "6": "Almost daily",
+        "7": "Every day"
+      },
+      "hint": "You can change it in your profile — a new goal starts on Monday.",
+      "nextWeek": "The new goal starts on Monday.",
+      "start": "Start",
+      "save": "Save",
+      "error": "Couldn't save your goal. Check your connection and try again."
+    },
+    "moments": {
+      "orbitTitle": "Orbit closed!",
+      "xp": "+{n} XP",
+      "shieldEarned": "Plus a shield in reserve: it closes a week for you if you fall short.",
+      "levelTitle": "Level up!",
+      "level": "Level {n}",
+      "repairedTitle": "Streak repaired",
+      "shieldUsedTitle": "A shield saved your streak",
+      "shieldUsedText": "Last week's orbit wasn't closed, but a shield covered it — your streak is intact.",
+      "repairTitle": "You can repair your streak",
+      "repairText": {
+        "one": "Last week fell through. Complete {n} session by the end of Wednesday and your streak comes back.",
+        "other": "Last week fell through. Complete {n} sessions by the end of Wednesday and your streak comes back."
+      },
+      "tap": "Tap to close"
     }
   },
   "onboarding": {
@@ -98,8 +153,8 @@
       },
       {
         "title": "Watch your progress",
-        "text": "Day streaks, achievements and stats. Come back every day — Kolo shows only the words that are due.",
-        "tip": "Your profile has an activity calendar and every achievement."
+        "text": "XP and levels, a weekly orbit and medals. Choose how many days a week to practise and close your orbits — Kolo shows only the words that are due.",
+        "tip": "Your profile has your level, weekly orbit, medals and stats."
       },
       {
         "title": "All set!",
@@ -141,7 +196,7 @@
     "start": "Start learning",
     "addButton": "Add course",
     "title": "Courses",
-    "subtitle": "Each language has its own sets and folders. Your streak and achievements are shared.",
+    "subtitle": "Each language has its own sets and folders. Your level, orbit and medals are shared.",
     "current": "Current",
     "switchTo": "Switch to",
     "remove": "Delete course",

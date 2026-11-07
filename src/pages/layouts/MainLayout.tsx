@@ -3,8 +3,8 @@ import { IconButton, Logo, cx } from "../../ui";
 import { APP_LANGUAGES } from "../../locales/languages";
 import BottomNav from "../../components/ui/BottomNav";
 import { Outlet, Link, Navigate } from "react-router-dom";
-import { Menu, Languages, Flame, Trophy, ChevronRight, Search } from "lucide-react";
-import { useEffect, useState, useMemo } from "react";
+import { Menu, Languages, ChevronRight, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
 import { getLanguageInfo } from "../../locales/languages";
@@ -15,17 +15,22 @@ import VerifyEmailBanner from "../../components/VerifyEmailBanner";
 import InstallPrompt from "../../components/InstallPrompt";
 import SearchModal from "../../components/SearchModal";
 import CourseSwitcher from "../../components/courses/CourseSwitcher";
+import { OrbitRing } from "../../components/progress/OrbitRing";
+import { WeekCard } from "../../components/progress/WeekOrbit";
+import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
 
 const SIDEBAR_KEY = "sidebar-open";
 
 export default function MainLayout() {
   const { t, language, setLanguage } = useI18n();
   const sh = t.shell;
-  const days = (n: number) => plural(getLanguageInfo(language).htmlLang, n, sh.streak.days);
-  const { profile, courses, coursesReady } = useData();
+  const locale = getLanguageInfo(language).htmlLang;
+  const { progression, courses, coursesReady } = useData();
+  const orbit = progression?.orbit;
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
-  const [showStreakCard, setShowStreakCard] = useState(false);
+  const [showWeekCard, setShowWeekCard] = useState(false);
+  const [goalDismissed, setGoalDismissed] = useState(false);
 
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -61,21 +66,9 @@ export default function MainLayout() {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
-  const streakData = useMemo(() => {
-    if (!profile) return { current: 0, isActive: false, longest: 0 };
-    const lastDate =
-      typeof profile.lastStudyDate?.toDate === 'function'
-        ? profile.lastStudyDate.toDate()
-        : profile.lastStudyDate
-        ? new Date(profile.lastStudyDate)
-        : null;
-    const isActive = !!lastDate && lastDate.toDateString() === new Date().toDateString();
-    return {
-      current: profile.currentStreak ?? 0,
-      isActive,
-      longest: profile.longestStreak ?? 0,
-    };
-  }, [profile]);
+  // Первый вход после обновления (и для новичков — после знакомства): выбрать цель недели
+  const needsGoal =
+    !!progression && !progression.orbit.goalSet && !goalDismissed && !showOnboarding && !!localStorage.getItem(ONBOARDING_STORAGE_KEY);
 
   // Без курса приложение начинается с выбора языка
   if (coursesReady && courses.length === 0) return <Navigate to="/start" replace />;
@@ -155,71 +148,39 @@ export default function MainLayout() {
               </kbd>
             </button>
 
-            {/* STREAK WIDGET */}
+            {/* ОРБИТА НЕДЕЛИ (docs/specs/02-progression.md) */}
             <div className="relative">
               <button
                 type="button"
-                onClick={() => setShowStreakCard(!showStreakCard)}
-                aria-expanded={showStreakCard}
-                aria-label={`${sh.streak.label}: ${days(streakData.current)}`}
+                onClick={() => setShowWeekCard(!showWeekCard)}
+                aria-expanded={showWeekCard}
+                aria-label={orbit ? `${t.orbit.label}: ${plural(locale, orbit.streak, t.orbit.inRow)}` : t.orbit.label}
                 className={cx(
-                  "flex h-9 items-center gap-1.5 rounded-full px-3 text-sm font-semibold tabular-nums transition-colors",
-                  streakData.isActive ? "bg-accent-soft text-accent-ink" : "bg-inset text-muted hover:text-fg",
+                  "flex h-9 items-center gap-1.5 rounded-full px-2.5 text-sm font-semibold tabular-nums transition-colors",
+                  orbit?.closed ? "bg-accent-soft text-accent-ink" : "bg-inset text-muted hover:text-fg",
                 )}
               >
-                <Flame size={17} className={streakData.isActive ? "fill-accent text-accent" : ""} />
-                {streakData.current}
+                <OrbitRing goal={orbit?.goal ?? 3} done={orbit?.days.length ?? 0} closed={orbit?.closed ?? false} size={22} />
+                {orbit && <span className={orbit.streak > 0 ? "text-fg" : undefined}>{orbit.streak}</span>}
               </button>
 
-              {/* STREAK DROP CARD */}
               <AnimatePresence>
-                {showStreakCard && (
+                {showWeekCard && progression && (
                   <>
-                    <div
-                      className="fixed inset-0 z-40"
-                      onClick={() => setShowStreakCard(false)}
-                    />
+                    <div className="fixed inset-0 z-40" onClick={() => setShowWeekCard(false)} />
                     <motion.div
                       initial={{ opacity: 0, y: 8, scale: 0.97 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 8, scale: 0.97 }}
-                      className="absolute right-0 z-50 mt-3 grid w-72 gap-4 rounded-3xl border border-line bg-surface p-5 shadow-xl"
+                      className="absolute right-0 z-50 mt-3 grid w-80 max-w-[calc(100vw-2rem)] gap-4 rounded-3xl border border-line bg-surface p-5 shadow-xl"
                     >
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={cx(
-                            "grid h-11 w-11 shrink-0 place-items-center rounded-2xl",
-                            streakData.isActive ? "bg-accent-soft text-accent" : "bg-inset text-faint",
-                          )}
-                        >
-                          <Flame size={22} className={streakData.isActive ? "fill-accent" : ""} />
-                        </span>
-                        <div>
-                          <p className="text-sm text-muted">{sh.streak.label}</p>
-                          <p className="font-display text-xl font-extrabold text-fg">{days(streakData.current)}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="flex items-center gap-2 text-muted">
-                          <Trophy size={15} />
-                          {sh.streak.best}
-                        </span>
-                        <span className="font-semibold text-fg">{days(streakData.longest)}</span>
-                      </div>
-                      <p
-                        className={cx(
-                          "rounded-2xl px-3.5 py-3 text-sm leading-snug",
-                          streakData.isActive ? "bg-success-soft text-success" : "bg-accent-soft text-accent-ink",
-                        )}
-                      >
-                        {streakData.isActive ? sh.streak.active : sh.streak.inactive}
-                      </p>
+                      <WeekCard progression={progression} />
                       <Link
                         to="/profile"
-                        onClick={() => setShowStreakCard(false)}
+                        onClick={() => setShowWeekCard(false)}
                         className="flex items-center justify-between rounded-2xl bg-inset px-3.5 py-3 text-sm font-medium text-fg transition-colors hover:bg-track"
                       >
-                        {sh.streak.more}
+                        {t.orbit.more}
                         <ChevronRight size={16} />
                       </Link>
                     </motion.div>
@@ -307,6 +268,8 @@ export default function MainLayout() {
         isOpen={showOnboarding}
         onClose={() => setShowOnboarding(false)}
       />
+
+      <OrbitGoalModal open={needsGoal} onClose={() => setGoalDismissed(true)} />
 
       <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
       <InstallPrompt />

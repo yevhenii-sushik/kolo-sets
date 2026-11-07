@@ -86,7 +86,7 @@ Kolo должен давать повод возвращаться и чем х�
 ### Как сервер подводит итоги недель
 
 Итоги подводятся «лениво»: при любой тренировке и при открытии приложения
-(`POST /api/progress/sync`) сервер закрывает все прошедшие недели с последнего подведения:
+(`POST /api/progress-sync`) сервер закрывает все прошедшие недели с последнего подведения:
 замкнута → серия +1 (и щит за каждую 4-ю); не замкнута → щит, иначе разрыв и окно починки.
 Так итоги верны, даже если человек не заходил несколько недель.
 
@@ -204,13 +204,13 @@ xp: number; level: number;
 xpDay: { day: string; amount: number };            // дневной потолок
 weekXp: { week: string; amount: number };          // для лиг
 orbit: {
-  goal: number; nextGoal?: number;                 // 3–7; nextGoal — со следующего понедельника
-  week: string; days: string[];                    // понедельник текущей недели, засчитанные дни
+  goal: number; goalSet: boolean; nextGoal?: number; // 3–7; goalSet — человек уже выбрал; nextGoal — со следующего понедельника
+  week: string; days: string[]; closed: boolean;   // понедельник текущей недели (итоги подведены до неё), засчитанные дни
   streak: number; longest: number; shields: number;
-  finalizedThrough: string;                        // до какой недели подведены итоги
-  repair?: { failedWeek: string; until: string; sessions: number };
+  repair?: { failedWeek: string; until: string; sessions: number; streakBefore: number };
   lastRepairDay?: string;
 };
+legacyFlames?: number;                              // рекорд старых огоньков — памятная медаль
 capsules: number; pity: number; dust: number;
 inventory: Record<string, { n: number; at: Timestamp }>;
 equipped: { satellite?: string; ring?: string; title?: string; background?: string; showcase: string[] };
@@ -225,10 +225,10 @@ medals: string[];                                   // памятные и за 
 | Адрес | Что делает |
 |-------|------------|
 | `POST /api/session` | как на этапе 0 + опыт, день недели, итоги недель, капсулы; в ответе — что изменилось |
-| `POST /api/progress/sync` | при открытии приложения: подвести итоги прошедших недель, однократный переход со старых огоньков |
-| `POST /api/orbit/goal` | цель недели (первый раз — сразу, дальше — со следующего понедельника) |
-| `POST /api/capsules/open` | открыть капсулу → предмет или пыль |
-| `POST /api/dust/spend` | щит или недостающий предмет коллекции |
+| `POST /api/progress-sync` | при открытии приложения: подвести итоги прошедших недель, однократный переход со старых огоньков |
+| `POST /api/orbit-goal` | цель недели (первый раз — сразу, дальше — со следующего понедельника) |
+| `POST /api/capsules-open` | открыть капсулу → предмет или пыль |
+| `POST /api/dust-spend` | щит или недостающий предмет коллекции |
 | `POST /api/equip` | надеть предмет, выбрать витрину (только из своего инвентаря) |
 
 ## Что ещё учесть

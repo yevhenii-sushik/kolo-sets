@@ -32,13 +32,30 @@
     "avatarGeneric": "Kunne ikke laste opp bildet – prøv igjen"
   },
   "easterEgg": "Såkalt «hemmelig» innhold lastes…",
-  "streak": {
-    "title": "Dagsrekke",
+  "legacyFlames": {
+    "name": "Flammer",
+    "description": "Rekorden for daglig rekke før banene: {days}."
+  },
+  "tabs": {
+    "medals": "Medaljer",
+    "stats": "Statistikk"
+  },
+  "orbit": {
+    "title": "Ukens bane",
     "inRow": {
-      "one": "dag på rad",
-      "other": "dager på rad"
+      "one": "bane på rad",
+      "other": "baner på rad"
     },
-    "record": "Rekord"
+    "record": "Rekord",
+    "shields": "Skjold",
+    "goal": "Mål",
+    "change": "Endre",
+    "next": "Fra mandag: {value}"
+  },
+  "level": {
+    "label": "Nivå {n}",
+    "toNext": "{into} av {next} XP til neste nivå",
+    "total": "XP totalt"
   },
   "stats": {
     "totalWords": "Ord",

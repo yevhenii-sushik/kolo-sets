@@ -9,7 +9,7 @@ import { isDueCard } from "./utils/storage";
 import { getReminderSettings, scheduleReminder, cancelReminder, registerDueCountGetter } from "./utils/notifications";
 
 import AchievementUnlockBanner from "./components/AchievementUnlockBanner";
-import { StreakCelebrationHost } from "./components/StreakCelebration";
+import { ProgressMomentsHost } from "./components/progress/ProgressMoments";
 import CookieConsentBanner from "./components/legal/CookieConsentBanner";
 
 // Layouts (небольшие — грузим сразу)
@@ -86,7 +86,7 @@ function AppContent() {
     <ReminderScheduler />
     <Suspense fallback={null}>
     <AchievementUnlockBanner />
-    <StreakCelebrationHost />
+    <ProgressMomentsHost />
     <CookieConsentBanner />
     <Routes>
       {/* 1. Группа публичных маршрутов */}

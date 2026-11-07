@@ -4,6 +4,10 @@ import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { Timestamp } from "firebase-admin/firestore";
 import sessionFn from "../netlify/functions/session";
 import achievementsFn from "../netlify/functions/achievements";
+import syncFn from "../netlify/functions/progress-sync";
+import goalFn from "../netlify/functions/orbit-goal";
+import { addDays, dayKey } from "./core/time";
+import { weekOf } from "./core/orbit";
 import { adminAuth, db } from "./admin";
 import { AchievementType } from "../src/types";
 
@@ -117,5 +121,57 @@ describe("POST /api/achievements", () => {
     expect(first.newAchievements).not.toContain(AchievementType.NIGHT_OWL);
     const second = await (await call(achievementsFn, {})).json();
     expect(second.newAchievements).toEqual([]);
+  });
+});
+
+describe("опыт и орбиты", () => {
+  const today = () => dayKey(new Date(), "Europe/Oslo");
+  const profile = async () => (await db().doc(`users/${UID}`).get()).data()!;
+
+  it("тренировка начисляет опыт и засчитывает день недели", async () => {
+    const body = await (await call(sessionFn, session())).json();
+    expect(body.progression.orbit).toMatchObject({ week: weekOf(today()), days: [today()], goalSet: false });
+    expect(body.progression.xp.gained).toBeGreaterThan(5);
+    const p = await profile();
+    expect(p.xp).toBe(body.progression.xp.total);
+    expect(p.orbit.days).toEqual([today()]);
+    expect(p.xpDay).toEqual({ day: today(), amount: 5 });
+  });
+
+  it("синхронизация переводит старый профиль один раз и потом ничего не пишет", async () => {
+    // Две прошлые недели по три дня и рекорд старых огоньков 12
+    const week = weekOf(today());
+    const days = [-14, -13, -12, -7, -6, -5].map((n) => addDays(week, n));
+    await db()
+      .doc(`users/${UID}`)
+      .update({ longestStreak: 12, studyHistory: days.map((date) => ({ date, sessions: 1, cardsStudied: 20, timeSpent: 60 })) });
+
+    const res = await call(syncFn, { timezone: "Europe/Oslo" });
+    expect(res.status).toBe(200);
+    const { progression } = await res.json();
+    expect(progression.orbit).toMatchObject({ streak: 2, longest: 2, goalSet: false, week });
+    expect(progression.xp).toMatchObject({ total: 120, levelUp: false });
+    const first = await db().doc(`users/${UID}`).get();
+    expect(first.data()!.legacyFlames).toBe(12);
+
+    await call(syncFn, { timezone: "Europe/Oslo" });
+    const second = await db().doc(`users/${UID}`).get();
+    expect(second.updateTime?.toMillis()).toBe(first.updateTime?.toMillis());
+    expect(second.data()!.xp).toBe(120);
+  });
+
+  it("цель недели: проверка, первый выбор сразу, следующий — с понедельника", async () => {
+    expect((await call(goalFn, { goal: 2 })).status).toBe(400);
+    expect((await call(goalFn, { goal: "5" })).status).toBe(400);
+    expect((await call(goalFn, { goal: 5 }, "")).status).toBe(401);
+
+    const first = await (await call(goalFn, { goal: 5, timezone: "Europe/Oslo" })).json();
+    expect(first.progression.orbit).toMatchObject({ goal: 5, goalSet: true });
+    const second = await (await call(goalFn, { goal: 4, timezone: "Europe/Oslo" })).json();
+    expect(second.progression.orbit).toMatchObject({ goal: 5, nextGoal: 4 });
+    expect((await profile()).orbit).toMatchObject({ goal: 5, nextGoal: 4, goalSet: true });
+    // Вернуть прежнюю цель — поле nextGoal исчезает из базы, а не остаётся от прошлого раза
+    await call(goalFn, { goal: 5, timezone: "Europe/Oslo" });
+    expect((await profile()).orbit).not.toHaveProperty("nextGoal");
   });
 });
