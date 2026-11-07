@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Bell, Check, Monitor, Moon, Sun } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { getThemePref, setTheme as saveTheme, getDailyGoal, setDailyGoal } from "../../utils/storage";
@@ -16,16 +17,18 @@ import { APP_LANGUAGES, getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { Alert, Button, Input, Select, Switch } from "../../ui";
 import { OptionButton, PageHeader, Section, SettingRow } from "../../components/other/PageSection";
+import { ONBOARDING_STORAGE_KEY } from "../../components/OnboardingModal";
 
 type Theme = "light" | "dark" | "system";
 
 const GOAL_PRESETS = [5, 10, 15, 20, 30, 50];
 const pad = (n: number) => String(n).padStart(2, "0");
 
-// Настройки — только предпочтения: тема, язык, цель, напоминание, звук.
+// Настройки — предпочтения: тема, язык, цель, напоминание, звук; плюс повтор знакомства с приложением.
 // Резервная копия и удаление аккаунта — на странице «Данные и аккаунт».
 export default function SettingsPage() {
   const { t, language, setLanguage } = useI18n();
+  const navigate = useNavigate();
   const s = t.settings;
   const locale = getLanguageInfo(language).htmlLang;
 
@@ -205,6 +208,23 @@ export default function SettingsPage() {
           description={s.sound.effectsDesc}
           control={<Switch checked={soundEnabled} onChange={handleSoundToggle} label={s.sound.effects} />}
         />
+      </Section>
+
+      {/* Тур открывается на главной: сбрасываем отметку «знакомство пройдено» и уходим туда */}
+      <Section title={s.tour.title}>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <p className="min-w-0 flex-1 basis-60 text-sm text-muted">{s.tour.hint}</p>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => {
+              localStorage.removeItem(ONBOARDING_STORAGE_KEY);
+              navigate("/");
+            }}
+          >
+            {s.tour.button}
+          </Button>
+        </div>
       </Section>
     </div>
   );

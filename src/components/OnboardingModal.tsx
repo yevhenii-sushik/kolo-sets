@@ -9,7 +9,6 @@ import { formatDuration } from "../utils/progress";
 import { Button, Heading, Logo, Text, cx } from "../ui";
 
 export const ONBOARDING_STORAGE_KEY = "kolo_onboarding_v1";
-export const ONBOARDING_RESTART_EVENT = "kolo:restart-onboarding";
 
 // ── Иллюстрации шагов: маленькие копии настоящих экранов, тексты — из тех же переводов ──
 

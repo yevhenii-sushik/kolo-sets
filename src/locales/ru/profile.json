@@ -73,9 +73,6 @@
   "showAll": "Показать все ({n})",
   "showLess": "Свернуть",
   "unlocked": "Получено",
-  "settingsTitle": "Настройки",
-  "restartTour": "Перезапустить знакомство",
-  "restartTourText": "Снова посмотреть знакомство с приложением",
   "achievementsList": {
     "first_collection": {
       "name": "Первый шаг",

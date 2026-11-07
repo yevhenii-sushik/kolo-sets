@@ -67,9 +67,6 @@
   "showAll": "Show all ({n})",
   "showLess": "Show less",
   "unlocked": "Unlocked",
-  "settingsTitle": "Settings",
-  "restartTour": "Replay the introduction",
-  "restartTourText": "See the app tour again",
   "achievementsList": {
     "first_collection": {
       "name": "First step",

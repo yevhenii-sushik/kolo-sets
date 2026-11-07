@@ -66,5 +66,10 @@
     "confirmMessage": "Kontoen, alle sett og all fremgang slettes for godt.",
     "deleteError": "Kunne ikke slette kontoen. Logg ut, logg inn igjen og prøv på nytt.",
     "deleting": "Sletter…"
+  },
+  "tour": {
+    "title": "Omvisning i appen",
+    "hint": "En kort omvisning i det viktigste: sett, øving og dagsrekke. Den åpnes på forsiden.",
+    "button": "Vis igjen"
   }
 }

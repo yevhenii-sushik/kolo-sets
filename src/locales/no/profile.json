@@ -67,9 +67,6 @@
   "showAll": "Vis alle ({n})",
   "showLess": "Vis færre",
   "unlocked": "Låst opp",
-  "settingsTitle": "Innstillinger",
-  "restartTour": "Spill av introduksjonen på nytt",
-  "restartTourText": "Se omvisningen i appen igjen",
   "achievementsList": {
     "first_collection": {
       "name": "Første steg",

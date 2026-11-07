@@ -10,10 +10,7 @@ import { useData } from "../../contexts/DataContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { motion, AnimatePresence } from "framer-motion";
-import OnboardingModal, {
-  ONBOARDING_STORAGE_KEY,
-  ONBOARDING_RESTART_EVENT,
-} from "../../components/OnboardingModal";
+import OnboardingModal, { ONBOARDING_STORAGE_KEY } from "../../components/OnboardingModal";
 import VerifyEmailBanner from "../../components/VerifyEmailBanner";
 import InstallPrompt from "../../components/InstallPrompt";
 import SearchModal from "../../components/SearchModal";
@@ -51,12 +48,6 @@ export default function MainLayout() {
     }
   }, []);
 
-  // Listen for restart event from ProfilePage
-  useEffect(() => {
-    const handler = () => setShowOnboarding(true);
-    window.addEventListener(ONBOARDING_RESTART_EVENT, handler);
-    return () => window.removeEventListener(ONBOARDING_RESTART_EVENT, handler);
-  }, []);
 
   // Cmd/Ctrl+K → open search
   useEffect(() => {

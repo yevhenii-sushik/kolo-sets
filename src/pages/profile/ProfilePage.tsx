@@ -23,7 +23,6 @@ import {
   BookOpen,
   Camera,
   ChevronDown,
-  ChevronRight,
   Clock,
   Flame,
   GalleryVerticalEnd,
@@ -33,13 +32,12 @@ import {
   RefreshCw,
   User,
 } from "lucide-react";
-import { ONBOARDING_STORAGE_KEY, ONBOARDING_RESTART_EVENT } from "../../components/OnboardingModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge, Button, Card, Field, Heading, IconButton, Input, Spinner, Text, cx } from "../../ui";
 
 const ACHIEVEMENTS_PREVIEW_COUNT = 3;
 
-// Профиль: кто ты → серия и цифры → неделя и календарь → достижения → перезапуск знакомства
+// Профиль: кто ты → серия и цифры → неделя и календарь → достижения
 export default function ProfilePage() {
   const { t, language } = useI18n();
   const p = t.profile;
@@ -535,30 +533,6 @@ export default function ProfilePage() {
         >
           {achievementsOpen ? p.showLess : p.showAll.replace("{n}", String(ALL_ACHIEVEMENTS.length))}
         </Button>
-      </section>
-
-      {/* ── Настройки ── */}
-      <section className="mt-4 grid gap-4">
-        <Heading size={2}>{p.settingsTitle}</Heading>
-        <Card padding="none" className="p-2">
-          <button
-            type="button"
-            onClick={() => {
-              localStorage.removeItem(ONBOARDING_STORAGE_KEY);
-              window.dispatchEvent(new CustomEvent(ONBOARDING_RESTART_EVENT));
-            }}
-            className="flex w-full items-center gap-4 rounded-3xl px-4 py-3 text-left transition-colors hover:bg-inset focus-visible:outline-2 focus-visible:outline-accent"
-          >
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent-soft text-accent-ink">
-              <RefreshCw size={18} />
-            </span>
-            <span className="grid min-w-0 flex-1 gap-0.5">
-              <span className="font-semibold text-fg">{p.restartTour}</span>
-              <span className="text-sm text-muted">{p.restartTourText}</span>
-            </span>
-            <ChevronRight size={18} className="shrink-0 text-faint" />
-          </button>
-        </Card>
       </section>
 
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />

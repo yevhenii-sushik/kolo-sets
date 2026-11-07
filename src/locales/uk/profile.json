@@ -73,9 +73,6 @@
   "showAll": "Показати всі ({n})",
   "showLess": "Згорнути",
   "unlocked": "Отримано",
-  "settingsTitle": "Налаштування",
-  "restartTour": "Перезапустити знайомство",
-  "restartTourText": "Знову переглянути знайомство із застосунком",
   "achievementsList": {
     "first_collection": {
       "name": "Перший крок",
