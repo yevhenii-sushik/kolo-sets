@@ -42,7 +42,6 @@ const RewardsPage = lazy(() => import("./pages/rewards/RewardsPage"));
 const OtherPage = lazy(() => import("./pages/other/OtherPage"));
 const SettingsPage = lazy(() => import("./pages/other/SettingsPage"));
 const UpdatesPage = lazy(() => import("./pages/other/UpdatesPage"));
-const DataManagementPage = lazy(() => import("./pages/other/DataManagementPage"));
 const SupportPage = lazy(() => import("./pages/other/SupportPage"));
 const ExplorePage = lazy(() => import("./pages/other/ExplorePage"));
 const StartPage = lazy(() => import("./pages/courses/StartPage"));
@@ -181,7 +180,8 @@ function AppContent() {
 
         <Route path="/other/settings" element={<SettingsPage />} />
         <Route path="/other/updates" element={<UpdatesPage />} />
-        <Route path="/other/data-management" element={<DataManagementPage />} />
+        {/* «Данные и аккаунт» переехали в настройки; старый адрес — из прежних версий документов */}
+        <Route path="/other/data-management" element={<Navigate to="/other/settings" replace />} />
         <Route path="/other/support" element={<SupportPage />} />
         <Route path="/other/explore" element={<ExplorePage />} />
       </Route>

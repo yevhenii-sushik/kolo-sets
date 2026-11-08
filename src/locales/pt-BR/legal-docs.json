@@ -137,7 +137,7 @@
           {
             "list": [
               "Conta e dados de aprendizado: enquanto sua conta existir.",
-              "Quando você exclui sua conta no app (“Other → Data & account”), seu login, perfil, sets e nome de usuário são apagados na hora.",
+              "Quando você exclui sua conta no app (“More → Settings”), seu login, perfil, sets e nome de usuário são apagados na hora.",
               "Pontuações do jogo do dia e uma foto de perfil enviada **ainda não são removidas automaticamente** quando você exclui a conta. Escreva para {email.privacy} e as apagaremos em até 30 dias.",
               "Mensagens ao suporte: pelo tempo necessário para atender seu pedido. Você pode pedir que as apaguemos.",
               "Registros técnicos dos fornecedores: conforme os prazos de retenção deles.",
@@ -155,8 +155,8 @@
             "list": [
               "Acessar os dados pessoais que temos sobre você.",
               "Corrigir dados incorretos — você pode editar seu nome, nome de usuário e foto no perfil.",
-              "Apagar seus dados — você pode excluir sua conta em “Other → Data & account”.",
-              "Levar seus dados com você — você pode exportar seus sets em “Other → Data & account”.",
+              "Apagar seus dados — você pode excluir sua conta em “More → Settings”.",
+              "Levar seus dados com você — você pode exportar seus sets em “More → Settings”.",
               "Restringir ou se opor ao tratamento baseado em nossos interesses legítimos.",
               "Retirar seu consentimento a qualquer momento quando nos baseamos nele, por exemplo nas configurações de cookies."
             ]
@@ -258,7 +258,7 @@
               "Os sets de palavras, cartões e outros conteúdos que você cria são seus.",
               "Você nos concede uma licença limitada e não exclusiva para armazenar, tratar e exibir seu conteúdo apenas para oferecer o Kolo — por exemplo, para sincronizar seus sets e mostrar seu nome de usuário no ranking.",
               "Você é responsável por garantir que seu conteúdo não viole direitos autorais ou outros direitos.",
-              "Você pode exportar seus sets ou excluir sua conta a qualquer momento em “Other → Data & account”."
+              "Você pode exportar seus sets ou excluir sua conta a qualquer momento em “More → Settings”."
             ]
           }
         ]
@@ -307,7 +307,7 @@
         "id": "termination",
         "title": "Encerramento do acordo",
         "blocks": [
-          "**Por você:** você pode parar de usar o Kolo e excluir sua conta a qualquer momento em “Other → Data & account”.",
+          "**Por você:** você pode parar de usar o Kolo e excluir sua conta a qualquer momento em “More → Settings”.",
           "**Por nós:** podemos suspender ou encerrar uma conta que viole estes Termos de forma grave ou repetida. Quando for razoável, avisaremos antes e explicaremos o motivo."
         ]
       },

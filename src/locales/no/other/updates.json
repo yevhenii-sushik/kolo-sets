@@ -10,8 +10,24 @@
   },
   "versions": [
     {
+      "number": "0.4.0",
+      "status": "Latest",
+      "date": "November 2026",
+      "type": "Feature Release",
+      "changes": [
+        "Kurs: hvert språk du lærer, får sitt eget område med sett og mapper. Du velger språket én gang ved start og bytter mellom kurs rett i toppfeltet",
+        "Ukentlige baner i stedet for daglige flammer: velg hvor mange dager i uka du vil øve (3 til 7), lukk banene og bygg rekken din. Skjold dekker en mislykket uke, og en brutt rekke kan repareres",
+        "XP og nivåer for hver økt og hvert spill. Har du øvd før, har du allerede fått XP for alle kortene du har gått gjennom",
+        "Belønningskapsler: 36 gjenstander i fire samlinger – satellitter, ringfarger, profilbakgrunner og titler. Duplikater blir til stjernestøv, som kan byttes mot et skjold eller en manglende gjenstand",
+        "Ny profil: nivåring rundt avataren, ukens bane, en utstilling med tre favorittbelønninger, medaljer og statistikk",
+        "En medalje, tittelen «Betatester» og ringen «Første bane» til alle som blir med i betaen – fram til utgangen av 2026",
+        "Fremgangen registreres nå av serveren: den kan ikke forfalskes, og økter uten nett telles neste gang du åpner appen",
+        "Det nye «Bane»-designet og ny skrift i overskrifter. Konto, passord, utlogging og sikkerhetskopi finner du nå i Innstillinger, og fanen «Annet» heter nå «Mer»"
+      ]
+    },
+    {
       "number": "0.3.0",
-      "status": "Siste",
+      "status": "Minor",
       "date": "Juli 2026",
       "type": "Funksjonslansering",
       "changes": [

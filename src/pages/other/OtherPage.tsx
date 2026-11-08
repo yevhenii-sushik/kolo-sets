@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronRight, Cookie, Database, Languages, LifeBuoy, Rocket, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
+import { ArrowRight, ChevronRight, Cookie, Languages, LifeBuoy, Rocket, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import type { ElementType } from "react";
 import { useI18n } from "../../contexts/I18nContext";
+import { useData } from "../../contexts/DataContext";
 import { Card, Heading, Text } from "../../ui";
 import { DakutaLogo } from "../../components/brand/DakutaLogo";
 
@@ -37,9 +38,12 @@ function Group({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
-// «Другое»: настройки и данные, что нового и поддержка, документы; ниже — другие приложения Dakuta
+// «Ещё»: курсы, настройки (аккаунт, оформление, копия), что нового и поддержка, документы;
+// ниже — другие приложения Dakuta (они про норвежский — только тем, кто его учит)
 export default function OtherPage() {
   const { t } = useI18n();
+  const { courses } = useData();
+  const learnsNorwegian = courses.some((c) => c.id === "nb");
   const o = t.other;
   const promo = t.explore.promo;
   const version = t.updates.versions[0]?.number;
@@ -52,7 +56,6 @@ export default function OtherPage() {
         <Group title={o.groups.app}>
           <Row to="/courses" icon={Languages} label={o.courses} hint={o.hints.courses} />
           <Row to="/other/settings" icon={SlidersHorizontal} label={o.settings} hint={o.hints.settings} />
-          <Row to="/other/data-management" icon={Database} label={o.dataManagement} hint={o.hints.data} />
           <Row to="/other/updates" icon={Rocket} label={o.updates} hint={o.hints.updates} />
           <Row to="/other/support" icon={LifeBuoy} label={o.support} hint={o.hints.support} />
         </Group>
@@ -65,6 +68,7 @@ export default function OtherPage() {
       </div>
 
       {/* Другие приложения команды — ночной блок, как подвал сайта */}
+      {learnsNorwegian && (
       <Link
         to="/other/explore"
         className="group grid gap-6 rounded-4xl bg-brand-night p-6 text-white transition-transform active:scale-[0.99] sm:grid-cols-[1fr_auto] sm:items-center sm:p-8"
@@ -79,6 +83,7 @@ export default function OtherPage() {
           <ArrowRight size={16} />
         </span>
       </Link>
+      )}
 
       {version && (
         <Text size="sm" tone="faint" className="text-center">

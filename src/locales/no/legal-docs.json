@@ -137,7 +137,7 @@
           {
             "list": [
               "Konto og læringsdata: så lenge kontoen din finnes.",
-              "Når du sletter kontoen i appen («Annet → Data og konto»), slettes innlogging, profil, ordsett og brukernavn med en gang.",
+              "Når du sletter kontoen i appen («Mer → Innstillinger»), slettes innlogging, profil, ordsett og brukernavn med en gang.",
               "Resultater i dagens spill og et opplastet profilbilde **fjernes ennå ikke automatisk** når du sletter kontoen. Send e-post til {email.privacy}, så sletter vi dem innen 30 dager.",
               "Henvendelser til støtte: så lenge det trengs for å håndtere saken din. Du kan be oss slette dem.",
               "Tekniske logger hos leverandørene: etter deres lagringstider.",
@@ -155,8 +155,8 @@
             "list": [
               "Få innsyn i personopplysningene vi har om deg.",
               "Rette uriktige opplysninger — navn, brukernavn og bilde endrer du i profilen.",
-              "Slette dataene dine — kontoen sletter du under «Annet → Data og konto».",
-              "Ta med deg dataene — ordsettene eksporterer du under «Annet → Data og konto».",
+              "Slette dataene dine — kontoen sletter du under «Mer → Innstillinger».",
+              "Ta med deg dataene — ordsettene eksporterer du under «Mer → Innstillinger».",
               "Begrense eller protestere mot behandling som bygger på vår berettigede interesse.",
               "Trekke tilbake samtykke når som helst der vi bygger på det, for eksempel i innstillingene for informasjonskapsler."
             ]
@@ -258,7 +258,7 @@
               "Du eier ordsettene, kortene og annet innhold du lager.",
               "Du gir oss en begrenset, ikke-eksklusiv lisens til å lagre, behandle og vise innholdet ditt bare for å levere Kolo — for eksempel for å synkronisere settene dine og vise brukernavnet ditt på topplisten.",
               "Du er ansvarlig for at innholdet ditt ikke krenker opphavsrett eller andre rettigheter.",
-              "Du kan eksportere settene dine eller slette kontoen når som helst under «Annet → Data og konto»."
+              "Du kan eksportere settene dine eller slette kontoen når som helst under «Mer → Innstillinger»."
             ]
           }
         ]
@@ -307,7 +307,7 @@
         "id": "termination",
         "title": "Avslutning av avtalen",
         "blocks": [
-          "**Fra din side:** du kan når som helst slutte å bruke Kolo og slette kontoen under «Annet → Data og konto».",
+          "**Fra din side:** du kan når som helst slutte å bruke Kolo og slette kontoen under «Mer → Innstillinger».",
           "**Fra vår side:** vi kan suspendere eller stenge en konto som alvorlig eller gjentatte ganger bryter vilkårene. Der det er rimelig, advarer vi deg først og forklarer hvorfor."
         ]
       },

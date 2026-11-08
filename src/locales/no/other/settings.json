@@ -1,6 +1,6 @@
 {
   "title": "Innstillinger",
-  "subtitle": "Tilpass Kolo slik du vil ha det",
+  "subtitle": "Konto, utseende, påminnelser og sikkerhetskopi",
   "appearance": {
     "title": "Utseende",
     "light": "Lyst",
@@ -38,8 +38,6 @@
     "effectsDesc": "Lyder for riktige og gale svar og fullførte økter"
   },
   "data": {
-    "title": "Data og konto",
-    "subtitle": "Ta sikkerhetskopi av settene, gjenopprett dem fra fil eller slett kontoen.",
     "backup": "Sikkerhetskopi",
     "export": "Last ned sikkerhetskopi",
     "exportDesc": "Alle settene og ordene dine i én .json-fil",
@@ -65,7 +63,21 @@
     "confirmTitle": "Slette kontoen?",
     "confirmMessage": "Kontoen, alle sett og all fremgang slettes for godt.",
     "deleteError": "Kunne ikke slette kontoen. Logg ut, logg inn igjen og prøv på nytt.",
-    "deleting": "Sletter…"
+    "deleting": "Sletter…",
+    "email": "E-post",
+    "method": "Innlogging",
+    "methods": {
+      "password": "E-post og passord",
+      "google": "Google"
+    },
+    "changePassword": "Bytt passord",
+    "changePasswordDesc": "Vi sender deg en lenke på e-post der du kan velge nytt passord.",
+    "send": "Send lenke",
+    "passwordSent": "E-post sendt til {email}",
+    "passwordError": "Kunne ikke sende e-posten. Prøv igjen litt senere.",
+    "logout": "Logg ut",
+    "logoutDesc": "Settene og fremgangen din blir lagret – logg inn igjen når du vil.",
+    "dangerTitle": "Slett konto"
   },
   "tour": {
     "title": "Omvisning i appen",

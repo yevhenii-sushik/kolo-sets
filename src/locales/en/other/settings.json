@@ -1,6 +1,6 @@
 {
   "title": "Settings",
-  "subtitle": "Make Kolo work the way you like",
+  "subtitle": "Account, appearance, reminders and backup",
   "appearance": {
     "title": "Appearance",
     "light": "Light",
@@ -38,8 +38,6 @@
     "effectsDesc": "Sounds for right and wrong answers and finished sessions"
   },
   "data": {
-    "title": "Data & account",
-    "subtitle": "Back up your sets, restore them from a file or delete your account.",
     "backup": "Backup",
     "export": "Download a backup",
     "exportDesc": "All your sets and words in one .json file",
@@ -65,7 +63,21 @@
     "confirmTitle": "Delete your account?",
     "confirmMessage": "Your account, all sets and progress will be deleted for good.",
     "deleteError": "Couldn't delete your account. Sign out, sign back in and try again.",
-    "deleting": "Deleting…"
+    "deleting": "Deleting…",
+    "email": "Email",
+    "method": "Sign-in",
+    "methods": {
+      "password": "Email and password",
+      "google": "Google"
+    },
+    "changePassword": "Change password",
+    "changePasswordDesc": "We'll email you a link to set a new password.",
+    "send": "Send link",
+    "passwordSent": "Email sent to {email}",
+    "passwordError": "Couldn't send the email. Try again a little later.",
+    "logout": "Sign out",
+    "logoutDesc": "Your sets and progress stay — sign in again whenever you like.",
+    "dangerTitle": "Delete account"
   },
   "tour": {
     "title": "App tour",

@@ -137,7 +137,7 @@
           {
             "list": [
               "Account and learning data: as long as your account exists.",
-              "When you delete your account in the app (Other → Data & account), your login, profile, word sets and username are deleted right away.",
+              "When you delete your account in the app (More → Settings), your login, profile, word sets and username are deleted right away.",
               "Daily puzzle scores and an uploaded profile photo are **not yet removed automatically** when you delete your account. Email {email.privacy} and we will delete them within 30 days.",
               "Support messages: as long as needed to handle your request. You can ask us to delete them.",
               "Technical logs at our providers: according to their retention periods.",
@@ -155,8 +155,8 @@
             "list": [
               "Access the personal data we hold about you.",
               "Correct inaccurate data — you can edit your name, username and photo in your profile.",
-              "Delete your data — you can delete your account in Other → Data & account.",
-              "Take your data with you — you can export your word sets in Other → Data & account.",
+              "Delete your data — you can delete your account in More → Settings.",
+              "Take your data with you — you can export your word sets in More → Settings.",
               "Restrict or object to processing based on our legitimate interests.",
               "Withdraw consent at any time where we rely on it, for example in Cookie settings."
             ]
@@ -258,7 +258,7 @@
               "You own the word sets, cards and other content you create.",
               "You give us a limited, non-exclusive license to store, process and display your content only to provide Kolo — for example, to sync your sets and show your username on the leaderboard.",
               "You are responsible for making sure your content doesn't infringe copyrights or other rights.",
-              "You can export your sets or delete your account at any time in Other → Data & account."
+              "You can export your sets or delete your account at any time in More → Settings."
             ]
           }
         ]
@@ -307,7 +307,7 @@
         "id": "termination",
         "title": "Ending the agreement",
         "blocks": [
-          "**By you:** you can stop using Kolo and delete your account at any time in Other → Data & account.",
+          "**By you:** you can stop using Kolo and delete your account at any time in More → Settings.",
           "**By us:** we may suspend or close an account that seriously or repeatedly breaks these Terms. Where reasonable, we will warn you first and explain why."
         ]
       },

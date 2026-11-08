@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bell, Check, Monitor, Moon, Sun } from "lucide-react";
+import { Bell, Check, Download, KeyRound, LogOut, Monitor, Moon, Sun, Trash2, Upload } from "lucide-react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { getThemePref, setTheme as saveTheme, getDailyGoal, setDailyGoal } from "../../utils/storage";
+import { useConfirm } from "../../hooks/useConfirm";
+import { useToast } from "../../hooks/useToast";
+import { getCollections, getThemePref, setTheme as saveTheme, getDailyGoal, setDailyGoal } from "../../utils/storage";
+import { exportCollectionsToJSON, downloadJSON, importCollectionsFromJSON, readJSONFile } from "../../utils/exportImport";
+import { saveUserCollection } from "../../firebase/firestore";
 import {
   getReminderSettings,
   saveReminderSettings,
@@ -15,7 +21,9 @@ import {
 import { getSoundEnabled, setSoundEnabled } from "../../utils/sounds";
 import { APP_LANGUAGES, getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
-import { Alert, Button, Input, Select, Switch } from "../../ui";
+import { Alert, Button, Card, Input, Select, Switch } from "../../ui";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import Toast from "../../components/ui/Toast";
 import { OptionButton, PageHeader, Section, SettingRow } from "../../components/other/PageSection";
 import { ONBOARDING_STORAGE_KEY } from "../../components/OnboardingModal";
 
@@ -24,19 +32,29 @@ type Theme = "light" | "dark" | "system";
 const GOAL_PRESETS = [5, 10, 15, 20, 30, 50];
 const pad = (n: number) => String(n).padStart(2, "0");
 
-// Настройки — предпочтения: тема, язык, цель, напоминание, звук; плюс повтор знакомства с приложением.
-// Резервная копия и удаление аккаунта — на странице «Данные и аккаунт».
+// Настройки — всё про аккаунт и приложение на одной странице: аккаунт (вход, пароль, выход),
+// предпочтения, резервная копия, знакомство с приложением и в самом низу — удаление аккаунта.
+// На эту страницу ссылаются юридические документы («Ещё → Настройки»)
 export default function SettingsPage() {
   const { t, language, setLanguage } = useI18n();
   const navigate = useNavigate();
   const s = t.settings;
   const locale = getLanguageInfo(language).htmlLang;
+  const { user, logout, resetPassword, deleteAccount } = useAuth();
+  const { refreshCollections } = useData();
+  const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
+  const { success, error, toastState, hideToast } = useToast();
 
   const [currentTheme, setCurrentTheme] = useState<Theme>(getThemePref());
   const [soundEnabled, setSoundState] = useState(getSoundEnabled());
   const [dailyGoal, setDailyGoalState] = useState(getDailyGoal);
   const [reminder, setReminder] = useState<ReminderSettings>(getReminderSettings);
   const [notifAccess, setNotifAccess] = useState<NotificationAccess>(getNotificationAccess);
+  const [busy, setBusy] = useState<"export" | "import" | "password" | "delete" | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const hasPassword = !!user?.providerData.some((p) => p.providerId === "password");
+  const hasGoogle = !!user?.providerData.some((p) => p.providerId === "google.com");
 
   const handleThemeChange = (theme: Theme) => {
     setCurrentTheme(theme);
@@ -67,15 +85,140 @@ export default function SettingsPage() {
     setDailyGoal(clamped);
   };
 
+  // ── Аккаунт
+
+  const handlePassword = async () => {
+    if (!user?.email) return;
+    setBusy("password");
+    try {
+      await resetPassword(user.email);
+      success(s.account.passwordSent.replace("{email}", user.email));
+    } catch {
+      error(s.account.passwordError);
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const handleLogout = async () => {
+    if (await confirm({ title: t.profile.logoutTitle, message: t.profile.logoutConfirm, type: "warning" })) {
+      await logout();
+      navigate("/login");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    const confirmed = await confirm({
+      title: s.account.confirmTitle,
+      message: s.account.confirmMessage,
+      type: "danger",
+      confirmText: s.account.delete,
+      cancelText: t.cancel,
+    });
+    if (!confirmed) return;
+    setBusy("delete");
+    try {
+      await deleteAccount();
+      navigate("/welcome", { replace: true });
+    } catch {
+      error(s.account.deleteError);
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  // ── Резервная копия
+
+  const handleExport = async () => {
+    setBusy("export");
+    try {
+      const collections = await getCollections();
+      if (collections.length === 0) {
+        error(s.data.noCollections);
+        return;
+      }
+      downloadJSON(exportCollectionsToJSON(collections), `kolo-backup-${new Date().toISOString().split("T")[0]}.json`);
+      success(s.data.exportSuccess);
+    } catch {
+      error(s.data.exportError);
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // иначе повторный выбор того же файла не сработает
+    if (!file) return;
+    if (!user) {
+      error(s.data.signInToImport);
+      return;
+    }
+    setBusy("import");
+    try {
+      const imported = importCollectionsFromJSON(await readJSONFile(file));
+      // id из файла сохраняются: набор, который уже есть, перезапишется версией из копии
+      for (const coll of imported) await saveUserCollection(user.uid, coll);
+      await refreshCollections();
+      success(plural(locale, imported.length, s.data.importSuccess));
+    } catch {
+      error(s.data.importError);
+    } finally {
+      setBusy(null);
+    }
+  };
+
   const themes = [
     { value: "light", Icon: Sun, label: s.appearance.light },
     { value: "system", Icon: Monitor, label: s.appearance.system },
     { value: "dark", Icon: Moon, label: s.appearance.dark },
   ] as const;
 
+  const method = [hasPassword && s.account.methods.password, hasGoogle && s.account.methods.google].filter(Boolean).join(" · ");
+
   return (
     <div className="mx-auto grid max-w-2xl grid-cols-1 gap-5">
       <PageHeader title={s.title} subtitle={s.subtitle} />
+
+      {/* ── Аккаунт: кто вошёл, пароль, выход ── */}
+      <Section title={s.account.title}>
+        <dl className="grid gap-3 text-sm">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+            <dt className="text-muted">{s.account.email}</dt>
+            <dd className="min-w-0 truncate font-semibold text-fg">{user?.email}</dd>
+          </div>
+          {method && (
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+              <dt className="text-muted">{s.account.method}</dt>
+              <dd className="font-semibold text-fg">{method}</dd>
+            </div>
+          )}
+        </dl>
+        <div className="grid gap-3">
+          {hasPassword && (
+            <ActionRow
+              icon={<KeyRound size={18} />}
+              title={s.account.changePassword}
+              description={s.account.changePasswordDesc}
+              action={
+                <Button variant="secondary" size="sm" loading={busy === "password"} disabled={busy !== null} onClick={handlePassword}>
+                  {s.account.send}
+                </Button>
+              }
+            />
+          )}
+          <ActionRow
+            icon={<LogOut size={18} />}
+            title={s.account.logout}
+            description={s.account.logoutDesc}
+            action={
+              <Button variant="secondary" size="sm" disabled={busy !== null} onClick={handleLogout}>
+                {s.account.logout}
+              </Button>
+            }
+          />
+        </div>
+      </Section>
 
       <Section title={s.appearance.title}>
         <div className="grid grid-cols-3 gap-2">
@@ -210,6 +353,35 @@ export default function SettingsPage() {
         />
       </Section>
 
+      {/* ── Резервная копия наборов ── */}
+      <Section title={s.data.backup} description={s.data.importNote}>
+        <div className="grid gap-3">
+          <ActionRow
+            icon={<Download size={18} />}
+            title={s.data.export}
+            description={s.data.exportDesc}
+            action={
+              <Button variant="secondary" size="sm" loading={busy === "export"} disabled={busy !== null} onClick={handleExport}>
+                {s.data.exportButton}
+              </Button>
+            }
+          />
+          <ActionRow
+            icon={<Upload size={18} />}
+            title={s.data.import}
+            description={s.data.importDesc}
+            action={
+              <>
+                <input ref={fileRef} type="file" accept=".json,application/json" className="hidden" onChange={handleFile} />
+                <Button variant="secondary" size="sm" loading={busy === "import"} disabled={busy !== null} onClick={() => fileRef.current?.click()}>
+                  {s.data.importButton}
+                </Button>
+              </>
+            }
+          />
+        </div>
+      </Section>
+
       {/* Тур открывается на главной: сбрасываем отметку «знакомство пройдено» и уходим туда */}
       <Section title={s.tour.title}>
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -226,6 +398,40 @@ export default function SettingsPage() {
           </Button>
         </div>
       </Section>
+
+      {/* ── Удаление аккаунта — отдельно и в самом низу, чтобы не нажать случайно ── */}
+      <Section title={s.account.dangerTitle} className="border-danger/40">
+        <div className="grid justify-items-start gap-4 sm:flex sm:items-center sm:justify-between">
+          <p className="text-sm text-muted">{s.account.deleteDesc}</p>
+          <Button
+            variant="danger"
+            iconLeft={<Trash2 size={16} />}
+            loading={busy === "delete"}
+            disabled={busy !== null && busy !== "delete"}
+            onClick={handleDeleteAccount}
+            className="shrink-0"
+          >
+            {busy === "delete" ? s.account.deleting : s.account.delete}
+          </Button>
+        </div>
+      </Section>
+
+      <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
+      <Toast {...toastState} onClose={hideToast} />
     </div>
+  );
+}
+
+function ActionRow({ icon, title, description, action }: { icon: ReactNode; title: string; description: string; action: ReactNode }) {
+  return (
+    <Card tone="inset" padding="sm" radius="lg" className="grid gap-3 sm:flex sm:items-center sm:gap-4">
+      <span className="hidden h-10 w-10 shrink-0 place-items-center rounded-full bg-surface text-accent-ink sm:grid">{icon}</span>
+      <div className="grid min-w-0 flex-1 gap-0.5">
+        <p className="font-semibold text-fg">{title}</p>
+        <p className="text-sm text-muted">{description}</p>
+      </div>
+      {/* На телефоне кнопка уходит под текст — иначе описание сжимается в узкую колонку */}
+      <div className="shrink-0">{action}</div>
+    </Card>
   );
 }

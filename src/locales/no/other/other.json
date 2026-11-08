@@ -1,6 +1,5 @@
 {
   "settings": "Innstillinger",
-  "dataManagement": "Data og konto",
   "updates": "Hva er nytt",
   "support": "Støtte",
   "groups": {
@@ -8,8 +7,7 @@
     "docs": "Dokumenter"
   },
   "hints": {
-    "settings": "Tema, språk, dagsmål, påminnelser",
-    "data": "Sikkerhetskopi og sletting av konto",
+    "settings": "Konto, utseende, påminnelser, kopi",
     "updates": "Alle Kolo-versjoner",
     "support": "Meld fra om en feil eller foreslå en idé",
     "privacy": "Hvordan vi behandler dataene dine",

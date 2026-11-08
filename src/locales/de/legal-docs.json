@@ -137,7 +137,7 @@
           {
             "list": [
               "Konto und Lerndaten: solange dein Konto besteht.",
-              "Wenn du dein Konto in der App löschst („Other → Data & account“), werden Anmeldung, Profil, Wortsets und Benutzername sofort gelöscht.",
+              "Wenn du dein Konto in der App löschst („More → Settings“), werden Anmeldung, Profil, Wortsets und Benutzername sofort gelöscht.",
               "Ergebnisse im Spiel des Tages und ein hochgeladenes Profilbild werden beim Löschen des Kontos **noch nicht automatisch entfernt**. Schreib an {email.privacy}, dann löschen wir sie innerhalb von 30 Tagen.",
               "Support-Nachrichten: so lange, wie es zur Bearbeitung deiner Anfrage nötig ist. Du kannst uns bitten, sie zu löschen.",
               "Technische Protokolle bei unseren Dienstleistern: gemäß deren Aufbewahrungsfristen.",
@@ -155,8 +155,8 @@
             "list": [
               "Auskunft über deine bei uns gespeicherten Daten zu erhalten;",
               "unrichtige Daten berichtigen zu lassen – Name, Benutzername und Foto änderst du im Profil;",
-              "deine Daten löschen zu lassen – dein Konto löschst du unter „Other → Data & account“;",
-              "deine Daten mitzunehmen – deine Wortsets exportierst du unter „Other → Data & account“;",
+              "deine Daten löschen zu lassen – dein Konto löschst du unter „More → Settings“;",
+              "deine Daten mitzunehmen – deine Wortsets exportierst du unter „More → Settings“;",
               "die Verarbeitung einzuschränken oder einer Verarbeitung auf Grundlage unserer berechtigten Interessen zu widersprechen;",
               "eine Einwilligung jederzeit zu widerrufen, wo wir uns darauf stützen, etwa in den Cookie-Einstellungen."
             ]
@@ -258,7 +258,7 @@
               "Die Wortsets, Karten und anderen Inhalte, die du erstellst, gehören dir.",
               "Du gewährst uns eine beschränkte, nicht exklusive Lizenz, deine Inhalte nur zur Bereitstellung von Kolo zu speichern, zu verarbeiten und anzuzeigen – etwa um deine Sets zu synchronisieren und deinen Benutzernamen in der Bestenliste zu zeigen.",
               "Du bist dafür verantwortlich, dass deine Inhalte keine Urheber- oder sonstigen Rechte verletzen.",
-              "Du kannst deine Sets jederzeit unter „Other → Data & account“ exportieren oder dein Konto löschen."
+              "Du kannst deine Sets jederzeit unter „More → Settings“ exportieren oder dein Konto löschen."
             ]
           }
         ]
@@ -307,7 +307,7 @@
         "id": "termination",
         "title": "Beendigung",
         "blocks": [
-          "**Durch dich:** Du kannst Kolo jederzeit nicht mehr nutzen und dein Konto unter „Other → Data & account“ löschen.",
+          "**Durch dich:** Du kannst Kolo jederzeit nicht mehr nutzen und dein Konto unter „More → Settings“ löschen.",
           "**Durch uns:** Wir können ein Konto sperren oder schließen, das schwerwiegend oder wiederholt gegen diese Bedingungen verstößt. Wo es angemessen ist, warnen wir dich vorher und nennen den Grund."
         ]
       },

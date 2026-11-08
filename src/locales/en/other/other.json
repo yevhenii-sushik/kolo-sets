@@ -1,6 +1,5 @@
 {
   "settings": "Settings",
-  "dataManagement": "Data & account",
   "updates": "What's new",
   "support": "Support",
   "groups": {
@@ -8,8 +7,7 @@
     "docs": "Documents"
   },
   "hints": {
-    "settings": "Theme, language, daily goal, reminders",
-    "data": "Backup and account deletion",
+    "settings": "Account, appearance, reminders, backup",
     "updates": "Every Kolo release",
     "support": "Report a bug or suggest an idea",
     "privacy": "How we handle your data",

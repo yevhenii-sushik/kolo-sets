@@ -10,8 +10,24 @@
   },
   "versions": [
     {
-      "number": "0.3.0",
+      "number": "0.4.0",
       "status": "Latest",
+      "date": "November 2026",
+      "type": "Feature Release",
+      "changes": [
+        "Courses: every language you learn gets its own space with sets and folders. You pick the language once at the start and switch between courses right in the header",
+        "Weekly orbits instead of daily flames: choose how many days a week to practise (3 to 7), close your orbits and grow your streak. Shields cover a missed week, and a broken streak can be repaired",
+        "XP and levels for every session and game. If you practised before, XP for every card you've studied is already yours",
+        "Reward capsules: 36 items in four collections — satellites, ring colours, profile backgrounds and titles. Duplicates turn into stardust, which buys a shield or a missing item",
+        "A new profile: a level ring around your avatar, the weekly orbit, a showcase of your three favourite rewards, medals and stats",
+        "A medal, the Beta Tester title and the First Orbit ring for everyone who joins during the beta — until the end of 2026",
+        "Progress is now recorded by the server: it can't be faked, and sessions done offline are counted the next time you open the app",
+        "The new Orbit design and heading font. Account, password, sign-out and backup now live in Settings, and the Other tab is now called More"
+      ]
+    },
+    {
+      "number": "0.3.0",
+      "status": "Minor",
       "date": "July 2026",
       "type": "Feature Release",
       "changes": [

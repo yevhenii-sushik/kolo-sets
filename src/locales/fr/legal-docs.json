@@ -137,7 +137,7 @@
           {
             "list": [
               "Compte et données d'apprentissage : tant que ton compte existe.",
-              "Quand tu supprimes ton compte dans l'appli (« Other → Data & account »), ta connexion, ton profil, tes sets et ton nom d'utilisateur sont supprimés immédiatement.",
+              "Quand tu supprimes ton compte dans l'appli (« More → Settings »), ta connexion, ton profil, tes sets et ton nom d'utilisateur sont supprimés immédiatement.",
               "Les scores du jeu du jour et une photo de profil ajoutée **ne sont pas encore supprimés automatiquement** avec le compte. Écris à {email.privacy} et nous les supprimerons sous 30 jours.",
               "Messages à l'assistance : le temps nécessaire pour traiter ta demande. Tu peux nous demander de les supprimer.",
               "Journaux techniques chez nos prestataires : selon leurs durées de conservation.",
@@ -155,8 +155,8 @@
             "list": [
               "accéder aux données personnelles que nous détenons sur toi ;",
               "rectifier des données inexactes — ton nom, ton nom d'utilisateur et ta photo se modifient dans ton profil ;",
-              "effacer tes données — tu peux supprimer ton compte dans « Other → Data & account » ;",
-              "emporter tes données — tu peux exporter tes sets dans « Other → Data & account » ;",
+              "effacer tes données — tu peux supprimer ton compte dans « More → Settings » ;",
+              "emporter tes données — tu peux exporter tes sets dans « More → Settings » ;",
               "limiter un traitement ou t'opposer à un traitement fondé sur nos intérêts légitimes ;",
               "retirer ton consentement à tout moment lorsque nous nous fondons dessus, par exemple dans les paramètres des cookies."
             ]
@@ -258,7 +258,7 @@
               "Les sets de mots, cartes et autres contenus que tu crées t'appartiennent.",
               "Tu nous accordes une licence limitée et non exclusive pour stocker, traiter et afficher ton contenu uniquement afin de fournir Kolo — par exemple pour synchroniser tes sets et afficher ton nom dans le classement.",
               "Tu dois t'assurer que ton contenu ne porte pas atteinte aux droits d'auteur ou à d'autres droits.",
-              "Tu peux exporter tes sets ou supprimer ton compte à tout moment dans « Other → Data & account »."
+              "Tu peux exporter tes sets ou supprimer ton compte à tout moment dans « More → Settings »."
             ]
           }
         ]
@@ -307,7 +307,7 @@
         "id": "termination",
         "title": "Fin de l'accord",
         "blocks": [
-          "**De ton côté :** tu peux cesser d'utiliser Kolo et supprimer ton compte à tout moment dans « Other → Data & account ».",
+          "**De ton côté :** tu peux cesser d'utiliser Kolo et supprimer ton compte à tout moment dans « More → Settings ».",
           "**De notre côté :** nous pouvons suspendre ou fermer un compte qui enfreint ces Conditions de façon grave ou répétée. Lorsque c'est raisonnable, nous te prévenons d'abord et expliquons pourquoi."
         ]
       },

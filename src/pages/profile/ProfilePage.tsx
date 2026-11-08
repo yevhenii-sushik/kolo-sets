@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
-import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
 import { UserProfile, Achievement } from "../../types";
 import { ALL_ACHIEVEMENTS, getAchievementProgress } from "../../utils/achievements";
@@ -16,7 +15,6 @@ import { plural } from "../../utils/plural";
 import { updateProfile } from "firebase/auth";
 import ActivityCalendar from "../../components/ActivityCalendar";
 import AchievementCard from "../../components/AchievementCard";
-import ConfirmDialog from "../../components/ConfirmDialog";
 import { OrbitRing } from "../../components/progress/OrbitRing";
 import { RepairLine, Shields, WeekDays, WeekStatus } from "../../components/progress/WeekOrbit";
 import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
@@ -39,7 +37,6 @@ import {
   GalleryVerticalEnd,
   Gift,
   ListChecks,
-  LogOut,
   Medal,
   Pencil,
   RefreshCw,
@@ -57,7 +54,7 @@ export default function ProfilePage() {
   const p = t.profile;
   const locale = getLanguageInfo(language).htmlLang;
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   // Профиль — про весь аккаунт: слова и наборы всех курсов
   const {
     profile: rawProfile,
@@ -76,7 +73,6 @@ export default function ProfilePage() {
   const legacyFlames: number | null = typeof rawProfile?.legacyFlames === "number" ? rawProfile.legacyFlames : null;
   const [tab, setTab] = useState<"medals" | "stats">("medals");
   const [goalOpen, setGoalOpen] = useState(false);
-  const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
   // Приводим сырые данные из контекста к типу UserProfile для компонента
@@ -207,12 +203,6 @@ export default function ProfilePage() {
     }
   };
 
-  const handleLogout = async () => {
-    if (await confirm({ title: p.logoutTitle, message: p.logoutConfirm, type: "warning" })) {
-      await logout();
-      navigate("/login");
-    }
-  };
 
   const weekStats = useMemo(() => (profile ? getWeekStats(profile.studyHistory) : null), [profile]);
 
@@ -395,9 +385,6 @@ export default function ProfilePage() {
                   <Pencil size={18} />
                 </IconButton>
               </span>
-              <IconButton label={p.logoutTitle} onClick={handleLogout}>
-                <LogOut size={18} />
-              </IconButton>
             </div>
           )}
         </div>
@@ -746,7 +733,6 @@ export default function ProfilePage() {
       <CapsuleOpenModal open={capsuleOpen} onClose={() => setCapsuleOpen(false)} />
       <ShowcaseModal open={showcaseOpen} onClose={() => setShowcaseOpen(false)} />
 
-      <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
       <Toast {...toastState} onClose={hideToast} />
     </div>
   );
