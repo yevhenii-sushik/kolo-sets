@@ -117,10 +117,16 @@ export async function recheckAchievements(): Promise<{ newAchievements: Achievem
   }
 }
 
-// При открытии приложения: итоги прошедших недель. null — сервер недоступен, остаётся то, что было
-export async function syncProgress(): Promise<Progression | null> {
+// При открытии приложения: итоги прошедших недель и особые награды (бета-тестерам). null — сервер недоступен
+export interface SyncReply {
+  progression: Progression;
+  granted?: string[];
+  loot?: Loot;
+}
+
+export async function syncProgress(): Promise<SyncReply | null> {
   try {
-    return (await post<{ progression: Progression }>("/api/progress-sync", { timezone: timeZone() })).progression;
+    return await post<SyncReply>("/api/progress-sync", { timezone: timeZone() });
   } catch {
     return null;
   }

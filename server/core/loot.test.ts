@@ -3,6 +3,8 @@ import { randomInt } from "node:crypto";
 import { AchievementType } from "../../src/types";
 import { CAPSULE_ITEMS, collectionItems, ITEMS } from "./items";
 import {
+  BETA_CUTOFF,
+  grantBeta,
   capsulesEarned,
   craftItem,
   equipItem,
@@ -202,5 +204,29 @@ describe("откуда капсулы", () => {
     expect(r?.result.newAchievements).toEqual([AchievementType.CARDS_500]);
     expect(r?.patch).toMatchObject({ xp: 100, capsules: 1 + 1 }); // капсула за достижение и за 2-й уровень
     expect(applyCollectionUnlocks({ achievements: Object.values(AchievementType) }, info, "2026-11-04")).toBeNull();
+  });
+});
+
+describe("бета-тестеры", () => {
+  it("до конца 2026 — медаль, титул и кольцо; один раз", () => {
+    const g = grantBeta({ inventory: own("sat_moon") }, Date.parse("2026-12-31T23:00:00Z"), NOW);
+    expect(g?.medals).toEqual(["beta_tester"]);
+    expect(Object.keys(g!.inventory).sort()).toEqual(["ring_beta", "sat_moon", "title_beta_tester"]);
+    expect(grantBeta({ ...g! }, Date.parse("2026-11-01"), NOW)).toBeNull();
+  });
+
+  it("после — ничего", () => {
+    expect(grantBeta({}, BETA_CUTOFF, NOW)).toBeNull();
+    expect(grantBeta({}, Date.parse("2027-02-01"), NOW)).toBeNull();
+  });
+
+  it("бета-награды не выпадают из капсул и не создаются за пыль", () => {
+    expect(CAPSULE_ITEMS.some((i) => i.exclusive)).toBe(false);
+    expect(craftItem({ dust: 9999 }, "ring_beta", NOW)).toEqual({ ok: false, reason: "not-craftable" });
+  });
+
+  it("надеть можно, если выдано", () => {
+    expect(equipItem({ inventory: own("ring_beta") }, "ring", "ring_beta").ok).toBe(true);
+    expect(equipItem({}, "title", "title_beta_tester").ok).toBe(false);
   });
 });

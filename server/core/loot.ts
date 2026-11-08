@@ -12,6 +12,13 @@ export const SHIELD_COST = 120;
 export const SHOWCASE_MAX = 3;
 const STARTER_MAX = 5;
 
+// Бета-тестеры — кто зарегистрировался до 31 декабря 2026 включительно (с запасом на часовые пояса:
+// полдень 1 января по UTC — это ещё 31 декабря на западе Тихого океана). Дату регистрации сервер
+// берёт из Firebase Auth, а не из профиля — её нельзя подделать
+export const BETA_CUTOFF = Date.UTC(2027, 0, 1, 12);
+export const BETA_MEDAL = "beta_tester";
+const BETA_ITEMS = ["title_beta_tester", "ring_beta"];
+
 // Капсулы за события
 const ORBIT_MILESTONES = [4, 12, 26];
 const BIG_ACHIEVEMENTS = new Set<AchievementType>([
@@ -99,6 +106,14 @@ const base = (s: LootState): LootPatch => ({
   inventory: { ...(s.inventory ?? {}) },
   medals: [...(s.medals ?? [])],
 });
+
+// Медаль, титул и кольцо бета-тестера. null — не положено или уже выдано
+export function grantBeta(state: LootState, joinedAt: number, now: Date): Pick<LootPatch, "medals" | "inventory"> | null {
+  if (!(joinedAt < BETA_CUTOFF) || (state.medals ?? []).includes(BETA_MEDAL)) return null;
+  const inventory = { ...(state.inventory ?? {}) };
+  for (const id of BETA_ITEMS) if (!inventory[id]) inventory[id] = { n: 1, at: now };
+  return { medals: [...(state.medals ?? []), BETA_MEDAL], inventory };
+}
 
 export type OpenResult =
   | { ok: false; reason: "no-capsules" }

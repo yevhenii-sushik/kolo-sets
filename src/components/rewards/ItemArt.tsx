@@ -14,12 +14,13 @@ export const RARITY_TONE: Record<Rarity, { text: string; soft: string; border: s
   legendary: { text: "text-accent-ink", soft: "bg-accent-soft", border: "border-accent" },
 };
 
-export function RarityChip({ rarity, className }: { rarity: Rarity; className?: string }) {
+// exclusive — особая награда (бета-тестерам): вместо редкости — «Эксклюзив»
+export function RarityChip({ rarity, exclusive, className }: { rarity: Rarity; exclusive?: boolean; className?: string }) {
   const { t } = useI18n();
-  const tone = RARITY_TONE[rarity];
+  const tone = exclusive ? RARITY_TONE.epic : RARITY_TONE[rarity];
   return (
     <span className={cx("inline-flex w-fit items-center rounded-full px-2 py-0.5 text-2xs font-semibold", tone.soft, tone.text, className)}>
-      {t.rewards.rarity[rarity]}
+      {exclusive ? t.rewards.exclusive : t.rewards.rarity[rarity]}
     </span>
   );
 }

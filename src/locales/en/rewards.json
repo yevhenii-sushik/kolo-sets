@@ -84,7 +84,11 @@
   },
   "medal": {
     "name": "{name} collection",
-    "description": "Completed"
+    "description": "Completed",
+    "beta": {
+      "name": "Kolo Beta Tester",
+      "description": "Joined before the end of 2026 — here since the beta"
+    }
   },
   "moment": {
     "title": {
@@ -92,7 +96,9 @@
       "other": "+{n} capsules"
     },
     "text": "Inside: a satellite, ring, background or title. Open it in Rewards.",
-    "open": "Open"
+    "open": "Open",
+    "medalTitle": "New medal",
+    "betaText": "Thank you for being here since the beta! The Beta Tester title and the First Orbit ring are waiting in Rewards."
   },
   "items": {
     "sat_moon": "Moon",
@@ -133,6 +139,13 @@
     "title_kolo_legend": "Kolo Legend",
     "title_system_master": "Master of the System",
     "title_orbit_cartographer": "Orbit Cartographer",
-    "title_stargazer": "Stargazer"
+    "title_stargazer": "Stargazer",
+    "title_beta_tester": "Beta Tester",
+    "ring_beta": "First Orbit"
+  },
+  "exclusive": "Exclusive",
+  "special": {
+    "title": "Special rewards",
+    "hint": "For completing collections and for beta testers. They never come from capsules."
   }
 }

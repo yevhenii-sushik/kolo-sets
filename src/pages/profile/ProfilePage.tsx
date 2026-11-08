@@ -26,7 +26,7 @@ import { CapsuleArt } from "../../components/rewards/CapsuleArt";
 import { CapsuleOpenModal } from "../../components/rewards/CapsuleOpenModal";
 import { ShowcaseModal, ShowcaseTile } from "../../components/rewards/Showcase";
 import { COLLECTIONS, collectionItems } from "../../../server/core/items";
-import { SHOWCASE_MAX } from "../../../server/core/loot";
+import { BETA_MEDAL, SHOWCASE_MAX } from "../../../server/core/loot";
 import Toast from "../../components/ui/Toast";
 import {
   AtSign,
@@ -35,6 +35,7 @@ import {
   ChevronDown,
   Clock,
   Flame,
+  FlaskConical,
   GalleryVerticalEnd,
   Gift,
   ListChecks,
@@ -605,7 +606,8 @@ export default function ProfilePage() {
         </div>
         {tab === "medals" && (
           <Badge tone="accent" className="tabular-nums">
-            {unlockedCount + (legacyFlames ? 1 : 0) + loot.medals.length} / {ALL_ACHIEVEMENTS.length + (legacyFlames ? 1 : 0) + COLLECTIONS.length}
+            {unlockedCount + (legacyFlames ? 1 : 0) + loot.medals.length} /{" "}
+            {ALL_ACHIEVEMENTS.length + (legacyFlames ? 1 : 0) + COLLECTIONS.length + (loot.medals.includes(BETA_MEDAL) ? 1 : 0)}
           </Badge>
         )}
       </div>
@@ -654,6 +656,17 @@ export default function ProfilePage() {
           остальные плавно раскрываются под ним ── */}
       {tab === "medals" && (
       <section className="grid gap-4" aria-label={p.tabs.medals}>
+        {loot.medals.includes(BETA_MEDAL) && (
+          <Card padding="sm" radius="lg" className="flex items-center gap-4 bg-special-soft">
+            <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-surface text-special">
+              <FlaskConical size={24} />
+            </span>
+            <div className="grid min-w-0 gap-0.5">
+              <h3 className="font-semibold leading-snug text-fg">{r.medal.beta.name}</h3>
+              <p className="text-sm leading-snug text-muted">{r.medal.beta.description}</p>
+            </div>
+          </Card>
+        )}
         {legacyFlames && (
           <Card padding="sm" radius="lg" className="flex items-center gap-4 bg-accent-soft">
             <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-surface">

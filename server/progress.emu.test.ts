@@ -243,3 +243,25 @@ describe("удаление аккаунта", () => {
     expect((await db().collection(`users/${UID}/sessions`).get()).size).toBe(0);
   });
 });
+
+describe("бета-тестеры", () => {
+  it("первая синхронизация: дата регистрации из Auth, медаль, титул и кольцо — один раз", async () => {
+    const first = await (await call(syncFn, { timezone: "Europe/Oslo" })).json();
+    expect(first.granted).toEqual(["beta_tester"]);
+    expect(first.loot.medals).toContain("beta_tester");
+    const p = (await db().doc(`users/${UID}`).get()).data()!;
+    expect(p.joinedAt).toBeInstanceOf(Timestamp);
+    expect(p.inventory.title_beta_tester.n).toBe(1);
+    expect(p.inventory.ring_beta.n).toBe(1);
+    const second = await (await call(syncFn, { timezone: "Europe/Oslo" })).json();
+    expect(second.granted).toBeUndefined();
+    expect((await call(equipFn, { slot: "ring", item: "ring_beta" })).status).toBe(200);
+  });
+
+  it("зарегистрировался после конца 2026 — ничего", async () => {
+    await db().doc(`users/${UID}`).update({ joinedAt: Timestamp.fromMillis(Date.parse("2027-03-01")) });
+    const r = await (await call(syncFn, { timezone: "Europe/Oslo" })).json();
+    expect(r.granted).toBeUndefined();
+    expect((await db().doc(`users/${UID}`).get()).data()!.medals ?? []).not.toContain("beta_tester");
+  });
+});

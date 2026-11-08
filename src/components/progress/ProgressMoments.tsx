@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Sparkles, Wrench } from "lucide-react";
+import { FlaskConical, Shield, Sparkles, Wrench } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
@@ -22,7 +22,8 @@ export type Moment =
   | { kind: "repaired"; streak: number }
   | { kind: "shieldUsed" }
   | { kind: "repair"; left: number }
-  | { kind: "capsule"; count: number };
+  | { kind: "capsule"; count: number }
+  | { kind: "beta" };
 
 export function momentsOf(p: Progression): Moment[] {
   const e = p.events;
@@ -34,6 +35,12 @@ export function momentsOf(p: Progression): Moment[] {
   if (p.xp.levelUp) out.push({ kind: "level", level: p.xp.level });
   if (p.capsules?.gained > 0) out.push({ kind: "capsule", count: p.capsules.gained });
   return out;
+}
+
+// Особые медали, выданные при синхронизации (бета-тестерам)
+export function announceMedals(granted: string[]) {
+  const moments: Moment[] = granted.includes("beta_tester") ? [{ kind: "beta" }] : [];
+  if (moments.length > 0) window.dispatchEvent(new CustomEvent(PROGRESS_MOMENTS_EVENT, { detail: moments }));
 }
 
 export function announceProgress(p: Progression) {
@@ -137,6 +144,27 @@ function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }
       title = m.repairTitle;
       visual = <Emblem icon={<Wrench size={44} className="text-accent" />} />;
       text = <span className="text-sm text-muted">{plural(locale, moment.left, m.repairText)}</span>;
+      break;
+    case "beta":
+      title = t.rewards.moment.medalTitle;
+      visual = <Emblem icon={<FlaskConical size={48} className="text-special" />} />;
+      text = (
+        <>
+          <span className="font-display text-xl font-extrabold text-fg">{t.rewards.medal.beta.name}</span>
+          <span className="mt-1 text-sm text-muted">{t.rewards.moment.betaText}</span>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+              navigate("/rewards");
+            }}
+            className="mx-auto mt-3 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-hover"
+          >
+            {t.rewards.moment.open}
+          </button>
+        </>
+      );
       break;
     case "capsule":
       title = plural(locale, moment.count, t.rewards.moment.title);

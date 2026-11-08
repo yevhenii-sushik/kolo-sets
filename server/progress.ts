@@ -3,10 +3,10 @@ import { randomInt } from "node:crypto";
 import { Timestamp } from "firebase-admin/firestore";
 import { applyCollectionUnlocks, applySession, checkPlausibility, type ProgressState, type SessionInput } from "./core/session";
 import { applyGoal, buyShield, syncProgress } from "./core/progression";
-import { craftItem, equipItem, openCapsule, setShowcase, type Equipped, type LootState, type Slot } from "./core/loot";
+import { craftItem, equipItem, grantBeta, openCapsule, setShowcase, type Equipped, type LootState, type Slot } from "./core/loot";
 import type { OrbitState } from "./core/orbit";
 import { dayKey, safeTimeZone } from "./core/time";
-import { db } from "./admin";
+import { adminAuth, db } from "./admin";
 
 export interface Reply {
   status: number;
@@ -172,14 +172,31 @@ export async function recheckCollectionAchievements(uid: string, timezone?: unkn
 export async function syncUserProgress(uid: string, timezone: unknown, now = new Date()): Promise<Reply> {
   const store = db();
   const userRef = store.doc(`users/${uid}`);
+  // Дата регистрации — из Firebase Auth (её нельзя подделать, в отличие от createdAt в профиле);
+  // спрашиваем один раз и запоминаем в профиле
+  const stored = (await userRef.get()).data()?.joinedAt;
+  const joinedAt =
+    stored instanceof Timestamp ? null : await adminAuth().getUser(uid).then((u) => Date.parse(u.metadata.creationTime), () => null);
   return store.runTransaction(async (tx) => {
     const profile = await tx.get(userRef);
     if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
-    const { tz, today } = todayFor(timezone, profile.data(), now);
-    const { patch, result } = syncProgress(progressState(profile.data()), today);
+    const data = profile.data()!;
+    const { tz, today } = todayFor(timezone, data, now);
+    const state = progressState(data);
+    const { patch, result } = syncProgress(state, today);
+    // Медаль, титул и кольцо бета-тестера (docs/specs/02-progression.md)
+    const joined = data.joinedAt instanceof Timestamp ? data.joinedAt.toMillis() : joinedAt;
+    const beta = joined !== null && !Number.isNaN(joined) ? grantBeta(state, joined, now) : null;
+    const extra = {
+      ...(joinedAt !== null && !Number.isNaN(joinedAt) && !(data.joinedAt instanceof Timestamp) ? { joinedAt: Timestamp.fromMillis(joinedAt) } : {}),
+      ...(beta ?? {}),
+    };
     // Ничего не изменилось — не пишем: синхронизация идёт при каждом открытии
-    if (patch) writeProfile(tx, userRef, { ...patch, timezone: tz });
-    return { status: 200, body: { progression: result } };
+    if (patch || Object.keys(extra).length > 0) writeProfile(tx, userRef, { ...(patch ?? {}), ...extra, timezone: tz });
+    return {
+      status: 200,
+      body: { progression: result, ...(beta ? { granted: ["beta_tester"], loot: lootView({ ...state, ...beta }) } : {}) },
+    };
   });
 }
 

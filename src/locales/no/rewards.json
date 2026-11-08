@@ -84,7 +84,11 @@
   },
   "medal": {
     "name": "Samlingen «{name}»",
-    "description": "Komplett"
+    "description": "Komplett",
+    "beta": {
+      "name": "Kolo-betatester",
+      "description": "Registrert før utgangen av 2026 – med oss siden betaen"
+    }
   },
   "moment": {
     "title": {
@@ -92,7 +96,9 @@
       "other": "+{n} kapsler"
     },
     "text": "Inni: en satellitt, ring, bakgrunn eller tittel. Åpne den under Belønninger.",
-    "open": "Åpne"
+    "open": "Åpne",
+    "medalTitle": "Ny medalje",
+    "betaText": "Takk for at du har vært med siden betaen! Tittelen «Betatester» og ringen «Første bane» venter under Belønninger."
   },
   "items": {
     "sat_moon": "Månen",
@@ -133,6 +139,13 @@
     "title_kolo_legend": "Kolo-legende",
     "title_system_master": "Systemets herre",
     "title_orbit_cartographer": "Banekartograf",
-    "title_stargazer": "Stjernekikker"
+    "title_stargazer": "Stjernekikker",
+    "title_beta_tester": "Betatester",
+    "ring_beta": "Første bane"
+  },
+  "exclusive": "Eksklusiv",
+  "special": {
+    "title": "Spesielle belønninger",
+    "hint": "For komplette samlinger og for betatestere. De kommer aldri fra kapsler."
   }
 }

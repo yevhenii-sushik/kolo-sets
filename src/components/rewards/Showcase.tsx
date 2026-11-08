@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Check, Flame, Medal, Plus } from "lucide-react";
+import { Check, Flame, FlaskConical, Medal, Plus } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
 import { Alert, Button, Modal, cx } from "../../ui";
 import { saveShowcase } from "../../api/progress";
 import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import { COLLECTIONS, ITEMS, itemById } from "../../../server/core/items";
-import { LEGACY_MEDAL, SHOWCASE_MAX } from "../../../server/core/loot";
+import { BETA_MEDAL, LEGACY_MEDAL, SHOWCASE_MAX } from "../../../server/core/loot";
 import { ItemArt } from "./ItemArt";
 
 // Что можно выставить на витрину и как это выглядит: предмет, медаль за коллекцию, медаль огоньков, достижение
@@ -23,6 +23,15 @@ function useEntry() {
         art: (
           <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-soft text-accent-ink">
             <Medal size={28} />
+          </span>
+        ),
+      };
+    if (id === BETA_MEDAL)
+      return {
+        name: r.medal.beta.name,
+        art: (
+          <span className="grid h-14 w-14 place-items-center rounded-2xl bg-special-soft text-special">
+            <FlaskConical size={28} />
           </span>
         ),
       };

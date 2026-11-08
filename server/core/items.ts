@@ -9,8 +9,9 @@ export interface Item {
   id: string;
   kind: ItemKind;
   rarity: Rarity;
-  collection: CollectionId;
-  reward?: true; // награда за полный сбор: в капсулах не выпадает и за пыль не создаётся
+  collection?: CollectionId; // нет у особых наград (бета-тестерам)
+  reward?: true; // награда (за полный сбор или особая): в капсулах не выпадает и за пыль не создаётся
+  exclusive?: "beta"; // особая награда — больше её не получить
 }
 
 export const RARITIES: readonly Rarity[] = ["common", "rare", "epic", "legendary"];
@@ -47,6 +48,9 @@ export const ITEMS: readonly Item[] = [
   { id: "title_system_master", kind: "title", rarity: "legendary", collection: "planets", reward: true },
   { id: "title_orbit_cartographer", kind: "title", rarity: "legendary", collection: "orbits", reward: true },
   { id: "title_stargazer", kind: "title", rarity: "legendary", collection: "sky", reward: true },
+  // Бета-тестерам: кто зарегистрировался до конца 2026 года (server/core/loot.ts → BETA_CUTOFF)
+  { id: "title_beta_tester", kind: "title", rarity: "legendary", reward: true, exclusive: "beta" },
+  { id: "ring_beta", kind: "ring", rarity: "legendary", reward: true, exclusive: "beta" },
 ];
 
 export const COLLECTIONS: readonly { id: CollectionId; kind: ItemKind; medal: string; title?: string }[] = [
@@ -61,4 +65,6 @@ export const itemById = (id: string): Item | undefined => BY_ID.get(id);
 
 // Предметы, которые можно получить из капсулы (и собрать в коллекцию)
 export const CAPSULE_ITEMS = ITEMS.filter((i) => !i.reward);
+// Награды за полный сбор и особые — их только надевают
+export const REWARD_ITEMS = ITEMS.filter((i) => i.reward);
 export const collectionItems = (c: CollectionId) => CAPSULE_ITEMS.filter((i) => i.collection === c);

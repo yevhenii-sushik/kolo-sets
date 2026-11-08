@@ -33,7 +33,7 @@ import {
   type SessionPayload,
   type SessionReply,
 } from '../api/progress';
-import { announceProgress } from '../components/progress/ProgressMoments';
+import { announceMedals, announceProgress } from '../components/progress/ProgressMoments';
 import { localDateKey } from '../utils/progress';
 
 interface DataContextType {
@@ -360,7 +360,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
     (async () => {
       const replies = await flushPendingSessions();
       replies.forEach(r => applyReply(r, false));
-      applyProgression(await syncProgress(), true);
+      const synced = await syncProgress();
+      applyProgression(synced?.progression, true);
+      if (synced?.loot) applyLoot(synced.loot);
+      announceMedals(synced?.granted ?? []);
       if (replies.length > 0) refreshProfile();
     })();
   }, [user, coursesReady, applyReply, applyProgression, refreshProfile]);
@@ -372,7 +375,11 @@ export function DataProvider({ children }: { children: ReactNode }) {
       const today = localDateKey(new Date());
       if (document.visibilityState !== 'visible' || syncedDayRef.current === today) return;
       syncedDayRef.current = today;
-      syncProgress().then(p => applyProgression(p, true));
+      syncProgress().then(r => {
+        applyProgression(r?.progression, true);
+        if (r?.loot) applyLoot(r.loot);
+        announceMedals(r?.granted ?? []);
+      });
     };
     document.addEventListener('visibilitychange', onVisible);
     return () => document.removeEventListener('visibilitychange', onVisible);

@@ -19,7 +19,7 @@ service cloud.firestore {
     // Опыт, орбиты, капсулы и предметы (docs/specs/02-progression.md) — только сервер, даже при создании
     function progressionFields() {
       return ['xp', 'level', 'xpDay', 'weekXp', 'orbit', 'legacyFlames',
-              'capsules', 'pity', 'dust', 'inventory', 'equipped', 'medals'];
+              'capsules', 'pity', 'dust', 'inventory', 'equipped', 'medals', 'joinedAt'];
     }
 
     function zeroOrAbsent(m, key) {

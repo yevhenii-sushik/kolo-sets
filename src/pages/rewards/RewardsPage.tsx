@@ -14,7 +14,7 @@ import { buyShield, craftItem, equipItem } from "../../api/progress";
 import { CapsuleArt } from "../../components/rewards/CapsuleArt";
 import { CapsuleOpenModal } from "../../components/rewards/CapsuleOpenModal";
 import { ItemArt, RarityChip } from "../../components/rewards/ItemArt";
-import { COLLECTIONS, RARITIES, collectionItems, type Item } from "../../../server/core/items";
+import { COLLECTIONS, RARITIES, REWARD_ITEMS, collectionItems, type Item } from "../../../server/core/items";
 import { CRAFT_COST, ODDS, PITY_AT, SHIELD_COST } from "../../../server/core/loot";
 import { MAX_SHIELDS } from "../../../server/core/orbit";
 
@@ -241,6 +241,46 @@ export default function RewardsPage() {
           </Card>
         );
       })}
+
+      {/* ── Особые награды: титулы за полный сбор и бета-тестерам — только надеть ── */}
+      {REWARD_ITEMS.some((i) => loot.inventory[i.id]) && (
+        <Card padding="lg" className="grid grid-cols-1 gap-5">
+          <div className="grid gap-1">
+            <Heading size={3} as="h3">
+              {r.special.title}
+            </Heading>
+            <p className="text-sm text-muted">{r.special.hint}</p>
+          </div>
+          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {REWARD_ITEMS.filter((i) => loot.inventory[i.id]).map((item) => {
+              const on = loot.equipped[item.kind] === item.id;
+              return (
+                <li
+                  key={item.id}
+                  className={cx(
+                    "grid content-start justify-items-center gap-2 rounded-2xl border p-3 text-center",
+                    on ? "border-accent bg-accent-soft" : "border-line",
+                  )}
+                >
+                  <ItemArt id={item.id} size={64} />
+                  <p className="text-sm font-semibold leading-tight text-fg">{name(item.id)}</p>
+                  <RarityChip rarity={item.rarity} exclusive={!!item.exclusive} />
+                  <Button
+                    size="sm"
+                    variant={on ? "ghost" : "secondary"}
+                    loading={busy === item.id}
+                    disabled={!!busy}
+                    onClick={() => toggle(item)}
+                    className="mt-1 w-full"
+                  >
+                    {on ? r.equip.off : r.equip.on}
+                  </Button>
+                </li>
+              );
+            })}
+          </ul>
+        </Card>
+      )}
 
       <CapsuleOpenModal open={opening} onClose={() => setOpening(false)} />
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />

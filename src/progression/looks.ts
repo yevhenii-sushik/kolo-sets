@@ -42,6 +42,8 @@ export const RINGS: Record<string, RingLook> = {
   ring_constellation: { stops: ["#E0E7FF", "#93C5FD", "#E0E7FF"], dash: true },
   ring_neon: { stops: ["#F0ABFC", "#8B5CF6", "#22D3EE"], glow: true },
   ring_corona: { stops: ["#FFE08A", "#FF5A1F", "#FFE08A"], glow: true, spin: true },
+  // Бета-тестерам: все цвета орбит Kolo по кругу
+  ring_beta: { stops: ["#FF5A1F", "#FFD15A", "#34D399", "#22D3EE", "#7C3AED", "#FF5A1F"], glow: true, spin: true },
 };
 
 export interface SkyLook {
