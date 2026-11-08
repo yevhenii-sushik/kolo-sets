@@ -1,1 +1,4 @@
-/* /index.html   200
+# Netlify применяет правила этого файла раньше netlify.toml — поэтому все перенаправления здесь.
+# /api/* → серверные функции (docs/specs/00-server.md); правило выше общего SPA-правила
+/api/*  /.netlify/functions/:splat  200
+/*      /index.html                 200

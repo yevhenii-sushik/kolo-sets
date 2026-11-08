@@ -8,13 +8,4 @@
   node_bundler = "esbuild"
   external_node_modules = ["firebase-admin"]
 
-# /api/* → функции. Правило выше общего SPA-правила: Netlify проверяет их по порядку
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Перенаправления (/api/* → функции и SPA) — в public/_redirects: Netlify применяет его раньше этого файла
