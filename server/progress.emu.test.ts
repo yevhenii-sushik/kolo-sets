@@ -9,6 +9,7 @@ import goalFn from "../netlify/functions/orbit-goal";
 import capsuleFn from "../netlify/functions/capsules-open";
 import dustFn from "../netlify/functions/dust-spend";
 import equipFn from "../netlify/functions/equip";
+import cleanupFn from "../netlify/functions/account-cleanup";
 import { addDays, dayKey } from "./core/time";
 import { weekOf } from "./core/orbit";
 import { adminAuth, db } from "./admin";
@@ -229,5 +230,16 @@ describe("капсулы, пыль и предметы", () => {
     expect(show.loot.equipped.showcase).toEqual(["collection_sky", "sat_moon"]);
     await call(equipFn, { slot: "satellite", item: null });
     expect((await user().get()).data()!.equipped).toEqual({ showcase: ["collection_sky", "sat_moon"] });
+  });
+});
+
+describe("удаление аккаунта", () => {
+  it("журнал тренировок удаляет сервер", async () => {
+    await call(sessionFn, session());
+    await call(sessionFn, session());
+    expect((await db().collection(`users/${UID}/sessions`).get()).size).toBe(2);
+    const res = await call(cleanupFn, {});
+    expect(await res.json()).toEqual({ deleted: 2 });
+    expect((await db().collection(`users/${UID}/sessions`).get()).size).toBe(0);
   });
 });

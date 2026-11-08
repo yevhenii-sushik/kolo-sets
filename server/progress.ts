@@ -260,3 +260,16 @@ export async function equipUserItem(uid: string, body: { slot?: unknown; item?: 
     return { status: 200, body: { loot: lootView({ ...state, equipped: done.equipped }) } };
   });
 }
+
+// POST /api/account-cleanup — перед удалением аккаунта: журнал тренировок пишет сервер, он же и удаляет
+// (правила базы клиенту этого не дают, пока не развёрнуты новые)
+export async function deleteSessions(uid: string): Promise<Reply> {
+  const store = db();
+  const sessions = await store.collection(`users/${uid}/sessions`).get();
+  for (let i = 0; i < sessions.docs.length; i += 400) {
+    const batch = store.batch();
+    sessions.docs.slice(i, i + 400).forEach((d) => batch.delete(d.ref));
+    await batch.commit();
+  }
+  return { status: 200, body: { deleted: sessions.size } };
+}

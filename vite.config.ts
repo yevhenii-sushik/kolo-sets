@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   // Локально функций нет: /api проксируем на развёрнутые (по умолчанию — рабочий сайт).
-  // Для тестовой ветки: KOLO_API_TARGET=https://feature-server--dakuta-kolo.netlify.app npm run dev
+  // Функции — на kolo.dakuta.dev; для превью ветки: KOLO_API_TARGET=https://<ветка>--dakuta-kolo.netlify.app npm run dev
   server: {
     proxy: {
       '/api': { target: process.env.KOLO_API_TARGET ?? 'https://kolo.dakuta.dev', changeOrigin: true },

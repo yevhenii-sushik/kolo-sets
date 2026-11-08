@@ -56,6 +56,12 @@
       "text": "Open it from your home screen, without the address bar",
       "ios": "Tap {share} and choose {add} “Add to Home Screen”",
       "install": "Install"
+    },
+    "legalUpdate": {
+      "text": "On {date} we updated our Terms of Use and Privacy Policy: XP, weekly orbits, capsules and virtual items have arrived.",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "ok": "Got it"
     }
   },
   "orbit": {

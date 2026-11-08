@@ -288,15 +288,18 @@ export const recordLegalAcceptance = async (userId: string, version: string) => 
   await updateUserProfile(userId, { legalAcceptance: { version, acceptedAt: Timestamp.now() } });
 };
 
-// Удалить все данные пользователя (коллекции + профиль)
-export const deleteUserData = async (userId: string): Promise<void> => {
+// Удалить все данные пользователя (коллекции + профиль). sessionsCleared — журнал тренировок уже
+// удалил сервер (/api/account-cleanup); иначе удаляем сами — правила это разрешают владельцу
+export const deleteUserData = async (userId: string, { sessionsCleared = false } = {}): Promise<void> => {
   // Журнал тренировок (users/{uid}/sessions, пишет сервер) — тоже личные данные; удаляем частями,
   // в пакете Firestore не больше 500 операций
-  const sessions = await getDocs(query(collection(db, 'users', userId, 'sessions')));
-  for (let i = 0; i < sessions.docs.length; i += 400) {
-    const chunk = writeBatch(db);
-    sessions.docs.slice(i, i + 400).forEach(d => chunk.delete(d.ref));
-    await chunk.commit();
+  if (!sessionsCleared) {
+    const sessions = await getDocs(query(collection(db, 'users', userId, 'sessions')));
+    for (let i = 0; i < sessions.docs.length; i += 400) {
+      const chunk = writeBatch(db);
+      sessions.docs.slice(i, i + 400).forEach(d => chunk.delete(d.ref));
+      await chunk.commit();
+    }
   }
 
   const collectionsRef = collection(db, 'users', userId, 'collections');

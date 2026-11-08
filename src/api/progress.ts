@@ -165,3 +165,6 @@ export const buyShield = () =>
 export const equipItem = (slot: Slot, item: string | null) => post<{ loot: Loot }>("/api/equip", { slot, item });
 
 export const saveShowcase = (showcase: string[]) => post<{ loot: Loot }>("/api/equip", { showcase });
+
+// Перед удалением аккаунта: журнал тренировок удаляет сервер. false — сервер недоступен
+export const cleanupAccount = () => post<{ deleted: number }>("/api/account-cleanup", {}).then(() => true, () => false);

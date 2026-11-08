@@ -56,6 +56,12 @@
       "text": "Åpne fra Hjem-skjermen, uten adressefelt",
       "ios": "Trykk på {share} og velg {add} «Legg til på Hjem-skjerm»",
       "install": "Installer"
+    },
+    "legalUpdate": {
+      "text": "{date} oppdaterte vi vilkårene for bruk og personvernerklæringen: XP, ukentlige baner, kapsler og virtuelle gjenstander er på plass.",
+      "terms": "Vilkår",
+      "privacy": "Personvern",
+      "ok": "Skjønner"
     }
   },
   "orbit": {

@@ -11,6 +11,7 @@ import {
   resendVerificationEmail as firebaseResendVerification,
 } from '../firebase/auth';
 import { deleteUserData } from '../firebase/firestore';
+import { cleanupAccount } from '../api/progress';
 import {
   syncCollectionsToFirestore,
   getUserProfile
@@ -102,7 +103,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const deleteAccount = async () => {
     if (!user) return;
-    await deleteUserData(user.uid);
+    // Журнал тренировок пишет только сервер — он его и удаляет; не вышло — пробуем сами
+    const sessionsCleared = await cleanupAccount();
+    await deleteUserData(user.uid, { sessionsCleared });
     await firebaseDeleteAccount();
   };
 

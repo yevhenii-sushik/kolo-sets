@@ -12,6 +12,7 @@ import { plural } from "../../utils/plural";
 import { motion, AnimatePresence } from "framer-motion";
 import OnboardingModal, { ONBOARDING_STORAGE_KEY } from "../../components/OnboardingModal";
 import VerifyEmailBanner from "../../components/VerifyEmailBanner";
+import LegalUpdateBanner from "../../components/LegalUpdateBanner";
 import InstallPrompt from "../../components/InstallPrompt";
 import SearchModal from "../../components/SearchModal";
 import CourseSwitcher from "../../components/courses/CourseSwitcher";
@@ -258,6 +259,7 @@ export default function MainLayout() {
             низ страницы частично под нижним меню на мобилке */}
         <main className="flex-1 w-full max-w-5xl mx-auto pt-6 pb-24 md:pb-6 px-5 sm:px-6 lg:px-8">
           <VerifyEmailBanner />
+          <LegalUpdateBanner />
           <Outlet />
         </main>
       </div>
