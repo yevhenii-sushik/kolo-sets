@@ -6,6 +6,7 @@ import enHome from './en/home.json';
 import enTips from './en/tips.json';
 import enWords from './en/words/words.json';
 import enProfile from './en/profile.json';
+import enRewards from './en/rewards.json';
 import enOther from './en/other/other.json';
 import enSettings from './en/other/settings.json';
 import enExplore from './en/other/explore.json';
@@ -21,6 +22,7 @@ import ruHome from './ru/home.json';
 import ruTips from './ru/tips.json';
 import ruWords from './ru/words/words.json';
 import ruProfile from './ru/profile.json';
+import ruRewards from './ru/rewards.json';
 import ruOther from './ru/other/other.json';
 import ruSettings from './ru/other/settings.json';
 import ruExplore from './ru/other/explore.json';
@@ -36,6 +38,7 @@ import noHome from './no/home.json';
 import noTips from './no/tips.json';
 import noWords from './no/words/words.json';
 import noProfile from './no/profile.json';
+import noRewards from './no/rewards.json';
 import noOther from './no/other/other.json';
 import noSettings from './no/other/settings.json';
 import noExplore from './no/other/explore.json';
@@ -51,6 +54,7 @@ import ukHome from './uk/home.json';
 import ukTips from './uk/tips.json';
 import ukWords from './uk/words/words.json';
 import ukProfile from './uk/profile.json';
+import ukRewards from './uk/rewards.json';
 import ukOther from './uk/other/other.json';
 import ukSettings from './uk/other/settings.json';
 import ukExplore from './uk/other/explore.json';
@@ -93,6 +97,7 @@ const en = {
   tips: enTips,
   words: enWords,
   profile: enProfile,
+  rewards: enRewards,
   other: enOther,
   settings: enSettings,
   explore: enExplore,
@@ -110,6 +115,7 @@ const ru = {
   tips: ruTips,
   words: ruWords,
   profile: ruProfile,
+  rewards: ruRewards,
   other: ruOther,
   settings: ruSettings,
   explore: ruExplore,
@@ -127,6 +133,7 @@ const no = {
   tips: noTips,
   words: noWords,
   profile: noProfile,
+  rewards: noRewards,
   other: noOther,
   settings: noSettings,
   explore: noExplore,
@@ -144,6 +151,7 @@ const uk = {
   tips: ukTips,
   words: ukWords,
   profile: ukProfile,
+  rewards: ukRewards,
   other: ukOther,
   settings: ukSettings,
   explore: ukExplore,

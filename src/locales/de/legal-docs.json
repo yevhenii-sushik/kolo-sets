@@ -45,7 +45,7 @@
                   "Vertrag"
                 ],
                 [
-                  "**Lerndaten:** Wortsets und Karten, Wiederholungsplan, Lernverlauf, Statistiken, Serien, Erfolge und Tagesziel.",
+                  "**Lerndaten:** Wortsets und Karten, Wiederholungsplan, Lernverlauf, Statistiken, Serien, Erfolge und Tagesziel; XP und Level, wöchentliche Orbits und Schilde, Kapseln, virtuelle Gegenstände, Sternenstaub und Medaillen.",
                   "Die Trainingsmodi betreiben, Wiederholungen planen und deinen Fortschritt zwischen Geräten synchronisieren.",
                   "Vertrag"
                 ],
@@ -97,7 +97,7 @@
           {
             "list": [
               "**Google** (Firebase Authentication, Cloud Firestore, Cloud Storage) – Konten, Datenbank und Profilbilder. [Datenschutz bei Firebase](https://firebase.google.com/support/privacy)",
-              "**Netlify** – Hosting und Auslieferung der Website. [Datenschutz bei Netlify](https://www.netlify.com/privacy/)",
+              "**Netlify** – Hosting und Auslieferung der Website sowie die Serverfunktionen, die deinen Fortschritt und deine Belohnungen speichern. [Datenschutz bei Netlify](https://www.netlify.com/privacy/)",
               "**Telegram** – leitet Nachrichten aus dem Support-Formular an den privaten Chat unseres Teams weiter. [Datenschutz bei Telegram](https://telegram.org/privacy)",
               "**Google-Anmeldung** – nur, wenn du dich mit Google anmeldest.",
               "**Die Sprachausgabe deines Browsers** – die Aussprache nutzt die im Browser eingebaute Sprachsynthese. Je nach Browser kann der Text vom Browser- oder Betriebssystemhersteller verarbeitet werden (einige Stimmen in Chrome sind Online-Stimmen von Google). Kolo erhält keine Audiodaten."
@@ -268,6 +268,22 @@
         "title": "Unsere Inhalte",
         "blocks": [
           "Die Kolo-App, ihr Code, Design, Logo und die Marke sowie die von uns veröffentlichten Wortsets gehören uns oder unseren Lizenzgebern. Du darfst sie für dein persönliches, nicht kommerzielles Lernen nutzen. Bitte kopiere, verkaufe oder verbreite sie nicht ohne unsere Erlaubnis."
+        ]
+      },
+      {
+        "id": "virtual",
+        "title": "Virtuelle Gegenstände und Belohnungen",
+        "blocks": [
+          {
+            "list": [
+              "Fürs Lernen vergibt Kolo XP, Level, wöchentliche Orbits und Schilde, Kapseln, virtuelle Gegenstände (Satelliten, Ringfarben, Titel, Profilhintergründe), Sternenstaub und Medaillen. Sie existieren nur in Kolo und machen das Lernen unterhaltsamer.",
+              "Virtuelle Gegenstände haben keinen Geldwert. Sie können nicht verkauft, auf ein anderes Konto übertragen oder gegen Geld oder etwas außerhalb von Kolo eingetauscht werden. Wir verkaufen keine Kapseln, Gegenstände oder Sternenstaub.",
+              "Der Inhalt einer Kapsel ist zufällig. Die Wahrscheinlichkeiten werden in der App angezeigt, bevor du sie öffnest.",
+              "Ein Gegenstand gibt dir ein persönliches Recht, ihn in Kolo zu nutzen, kein Eigentum. Wir können Belohnungen anpassen, etwa um einen Fehler zu beheben; entfernen wir einen Gegenstand, den du bereits hast, versuchen wir, ihn durch einen gleichwertigen zu ersetzen.",
+              "Belohnungen, die durch Betrug oder Missbrauch des Dienstes erlangt wurden, können entfernt werden.",
+              "Wenn du dein Konto löschst, werden auch deine Belohnungen gelöscht und können nicht wiederhergestellt werden."
+            ]
+          }
         ]
       },
       {

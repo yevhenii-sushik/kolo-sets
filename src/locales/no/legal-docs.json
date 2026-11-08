@@ -45,7 +45,7 @@
                   "Avtale"
                 ],
                 [
-                  "**Læringsdata:** ordsett og kort, repetisjonsplan, studiehistorikk, statistikk, rekker, prestasjoner og dagsmål.",
+                  "**Læringsdata:** ordsett og kort, repetisjonsplan, studiehistorikk, statistikk, rekker, prestasjoner og dagsmål; XP og nivå, ukentlige baner og skjold, kapsler, virtuelle gjenstander, stjernestøv og medaljer.",
                   "Drive treningsmodusene, planlegge repetisjoner og synkronisere fremgangen mellom enheter.",
                   "Avtale"
                 ],
@@ -97,7 +97,7 @@
           {
             "list": [
               "**Google** (Firebase Authentication, Cloud Firestore, Cloud Storage) — kontoer, database og profilbilder. [Personvern hos Firebase](https://firebase.google.com/support/privacy)",
-              "**Netlify** — hosting og levering av nettstedet. [Personvern hos Netlify](https://www.netlify.com/privacy/)",
+              "**Netlify** — hosting og levering av nettstedet, og serverfunksjonene som registrerer fremgang og belønninger. [Personvern hos Netlify](https://www.netlify.com/privacy/)",
               "**Telegram** — leverer meldinger du sender via støtteskjemaet til teamets private chat. [Personvern hos Telegram](https://telegram.org/privacy)",
               "**Google-innlogging** — bare hvis du velger å logge inn med Google.",
               "**Nettleserens talemotor** — opplesning bruker talesyntesen som er innebygd i nettleseren din. Avhengig av nettleseren kan teksten behandles av nettleser- eller operativsystemleverandøren (noen stemmer i Chrome er nettbaserte Google-stemmer). Kolo mottar ingen lyd."
@@ -268,6 +268,22 @@
         "title": "Vårt innhold",
         "blocks": [
           "Kolo-appen, koden, designet, logoen og merkevaren, samt ordsettene vi publiserer, tilhører oss eller våre lisensgivere. Du kan bruke dem til personlig, ikke-kommersiell læring. Ikke kopier, videreselg eller distribuer dem uten vår tillatelse."
+        ]
+      },
+      {
+        "id": "virtual",
+        "title": "Virtuelle gjenstander og belønninger",
+        "blocks": [
+          {
+            "list": [
+              "For øving gir Kolo XP, nivåer, ukentlige baner og skjold, kapsler, virtuelle gjenstander (satellitter, ringfarger, titler, profilbakgrunner), stjernestøv og medaljer. De finnes bare i Kolo og gjør læringen morsommere.",
+              "Virtuelle gjenstander har ingen pengeverdi. De kan ikke selges, overføres til en annen konto eller byttes mot penger eller noe utenfor Kolo. Vi selger ikke kapsler, gjenstander eller stjernestøv.",
+              "Innholdet i en kapsel er tilfeldig. Sjansene vises i appen før du åpner den.",
+              "En gjenstand gir deg en personlig rett til å bruke den i Kolo, ikke eiendomsrett. Vi kan justere belønninger, for eksempel for å rette en feil; fjerner vi en gjenstand du allerede har, prøver vi å erstatte den med en tilsvarende.",
+              "Belønninger oppnådd ved juks eller misbruk av tjenesten kan fjernes.",
+              "Når du sletter kontoen, slettes belønningene også, og de kan ikke gjenopprettes."
+            ]
+          }
         ]
       },
       {

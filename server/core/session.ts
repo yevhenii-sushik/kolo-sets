@@ -4,9 +4,9 @@
 import { AchievementType } from "../../src/types";
 import { checkAndUnlockAchievements } from "../../src/utils/achievements";
 import { addDays, dayKey, daysBetween, hourIn, safeTimeZone } from "./time";
-import { achievementXp, capDaily, FIRST_SESSION_BONUS, levelFromXp, ORBIT_BONUS, sessionXp } from "./xp";
+import { achievementXp, capDaily, FIRST_SESSION_BONUS, ORBIT_BONUS, sessionXp } from "./xp";
 import { recordSession, type OrbitEvent } from "./orbit";
-import { addWeekXp, prepare, view, type ProgressionPatch, type ProgressionState, type ProgressionView } from "./progression";
+import { prepare, settle, type ProgressionPatch, type ProgressionState, type ProgressionView } from "./progression";
 
 export const SESSION_KINDS = ["flashcards", "review", "quiz", "speed", "survival", "match"] as const;
 export type SessionKind = (typeof SESSION_KINDS)[number];
@@ -152,8 +152,7 @@ export function applySession(
   const lastDay = state.lastStudyDay ?? (state.lastStudyDate ? dayKey(state.lastStudyDate, tz) : null);
 
   // ── Орбиты и опыт: переход со старых огоньков (по истории ДО этой тренировки) и итоги прошедших недель
-  const prep = prepare({ ...state, studyHistory: state.studyHistory }, today);
-  const levelBefore = levelFromXp(prep.xp).level;
+  const prep = prepare(state, today);
   const events: OrbitEvent[] = [...prep.events];
 
   // ── Серия: тот же день — без изменений; вчера — +1; раньше или никогда — 1.
@@ -208,7 +207,7 @@ export function applySession(
     },
   });
 
-  // ── Орбита недели и опыт: тренировка (до дневного потолка) + бонусы сверх потолка
+  // ── Орбита недели и опыт: тренировка (до дневного потолка) + бонусы сверх потолка; капсулы
   const orbit = recordSession(prep.orbit, today, events);
   const capped = capDaily(sessionXp(s.kind, s.cards, s.correct), state.xpDay, today);
   const gained =
@@ -216,16 +215,12 @@ export function applySession(
     (firstToday ? FIRST_SESSION_BONUS : 0) +
     (events.includes("orbitClosed") ? ORBIT_BONUS : 0) +
     newAchievements.reduce((n, id) => n + achievementXp(id), 0);
-  const xp = prep.xp + gained;
+  const progression = settle(state, prep, today, { gained, orbit, events, newAchievements });
 
   return {
     patch: {
-      xp,
-      level: levelFromXp(xp).level,
+      ...progression.patch,
       xpDay: capped.xpDay,
-      weekXp: addWeekXp(state.weekXp, prep.currentWeek, gained),
-      orbit,
-      ...(prep.legacyFlames !== undefined ? { legacyFlames: prep.legacyFlames } : {}),
       stats,
       currentStreak: current,
       longestStreak: longest,
@@ -239,7 +234,7 @@ export function applySession(
       streak: { current, longest, extendedToday },
       newAchievements,
       day: today,
-      progression: view(orbit, xp, gained, levelBefore, today, events),
+      progression: progression.view,
     },
   };
 }
@@ -251,4 +246,17 @@ export function collectionAchievements(state: ProgressState, info: CollectionsIn
     info.totalCards,
     { collectionsCount: info.collectionsCount },
   );
+}
+
+// То же с опытом и капсулами (500 и 1000 слов). null — новых достижений нет, писать нечего
+export function applyCollectionUnlocks(state: ProgressState, info: CollectionsInfo, today: string) {
+  const newAchievements = collectionAchievements(state, info);
+  if (newAchievements.length === 0) return null;
+  const prep = prepare(state, today);
+  const gained = newAchievements.reduce((n, id) => n + achievementXp(id), 0);
+  const { patch, view } = settle(state, prep, today, { gained, orbit: prep.orbit, events: prep.events, newAchievements });
+  return {
+    patch: { ...patch, achievements: [...(state.achievements ?? []), ...newAchievements] },
+    result: { newAchievements, progression: view },
+  };
 }

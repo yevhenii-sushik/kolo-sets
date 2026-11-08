@@ -275,7 +275,7 @@ describe("тренировка, синхронизация и цель цели�
     const r = syncProgress(state, monday);
     expect(r.patch?.orbit).toMatchObject({ week: monday, streak: 2, shields: 0 });
     expect(r.result.events).toEqual(["shieldUsed"]);
-    expect(syncProgress({ ...state, orbit: r.patch!.orbit }, monday).patch).toBeNull();
+    expect(syncProgress({ ...state, ...r.patch! }, monday).patch).toBeNull();
   });
 
   it("синхронизация мигрирует старый профиль один раз", () => {

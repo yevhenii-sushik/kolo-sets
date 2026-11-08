@@ -28,6 +28,7 @@ import {
   setOrbitGoal,
   submitSession,
   syncProgress,
+  type Loot,
   type Progression,
   type SessionPayload,
   type SessionReply,
@@ -81,6 +82,12 @@ interface DataContextType {
   progression: Progression | null;
   /** Цель недели 3–7: первый выбор — сразу, дальше — с понедельника. Ошибку сети пробрасывает */
   setWeeklyGoal: (goal: number) => Promise<void>;
+  /** Капсулы, пыль, инвентарь, медали и надетое — из профиля (пишет только сервер) */
+  loot: Loot;
+  /** Ответ сервера после действия с наградами */
+  applyLoot: (loot: Loot) => void;
+  /** Ответ сервера с опытом и орбитой (покупка щита и т. п.) */
+  applyProgression: (p: Progression | null | undefined, celebrate: boolean) => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -195,8 +202,21 @@ export function DataProvider({ children }: { children: ReactNode }) {
     if (!p || !user) return;
     setProgressionState(p);
     writeCache(progressionCacheKey(user.uid), p);
+    if (p.capsules) patchProfile({ capsules: p.capsules.count });
     if (celebrate) announceProgress(p);
-  }, [user]);
+  }, [user, patchProfile]);
+
+  const applyLoot = useCallback((l: Loot) => patchProfile({ ...l }), [patchProfile]);
+
+  const loot = useMemo<Loot>(() => ({
+    // Кэш опыта с этапа 2a капсул не знает — на него не опираемся
+    capsules: typeof profile?.capsules === 'number' ? profile.capsules : (progression?.capsules?.count ?? 0),
+    pity: profile?.pity ?? 0,
+    dust: profile?.dust ?? 0,
+    inventory: profile?.inventory ?? {},
+    medals: profile?.medals ?? [],
+    equipped: { showcase: [], ...(profile?.equipped ?? {}) },
+  }), [profile, progression]);
 
   const applyReply = useCallback((reply: SessionReply, celebrate: boolean) => {
     showUnlocks(reply.newAchievements);
@@ -215,12 +235,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [applyReply, refreshProfile]);
 
   const checkAchievements = useCallback(async () => {
-    const ids = await recheckAchievements();
-    if (ids.length > 0) {
-      showUnlocks(ids);
+    const { newAchievements, progression: p } = await recheckAchievements();
+    if (newAchievements.length > 0) {
+      showUnlocks(newAchievements);
+      applyProgression(p, true);
       await refreshProfile();
     }
-  }, [showUnlocks, refreshProfile]);
+  }, [showUnlocks, applyProgression, refreshProfile]);
 
   useEffect(() => {
     if (!user?.uid) {
@@ -482,6 +503,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
         checkAchievements,
         progression,
         setWeeklyGoal,
+        loot,
+        applyLoot,
+        applyProgression,
       }}
     >
       {children}

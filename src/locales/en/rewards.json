@@ -1,0 +1,138 @@
+{
+  "title": "Rewards",
+  "subtitle": "Capsules, collections and stardust. Earned only by practising — never sold.",
+  "link": "Rewards",
+  "capsules": {
+    "title": "Capsules",
+    "count": {
+      "one": "{n} capsule",
+      "other": "{n} capsules"
+    },
+    "none": "No capsules yet. You get them for new levels, closed orbits, streaks of 4, 12 and 26 orbits and big achievements.",
+    "open": "Open a capsule",
+    "openMore": "Open another",
+    "opening": "Opening…",
+    "pity": {
+      "one": "Epic or better within {n} capsule",
+      "other": "Epic or better within {n} capsules"
+    },
+    "pityNow": "Your next capsule is epic or better",
+    "odds": "Odds",
+    "oddsText": "Each capsule holds one item; within a rarity every item is equally likely. If 9 capsules in a row bring nothing epic or legendary, the 10th is epic. Duplicates turn into stardust.",
+    "new": "New!",
+    "duplicate": "Already yours — +{n} stardust",
+    "completed": "The {name} collection is complete!",
+    "done": "Done",
+    "error": "Couldn't open the capsule. Check your connection and try again."
+  },
+  "rarity": {
+    "common": "Common",
+    "rare": "Rare",
+    "epic": "Epic",
+    "legendary": "Legendary"
+  },
+  "kinds": {
+    "satellite": "Satellite",
+    "ring": "Ring",
+    "title": "Title",
+    "background": "Profile background"
+  },
+  "dust": {
+    "title": "Stardust",
+    "hint": "Left over from duplicates. Trade it for a shield or a missing common or rare collection item.",
+    "shield": "Shield for {n}",
+    "shieldHint": "A shield closes a week for you if you fall short. You can hold two.",
+    "shieldFull": "You already have two shields",
+    "shieldDone": "Shield added",
+    "craft": "Create for {n}",
+    "crafted": "{item} is now in your collection",
+    "notEnough": "Not enough stardust",
+    "error": "That didn't work. Check your connection and try again.",
+    "craftConfirm": "Spend {n} stardust on {item}?"
+  },
+  "collections": {
+    "title": "Collections",
+    "progress": "{n} of {total}",
+    "reward": "Complete it for a medal and the title “{title}”",
+    "rewardMedal": "Complete it for a medal",
+    "complete": "Complete",
+    "names": {
+      "planets": "Planets",
+      "orbits": "Orbits",
+      "sky": "Sky",
+      "voices": "Voices"
+    },
+    "missing": "Not found yet",
+    "all": "All rewards"
+  },
+  "equip": {
+    "on": "Equip",
+    "off": "Remove",
+    "equipped": "Equipped",
+    "error": "That didn't work. Try again."
+  },
+  "showcase": {
+    "title": "Showcase",
+    "hint": "Up to three rewards you want to show off.",
+    "edit": "Edit",
+    "empty": "Empty",
+    "pick": "Choose up to three rewards",
+    "save": "Save",
+    "items": "Items",
+    "medals": "Medals and achievements",
+    "nothing": "Nothing to show yet: open a capsule or earn an achievement."
+  },
+  "medal": {
+    "name": "{name} collection",
+    "description": "Completed"
+  },
+  "moment": {
+    "title": {
+      "one": "Capsule earned",
+      "other": "+{n} capsules"
+    },
+    "text": "Inside: a satellite, ring, background or title. Open it in Rewards.",
+    "open": "Open"
+  },
+  "items": {
+    "sat_moon": "Moon",
+    "sat_mars": "Mars",
+    "sat_mercury": "Mercury",
+    "sat_venus": "Venus",
+    "sat_neptune": "Neptune",
+    "sat_uranus": "Uranus",
+    "sat_jupiter": "Jupiter",
+    "sat_saturn": "Saturn",
+    "sat_supernova": "Supernova",
+    "ring_mint": "Mint",
+    "ring_lavender": "Lavender",
+    "ring_sky": "Azure",
+    "ring_coral": "Coral",
+    "ring_sunset": "Sunset",
+    "ring_ocean": "Ocean",
+    "ring_aurora": "Aurora",
+    "ring_constellation": "Constellation",
+    "ring_neon": "Neon",
+    "ring_corona": "Corona",
+    "bg_dawn": "Dawn",
+    "bg_dusk": "Dusk",
+    "bg_mist": "Mist",
+    "bg_starry": "Starry Night",
+    "bg_northern": "Northern Lights",
+    "bg_milkyway": "Milky Way",
+    "bg_nebula": "Nebula",
+    "bg_meteors": "Meteor Shower",
+    "title_curious": "Word Seeker",
+    "title_persistent": "Orbit Apprentice",
+    "title_bookworm": "Bookworm",
+    "title_early_bird": "Early Bird",
+    "title_polyglot": "Polyglot",
+    "title_wordsmith": "Wordsmith",
+    "title_review_master": "Review Master",
+    "title_word_keeper": "Keeper of Words",
+    "title_kolo_legend": "Kolo Legend",
+    "title_system_master": "Master of the System",
+    "title_orbit_cartographer": "Orbit Cartographer",
+    "title_stargazer": "Stargazer"
+  }
+}

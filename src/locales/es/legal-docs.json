@@ -45,7 +45,7 @@
                   "Contrato"
                 ],
                 [
-                  "**Datos de aprendizaje:** sets de palabras y tarjetas, calendario de repasos, historial de estudio, estadísticas, rachas, logros y objetivo diario.",
+                  "**Datos de aprendizaje:** sets de palabras y tarjetas, calendario de repasos, historial de estudio, estadísticas, rachas, logros y objetivo diario; XP y nivel, órbitas semanales y escudos, cápsulas, objetos virtuales, polvo de estrellas y medallas.",
                   "Hacer funcionar los modos de práctica, programar repasos y sincronizar tu progreso entre dispositivos.",
                   "Contrato"
                 ],
@@ -97,7 +97,7 @@
           {
             "list": [
               "**Google** (Firebase Authentication, Cloud Firestore, Cloud Storage): cuentas, base de datos y fotos de perfil. [Privacidad de Firebase](https://firebase.google.com/support/privacy)",
-              "**Netlify**: alojamiento y entrega del sitio web. [Privacidad de Netlify](https://www.netlify.com/privacy/)",
+              "**Netlify**: alojamiento y entrega del sitio web, y las funciones de servidor que registran tu progreso y tus recompensas. [Privacidad de Netlify](https://www.netlify.com/privacy/)",
               "**Telegram**: entrega los mensajes que envías desde el formulario de soporte al chat privado de nuestro equipo. [Privacidad de Telegram](https://telegram.org/privacy)",
               "**Inicio de sesión con Google**: solo si eliges entrar con Google.",
               "**El motor de voz de tu navegador**: la pronunciación usa la síntesis de voz integrada en tu navegador. Según el navegador, el texto puede ser tratado por el fabricante del navegador o del sistema operativo (algunas voces de Chrome son voces en línea de Google). Kolo no recibe ningún audio."
@@ -268,6 +268,22 @@
         "title": "Nuestro contenido",
         "blocks": [
           "La app Kolo, su código, diseño, logotipo y marca, así como los sets de palabras que publicamos, nos pertenecen a nosotros o a nuestros licenciantes. Puedes usarlos para tu aprendizaje personal y no comercial. No los copies, revendas ni redistribuyas sin nuestro permiso."
+        ]
+      },
+      {
+        "id": "virtual",
+        "title": "Objetos virtuales y recompensas",
+        "blocks": [
+          {
+            "list": [
+              "Por estudiar, Kolo otorga XP, niveles, órbitas semanales y escudos, cápsulas, objetos virtuales (satélites, colores de anillo, títulos, fondos de perfil), polvo de estrellas y medallas. Solo existen dentro de Kolo y hacen que aprender sea más divertido.",
+              "Los objetos virtuales no tienen valor monetario. No se pueden vender, transferir a otra cuenta ni cambiar por dinero ni por nada fuera de Kolo. No vendemos cápsulas, objetos ni polvo de estrellas.",
+              "El contenido de una cápsula es aleatorio. Las probabilidades se muestran en la app antes de que la abras.",
+              "Un objeto te da un derecho personal a usarlo en Kolo, no su propiedad. Podemos ajustar las recompensas, por ejemplo para corregir un error; si retiramos un objeto que ya tienes, intentaremos sustituirlo por uno equivalente.",
+              "Las recompensas obtenidas mediante trampas o abuso del servicio pueden retirarse.",
+              "Si eliminas tu cuenta, tus recompensas también se eliminan y no se pueden recuperar."
+            ]
+          }
         ]
       },
       {

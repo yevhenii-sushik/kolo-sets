@@ -1,8 +1,9 @@
 // Запись прогресса в базу: транзакции поверх чистого ядра server/core (docs/specs/00-server.md)
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
-import type { AchievementType } from "../src/types";
-import { applySession, checkPlausibility, collectionAchievements, type ProgressState, type SessionInput } from "./core/session";
-import { applyGoal, syncProgress } from "./core/progression";
+import { randomInt } from "node:crypto";
+import { Timestamp } from "firebase-admin/firestore";
+import { applyCollectionUnlocks, applySession, checkPlausibility, type ProgressState, type SessionInput } from "./core/session";
+import { applyGoal, buyShield, syncProgress } from "./core/progression";
+import { craftItem, equipItem, openCapsule, setShowcase, type Equipped, type LootState, type Slot } from "./core/loot";
 import type { OrbitState } from "./core/orbit";
 import { dayKey, safeTimeZone } from "./core/time";
 import { db } from "./admin";
@@ -39,8 +40,10 @@ function orbitOf(v: unknown): OrbitState | undefined {
   return ok ? (o as unknown as OrbitState) : undefined;
 }
 
+const isRecord = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
+
 // Поля профиля, которые считает сервер, — в виде, понятном ядру
-function progressState(data: FirebaseFirestore.DocumentData | undefined): ProgressState {
+function progressState(data: FirebaseFirestore.DocumentData | undefined): ProgressState & LootState {
   return {
     stats: data?.stats,
     currentStreak: data?.currentStreak,
@@ -55,8 +58,30 @@ function progressState(data: FirebaseFirestore.DocumentData | undefined): Progre
     weekXp: tally(data?.weekXp, "week"),
     orbit: orbitOf(data?.orbit),
     legacyFlames: num(data?.legacyFlames),
+    capsules: num(data?.capsules),
+    pity: num(data?.pity),
+    dust: num(data?.dust),
+    inventory: isRecord(data?.inventory)
+      ? Object.fromEntries(
+          Object.entries(data.inventory).filter(([, v]) => isRecord(v) && num(v.n) !== undefined),
+        ) as LootState["inventory"]
+      : {},
+    medals: Array.isArray(data?.medals) ? data.medals.filter((m: unknown) => typeof m === "string") : [],
+    equipped: isRecord(data?.equipped)
+      ? ({ ...data.equipped, showcase: Array.isArray(data.equipped.showcase) ? data.equipped.showcase : [] } as Equipped)
+      : undefined,
   };
 }
+
+// Награды — как их показывает клиент (в инвентаре — только количество)
+const lootView = (s: LootState) => ({
+  capsules: s.capsules ?? 0,
+  pity: s.pity ?? 0,
+  dust: s.dust ?? 0,
+  inventory: Object.fromEntries(Object.entries(s.inventory ?? {}).map(([id, v]) => [id, { n: v.n }])),
+  medals: s.medals ?? [],
+  equipped: s.equipped ?? { showcase: [] },
+});
 
 // Поля сервера заменяются целиком: при merge Firestore слил бы вложенные объекты, и, например,
 // закрытая починка осталась бы в orbit
@@ -122,24 +147,25 @@ export async function recordSession(uid: string, s: SessionInput, now = new Date
   });
 }
 
-// POST /api/achievements — достижения за наборы и слова после их изменения
-export async function recheckCollectionAchievements(uid: string): Promise<Reply> {
+// POST /api/achievements — достижения за наборы и слова после их изменения: опыт и капсулы, как за тренировку
+export async function recheckCollectionAchievements(uid: string, timezone?: unknown, now = new Date()): Promise<Reply> {
   const store = db();
   const userRef = store.doc(`users/${uid}`);
-  const [profile, sets] = await Promise.all([userRef.get(), userRef.collection("collections").get()]);
-  if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
-
+  const sets = await userRef.collection("collections").get();
   const info = {
     cardsInSession: 0,
     totalCards: sets.docs.reduce((n, d) => n + cardCount(d.data()), 0),
     collectionsCount: sets.size,
   };
-  const newAchievements: AchievementType[] = collectionAchievements(progressState(profile.data()), info);
-  if (newAchievements.length > 0) {
-    // arrayUnion: параллельный /api/session не потеряет свои достижения
-    await userRef.update({ achievements: FieldValue.arrayUnion(...newAchievements) });
-  }
-  return { status: 200, body: { newAchievements } };
+  return store.runTransaction(async (tx) => {
+    const profile = await tx.get(userRef);
+    if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
+    const { tz, today } = todayFor(timezone, profile.data(), now);
+    const applied = applyCollectionUnlocks(progressState(profile.data()), info, today);
+    if (!applied) return { status: 200, body: { newAchievements: [] } };
+    writeProfile(tx, userRef, { ...applied.patch, timezone: tz });
+    return { status: 200, body: applied.result };
+  });
 }
 
 // POST /api/progress-sync — при открытии приложения: итоги прошедших недель и однократный переход со старых огоньков
@@ -168,5 +194,69 @@ export async function setOrbitGoal(uid: string, goal: number, timezone: unknown,
     const { patch, result } = applyGoal(progressState(profile.data()), goal, today);
     writeProfile(tx, userRef, { ...patch, timezone: tz });
     return { status: 200, body: { progression: result } };
+  });
+}
+
+// POST /api/capsules-open — случайность только здесь, на сервере
+export async function openUserCapsule(uid: string, now = new Date()): Promise<Reply> {
+  const store = db();
+  const userRef = store.doc(`users/${uid}`);
+  return store.runTransaction(async (tx) => {
+    const profile = await tx.get(userRef);
+    if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
+    const state = progressState(profile.data());
+    const opened = openCapsule(state, randomInt, now);
+    if (!opened.ok) return { status: 409, body: { error: opened.reason } };
+    writeProfile(tx, userRef, opened.patch);
+    return { status: 200, body: { ...opened.result, loot: lootView({ ...state, ...opened.patch }) } };
+  });
+}
+
+// POST /api/dust-spend — { kind: "shield" } или { kind: "item", item }
+export async function spendDust(uid: string, body: { kind?: unknown; item?: unknown; timezone?: unknown }, now = new Date()): Promise<Reply> {
+  if (body.kind !== "shield" && !(body.kind === "item" && typeof body.item === "string")) {
+    return { status: 400, body: { error: "bad-request" } };
+  }
+  const store = db();
+  const userRef = store.doc(`users/${uid}`);
+  return store.runTransaction(async (tx) => {
+    const profile = await tx.get(userRef);
+    if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
+    const state = progressState(profile.data());
+    if (body.kind === "shield") {
+      const { tz, today } = todayFor(body.timezone, profile.data(), now);
+      const bought = buyShield(state, today);
+      if (!bought.ok) return { status: 409, body: { error: bought.reason } };
+      writeProfile(tx, userRef, { ...bought.patch, timezone: tz });
+      return { status: 200, body: { progression: bought.result, loot: lootView({ ...state, dust: bought.patch.dust }) } };
+    }
+    const crafted = craftItem(state, body.item as string, now);
+    if (!crafted.ok) return { status: crafted.reason === "unknown-item" ? 400 : 409, body: { error: crafted.reason } };
+    writeProfile(tx, userRef, crafted.patch);
+    return { status: 200, body: { ...crafted.result, loot: lootView({ ...state, ...crafted.patch }) } };
+  });
+}
+
+const SLOTS: readonly Slot[] = ["satellite", "ring", "title", "background"];
+
+// POST /api/equip — { slot, item | null } или { showcase: [...] }
+export async function equipUserItem(uid: string, body: { slot?: unknown; item?: unknown; showcase?: unknown }): Promise<Reply> {
+  const store = db();
+  const userRef = store.doc(`users/${uid}`);
+  return store.runTransaction(async (tx) => {
+    const profile = await tx.get(userRef);
+    if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
+    const state = progressState(profile.data());
+    let done: { ok: true; equipped: Equipped } | { ok: false };
+    if (body.showcase !== undefined) {
+      done = setShowcase({ ...state, achievements: state.achievements as string[] | undefined }, body.showcase);
+    } else if (SLOTS.includes(body.slot as Slot) && (body.item === null || typeof body.item === "string")) {
+      done = equipItem(state, body.slot as Slot, body.item as string | null);
+    } else {
+      return { status: 400, body: { error: "bad-request" } };
+    }
+    if (!done.ok) return { status: 409, body: { error: "not-owned" } };
+    writeProfile(tx, userRef, { equipped: done.equipped });
+    return { status: 200, body: { loot: lootView({ ...state, equipped: done.equipped }) } };
   });
 }

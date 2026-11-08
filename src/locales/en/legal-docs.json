@@ -45,7 +45,7 @@
                   "Contract"
                 ],
                 [
-                  "**Learning data:** word sets and cards, review schedule, study history, statistics, streaks, achievements and daily goal.",
+                  "**Learning data:** word sets and cards, review schedule, study history, statistics, streaks, achievements and daily goal; XP and level, weekly orbits and shields, capsules, virtual items, stardust and medals.",
                   "Run the training modes, schedule reviews and sync your progress between devices.",
                   "Contract"
                 ],
@@ -97,7 +97,7 @@
           {
             "list": [
               "**Google** (Firebase Authentication, Cloud Firestore, Cloud Storage) — accounts, database and profile photos. [Firebase privacy](https://firebase.google.com/support/privacy)",
-              "**Netlify** — hosting and delivery of the website. [Netlify privacy](https://www.netlify.com/privacy/)",
+              "**Netlify** — hosting and delivery of the website, and the server functions that record your progress and rewards. [Netlify privacy](https://www.netlify.com/privacy/)",
               "**Telegram** — delivers messages you send through the support form to our team's private chat. [Telegram privacy](https://telegram.org/privacy)",
               "**Google Sign-In** — only if you choose to sign in with Google.",
               "**Your browser's speech engine** — pronunciation uses the speech synthesis built into your browser. Depending on the browser, the text may be processed by your browser or operating system vendor (some voices in Chrome are online Google voices). Kolo receives no audio."
@@ -268,6 +268,22 @@
         "title": "Our content",
         "blocks": [
           "The Kolo app, its code, design, logo and brand, and the word sets we publish belong to us or our licensors. You may use them for personal, non-commercial learning. Please don't copy, resell or redistribute them without our permission."
+        ]
+      },
+      {
+        "id": "virtual",
+        "title": "Virtual items and rewards",
+        "blocks": [
+          {
+            "list": [
+              "For learning, Kolo gives XP, levels, weekly orbits and shields, capsules, virtual items (satellites, ring colours, titles, profile backgrounds), stardust and medals. They exist only inside Kolo and make learning more fun.",
+              "Virtual items have no monetary value. They can't be sold, transferred to another account or exchanged for money or anything outside Kolo. We don't sell capsules, items or stardust.",
+              "What a capsule contains is random. The odds are shown in the app before you open it.",
+              "An item gives you a personal right to use it in Kolo, not ownership. We may adjust rewards, for example to fix a mistake; if we remove an item you already have, we will try to replace it with an equivalent one.",
+              "Rewards gained by cheating or abusing the service may be removed.",
+              "When you delete your account, your rewards are deleted too and can't be restored."
+            ]
+          }
         ]
       },
       {

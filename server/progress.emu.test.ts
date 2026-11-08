@@ -6,6 +6,9 @@ import sessionFn from "../netlify/functions/session";
 import achievementsFn from "../netlify/functions/achievements";
 import syncFn from "../netlify/functions/progress-sync";
 import goalFn from "../netlify/functions/orbit-goal";
+import capsuleFn from "../netlify/functions/capsules-open";
+import dustFn from "../netlify/functions/dust-spend";
+import equipFn from "../netlify/functions/equip";
 import { addDays, dayKey } from "./core/time";
 import { weekOf } from "./core/orbit";
 import { adminAuth, db } from "./admin";
@@ -119,6 +122,8 @@ describe("POST /api/achievements", () => {
     const first = await (await call(achievementsFn, {})).json();
     expect(first.newAchievements).toEqual(expect.arrayContaining([AchievementType.FIRST_COLLECTION, AchievementType.CARDS_10]));
     expect(first.newAchievements).not.toContain(AchievementType.NIGHT_OWL);
+    expect(first.progression.xp.gained).toBeGreaterThan(0);
+    expect((await db().doc(`users/${UID}`).get()).data()!.xp).toBe(first.progression.xp.total);
     const second = await (await call(achievementsFn, {})).json();
     expect(second.newAchievements).toEqual([]);
   });
@@ -173,5 +178,56 @@ describe("опыт и орбиты", () => {
     // Вернуть прежнюю цель — поле nextGoal исчезает из базы, а не остаётся от прошлого раза
     await call(goalFn, { goal: 5, timezone: "Europe/Oslo" });
     expect((await profile()).orbit).not.toHaveProperty("nextGoal");
+  });
+});
+
+describe("капсулы, пыль и предметы", () => {
+  const user = () => db().doc(`users/${UID}`);
+
+  it("первая синхронизация дарит капсулу; открыть — предмет в инвентаре, капсул меньше", async () => {
+    expect((await call(capsuleFn, {})).status).toBe(409); // капсул ещё нет
+    const { progression } = await (await call(syncFn, { timezone: "Europe/Oslo" })).json();
+    expect(progression.capsules).toEqual({ count: 1, gained: 1 });
+
+    const res = await call(capsuleFn, {});
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.item).toMatch(/^(sat|ring|bg|title)_/);
+    expect(body.loot.capsules).toBe(0);
+    const p = (await user().get()).data()!;
+    expect(p.capsules).toBe(0);
+    expect(p.pity + (["epic", "legendary"].includes(body.rarity) ? 1 : 0)).toBeLessThanOrEqual(1);
+    expect(p.inventory[body.item].n).toBe(1);
+    expect(p.inventory[body.item].at).toBeInstanceOf(Timestamp);
+    expect((await call(capsuleFn, {})).status).toBe(409);
+  });
+
+  it("пыль: недостающий предмет и щит", async () => {
+    await call(syncFn, { timezone: "Europe/Oslo" });
+    await user().update({ dust: 300 });
+    expect((await call(dustFn, { kind: "item", item: "sat_saturn" })).status).toBe(409); // эпический — нельзя
+    expect((await call(dustFn, { kind: "item", item: "nope" })).status).toBe(400);
+    expect((await call(dustFn, { kind: "potion" })).status).toBe(400);
+
+    const crafted = await (await call(dustFn, { kind: "item", item: "sat_moon" })).json();
+    expect(crafted).toMatchObject({ item: "sat_moon", cost: 40, loot: { dust: 260 } });
+    const shield = await (await call(dustFn, { kind: "shield", timezone: "Europe/Oslo" })).json();
+    expect(shield.progression.orbit.shields).toBe(1);
+    expect(shield.loot.dust).toBe(140);
+    const p = (await user().get()).data()!;
+    expect(p).toMatchObject({ dust: 140, orbit: { shields: 1 } });
+    expect(p.inventory.sat_moon.n).toBe(1);
+  });
+
+  it("надеть можно только своё; витрина — из своего", async () => {
+    await user().update({ inventory: { sat_moon: { n: 1 } }, medals: ["collection_sky"] });
+    expect((await call(equipFn, { slot: "satellite", item: "sat_mars" })).status).toBe(409);
+    expect((await call(equipFn, { slot: "hat", item: "sat_moon" })).status).toBe(400);
+    const on = await (await call(equipFn, { slot: "satellite", item: "sat_moon" })).json();
+    expect(on.loot.equipped).toEqual({ satellite: "sat_moon", showcase: [] });
+    const show = await (await call(equipFn, { showcase: ["collection_sky", "sat_moon"] })).json();
+    expect(show.loot.equipped.showcase).toEqual(["collection_sky", "sat_moon"]);
+    await call(equipFn, { slot: "satellite", item: null });
+    expect((await user().get()).data()!.equipped).toEqual({ showcase: ["collection_sky", "sat_moon"] });
   });
 });

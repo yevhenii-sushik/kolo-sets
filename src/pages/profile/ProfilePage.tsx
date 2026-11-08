@@ -20,6 +20,13 @@ import ConfirmDialog from "../../components/ConfirmDialog";
 import { OrbitRing } from "../../components/progress/OrbitRing";
 import { RepairLine, Shields, WeekDays, WeekStatus } from "../../components/progress/WeekOrbit";
 import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
+import { AvatarFrame } from "../../components/rewards/AvatarFrame";
+import { BackgroundArt, TitleBadge } from "../../components/rewards/ItemArt";
+import { CapsuleArt } from "../../components/rewards/CapsuleArt";
+import { CapsuleOpenModal } from "../../components/rewards/CapsuleOpenModal";
+import { ShowcaseModal, ShowcaseTile } from "../../components/rewards/Showcase";
+import { COLLECTIONS, collectionItems } from "../../../server/core/items";
+import { SHOWCASE_MAX } from "../../../server/core/loot";
 import Toast from "../../components/ui/Toast";
 import {
   AtSign,
@@ -29,15 +36,17 @@ import {
   Clock,
   Flame,
   GalleryVerticalEnd,
+  Gift,
   ListChecks,
   LogOut,
+  Medal,
   Pencil,
   RefreshCw,
   Target,
   User,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Badge, Button, Card, Field, Heading, IconButton, Input, Ring, Spinner, Text, cx } from "../../ui";
+import { Badge, Button, ButtonLink, Card, Field, Heading, IconButton, Input, Spinner, Text, cx } from "../../ui";
 
 const ACHIEVEMENTS_PREVIEW_COUNT = 3;
 
@@ -56,7 +65,11 @@ export default function ProfilePage() {
     profileLoading,
     refreshProfile,
     progression,
+    loot,
   } = useData();
+  const [capsuleOpen, setCapsuleOpen] = useState(false);
+  const [showcaseOpen, setShowcaseOpen] = useState(false);
+  const r = t.rewards;
   const orbit = progression?.orbit;
   const level = progression?.xp ?? null;
   const legacyFlames: number | null = typeof rawProfile?.legacyFlames === "number" ? rawProfile.legacyFlames : null;
@@ -280,18 +293,24 @@ export default function ProfilePage() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:gap-5">
       {/* ── Кто ты ── */}
-      <Card padding="lg" className="grid grid-cols-1 gap-6">
+      <Card padding="lg" className="relative grid grid-cols-1 gap-6 overflow-hidden">
+        {/* Фон профиля — полоса сверху; аватар заходит на неё снизу */}
+        {!isEditing && (
+          <div aria-hidden className={cx("absolute inset-x-0 top-0 h-24 sm:h-28", !loot.equipped.background && "bg-linear-to-br from-accent-soft to-special-soft")}>
+            {loot.equipped.background && <BackgroundArt id={loot.equipped.background} />}
+          </div>
+        )}
         {/* На телефоне: аватар и кнопки — первой строкой, имя и данные — второй во всю ширину */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-5 sm:flex-nowrap sm:gap-6">
+        <div className={cx("relative flex flex-wrap items-center gap-x-4 gap-y-5 sm:flex-nowrap sm:gap-6", !isEditing && "pt-12 sm:pt-14")}>
           <div className="relative shrink-0">
-            <Ring
-              value={level ? level.into / level.next : 0}
-              size={112}
-              stroke={5}
-              tone="special"
-              label={level ? `${p.level.label.replace("{n}", String(level.level))}: ${level.into} / ${level.next}` : p.edit}
+            <AvatarFrame
+              progress={level ? level.into / level.next : 0}
+              ring={loot.equipped.ring}
+              satellite={isEditing ? undefined : loot.equipped.satellite}
+              level={level && !isEditing ? level.level : undefined}
+              label={level ? `${p.level.label.replace("{n}", String(level.level))}: ${level.into} / ${level.next}` : profile.displayName}
             >
-            <div className="h-24 w-24 overflow-hidden rounded-full bg-accent-soft">
+            <div className="h-full w-full overflow-hidden rounded-full bg-accent-soft">
               {editForm.photoURL ? (
                 <img
                   src={editForm.photoURL}
@@ -309,16 +328,7 @@ export default function ProfilePage() {
                 </div>
               )}
             </div>
-            </Ring>
-
-            {level && !isEditing && (
-              <span
-                aria-hidden
-                className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full border-2 border-surface bg-fg px-2.5 py-0.5 font-display text-sm font-extrabold tabular-nums text-on-inverse"
-              >
-                {level.level}
-              </span>
-            )}
+            </AvatarFrame>
 
             {/* Затемнение + спиннер поверх аватара во время загрузки/сжатия */}
             {isUploadingAvatar && (
@@ -354,6 +364,7 @@ export default function ProfilePage() {
                 <Heading size={1} className="break-words">
                   {profile.displayName}
                 </Heading>
+                {loot.equipped.title && <TitleBadge id={loot.equipped.title} className="mt-1.5" />}
                 <p className="mt-1 truncate text-sm text-muted">
                   {editForm.username && <span className="font-semibold text-fg">@{editForm.username}</span>}
                   {editForm.username && profile.email && " · "}
@@ -366,6 +377,13 @@ export default function ProfilePage() {
 
           {!isEditing && (
             <div className="ml-auto flex shrink-0 items-center gap-1">
+              {/* На телефоне к наградам ведут точка в нижнем меню и карточка «Коллекции» */}
+              <ButtonLink to="/rewards" variant="soft" size="sm" iconLeft={<Gift size={15} />} className="mr-1 hidden sm:inline-flex">
+                {r.link}
+                {loot.capsules > 0 && (
+                  <span className="rounded-full bg-accent px-1.5 text-2xs font-bold tabular-nums text-on-accent">{loot.capsules}</span>
+                )}
+              </ButtonLink>
               <span className="hidden sm:contents">
                 <Button variant="secondary" size="sm" iconLeft={<Pencil size={15} />} onClick={() => setIsEditing(true)}>
                   {p.edit}
@@ -498,6 +516,74 @@ export default function ProfilePage() {
         </Card>
       )}
 
+      {/* ── Витрина и коллекции ── */}
+      <div className="grid grid-cols-1 items-start gap-4 sm:gap-5 lg:grid-cols-[3fr_2fr]">
+        <Card padding="lg" className="grid content-start gap-4">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <Heading size={4} as="h2">
+                {r.showcase.title}
+              </Heading>
+              <p className="text-sm text-muted">{r.showcase.hint}</p>
+            </div>
+            <Button variant="secondary" size="sm" iconLeft={<Pencil size={15} />} onClick={() => setShowcaseOpen(true)}>
+              {r.showcase.edit}
+            </Button>
+          </div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            {Array.from({ length: SHOWCASE_MAX }, (_, i) => (
+              <ShowcaseTile key={i} id={loot.equipped.showcase[i]} />
+            ))}
+          </div>
+        </Card>
+
+        <Card padding="lg" className="grid content-start gap-4">
+          <div className="flex items-center justify-between gap-3">
+            <Heading size={4} as="h2">
+              {r.collections.title}
+            </Heading>
+            <ButtonLink to="/rewards" variant="ghost" size="sm">
+              {r.collections.all}
+            </ButtonLink>
+          </div>
+          <ul className="grid gap-3">
+            {COLLECTIONS.map((c) => {
+              const items = collectionItems(c.id);
+              const owned = items.filter((i) => loot.inventory[i.id]).length;
+              return (
+                <li key={c.id} className="grid gap-1.5">
+                  <div className="flex items-baseline justify-between gap-3 text-sm">
+                    <span className="flex items-center gap-1.5 font-semibold text-fg">
+                      {r.collections.names[c.id]}
+                      {loot.medals.includes(c.medal) && <Medal size={14} className="text-accent" aria-label={r.collections.complete} />}
+                    </span>
+                    <span className="tabular-nums text-muted">
+                      {r.collections.progress.replace("{n}", String(owned)).replace("{total}", String(items.length))}
+                    </span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-track">
+                    <div className="h-full rounded-full bg-accent" style={{ width: `${(owned / items.length) * 100}%` }} />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          {loot.capsules > 0 && (
+            <button
+              type="button"
+              onClick={() => setCapsuleOpen(true)}
+              className="flex items-center gap-3 rounded-2xl bg-fg p-3 text-left text-on-inverse transition-opacity hover:opacity-90"
+            >
+              <CapsuleArt size={44} glow />
+              <span className="grid">
+                <span className="font-semibold">{r.capsules.open}</span>
+                <span className="text-sm text-on-inverse/70">{plural(locale, loot.capsules, r.capsules.count)}</span>
+              </span>
+            </button>
+          )}
+        </Card>
+      </div>
+
       {/* ── Медали | Статистика ── */}
       <div className="mt-2 flex items-center justify-between gap-3">
         <div role="tablist" aria-label={p.tabs.medals} className="flex w-fit gap-1 rounded-full bg-inset p-1">
@@ -519,7 +605,7 @@ export default function ProfilePage() {
         </div>
         {tab === "medals" && (
           <Badge tone="accent" className="tabular-nums">
-            {unlockedCount + (legacyFlames ? 1 : 0)} / {ALL_ACHIEVEMENTS.length + (legacyFlames ? 1 : 0)}
+            {unlockedCount + (legacyFlames ? 1 : 0) + loot.medals.length} / {ALL_ACHIEVEMENTS.length + (legacyFlames ? 1 : 0) + COLLECTIONS.length}
           </Badge>
         )}
       </div>
@@ -580,6 +666,18 @@ export default function ProfilePage() {
           </Card>
         )}
 
+        {COLLECTIONS.filter((c) => loot.medals.includes(c.medal)).map((c) => (
+          <Card key={c.medal} padding="sm" radius="lg" className="flex items-center gap-4 bg-accent-soft">
+            <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-surface text-accent-ink">
+              <Medal size={24} />
+            </span>
+            <div className="grid min-w-0 gap-0.5">
+              <h3 className="font-semibold leading-snug text-fg">{r.medal.name.replace("{name}", r.collections.names[c.id])}</h3>
+              <p className="text-sm leading-snug text-muted">{r.medal.description}</p>
+            </div>
+          </Card>
+        ))}
+
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {previewAchievements.map((achievement) => (
             <AchievementCard
@@ -632,6 +730,8 @@ export default function ProfilePage() {
       )}
 
       <OrbitGoalModal open={goalOpen} onClose={() => setGoalOpen(false)} />
+      <CapsuleOpenModal open={capsuleOpen} onClose={() => setCapsuleOpen(false)} />
+      <ShowcaseModal open={showcaseOpen} onClose={() => setShowcaseOpen(false)} />
 
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
       <Toast {...toastState} onClose={hideToast} />

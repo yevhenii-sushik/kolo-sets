@@ -1,0 +1,138 @@
+{
+  "title": "Belønninger",
+  "subtitle": "Kapsler, samlinger og stjernestøv. Bare for øving – kan aldri kjøpes.",
+  "link": "Belønninger",
+  "capsules": {
+    "title": "Kapsler",
+    "count": {
+      "one": "{n} kapsel",
+      "other": "{n} kapsler"
+    },
+    "none": "Ingen kapsler ennå. Du får dem for nye nivåer, lukkede baner, rekker på 4, 12 og 26 baner og store prestasjoner.",
+    "open": "Åpne en kapsel",
+    "openMore": "Åpne en til",
+    "opening": "Åpner …",
+    "pity": {
+      "one": "Episk eller bedre innen {n} kapsel",
+      "other": "Episk eller bedre innen {n} kapsler"
+    },
+    "pityNow": "Neste kapsel er episk eller bedre",
+    "odds": "Sjanser",
+    "oddsText": "Hver kapsel inneholder én gjenstand; innenfor en sjeldenhet er alle like sannsynlige. Gir 9 kapsler på rad ingen episk eller legendarisk, blir den 10. episk. Duplikater blir til stjernestøv.",
+    "new": "Ny!",
+    "duplicate": "Har du allerede – +{n} stjernestøv",
+    "completed": "Samlingen «{name}» er komplett!",
+    "done": "Ferdig",
+    "error": "Kunne ikke åpne kapselen. Sjekk nettet og prøv igjen."
+  },
+  "rarity": {
+    "common": "Vanlig",
+    "rare": "Sjelden",
+    "epic": "Episk",
+    "legendary": "Legendarisk"
+  },
+  "kinds": {
+    "satellite": "Satellitt",
+    "ring": "Ring",
+    "title": "Tittel",
+    "background": "Profilbakgrunn"
+  },
+  "dust": {
+    "title": "Stjernestøv",
+    "hint": "Blir til overs fra duplikater. Bytt det mot et skjold eller en manglende vanlig eller sjelden gjenstand.",
+    "shield": "Skjold for {n}",
+    "shieldHint": "Et skjold lukker uka for deg hvis du ikke rekker det. Du kan ha to.",
+    "shieldFull": "Du har allerede to skjold",
+    "shieldDone": "Skjold lagt til",
+    "craft": "Lag for {n}",
+    "crafted": "«{item}» er nå i samlingen",
+    "notEnough": "Ikke nok stjernestøv",
+    "error": "Det gikk ikke. Sjekk nettet og prøv igjen.",
+    "craftConfirm": "Bruke {n} stjernestøv på «{item}»?"
+  },
+  "collections": {
+    "title": "Samlinger",
+    "progress": "{n} av {total}",
+    "reward": "Fullfør for en medalje og tittelen «{title}»",
+    "rewardMedal": "Fullfør for en medalje",
+    "complete": "Komplett",
+    "names": {
+      "planets": "Planeter",
+      "orbits": "Baner",
+      "sky": "Himmel",
+      "voices": "Stemmer"
+    },
+    "missing": "Ikke funnet",
+    "all": "Alle belønninger"
+  },
+  "equip": {
+    "on": "Bruk",
+    "off": "Ta av",
+    "equipped": "I bruk",
+    "error": "Det gikk ikke. Prøv igjen."
+  },
+  "showcase": {
+    "title": "Utstilling",
+    "hint": "Opptil tre belønninger du vil vise fram.",
+    "edit": "Endre",
+    "empty": "Tom",
+    "pick": "Velg opptil tre belønninger",
+    "save": "Lagre",
+    "items": "Gjenstander",
+    "medals": "Medaljer og prestasjoner",
+    "nothing": "Ingenting å vise ennå: åpne en kapsel eller få en prestasjon."
+  },
+  "medal": {
+    "name": "Samlingen «{name}»",
+    "description": "Komplett"
+  },
+  "moment": {
+    "title": {
+      "one": "Kapsel mottatt",
+      "other": "+{n} kapsler"
+    },
+    "text": "Inni: en satellitt, ring, bakgrunn eller tittel. Åpne den under Belønninger.",
+    "open": "Åpne"
+  },
+  "items": {
+    "sat_moon": "Månen",
+    "sat_mars": "Mars",
+    "sat_mercury": "Merkur",
+    "sat_venus": "Venus",
+    "sat_neptune": "Neptun",
+    "sat_uranus": "Uranus",
+    "sat_jupiter": "Jupiter",
+    "sat_saturn": "Saturn",
+    "sat_supernova": "Supernova",
+    "ring_mint": "Mynte",
+    "ring_lavender": "Lavendel",
+    "ring_sky": "Asur",
+    "ring_coral": "Korall",
+    "ring_sunset": "Solnedgang",
+    "ring_ocean": "Hav",
+    "ring_aurora": "Aurora",
+    "ring_constellation": "Stjernebilde",
+    "ring_neon": "Neon",
+    "ring_corona": "Korona",
+    "bg_dawn": "Daggry",
+    "bg_dusk": "Skumring",
+    "bg_mist": "Tåke",
+    "bg_starry": "Stjernenatt",
+    "bg_northern": "Nordlys",
+    "bg_milkyway": "Melkeveien",
+    "bg_nebula": "Stjernetåke",
+    "bg_meteors": "Stjerneskudd",
+    "title_curious": "Ordjeger",
+    "title_persistent": "Banelærling",
+    "title_bookworm": "Bokorm",
+    "title_early_bird": "Morgenfugl",
+    "title_polyglot": "Polyglott",
+    "title_wordsmith": "Ordsmed",
+    "title_review_master": "Repetisjonsmester",
+    "title_word_keeper": "Ordvokter",
+    "title_kolo_legend": "Kolo-legende",
+    "title_system_master": "Systemets herre",
+    "title_orbit_cartographer": "Banekartograf",
+    "title_stargazer": "Stjernekikker"
+  }
+}

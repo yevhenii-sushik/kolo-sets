@@ -38,6 +38,7 @@ const SpeedRoundPage = lazy(() => import("./pages/games/SpeedRoundPage"));
 const SurvivalPage = lazy(() => import("./pages/games/SurvivalPage"));
 const MatchPage = lazy(() => import("./pages/games/MatchPage"));
 const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
+const RewardsPage = lazy(() => import("./pages/rewards/RewardsPage"));
 const OtherPage = lazy(() => import("./pages/other/OtherPage"));
 const SettingsPage = lazy(() => import("./pages/other/SettingsPage"));
 const UpdatesPage = lazy(() => import("./pages/other/UpdatesPage"));
@@ -147,6 +148,7 @@ function AppContent() {
         <Route path="/" element={<HomePage />} />
         <Route path="/words" element={<WordsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/rewards" element={<RewardsPage />} />
         <Route path="/other" element={<OtherPage />} />
       </Route>
 

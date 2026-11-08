@@ -3,6 +3,8 @@
 import { auth } from "../firebase/config";
 import type { AchievementType } from "../types";
 import type { ProgressionView } from "../../server/core/progression";
+import type { Rarity } from "../../server/core/items";
+import type { CollectionDone, Equipped, Slot } from "../../server/core/loot";
 
 // Опыт и орбита недели — как их отдаёт сервер (docs/specs/02-progression.md)
 export type Progression = ProgressionView;
@@ -106,12 +108,12 @@ export async function flushPendingSessions(): Promise<SessionReply[]> {
   return replies;
 }
 
-// Достижения за наборы и слова — после создания набора, импорта или добавления слов
-export async function recheckAchievements(): Promise<AchievementType[]> {
+// Достижения за наборы и слова — после создания набора, импорта или добавления слов (с опытом и капсулами)
+export async function recheckAchievements(): Promise<{ newAchievements: AchievementType[]; progression?: Progression }> {
   try {
-    return (await post<{ newAchievements: AchievementType[] }>("/api/achievements", {})).newAchievements;
+    return await post<{ newAchievements: AchievementType[]; progression?: Progression }>("/api/achievements", { timezone: timeZone() });
   } catch {
-    return [];
+    return { newAchievements: [] };
   }
 }
 
@@ -128,3 +130,38 @@ export async function syncProgress(): Promise<Progression | null> {
 export async function setOrbitGoal(goal: number): Promise<Progression> {
   return (await post<{ progression: Progression }>("/api/orbit-goal", { goal, timezone: timeZone() })).progression;
 }
+
+// ── Награды (docs/specs/02-progression.md → «2b»). Ошибки пробрасываются: их показывает тот, кто вызвал
+
+export type { Rarity, Equipped, Slot };
+
+// Награды в профиле — как их возвращает сервер после каждого действия
+export interface Loot {
+  capsules: number;
+  pity: number;
+  dust: number;
+  inventory: Record<string, { n: number }>;
+  medals: string[];
+  equipped: Equipped;
+}
+
+export interface CapsuleResult {
+  item: string;
+  rarity: Rarity;
+  duplicate: boolean;
+  dust: number;
+  completed?: CollectionDone;
+  loot: Loot;
+}
+
+export const openCapsule = () => post<CapsuleResult>("/api/capsules-open", {});
+
+export const craftItem = (item: string) =>
+  post<{ item: string; cost: number; completed?: CollectionDone; loot: Loot }>("/api/dust-spend", { kind: "item", item });
+
+export const buyShield = () =>
+  post<{ progression: Progression; loot: Loot }>("/api/dust-spend", { kind: "shield", timezone: timeZone() });
+
+export const equipItem = (slot: Slot, item: string | null) => post<{ loot: Loot }>("/api/equip", { slot, item });
+
+export const saveShowcase = (showcase: string[]) => post<{ loot: Loot }>("/api/equip", { showcase });

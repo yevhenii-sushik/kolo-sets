@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shield, Sparkles, Wrench } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
@@ -9,6 +10,7 @@ import type { Progression } from "../../api/progress";
 import { ORBIT_BONUS } from "../../../server/core/xp";
 import { REPAIR_SESSIONS } from "../../../server/core/orbit";
 import { OrbitRing } from "./OrbitRing";
+import { CapsuleArt } from "../rewards/CapsuleArt";
 
 // Празднования этапа 2 (docs/specs/02-progression.md): орбита замкнута, новый уровень, починка удалась,
 // а после подведения итогов недели — щит сработал или серию можно починить. Не каждый день, а то, что важно.
@@ -19,7 +21,8 @@ export type Moment =
   | { kind: "level"; level: number }
   | { kind: "repaired"; streak: number }
   | { kind: "shieldUsed" }
-  | { kind: "repair"; left: number };
+  | { kind: "repair"; left: number }
+  | { kind: "capsule"; count: number };
 
 export function momentsOf(p: Progression): Moment[] {
   const e = p.events;
@@ -29,6 +32,7 @@ export function momentsOf(p: Progression): Moment[] {
   if (e.includes("repaired")) out.push({ kind: "repaired", streak: p.orbit.streak });
   if (e.includes("orbitClosed")) out.push({ kind: "orbit", streak: p.orbit.streak, goal: p.orbit.goal, shield: e.includes("shieldEarned") });
   if (p.xp.levelUp) out.push({ kind: "level", level: p.xp.level });
+  if (p.capsules?.gained > 0) out.push({ kind: "capsule", count: p.capsules.gained });
   return out;
 }
 
@@ -62,6 +66,7 @@ export function ProgressMomentsHost() {
 
 function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }) {
   const { t, language } = useI18n();
+  const navigate = useNavigate();
   const m = t.orbit.moments;
   const locale = getLanguageInfo(language).htmlLang;
   const [filled, setFilled] = useState(false);
@@ -132,6 +137,26 @@ function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }
       title = m.repairTitle;
       visual = <Emblem icon={<Wrench size={44} className="text-accent" />} />;
       text = <span className="text-sm text-muted">{plural(locale, moment.left, m.repairText)}</span>;
+      break;
+    case "capsule":
+      title = plural(locale, moment.count, t.rewards.moment.title);
+      visual = <CapsuleArt size={132} glow />;
+      text = (
+        <>
+          <span className="text-sm text-muted">{t.rewards.moment.text}</span>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+              navigate("/rewards");
+            }}
+            className="mx-auto mt-3 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-hover"
+          >
+            {t.rewards.moment.open}
+          </button>
+        </>
+      );
       break;
   }
 

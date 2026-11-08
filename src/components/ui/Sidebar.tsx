@@ -1,11 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import { navItems } from '../../navigation';
 import { useI18n } from '../../contexts/I18nContext';
+import { useData } from '../../contexts/DataContext';
 import { cx } from '../../ui';
 
 // Боковое меню на широких экранах: свёрнутое — только иконки
 export default function Sidebar({ open }: { open: boolean }) {
   const { t } = useI18n();
+  // Неоткрытые капсулы — точка на «Профиле»
+  const { loot } = useData();
 
   return (
     <>
@@ -34,7 +37,12 @@ export default function Sidebar({ open }: { open: boolean }) {
                   )
                 }
               >
-                <Icon size={22} className="shrink-0" />
+                <span className="relative shrink-0">
+                  <Icon size={22} />
+                  {to === '/profile' && loot.capsules > 0 && (
+                    <span aria-hidden className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border-2 border-bg bg-accent" />
+                  )}
+                </span>
                 {/* Подпись плавно исчезает, когда меню свёрнуто */}
                 <span
                   className={cx(
