@@ -134,7 +134,10 @@
     "coach": {
       "recall": "Prøv først å huske oversettelsen selv – vis så svaret. På mobilen kan du bare trykke på kortet.",
       "rate": "Vurder ærlig: etter «Vet ikke» og «Glemte» kommer ordet snart tilbake, etter «Husker» og «Kan» – om noen dager. Slik legger Perigee opp timeplanen din."
-    }
+    },
+    "speak": "Spill av uttale",
+    "ttsBeta": "Beta",
+    "ttsBetaHint": "Uttale er i beta: stemmen avhenger av enheten og nettleseren."
   },
   "quiz": {
     "correct": "Riktig!",

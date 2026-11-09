@@ -3,7 +3,7 @@ import { BookOpen, Eye, EyeOff, Quote, Volume2 } from "lucide-react";
 import { Card } from "../../types";
 import { speak, isTTSSupported } from "../../utils/tts";
 import { useI18n } from "../../contexts/I18nContext";
-import { IconButton } from "../../ui";
+import { Badge, IconButton } from "../../ui";
 import { posLabel } from "../../data/partsOfSpeech";
 
 interface FlashcardProps {
@@ -45,10 +45,14 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
         <div className="flip-card-back absolute h-full w-full">
           <div className="relative flex h-full w-full flex-col overflow-y-auto rounded-4xl border border-line bg-surface p-6 shadow-xl md:p-10">
             <div className="absolute left-4 top-4 right-4 flex justify-between" onClick={(e) => e.stopPropagation()}>
+              {/* Озвучка — голосом браузера, качество зависит от устройства: пока честно помечаем бетой */}
               {isTTSSupported() ? (
-                <IconButton variant="soft" label={card.word} onClick={stop(() => speak(card.word, language))}>
-                  <Volume2 size={20} />
-                </IconButton>
+                <div className="flex items-center gap-2" title={f.ttsBetaHint}>
+                  <IconButton variant="soft" label={f.speak} onClick={stop(() => speak(card.word, language))}>
+                    <Volume2 size={20} />
+                  </IconButton>
+                  <Badge tone="special">{f.ttsBeta}</Badge>
+                </div>
               ) : (
                 <span />
               )}

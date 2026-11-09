@@ -134,7 +134,10 @@
     "coach": {
       "recall": "First try to recall the translation yourself — then show the answer. On your phone, just tap the card.",
       "rate": "Rate honestly: after “Don't know” and “Forgot” the word comes back soon, after “Remember” and “Know” — in a few days. That's how Perigee builds your schedule."
-    }
+    },
+    "speak": "Play pronunciation",
+    "ttsBeta": "Beta",
+    "ttsBetaHint": "Pronunciation is in beta: the voice depends on your device and browser."
   },
   "quiz": {
     "correct": "Correct!",
