@@ -217,16 +217,34 @@
       "one": "{n} set",
       "other": "{n} sets"
     },
-    "emptyFolder": "This folder is empty — create a set here or drag one in from your library.",
+    "emptyFolder": "This folder is empty. Create a set right here, or open a set's menu and choose “Move to folder”.",
     "drag": "Drag to reorder or move into a folder",
-    "deleteFolder": "Delete folder"
+    "deleteFolder": "Delete folder",
+    "editFolder": "Edit folder",
+    "deleteFolderTitle": "Delete the folder “{name}”?",
+    "deleteFolderText": "The sets inside won't be deleted — they'll go back to your main list.",
+    "dropOut": "Drop here to take the set out of the folder",
+    "movedTo": "Moved to “{name}”",
+    "movedOut": "Taken out of the folder"
   },
   "folderModal": {
     "title": "New folder",
     "name": "Name",
     "placeholder": "e.g. Travel",
     "color": "Colour",
-    "create": "Create folder"
+    "create": "Create folder",
+    "editTitle": "Edit folder",
+    "save": "Save",
+    "colors": {
+      "orange": "Orange",
+      "blue": "Blue",
+      "green": "Green",
+      "purple": "Purple",
+      "amber": "Amber",
+      "pink": "Pink",
+      "teal": "Teal",
+      "indigo": "Indigo"
+    }
   },
   "session": {
     "showAnswer": "Show answer",

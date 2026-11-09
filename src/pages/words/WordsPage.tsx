@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   Plus,
   Sparkles,
@@ -10,9 +10,11 @@ import {
   Star,
   ArrowLeft,
   GripVertical,
-  X,
   Check,
+  ChevronRight,
   Layers,
+  Pencil,
+  Trash2,
 } from "lucide-react";
 import { Badge, Button, Card, Field, Heading, IconButton, Input, Modal, Text, cx } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
@@ -37,6 +39,7 @@ import CreateCollectionModal from "../../components/CreateCollectionModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
 import {
+  CollisionDetection,
   DndContext,
   DragEndEvent,
   DragOverlay,
@@ -44,6 +47,7 @@ import {
   PointerSensor,
   TouchSensor,
   closestCenter,
+  pointerWithin,
   useSensor,
   useSensors,
   useDroppable,
@@ -65,17 +69,29 @@ type Tab = "my" | "kolo";
 // ломается из-за "неиспользуемых" импортов/стейта, как было в прошлый раз.
 const KOLO_SETS_ENABLED = false;
 
-// Цвет папки выбирает пользователь и он хранится в её данных, поэтому это значения, а не токены
+// Цвет папки выбирает пользователь и он хранится в её данных, поэтому это значения, а не токены.
+// id — ключ названия цвета для скринридера (folderModal.colors)
 const FOLDER_COLORS = [
-  "#FF5A1F",
-  "#3B82F6",
-  "#22C55E",
-  "#A855F7",
-  "#F59E0B",
-  "#EC4899",
-  "#14B8A6",
-  "#6366F1",
-];
+  { id: "orange", hex: "#FF5A1F" },
+  { id: "blue", hex: "#3B82F6" },
+  { id: "green", hex: "#22C55E" },
+  { id: "purple", hex: "#A855F7" },
+  { id: "amber", hex: "#F59E0B" },
+  { id: "pink", hex: "#EC4899" },
+  { id: "teal", hex: "#14B8A6" },
+  { id: "indigo", hex: "#6366F1" },
+] as const;
+const DEFAULT_FOLDER_COLOR = FOLDER_COLORS[1].hex;
+
+// Цель «убрать из папки» — шапка открытой папки
+const ROOT_DROP = "root";
+
+// Сначала — цель прямо под пальцем (плитка папки, шапка папки): closestCenter по центрам промахивается
+// мимо широкой шапки. Иначе — ближайшая карточка, чтобы поменять порядок
+const collisionDetection: CollisionDetection = (args) => {
+  const targets = pointerWithin(args).filter((c) => String(c.id).startsWith("folder-") || c.id === ROOT_DROP);
+  return targets.length > 0 ? targets : closestCenter(args);
+};
 
 // flex-1 на мобилке — оба таба ровно делят ширину строки (один слева,
 // другой справа), sm:flex-initial возвращает компактный wrap-to-content
@@ -117,31 +133,38 @@ const CollectionSkeleton = () => (
   </div>
 );
 
-// ── Окно новой папки ──
-function CreateFolderModal({
-  isOpen,
+// ── Окно папки: новая (folder = null) или изменить название и цвет ──
+function FolderModal({
+  open,
+  folder,
   onClose,
-  onCreate,
+  onSave,
 }: {
-  isOpen: boolean;
+  open: boolean;
+  folder: FolderType | null;
   onClose: () => void;
-  onCreate: (name: string, color: string) => void;
+  onSave: (name: string, color: string) => void;
 }) {
   const { t } = useI18n();
   const f = t.words.folderModal;
   const [name, setName] = useState("");
-  const [color, setColor] = useState(FOLDER_COLORS[1]);
+  const [color, setColor] = useState<string>(DEFAULT_FOLDER_COLOR);
+
+  // Каждое открытие — с данными этой папки или с чистого листа
+  useEffect(() => {
+    if (!open) return;
+    setName(folder?.name ?? "");
+    setColor(folder?.color ?? DEFAULT_FOLDER_COLOR);
+  }, [open, folder]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
-    onCreate(name.trim(), color);
-    setName("");
-    setColor(FOLDER_COLORS[1]);
+    onSave(name.trim(), color);
   };
 
   return (
-    <Modal open={isOpen} onClose={onClose} title={f.title} size="sm">
+    <Modal open={open} onClose={onClose} title={folder ? f.editTitle : f.title} size="sm">
       <form onSubmit={handleSubmit} className="grid gap-5">
         <Field label={f.name} htmlFor="folder-name">
           <Input id="folder-name" autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder={f.placeholder} />
@@ -149,26 +172,26 @@ function CreateFolderModal({
         <fieldset className="grid gap-2">
           <legend className="mb-1.5 text-sm font-medium text-fg">{f.color}</legend>
           <div className="flex flex-wrap gap-2">
-            {FOLDER_COLORS.map((c) => (
+            {FOLDER_COLORS.map(({ id, hex }) => (
               <button
-                key={c}
+                key={id}
                 type="button"
-                onClick={() => setColor(c)}
-                aria-label={c}
-                aria-pressed={color === c}
-                style={{ backgroundColor: c }}
+                onClick={() => setColor(hex)}
+                aria-label={f.colors[id]}
+                aria-pressed={color === hex}
+                style={{ backgroundColor: hex }}
                 className={cx(
                   "grid h-9 w-9 place-items-center rounded-xl transition-transform hover:scale-105",
-                  color === c && "ring-2 ring-fg ring-offset-2 ring-offset-surface",
+                  color === hex && "ring-2 ring-fg ring-offset-2 ring-offset-surface",
                 )}
               >
-                {color === c && <Check size={16} className="text-white" strokeWidth={3} />}
+                {color === hex && <Check size={16} className="text-white" strokeWidth={3} />}
               </button>
             ))}
           </div>
         </fieldset>
         <Button type="submit" size="lg" fullWidth disabled={!name.trim()}>
-          {f.create}
+          {folder ? f.save : f.create}
         </Button>
       </form>
     </Modal>
@@ -182,6 +205,7 @@ function SortableCollectionCard({
   onToggleFavorite,
   folders,
   onMoveToFolder,
+  onNewFolder,
   onMoveToCourse,
 }: {
   collection: Collection;
@@ -189,6 +213,7 @@ function SortableCollectionCard({
   onToggleFavorite: (id: string) => void;
   folders: FolderType[];
   onMoveToFolder: (folderId: string | undefined) => void;
+  onNewFolder: () => void;
   onMoveToCourse: (courseId: string) => void;
 }) {
   const { t } = useI18n();
@@ -211,6 +236,7 @@ function SortableCollectionCard({
         onToggleFavorite={onToggleFavorite}
         folders={folders}
         onMoveToFolder={onMoveToFolder}
+        onNewFolder={onNewFolder}
         onMoveToCourse={onMoveToCourse}
         dragHandle={
           <span
@@ -228,27 +254,18 @@ function SortableCollectionCard({
   );
 }
 
-// ── Плитка папки, как в Finder: клик открывает, на неё можно перетащить набор ──
-function FolderTile({
-  folder,
-  count,
-  onOpen,
-  onDelete,
-}: {
-  folder: FolderType;
-  count: number;
-  onOpen: () => void;
-  onDelete: () => void;
-}) {
-  const { t } = useI18n();
+// ── Плитка папки, как в Finder: открывает папку по своему адресу (работают «Назад» и возврат после
+// тренировки), на неё можно перетащить набор. Изменить и удалить — внутри папки, чтобы не задеть случайно ──
+function FolderTile({ folder, count }: { folder: FolderType; count: string }) {
   const { setNodeRef, isOver } = useDroppable({ id: `folder-${folder.id}` });
 
   return (
-    <div
+    <Link
       ref={setNodeRef}
-      onClick={onOpen}
+      to={{ search: `?folder=${folder.id}` }}
+      state={{ fromRoot: true }}
       className={cx(
-        "group relative flex cursor-pointer items-center gap-3 rounded-2xl border p-3 transition-colors",
+        "flex items-center gap-3 rounded-2xl border p-3 transition-colors focus-visible:outline-2 focus-visible:outline-accent",
         isOver ? "border-accent bg-accent-soft" : "border-line bg-surface hover:border-accent/30",
       )}
     >
@@ -258,20 +275,62 @@ function FolderTile({
       </span>
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-semibold text-fg">{folder.name}</span>
-        <span className="block text-xs text-faint">{count}</span>
+        <span className="block text-xs text-muted">{count}</span>
       </span>
-      <span className="opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
-        <IconButton
-          size="sm"
-          label={t.words.library.deleteFolder}
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete();
-          }}
-        >
-          <X size={15} />
-        </IconButton>
+      <ChevronRight aria-hidden size={16} className="shrink-0 text-faint" />
+    </Link>
+  );
+}
+
+// ── Шапка открытой папки. Пока тянут набор, она же — цель «убрать из папки», как путь в окне Finder ──
+function FolderHeader({
+  folder,
+  count,
+  dragging,
+  onBack,
+  onEdit,
+  onDelete,
+}: {
+  folder: FolderType;
+  count: string;
+  dragging: boolean;
+  onBack: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
+  const { t } = useI18n();
+  const lib = t.words.library;
+  const { setNodeRef, isOver } = useDroppable({ id: ROOT_DROP });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={cx(
+        "mb-5 flex items-center gap-3 rounded-2xl outline-offset-4 transition-colors",
+        dragging && "outline-2 outline-dashed",
+        dragging && (isOver ? "bg-accent-soft outline-accent" : "outline-line"),
+      )}
+    >
+      <IconButton variant="surface" label={lib.back} onClick={onBack}>
+        <ArrowLeft size={18} />
+      </IconButton>
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl" style={{ backgroundColor: folder.color + "1F", color: folder.color }}>
+        <FolderOpen size={20} />
       </span>
+      <div className="min-w-0 flex-1">
+        <h2 className="truncate text-lg font-semibold text-fg">{folder.name}</h2>
+        <p className="text-sm text-muted">{dragging ? lib.dropOut : count}</p>
+      </div>
+      {!dragging && (
+        <div className="flex shrink-0 items-center">
+          <IconButton label={lib.editFolder} onClick={onEdit}>
+            <Pencil size={18} />
+          </IconButton>
+          <IconButton label={lib.deleteFolder} onClick={onDelete}>
+            <Trash2 size={18} />
+          </IconButton>
+        </div>
+      )}
     </div>
   );
 }
@@ -302,9 +361,11 @@ export default function WordsPage() {
     activeCourse,
     folders,
     createFolder,
+    updateFolder,
     deleteFolder,
     moveCollectionToCourse,
   } = useData();
+  const location = useLocation();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
@@ -312,14 +373,36 @@ export default function WordsPage() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   // /words?new=1 — сразу создать набор: из вступления и «Первых шагов» на главной
   const [searchParams, setSearchParams] = useSearchParams();
+  const dropParam = useCallback(
+    (key: string) =>
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.delete(key);
+          return next;
+        },
+        { replace: true },
+      ),
+    [setSearchParams],
+  );
   useEffect(() => {
     if (searchParams.get("new") !== "1") return;
     setIsCreateModalOpen(true);
-    setSearchParams({}, { replace: true });
-  }, [searchParams, setSearchParams]);
-  const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
-  // Finder-style навигация: null = корень "My Library", иначе — id открытой папки
-  const [openFolderId, setOpenFolderId] = useState<string | null>(null);
+    dropParam("new");
+  }, [searchParams, dropParam]);
+  // Окно папки: новая (folder: null; moveId — сразу положить в неё набор из его меню) или изменить
+  const [folderModal, setFolderModal] = useState<{ open: boolean; folder: FolderType | null; moveId?: string }>({
+    open: false,
+    folder: null,
+  });
+  // Открытая папка — в адресе (/words?folder=id), как в Finder: «Назад» закрывает её,
+  // а из тренировки (navigate(-1)) возвращаешься в неё же
+  const openFolderId = searchParams.get("folder");
+  const openFolder = openFolderId ? folders.find((f) => f.id === openFolderId) : undefined;
+  // Папки нет в этом курсе (переключили курс, удалили папку) — к корню, а не пустой экран
+  useEffect(() => {
+    if (openFolderId && coursesReady && !openFolder) dropParam("folder");
+  }, [openFolderId, openFolder, coursesReady, dropParam]);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [orderedCollections, setOrderedCollections] = useState<Collection[]>(
     [],
@@ -346,9 +429,9 @@ export default function WordsPage() {
       const newCollection = await createCollection(name, activeCourse.voice, activeCourse.id);
       // Создаём "внутри" открытой папки — как в Finder, новый файл
       // появляется в текущей директории, а не в корне
-      if (openFolderId) {
-        await updateCollectionMeta(newCollection, { folderId: openFolderId });
-        newCollection.folderId = openFolderId;
+      if (openFolder) {
+        await updateCollectionMeta(newCollection, { folderId: openFolder.id });
+        newCollection.folderId = openFolder.id;
       }
       // Функциональный апдейт по полному списку: в контексте лежат наборы всех курсов
       setCollections((prev) => [newCollection, ...prev]);
@@ -422,6 +505,11 @@ export default function WordsPage() {
       handleMoveToFolder(active.id as string, folderId);
       return;
     }
+    // Дропнули на шапку открытой папки — достаём набор из неё
+    if (overId === ROOT_DROP) {
+      handleMoveToFolder(active.id as string, undefined);
+      return;
+    }
 
     if (active.id === over.id) return;
     // Перемещаем внутри ПОЛНОГО упорядоченного списка: относительный порядок
@@ -438,34 +526,61 @@ export default function WordsPage() {
       );
   };
 
-  const handleCreateFolder = async (name: string, color: string) => {
-    setIsCreateFolderOpen(false);
+  // Вернуться к корню: если папку открыли из корня — шагом назад по истории, иначе заменой адреса,
+  // чтобы системная «Назад» потом не открыла папку снова
+  const closeFolder = () => {
+    if ((location.state as { fromRoot?: boolean } | null)?.fromRoot) navigate(-1);
+    else dropParam("folder");
+  };
+
+  const handleSaveFolder = async (name: string, color: string) => {
+    const target = folderModal;
+    setFolderModal((m) => ({ ...m, open: false }));
     try {
-      await createFolder(name, color);
+      if (target.folder) {
+        await updateFolder(target.folder.id, { name, color });
+        return;
+      }
+      const id = await createFolder(name, color);
+      if (id && target.moveId) await handleMoveToFolder(target.moveId, id, name);
     } catch {
       error(t.words.toast.createError);
     }
   };
 
-  const handleDeleteFolder = async (folderId: string) => {
+  // Наборы из удалённой папки не пропадают — возвращаются в общий список; об этом и спрашиваем
+  const handleDeleteFolder = async (folder: FolderType) => {
+    const confirmed = await confirm({
+      title: lib.deleteFolderTitle.replace("{name}", folder.name),
+      message: lib.deleteFolderText,
+      type: "danger",
+      confirmText: t.delete,
+      cancelText: t.cancel,
+    });
+    if (!confirmed) return;
+    closeFolder();
     try {
-      await deleteFolder(folderId);
+      await deleteFolder(folder.id);
     } catch {
       error(t.words.toast.deleteError);
     }
   };
 
+  // folderName — для только что созданной папки: её ещё нет в folders этого рендера
   const handleMoveToFolder = async (
     collectionId: string,
     folderId: string | undefined,
+    folderName = folders.find((f) => f.id === folderId)?.name,
   ) => {
     const col = collections.find((c) => c.id === collectionId);
-    if (!col) return;
+    if (!col || col.folderId === folderId) return;
     setCollections((prev) =>
       prev.map((c) => (c.id === collectionId ? { ...c, folderId } : c)),
     );
     try {
       await updateCollectionMeta(col, { folderId });
+      // Карточка исчезает с экрана — скажем, куда она делась
+      success(folderName ? lib.movedTo.replace("{name}", folderName) : lib.movedOut);
     } catch {
       setCollections((prev) =>
         prev.map((c) =>
@@ -487,19 +602,20 @@ export default function WordsPage() {
 
   // ── Derived state ────────────────────────────────────────────────────────────
 
-  const ungroupedCollections = useMemo(
-    () => orderedCollections.filter((c) => !c.folderId),
+  // Избранное — быстрый доступ из корня ко всем наборам со звёздочкой, в том числе лежащим в папках
+  const favoriteCollections = useMemo(
+    () => orderedCollections.filter((c) => c.isFavorite),
     [orderedCollections],
   );
 
-  const favoriteCollections = useMemo(
-    () => ungroupedCollections.filter((c) => c.isFavorite),
-    [ungroupedCollections],
+  const regularCollections = useMemo(
+    () => orderedCollections.filter((c) => !c.folderId && !c.isFavorite),
+    [orderedCollections],
   );
 
-  const regularCollections = useMemo(
-    () => ungroupedCollections.filter((c) => !c.isFavorite),
-    [ungroupedCollections],
+  const folderCollections = useMemo(
+    () => (openFolder ? orderedCollections.filter((c) => c.folderId === openFolder.id) : []),
+    [orderedCollections, openFolder],
   );
 
   // Может стать undefined, если коллекции обновятся посреди перетаскивания —
@@ -514,6 +630,39 @@ export default function WordsPage() {
     [],
   );
   const activeLevel = selectedLevel ?? availableLevels[0] ?? null;
+
+  const folderCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const c of orderedCollections) if (c.folderId) counts.set(c.folderId, (counts.get(c.folderId) ?? 0) + 1);
+    return counts;
+  }, [orderedCollections]);
+
+  // Одна и та же карточка в корне и в папке: сортируется, переносится в папку, курс или в новую папку
+  const renderCard = (col: Collection) => (
+    <SortableCollectionCard
+      key={col.id}
+      collection={col}
+      onDelete={handleDeleteCollection}
+      onToggleFavorite={handleToggleFavorite}
+      folders={folders}
+      onMoveToFolder={(folderId) => handleMoveToFolder(col.id, folderId)}
+      onNewFolder={() => setFolderModal({ open: true, folder: null, moveId: col.id })}
+      onMoveToCourse={(courseId) => handleMoveToCourse(col.id, courseId)}
+    />
+  );
+
+  const dragOverlay = (
+    <DragOverlay dropAnimation={{ duration: 180, easing: "ease" }}>
+      {draggedCollection ? (
+        // transform-gpu — форсирует композитный слой (translate3d
+        // вместо translate), иначе повёрнутые скруглённые углы
+        // деки рендерятся с "рваными" артефактами по краям
+        <div className="pointer-events-none rotate-1 scale-[1.02] transform-gpu rounded-4xl opacity-95 shadow-2xl">
+          <CollectionCard collection={draggedCollection} onDelete={() => {}} onToggleFavorite={() => {}} />
+        </div>
+      ) : null}
+    </DragOverlay>
+  );
 
   // ── Render ───────────────────────────────────────────────────────────────────
 
@@ -545,9 +694,9 @@ export default function WordsPage() {
 
         {activeTab === "my" && (
           <div className="flex items-center gap-2">
-            {!openFolderId && (
-              <Button variant="secondary" iconLeft={<FolderPlus size={18} />} onClick={() => setIsCreateFolderOpen(true)} aria-label={lib.newFolder}>
-                <span className="hidden sm:inline">{lib.newFolder}</span>
+            {!openFolder && (
+              <Button variant="secondary" iconLeft={<FolderPlus size={18} />} onClick={() => setFolderModal({ open: true, folder: null })}>
+                {lib.newFolder}
               </Button>
             )}
             <Button iconLeft={<Plus size={18} />} onClick={() => setIsCreateModalOpen(true)}>
@@ -580,184 +729,67 @@ export default function WordsPage() {
                   {t.words.empty.button}
                 </Button>
               </Card>
-            ) : openFolderId ? (
-              /* ── Folder detail view (Finder-style: opened folder) ── */
-              (() => {
-                const openFolder = folders.find((f) => f.id === openFolderId);
-                const folderCollections = orderedCollections.filter(
-                  (c) => c.folderId === openFolderId,
-                );
-                if (!openFolder) return null;
-                return (
-                  <div>
-                    <div className="mb-5 flex items-center gap-3">
-                      <IconButton variant="surface" label={lib.back} onClick={() => setOpenFolderId(null)}>
-                        <ArrowLeft size={18} />
-                      </IconButton>
-                      <span
-                        className="grid h-10 w-10 shrink-0 place-items-center rounded-xl"
-                        style={{ backgroundColor: openFolder.color + "1F", color: openFolder.color }}
-                      >
-                        <FolderOpen size={20} />
-                      </span>
-                      <div className="min-w-0">
-                        <h2 className="truncate text-lg font-semibold text-fg">{openFolder.name}</h2>
-                        <p className="text-sm text-muted">{setsCount(folderCollections.length)}</p>
-                      </div>
-                    </div>
-
-                    {folderCollections.length === 0 ? (
-                      <Card tone="inset" className="py-12 text-center">
-                        <Text size="sm" tone="muted" className="mx-auto max-w-sm">
-                          {lib.emptyFolder}
-                        </Text>
-                      </Card>
-                    ) : (
-                      <DndContext
-                        sensors={sensors}
-                        collisionDetection={closestCenter}
-                        onDragStart={handleDragStart}
-                        onDragEnd={handleDragEnd}
-                      >
-                        <SortableContext
-                          items={folderCollections.map((c) => c.id)}
-                          strategy={rectSortingStrategy}
-                        >
-                          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {folderCollections.map((col) => (
-                              <SortableCollectionCard
-                                key={col.id}
-                                collection={col}
-                                onDelete={handleDeleteCollection}
-                                onToggleFavorite={handleToggleFavorite}
-                                folders={folders}
-                                onMoveToFolder={(folderId) =>
-                                  handleMoveToFolder(col.id, folderId)
-                                }
-                                onMoveToCourse={(courseId) => handleMoveToCourse(col.id, courseId)}
-                              />
-                            ))}
-                          </div>
-                        </SortableContext>
-                        <DragOverlay
-                          dropAnimation={{ duration: 180, easing: "ease" }}
-                        >
-                          {draggedCollection ? (
-                            <div className="pointer-events-none rotate-1 scale-[1.02] transform-gpu rounded-4xl opacity-95 shadow-2xl">
-                              <CollectionCard
-                                collection={draggedCollection}
-                                onDelete={() => {}}
-                                onToggleFavorite={() => {}}
-                              />
-                            </div>
-                          ) : null}
-                        </DragOverlay>
-                      </DndContext>
-                    )}
-                  </div>
-                );
-              })()
+            ) : openFolder ? (
+              /* ── Открытая папка (как в Finder). Шапка — цель «убрать из папки» при перетаскивании ── */
+              <DndContext sensors={sensors} collisionDetection={collisionDetection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+                <FolderHeader
+                  folder={openFolder}
+                  count={setsCount(folderCollections.length)}
+                  dragging={draggedId !== null}
+                  onBack={closeFolder}
+                  onEdit={() => setFolderModal({ open: true, folder: openFolder })}
+                  onDelete={() => handleDeleteFolder(openFolder)}
+                />
+                {folderCollections.length === 0 ? (
+                  <Card tone="inset" className="py-12 text-center">
+                    <Text size="sm" tone="muted" className="mx-auto max-w-sm">
+                      {lib.emptyFolder}
+                    </Text>
+                  </Card>
+                ) : (
+                  <SortableContext items={folderCollections.map((c) => c.id)} strategy={rectSortingStrategy}>
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">{folderCollections.map(renderCard)}</div>
+                  </SortableContext>
+                )}
+                {dragOverlay}
+              </DndContext>
             ) : (
-              /* ── Root view: folders + favorites + regular, one DndContext
-                   so dragging a card onto a folder tile files it there ── */
-              <DndContext
-                sensors={sensors}
-                collisionDetection={closestCenter}
-                onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
-              >
-                <div>
-                  {/* ── Folders (closed tiles — click opens, drag-drop files) ── */}
-                  {folders.length > 0 && (
-                    <div className="mb-8">
-                      <SectionLabel count={folders.length}>{lib.folders}</SectionLabel>
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                        {folders.map((folder) => (
-                          <FolderTile
-                            key={folder.id}
-                            folder={folder}
-                            count={
-                              orderedCollections.filter(
-                                (c) => c.folderId === folder.id,
-                              ).length
-                            }
-                            onOpen={() => setOpenFolderId(folder.id)}
-                            onDelete={() => handleDeleteFolder(folder.id)}
-                          />
-                        ))}
-                      </div>
+              /* ── Корень: папки, избранное и наборы без папки в одном DndContext —
+                   карточку можно перетащить на плитку папки ── */
+              <DndContext sensors={sensors} collisionDetection={collisionDetection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+                {folders.length > 0 && (
+                  <div className="mb-8">
+                    <SectionLabel count={folders.length}>{lib.folders}</SectionLabel>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                      {folders.map((folder) => (
+                        <FolderTile key={folder.id} folder={folder} count={setsCount(folderCounts.get(folder.id) ?? 0)} />
+                      ))}
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {/* ── Favorites (pinned, outside folders) ── */}
-                  {favoriteCollections.length > 0 && (
-                    <div className="mb-8">
-                      <SectionLabel count={favoriteCollections.length} icon={<Star size={16} className="fill-warning text-warning" />}>
-                        {lib.favorites}
-                      </SectionLabel>
-                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {favoriteCollections.map((col) => (
-                          <CollectionCard
-                            key={col.id}
-                            collection={col}
-                            onDelete={handleDeleteCollection}
-                            onToggleFavorite={handleToggleFavorite}
-                            folders={folders}
-                            onMoveToFolder={(folderId) =>
-                              handleMoveToFolder(col.id, folderId)
-                            }
-                            onMoveToCourse={(courseId) => handleMoveToCourse(col.id, courseId)}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                {favoriteCollections.length > 0 && (
+                  <div className="mb-8">
+                    <SectionLabel count={favoriteCollections.length} icon={<Star size={16} className="fill-warning text-warning" />}>
+                      {lib.favorites}
+                    </SectionLabel>
+                    <SortableContext items={favoriteCollections.map((c) => c.id)} strategy={rectSortingStrategy}>
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">{favoriteCollections.map(renderCard)}</div>
+                    </SortableContext>
+                  </div>
+                )}
 
-                  {/* ── Regular ungrouped (drag-to-reorder, drag-into-folder) ── */}
-                  {regularCollections.length > 0 && (
-                    <div>
-                      {(folders.length > 0 ||
-                        favoriteCollections.length > 0) && (
-                        <SectionLabel count={regularCollections.length}>{lib.all}</SectionLabel>
-                      )}
-                      <SortableContext
-                        items={regularCollections.map((c) => c.id)}
-                        strategy={rectSortingStrategy}
-                      >
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                          {regularCollections.map((col) => (
-                            <SortableCollectionCard
-                              key={col.id}
-                              collection={col}
-                              onDelete={handleDeleteCollection}
-                              onToggleFavorite={handleToggleFavorite}
-                              folders={folders}
-                              onMoveToFolder={(folderId) =>
-                                handleMoveToFolder(col.id, folderId)
-                              }
-                              onMoveToCourse={(courseId) => handleMoveToCourse(col.id, courseId)}
-                            />
-                          ))}
-                        </div>
-                      </SortableContext>
-                    </div>
-                  )}
-                </div>
-
-                <DragOverlay dropAnimation={{ duration: 180, easing: "ease" }}>
-                  {draggedCollection ? (
-                    // transform-gpu — форсирует композитный слой (translate3d
-                    // вместо translate), иначе повёрнутые скруглённые углы
-                    // деки рендерятся с "рваными" артефактами по краям
-                    <div className="pointer-events-none rotate-1 scale-[1.02] transform-gpu rounded-4xl opacity-95 shadow-2xl">
-                      <CollectionCard
-                        collection={draggedCollection}
-                        onDelete={() => {}}
-                        onToggleFavorite={() => {}}
-                      />
-                    </div>
-                  ) : null}
-                </DragOverlay>
+                {regularCollections.length > 0 && (
+                  <div>
+                    {(folders.length > 0 || favoriteCollections.length > 0) && (
+                      <SectionLabel count={regularCollections.length}>{lib.all}</SectionLabel>
+                    )}
+                    <SortableContext items={regularCollections.map((c) => c.id)} strategy={rectSortingStrategy}>
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">{regularCollections.map(renderCard)}</div>
+                    </SortableContext>
+                  </div>
+                )}
+                {dragOverlay}
               </DndContext>
             )}
           </>
@@ -798,10 +830,11 @@ export default function WordsPage() {
         onClose={() => setIsCreateModalOpen(false)}
         onCreate={handleCreateCollection}
       />
-      <CreateFolderModal
-        isOpen={isCreateFolderOpen}
-        onClose={() => setIsCreateFolderOpen(false)}
-        onCreate={handleCreateFolder}
+      <FolderModal
+        open={folderModal.open}
+        folder={folderModal.folder}
+        onClose={() => setFolderModal((m) => ({ ...m, open: false }))}
+        onSave={handleSaveFolder}
       />
       <ConfirmDialog
         {...confirmState}

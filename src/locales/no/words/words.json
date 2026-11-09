@@ -217,16 +217,34 @@
       "one": "{n} sett",
       "other": "{n} sett"
     },
-    "emptyFolder": "Mappen er tom – lag et sett her eller dra et inn fra biblioteket.",
+    "emptyFolder": "Mappen er tom. Lag et sett her, eller åpne menyen til et sett og velg «Flytt til mappe».",
     "drag": "Dra for å endre rekkefølgen eller flytte til en mappe",
-    "deleteFolder": "Slett mappe"
+    "deleteFolder": "Slett mappe",
+    "editFolder": "Rediger mappe",
+    "deleteFolderTitle": "Slette mappen «{name}»?",
+    "deleteFolderText": "Settene i den blir ikke slettet – de går tilbake til hovedlisten.",
+    "dropOut": "Slipp her for å ta settet ut av mappen",
+    "movedTo": "Flyttet til «{name}»",
+    "movedOut": "Tatt ut av mappen"
   },
   "folderModal": {
     "title": "Ny mappe",
     "name": "Navn",
     "placeholder": "F.eks. Reise",
     "color": "Farge",
-    "create": "Opprett mappe"
+    "create": "Opprett mappe",
+    "editTitle": "Rediger mappe",
+    "save": "Lagre",
+    "colors": {
+      "orange": "Oransje",
+      "blue": "Blå",
+      "green": "Grønn",
+      "purple": "Lilla",
+      "amber": "Rav",
+      "pink": "Rosa",
+      "teal": "Turkis",
+      "indigo": "Indigo"
+    }
   },
   "session": {
     "showAnswer": "Vis svaret",

@@ -8,6 +8,7 @@ import {
   Clock,
   EllipsisVertical,
   Folder,
+  FolderPlus,
   Languages,
   Link2,
   Pencil,
@@ -37,13 +38,14 @@ interface CollectionCardProps {
   onToggleFavorite?: (id: string) => void;
   folders?: FolderType[];
   onMoveToFolder?: (folderId: string | undefined) => void;
+  onNewFolder?: () => void; // «Новая папка» в меню переноса: создать и сразу положить туда этот набор
   onMoveToCourse?: (courseId: string) => void; // пункт «Перенести в курс» — если курсов больше одного
   dragHandle?: ReactNode; // ручка перетаскивания — слева от «Учить» (передаёт сортируемая обёртка)
 }
 
 const MENU_ITEM = "flex w-full items-center gap-2.5 px-4 py-2.5 text-sm font-medium transition-colors";
 
-export default function CollectionCard({ collection, onDelete, onToggleFavorite, folders = [], onMoveToFolder, onMoveToCourse, dragHandle }: CollectionCardProps) {
+export default function CollectionCard({ collection, onDelete, onToggleFavorite, folders = [], onMoveToFolder, onNewFolder, onMoveToCourse, dragHandle }: CollectionCardProps) {
   const navigate = useNavigate();
   const { t, language } = useI18n();
   const c = t.words.collectionCard;
@@ -156,7 +158,8 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
                       >
                         <Pencil size={16} className="text-muted" /> {c.edit}
                       </button>
-                      {folders.length > 0 && (
+                      {/* Без папок пункт тоже есть — из него папку можно создать */}
+                      {onMoveToFolder && (folders.length > 0 || onNewFolder) && (
                         <button type="button" onClick={() => setMenuView("folders")} className={cx(MENU_ITEM, "text-fg hover:bg-inset")}>
                           <Folder size={16} className="text-muted" />
                           <span className="flex-1 text-left">{c.moveTo}</span>
@@ -243,6 +246,21 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
                           {f.id === collection.folderId && <Check size={15} className="shrink-0 text-accent-ink" />}
                         </button>
                       ))}
+                      {onNewFolder && (
+                        <>
+                          {(folders.length > 0 || collection.folderId) && <div className="mx-3 my-1 h-px bg-line" />}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              onNewFolder();
+                              closeMenu();
+                            }}
+                            className={cx(MENU_ITEM, "text-accent-ink hover:bg-inset")}
+                          >
+                            <FolderPlus size={16} /> {t.words.library.newFolder}
+                          </button>
+                        </>
+                      )}
                     </>
                   )}
                 </motion.div>

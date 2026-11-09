@@ -59,7 +59,9 @@ interface DataContextType {
   /** Удаляет курс вместе с его наборами и папками */
   removeCourse: (id: string) => Promise<void>;
   moveCollectionToCourse: (collectionId: string, courseId: string) => Promise<void>;
-  createFolder: (name: string, color: string) => Promise<void>;
+  /** Создаёт папку в активном курсе; возвращает её id — чтобы сразу положить туда набор */
+  createFolder: (name: string, color: string) => Promise<string | undefined>;
+  updateFolder: (folderId: string, fields: Pick<Folder, 'name' | 'color'>) => Promise<void>;
   /** Удаляет папку; её наборы остаются в курсе без папки */
   deleteFolder: (folderId: string) => Promise<void>;
   /** Голос озвучки для набора — из его курса */
@@ -454,8 +456,16 @@ export function DataProvider({ children }: { children: ReactNode }) {
       if (!activeId) return;
       const folder: Folder = { id: crypto.randomUUID(), name, color, createdAt: new Date(), courseId: activeId };
       await saveCourses({ folders: [...plan.folders, folder] });
+      return folder.id;
     },
     [activeId, plan.folders, saveCourses],
+  );
+
+  const updateFolder = useCallback(
+    async (folderId: string, fields: Pick<Folder, 'name' | 'color'>) => {
+      await saveCourses({ folders: plan.folders.map(f => (f.id === folderId ? { ...f, ...fields } : f)) });
+    },
+    [plan.folders, saveCourses],
   );
 
   const deleteFolder = useCallback(
@@ -497,6 +507,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         removeCourse,
         moveCollectionToCourse,
         createFolder,
+        updateFolder,
         deleteFolder,
         voiceForCollection,
         profileLoading,
