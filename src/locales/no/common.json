@@ -207,7 +207,7 @@
     "switchTo": "Bytt til",
     "remove": "Slett kurs",
     "removeTitle": "Slette kurset {name}?",
-    "removeText": "{sets} og alle ordene i dem slettes for godt. Du kan laste ned en sikkerhetskopi først under Data og konto.",
+    "removeText": "{sets} og alle ordene i dem slettes for godt. Du kan laste ned en sikkerhetskopi først under Innstillinger.",
     "removeEmpty": "Kurset er tomt – bare selve kurset slettes.",
     "removeError": "Kunne ikke slette kurset – prøv igjen",
     "moveTo": "Flytt til kurs",

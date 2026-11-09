@@ -1,0 +1,50 @@
+{
+  "settings": "Einstellungen",
+  "updates": "Was ist neu",
+  "support": "Hilfe",
+  "groups": {
+    "app": "App",
+    "docs": "Dokumente"
+  },
+  "hints": {
+    "settings": "Konto, Aussehen, Erinnerungen, Sicherung",
+    "updates": "Alle Kolo-Versionen",
+    "support": "Fehler melden oder eine Idee vorschlagen",
+    "privacy": "Wie wir mit deinen Daten umgehen",
+    "terms": "Regeln für die Nutzung von Kolo",
+    "cookies": "Was wir in deinem Browser speichern",
+    "courses": "Sprachen, die du lernst"
+  },
+  "version": "Version {v}",
+  "supportPage": {
+    "title": "Hilfe",
+    "subtitle": "Etwas funktioniert nicht oder du hast eine Idee? Deine Nachricht geht direkt an das Kolo-Team.",
+    "typeTitle": "Worum geht es?",
+    "types": {
+      "bug": "Fehler",
+      "feature": "Idee",
+      "change": "Verbesserung",
+      "review": "Feedback"
+    },
+    "typeHints": {
+      "bug": "Etwas funktioniert nicht",
+      "feature": "Eine neue Funktion",
+      "change": "Etwas besser machen",
+      "review": "Eindrücke teilen"
+    },
+    "pickType": "Wähle ein Thema, um das Formular zu öffnen.",
+    "subject": "Betreff",
+    "subjectPlaceholder": "In ein paar Worten",
+    "email": "E-Mail für eine Antwort",
+    "emailHint": "Optional – trag sie ein, wenn du eine Antwort möchtest",
+    "message": "Nachricht",
+    "messagePlaceholder": "Je mehr Details, desto schneller können wir helfen",
+    "send": "Senden",
+    "sendError": "Die Nachricht konnte nicht gesendet werden. Versuche es etwas später erneut.",
+    "sentTitle": "Danke!",
+    "sentText": "Deine Nachricht ist beim Kolo-Team angekommen. Wir lesen jede – wenn du eine E-Mail angegeben hast, antworten wir dorthin.",
+    "sentHome": "Zur Startseite",
+    "sentAgain": "Noch eine schreiben"
+  },
+  "courses": "Kurse"
+}

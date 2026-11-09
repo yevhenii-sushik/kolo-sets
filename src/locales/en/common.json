@@ -207,7 +207,7 @@
     "switchTo": "Switch to",
     "remove": "Delete course",
     "removeTitle": "Delete the {name} course?",
-    "removeText": "{sets} and all the words in them will be deleted for good. You can download a backup first in Data & account.",
+    "removeText": "{sets} and all the words in them will be deleted for good. You can download a backup first in Settings.",
     "removeEmpty": "The course is empty — only the course itself will be removed.",
     "removeError": "Couldn't delete the course — try again",
     "moveTo": "Move to course",

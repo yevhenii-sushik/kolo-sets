@@ -1,0 +1,217 @@
+{
+  "appName": "Kolo Sets",
+  "loading": "Wird geladen…",
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+  "confirm": "Bestätigen",
+  "delete": "Löschen",
+  "edit": "Bearbeiten",
+  "create": "Erstellen",
+  "back": "Zurück",
+  "next": "Weiter",
+  "finish": "Fertig",
+  "close": "Schließen",
+  "nav": {
+    "home": "Start",
+    "words": "Wörter",
+    "stories": "Geschichten",
+    "dictionary": "Wörterbuch",
+    "profile": "Profil",
+    "other": "Mehr"
+  },
+  "shell": {
+    "menu": "Menü ein- oder ausblenden",
+    "search": "Suche",
+    "searchHint": "Karten durchsuchen (⌘K)",
+    "streak": {
+      "days": {
+        "one": "{n} Tag",
+        "other": "{n} Tage"
+      }
+    },
+    "verify": {
+      "text": "Bestätige deine E-Mail, um dein Konto zu schützen.",
+      "resend": "E-Mail erneut senden",
+      "sending": "Wird gesendet…",
+      "sent": "E-Mail gesendet – schau in dein Postfach.",
+      "dismiss": "Ausblenden"
+    },
+    "achievement": {
+      "unlocked": "Neuer Erfolg"
+    },
+    "searchPanel": {
+      "placeholder": "Wörter, Übersetzungen, Erklärungen suchen",
+      "empty": "Tippe los, um alle deine Karten zu durchsuchen",
+      "inSets": {
+        "one": "in {n} Set",
+        "other": "in {n} Sets"
+      },
+      "noResults": "Nichts gefunden",
+      "noResultsText": "Keine Karten passen zu „{q}“",
+      "limit": "Die ersten 50 werden angezeigt – verfeinere deine Suche",
+      "clear": "Leeren"
+    },
+    "install": {
+      "title": "Kolo installieren",
+      "text": "Öffne Kolo vom Home-Bildschirm aus, ohne Adressleiste",
+      "ios": "Tippe auf {share} und wähle {add} „Zum Home-Bildschirm“",
+      "install": "Installieren"
+    },
+    "legalUpdate": {
+      "text": "Am {date} haben wir die Nutzungsbedingungen und die Datenschutzerklärung aktualisiert: XP, wöchentliche Orbits, Kapseln und virtuelle Gegenstände sind da.",
+      "terms": "Bedingungen",
+      "privacy": "Datenschutz",
+      "ok": "Verstanden"
+    }
+  },
+  "orbit": {
+    "label": "Wochen-Orbit",
+    "inRow": {
+      "one": "{n} Orbit in Folge",
+      "other": "{n} Orbits in Folge"
+    },
+    "daysOf": "{done} von {goal} Tagen",
+    "best": "Rekord",
+    "shields": "Schilde",
+    "shieldsHint": "Ein Schild schließt eine Woche für dich, wenn du es nicht schaffst. Du bekommst eins für je 4 Orbits in Folge.",
+    "status": {
+      "closed": "Orbit geschlossen! Der nächste beginnt am Montag.",
+      "onTrack": {
+        "one": "Noch {n} Tag, dann ist der Orbit geschlossen.",
+        "other": "Noch {n} Tage, dann ist der Orbit geschlossen."
+      },
+      "atRisk": "Um den Orbit zu schließen, übe jeden Tag bis Sonntag.",
+      "lostShield": "Diese Woche ist nicht mehr zu schaffen – ein Schild rettet deine Serie.",
+      "lostRepair": "Diese Woche ist nicht mehr zu schaffen. Anfang nächster Woche kannst du deine Serie reparieren.",
+      "lostNew": "Diese Woche ist nicht mehr zu schaffen – nächste Woche startet eine neue Serie."
+    },
+    "repair": "Serie reparieren: {done} von {total} Einheiten bis Mittwochabend",
+    "more": "Mehr in deinem Profil",
+    "today": "Heute",
+    "goal": {
+      "title": "Dein Wochenrhythmus",
+      "intro": "Die täglichen Flammen in Kolo sind jetzt wöchentliche Orbits. Wähle, an wie vielen Tagen pro Woche du üben willst: Schaffst du das, schließt sich der Orbit und deine Orbit-Serie wächst. Ein verpasster Tag macht nichts kaputt.",
+      "migrated": {
+        "one": "Wir haben deinen Verlauf umgerechnet: Deine Serie beträgt {n} Orbit.",
+        "other": "Wir haben deinen Verlauf umgerechnet: Deine Serie beträgt {n} Orbits."
+      },
+      "legacy": "Dein Flammen-Rekord – {days} – bleibt als Medaille in deinem Profil.",
+      "perWeek": {
+        "one": "{n} Tag pro Woche",
+        "other": "{n} Tage pro Woche"
+      },
+      "levels": {
+        "3": "Entspannt",
+        "4": "Stetig",
+        "5": "Ernsthaft",
+        "6": "Fast täglich",
+        "7": "Jeden Tag"
+      },
+      "hint": "Du kannst es in deinem Profil ändern – ein neues Ziel gilt ab Montag.",
+      "nextWeek": "Das neue Ziel gilt ab Montag.",
+      "start": "Los geht's",
+      "save": "Speichern",
+      "error": "Dein Ziel konnte nicht gespeichert werden. Prüfe deine Verbindung und versuche es erneut."
+    },
+    "moments": {
+      "orbitTitle": "Orbit geschlossen!",
+      "xp": "+{n} XP",
+      "shieldEarned": "Dazu ein Schild in Reserve: Es schließt eine Woche für dich, wenn du es nicht schaffst.",
+      "levelTitle": "Level-up!",
+      "level": "Level {n}",
+      "repairedTitle": "Serie repariert",
+      "shieldUsedTitle": "Ein Schild hat deine Serie gerettet",
+      "shieldUsedText": "Der Orbit der letzten Woche wurde nicht geschlossen, aber ein Schild hat ihn abgedeckt – deine Serie ist intakt.",
+      "repairTitle": "Du kannst deine Serie reparieren",
+      "repairText": {
+        "one": "Letzte Woche hat es nicht geklappt. Schaffe {n} Einheit bis Mittwochabend, und deine Serie ist zurück.",
+        "other": "Letzte Woche hat es nicht geklappt. Schaffe {n} Einheiten bis Mittwochabend, und deine Serie ist zurück."
+      },
+      "tap": "Tippen zum Schließen"
+    }
+  },
+  "onboarding": {
+    "skip": "Überspringen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "start": "Los geht's",
+    "step": "{n} von {total}",
+    "ready": "Bereit zum Start",
+    "steps": [
+      {
+        "title": "Willkommen bei Kolo",
+        "text": "Wortsets und cleveres Wiederholen. Diese Tour dauert keine Minute."
+      },
+      {
+        "title": "Erstelle ein Set",
+        "text": "Tippe auf „Set erstellen“ und füge Wörter mit Übersetzung, Erklärung und Beispiel hinzu – oder importiere eine fertige Liste.",
+        "tip": "Für ein Quiz braucht ein Set mindestens 4 Wörter."
+      },
+      {
+        "title": "Lerne mit Karteikarten",
+        "text": "Dreh eine Karte um und bewerte, wie gut du das Wort kennst. Perigee, unsere Wiederholungs-Engine, entscheidet, wann es wiederkommt.",
+        "tip": "Auf der Tastatur: Leertaste dreht um, 1–4 bewertet. Am Handy: nach rechts wischen, wenn du es weißt, nach links, wenn nicht."
+      },
+      {
+        "title": "Teste dich",
+        "text": "Sechs Arten von Quizaufgaben – von der Wahl der Übersetzung bis zum Schreiben des Wortes – plus drei Spiele: Tempo-Runde, Überleben und Paare.",
+        "tip": "In den Quiz-Einstellungen kannst du nur die Aufgaben behalten, die du brauchst."
+      },
+      {
+        "title": "Behalte deinen Fortschritt im Blick",
+        "text": "XP und Level, ein Wochen-Orbit und Medaillen. Wähle, an wie vielen Tagen pro Woche du übst, und schließe deine Orbits – Kolo zeigt nur die Wörter, die gerade dran sind.",
+        "tip": "In deinem Profil findest du Level, Wochen-Orbit, Medaillen und Statistiken."
+      },
+      {
+        "title": "Alles bereit!",
+        "text": "Erstelle dein erstes Set und fang an zu lernen."
+      }
+    ],
+    "sample": {
+      "sets": [
+        "Alltagswörter",
+        "Reisen"
+      ],
+      "study": "Lernen",
+      "word": "hund",
+      "translation": "Hund",
+      "example": "Hunden min heter Max",
+      "options": [
+        "hund",
+        "katt",
+        "fugl",
+        "fisk"
+      ]
+    }
+  },
+  "courses": {
+    "switcher": "Kurs: {name}",
+    "menuTitle": "Deine Kurse",
+    "add": "Kurs hinzufügen",
+    "manage": "Kurse verwalten",
+    "pickTitle": "Welche Sprache möchtest du lernen?",
+    "pickSubtitle": "Weitere Sprachen kannst du später hinzufügen. Jede bekommt eigene Sets und Ordner.",
+    "addTitle": "Neuer Kurs",
+    "search": "Sprachen suchen",
+    "popular": "Beliebt",
+    "all": "Alle Sprachen",
+    "noResults": "Keine Sprache passt zu „{q}“",
+    "added": "Bereits hinzugefügt",
+    "noVoice": "Dieses Gerät hat keine Stimme für diese Sprache, deshalb werden Karten nicht vorgelesen.",
+    "pronunciation": "Aussprache",
+    "start": "Loslernen",
+    "addButton": "Kurs hinzufügen",
+    "title": "Kurse",
+    "subtitle": "Jede Sprache hat eigene Sets und Ordner. Level, Orbit und Medaillen sind gemeinsam.",
+    "current": "Aktuell",
+    "switchTo": "Wechseln",
+    "remove": "Kurs löschen",
+    "removeTitle": "Kurs „{name}“ löschen?",
+    "removeText": "{sets} und alle Wörter darin werden endgültig gelöscht. Vorher kannst du in den Einstellungen eine Sicherungskopie herunterladen.",
+    "removeEmpty": "Der Kurs ist leer – nur der Kurs selbst wird entfernt.",
+    "removeError": "Der Kurs konnte nicht gelöscht werden – versuche es erneut",
+    "moveTo": "In Kurs verschieben",
+    "moved": "Nach {name} verschoben",
+    "moveError": "Das Set konnte nicht verschoben werden – versuche es erneut"
+  }
+}
