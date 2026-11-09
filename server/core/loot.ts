@@ -30,7 +30,8 @@ const BIG_ACHIEVEMENTS = new Set<AchievementType>([
 
 export type Slot = "satellite" | "ring" | "title" | "background";
 export interface Equipped {
-  satellite?: string;
+  satellites?: string[]; // на орбите может быть несколько спутников — см. SATELLITE_LEVELS
+  satellite?: string; // до нескольких мест — один спутник; читается через satellitesOf
   ring?: string;
   title?: string;
   background?: string;
@@ -160,18 +161,46 @@ export function craftItem(state: LootState, id: string, now: Date): CraftResult 
   return { ok: true, patch: p, result: { item: id, cost, ...(completed ? { completed } : {}) } };
 }
 
-// Надеть предмет (null — снять). Только свой и подходящего вида
-export function equipItem(state: LootState, slot: Slot, id: string | null): { ok: true; equipped: Equipped } | { ok: false } {
+// Места для спутников на орбите: каждое следующее открывается с этого уровня
+export const SATELLITE_LEVELS = [1, 5, 10];
+export const satelliteSlots = (level: number) => SATELLITE_LEVELS.filter((l) => level >= l).length;
+
+// Спутники на орбите — из списка или из старого одиночного поля
+export const satellitesOf = (e: Partial<Equipped> | undefined): string[] => e?.satellites ?? (e?.satellite ? [e.satellite] : []);
+
+const copyEquipped = (state: LootState): Equipped => {
   const equipped: Equipped = { ...(state.equipped ?? { showcase: [] }), showcase: [...(state.equipped?.showcase ?? [])] };
+  delete equipped.satellite;
+  return equipped;
+};
+
+// Надеть предмет (null — снять). Только свой и подходящего вида. Спутник так ставится один —
+// как в версиях до нескольких мест; несколько — через setSatellites
+export function equipItem(state: LootState, slot: Slot, id: string | null): { ok: true; equipped: Equipped } | { ok: false } {
+  const equipped = copyEquipped(state);
   if (id === null) {
-    delete equipped[slot];
+    if (slot === "satellite") equipped.satellites = [];
+    else delete equipped[slot];
     return { ok: true, equipped };
   }
   const item = itemById(id);
   const kinds: Record<Slot, ItemKind> = { satellite: "satellite", ring: "ring", title: "title", background: "background" };
   if (!item || item.kind !== kinds[slot] || !state.inventory?.[id]) return { ok: false };
-  equipped[slot] = id;
+  if (slot === "satellite") equipped.satellites = [id];
+  else equipped[slot] = id;
   return { ok: true, equipped };
+}
+
+// Спутники на орбите целиком: только свои, без повторов и не больше открытых мест
+export function setSatellites(
+  state: LootState & { level?: number },
+  ids: unknown,
+): { ok: true; equipped: Equipped } | { ok: false; reason: "bad-request" | "not-owned" | "no-room" } {
+  if (!Array.isArray(ids) || !ids.every((x) => typeof x === "string")) return { ok: false, reason: "bad-request" };
+  const unique = [...new Set(ids as string[])];
+  if (!unique.every((id) => itemById(id)?.kind === "satellite" && !!state.inventory?.[id])) return { ok: false, reason: "not-owned" };
+  if (unique.length > satelliteSlots(state.level ?? 1)) return { ok: false, reason: "no-room" };
+  return { ok: true, equipped: { ...copyEquipped(state), satellites: unique } };
 }
 
 export const LEGACY_MEDAL = "legacy_flames"; // памятная медаль за рекорд старых огоньков

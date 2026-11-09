@@ -152,6 +152,8 @@ export const buyShield = () =>
   post<{ progression: Progression; loot: Loot }>("/api/dust-spend", { kind: "shield", timezone: timeZone() });
 
 export const equipItem = (slot: Slot, item: string | null) => post<{ loot: Loot }>("/api/equip", { slot, item });
+// Спутники на орбите целиком (сколько мест открыто — satelliteSlots в server/core/loot.ts)
+export const saveSatellites = (satellites: string[]) => post<{ loot: Loot }>("/api/equip", { satellites });
 
 export const saveShowcase = (showcase: string[]) => post<{ loot: Loot }>("/api/equip", { showcase });
 

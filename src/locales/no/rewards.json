@@ -71,6 +71,12 @@
     "equipped": "I bruk",
     "error": "Det gikk ikke. Prøv igjen."
   },
+  "satellites": {
+    "slots": "I banen: {n} av {max}",
+    "next": "én plass til fra nivå {level}",
+    "noRoom": "Ikke plass",
+    "instead": "Bruk i stedet for «{item}»"
+  },
   "showcase": {
     "title": "Utstilling",
     "hint": "Opptil tre belønninger du vil vise fram.",

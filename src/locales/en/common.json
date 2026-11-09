@@ -119,6 +119,7 @@
       "shieldEarned": "Plus a shield in reserve: it closes a week for you if you fall short.",
       "levelTitle": "Level up!",
       "level": "Level {n}",
+      "satelliteSlot": "A new spot has opened on your orbit — you can equip one more satellite.",
       "repairedTitle": "Streak repaired",
       "shieldUsedTitle": "A shield saved your streak",
       "shieldUsedText": "Last week's orbit wasn't closed, but a shield covered it — your streak is intact.",

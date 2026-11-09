@@ -10,12 +10,12 @@ import { plural } from "../../utils/plural";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
 import { Badge, Button, Card, Heading, Text, cx } from "../../ui";
-import { buyShield, craftItem, equipItem } from "../../api/progress";
+import { buyShield, craftItem, equipItem, saveSatellites } from "../../api/progress";
 import { CapsuleArt } from "../../components/rewards/CapsuleArt";
 import { CapsuleOpenModal } from "../../components/rewards/CapsuleOpenModal";
 import { ItemArt, RarityChip } from "../../components/rewards/ItemArt";
 import { COLLECTIONS, RARITIES, REWARD_ITEMS, collectionItems, type Item } from "../../../server/core/items";
-import { CRAFT_COST, ODDS, PITY_AT, SHIELD_COST } from "../../../server/core/loot";
+import { CRAFT_COST, ODDS, PITY_AT, SATELLITE_LEVELS, SHIELD_COST, satelliteSlots, satellitesOf } from "../../../server/core/loot";
 import { MAX_SHIELDS } from "../../../server/core/orbit";
 
 // Награды (docs/specs/02-progression.md → «2b»): капсулы, звёздная пыль, коллекции. Всё пишет сервер
@@ -32,6 +32,13 @@ export default function RewardsPage() {
 
   const shields = progression?.orbit.shields ?? 0;
   const name = (id: string) => r.items[id as keyof typeof r.items];
+
+  // Спутников на орбите может быть несколько: места открываются с уровнем (SATELLITE_LEVELS)
+  const sats = satellitesOf(loot.equipped);
+  const slots = satelliteSlots(progression?.xp.level ?? 1);
+  const nextSlotAt = SATELLITE_LEVELS[slots];
+  const isOn = (item: Item) => (item.kind === "satellite" ? sats.includes(item.id) : loot.equipped[item.kind] === item.id);
+  const noRoom = (item: Item) => item.kind === "satellite" && !sats.includes(item.id) && sats.length >= slots;
 
   const run = async (key: string, action: () => Promise<void>) => {
     setBusy(key);
@@ -69,6 +76,11 @@ export default function RewardsPage() {
 
   const toggle = (item: Item) =>
     run(item.id, async () => {
+      if (item.kind === "satellite") {
+        const next = sats.includes(item.id) ? sats.filter((id) => id !== item.id) : [...sats, item.id];
+        applyLoot((await saveSatellites(next)).loot);
+        return;
+      }
       const on = loot.equipped[item.kind] !== item.id;
       applyLoot((await equipItem(item.kind, on ? item.id : null)).loot);
     });
@@ -191,11 +203,17 @@ export default function RewardsPage() {
             <div className="h-1.5 overflow-hidden rounded-full bg-track">
               <div className="h-full rounded-full bg-accent transition-[width] duration-700" style={{ width: `${(owned / items.length) * 100}%` }} />
             </div>
+            {c.kind === "satellite" && owned > 0 && (
+              <p className="-mt-2 text-sm text-muted">
+                {r.satellites.slots.replace("{n}", String(sats.length)).replace("{max}", String(slots))}
+                {nextSlotAt !== undefined && ` · ${r.satellites.next.replace("{level}", String(nextSlotAt))}`}
+              </p>
+            )}
 
             <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               {items.map((item) => {
                 const has = !!loot.inventory[item.id];
-                const on = loot.equipped[item.kind] === item.id;
+                const on = isOn(item);
                 const cost = CRAFT_COST[item.rarity];
                 return (
                   <li
@@ -213,11 +231,11 @@ export default function RewardsPage() {
                         size="sm"
                         variant={on ? "ghost" : "secondary"}
                         loading={busy === item.id}
-                        disabled={!!busy}
+                        disabled={!!busy || noRoom(item)}
                         onClick={() => toggle(item)}
                         className="mt-1 w-full"
                       >
-                        {on ? r.equip.off : r.equip.on}
+                        {on ? r.equip.off : noRoom(item) ? r.satellites.noRoom : r.equip.on}
                       </Button>
                     ) : cost !== undefined ? (
                       <Button
@@ -253,7 +271,7 @@ export default function RewardsPage() {
           </div>
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {REWARD_ITEMS.filter((i) => loot.inventory[i.id]).map((item) => {
-              const on = loot.equipped[item.kind] === item.id;
+              const on = isOn(item);
               return (
                 <li
                   key={item.id}
@@ -269,11 +287,11 @@ export default function RewardsPage() {
                     size="sm"
                     variant={on ? "ghost" : "secondary"}
                     loading={busy === item.id}
-                    disabled={!!busy}
+                    disabled={!!busy || noRoom(item)}
                     onClick={() => toggle(item)}
                     className="mt-1 w-full"
                   >
-                    {on ? r.equip.off : r.equip.on}
+                    {on ? r.equip.off : noRoom(item) ? r.satellites.noRoom : r.equip.on}
                   </Button>
                 </li>
               );

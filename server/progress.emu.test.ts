@@ -225,11 +225,21 @@ describe("капсулы, пыль и предметы", () => {
     expect((await call(equipFn, { slot: "satellite", item: "sat_mars" })).status).toBe(409);
     expect((await call(equipFn, { slot: "hat", item: "sat_moon" })).status).toBe(400);
     const on = await (await call(equipFn, { slot: "satellite", item: "sat_moon" })).json();
-    expect(on.loot.equipped).toEqual({ satellite: "sat_moon", showcase: [] });
+    expect(on.loot.equipped).toEqual({ satellites: ["sat_moon"], showcase: [] });
     const show = await (await call(equipFn, { showcase: ["collection_sky", "sat_moon"] })).json();
     expect(show.loot.equipped.showcase).toEqual(["collection_sky", "sat_moon"]);
     await call(equipFn, { slot: "satellite", item: null });
-    expect((await user().get()).data()!.equipped).toEqual({ showcase: ["collection_sky", "sat_moon"] });
+    expect((await user().get()).data()!.equipped).toEqual({ satellites: [], showcase: ["collection_sky", "sat_moon"] });
+  });
+
+  it("спутников на орбите — столько, сколько мест открыл уровень; старое поле читается", async () => {
+    await user().update({ inventory: { sat_moon: { n: 1 }, sat_mars: { n: 1 } }, level: 4, equipped: { satellite: "sat_moon", showcase: [] } });
+    expect((await call(equipFn, { satellites: ["sat_moon", "sat_mars"] })).status).toBe(409);
+    expect((await call(equipFn, { satellites: "sat_moon" })).status).toBe(400);
+    await user().update({ level: 5 });
+    const two = await (await call(equipFn, { satellites: ["sat_moon", "sat_mars"] })).json();
+    expect(two.loot.equipped).toEqual({ satellites: ["sat_moon", "sat_mars"], showcase: [] });
+    expect((await user().get()).data()!.equipped).toEqual({ satellites: ["sat_moon", "sat_mars"], showcase: [] });
   });
 });
 

@@ -6,9 +6,9 @@ import { useData } from "../../contexts/DataContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { Alert, Button, Modal, cx } from "../../ui";
-import { equipItem, openCapsule, type CapsuleResult } from "../../api/progress";
+import { equipItem, openCapsule, saveSatellites, type CapsuleResult } from "../../api/progress";
 import { itemById } from "../../../server/core/items";
-import { PITY_AT } from "../../../server/core/loot";
+import { PITY_AT, satelliteSlots, satellitesOf } from "../../../server/core/loot";
 import { CapsuleArt } from "./CapsuleArt";
 import { ItemArt, RARITY_TONE, RarityChip, TitleBadge } from "./ItemArt";
 
@@ -19,7 +19,7 @@ export function CapsuleOpenModal({ open, onClose }: { open: boolean; onClose: ()
   const { t, language } = useI18n();
   const r = t.rewards;
   const locale = getLanguageInfo(language).htmlLang;
-  const { loot, applyLoot } = useData();
+  const { loot, applyLoot, progression } = useData();
   const [phase, setPhase] = useState<"idle" | "opening" | "revealed">("idle");
   const [result, setResult] = useState<CapsuleResult | null>(null);
   const [failed, setFailed] = useState(false);
@@ -49,13 +49,17 @@ export function CapsuleOpenModal({ open, onClose }: { open: boolean; onClose: ()
   };
 
   const item = result ? itemById(result.item) : undefined;
-  const equipped = item ? loot.equipped[item.kind] === item.id : false;
+  // Спутник встаёт на свободное место орбиты; если мест нет — вместо последнего надетого
+  const sats = satellitesOf(loot.equipped);
+  const replaces = item?.kind === "satellite" && sats.length >= satelliteSlots(progression?.xp.level ?? 1) ? sats[sats.length - 1] : undefined;
+  const equipped = item ? (item.kind === "satellite" ? sats.includes(item.id) : loot.equipped[item.kind] === item.id) : false;
 
   const equip = async () => {
     if (!item) return;
     setEquipping(true);
     try {
-      applyLoot((await equipItem(item.kind, item.id)).loot);
+      const next = replaces ? [...sats.slice(0, -1), item.id] : [...sats, item.id];
+      applyLoot((item.kind === "satellite" ? await saveSatellites(next) : await equipItem(item.kind, item.id)).loot);
     } catch {
       setFailed(true);
     } finally {
@@ -123,7 +127,7 @@ export function CapsuleOpenModal({ open, onClose }: { open: boolean; onClose: ()
         <div className="grid w-full gap-2">
           {phase === "revealed" && item && !result?.duplicate && !equipped && (
             <Button variant="inverse" fullWidth loading={equipping} onClick={equip}>
-              {r.equip.on}
+              {replaces ? r.satellites.instead.replace("{item}", r.items[replaces as keyof typeof r.items]) : r.equip.on}
             </Button>
           )}
           {phase !== "revealed" ? (

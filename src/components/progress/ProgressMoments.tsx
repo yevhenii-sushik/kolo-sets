@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FlaskConical, Shield, Sparkles, Wrench } from "lucide-react";
+import { FlaskConical, Orbit, Shield, Sparkles, Wrench } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
@@ -9,6 +9,7 @@ import { Ring } from "../../ui";
 import type { Progression } from "../../api/progress";
 import { ORBIT_BONUS } from "../../../server/core/xp";
 import { REPAIR_SESSIONS } from "../../../server/core/orbit";
+import { SATELLITE_LEVELS } from "../../../server/core/loot";
 import { OrbitRing } from "./OrbitRing";
 import { CapsuleArt } from "../rewards/CapsuleArt";
 
@@ -124,7 +125,18 @@ function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }
           </span>
         </Ring>
       );
-      text = <span className="font-display text-xl font-extrabold text-fg">{m.level.replace("{n}", String(moment.level))}</span>;
+      text = (
+        <>
+          <span className="font-display text-xl font-extrabold text-fg">{m.level.replace("{n}", String(moment.level))}</span>
+          {/* С этого уровня на орбите помещается ещё один спутник */}
+          {moment.level > 1 && SATELLITE_LEVELS.includes(moment.level) && (
+            <span className="mt-2 flex items-start gap-2 text-left text-sm text-muted">
+              <Orbit size={16} className="mt-0.5 shrink-0 text-special" />
+              {m.satelliteSlot}
+            </span>
+          )}
+        </>
+      );
       break;
     case "repaired":
       title = m.repairedTitle;

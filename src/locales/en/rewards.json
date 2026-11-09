@@ -71,6 +71,12 @@
     "equipped": "Equipped",
     "error": "That didn't work. Try again."
   },
+  "satellites": {
+    "slots": "On your orbit: {n} of {max}",
+    "next": "another spot at level {level}",
+    "noRoom": "No room",
+    "instead": "Equip instead of {item}"
+  },
   "showcase": {
     "title": "Showcase",
     "hint": "Up to three rewards you want to show off.",

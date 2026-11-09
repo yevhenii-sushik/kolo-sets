@@ -24,7 +24,7 @@ import { CapsuleArt } from "../../components/rewards/CapsuleArt";
 import { CapsuleOpenModal } from "../../components/rewards/CapsuleOpenModal";
 import { ShowcaseModal, ShowcaseTile } from "../../components/rewards/Showcase";
 import { COLLECTIONS, collectionItems } from "../../../server/core/items";
-import { BETA_MEDAL, SHOWCASE_MAX } from "../../../server/core/loot";
+import { BETA_MEDAL, SHOWCASE_MAX, satellitesOf } from "../../../server/core/loot";
 import Toast from "../../components/ui/Toast";
 import {
   AtSign,
@@ -294,13 +294,7 @@ export default function ProfilePage() {
         {/* На телефоне: аватар и кнопки — первой строкой, имя и данные — второй во всю ширину */}
         <div className={cx("relative flex flex-wrap items-center gap-x-4 gap-y-5 sm:flex-nowrap sm:gap-6", !isEditing && "pt-12 sm:pt-14")}>
           <div className="relative shrink-0">
-            <AvatarFrame
-              progress={level ? level.into / level.next : 0}
-              ring={loot.equipped.ring}
-              satellite={isEditing ? undefined : loot.equipped.satellite}
-              level={level && !isEditing ? level.level : undefined}
-              label={level ? `${p.level.label.replace("{n}", String(level.level))}: ${level.into} / ${level.next}` : profile.displayName}
-            >
+            <AvatarFrame ring={loot.equipped.ring} satellites={isEditing ? [] : satellitesOf(loot.equipped)} label={profile.displayName}>
             <div className="h-full w-full overflow-hidden rounded-full bg-accent-soft">
               {editForm.photoURL ? (
                 <img

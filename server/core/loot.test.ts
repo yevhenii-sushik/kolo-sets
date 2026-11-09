@@ -8,6 +8,9 @@ import {
   capsulesEarned,
   craftItem,
   equipItem,
+  satelliteSlots,
+  satellitesOf,
+  setSatellites,
   ODDS,
   openCapsule,
   PITY_AT,
@@ -144,11 +147,34 @@ describe("пыль", () => {
 describe("надеть и витрина", () => {
   it("только свой предмет подходящего вида; null — снять", () => {
     const state: LootState = { inventory: own("sat_moon", "ring_mint") };
-    expect(equipItem(state, "satellite", "sat_moon")).toEqual({ ok: true, equipped: { satellite: "sat_moon", showcase: [] } });
+    expect(equipItem(state, "satellite", "sat_moon")).toEqual({ ok: true, equipped: { satellites: ["sat_moon"], showcase: [] } });
     expect(equipItem(state, "ring", "sat_moon")).toEqual({ ok: false });
     expect(equipItem(state, "satellite", "sat_mars")).toEqual({ ok: false });
     const off = equipItem({ ...state, equipped: { satellite: "sat_moon", showcase: [] } }, "satellite", null);
-    expect(off.ok && off.equipped).toEqual({ showcase: [] });
+    expect(off.ok && off.equipped).toEqual({ satellites: [], showcase: [] });
+    const ring = equipItem({ ...state, equipped: { satellite: "sat_moon", showcase: [] } }, "ring", "ring_mint");
+    expect(ring.ok && ring.equipped).toEqual({ ring: "ring_mint", showcase: [] });
+  });
+
+  it("места для спутников: одно сразу, второе с 5 уровня, третье с 10", () => {
+    expect([1, 4, 5, 9, 10, 40].map(satelliteSlots)).toEqual([1, 1, 2, 2, 3, 3]);
+  });
+
+  it("спутники на орбите: свои, без повторов, не больше открытых мест; старое поле читается", () => {
+    const state: LootState & { level?: number } = { inventory: own("sat_moon", "sat_mars", "sat_venus", "ring_mint"), level: 5 };
+    expect(setSatellites(state, ["sat_moon", "sat_mars"])).toEqual({ ok: true, equipped: { satellites: ["sat_moon", "sat_mars"], showcase: [] } });
+    expect(setSatellites(state, ["sat_moon", "sat_moon"])).toEqual({ ok: true, equipped: { satellites: ["sat_moon"], showcase: [] } });
+    expect(setSatellites(state, ["sat_moon", "sat_mars", "sat_venus"])).toEqual({ ok: false, reason: "no-room" });
+    expect(setSatellites({ ...state, level: 10 }, ["sat_moon", "sat_mars", "sat_venus"]).ok).toBe(true);
+    expect(setSatellites({ ...state, level: undefined }, ["sat_moon", "sat_mars"])).toEqual({ ok: false, reason: "no-room" });
+    expect(setSatellites(state, ["sat_jupiter"])).toEqual({ ok: false, reason: "not-owned" });
+    expect(setSatellites(state, ["ring_mint"])).toEqual({ ok: false, reason: "not-owned" });
+    expect(setSatellites(state, "sat_moon")).toEqual({ ok: false, reason: "bad-request" });
+    const legacy = setSatellites({ ...state, equipped: { satellite: "sat_moon", ring: "ring_mint", showcase: ["x"] } }, []);
+    expect(legacy.ok && legacy.equipped).toEqual({ satellites: [], ring: "ring_mint", showcase: ["x"] });
+    expect(satellitesOf({ satellite: "sat_moon", showcase: [] })).toEqual(["sat_moon"]);
+    expect(satellitesOf({ satellites: ["sat_mars"], satellite: "sat_moon", showcase: [] })).toEqual(["sat_mars"]);
+    expect(satellitesOf(undefined)).toEqual([]);
   });
 
   it("витрина — до трёх своих предметов, медалей и достижений", () => {

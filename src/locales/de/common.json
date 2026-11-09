@@ -119,6 +119,7 @@
       "shieldEarned": "Dazu ein Schild in Reserve: Es schließt eine Woche für dich, wenn du es nicht schaffst.",
       "levelTitle": "Level-up!",
       "level": "Level {n}",
+      "satelliteSlot": "In deinem Orbit ist ein neuer Platz frei – du kannst einen weiteren Satelliten anlegen.",
       "repairedTitle": "Serie repariert",
       "shieldUsedTitle": "Ein Schild hat deine Serie gerettet",
       "shieldUsedText": "Der Orbit der letzten Woche wurde nicht geschlossen, aber ein Schild hat ihn abgedeckt – deine Serie ist intakt.",

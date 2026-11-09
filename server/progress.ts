@@ -3,7 +3,7 @@ import { randomInt } from "node:crypto";
 import { Timestamp } from "firebase-admin/firestore";
 import { applyCollectionUnlocks, applySession, checkPlausibility, type ProgressState, type SessionInput } from "./core/session";
 import { applyGoal, buyShield, syncProgress } from "./core/progression";
-import { craftItem, equipItem, grantBeta, openCapsule, setShowcase, type Equipped, type LootState, type Slot } from "./core/loot";
+import { craftItem, equipItem, grantBeta, openCapsule, satellitesOf, setSatellites, setShowcase, type Equipped, type LootState, type Slot } from "./core/loot";
 import type { OrbitState } from "./core/orbit";
 import { dayKey, safeTimeZone } from "./core/time";
 import { adminAuth, db } from "./admin";
@@ -80,7 +80,7 @@ const lootView = (s: LootState) => ({
   dust: s.dust ?? 0,
   inventory: Object.fromEntries(Object.entries(s.inventory ?? {}).map(([id, v]) => [id, { n: v.n }])),
   medals: s.medals ?? [],
-  equipped: s.equipped ?? { showcase: [] },
+  equipped: s.equipped ? { ...s.equipped, satellites: satellitesOf(s.equipped) } : { showcase: [], satellites: [] },
 });
 
 // Поля сервера заменяются целиком: при merge Firestore слил бы вложенные объекты, и, например,
@@ -256,23 +256,28 @@ export async function spendDust(uid: string, body: { kind?: unknown; item?: unkn
 
 const SLOTS: readonly Slot[] = ["satellite", "ring", "title", "background"];
 
-// POST /api/equip — { slot, item | null } или { showcase: [...] }
-export async function equipUserItem(uid: string, body: { slot?: unknown; item?: unknown; showcase?: unknown }): Promise<Reply> {
+// POST /api/equip — { slot, item | null }, { satellites: [...] } или { showcase: [...] }
+export async function equipUserItem(
+  uid: string,
+  body: { slot?: unknown; item?: unknown; satellites?: unknown; showcase?: unknown },
+): Promise<Reply> {
   const store = db();
   const userRef = store.doc(`users/${uid}`);
   return store.runTransaction(async (tx) => {
     const profile = await tx.get(userRef);
     if (!profile.exists) return { status: 409, body: { error: "no-profile" } };
     const state = progressState(profile.data());
-    let done: { ok: true; equipped: Equipped } | { ok: false };
-    if (body.showcase !== undefined) {
+    let done: { ok: true; equipped: Equipped } | { ok: false; reason?: string };
+    if (body.satellites !== undefined) {
+      done = setSatellites(state, body.satellites);
+    } else if (body.showcase !== undefined) {
       done = setShowcase({ ...state, achievements: state.achievements as string[] | undefined }, body.showcase);
     } else if (SLOTS.includes(body.slot as Slot) && (body.item === null || typeof body.item === "string")) {
       done = equipItem(state, body.slot as Slot, body.item as string | null);
     } else {
       return { status: 400, body: { error: "bad-request" } };
     }
-    if (!done.ok) return { status: 409, body: { error: "not-owned" } };
+    if (!done.ok) return { status: done.reason === "bad-request" ? 400 : 409, body: { error: done.reason ?? "not-owned" } };
     writeProfile(tx, userRef, { equipped: done.equipped });
     return { status: 200, body: { loot: lootView({ ...state, equipped: done.equipped }) } };
   });
