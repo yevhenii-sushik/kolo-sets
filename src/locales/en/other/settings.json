@@ -50,6 +50,13 @@
       "blocked": "Blocked",
       "enable": "Turn on",
       "unsupported": "Unavailable"
+    },
+    "notify": {
+      "due": {
+        "one": "{n} word is waiting for review. A couple of minutes and you’re done.",
+        "other": "{n} words are waiting for review. A couple of minutes and you’re done."
+      },
+      "idle": "Time for a quick session: a few minutes bring your weekly goal closer."
     }
   },
   "sound": {

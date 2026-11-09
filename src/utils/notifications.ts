@@ -1,3 +1,5 @@
+import { APP_TITLE } from './pageMeta';
+
 const REMINDER_KEY = 'kolo_reminder_v1';
 
 export interface ReminderSettings {
@@ -53,6 +55,14 @@ export const registerDueCountGetter = (fn: () => number): void => {
   dueCountGetter = fn;
 };
 
+// Текст — тоже в момент срабатывания и на языке интерфейса: язык мог смениться за часы ожидания.
+// Собирает его ReminderScheduler в App из переводов (settings.reminder.notify)
+let reminderText: (dueCount: number) => string = () => '';
+
+export const registerReminderText = (fn: (dueCount: number) => string): void => {
+  reminderText = fn;
+};
+
 export const scheduleReminder = (settings: ReminderSettings): void => {
   cancelReminder();
   if (!settings.enabled || !('Notification' in window) || Notification.permission !== 'granted') return;
@@ -69,10 +79,8 @@ export const scheduleReminder = (settings: ReminderSettings): void => {
     scheduledTimer = null;
     try {
       const dueCount = dueCountGetter();
-      new Notification('Kolo Sets', {
-        body: dueCount > 0
-          ? `You have ${dueCount} cards due for review. Keep your streak alive!`
-          : 'Time to study! Open Kolo Sets to keep your streak going.',
+      new Notification(APP_TITLE, {
+        body: reminderText(dueCount),
         icon: '/icon-192.png',
         badge: '/badge-96.png', // белый силуэт знака: Android сам красит значок
         tag: 'kolo-daily-reminder',

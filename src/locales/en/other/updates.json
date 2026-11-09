@@ -51,7 +51,8 @@
         "Writing to support is simpler: pick a topic, type your message, and we'll reply to your account email. Messages with characters like _ or * now send without an error.",
         "New here? A short intro and First steps on the home screen take you from your first set to your first session — with hints along the way.",
         "The home screen no longer says everything is reviewed while new words are waiting, and a set's page now has a Study button.",
-        "Folders work properly: rename and recolour them, delete only after a confirmation (the sets stay), the Back button closes a folder, and after a session you return to the same folder. You can create a folder straight from a set’s menu, and starred sets from folders show up in Favourites."
+        "Folders work properly: rename and recolour them, delete only after a confirmation (the sets stay), the Back button closes a folder, and after a session you return to the same folder. You can create a folder straight from a set’s menu, and starred sets from folders show up in Favourites.",
+        "The daily reminder now speaks your app language and counts words waiting for review."
       ]
     },
     {

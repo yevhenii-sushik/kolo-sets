@@ -50,6 +50,13 @@
       "blocked": "Blokkert",
       "enable": "Slå på",
       "unsupported": "Ikke tilgjengelig"
+    },
+    "notify": {
+      "due": {
+        "one": "{n} ord venter på repetisjon. Et par minutter, så er du ferdig.",
+        "other": "{n} ord venter på repetisjon. Et par minutter, så er du ferdig."
+      },
+      "idle": "Tid for en kort økt: noen minutter bringer deg nærmere ukesmålet."
     }
   },
   "sound": {

@@ -1,12 +1,14 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
-import { I18nProvider } from "./contexts/I18nContext";
+import { I18nProvider, useI18n } from "./contexts/I18nContext";
 import { DataProvider, useData } from "./contexts/DataContext";
 import { Collection } from "./types";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { isDueCard } from "./utils/storage";
-import { getReminderSettings, scheduleReminder, cancelReminder, registerDueCountGetter } from "./utils/notifications";
+import { getReminderSettings, scheduleReminder, cancelReminder, registerDueCountGetter, registerReminderText } from "./utils/notifications";
+import { plural } from "./utils/plural";
+import { getLanguageInfo } from "./locales/languages";
 
 import AchievementUnlockBanner from "./components/AchievementUnlockBanner";
 import { ProgressMomentsHost } from "./components/progress/ProgressMoments";
@@ -57,11 +59,18 @@ function ReminderScheduler() {
   // dueCount вычисляется в момент срабатывания из актуального снапшота
   const collectionsRef = useRef<Collection[]>(collections);
   collectionsRef.current = collections;
+  // Текст — на текущем языке интерфейса, тоже через ref
+  const { t, language } = useI18n();
+  const notify = t.settings.reminder.notify;
+  const locale = getLanguageInfo(language).htmlLang;
+  const textRef = useRef((due: number) => (due > 0 ? plural(locale, due, notify.due) : notify.idle));
+  textRef.current = (due: number) => (due > 0 ? plural(locale, due, notify.due) : notify.idle);
 
   useEffect(() => {
     registerDueCountGetter(() =>
       collectionsRef.current.reduce((n, col) => n + col.cards.filter(isDueCard).length, 0)
     );
+    registerReminderText((due) => textRef.current(due));
     scheduleReminder(getReminderSettings());
     return cancelReminder;
   }, []);
