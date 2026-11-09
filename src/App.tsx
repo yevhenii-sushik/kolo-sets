@@ -26,6 +26,8 @@ const HomePage = lazy(() => import("./pages/home/HomePage"));
 // Public legal & support pages
 const LegalLayout = lazy(() => import("./pages/legal/LegalLayout"));
 const LegalDocumentPage = lazy(() => import("./pages/legal/LegalDocumentPage"));
+const GuideLayout = lazy(() => import("./pages/guide/GuideLayout"));
+const GuidePage = lazy(() => import("./pages/guide/GuidePage"));
 // Витрина дизайн-системы — только в режиме разработки, в продакшен-сборку не попадает
 const DesignPage = import.meta.env.DEV ? lazy(() => import("./pages/design/DesignPage")) : null;
 const NotFoundPage = lazy(() => import("./pages/error/NotFoundPage"));
@@ -192,6 +194,13 @@ function AppContent() {
         <Route path="/terms" element={<LegalDocumentPage doc="terms" />} />
         <Route path="/cookies" element={<LegalDocumentPage doc="cookies" />} />
         <Route path="/refund" element={<LegalDocumentPage doc="refund" />} />
+      </Route>
+
+      {/* 5. Страницы «О Kolo» из подвала сайта: как это работает, режимы, движок Perigee */}
+      <Route element={<GuideLayout />}>
+        <Route path="/how-it-works" element={<GuidePage page="how" />} />
+        <Route path="/modes" element={<GuidePage page="modes" />} />
+        <Route path="/perigee" element={<GuidePage page="perigee" />} />
       </Route>
 
       {DesignPage && <Route path="/design" element={<DesignPage />} />}

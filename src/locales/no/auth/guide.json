@@ -1,0 +1,181 @@
+{
+  "nav": "Om Kolo",
+  "next": "Neste",
+  "cta": {
+    "title": "Prøv med dine egne ord",
+    "text": "All læring er gratis og uten reklame. Det første settet lager du på et minutt.",
+    "start": "Begynn å lære",
+    "openApp": "Åpne Kolo"
+  },
+  "pages": {
+    "how": {
+      "tab": "Slik fungerer det",
+      "meta": {
+        "title": "Slik fungerer Kolo – lær ord med repetisjon med mellomrom",
+        "description": "Velg et språk, lag sett med dine egne ord og øv noen minutter om dagen. Kolo henter fram hvert ord rett før du glemmer det."
+      },
+      "title": "Slik fungerer Kolo",
+      "lead": "Kolo er stedet for ordene du faktisk trenger. Du legger dem inn, øver noen minutter om dagen, og Kolo holder styr på når hvert ord skal komme tilbake.",
+      "sections": [
+        {
+          "id": "language",
+          "title": "Velg et språk",
+          "text": "Hvert språk du lærer, er et eget kurs med egne sett og mapper, så spansk og norsk blandes aldri. Kolo støtter nesten 60 språk og alle alfabeter og skriftsystemer. Du bytter mellom kursene rett i toppfeltet."
+        },
+        {
+          "id": "sets",
+          "title": "Lag sett med dine egne ord",
+          "text": "Et sett er en liste med ord om ett tema: mat, reise, et kapittel i en bok. Hvert kort har et ord og en oversettelse – og om du vil, en forklaring, et eksempel og en ordklasse. Sorter settene i mapper, og lim inn en hel liste på én gang, ett ord per linje."
+        },
+        {
+          "id": "practise",
+          "title": "Øv noen minutter",
+          "text": "Flashkort er hjertet i Kolo: du ser ordet, prøver å huske det, snur kortet og vurderer deg selv ærlig. Quiz og spill gir deg de samme ordene i andre formater. Fem minutter om dagen er nok til å komme videre."
+        },
+        {
+          "id": "return",
+          "title": "Kolo henter ordene tilbake",
+          "text": "Etter hvert kort planlegger Perigee – repetisjonsmotoren i Kolo – neste møte. Vanskelige ord kommer tilbake i morgen, kjente ord om en uke eller en måned. På forsiden ser du hvor mange ord som venter i dag, og dagens repetisjon tar dem i én omgang."
+        },
+        {
+          "id": "goal",
+          "title": "Et ukesmål i stedet for daglig press",
+          "text": "Velg hvor mange dager i uken du vil øve – fra 3 til 7. Hver dag med en økt gir et punkt på ukens bane; når du når målet, lukkes banen. En glemt dag brenner ingenting, og et skjold kan dekke en dårlig uke."
+        },
+        {
+          "id": "rewards",
+          "title": "Belønning for øving",
+          "text": "Hver økt gir XP og løfter nivået ditt. Nye nivåer og lukkede baner gir kapsler med satellitter, ringfarger, profilbakgrunner og titler. Belønninger kommer bare fra øving – ingenting er til salgs."
+        },
+        {
+          "id": "facts",
+          "title": "Greit å vite",
+          "points": [
+            { "title": "Gratis", "text": "All læring er gratis og uten reklame." },
+            { "title": "På alle enheter", "text": "Kolo kjører i nettleseren på datamaskinen og mobilen. Legg det til på hjemskjermen, så åpnes det som en app." },
+            { "title": "Synkronisert", "text": "Med en konto lagres settene og fremgangen din i skyen og synkroniseres mellom enhetene dine." },
+            { "title": "Fungerer uten nett", "text": "Mistet du nettet midt i en økt? Økten lagres og telles med så snart du er på nett igjen." }
+          ]
+        }
+      ]
+    },
+    "modes": {
+      "tab": "Treningsmoduser",
+      "meta": {
+        "title": "Treningsmoduser i Kolo – flashkort, quiz og spill",
+        "description": "Flashkort, dagens repetisjon, quiz, hurtigrunde, overlevelse og finn par: seks måter å øve på de samme ordene – og hva hver av dem passer best til."
+      },
+      "title": "Seks treningsmoduser",
+      "lead": "De samme ordene i ulike formater. Flashkort og dagens repetisjon bygger langtidshukommelsen; quiz og spill gir ekstra øving og gjør det morsomt.",
+      "sections": [
+        {
+          "id": "flashcards",
+          "title": "Flashkort",
+          "tags": ["Styrer repetisjonsplanen"],
+          "text": "Du ser ordet, husker oversettelsen, snur kortet og vurderer deg selv med én av fire knapper: «Vet ikke», «Glemte», «Husker» eller «Kan». Vurderingen forteller Perigee når ordet skal komme tilbake. Baksiden viser forklaringen, et eksempel og uttalen. Passer best til å lære nye ord og holde på de gamle."
+        },
+        {
+          "id": "review",
+          "title": "Dagens repetisjon",
+          "tags": ["Styrer repetisjonsplanen"],
+          "text": "Samler alle ordene som skal repeteres i dag, fra alle settene i kurset, og kjører dem som flashkort. Noen minutter om dagen, og ingenting glipper. Passer best som en daglig vane."
+        },
+        {
+          "id": "quiz",
+          "title": "Quiz",
+          "tags": ["Fra 4 ord"],
+          "text": "En blanding av oppgaver: velg oversettelsen, velg ordet, kjenn igjen et ord fra forklaringen, skriv det selv eller finn par. Du velger hvilke oppgavetyper som er med. En quiz uten feil gir bonus-XP. Passer best til å sjekke hva du faktisk kan."
+        },
+        {
+          "id": "speed",
+          "title": "Hurtigrunde",
+          "tags": ["Fra 4 ord"],
+          "text": "60 sekunder og så mange riktige svar du klarer. Raske avgjørelser trener opp den umiddelbare gjenkjennelsen du trenger i en ekte samtale."
+        },
+        {
+          "id": "survival",
+          "title": "Overlevelse",
+          "tags": ["Fra 4 ord"],
+          "text": "Svar til livene er brukt opp: du har tre, og hver feil koster ett. En fin måte å finne ordene du fortsatt snubler i."
+        },
+        {
+          "id": "match",
+          "title": "Finn par",
+          "tags": ["Fra 4 ord"],
+          "text": "Koble ord med oversettelsene mot klokka – opptil seks par om gangen. Lett, raskt og fint til en kort pause."
+        },
+        {
+          "id": "schedule",
+          "title": "Hvilke moduser endrer planen?",
+          "text": "Bare flashkort og dagens repetisjon bestemmer når et ord kommer tilbake – der er vurderingen din presis. Quiz og spill er ekstra øving: de gir XP og teller med i ukesmålet, men flytter ikke planen."
+        },
+        {
+          "id": "xp",
+          "title": "Slik får du XP",
+          "points": [
+            { "title": "Flashkort og repetisjon", "text": "1 XP for hvert kort." },
+            { "title": "Quiz", "text": "1 XP per spørsmål og 1 til per riktig svar, pluss 10 for en quiz uten feil." },
+            { "title": "Spill", "text": "1 XP per riktig svar, opptil 20 per runde." },
+            { "title": "Bonuser", "text": "+5 for dagens første økt og +50 for å lukke ukens bane. XP fra øving er begrenset til 400 om dagen." }
+          ]
+        }
+      ]
+    },
+    "perigee": {
+      "tab": "Perigee-motoren",
+      "meta": {
+        "title": "Perigee – repetisjonsmotoren i Kolo",
+        "description": "Slik bestemmer Kolo når et ord skal komme tilbake: glemselskurven, fire vurderingsknapper, voksende intervaller og SM-2-algoritmen under panseret."
+      },
+      "title": "Perigee, repetisjonsmotoren i Kolo",
+      "lead": "Perigee bestemmer når hvert ord skal komme tilbake: ikke for tidlig, så du ikke kaster bort tid på det du kan, og ikke for sent, så du ikke glemmer det.",
+      "sections": [
+        {
+          "id": "name",
+          "title": "Hvorfor «Perigee»",
+          "text": "I en bane er perigeum punktet der en satellitt er nærmest planeten sin. I Kolo går hvert ord i sin egen bane, og perigeum er øyeblikket det kommer tilbake til deg – rett før det begynner å blekne."
+        },
+        {
+          "id": "curve",
+          "title": "Glemselskurven",
+          "text": "Uten repetisjon blekner minnet fort: i løpet av noen dager er de fleste nye ordene borte. Hver repetisjon til rett tid gjør kurven flatere, og ordet sitter lenger hver gang. Dette er repetisjon med mellomrom, en av de best utforskede måtene å lære på."
+        },
+        {
+          "id": "ratings",
+          "title": "Fire knapper, fire signaler",
+          "text": "Etter hvert flashkort forteller du Perigee hvor godt du kunne ordet. Det er alt den trenger.",
+          "points": [
+            { "title": "Vet ikke", "text": "Du husket det ikke. Ordet begynner på nytt og kommer tilbake i morgen." },
+            { "title": "Glemte", "text": "Du kunne det en gang, men det glapp. Det kommer også tilbake i morgen, og senere intervaller vokser saktere." },
+            { "title": "Husker", "text": "Du husket det med litt innsats. Intervallet vokser, men forsiktig." },
+            { "title": "Kan", "text": "Du husket det med en gang. Intervallet vokser mest." }
+          ]
+        },
+        {
+          "id": "intervals",
+          "title": "Slik vokser intervallene",
+          "text": "Etter første riktige svar kommer et ord tilbake om 1 dag, etter det andre om 6 dager, og deretter ganges hvert intervall med ordets letthet. Hvert ord starter på 2,5: «Kan» hever den, «Husker» senker den litt, «Glemte» og «Vet ikke» senker den mer – men aldri under 1,3. Lette ord flyr langt av gårde, vanskelige kommer oftere tilbake.",
+          "points": [
+            { "title": "Alltid «Kan»", "text": "1 dag → 6 dager → 16 dager → 45 dager" },
+            { "title": "Alltid «Husker»", "text": "1 dag → 6 dager → 13 dager → 27 dager" }
+          ]
+        },
+        {
+          "id": "sm2",
+          "title": "SM-2 under panseret",
+          "text": "Perigee bygger på SM-2, den klassiske algoritmen for repetisjon med mellomrom fra SuperMemo, som mange flashkort-apper bruker. Vi bruker en forenklet versjon med fire tydelige knapper i stedet for en skala fra 0 til 5. Bare flashkort og dagens repetisjon oppdaterer planen; quiz og spill er ekstra øving."
+        },
+        {
+          "id": "tips",
+          "title": "Slik får du mest ut av det",
+          "points": [
+            { "title": "Vurder ærlig", "text": "Et rundhåndet «Kan» sender ordet for langt av gårde. Nølte du, trykk «Husker»." },
+            { "title": "Litt hver dag", "text": "Fem minutter om dagen virker bedre enn en time én gang i uken." },
+            { "title": "Begynn med repetisjonen", "text": "Venter det ord i dag, ta dem først – og legg til nye etterpå." },
+            { "title": "Nye ord venter på deg", "text": "Et ord får sin første dato etter den første flashkort-økten med det." }
+          ]
+        }
+      ]
+    }
+  }
+}

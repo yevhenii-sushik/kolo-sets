@@ -1,0 +1,181 @@
+{
+  "nav": "About Kolo",
+  "next": "Next",
+  "cta": {
+    "title": "Try it on your own words",
+    "text": "All learning is free, with no ads. It takes a minute to create your first set.",
+    "start": "Start learning",
+    "openApp": "Open Kolo"
+  },
+  "pages": {
+    "how": {
+      "tab": "How it works",
+      "meta": {
+        "title": "How Kolo works — learn words with spaced repetition",
+        "description": "Pick a language, build sets from your own words and practise a few minutes a day. Kolo brings each word back right before you forget it."
+      },
+      "title": "How Kolo works",
+      "lead": "Kolo is a place for the words you actually need. You add them, practise for a few minutes a day, and Kolo keeps track of when each word should come back.",
+      "sections": [
+        {
+          "id": "language",
+          "title": "Pick a language",
+          "text": "Every language you learn is a separate course with its own sets and folders, so Spanish and Norwegian never get mixed up. Kolo supports almost 60 languages and any alphabet or script. You can switch between courses right in the header."
+        },
+        {
+          "id": "sets",
+          "title": "Build sets from your own words",
+          "text": "A set is a list of words on one topic: food, travel, a chapter of a book. Each card has a word and its translation; add an explanation, an example and a part of speech if you like. Sort sets into folders and paste a whole list at once — one word per line."
+        },
+        {
+          "id": "practise",
+          "title": "Practise for a few minutes",
+          "text": "Flashcards are the heart of Kolo: see the word, try to recall it, flip the card and rate yourself honestly. Quizzes and games give you the same words in other formats. Five minutes a day is enough to make progress."
+        },
+        {
+          "id": "return",
+          "title": "Kolo brings words back",
+          "text": "After every card, Perigee — Kolo's review engine — plans the next meeting. Hard words come back tomorrow, familiar ones in a week or a month. The home screen shows how many words are due today, and the daily review goes through them in one go."
+        },
+        {
+          "id": "goal",
+          "title": "A weekly goal instead of daily pressure",
+          "text": "Choose how many days a week you want to practise — from 3 to 7. Each day with a session adds a point to the week's orbit; reach your goal and the orbit closes. A missed day burns nothing, and a shield can cover a bad week."
+        },
+        {
+          "id": "rewards",
+          "title": "Rewards for practice",
+          "text": "Every session earns XP and raises your level. New levels and closed orbits bring capsules with satellites, ring colours, profile backgrounds and titles. Rewards come only from practice — nothing is for sale."
+        },
+        {
+          "id": "facts",
+          "title": "Good to know",
+          "points": [
+            { "title": "Free", "text": "All learning is free, with no ads." },
+            { "title": "On any device", "text": "Kolo runs in the browser on your computer and phone. Add it to your home screen and it opens like an app." },
+            { "title": "In sync", "text": "With an account, your sets and progress are stored in the cloud and sync between your devices." },
+            { "title": "Works offline", "text": "Lost your connection mid-session? Your session is saved and counted as soon as you're back online." }
+          ]
+        }
+      ]
+    },
+    "modes": {
+      "tab": "Training modes",
+      "meta": {
+        "title": "Training modes in Kolo — flashcards, quizzes and games",
+        "description": "Flashcards, daily review, quizzes, speed round, survival and match pairs: six ways to practise the same words, and what each one is best for."
+      },
+      "title": "Six training modes",
+      "lead": "The same words in different formats. Flashcards and the daily review build long-term memory; quizzes and games help you practise and keep things fun.",
+      "sections": [
+        {
+          "id": "flashcards",
+          "title": "Flashcards",
+          "tags": ["Sets the review schedule"],
+          "text": "See the word, recall the translation, flip the card and rate yourself with one of four buttons: Don't know, Forgot, Remember or Know. Your rating tells Perigee when to bring the word back. The back of the card shows the explanation, an example and the pronunciation. Best for learning new words and keeping old ones."
+        },
+        {
+          "id": "review",
+          "title": "Daily review",
+          "tags": ["Sets the review schedule"],
+          "text": "Collects every word that's due today from all the sets in your course and runs them as flashcards. A few minutes a day, and nothing slips through. Best as a daily routine."
+        },
+        {
+          "id": "quiz",
+          "title": "Quiz",
+          "tags": ["From 4 words"],
+          "text": "A mix of tasks: pick the translation, pick the word, recognise a word from its explanation, type it yourself or match pairs. You choose which task types to include. A quiz without mistakes earns bonus XP. Best for checking what you really know."
+        },
+        {
+          "id": "speed",
+          "title": "Speed round",
+          "tags": ["From 4 words"],
+          "text": "60 seconds, as many correct answers as you can. Quick decisions train instant recall — the kind you need in a real conversation."
+        },
+        {
+          "id": "survival",
+          "title": "Survival",
+          "tags": ["From 4 words"],
+          "text": "Answer until you run out of lives: you have three, and every mistake costs one. A good way to find the words that still trip you up."
+        },
+        {
+          "id": "match",
+          "title": "Match pairs",
+          "tags": ["From 4 words"],
+          "text": "Connect words with their translations against the clock — up to six pairs at a time. Light, fast and good for a short break."
+        },
+        {
+          "id": "schedule",
+          "title": "Which modes change the schedule?",
+          "text": "Only flashcards and the daily review decide when a word comes back — that's where your rating is precise. Quizzes and games are practice on top: they earn XP and count towards your weekly goal, but they don't move the schedule."
+        },
+        {
+          "id": "xp",
+          "title": "How XP is earned",
+          "points": [
+            { "title": "Flashcards and review", "text": "1 XP for every card." },
+            { "title": "Quiz", "text": "1 XP per question and 1 more per correct answer, plus 10 for a quiz without mistakes." },
+            { "title": "Games", "text": "1 XP per correct answer, up to 20 per round." },
+            { "title": "Bonuses", "text": "+5 for the first session of the day and +50 for closing the week's orbit. Training XP is capped at 400 a day." }
+          ]
+        }
+      ]
+    },
+    "perigee": {
+      "tab": "Perigee engine",
+      "meta": {
+        "title": "Perigee — Kolo's spaced repetition engine",
+        "description": "How Kolo decides when to bring a word back: the forgetting curve, four rating buttons, growing intervals and the SM-2 algorithm under the hood."
+      },
+      "title": "Perigee, Kolo's review engine",
+      "lead": "Perigee decides when each word should come back: not too early, so you don't waste time on what you know, and not too late, so you don't forget it.",
+      "sections": [
+        {
+          "id": "name",
+          "title": "Why “Perigee”",
+          "text": "In orbit, the perigee is the point where a satellite comes closest to its planet. In Kolo every word moves on its own orbit, and its perigee is the moment it comes back to you — just before it starts to fade."
+        },
+        {
+          "id": "curve",
+          "title": "The forgetting curve",
+          "text": "Without review, memory fades fast: within a few days most new words are gone. Every well-timed review flattens the curve, and the word stays with you longer each time. This is spaced repetition, one of the best-researched ways to learn."
+        },
+        {
+          "id": "ratings",
+          "title": "Four buttons, four signals",
+          "text": "After each flashcard you tell Perigee how well you knew the word. That's all it needs.",
+          "points": [
+            { "title": "Don't know", "text": "You didn't recall it. The word starts over and comes back tomorrow." },
+            { "title": "Forgot", "text": "You knew it once, but it slipped. It also comes back tomorrow, and later gaps grow more slowly." },
+            { "title": "Remember", "text": "You recalled it with some effort. The gap grows, but carefully." },
+            { "title": "Know", "text": "Instant recall. The gap grows the most." }
+          ]
+        },
+        {
+          "id": "intervals",
+          "title": "How the gaps grow",
+          "text": "After the first correct answer a word comes back in 1 day, after the second in 6 days, and from then on each gap is multiplied by the word's ease. Every word starts at 2.5: “Know” raises it, “Remember” lowers it a little, “Forgot” and “Don't know” lower it more — but never below 1.3. Easy words fly far away, tricky ones keep coming back.",
+          "points": [
+            { "title": "Always “Know”", "text": "1 day → 6 days → 16 days → 45 days" },
+            { "title": "Always “Remember”", "text": "1 day → 6 days → 13 days → 27 days" }
+          ]
+        },
+        {
+          "id": "sm2",
+          "title": "SM-2 under the hood",
+          "text": "Perigee is built on SM-2, the classic spaced-repetition algorithm behind SuperMemo and many flashcard apps. We use a simplified version with four clear buttons instead of a six-point scale. Only flashcards and the daily review update the schedule; quizzes and games are practice on top."
+        },
+        {
+          "id": "tips",
+          "title": "Getting the most out of it",
+          "points": [
+            { "title": "Rate honestly", "text": "A generous “Know” sends a word away too early. If you hesitated, press “Remember”." },
+            { "title": "A little every day", "text": "Five minutes a day works better than an hour once a week." },
+            { "title": "Start with the review", "text": "When words are due, go through them first — then add new ones." },
+            { "title": "New words wait for you", "text": "A word gets its first date after your first flashcards session with it." }
+          ]
+        }
+      ]
+    }
+  }
+}

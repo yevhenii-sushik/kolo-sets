@@ -58,6 +58,22 @@ function SectionHeader({ title, text, center = true }: { title: string; text?: s
   );
 }
 
+// «Подробнее» — на отдельную страницу раздела (src/pages/guide)
+function MoreLink({ to, label, inverse = false }: { to: string; label: string; inverse?: boolean }) {
+  return (
+    <Link
+      to={to}
+      className={cx(
+        "group inline-flex items-center gap-1.5 font-semibold underline-offset-4 hover:underline",
+        inverse ? "text-on-inverse" : "text-accent-ink",
+      )}
+    >
+      {label}
+      <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+    </Link>
+  );
+}
+
 // Карточка с макетом сверху и подписью снизу — для режимов, привычки и словаря.
 // Макет декоративный: всё важное сказано в подписи.
 function PreviewCard({
@@ -316,6 +332,9 @@ export default function LandingPage() {
                   </motion.li>
                 ))}
               </ol>
+              <div className="mt-12 flex justify-center">
+                <MoreLink to="/how-it-works" label={l.learnMore} />
+              </div>
             </Container>
           </section>
 
@@ -336,6 +355,9 @@ export default function LandingPage() {
                 <PreviewCard {...mode("survival")} preview={<SurvivalPreview />} className="lg:col-span-2" />
                 <PreviewCard {...mode("match")} preview={<MatchPreview />} className="lg:col-span-2" />
               </div>
+              <div className="mt-10 flex justify-center">
+                <MoreLink to="/modes" label={l.learnMore} />
+              </div>
             </Container>
           </section>
 
@@ -355,6 +377,7 @@ export default function LandingPage() {
                   <Text size="lg" tone="inverse">
                     {l.method.text}
                   </Text>
+                  <MoreLink to="/perigee" label={l.learnMore} inverse />
                 </motion.div>
                 <ForgettingCurve />
               </div>

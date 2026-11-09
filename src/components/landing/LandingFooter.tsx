@@ -61,9 +61,10 @@ export default function LandingFooter() {
     {
       title: "Kolo",
       links: [
-        { label: f.how, ...section("how") },
-        { label: f.modes, ...section("modes") },
-        { label: f.engine, ...section("method") },
+        // Отдельные страницы с подробностями (src/pages/guide)
+        { label: f.how, to: "/how-it-works" },
+        { label: f.modes, to: "/modes" },
+        { label: f.engine, to: "/perigee" },
       ],
     },
     {

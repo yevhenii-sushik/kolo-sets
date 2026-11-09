@@ -7,6 +7,21 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://kolo.dakuta.dev/how-it-works</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kolo.dakuta.dev/modes</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kolo.dakuta.dev/perigee</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kolo.dakuta.dev/terms</loc>
     <lastmod>2026-11-08</lastmod>
     <priority>0.3</priority>
