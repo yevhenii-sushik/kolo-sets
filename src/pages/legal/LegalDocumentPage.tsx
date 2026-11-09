@@ -235,9 +235,9 @@ export default function LegalDocumentPage({ doc }: { doc: DocKey }) {
 
   useEffect(() => {
     if (!content) return;
-    document.title = `${content.title} · Kolo Sets`;
+    document.title = `${content.title} · Kolo`;
     return () => {
-      document.title = "Kolo Sets";
+      document.title = "Kolo";
     };
   }, [content]);
 

@@ -42,7 +42,7 @@ export default function NotFoundPage() {
   // SPA отвечает на любой адрес кодом 200, поэтому просим поисковики не индексировать эту страницу
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = "404 · Kolo Sets";
+    document.title = "404 · Kolo";
     const robots = document.createElement("meta");
     robots.name = "robots";
     robots.content = "noindex";
