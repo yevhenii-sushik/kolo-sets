@@ -418,7 +418,7 @@
         "id": "thirdparty",
         "title": "Сторонние cookie",
         "blocks": [
-          "Если ты выбираешь **вход через Google**, Google устанавливает собственные cookie на своих страницах входа (например, accounts.google.com и домене входа Firebase kolo-sets.firebaseapp.com), чтобы безопасно авторизовать тебя. На них распространяется [политика cookie Google](https://policies.google.com/technologies/cookies). Других сторонних cookie Kolo не устанавливает."
+          "Если ты выбираешь **вход через Google**, Google устанавливает собственные cookie на своих страницах входа (например, accounts.google.com), чтобы безопасно авторизовать тебя. На них распространяется [политика cookie Google](https://policies.google.com/technologies/cookies). Других сторонних cookie Kolo не устанавливает."
         ]
       },
       {

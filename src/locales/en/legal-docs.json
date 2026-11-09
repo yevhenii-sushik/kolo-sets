@@ -418,7 +418,7 @@
         "id": "thirdparty",
         "title": "Third-party cookies",
         "blocks": [
-          "If you choose **Sign in with Google**, Google sets its own cookies on its sign-in pages (for example, accounts.google.com and the Firebase sign-in domain kolo-sets.firebaseapp.com) to sign you in securely. They are governed by [Google's cookie policy](https://policies.google.com/technologies/cookies). Kolo sets no other third-party cookies."
+          "If you choose **Sign in with Google**, Google sets its own cookies on its sign-in pages (for example, accounts.google.com) to sign you in securely. They are governed by [Google's cookie policy](https://policies.google.com/technologies/cookies). Kolo sets no other third-party cookies."
         ]
       },
       {

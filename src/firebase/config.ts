@@ -6,7 +6,10 @@ import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
   // Ключ теперь берется из файла .env.local
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "kolo-sets.firebaseapp.com",
+  // Свой домен: /__/auth/* проксируется на kolo-sets.firebaseapp.com (public/_redirects). Окно входа Google
+  // показывает адрес Kolo, и вход не зависит от сторонних cookie. Обработчик должен быть в разрешённых
+  // адресах перенаправления OAuth-клиента: https://kolo.dakuta.dev/__/auth/handler
+  authDomain: "kolo.dakuta.dev",
   projectId: "kolo-sets",
   storageBucket: "kolo-sets.firebasestorage.app",
   messagingSenderId: "34261297782",

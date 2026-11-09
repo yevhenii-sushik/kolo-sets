@@ -418,7 +418,7 @@
         "id": "thirdparty",
         "title": "Cookies von Drittanbietern",
         "blocks": [
-          "Wenn du **Mit Google anmelden** wählst, setzt Google auf seinen Anmeldeseiten eigene Cookies (zum Beispiel auf accounts.google.com und der Firebase-Anmeldedomain kolo-sets.firebaseapp.com), um dich sicher anzumelden. Dafür gilt die [Cookie-Richtlinie von Google](https://policies.google.com/technologies/cookies). Kolo setzt keine weiteren Drittanbieter-Cookies."
+          "Wenn du **Mit Google anmelden** wählst, setzt Google auf seinen Anmeldeseiten eigene Cookies (zum Beispiel auf accounts.google.com), um dich sicher anzumelden. Dafür gilt die [Cookie-Richtlinie von Google](https://policies.google.com/technologies/cookies). Kolo setzt keine weiteren Drittanbieter-Cookies."
         ]
       },
       {

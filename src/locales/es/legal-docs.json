@@ -418,7 +418,7 @@
         "id": "thirdparty",
         "title": "Cookies de terceros",
         "blocks": [
-          "Si eliges **Iniciar sesión con Google**, Google instala sus propias cookies en sus páginas de acceso (por ejemplo, accounts.google.com y el dominio de inicio de sesión de Firebase kolo-sets.firebaseapp.com) para identificarte de forma segura. Se rigen por la [política de cookies de Google](https://policies.google.com/technologies/cookies). Kolo no instala otras cookies de terceros."
+          "Si eliges **Iniciar sesión con Google**, Google instala sus propias cookies en sus páginas de acceso (por ejemplo, accounts.google.com) para identificarte de forma segura. Se rigen por la [política de cookies de Google](https://policies.google.com/technologies/cookies). Kolo no instala otras cookies de terceros."
         ]
       },
       {

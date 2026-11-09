@@ -1,4 +1,7 @@
 # Netlify применяет правила этого файла раньше netlify.toml — поэтому все перенаправления здесь.
 # /api/* → серверные функции (docs/specs/00-server.md); правило выше общего SPA-правила
-/api/*  /.netlify/functions/:splat  200
-/*      /index.html                 200
+/api/*     /.netlify/functions/:splat                       200
+# Вход через Google: страницы Firebase Auth отдаём со своего домена (authDomain в src/firebase/config.ts),
+# чтобы окно Google показывало kolo.dakuta.dev, а не kolo-sets.firebaseapp.com
+/__/auth/*  https://kolo-sets.firebaseapp.com/__/auth/:splat  200
+/*         /index.html                                      200

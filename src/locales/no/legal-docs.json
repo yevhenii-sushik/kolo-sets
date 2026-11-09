@@ -418,7 +418,7 @@
         "id": "thirdparty",
         "title": "Tredjeparts informasjonskapsler",
         "blocks": [
-          "Hvis du velger **Logg inn med Google**, setter Google sine egne informasjonskapsler på innloggingssidene sine (for eksempel accounts.google.com og Firebase-innloggingsdomenet kolo-sets.firebaseapp.com) for å logge deg trygt inn. Disse reguleres av [Googles retningslinjer for informasjonskapsler](https://policies.google.com/technologies/cookies). Kolo setter ingen andre tredjeparts informasjonskapsler."
+          "Hvis du velger **Logg inn med Google**, setter Google sine egne informasjonskapsler på innloggingssidene sine (for eksempel accounts.google.com) for å logge deg trygt inn. Disse reguleres av [Googles retningslinjer for informasjonskapsler](https://policies.google.com/technologies/cookies). Kolo setter ingen andre tredjeparts informasjonskapsler."
         ]
       },
       {

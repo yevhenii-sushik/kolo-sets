@@ -418,7 +418,7 @@
         "id": "thirdparty",
         "title": "Cookies de terceiros",
         "blocks": [
-          "Se você escolher **Entrar com o Google**, o Google define cookies próprios nas páginas de login dele (por exemplo, accounts.google.com e o domínio de login do Firebase kolo-sets.firebaseapp.com) para conectar você com segurança. Eles seguem a [política de cookies do Google](https://policies.google.com/technologies/cookies). O Kolo não define nenhum outro cookie de terceiros."
+          "Se você escolher **Entrar com o Google**, o Google define cookies próprios nas páginas de login dele (por exemplo, accounts.google.com) para conectar você com segurança. Eles seguem a [política de cookies do Google](https://policies.google.com/technologies/cookies). O Kolo não define nenhum outro cookie de terceiros."
         ]
       },
       {

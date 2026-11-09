@@ -418,7 +418,7 @@
         "id": "thirdparty",
         "title": "Cookies tiers",
         "blocks": [
-          "Si tu choisis **Se connecter avec Google**, Google dépose ses propres cookies sur ses pages de connexion (par exemple accounts.google.com et le domaine de connexion Firebase kolo-sets.firebaseapp.com) pour te connecter en toute sécurité. Ils relèvent de la [politique de Google relative aux cookies](https://policies.google.com/technologies/cookies). Kolo ne dépose aucun autre cookie tiers."
+          "Si tu choisis **Se connecter avec Google**, Google dépose ses propres cookies sur ses pages de connexion (par exemple accounts.google.com) pour te connecter en toute sécurité. Ils relèvent de la [politique de Google relative aux cookies](https://policies.google.com/technologies/cookies). Kolo ne dépose aucun autre cookie tiers."
         ]
       },
       {
