@@ -6,6 +6,7 @@ import { Badge, Button, Card, Heading, Text, buttonStyles, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo, type Language } from "../../locales/languages";
 import { openCookieSettings } from "../../utils/consent";
+import { APP_TITLE, usePageMeta } from "../../utils/pageMeta";
 import { LEGAL, LEGAL_DOCS, operatorLine, type DocKey } from "./legalInfo";
 
 // ── Формат текстов: locales/{lang}/legal-docs.json ──────────────────────────
@@ -233,13 +234,7 @@ export default function LegalDocumentPage({ doc }: { doc: DocKey }) {
   const sections = content?.sections ?? [];
   const active = useScrollSpy(sections.map((s) => s.id));
 
-  useEffect(() => {
-    if (!content) return;
-    document.title = `${content.title} · Kolo`;
-    return () => {
-      document.title = "Kolo";
-    };
-  }, [content]);
+  usePageMeta({ title: content ? `${content.title} · ${APP_TITLE}` : undefined, path: `/${doc}` });
 
   // Прямая ссылка на раздел (/privacy#rights) — прокручиваем, когда текст загрузился
   useEffect(() => {

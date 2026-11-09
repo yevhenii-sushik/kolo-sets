@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "title": "Kolo — aprenda palavras em quase qualquer idioma",
+    "description": "Adicione suas próprias palavras, pratique alguns minutos por dia e o Kolo traz cada uma de volta bem antes de você esquecer. Grátis, sem anúncios, no navegador e no celular."
+  },
   "nav": {
     "siteLanguage": "Idioma do site",
     "login": "Entrar",

@@ -10,6 +10,7 @@ import { LEGAL } from "../legal/legalInfo";
 import SiteLanguagePicker from "../../components/landing/SiteLanguagePicker";
 import LandingFooter from "../../components/landing/LandingFooter";
 import { DakutaLogo } from "../../components/brand/DakutaLogo";
+import { usePageMeta } from "../../utils/pageMeta";
 import {
   AudioPreview,
   DailyPreview,
@@ -174,6 +175,7 @@ function LearnLanguagesStrip() {
 export default function LandingPage() {
   const { t, language } = useI18n();
   const l = t.landing;
+  usePageMeta({ title: l.meta.title, description: l.meta.description, path: "/welcome" });
   const info = getLanguageInfo(language);
 
   // Списки языков считаем из LANGUAGES, чтобы не править тексты при добавлении нового.

@@ -1,35 +1,79 @@
 <!doctype html>
-<html lang="no">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- Эти теги видят поисковики до запуска JS и мессенджеры, которые JS не запускают вовсе.
+         Во вкладке приложения заголовок потом станет «Kolo», у лендинга и документов — свой (src/utils/pageMeta.ts) -->
+    <title>Kolo — learn words in almost any language</title>
+    <meta name="description" content="Add your own words, practise a few minutes a day, and Kolo brings each one back right before you forget it. Free, no ads, in your browser and on your phone." />
+    <meta name="application-name" content="Kolo" />
+    <meta name="author" content="Dakuta" />
+
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Learn words in almost any language with spaced repetition. Build flashcard collections, set a weekly goal, and let Kolo bring each word back right before you forget it." />
     <meta name="theme-color" content="#F5F6FA" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Kolo Sets" />
+    <meta name="apple-mobile-web-app-title" content="Kolo" />
 
-    <!-- Open Graph -->
+    <!-- Превью ссылок: Telegram, WhatsApp, iMessage, Facebook, LinkedIn, Slack. ?v= — сбросить кэш картинки после её замены -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Kolo Sets" />
-    <meta property="og:title" content="Kolo Sets — Learn Any Language with Spaced Repetition" />
-    <meta property="og:description" content="Build flashcard collections, set a weekly goal, and let Kolo bring each word back right before you forget it." />
+    <meta property="og:site_name" content="Kolo" />
+    <meta property="og:title" content="Kolo — learn words in almost any language" />
+    <meta property="og:description" content="Add your own words, practise a few minutes a day, and Kolo brings each one back right before you forget it. Free and ad-free." />
     <meta property="og:url" content="https://kolo.dakuta.dev/" />
-    <meta property="og:image" content="https://kolo.dakuta.dev/og-image.png" />
+    <meta property="og:image" content="https://kolo.dakuta.dev/og-image.png?v=2" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Kolo — learn words in almost any language" />
+    <meta property="og:image:alt" content="Kolo — learn words in almost any language with your own flashcards, smart review and a weekly goal" />
 
-    <!-- Twitter / X -->
+    <!-- X / Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Kolo Sets — Learn Any Language with Spaced Repetition" />
-    <meta name="twitter:description" content="Build flashcard collections, set a weekly goal, and let Kolo bring each word back right before you forget it." />
-    <meta name="twitter:image" content="https://kolo.dakuta.dev/og-image.png" />
+    <meta name="twitter:title" content="Kolo — learn words in almost any language" />
+    <meta name="twitter:description" content="Add your own words, practise a few minutes a day, and Kolo brings each one back right before you forget it. Free and ad-free." />
+    <meta name="twitter:image" content="https://kolo.dakuta.dev/og-image.png?v=2" />
+    <meta name="twitter:image:alt" content="Kolo — learn words in almost any language with your own flashcards, smart review and a weekly goal" />
 
-    <title>Kolo</title>
+    <!-- Структурированные данные: имя сайта в выдаче Google («Kolo», а не домен) и что это за приложение -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://kolo.dakuta.dev/#website",
+            "name": "Kolo",
+            "url": "https://kolo.dakuta.dev/",
+            "publisher": { "@id": "https://dakuta.dev/#organization" }
+          },
+          {
+            "@type": "WebApplication",
+            "name": "Kolo",
+            "url": "https://kolo.dakuta.dev/welcome",
+            "description": "Learn words in almost any language with your own flashcards and spaced repetition. Kolo brings each word back right before you forget it.",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web, iOS, Android",
+            "browserRequirements": "Requires JavaScript",
+            "inLanguage": ["en", "ru", "uk", "no"],
+            "image": "https://kolo.dakuta.dev/og-image.png?v=2",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+            "publisher": { "@id": "https://dakuta.dev/#organization" }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://dakuta.dev/#organization",
+            "name": "Dakuta",
+            "url": "https://dakuta.dev/",
+            "email": "support@dakuta.dev"
+          }
+        ]
+      }
+    </script>
+
     <script>
       (function () {
         var t = localStorage.getItem('language_cards_theme');

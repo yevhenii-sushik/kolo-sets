@@ -55,7 +55,7 @@ const SIZES = {
   lg: { mark: 44, text: "text-3xl", gap: "gap-3" },
 };
 
-// Логотип: знак + «kolo». Полное название «Kolo Sets» — для заголовков страниц и документов, не для логотипа.
+// Логотип: знак + «kolo». В заголовках страниц и превью — «Kolo» (src/design/README.md → «Название»).
 export function Logo({ size = "md", tone = "brand", className }: { size?: keyof typeof SIZES; tone?: LogoTone; className?: string }) {
   const s = SIZES[size];
   return (

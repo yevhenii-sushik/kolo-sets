@@ -18,7 +18,7 @@ export default defineConfig({
       // управлять моментом активации нового деплоя вручную, без авто-инжекта
       injectRegister: null,
       manifest: {
-        name: 'Kolo Sets',
+        name: 'Kolo',
         short_name: 'Kolo',
         description:
           'Learn words in almost any language with spaced repetition. Build flashcard collections, set a weekly goal, and let Kolo bring each word back right before you forget it.',
@@ -42,11 +42,14 @@ export default defineConfig({
         // Прекэшируем весь билд (все чанки роутов, включая lazy-loaded) —
         // после активации новой версии SW отдаёт уже новые файлы
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Картинка превью ссылок нужна только мессенджерам — не тянем её в кэш каждому пользователю
+        globIgnores: ['**/og-image.png'],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: true,
         // Firebase (Auth/Firestore) не проксируем через SW — только статика
-        navigateFallbackDenylist: [/^\/__/, /^\/api\//],
+        // robots.txt и sitemap.xml — настоящие файлы, а не страницы приложения
+        navigateFallbackDenylist: [/^\/__/, /^\/api\//, /^\/(robots\.txt|sitemap\.xml)$/],
       },
       devOptions: {
         // Не включаем SW в dev-режиме — избегаем кэш-сюрпризов при разработке

@@ -1,0 +1,7 @@
+# Kolo — https://kolo.dakuta.dev
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /__/
+
+Sitemap: https://kolo.dakuta.dev/sitemap.xml
