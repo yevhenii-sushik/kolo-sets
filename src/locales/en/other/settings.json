@@ -1,11 +1,21 @@
 {
   "title": "Settings",
-  "subtitle": "Account, appearance, reminders and backup",
+  "subtitle": "Account, appearance, learning and data",
+  "groups": {
+    "account": "Account",
+    "appearance": "Appearance",
+    "learning": "Learning",
+    "notifications": "Notifications",
+    "data": "Data",
+    "help": "Help"
+  },
   "appearance": {
     "title": "Appearance",
     "light": "Light",
     "system": "System",
-    "dark": "Dark"
+    "dark": "Dark",
+    "theme": "Theme",
+    "auto": "Auto"
   },
   "language": {
     "title": "Interface language",
@@ -18,7 +28,12 @@
     "unit": {
       "one": "card a day",
       "other": "cards a day"
-    }
+    },
+    "value": {
+      "one": "{n} card",
+      "other": "{n} cards"
+    },
+    "done": "Done"
   },
   "reminder": {
     "title": "Daily reminder",
@@ -30,7 +45,12 @@
     "toggle": "Remind me every day",
     "time": "Time",
     "hour": "Hour",
-    "minute": "Minutes"
+    "minute": "Minutes",
+    "status": {
+      "blocked": "Blocked",
+      "enable": "Turn on",
+      "unsupported": "Unavailable"
+    }
   },
   "sound": {
     "title": "Sound",
@@ -83,5 +103,8 @@
     "title": "App tour",
     "hint": "A quick tour of the basics: sets, practice and weekly orbits. It opens on the home screen.",
     "button": "Show again"
+  },
+  "courses": {
+    "title": "Courses and voices"
   }
 }

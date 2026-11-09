@@ -1,11 +1,21 @@
 {
   "title": "Innstillinger",
-  "subtitle": "Konto, utseende, påminnelser og sikkerhetskopi",
+  "subtitle": "Konto, utseende, læring og data",
+  "groups": {
+    "account": "Konto",
+    "appearance": "Utseende",
+    "learning": "Læring",
+    "notifications": "Varsler",
+    "data": "Data",
+    "help": "Hjelp"
+  },
   "appearance": {
     "title": "Utseende",
     "light": "Lyst",
     "system": "Som systemet",
-    "dark": "Mørkt"
+    "dark": "Mørkt",
+    "theme": "Tema",
+    "auto": "Auto"
   },
   "language": {
     "title": "Språk i appen",
@@ -18,7 +28,12 @@
     "unit": {
       "one": "kort om dagen",
       "other": "kort om dagen"
-    }
+    },
+    "value": {
+      "one": "{n} kort",
+      "other": "{n} kort"
+    },
+    "done": "Ferdig"
   },
   "reminder": {
     "title": "Påminnelse",
@@ -30,7 +45,12 @@
     "toggle": "Påminn meg hver dag",
     "time": "Tidspunkt",
     "hour": "Timer",
-    "minute": "Minutter"
+    "minute": "Minutter",
+    "status": {
+      "blocked": "Blokkert",
+      "enable": "Slå på",
+      "unsupported": "Ikke tilgjengelig"
+    }
   },
   "sound": {
     "title": "Lyd",
@@ -83,5 +103,8 @@
     "title": "Omvisning i appen",
     "hint": "En kort omvisning i det viktigste: sett, øving og ukens bane. Den åpnes på forsiden.",
     "button": "Vis igjen"
+  },
+  "courses": {
+    "title": "Kurs og stemmer"
   }
 }
