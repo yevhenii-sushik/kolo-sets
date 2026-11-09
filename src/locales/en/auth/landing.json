@@ -121,22 +121,22 @@
     "schematic": "Schematic illustration"
   },
   "habit": {
-    "title": "A habit you won't want to break",
-    "text": "Your streak grows with every day you practise, and achievements give you a reason to come back tomorrow.",
-    "textWithDaily": "Your streak grows with every day you practise. The daily puzzle and achievements give you a reason to come back tomorrow.",
-    "streak": {
-      "title": "Day streak",
-      "text": "Every day of practice extends it."
+    "title": "A habit that fits your week",
+    "text": "Choose how many days a week you'll practise — from 3 to 7. Reach your goal and the week's orbit closes; a missed day burns nothing. Practice earns XP, and new levels bring capsules with rewards.",
+    "textWithDaily": "Choose how many days a week you'll practise — from 3 to 7. Reach your goal and the week's orbit closes; a missed day burns nothing. The daily puzzle, XP and capsules give you a reason to come back.",
+    "orbit": {
+      "title": "Weekly orbit",
+      "text": "Your goal is days per week, not every single day. Close the orbit and your streak of weeks grows."
     },
     "daily": {
       "title": "Daily puzzle",
       "text": "Make words from seven letters and compare your score with other players."
     },
-    "achievements": {
-      "title": "Achievements",
-      "text": "For streaks, words learned and perfect quizzes."
+    "rewards": {
+      "title": "Levels and capsules",
+      "text": "Every session earns XP. New levels and closed orbits bring capsules with satellites, ring colours and titles."
     },
-    "days": "days",
+    "thisWeek": "this week",
     "week": [
       "M",
       "T",
@@ -146,7 +146,7 @@
       "S",
       "S"
     ],
-    "achievementName": "Two weeks strong"
+    "level": "Level {n}"
   },
   "words": {
     "title": "Your words, your pace",

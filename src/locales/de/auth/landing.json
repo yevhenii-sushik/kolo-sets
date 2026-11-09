@@ -121,22 +121,22 @@
     "schematic": "Schematische Darstellung"
   },
   "habit": {
-    "title": "Eine Gewohnheit, die du nicht brechen willst",
-    "text": "Deine Serie wächst mit jedem Tag, an dem du übst, und Erfolge geben dir einen Grund, morgen wiederzukommen.",
-    "textWithDaily": "Deine Serie wächst mit jedem Tag, an dem du übst. Das Spiel des Tages und Erfolge geben dir einen Grund, morgen wiederzukommen.",
-    "streak": {
-      "title": "Tagesserie",
-      "text": "Jeder Übungstag verlängert sie."
+    "title": "Eine Gewohnheit in deinem Rhythmus",
+    "text": "Wähle, an wie vielen Tagen pro Woche du üben willst – von 3 bis 7. Erreichst du dein Ziel, schließt sich der Wochen-Orbit; ein verpasster Tag macht nichts kaputt. Üben bringt XP, und neue Level bringen Kapseln mit Belohnungen.",
+    "textWithDaily": "Wähle, an wie vielen Tagen pro Woche du üben willst – von 3 bis 7. Erreichst du dein Ziel, schließt sich der Wochen-Orbit; ein verpasster Tag macht nichts kaputt. Das Spiel des Tages, XP und Kapseln geben dir einen Grund wiederzukommen.",
+    "orbit": {
+      "title": "Wochen-Orbit",
+      "text": "Dein Ziel sind Tage pro Woche, nicht jeder einzelne Tag. Schließt sich der Orbit, wächst deine Orbit-Serie."
     },
     "daily": {
       "title": "Spiel des Tages",
       "text": "Bilde Wörter aus sieben Buchstaben und vergleiche deine Punkte mit anderen Spielern."
     },
-    "achievements": {
-      "title": "Erfolge",
-      "text": "Für Serien, gelernte Wörter und fehlerfreie Quiz."
+    "rewards": {
+      "title": "Level und Kapseln",
+      "text": "Jede Übung bringt XP. Neue Level und geschlossene Orbits bringen Kapseln mit Satelliten, Ringfarben und Titeln."
     },
-    "days": "Tage",
+    "thisWeek": "diese Woche",
     "week": [
       "M",
       "D",
@@ -146,7 +146,7 @@
       "S",
       "S"
     ],
-    "achievementName": "Zwei Wochen am Stück"
+    "level": "Level {n}"
   },
   "words": {
     "title": "Deine Wörter, dein Tempo",

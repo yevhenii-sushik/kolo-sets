@@ -21,7 +21,7 @@ export default defineConfig({
         name: 'Kolo Sets',
         short_name: 'Kolo',
         description:
-          'Learn words in almost any language with spaced repetition. Build flashcard collections, track your streak, and let Kolo bring each word back right before you forget it.',
+          'Learn words in almost any language with spaced repetition. Build flashcard collections, set a weekly goal, and let Kolo bring each word back right before you forget it.',
         theme_color: '#F5F6FA',
         background_color: '#F5F6FA',
         display: 'standalone',

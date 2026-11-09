@@ -11,7 +11,6 @@ import SiteLanguagePicker from "../../components/landing/SiteLanguagePicker";
 import LandingFooter from "../../components/landing/LandingFooter";
 import { DakutaLogo } from "../../components/brand/DakutaLogo";
 import {
-  AchievementPreview,
   AudioPreview,
   DailyPreview,
   FlashcardsPreview,
@@ -19,11 +18,12 @@ import {
   HeroPhone,
   HomeScreenPhone,
   MatchPreview,
+  OrbitPreview,
   QuizPreview,
   ReviewPreview,
+  RewardsPreview,
   SetsPreview,
   SpeedPreview,
-  StreakPreview,
   SurvivalPreview,
 } from "../../components/landing/LandingIllustrations";
 
@@ -364,9 +364,9 @@ export default function LandingPage() {
             <Container>
               <SectionHeader title={l.habit.title} text={FEATURES.dailyGame ? l.habit.textWithDaily : l.habit.text} />
               <div className={cx("mt-14 grid gap-4", FEATURES.dailyGame ? "md:grid-cols-3" : "md:grid-cols-2")}>
-                <PreviewCard {...l.habit.streak} preview={<StreakPreview />} />
+                <PreviewCard {...l.habit.orbit} preview={<OrbitPreview />} />
                 {FEATURES.dailyGame && <PreviewCard {...l.habit.daily} preview={<DailyPreview />} />}
-                <PreviewCard {...l.habit.achievements} preview={<AchievementPreview />} />
+                <PreviewCard {...l.habit.rewards} preview={<RewardsPreview />} />
               </div>
             </Container>
           </section>

@@ -121,22 +121,22 @@
     "schematic": "Ilustração esquemática"
   },
   "habit": {
-    "title": "Um hábito que você não vai querer quebrar",
-    "text": "Sua sequência cresce a cada dia de prática, e as conquistas dão um motivo para voltar amanhã.",
-    "textWithDaily": "Sua sequência cresce a cada dia de prática. O jogo do dia e as conquistas dão um motivo para voltar amanhã.",
-    "streak": {
-      "title": "Sequência de dias",
-      "text": "Cada dia de prática a aumenta."
+    "title": "Um hábito no seu ritmo",
+    "text": "Escolha quantos dias por semana você quer praticar — de 3 a 7. Bateu a meta, a órbita da semana se fecha; um dia perdido não queima nada. Praticar rende XP, e novos níveis trazem cápsulas com recompensas.",
+    "textWithDaily": "Escolha quantos dias por semana você quer praticar — de 3 a 7. Bateu a meta, a órbita da semana se fecha; um dia perdido não queima nada. O jogo do dia, o XP e as cápsulas dão um motivo para voltar.",
+    "orbit": {
+      "title": "Órbita semanal",
+      "text": "Sua meta são dias por semana, não todos os dias sem falta. Feche a órbita e sua sequência de semanas cresce."
     },
     "daily": {
       "title": "Jogo do dia",
       "text": "Forme palavras com sete letras e compare sua pontuação com outros jogadores."
     },
-    "achievements": {
-      "title": "Conquistas",
-      "text": "Por sequências, palavras aprendidas e testes sem erros."
+    "rewards": {
+      "title": "Níveis e cápsulas",
+      "text": "Cada sessão rende XP. Novos níveis e órbitas fechadas trazem cápsulas com satélites, cores de anel e títulos."
     },
-    "days": "dias",
+    "thisWeek": "esta semana",
     "week": [
       "S",
       "T",
@@ -146,7 +146,7 @@
       "S",
       "D"
     ],
-    "achievementName": "Duas semanas sem falhar"
+    "level": "Nível {n}"
   },
   "words": {
     "title": "Suas palavras, seu ritmo",

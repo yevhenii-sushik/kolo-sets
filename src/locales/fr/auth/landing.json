@@ -121,22 +121,22 @@
     "schematic": "Schéma illustratif"
   },
   "habit": {
-    "title": "Une habitude que tu n'auras pas envie de rompre",
-    "text": "Ta série grandit à chaque jour d'entraînement, et les succès te donnent une raison de revenir demain.",
-    "textWithDaily": "Ta série grandit à chaque jour d'entraînement. Le jeu du jour et les succès te donnent une raison de revenir demain.",
-    "streak": {
-      "title": "Série de jours",
-      "text": "Chaque jour d'entraînement la prolonge."
+    "title": "Une habitude à ton rythme",
+    "text": "Choisis combien de jours par semaine tu veux t'entraîner : de 3 à 7. Objectif atteint, l'orbite de la semaine se referme ; un jour manqué ne fait rien perdre. L'entraînement rapporte de l'XP, et chaque nouveau niveau apporte des capsules de récompenses.",
+    "textWithDaily": "Choisis combien de jours par semaine tu veux t'entraîner : de 3 à 7. Objectif atteint, l'orbite de la semaine se referme ; un jour manqué ne fait rien perdre. Le jeu du jour, l'XP et les capsules te donnent une raison de revenir.",
+    "orbit": {
+      "title": "Orbite de la semaine",
+      "text": "Ton objectif, c'est un nombre de jours par semaine, pas chaque jour sans exception. Referme l'orbite et ta série de semaines grandit."
     },
     "daily": {
       "title": "Jeu du jour",
       "text": "Forme des mots avec sept lettres et compare ton score avec d'autres joueurs."
     },
-    "achievements": {
-      "title": "Succès",
-      "text": "Pour les séries, les mots appris et les quiz sans faute."
+    "rewards": {
+      "title": "Niveaux et capsules",
+      "text": "Chaque séance rapporte de l'XP. Les nouveaux niveaux et les orbites refermées apportent des capsules avec des satellites, des couleurs d'anneau et des titres."
     },
-    "days": "jours",
+    "thisWeek": "cette semaine",
     "week": [
       "L",
       "M",
@@ -146,7 +146,7 @@
       "S",
       "D"
     ],
-    "achievementName": "Deux semaines sans faute"
+    "level": "Niveau {n}"
   },
   "words": {
     "title": "Tes mots, ton rythme",

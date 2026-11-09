@@ -121,22 +121,22 @@
     "schematic": "Skjematisk illustrasjon"
   },
   "habit": {
-    "title": "En vane du ikke vil bryte",
-    "text": "Rekken vokser for hver dag du øver, og prestasjoner gir deg en grunn til å komme tilbake i morgen.",
-    "textWithDaily": "Rekken vokser for hver dag du øver. Dagens spill og prestasjoner gir deg en grunn til å komme tilbake i morgen.",
-    "streak": {
-      "title": "Dagsrekke",
-      "text": "Hver dag du øver, forlenger den."
+    "title": "En vane i din rytme",
+    "text": "Velg hvor mange dager i uken du vil øve – fra 3 til 7. Når du når målet, lukkes ukens bane, og en glemt dag brenner ingenting. Øving gir XP, og nye nivåer gir kapsler med belønninger.",
+    "textWithDaily": "Velg hvor mange dager i uken du vil øve – fra 3 til 7. Når du når målet, lukkes ukens bane, og en glemt dag brenner ingenting. Dagens spill, XP og kapsler gir deg en grunn til å komme tilbake.",
+    "orbit": {
+      "title": "Ukens bane",
+      "text": "Målet er dager i uken, ikke hver eneste dag. Lukk banen, så vokser rekken din av uker."
     },
     "daily": {
       "title": "Dagens spill",
       "text": "Lag ord av sju bokstaver og sammenlign poengsummen med andre spillere."
     },
-    "achievements": {
-      "title": "Prestasjoner",
-      "text": "For rekker, lærte ord og feilfrie quizer."
+    "rewards": {
+      "title": "Nivåer og kapsler",
+      "text": "Hver økt gir XP. Nye nivåer og lukkede baner gir kapsler med satellitter, ringfarger og titler."
     },
-    "days": "dager",
+    "thisWeek": "denne uken",
     "week": [
       "M",
       "T",
@@ -146,7 +146,7 @@
       "L",
       "S"
     ],
-    "achievementName": "To uker uten pause"
+    "level": "Nivå {n}"
   },
   "words": {
     "title": "Dine ord. Ditt tempo.",

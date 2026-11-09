@@ -4,17 +4,17 @@ import {
   BatteryFull,
   Check,
   ClipboardPaste,
-  Flame,
   Folder,
   Heart,
   Signal,
   Timer,
-  Trophy,
   Volume2,
   Wifi,
 } from "lucide-react";
 import { AppIcon, Badge, Ring, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
+import { OrbitRing } from "../progress/OrbitRing";
+import { CapsuleArt } from "../rewards/CapsuleArt";
 
 // Иллюстрации лендинга — макеты интерфейса Kolo на токенах дизайн-системы.
 // Слова на изучаемых языках (bok, amico, 旅行, uttale…) — часть картинки и не переводятся.
@@ -483,15 +483,22 @@ export function ForgettingCurve() {
 
 // ── Привычка ────────────────────────────────────────────────────────────────
 
-export function StreakPreview() {
+// Орбита недели — как в приложении: цель 5 дней, засчитано 4. Среда пропущена — и ничего не сгорело,
+// суббота (сегодня) ещё может замкнуть орбиту
+const WEEK_DONE = [true, true, false, true, true, false, false];
+const TODAY = 5;
+
+export function OrbitPreview() {
   const { t } = useI18n();
   const h = t.landing.habit;
   return (
-    <div className="grid gap-4 w-full max-w-64 px-4">
-      <div className="flex items-end justify-center gap-2">
-        <Flame size={30} className="text-accent fill-accent self-center" />
-        <span className="font-display text-4xl font-extrabold leading-none text-fg">14</span>
-        <span className="text-sm text-faint">{h.days}</span>
+    <div className="grid w-full max-w-64 gap-4 px-4">
+      <div className="flex items-center justify-center gap-4">
+        <OrbitRing goal={5} done={4} closed={false} size={72} />
+        <div className="grid gap-1">
+          <span className="font-display text-4xl font-extrabold leading-none text-fg">4/5</span>
+          <span className="text-sm text-faint">{h.thisWeek}</span>
+        </div>
       </div>
       <div className="grid grid-cols-7 gap-1">
         {h.week.map((day, i) => (
@@ -500,12 +507,13 @@ export function StreakPreview() {
             <span
               className={cx(
                 "w-7 h-7 rounded-full grid place-items-center",
-                i < 5 && "bg-accent text-on-accent",
-                i === 5 && "border-2 border-dashed border-accent",
-                i === 6 && "bg-track",
+                WEEK_DONE[i] && "bg-accent text-on-accent",
+                !WEEK_DONE[i] && i < TODAY && "bg-track",
+                i === TODAY && "border-2 border-dashed border-accent",
+                i > TODAY && "bg-surface",
               )}
             >
-              {i < 5 && <Check size={13} strokeWidth={3} />}
+              {WEEK_DONE[i] && <Check size={13} strokeWidth={3} />}
             </span>
           </div>
         ))}
@@ -540,14 +548,13 @@ export function DailyPreview() {
   );
 }
 
-export function AchievementPreview() {
+// Награды за практику: уровень приносит капсулу
+export function RewardsPreview() {
   const { t } = useI18n();
   return (
-    <div className="grid justify-items-center gap-3 px-4 text-center">
-      <span className="w-16 h-16 rounded-full bg-warning-soft text-warning grid place-items-center ring-4 ring-surface">
-        <Trophy size={30} />
-      </span>
-      <span className="text-sm font-semibold text-fg">{t.landing.habit.achievementName}</span>
+    <div className="grid justify-items-center gap-2 px-4 text-center">
+      <CapsuleArt size={96} glow />
+      <Badge tone="accent">{t.landing.habit.level.replace("{n}", "7")}</Badge>
     </div>
   );
 }
