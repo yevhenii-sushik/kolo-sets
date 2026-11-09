@@ -47,7 +47,8 @@
       "fixes": [
         "Progress is now counted by the server, so it can't get lost or faked.",
         "A session done offline no longer disappears — it counts as soon as Kolo is back online.",
-        "The new Orbit design and a new heading font."
+        "The new Orbit design and a new heading font.",
+        "Writing to support is simpler: pick a topic, type your message, and we'll reply to your account email. Messages with characters like _ or * now send without an error."
       ]
     },
     {

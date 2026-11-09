@@ -47,7 +47,8 @@
       "fixes": [
         "Fremgangen telles nå av serveren, så den kan ikke forsvinne eller forfalskes.",
         "En økt uten nett forsvinner ikke lenger – den telles så snart Kolo er på nett igjen.",
-        "Det nye «Bane»-designet og ny skrift i overskrifter."
+        "Det nye «Bane»-designet og ny skrift i overskrifter.",
+        "Det er enklere å skrive til støtte: velg et emne, skriv meldingen, så svarer vi på e-posten til kontoen. Meldinger med tegn som _ eller * sendes nå uten feil."
       ]
     },
     {

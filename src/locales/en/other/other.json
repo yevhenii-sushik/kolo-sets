@@ -9,7 +9,7 @@
   "hints": {
     "settings": "Account, appearance, reminders, backup",
     "updates": "Every Kolo release",
-    "support": "Report a bug or suggest an idea",
+    "support": "Report a problem, ask a question or share an idea",
     "privacy": "How we handle your data",
     "terms": "Rules for using Kolo",
     "cookies": "What we store in your browser",
@@ -18,33 +18,35 @@
   "version": "Version {v}",
   "supportPage": {
     "title": "Support",
-    "subtitle": "Something not working, or have an idea? Your message goes straight to the Kolo team.",
-    "typeTitle": "What's it about?",
-    "types": {
-      "bug": "Bug",
-      "feature": "Idea",
-      "change": "Improvement",
-      "review": "Feedback"
+    "subtitle": "Something not working, a question or an idea? Write to us — your message goes straight to the Kolo team.",
+    "topicTitle": "What's it about?",
+    "topics": {
+      "problem": "Problem",
+      "question": "Question",
+      "idea": "Idea",
+      "feedback": "Feedback"
     },
-    "typeHints": {
-      "bug": "Something doesn't work",
-      "feature": "A new feature",
-      "change": "Make something better",
-      "review": "Share your impressions"
-    },
-    "pickType": "Choose a topic to open the form.",
-    "subject": "Subject",
-    "subjectPlaceholder": "In a few words",
-    "email": "Email for a reply",
-    "emailHint": "Optional — leave it if you'd like an answer",
+    "topicRequired": "Choose what your message is about.",
     "message": "Message",
     "messagePlaceholder": "The more detail, the faster we can help",
+    "placeholders": {
+      "problem": "What went wrong? Tell us what you did just before",
+      "question": "Ask anything about Kolo",
+      "idea": "What would you add or change — and why?",
+      "feedback": "What do you like, and what gets in the way?"
+    },
+    "reply": "Reply to my email",
     "send": "Send",
     "sendError": "Couldn't send the message. Try again a little later.",
     "sentTitle": "Thank you!",
-    "sentText": "Your message is with the Kolo team. We read every one — if you left an email, we'll reply there.",
+    "sentText": "Your message is with the Kolo team. We read every one.",
+    "sentReply": "We'll reply to {email}.",
     "sentHome": "Back to home",
-    "sentAgain": "Write another"
+    "sentAgain": "Write another",
+    "otherTitle": "Other ways",
+    "mail": "Email us",
+    "mailHint": "{email} — handy if you want to attach a screenshot",
+    "updatesHint": "Maybe it's already fixed or added"
   },
   "courses": "Courses"
 }

@@ -9,7 +9,7 @@
   "hints": {
     "settings": "Konto, Aussehen, Erinnerungen, Sicherung",
     "updates": "Alle Kolo-Versionen",
-    "support": "Fehler melden oder eine Idee vorschlagen",
+    "support": "Ein Problem melden, eine Frage stellen oder eine Idee teilen",
     "privacy": "Wie wir mit deinen Daten umgehen",
     "terms": "Regeln für die Nutzung von Kolo",
     "cookies": "Was wir in deinem Browser speichern",
@@ -18,33 +18,35 @@
   "version": "Version {v}",
   "supportPage": {
     "title": "Hilfe",
-    "subtitle": "Etwas funktioniert nicht oder du hast eine Idee? Deine Nachricht geht direkt an das Kolo-Team.",
-    "typeTitle": "Worum geht es?",
-    "types": {
-      "bug": "Fehler",
-      "feature": "Idee",
-      "change": "Verbesserung",
-      "review": "Feedback"
+    "subtitle": "Etwas funktioniert nicht, du hast eine Frage oder eine Idee? Schreib uns – deine Nachricht geht direkt an das Kolo-Team.",
+    "topicTitle": "Worum geht es?",
+    "topics": {
+      "problem": "Problem",
+      "question": "Frage",
+      "idea": "Idee",
+      "feedback": "Feedback"
     },
-    "typeHints": {
-      "bug": "Etwas funktioniert nicht",
-      "feature": "Eine neue Funktion",
-      "change": "Etwas besser machen",
-      "review": "Eindrücke teilen"
-    },
-    "pickType": "Wähle ein Thema, um das Formular zu öffnen.",
-    "subject": "Betreff",
-    "subjectPlaceholder": "In ein paar Worten",
-    "email": "E-Mail für eine Antwort",
-    "emailHint": "Optional – trag sie ein, wenn du eine Antwort möchtest",
+    "topicRequired": "Wähle, worum es in deiner Nachricht geht.",
     "message": "Nachricht",
     "messagePlaceholder": "Je mehr Details, desto schneller können wir helfen",
+    "placeholders": {
+      "problem": "Was ist schiefgelaufen? Beschreib, was du davor gemacht hast",
+      "question": "Frag uns alles über Kolo",
+      "idea": "Was würdest du hinzufügen oder ändern – und warum?",
+      "feedback": "Was gefällt dir, und was stört dich?"
+    },
+    "reply": "Antwort an meine E-Mail",
     "send": "Senden",
     "sendError": "Die Nachricht konnte nicht gesendet werden. Versuche es etwas später erneut.",
     "sentTitle": "Danke!",
-    "sentText": "Deine Nachricht ist beim Kolo-Team angekommen. Wir lesen jede – wenn du eine E-Mail angegeben hast, antworten wir dorthin.",
+    "sentText": "Deine Nachricht ist beim Kolo-Team angekommen. Wir lesen jede.",
+    "sentReply": "Wir antworten an {email}.",
     "sentHome": "Zur Startseite",
-    "sentAgain": "Noch eine schreiben"
+    "sentAgain": "Noch eine schreiben",
+    "otherTitle": "Weitere Wege",
+    "mail": "E-Mail schreiben",
+    "mailHint": "{email} – praktisch, wenn du einen Screenshot anhängen möchtest",
+    "updatesHint": "Vielleicht ist es schon behoben oder neu dabei"
   },
   "courses": "Kurse"
 }

@@ -1,6 +1,7 @@
 // Прогресс начисляет сервер (docs/specs/00-server.md): клиент сообщает о тренировке и получает результат.
 // Если сеть пропала или сервер временно недоступен, тренировка ждёт в очереди и уйдёт при следующем запуске.
 import { auth } from "../firebase/config";
+import { ApiError, post } from "./http";
 import type { AchievementType } from "../types";
 import type { ProgressionView } from "../../server/core/progression";
 import type { Rarity } from "../../server/core/items";
@@ -28,26 +29,8 @@ export interface SessionReply {
   duplicate?: boolean;
 }
 
-class ApiError extends Error {
-  constructor(public status: number) {
-    super(`api ${status}`);
-  }
-}
-
 // Повторять имеет смысл только то, что может пройти позже: сеть, перегрузка, сбой сервера
 const retriable = (err: unknown) => !(err instanceof ApiError) || err.status === 429 || err.status >= 500;
-
-async function post<T>(path: string, body: unknown): Promise<T> {
-  const token = await auth.currentUser?.getIdToken();
-  if (!token) throw new ApiError(401);
-  const res = await fetch(path, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new ApiError(res.status);
-  return res.json() as Promise<T>;
-}
 
 interface Pending extends SessionPayload {
   id: string;

@@ -39,7 +39,7 @@ export function SettingsGroup({
 }
 
 // Строка: иконка, название (и пояснение), справа — значение со стрелкой или элемент управления.
-// onClick — строка-кнопка, to — строка-ссылка; control — переключатель или поле справа;
+// onClick — строка-кнопка, to — строка-ссылка, href — внешняя ссылка (mailto:); control — переключатель или поле справа;
 // below — элемент управления под названием (на телефоне не помещается справа)
 export function SettingsRow({
   icon,
@@ -51,6 +51,7 @@ export function SettingsRow({
   below,
   onClick,
   to,
+  href,
   loading,
   danger,
   disabled,
@@ -64,11 +65,12 @@ export function SettingsRow({
   below?: ReactNode;
   onClick?: () => void;
   to?: string;
+  href?: string;
   loading?: boolean;
   danger?: boolean;
   disabled?: boolean;
 }) {
-  const interactive = !!onClick || !!to;
+  const interactive = !!onClick || !!to || !!href;
   const body = (
     <>
       {icon && (
@@ -98,6 +100,13 @@ export function SettingsRow({
       <Link to={to} className={cx(row, hover)}>
         {body}
       </Link>
+    );
+  }
+  if (href) {
+    return (
+      <a href={href} className={cx(row, hover)}>
+        {body}
+      </a>
     );
   }
   if (onClick) {
