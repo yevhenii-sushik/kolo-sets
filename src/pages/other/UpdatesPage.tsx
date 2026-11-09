@@ -4,7 +4,8 @@ import { useI18n } from "../../contexts/I18nContext";
 import { Badge, ButtonLink, Card, Heading, Text, cx } from "../../ui";
 import { PageHeader } from "../../components/other/PageSection";
 
-// «Что нового»: версии от новой к старой; на широком экране слева — оглавление по версиям
+// «Что нового»: версии от новой к старой, по-человечески — как заметки к выпускам у Arc;
+// на широком экране слева — оглавление по версиям
 export default function UpdatesPage() {
   const { t } = useI18n();
   const u = t.updates;
@@ -61,25 +62,46 @@ export default function UpdatesPage() {
       <div className="grid min-w-0 max-w-2xl flex-1 grid-cols-1 gap-5">
         <PageHeader title={u.title} subtitle={u.subtitle} />
 
+        {/* Выпуск: заголовок с характером, пара фраз вступления, новинки — абзацами, исправления — коротким списком */}
         {versions.map((v, i) => (
           <Card key={v.number} id={`v-${v.number}`} padding="lg" className="grid scroll-mt-24 gap-5">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <Heading size={2} as="h2" className="tabular-nums">
-                v{v.number}
+            <header className="grid gap-1.5">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <Text size="sm" tone="faint" className="tabular-nums">
+                  v{v.number} · {v.date}
+                </Text>
+                {i === 0 && <Badge tone="accent">{u.latest}</Badge>}
+              </div>
+              <Heading size={2} as="h2">
+                {v.title}
               </Heading>
-              {i === 0 && <Badge tone="accent">{u.latest}</Badge>}
-              <Text size="sm" tone="faint" className="basis-full">
-                {v.date}
-              </Text>
-            </div>
-            <ul className="grid gap-3">
-              {v.changes.map((change, idx) => (
-                <li key={idx} className="flex gap-3 text-sm leading-relaxed text-muted">
-                  <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                  <span>{change}</span>
-                </li>
-              ))}
-            </ul>
+              {v.intro && <Text className="mt-1 leading-relaxed">{v.intro}</Text>}
+            </header>
+
+            {v.features.length > 0 && (
+              <div className="grid gap-4">
+                {v.features.map((f) => (
+                  <section key={f.title} className="grid gap-1">
+                    <h3 className="font-semibold text-fg">{f.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted">{f.text}</p>
+                  </section>
+                ))}
+              </div>
+            )}
+
+            {v.fixes.length > 0 && (
+              <section className={cx("grid gap-3", v.features.length > 0 && "border-t border-line pt-5")}>
+                <h3 className="text-sm font-semibold text-fg">{u.fixesTitle}</h3>
+                <ul className="grid gap-2">
+                  {v.fixes.map((fix, idx) => (
+                    <li key={idx} className="flex gap-3 text-sm leading-relaxed text-muted">
+                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                      <span>{fix}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </Card>
         ))}
 

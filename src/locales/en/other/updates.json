@@ -11,171 +11,306 @@
   "versions": [
     {
       "number": "0.4.0",
-      "status": "Latest",
       "date": "November 2026",
-      "type": "Feature Release",
-      "changes": [
-        "Courses: every language you learn gets its own space with sets and folders. You pick the language once at the start and switch between courses right in the header",
-        "Weekly orbits instead of daily flames: choose how many days a week to practise (3 to 7), close your orbits and grow your streak. Shields cover a missed week, and a broken streak can be repaired",
-        "XP and levels for every session and game. If you practised before, XP for every card you've studied is already yours",
-        "Reward capsules: 36 items in four collections — satellites, ring colours, profile backgrounds and titles. Duplicates turn into stardust, which buys a shield or a missing item",
-        "A new profile: a level ring around your avatar, the weekly orbit, a showcase of your three favourite rewards, medals and stats",
-        "A medal, the Beta Tester title and the First Orbit ring for everyone who joins during the beta — until the end of 2026",
-        "Progress is now recorded by the server: it can't be faked, and sessions done offline are counted the next time you open the app",
-        "The new Orbit design and heading font. Account, password, sign-out and backup now live in Settings, and the Other tab is now called More"
+      "title": "Orbits, capsules and a course for every language",
+      "intro": "The biggest Kolo update yet. Daily flames have made way for weekly orbits, practising now earns you rewards, and every language gets its own course.",
+      "features": [
+        {
+          "title": "A course for every language",
+          "text": "Norwegian over here, Spanish over there: each course has its own sets and folders, so nothing gets mixed up. Pick your language once and switch courses right from the header."
+        },
+        {
+          "title": "Weekly orbits",
+          "text": "Instead of flames that go out after a single missed day, you get a weekly goal of 3 to 7 days. Hit it and your orbit closes and your streak grows. A shield covers a rough week, and a broken streak can be repaired in the first three days of the next one."
+        },
+        {
+          "title": "XP and levels",
+          "text": "Every session and game earns XP, and your level grows with it. If you practised before, the XP for every card you've studied is already yours."
+        },
+        {
+          "title": "Capsules and collections",
+          "text": "New levels and closed orbits bring capsules. Inside: satellites, ring colours, profile backgrounds and titles — 36 items across four collections. Duplicates turn into stardust, and stardust turns into a shield or a missing item. The odds are right there in the capsule window."
+        },
+        {
+          "title": "A brand-new profile",
+          "text": "A level ring around your avatar, your weekly orbit, a showcase of your three favourite rewards, medals and stats — all on one page."
+        },
+        {
+          "title": "Thank you, beta testers",
+          "text": "Everyone who joins before the end of 2026 gets a medal, the Beta Tester title and the First Orbit ring. After that, they're gone for good."
+        },
+        {
+          "title": "Your account, all in one place",
+          "text": "Email, password, sign-out, backup and account deletion now live in More → Settings. And the Other tab is now called More."
+        }
+      ],
+      "fixes": [
+        "Progress is now counted by the server, so it can't get lost or faked.",
+        "A session done offline no longer disappears — it counts as soon as Kolo is back online.",
+        "The new Orbit design and a new heading font."
       ]
     },
     {
       "number": "0.3.0",
-      "status": "Minor",
       "date": "July 2026",
-      "type": "Feature Release",
-      "changes": [
-        "The app is now installable (PWA) — runs like a real app on your phone or computer, no browser address bar, fullscreen, and updates itself automatically on every new release",
-        "Three new game modes for faster, more engaging review — Speed Round (race the clock with a streak score multiplier), Survival (three lives, one mistake ends the run) and Match (pair up words with translations against the clock)",
-        "Upload a profile photo straight from your device instead of pasting a link — the image is automatically compressed before upload so it doesn't waste storage",
-        "Username (@handle) is now a required, unique part of every profile — every account has a unique identifier, laying the foundation for upcoming friends and social features",
-        "Major mobile redesign of the Profile, Other, and Home pages — noticeably more compact, no more oversized cards or wasted padding",
-        "The activity calendar on your profile now adapts to the available width and always shows full Monday-to-Sunday weeks with day labels",
-        "Achievements on your profile now collapse into a compact preview of your most recent unlocks instead of a screen filled with dozens of cards",
-        "Fixed a visual bug where flipping a flashcard on mobile made the front and back text overlap",
-        "Content no longer hides behind the mobile browser's toolbar — fixed viewport-height handling across the whole app",
-        "Removed unnecessary entrance animations on frequently visited pages — the interface now responds instantly",
-        "The \"My Words\" / \"Kolo Sets\" tab switcher on the collections page is now full-width on mobile — words on the left, sets on the right",
-        "Fixed a batch of accumulated bugs: collections no longer disappear when deleting a folder, the streak celebration animation now reliably fires, the daily word game no longer gets confused across timezones, email addresses are no longer exposed on the public leaderboard, and daily reminders now correctly reschedule for the next day"
+      "title": "Kolo on your home screen",
+      "intro": "You can now install Kolo like an app, and there are three games for quick review.",
+      "features": [
+        {
+          "title": "Install Kolo",
+          "text": "Add Kolo to your phone's home screen or your computer's dock: it opens full screen, without an address bar, and updates itself."
+        },
+        {
+          "title": "Three games",
+          "text": "Speed Round — answer as many as you can, with a streak multiplier for right answers. Survival — three lives, each mistake costs one. Match — pair words with their translations before time runs out."
+        },
+        {
+          "title": "Profile photos from your device",
+          "text": "No more hunting for a link: pick a photo from your phone or computer and Kolo compresses it for you."
+        },
+        {
+          "title": "Your own @username",
+          "text": "Every account now has a unique username. You can change it in your profile."
+        },
+        {
+          "title": "Tighter on phones",
+          "text": "Home, Profile and Other are much more compact: fewer giant cards, more of what matters on screen. The activity calendar fits your screen and achievements fold into a short list."
+        }
+      ],
+      "fixes": [
+        "The back of a flashcard no longer overlaps the front.",
+        "The mobile browser toolbar no longer covers buttons at the bottom of the screen.",
+        "Pages you open often appear instantly, without extra animation.",
+        "The My words / Kolo Sets switch now spans the full width on phones.",
+        "Sets no longer disappear when you delete a folder.",
+        "The daily game no longer gets confused by time zones, and emails no longer show on the leaderboard.",
+        "Daily reminders move to the next day correctly."
       ]
     },
     {
       "number": "0.2.7",
-      "status": "Minor",
       "date": "July 2026",
-      "type": "Feature Release",
-      "changes": [
-        "New user onboarding — 6-step interactive tutorial modal with animated UI previews auto-launches on first visit; can be restarted anytime from Profile settings",
-        "Streak celebration animation — full-screen epic effect with 42 spark particles, shockwave rings, and a giant animated streak counter fires every time a study day is extended",
-        "Fixed a bug where completing a study session did not credit the day toward the streak counter",
-        "Full Norwegian (Bokmål) 🇳🇴 and Ukrainian 🇺🇦 interface localization — all pages, quiz, flashcards, settings, and 130+ learning tips are now fully translated"
+      "title": "Hello, newcomers",
+      "intro": "A welcome tour for first-timers and two new interface languages.",
+      "features": [
+        {
+          "title": "App tour",
+          "text": "Six short steps with live previews show you the essentials the first time you open Kolo. You can take the tour again any time."
+        },
+        {
+          "title": "Norwegian and Ukrainian",
+          "text": "Kolo now speaks Norwegian 🇳🇴 and Ukrainian 🇺🇦: every screen, session, setting and more than 130 tips."
+        },
+        {
+          "title": "Streak celebration",
+          "text": "When your streak grows, Kolo throws a little fireworks show."
+        }
+      ],
+      "fixes": [
+        "Finishing a session counts the day towards your streak again."
       ]
     },
     {
       "number": "0.2.6",
-      "status": "Patch",
       "date": "June 2026",
-      "type": "UI Update",
-      "changes": [
-        "Global design refinement across all screens — tighter spacing, cleaner typography, and improved visual hierarchy",
-        "Updated collection card layout for better readability and faster interaction",
-        "Navigation and layout polish across main and profile views"
+      "title": "Neater everywhere",
+      "intro": "A small update all about the look.",
+      "features": [
+        {
+          "title": "Polished design",
+          "text": "We tightened spacing, type and the order of things on every screen — everything is easier to read."
+        },
+        {
+          "title": "New set cards",
+          "text": "Set cards are easier to scan and quicker to open."
+        }
+      ],
+      "fixes": [
+        "Navigation and layout on Home and Profile are tidier."
       ]
     },
     {
       "number": "0.2.5",
-      "status": "Minor",
       "date": "March 2026",
-      "type": "UI Update",
-      "changes": [
-        "Major navigation restructuring: the Words section is now a separate management center for your vocabulary, making room for a new interactive Dashboard panel",
-        "Launch of the updated Home page — it's now your personal hub with key statistics, useful widgets, and quick access to progress",
-        "The Words library now includes exclusive word collections, segmented by proficiency levels (from Beginner to Advanced) with regular content updates",
-        "Global update of the design code and interface to achieve impeccable visual clarity and modern user experience"
-      ]
+      "title": "A new Home",
+      "intro": "We rebuilt the navigation: words have their own section, and Home is now your personal dashboard.",
+      "features": [
+        {
+          "title": "The Words section",
+          "text": "All your sets and cards live in their own section, so they're easier to manage."
+        },
+        {
+          "title": "Home",
+          "text": "Your daily goal, key stats and a quick way back into review — everything you need when you open Kolo."
+        },
+        {
+          "title": "Ready-made sets by level",
+          "text": "The library now has Kolo sets from beginner to advanced, with more on the way."
+        },
+        {
+          "title": "A fresh look",
+          "text": "We refreshed the design of the whole app."
+        }
+      ],
+      "fixes": []
     },
     {
       "number": "0.2.4",
-      "status": "Patch",
       "date": "March 2026",
-      "type": "Maintenance",
-      "changes": [
-        "During routine monitoring, a potential vulnerability in the configuration of API interfaces was identified. To ensure user data security and prevent unauthorized access, the hosting provider's protection algorithms initiated an emergency freeze of the server core. We conducted a full audit of security protocols, after which system operation was restored to normal mode"
-      ]
+      "title": "A short pause for safety",
+      "intro": "During a routine check we found a weak spot in our server configuration, and our host briefly stopped Kolo to keep your data safe. We reviewed all our protections, fixed the configuration and brought Kolo back. Your data is fine.",
+      "features": [],
+      "fixes": []
     },
     {
       "number": "0.2.3",
-      "status": "Patch",
       "date": "February 2026",
-      "type": "UI Update",
-      "changes": [
-        "Global change of design and user interface for a more modern and clean look",
-        "Added Support page with a feedback form for the development team",
-        "Changed the card import window to a more modern and convenient interface solution + AI help button",
-        "Fixed a bug where a completed achievement could be displayed as incomplete"
+      "title": "Talk to us",
+      "intro": "Support is here, and adding words got easier.",
+      "features": [
+        {
+          "title": "Support",
+          "text": "Found a bug or have an idea? Write to us right from the app — your message goes straight to the Kolo team."
+        },
+        {
+          "title": "A new card import",
+          "text": "The import window is simpler, and an AI help button shows you how to prepare your word list."
+        },
+        {
+          "title": "A cleaner design",
+          "text": "The interface looks cleaner and more modern."
+        }
+      ],
+      "fixes": [
+        "An achievement you've earned no longer shows as locked."
       ]
     },
     {
       "number": "0.2.2",
-      "status": "Minor",
       "date": "February 2026",
-      "type": "Feature Release",
-      "changes": [
-        "Changed navigation between misc and updates pages for a more intuitive experience",
-        "Added a welcome page with a function overview for new users",
-        "Fixed a critical bug leading to page loss during navigation",
-        "Fixed a visual bug of premature card display in study mode",
-        "Fixed visual display errors on mobile devices",
-        "Redesign in study mode for a cleaner and more modern look",
-        "Other general redesign and UI optimization"
+      "title": "Welcome aboard",
+      "intro": "A welcome page for newcomers and a bundle of fixes.",
+      "features": [
+        {
+          "title": "Welcome page",
+          "text": "Anyone opening Kolo for the first time sees what it can do."
+        },
+        {
+          "title": "Refreshed flashcards",
+          "text": "Study mode is cleaner and more modern."
+        }
+      ],
+      "fixes": [
+        "Moving between pages no longer loses the page on the way.",
+        "Cards in study mode no longer reveal the answer too early.",
+        "Fixed layout issues on phones.",
+        "Getting between Other and What's new is clearer."
       ]
     },
     {
       "number": "0.2.1",
-      "status": "Patch",
       "date": "February 2026",
-      "type": "Maintenance",
-      "changes": [
-        "Improved accessibility and responsiveness of the interface for mobile devices",
-        "Fixed minor bugs and improved user interfaces",
-        "Optimized application performance"
+      "title": "Faster and friendlier on phones",
+      "intro": "A small update: Kolo is snappier and fits small screens better.",
+      "features": [],
+      "fixes": [
+        "The interface adapts better to phones.",
+        "Fixed a handful of small bugs.",
+        "The app runs faster."
       ]
     },
     {
       "number": "0.2.0",
-      "status": "Minor",
       "date": "February 2026",
-      "type": "Core Update",
-      "changes": [
-        "Added support for data synchronization via cloud (Cloud Sync)",
-        "Implemented critical account and authorization system",
-        "Added support for data export and import in JSON format",
-        "Added text-to-speech (TTS) function for cards",
-        "Added achievement and level system for motivation",
-        "Added strike system (Flames 🔥)",
-        "Multi-language interface support (localization)",
-        "Detailed statistics and user progress analytics"
-      ]
+      "title": "Kolo gets accounts",
+      "intro": "A big one: your words now live in your account and follow you to any device.",
+      "features": [
+        {
+          "title": "Accounts and cloud sync",
+          "text": "Sign in and your sets sync between your phone and computer."
+        },
+        {
+          "title": "Pronunciation",
+          "text": "Kolo reads words aloud, so it's easier to remember how they sound."
+        },
+        {
+          "title": "Achievements and flames",
+          "text": "Achievements arrived, along with flames for practising day after day 🔥."
+        },
+        {
+          "title": "Stats",
+          "text": "A detailed picture of your progress: words, sessions and time."
+        },
+        {
+          "title": "Backup",
+          "text": "Download your sets to a file and restore them whenever you need."
+        },
+        {
+          "title": "Interface languages",
+          "text": "You can switch Kolo to another language."
+        }
+      ],
+      "fixes": []
     },
     {
       "number": "0.1.2",
-      "status": "Patch",
       "date": "February 2026",
-      "type": "UI Update",
-      "changes": [
-        "Full support for dark theme (Dark Mode)",
-        "Responsive interface for mobile devices",
-        "New side and bottom menu design"
-      ]
+      "title": "Dark mode",
+      "intro": "Kolo learned to go dark and feel at home on phones.",
+      "features": [
+        {
+          "title": "Dark mode",
+          "text": "Easier on the eyes in the evening — Kolo follows your system theme."
+        },
+        {
+          "title": "Kolo on your phone",
+          "text": "The interface adapts to mobile screens, and the menu moved to the bottom, right under your thumb."
+        }
+      ],
+      "fixes": []
     },
     {
       "number": "0.1.1",
-      "status": "Patch",
       "date": "February 2026",
-      "type": "UI Update",
-      "changes": [
-        "Improved home page and interface design",
-        "Collections and cards system",
-        "Study mode (Flashcards) and Quiz mode"
-      ]
+      "title": "Sets and study",
+      "intro": "The first steps after launch.",
+      "features": [
+        {
+          "title": "Sets and cards",
+          "text": "Group words into sets — by topic, by lesson or however you like."
+        },
+        {
+          "title": "Flashcards and quiz",
+          "text": "Learn words on flashcards and test yourself with a quiz."
+        },
+        {
+          "title": "A clearer Home",
+          "text": "The home page is simpler and cleaner."
+        }
+      ],
+      "fixes": []
     },
     {
       "number": "0.1.0",
-      "status": "Initial",
       "date": "January 2026",
-      "type": "Feature Release",
-      "changes": [
-        "First public release",
-        "Collections and cards system",
-        "Study mode (Flashcards) and Quiz mode",
-        "Local data storage (localStorage)"
-      ]
+      "title": "Hello, Kolo",
+      "intro": "The first public version. This is where it all began.",
+      "features": [
+        {
+          "title": "Sets and cards",
+          "text": "Create word sets with translations."
+        },
+        {
+          "title": "Flashcards and quiz",
+          "text": "Review on flashcards and test yourself with a quiz."
+        },
+        {
+          "title": "All in your browser",
+          "text": "Your words are stored right in your browser — no sign-up needed."
+        }
+      ],
+      "fixes": []
     }
-  ]
+  ],
+  "fixesTitle": "Small but mighty fixes"
 }
