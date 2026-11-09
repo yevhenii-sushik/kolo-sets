@@ -1,13 +1,36 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bug, CheckCircle2, CircleHelp, Compass, Lightbulb, Mail, MessageSquareHeart, Rocket, Send } from "lucide-react";
+import {
+  Bug,
+  CheckCircle2,
+  CircleHelp,
+  Compass,
+  Lightbulb,
+  Mail,
+  MessageSquareHeart,
+  Rocket,
+  Send,
+} from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
-import ConsentText from "../../components/legal/ConsentText";
-import { ONBOARDING_STORAGE_KEY } from "../../components/OnboardingModal";
-import { Alert, Button, ButtonLink, Card, Field, Heading, Switch, Text, Textarea, cx } from "../../ui";
+import { restartOnboarding } from "../../utils/firstRun";
+import {
+  Alert,
+  Button,
+  ButtonLink,
+  Card,
+  Field,
+  Heading,
+  Switch,
+  Text,
+  Textarea,
+  cx,
+} from "../../ui";
 import { PageHeader } from "../../components/other/PageSection";
-import { SettingsGroup, SettingsRow } from "../../components/other/SettingsList";
+import {
+  SettingsGroup,
+  SettingsRow,
+} from "../../components/other/SettingsList";
 import { LEGAL } from "../legal/legalInfo";
 import { sendSupport, type SupportTopic as Topic } from "../../api/support";
 
@@ -66,7 +89,10 @@ export default function SupportPage() {
 
   if (isSent) {
     return (
-      <Card padding="lg" className="mx-auto grid max-w-md justify-items-center gap-3 py-12 text-center">
+      <Card
+        padding="lg"
+        className="mx-auto grid max-w-md justify-items-center gap-3 py-12 text-center"
+      >
         <span className="mb-2 grid h-16 w-16 place-items-center rounded-full bg-success-soft text-success">
           <CheckCircle2 size={30} />
         </span>
@@ -89,13 +115,20 @@ export default function SupportPage() {
     <div className="mx-auto grid max-w-2xl grid-cols-1 gap-7">
       <PageHeader title={sp.title} subtitle={sp.subtitle} />
 
-      <form onSubmit={handleSubmit} className="divide-y divide-line overflow-hidden rounded-3xl border border-line bg-surface">
+      <form
+        onSubmit={handleSubmit}
+        className="divide-y divide-line overflow-hidden rounded-3xl border border-line bg-surface"
+      >
         {/* ── Тема: без неё команде трудно разобрать входящие ── */}
         <div className="grid gap-3 p-4">
           <p id="support-topic" className="text-sm font-medium text-fg">
             {sp.topicTitle}
           </p>
-          <div role="radiogroup" aria-labelledby="support-topic" className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div
+            role="radiogroup"
+            aria-labelledby="support-topic"
+            className="grid grid-cols-2 gap-2 sm:grid-cols-4"
+          >
             {TOPICS.map(({ id, icon: Icon }) => {
               const active = topic === id;
               return (
@@ -111,7 +144,9 @@ export default function SupportPage() {
                   className={cx(
                     "flex h-11 items-center justify-center gap-2 rounded-2xl border px-3 text-sm font-semibold transition-colors",
                     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
-                    active ? "border-accent bg-accent-soft text-accent-ink" : "border-line text-muted hover:bg-inset hover:text-fg",
+                    active
+                      ? "border-accent bg-accent-soft text-accent-ink"
+                      : "border-line text-muted hover:bg-inset hover:text-fg",
                   )}
                 >
                   <Icon size={16} className="shrink-0" />
@@ -136,7 +171,9 @@ export default function SupportPage() {
               maxLength={3000}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder={topic ? sp.placeholders[topic] : sp.messagePlaceholder}
+              placeholder={
+                topic ? sp.placeholders[topic] : sp.messagePlaceholder
+              }
             />
           </Field>
         </div>
@@ -147,18 +184,26 @@ export default function SupportPage() {
             tone="info"
             title={sp.reply}
             description={email}
-            control={<Switch checked={reply} onChange={setReply} label={sp.reply} />}
+            control={
+              <Switch checked={reply} onChange={setReply} label={sp.reply} />
+            }
           />
         )}
 
         <div className="grid gap-3 p-4">
           {sendFailed && <Alert>{sp.sendError}</Alert>}
-          <Button type="submit" size="lg" fullWidth loading={isSubmitting} iconLeft={<Send size={16} />}>
+          <Button
+            type="submit"
+            size="lg"
+            fullWidth
+            loading={isSubmitting}
+            iconLeft={<Send size={16} />}
+          >
             {sp.send}
           </Button>
-          <p className="text-center text-xs leading-snug text-muted">
+          {/* <p className="text-center text-xs leading-snug text-muted">
             <ConsentText template={t.legal.consent.support} />
-          </p>
+          </p> */}
         </div>
       </form>
 
@@ -171,14 +216,20 @@ export default function SupportPage() {
           description={sp.mailHint.replace("{email}", LEGAL.email.support)}
           href={`mailto:${LEGAL.email.support}`}
         />
-        <SettingsRow icon={<Rocket size={16} />} tone="success" title={t.other.updates} description={sp.updatesHint} to="/other/updates" />
+        <SettingsRow
+          icon={<Rocket size={16} />}
+          tone="success"
+          title={t.other.updates}
+          description={sp.updatesHint}
+          to="/other/updates"
+        />
         <SettingsRow
           icon={<Compass size={16} />}
           tone="special"
           title={t.settings.tour.title}
           description={t.settings.tour.hint}
           onClick={() => {
-            localStorage.removeItem(ONBOARDING_STORAGE_KEY);
+            restartOnboarding(user?.uid);
             navigate("/");
           }}
         />

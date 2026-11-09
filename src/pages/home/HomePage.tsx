@@ -7,8 +7,9 @@ import { useData } from "../../contexts/DataContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { TIPS_ICONS } from "../../data/home/tips";
 import DailyGameWidget from "../../components/game/DailyGameWidget";
+import { FirstSteps, FirstStepsGuides, useFirstSteps } from "../../components/onboarding/FirstSteps";
 import { FEATURES } from "../../config/features";
-import { getDailyGoal, isDueCard } from "../../utils/storage";
+import { getDailyGoal, isDueCard, isNewCard } from "../../utils/storage";
 import { localDateKey } from "../../utils/progress";
 import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import { getLanguageInfo } from "../../locales/languages";
@@ -17,7 +18,8 @@ import { ButtonLink, Card, Heading, IconButton, Ring, Text, cx } from "../../ui"
 
 const MILESTONES = [10, 25, 50, 100, 200, 500];
 
-// Главная: приветствие → что делать сейчас (повторение или наборы) с целью дня → цифры → игра дня и совет
+// Главная: приветствие → что делать сейчас (у новичка — «Первые шаги», дальше — повторение, новые слова
+// или наборы) с целью дня → цифры → игра дня и совет
 export default function HomePage() {
   const { t, language } = useI18n();
   const h = t.home;
@@ -36,8 +38,26 @@ export default function HomePage() {
   }, [tipKey, h.tips, tipKeys]);
   const refreshTip = () => setTipKey(tipKeys[Math.floor(Math.random() * tipKeys.length)]);
 
-  // ── Повторение и цель дня ──
+  const firstSteps = useFirstSteps();
+
+  // ── Что делать сейчас и цель дня ──
   const dueCount = useMemo(() => collections.reduce((n, col) => n + col.cards.filter(isDueCard).length, 0), [collections]);
+  // Новые слова ещё не тренировались — они не «к повторению», но и «всё повторено» про них говорить нельзя
+  const newBySet = useMemo(
+    () => collections.map((c) => ({ id: c.id, n: c.cards.filter(isNewCard).length })).sort((a, b) => b.n - a.n),
+    [collections],
+  );
+  const newCount = newBySet.reduce((sum, c) => sum + c.n, 0);
+  const now =
+    dueCount > 0
+      ? { title: count(dueCount, h.review.dueTitle), text: h.review.dueText, button: h.review.dueButton, to: "/review" }
+      : collections.length === 0
+        ? { title: h.review.startTitle, text: h.review.startText, button: h.review.startButton, to: "/words?new=1" }
+        : totalCards === 0
+          ? { title: h.review.emptyTitle, text: h.review.emptyText, button: h.review.emptyButton, to: `/collection/${collections[0].id}/edit` }
+          : newCount > 0
+            ? { title: count(newCount, h.review.newTitle), text: h.review.newText, button: h.review.newButton, to: `/collection/${newBySet[0].id}/flashcards` }
+            : { title: h.review.doneTitle, text: h.review.doneText, button: h.review.doneButton, to: "/words" };
   const dailyGoal = getDailyGoal();
   const todayStudied = useMemo(() => {
     // Ключ дня — по местному времени: так сервер записывает историю (docs/specs/00-server.md)
@@ -87,15 +107,19 @@ export default function HomePage() {
         </ButtonLink>
       </header>
 
-      {/* ── Что делать сейчас: повторение или наборы; справа — цель дня ── */}
+      {/* ── Что делать сейчас: у новичка — «Первые шаги»; потом — повторение, новые слова или наборы; справа — цель дня ── */}
+      <FirstStepsGuides model={firstSteps} />
+      {firstSteps.mode !== "hidden" ? (
+        <FirstSteps model={firstSteps} />
+      ) : (
       <Card tone="inverse" padding="lg" className="grid gap-8 sm:grid-cols-[1fr_auto] sm:items-center">
         <div className="grid justify-items-start gap-3">
           <Heading size={1} as="h2" tone="inverse">
-            {dueCount > 0 ? count(dueCount, h.review.dueTitle) : h.review.doneTitle}
+            {now.title}
           </Heading>
-          <Text tone="inverse">{dueCount > 0 ? h.review.dueText : h.review.doneText}</Text>
-          <ButtonLink to={dueCount > 0 ? "/review" : "/words"} size="lg" iconRight={<ArrowRight size={18} />} className="mt-2">
-            {dueCount > 0 ? h.review.dueButton : h.review.doneButton}
+          <Text tone="inverse">{now.text}</Text>
+          <ButtonLink to={now.to} size="lg" iconRight={<ArrowRight size={18} />} className="mt-2">
+            {now.button}
           </ButtonLink>
         </div>
         <div className="flex items-center gap-4 sm:grid sm:justify-items-center sm:gap-3 sm:text-center">
@@ -118,6 +142,7 @@ export default function HomePage() {
           </div>
         </div>
       </Card>
+      )}
 
       {/* ── Цифры и веха ── */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">

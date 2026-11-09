@@ -1,21 +1,21 @@
-import { useState, useEffect, useCallback } from "react";
+import { Fragment, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Lightbulb } from "lucide-react";
+import { ArrowRight, Layers, Lightbulb, Plus, RotateCw } from "lucide-react";
 import { useI18n } from "../contexts/I18nContext";
+import { useData } from "../contexts/DataContext";
+import { finishOnboarding } from "../utils/firstRun";
 import { getLanguageInfo } from "../locales/languages";
 import { plural } from "../utils/plural";
 import { formatDuration } from "../utils/progress";
 import { Button, Heading, Logo, Text, cx } from "../ui";
 import { OrbitRing } from "./progress/OrbitRing";
 
-export const ONBOARDING_STORAGE_KEY = "kolo_onboarding_v1";
-
 // ── Иллюстрации шагов: маленькие копии настоящих экранов, тексты — из тех же переводов ──
 
 function useStrings() {
   const { t, language } = useI18n();
-  return { t, locale: getLanguageInfo(language).htmlLang, sample: t.onboarding.sample };
+  return { t, locale: getLanguageInfo(language).htmlLang };
 }
 
 const pop = (i: number) => ({
@@ -41,83 +41,38 @@ function WelcomeIll() {
   );
 }
 
-function CollectionsIll() {
-  const { t, locale, sample } = useStrings();
+// Как работает Kolo: добавь → учи → повторяй, и снова по кругу
+function LoopIll() {
+  const { t } = useStrings();
+  const l = t.onboarding.loop;
+  const steps = [
+    { icon: Plus, label: l.add, tone: "bg-accent-soft text-accent-ink" },
+    { icon: Layers, label: l.learn, tone: "bg-info-soft text-info" },
+    { icon: RotateCw, label: l.repeat, tone: "bg-special-soft text-special" },
+  ];
   return (
-    <div className="grid h-full place-items-center px-6">
-      <div className="grid w-full max-w-56 gap-2">
-        {sample.sets.map((name, i) => (
-          <motion.div key={name} {...pop(i)} className="rounded-2xl border border-line bg-surface p-3 shadow-sm">
-            <p className="text-xs font-semibold text-fg">{name}</p>
-            <div className="mt-1.5 flex items-center justify-between">
-              <span className="text-2xs text-muted">{plural(locale, i === 0 ? 24 : 48, t.words.collectionCard.words)}</span>
-              <span className="rounded-full bg-accent px-2 py-0.5 text-2xs font-semibold text-on-accent">{sample.study}</span>
-            </div>
-          </motion.div>
-        ))}
-        <motion.div {...pop(2)} className="rounded-2xl border border-dashed border-accent/50 py-2 text-center text-xs font-semibold text-accent-ink">
-          + {t.words.addDeck}
-        </motion.div>
-      </div>
-    </div>
-  );
-}
-
-const RATING_TONES = ["bg-danger-soft text-danger", "bg-warning-soft text-warning", "bg-info-soft text-info", "bg-success-soft text-success"];
-
-function FlashcardsIll() {
-  const { t, sample } = useStrings();
-  const levels = t.words.flashcards.levels;
-  return (
-    <div className="grid h-full place-items-center px-6">
-      <div className="grid w-full max-w-56 gap-2">
-        <div className="flex items-center gap-2">
-          <span className="text-2xs font-semibold tabular-nums text-muted">2 / 8</span>
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-track">
-            <motion.div initial={{ width: 0 }} animate={{ width: "25%" }} transition={{ delay: 0.3, duration: 0.6 }} className="h-full rounded-full bg-accent" />
-          </div>
-        </div>
-        <motion.div {...pop(0)} className="rounded-2xl border border-line bg-surface p-3 text-center shadow-sm">
-          <p className="font-display text-xl font-extrabold text-fg">{sample.word}</p>
-          <p className="text-sm font-semibold text-accent-ink">{sample.translation}</p>
-          <p className="mt-1 text-2xs italic text-faint">“{sample.example}”</p>
-        </motion.div>
-        <div className="grid grid-cols-2 gap-1">
-          {[levels.dontKnow, levels.forgot, levels.remember, levels.know].map((label, i) => (
-            <motion.span key={label} {...pop(i + 1)} className={cx("truncate rounded-lg px-1 py-1 text-center text-2xs font-semibold", RATING_TONES[i])}>
-              {label}
-            </motion.span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function QuizIll() {
-  const { t, sample } = useStrings();
-  return (
-    <div className="grid h-full place-items-center px-6">
-      <div className="grid w-full max-w-56 gap-2 rounded-2xl border border-line bg-surface p-3 shadow-sm">
-        <span className="w-fit rounded-full bg-accent-soft px-2 py-0.5 text-2xs font-semibold text-accent-ink">
-          {t.words.quiz.settings.types.word_by_translation}
-        </span>
-        <p className="font-semibold text-fg">{sample.translation}</p>
-        <div className="grid gap-1">
-          {sample.options.map((opt, i) => (
-            <motion.div
-              key={opt}
-              {...pop(i)}
-              className={cx(
-                "flex items-center rounded-xl border px-3 py-1 text-2xs font-semibold",
-                i === 0 ? "border-success bg-success-soft text-success" : "border-line text-muted",
+    <div className="grid h-full place-items-center px-5">
+      <div className="grid w-full max-w-64 gap-4">
+        <div className="flex items-start justify-between">
+          {steps.map(({ icon: Icon, label, tone }, i) => (
+            <Fragment key={label}>
+              {i > 0 && (
+                <motion.span {...pop(i * 2 - 1)} className="mt-4 text-faint">
+                  <ArrowRight size={16} />
+                </motion.span>
               )}
-            >
-              {opt}
-              {i === 0 && <span className="ml-auto">✓</span>}
-            </motion.div>
+              <motion.div {...pop(i * 2)} className="grid w-18 justify-items-center gap-1.5">
+                <span className={cx("grid h-12 w-12 place-items-center rounded-2xl shadow-sm", tone)}>
+                  <Icon size={22} />
+                </span>
+                <span className="text-center text-xs font-semibold leading-tight text-fg">{label}</span>
+              </motion.div>
+            </Fragment>
           ))}
         </div>
+        <motion.p {...pop(5)} className="justify-self-center rounded-full bg-surface px-3 py-1.5 text-center text-2xs font-semibold text-muted shadow-sm">
+          {l.note}
+        </motion.p>
       </div>
     </div>
   );
@@ -171,33 +126,11 @@ function ProgressIll() {
   );
 }
 
-function DoneIll() {
-  const { t } = useStrings();
-  return (
-    <div className="grid h-full place-items-center content-center gap-3">
-      <motion.span
-        initial={{ scale: 0, rotate: -20 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ type: "spring", damping: 12, stiffness: 80, delay: 0.1 }}
-        className="text-6xl"
-      >
-        🚀
-      </motion.span>
-      <motion.p {...pop(3)} className="text-sm font-semibold text-white/80">
-        {t.onboarding.ready}
-      </motion.p>
-    </div>
-  );
-}
-
-// Первый и последний шаги — на ночном фоне бренда, остальные — на светлой «подложке» с мини-экранами
+// Первый шаг — на ночном фоне бренда, остальные — на светлой «подложке» с мини-экранами
 const ILLUSTRATIONS = [
   { Ill: WelcomeIll, bg: "bg-brand-night" },
-  { Ill: CollectionsIll, bg: "bg-band" },
-  { Ill: FlashcardsIll, bg: "bg-band" },
-  { Ill: QuizIll, bg: "bg-band" },
+  { Ill: LoopIll, bg: "bg-band" },
   { Ill: ProgressIll, bg: "bg-band" },
-  { Ill: DoneIll, bg: "bg-brand-night" },
 ];
 
 interface Props {
@@ -205,28 +138,34 @@ interface Props {
   onClose: () => void;
 }
 
-// Знакомство с приложением: 6 шагов, стрелки и Enter — дальше, Esc — пропустить
+// Вступление: 3 коротких шага — что такое Kolo, как он работает и ритм недели. Учит дальше не слайд,
+// а дело: в конце — «Создать первый набор» (сценарий набора на главной), а там ждут «Первые шаги». Стрелки и Enter — дальше,
+// Esc — пропустить
 export default function OnboardingModal({ isOpen, onClose }: Props) {
   const navigate = useNavigate();
   const { t } = useI18n();
+  const { collections } = useData();
   const o = t.onboarding;
+  // Повторное знакомство (из настроек) у того, у кого наборы уже есть, — без призыва создать первый
   const [step, setStep] = useState(0);
   const total = o.steps.length;
   const isLast = step === total - 1;
 
+  const firstSet = collections.length === 0;
+
   const close = useCallback(
-    (goHome: boolean) => {
-      localStorage.setItem(ONBOARDING_STORAGE_KEY, "done");
+    (to?: string) => {
+      finishOnboarding();
       onClose();
-      if (goHome) navigate("/");
+      if (to) navigate(to);
     },
     [navigate, onClose],
   );
 
   const goNext = useCallback(() => {
     if (step < total - 1) setStep((s) => s + 1);
-    else close(true);
-  }, [step, total, close]);
+    else close(firstSet ? "/?guide=set" : "/");
+  }, [step, total, close, firstSet]);
 
   const goPrev = () => setStep((s) => Math.max(0, s - 1));
 
@@ -235,7 +174,7 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === "Enter") goNext();
       if (e.key === "ArrowLeft") goPrev();
-      if (e.key === "Escape") close(false);
+      if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -257,7 +196,7 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 bg-scrim/50 backdrop-blur-sm"
-            onClick={() => close(false)}
+            onClick={() => close()}
           />
 
           <motion.div
@@ -297,7 +236,7 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
                       {o.step.replace("{n}", String(step + 1)).replace("{total}", String(total))}
                     </span>
                     {!isLast && (
-                      <button type="button" onClick={() => close(false)} className="text-sm font-semibold text-muted transition-colors hover:text-fg">
+                      <button type="button" onClick={() => close()} className="text-sm font-semibold text-muted transition-colors hover:text-fg">
                         {o.skip}
                       </button>
                     )}
@@ -339,10 +278,15 @@ export default function OnboardingModal({ isOpen, onClose }: Props) {
                     {o.back}
                   </Button>
                 )}
-                <Button fullWidth onClick={goNext} iconRight={isLast ? undefined : <ArrowRight size={16} />} className="flex-1">
-                  {isLast ? o.start : o.next}
+                <Button fullWidth onClick={goNext} iconRight={isLast && !firstSet ? undefined : <ArrowRight size={16} />} className="flex-1">
+                  {!isLast ? o.next : firstSet ? o.createFirst : o.start}
                 </Button>
               </div>
+              {isLast && firstSet && (
+                <button type="button" onClick={() => close()} className="-mt-2 text-sm font-semibold text-muted transition-colors hover:text-fg">
+                  {o.later}
+                </button>
+              )}
             </div>
           </motion.div>
         </div>

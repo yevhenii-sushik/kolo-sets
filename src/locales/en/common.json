@@ -91,6 +91,8 @@
     "goal": {
       "title": "Your weekly rhythm",
       "intro": "Daily flames in Kolo are now weekly orbits. Choose how many days a week you want to practise: reach that and the orbit closes, and your orbit streak grows. Missing a day doesn't break anything.",
+      "introNew": "Kolo counts weeks, not days. Choose how many days a week you'll practise: reach that and the week's orbit closes and your streak of orbits grows. Missing a day doesn't break anything.",
+      "ringCaption": "Each dot is a day you practised. Fill enough of them and the orbit closes.",
       "migrated": {
         "one": "We've recalculated your history: your streak is {n} orbit.",
         "other": "We've recalculated your history: your streak is {n} orbits."
@@ -137,53 +139,29 @@
     "next": "Next",
     "start": "Let's go",
     "step": "{n} of {total}",
-    "ready": "Ready for take-off",
+    "createFirst": "Create my first set",
+    "later": "I'll look around first",
+    "loop": {
+      "add": "Add words",
+      "learn": "Practise",
+      "repeat": "Review",
+      "note": "Perigee picks the moment"
+    },
     "steps": [
       {
-        "title": "Welcome to Kolo",
-        "text": "Word sets and smart review. This tour takes less than a minute."
+        "title": "Hi! This is Kolo",
+        "text": "You collect the words you want to learn, and Kolo helps you keep them. Here's how it works — it takes half a minute."
       },
       {
-        "title": "Create a set",
-        "text": "Tap “Create Set” and add words with a translation, explanation and example — or import a ready-made list.",
-        "tip": "A quiz needs at least 4 words in a set."
+        "title": "How it works",
+        "text": "Add words, practise them on flashcards — and Perigee, our review engine, brings each word back right when you're about to forget it. A few minutes a day, and words stick for good.",
+        "tip": "Got a ready-made list? Paste it all at once with Import."
       },
       {
-        "title": "Learn with flashcards",
-        "text": "Flip a card and rate how well you remember the word. Perigee, our review engine, decides when to show it again.",
-        "tip": "On a keyboard: Space flips, 1–4 rates. On a phone: swipe right if you know it, left if you don't."
-      },
-      {
-        "title": "Test yourself",
-        "text": "Six kinds of quiz tasks — from picking a translation to writing the word — plus three games: Speed round, Survival and Match pairs.",
-        "tip": "In quiz settings you can keep only the tasks you need."
-      },
-      {
-        "title": "Watch your progress",
-        "text": "XP and levels, a weekly orbit and medals. Choose how many days a week to practise and close your orbits — Kolo shows only the words that are due.",
-        "tip": "Your profile has your level, weekly orbit, medals and stats."
-      },
-      {
-        "title": "All set!",
-        "text": "Create your first set and start learning."
+        "title": "Your weekly rhythm",
+        "text": "Choose how many days a week to practise. Hit your goal and the week's orbit closes and your streak grows — and practice earns XP, levels and capsules with rewards."
       }
-    ],
-    "sample": {
-      "sets": [
-        "Everyday words",
-        "Travel"
-      ],
-      "study": "Study",
-      "word": "hund",
-      "translation": "dog",
-      "example": "Hunden min heter Max",
-      "options": [
-        "hund",
-        "katt",
-        "fugl",
-        "fisk"
-      ]
-    }
+    ]
   },
   "courses": {
     "switcher": "Course: {name}",

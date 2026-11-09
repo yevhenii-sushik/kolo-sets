@@ -46,7 +46,19 @@
     "dueButton": "Start review",
     "doneTitle": "You're all caught up",
     "doneText": "Add new words or practise in any mode.",
-    "doneButton": "Go to my sets"
+    "doneButton": "Go to my sets",
+    "startTitle": "Start with your first set",
+    "startText": "Add the words you want to learn — Perigee will remind you when it's time to review them.",
+    "startButton": "Create a set",
+    "emptyTitle": "Your set is still empty",
+    "emptyText": "Add a few words and you can start learning.",
+    "emptyButton": "Add words",
+    "newTitle": {
+      "one": "{n} new word to learn",
+      "other": "{n} new words to learn"
+    },
+    "newText": "Go through them on flashcards — Perigee will note what you know and plan your reviews.",
+    "newButton": "Start learning"
   },
   "goal": {
     "label": "Daily goal",
@@ -938,6 +950,104 @@
     "regularity_key": {
       "category": "Summary",
       "text": "The main secret is regularity. The brain loves predictable loads."
+    }
+  },
+  "firstSteps": {
+    "title": "First steps",
+    "subtitle": "Five small steps, and you'll know everything you need. Each takes under a minute.",
+    "hide": "Hide first steps",
+    "progress": "{n} of {total}",
+    "doneLabel": "done",
+    "doneTitle": "You're all set!",
+    "doneText": "From here it's simple: open Kolo when it reminds you and review your words. A few minutes a day is enough — Perigee takes care of the rest.",
+    "doneButton": "Got it",
+    "steps": {
+      "language": {
+        "title": "Choose a language",
+        "titleDone": "Language: {lang}",
+        "text": "Kolo keeps a separate space with sets for every language you learn."
+      },
+      "set": {
+        "title": "Create a set",
+        "text": "A set is a list of words on one topic — say, “Food” or “Work”. Just give it a name."
+      },
+      "words": {
+        "title": "Add 5 words",
+        "text": "A word and its translation are enough. An explanation and an example help you remember it better."
+      },
+      "train": {
+        "title": "Do your first session",
+        "text": "Go through your words on flashcards: recall, flip, rate honestly. It takes a couple of minutes."
+      },
+      "goal": {
+        "title": "Set a weekly goal",
+        "text": "How many days a week will you practise? 3 is a great start."
+      }
+    },
+    "guides": {
+      "later": "Later",
+      "set": {
+        "title": "Your first set",
+        "intro": "A set is a list of words on one topic — say, “Food” or “Travel”. What will you call yours?",
+        "nameLabel": "Set name",
+        "suggestTitle": "Or pick one",
+        "suggestions": [
+          "First words",
+          "Food",
+          "Travel",
+          "Home",
+          "Work"
+        ],
+        "create": "Create set",
+        "error": "Couldn't create the set. Check your connection and try again.",
+        "doneTitle": "“{name}” is ready",
+        "doneText": "Now let's add the first words — five is enough.",
+        "next": "Add words"
+      },
+      "words": {
+        "title": "First words",
+        "introStarter": "Here are five words that make a good start. Keep the ones you want — or add your own.",
+        "introOwn": "Add five words: the word in the language you're learning and its translation. You can add an explanation and an example later in the set.",
+        "starter": [
+          "hello",
+          "thank you",
+          "yes",
+          "no",
+          "water"
+        ],
+        "addStarter": "Add selected ({n})",
+        "own": "I'll add my own words",
+        "wordLabel": "Word",
+        "translationLabel": "Translation",
+        "add": "Add word",
+        "progress": "{n} of {goal} words",
+        "error": "Couldn't save the words. Check your connection and try again.",
+        "doneTitle": "Your words are in!",
+        "doneText": "Five words — just right for a first session. Here's how it works.",
+        "next": "How to practise",
+        "finish": "Done for now"
+      },
+      "train": {
+        "title": "Your first session",
+        "intro": "A session goes through the set's words one flashcard at a time. On each card, three things:",
+        "steps": [
+          {
+            "title": "Recall",
+            "text": "You see a word — recall its translation in your head."
+          },
+          {
+            "title": "Flip",
+            "text": "Tap the card or “Show answer”."
+          },
+          {
+            "title": "Rate honestly",
+            "text": "Your rating decides when the word comes back:"
+          }
+        ],
+        "soon": "comes back soon",
+        "later": "in a few days",
+        "start": "Start session"
+      }
     }
   }
 }

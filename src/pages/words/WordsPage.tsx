@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Plus,
   Sparkles,
@@ -310,6 +310,13 @@ export default function WordsPage() {
 
   const [activeTab, setActiveTab] = useState<Tab>("my");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  // /words?new=1 — сразу создать набор: из вступления и «Первых шагов» на главной
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    if (searchParams.get("new") !== "1") return;
+    setIsCreateModalOpen(true);
+    setSearchParams({}, { replace: true });
+  }, [searchParams, setSearchParams]);
   const [isCreateFolderOpen, setIsCreateFolderOpen] = useState(false);
   // Finder-style навигация: null = корень "My Library", иначе — id открытой папки
   const [openFolderId, setOpenFolderId] = useState<string | null>(null);

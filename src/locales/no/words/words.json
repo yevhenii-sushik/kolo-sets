@@ -52,13 +52,14 @@
   },
   "editCollection": {
     "addCard": "Legg til ord",
+    "study": "Studer",
     "import": "Importer",
     "export": "Eksporter",
     "rename": "Gi nytt navn",
     "learned": "Lært",
     "wordList": "Ordliste",
     "noCards": "Ingen ord i dette settet ennå",
-    "noCardsDesc": "Klikk her for å legge til ditt første ord",
+    "noCardsDesc": "Et ord og oversettelsen er nok til å begynne. Har du en ferdig liste? Lim inn hele med «Importer».",
     "loading": "Laster...",
     "exportSuccess": "Samling eksportert",
     "exportError": "Eksport mislyktes",
@@ -127,7 +128,12 @@
       "restart": "Start på nytt",
       "exit": "Avslutt",
       "min": "m",
-      "sec": "s"
+      "sec": "s",
+      "coach": "Perigee har lagret vurderingene dine. Når det er tid for å repetere ordene, dukker de opp på forsiden – kom tilbake i morgen."
+    },
+    "coach": {
+      "recall": "Prøv først å huske oversettelsen selv – vis så svaret. På mobilen kan du bare trykke på kortet.",
+      "rate": "Vurder ærlig: etter «Vet ikke» og «Glemte» kommer ordet snart tilbake, etter «Husker» og «Kan» – om noen dager. Slik legger Perigee opp timeplanen din."
     }
   },
   "quiz": {

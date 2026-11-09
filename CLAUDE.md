@@ -65,6 +65,12 @@ Client side: `src/api/progress.ts` posts with a Bearer token. If the network or 
 - Courses (docs/specs/01-courses.md): one course per language. `courses: Course[]`, `activeCourseId` and `coursesVersion` live on the profile. The catalog is in `src/courses/languages.ts`. `src/courses/plan.ts` handles migration and self-healing and is tested. The Norwegian course id is `nb`, but the Norwegian UI language code is `no`.
 - SRS: `updateSRSData` and `isDueCard` in `src/utils/storage.ts`, a simplified SM-2. `storage.ts` falls back to localStorage when nobody is signed in.
 - Progression UI: `components/progress/*` (OrbitRing, WeekOrbit, OrbitGoalModal, ProgressMoments) and `components/rewards/*` (ItemArt, AvatarFrame, CapsuleArt, CapsuleOpenModal, Showcase). Item visuals are in `src/progression/looks.ts`, item display names in `locales/*/rewards.json`, and the catalog (kind, rarity, collection) in `server/core/items.ts`. A new item touches all three.
+- Onboarding teaches by doing:
+  - `OnboardingModal`: a 3-step intro that ends in "Create my first set" (`/words?new=1` opens the create modal).
+  - `components/onboarding/FirstSteps.tsx`: a checklist on Home (language → set → 5 words → first session → weekly goal). It is detected from real data and replaces the Home hero while active.
+  - Coach hints in the first flashcards session (`RatingBar`/`FlashcardStatsModal` `coach` prop).
+  - All "seen" flags live in `src/utils/firstRun.ts` (localStorage); `restartOnboarding()` resets them.
+  - New users get the weekly-goal prompt only after their first session (`MainLayout`).
 - Feature flags for built but hidden UI: `src/config/features.ts`.
 - Legal: `src/pages/legal/legalInfo.ts` (`LEGAL.version`). Bump it on material changes to Terms or Privacy: users accept it at sign-up, and `LegalUpdateBanner` shows a one-time notice. Document texts are in `locales/<lang>/legal-docs.json` (all 8 languages, English is the original).
 

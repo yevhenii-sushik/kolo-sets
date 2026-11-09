@@ -91,6 +91,8 @@
     "goal": {
       "title": "Ukerytmen din",
       "intro": "Daglige flammer i Kolo er byttet ut med ukentlige baner. Velg hvor mange dager i uka du vil øve: når du når det, lukkes banen og rekken din vokser. En glemt dag ødelegger ingenting.",
+      "introNew": "Kolo teller uker, ikke dager. Velg hvor mange dager i uka du vil øve: når du når det, lukkes ukens bane og rekken av baner vokser. En dag du står over, ødelegger ingenting.",
+      "ringCaption": "Hver prikk er en dag du har øvd. Når du har nok prikker, lukkes banen.",
       "migrated": {
         "one": "Vi har regnet om historikken din: rekken er {n} bane.",
         "other": "Vi har regnet om historikken din: rekken er {n} baner."
@@ -137,53 +139,29 @@
     "next": "Neste",
     "start": "Kom i gang",
     "step": "{n} av {total}",
-    "ready": "Klar for start",
+    "createFirst": "Lag mitt første sett",
+    "later": "Jeg ser meg rundt først",
+    "loop": {
+      "add": "Legg til ord",
+      "learn": "Øv",
+      "repeat": "Repeter",
+      "note": "Perigee velger tidspunktet"
+    },
     "steps": [
       {
         "title": "Hei! Dette er Kolo",
-        "text": "Ordsett og smart repetisjon. Omvisningen tar under ett minutt."
+        "text": "Her samler du ordene du vil lære, og Kolo hjelper deg å huske dem. Vi viser hvordan det fungerer – det tar et halvt minutt."
       },
       {
-        "title": "Lag et sett",
-        "text": "Trykk «Opprett sett» og legg til ord med oversettelse, forklaring og eksempel – eller importer en ferdig liste.",
-        "tip": "En quiz trenger minst 4 ord i settet."
+        "title": "Slik fungerer det",
+        "text": "Legg til ord, øv på kort – og Perigee, repetisjonsmotoren vår, henter fram hvert ord akkurat når du er i ferd med å glemme det. Noen minutter om dagen, så sitter ordene lenge.",
+        "tip": "Har du en ferdig liste? Lim inn hele med «Importer»."
       },
       {
-        "title": "Lær med flashkort",
-        "text": "Snu kortet og vurder hvor godt du husker ordet. Perigee, repetisjonsmotoren vår, bestemmer når det skal vises igjen.",
-        "tip": "På tastatur: mellomrom snur, 1–4 vurderer. På mobil: sveip til høyre hvis du kan ordet, til venstre hvis ikke."
-      },
-      {
-        "title": "Test deg selv",
-        "text": "Seks oppgavetyper i quizen – fra å velge oversettelse til å skrive ordet – og tre spill: Hurtigrunde, Overlevelse og Finn par.",
-        "tip": "I quizinnstillingene kan du beholde bare oppgavene du trenger."
-      },
-      {
-        "title": "Følg fremgangen",
-        "text": "XP og nivåer, ukens bane og medaljer. Velg hvor mange dager i uka du vil øve, og lukk banene dine – Kolo viser bare ordene som skal repeteres.",
-        "tip": "I profilen finner du nivå, ukens bane, medaljer og statistikk."
-      },
-      {
-        "title": "Alt klart!",
-        "text": "Lag ditt første sett og begynn å lære."
+        "title": "Ukens rytme",
+        "text": "Velg hvor mange dager i uka du vil øve. Når du når målet, lukkes ukens bane og rekken din vokser – og øving gir XP, nivåer og kapsler med belønninger."
       }
-    ],
-    "sample": {
-      "sets": [
-        "Hverdagsord",
-        "Reise"
-      ],
-      "study": "Lær",
-      "word": "dog",
-      "translation": "hund",
-      "example": "My dog is called Max",
-      "options": [
-        "dog",
-        "cat",
-        "bird",
-        "fish"
-      ]
-    }
+    ]
   },
   "courses": {
     "switcher": "Kurs: {name}",

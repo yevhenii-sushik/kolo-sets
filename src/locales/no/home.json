@@ -46,7 +46,19 @@
     "dueButton": "Start repetisjonen",
     "doneTitle": "Alt er repetert for i dag",
     "doneText": "Legg til nye ord eller øv i en hvilken som helst modus.",
-    "doneButton": "Til settene mine"
+    "doneButton": "Til settene mine",
+    "startTitle": "Begynn med ditt første sett",
+    "startText": "Legg til ordene du vil lære – Perigee minner deg på når det er tid for å repetere dem.",
+    "startButton": "Lag et sett",
+    "emptyTitle": "Settet er fortsatt tomt",
+    "emptyText": "Legg til noen ord, så kan du begynne å lære.",
+    "emptyButton": "Legg til ord",
+    "newTitle": {
+      "one": "{n} nytt ord venter på første økt",
+      "other": "{n} nye ord venter på første økt"
+    },
+    "newText": "Gå gjennom dem på kort – Perigee merker seg hva du kan og legger opp repetisjonene.",
+    "newButton": "Studer"
   },
   "goal": {
     "label": "Dagens mål",
@@ -938,6 +950,104 @@
     "regularity_key": {
       "category": "Oppsummering",
       "text": "Hovedhemmeligheten er regelmessighet. Hjernen elsker forutsigbare belastninger."
+    }
+  },
+  "firstSteps": {
+    "title": "Første steg",
+    "subtitle": "Fem små steg – så vet du alt du trenger. Hvert tar under ett minutt.",
+    "hide": "Skjul første steg",
+    "progress": "{n} av {total}",
+    "doneLabel": "ferdig",
+    "doneTitle": "Alt klart!",
+    "doneText": "Nå er det enkelt: åpne Kolo når den minner deg på det, og repeter ordene. Noen minutter om dagen holder – Perigee tar seg av resten.",
+    "doneButton": "Skjønner",
+    "steps": {
+      "language": {
+        "title": "Velg språk",
+        "titleDone": "Språk: {lang}",
+        "text": "Kolo har et eget rom med sett for hvert språk du lærer."
+      },
+      "set": {
+        "title": "Lag et sett",
+        "text": "Et sett er en liste med ord om ett tema, for eksempel «Mat» eller «Jobb». Det holder å gi det et navn."
+      },
+      "words": {
+        "title": "Legg til 5 ord",
+        "text": "Ord og oversettelse holder. En forklaring og et eksempel hjelper deg å huske bedre."
+      },
+      "train": {
+        "title": "Første økt",
+        "text": "Gå gjennom ordene på kort: husk, snu, vurder ærlig. Det tar et par minutter."
+      },
+      "goal": {
+        "title": "Ukemål",
+        "text": "Hvor mange dager i uka vil du øve? 3 er en flott start."
+      }
+    },
+    "guides": {
+      "later": "Senere",
+      "set": {
+        "title": "Ditt første sett",
+        "intro": "Et sett er en liste med ord om ett tema, for eksempel «Mat» eller «Reise». Hva vil du kalle ditt?",
+        "nameLabel": "Navn på settet",
+        "suggestTitle": "Eller velg et ferdig",
+        "suggestions": [
+          "Første ord",
+          "Mat",
+          "Reise",
+          "Hjemme",
+          "Jobb"
+        ],
+        "create": "Lag sett",
+        "error": "Kunne ikke lage settet. Sjekk nettet og prøv igjen.",
+        "doneTitle": "«{name}» er klart",
+        "doneText": "Nå legger vi til de første ordene – fem holder.",
+        "next": "Legg til ord"
+      },
+      "words": {
+        "title": "Første ord",
+        "introStarter": "Her er fem ord som er fine å begynne med. Behold dem du vil – eller legg til dine egne.",
+        "introOwn": "Legg til fem ord: ordet på språket du lærer og oversettelsen. En forklaring og et eksempel kan du legge til senere i settet.",
+        "starter": [
+          "hei",
+          "takk",
+          "ja",
+          "nei",
+          "vann"
+        ],
+        "addStarter": "Legg til valgte ({n})",
+        "own": "Jeg legger til egne ord",
+        "wordLabel": "Ord",
+        "translationLabel": "Oversettelse",
+        "add": "Legg til ord",
+        "progress": "{n} av {goal} ord",
+        "error": "Kunne ikke lagre ordene. Sjekk nettet og prøv igjen.",
+        "doneTitle": "Ordene er på plass!",
+        "doneText": "Fem ord – akkurat passe for første økt. Vi viser hvordan den fungerer.",
+        "next": "Slik øver du",
+        "finish": "Nok for nå"
+      },
+      "train": {
+        "title": "Din første økt",
+        "intro": "En økt går gjennom ordene i settet, ett kort om gangen. På hvert kort gjør du tre ting:",
+        "steps": [
+          {
+            "title": "Husk",
+            "text": "Du ser et ord – prøv å huske oversettelsen i hodet."
+          },
+          {
+            "title": "Snu",
+            "text": "Trykk på kortet eller «Vis svaret»."
+          },
+          {
+            "title": "Vurder ærlig",
+            "text": "Vurderingen avgjør når ordet kommer tilbake:"
+          }
+        ],
+        "soon": "kommer snart tilbake",
+        "later": "om noen dager",
+        "start": "Start økten"
+      }
     }
   }
 }

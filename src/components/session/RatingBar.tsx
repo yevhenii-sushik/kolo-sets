@@ -9,15 +9,18 @@ const LEVELS = [
   { level: KnowledgeLevel.KNOW, key: "know", tone: "bg-success-soft text-success hover:bg-success/15" },
 ] as const;
 
-// Низ флэшкарт и повторения: до переворота — «Показать ответ», после — четыре оценки с номерами клавиш
+// Низ флэшкарт и повторения: до переворота — «Показать ответ», после — четыре оценки с номерами клавиш.
+// coach — первая тренировка новичка: вместо коротких подсказок объясняем, как вспоминать и что значат оценки
 export default function RatingBar({
   isFlipped,
   onFlip,
   onRate,
+  coach = false,
 }: {
   isFlipped: boolean;
   onFlip: () => void;
   onRate: (level: KnowledgeLevel) => void;
+  coach?: boolean;
 }) {
   const { t } = useI18n();
   const f = t.words.flashcards;
@@ -25,7 +28,11 @@ export default function RatingBar({
   return (
     <div className="shrink-0 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-8">
       <div className="mx-auto grid max-w-3xl gap-3">
-        {isFlipped && <p className="text-center text-sm text-muted">{t.words.session.rate}</p>}
+        {(isFlipped || coach) && (
+          <p className={cx("mx-auto max-w-xl text-center text-sm", coach ? "text-fg" : "text-muted")}>
+            {!coach ? t.words.session.rate : isFlipped ? f.coach.rate : f.coach.recall}
+          </p>
+        )}
         {isFlipped ? (
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {LEVELS.map(({ level, key, tone }, i) => (

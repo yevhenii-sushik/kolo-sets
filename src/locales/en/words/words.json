@@ -52,13 +52,14 @@
   },
   "editCollection": {
     "addCard": "Add word",
+    "study": "Study",
     "import": "Import",
     "export": "Export",
     "rename": "Rename",
     "learned": "Learned",
     "wordList": "Word list",
     "noCards": "No words in this set yet",
-    "noCardsDesc": "Click here to add your first word",
+    "noCardsDesc": "A word and its translation are enough to start. Got a ready-made list? Paste it all at once with Import.",
     "loading": "Loading...",
     "exportSuccess": "Collection exported",
     "exportError": "Export failed",
@@ -127,7 +128,12 @@
       "restart": "Restart",
       "exit": "Exit",
       "min": "m",
-      "sec": "s"
+      "sec": "s",
+      "coach": "Perigee has saved your ratings. When it's time to review these words, they'll show up on the home screen — come back tomorrow."
+    },
+    "coach": {
+      "recall": "First try to recall the translation yourself — then show the answer. On your phone, just tap the card.",
+      "rate": "Rate honestly: after “Don't know” and “Forgot” the word comes back soon, after “Remember” and “Know” — in a few days. That's how Perigee builds your schedule."
     }
   },
   "quiz": {

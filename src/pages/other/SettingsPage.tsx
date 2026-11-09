@@ -49,7 +49,7 @@ import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
 import { PageHeader } from "../../components/other/PageSection";
 import { Segmented, SettingsGroup, SettingsRow } from "../../components/other/SettingsList";
-import { ONBOARDING_STORAGE_KEY } from "../../components/OnboardingModal";
+import { restartOnboarding } from "../../utils/firstRun";
 
 type Theme = "light" | "dark" | "system";
 
@@ -438,7 +438,7 @@ export default function SettingsPage() {
             title={s.tour.title}
             description={s.tour.hint}
             onClick={() => {
-              localStorage.removeItem(ONBOARDING_STORAGE_KEY);
+              restartOnboarding(user?.uid);
               navigate("/");
             }}
           />

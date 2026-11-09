@@ -180,6 +180,9 @@ export const createCard = (
   };
 };
 
+// Новая карточка: ещё ни разу не тренировалась (после первой же оценки interval ≥ 1)
+export const isNewCard = (card: Card): boolean => !card.srsData || card.srsData.interval === 0;
+
 // Карточка ожидает повторения? (interval === 0 = ещё не изучалась)
 // Единственная точка правды для due-логики — используется в App, HomePage,
 // ReviewPage, FlashcardsPage и CollectionCard.

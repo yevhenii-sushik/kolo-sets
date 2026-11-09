@@ -33,6 +33,8 @@ export function OrbitGoalModal({ open, onClose }: { open: boolean; onClose: () =
 
   // Рекорд старых огоньков: сервер сохраняет его медалью, если он не меньше 3 дней
   const legacy: number | null = profile?.legacyFlames ?? (profile?.longestStreak >= 3 ? profile.longestStreak : null);
+  // Новичок не видел старых огоньков — объясняем орбиту с нуля, на картинке
+  const newcomer = first && !legacy && !(orbit && orbit.streak > 0);
 
   const save = async () => {
     setSaving(true);
@@ -61,7 +63,13 @@ export function OrbitGoalModal({ open, onClose }: { open: boolean; onClose: () =
       <div className="grid gap-4">
         {first && (
           <div className="grid gap-2 text-sm leading-relaxed text-muted">
-            <p>{g.intro}</p>
+            {newcomer && (
+              <div className="mb-1 flex items-center gap-4 rounded-2xl bg-inset p-3">
+                <OrbitRing goal={3} done={2} closed={false} size={56} />
+                <p className="leading-snug text-fg">{g.ringCaption}</p>
+              </div>
+            )}
+            <p>{newcomer ? g.introNew : g.intro}</p>
             {orbit && orbit.streak > 0 && <p className="font-medium text-fg">{plural(locale, orbit.streak, g.migrated)}</p>}
             {legacy && <p>{g.legacy.replace("{days}", plural(locale, legacy, t.shell.streak.days))}</p>}
           </div>

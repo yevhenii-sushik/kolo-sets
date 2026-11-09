@@ -19,6 +19,7 @@ import RatingBar from "../../components/session/RatingBar";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import Flashcard from "../../components/cards/Flashcard";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
+import { coachSeen, markCoachSeen } from "../../utils/firstRun";
 import ConfirmDialog from "../../components/ConfirmDialog";
 
 export default function FlashcardsPage() {
@@ -28,7 +29,7 @@ export default function FlashcardsPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const { reportSession, refreshCollections, voiceForCollection } = useData();
+  const { profile, reportSession, refreshCollections, voiceForCollection } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
 
   const [collection, setCollection] = useState<Collection | null>(null);
@@ -36,6 +37,16 @@ export default function FlashcardsPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  // Первая тренировка новичка: подсказки, как вспоминать и оценивать, и что будет дальше. Решаем один раз,
+  // когда профиль загружен: после тренировки в нём появится история, а подсказка в итоге должна остаться
+  const [coach, setCoach] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (coach === null && profile) setCoach(!coachSeen("flashcards") && !(profile.studyHistory?.length > 0));
+  }, [coach, profile]);
+  // Прошёл до конца — больше не подсказываем; ушёл с середины — подскажем в следующий раз
+  useEffect(() => {
+    if (coach && showStats) markCoachSeen("flashcards");
+  }, [coach, showStats]);
   const [startTime, setStartTime] = useState(Date.now());
   const [stats, setStats] = useState<FlashcardStats>({
     totalCards: 0,
@@ -240,11 +251,12 @@ export default function FlashcardsPage() {
         </motion.div>
       </main>
 
-      <RatingBar isFlipped={isFlipped} onFlip={() => setIsFlipped(true)} onRate={handleRating} />
+      <RatingBar isFlipped={isFlipped} onFlip={() => setIsFlipped(true)} onRate={handleRating} coach={!!coach} />
 
       <FlashcardStatsModal
         isOpen={showStats}
         stats={stats}
+        coach={!!coach}
         onClose={() => navigate(-1)}
         onRestart={loadData}
       />

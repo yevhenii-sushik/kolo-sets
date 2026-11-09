@@ -10,7 +10,8 @@ import { useData } from "../../contexts/DataContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { motion, AnimatePresence } from "framer-motion";
-import OnboardingModal, { ONBOARDING_STORAGE_KEY } from "../../components/OnboardingModal";
+import OnboardingModal from "../../components/OnboardingModal";
+import { onboardingDone } from "../../utils/firstRun";
 import VerifyEmailBanner from "../../components/VerifyEmailBanner";
 import LegalUpdateBanner from "../../components/LegalUpdateBanner";
 import InstallPrompt from "../../components/InstallPrompt";
@@ -26,7 +27,7 @@ export default function MainLayout() {
   const { t, language, setLanguage } = useI18n();
   const sh = t.shell;
   const locale = getLanguageInfo(language).htmlLang;
-  const { progression, courses, coursesReady } = useData();
+  const { profile, progression, courses, coursesReady } = useData();
   const orbit = progression?.orbit;
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
@@ -48,7 +49,7 @@ export default function MainLayout() {
 
   // Show onboarding once for new users
   useEffect(() => {
-    if (!localStorage.getItem(ONBOARDING_STORAGE_KEY)) {
+    if (!onboardingDone()) {
       const timer = setTimeout(() => setShowOnboarding(true), 900);
       return () => clearTimeout(timer);
     }
@@ -67,9 +68,11 @@ export default function MainLayout() {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
-  // Первый вход после обновления (и для новичков — после знакомства): выбрать цель недели
+  // Цель недели: тем, кто уже занимался (первый вход после обновления), — сразу; новичку — после первой
+  // тренировки, когда он понял, что такое занятие. До этого цель ждёт в «Первых шагах» на главной
+  const hasStudied = (profile?.studyHistory?.length ?? 0) > 0;
   const needsGoal =
-    !!progression && !progression.orbit.goalSet && !goalDismissed && !showOnboarding && !!localStorage.getItem(ONBOARDING_STORAGE_KEY);
+    !!progression && !progression.orbit.goalSet && !goalDismissed && !showOnboarding && onboardingDone() && hasStudied;
 
   // Без курса приложение начинается с выбора языка
   if (coursesReady && courses.length === 0) return <Navigate to="/start" replace />;

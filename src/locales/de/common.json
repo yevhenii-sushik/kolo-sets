@@ -91,6 +91,8 @@
     "goal": {
       "title": "Dein Wochenrhythmus",
       "intro": "Die täglichen Flammen in Kolo sind jetzt wöchentliche Orbits. Wähle, an wie vielen Tagen pro Woche du üben willst: Schaffst du das, schließt sich der Orbit und deine Orbit-Serie wächst. Ein verpasster Tag macht nichts kaputt.",
+      "introNew": "Kolo zählt Wochen, nicht Tage. Wähle, an wie vielen Tagen pro Woche du üben willst: Erreichst du sie, schließt sich der Wochen-Orbit und deine Orbit-Serie wächst. Ein verpasster Tag macht nichts kaputt.",
+      "ringCaption": "Jeder Punkt ist ein Tag mit Übung. Sind genug Punkte voll, schließt sich der Orbit.",
       "migrated": {
         "one": "Wir haben deinen Verlauf umgerechnet: Deine Serie beträgt {n} Orbit.",
         "other": "Wir haben deinen Verlauf umgerechnet: Deine Serie beträgt {n} Orbits."
@@ -137,53 +139,29 @@
     "next": "Weiter",
     "start": "Los geht's",
     "step": "{n} von {total}",
-    "ready": "Bereit zum Start",
+    "createFirst": "Mein erstes Set erstellen",
+    "later": "Ich schaue mich erst um",
+    "loop": {
+      "add": "Wörter hinzufügen",
+      "learn": "Üben",
+      "repeat": "Wiederholen",
+      "note": "Perigee wählt den Moment"
+    },
     "steps": [
       {
-        "title": "Willkommen bei Kolo",
-        "text": "Wortsets und cleveres Wiederholen. Diese Tour dauert keine Minute."
+        "title": "Hallo! Das ist Kolo",
+        "text": "Hier sammelst du die Wörter, die du lernen willst, und Kolo hilft dir, sie nicht zu vergessen. Wir zeigen dir kurz, wie es funktioniert – das dauert eine halbe Minute."
       },
       {
-        "title": "Erstelle ein Set",
-        "text": "Tippe auf „Set erstellen“ und füge Wörter mit Übersetzung, Erklärung und Beispiel hinzu – oder importiere eine fertige Liste.",
-        "tip": "Für ein Quiz braucht ein Set mindestens 4 Wörter."
+        "title": "So funktioniert's",
+        "text": "Füge Wörter hinzu, übe sie mit Karteikarten – und Perigee, unser Wiederholungsalgorithmus, bringt jedes Wort genau dann zurück, wenn du es zu vergessen beginnst. Ein paar Minuten am Tag, und die Wörter bleiben hängen.",
+        "tip": "Du hast schon eine Liste? Füge sie mit „Import“ komplett ein."
       },
       {
-        "title": "Lerne mit Karteikarten",
-        "text": "Dreh eine Karte um und bewerte, wie gut du das Wort kennst. Perigee, unsere Wiederholungs-Engine, entscheidet, wann es wiederkommt.",
-        "tip": "Auf der Tastatur: Leertaste dreht um, 1–4 bewertet. Am Handy: nach rechts wischen, wenn du es weißt, nach links, wenn nicht."
-      },
-      {
-        "title": "Teste dich",
-        "text": "Sechs Arten von Quizaufgaben – von der Wahl der Übersetzung bis zum Schreiben des Wortes – plus drei Spiele: Tempo-Runde, Überleben und Paare.",
-        "tip": "In den Quiz-Einstellungen kannst du nur die Aufgaben behalten, die du brauchst."
-      },
-      {
-        "title": "Behalte deinen Fortschritt im Blick",
-        "text": "XP und Level, ein Wochen-Orbit und Medaillen. Wähle, an wie vielen Tagen pro Woche du übst, und schließe deine Orbits – Kolo zeigt nur die Wörter, die gerade dran sind.",
-        "tip": "In deinem Profil findest du Level, Wochen-Orbit, Medaillen und Statistiken."
-      },
-      {
-        "title": "Alles bereit!",
-        "text": "Erstelle dein erstes Set und fang an zu lernen."
+        "title": "Dein Wochenrhythmus",
+        "text": "Wähle, an wie vielen Tagen pro Woche du üben willst. Ziel erreicht – der Wochen-Orbit schließt sich, deine Serie wächst, und fürs Üben gibt es XP, Level und Kapseln mit Belohnungen."
       }
-    ],
-    "sample": {
-      "sets": [
-        "Alltagswörter",
-        "Reisen"
-      ],
-      "study": "Lernen",
-      "word": "hund",
-      "translation": "Hund",
-      "example": "Hunden min heter Max",
-      "options": [
-        "hund",
-        "katt",
-        "fugl",
-        "fisk"
-      ]
-    }
+    ]
   },
   "courses": {
     "switcher": "Kurs: {name}",

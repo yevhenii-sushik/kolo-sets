@@ -12,8 +12,8 @@ import { exportCollectionToJSON, downloadJSON } from "../../utils/exportImport";
 import { useI18n } from "../../contexts/I18nContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
-import { Plus, Upload, Download, Pencil, ArrowUp, Layers } from "lucide-react";
-import { Button, Card as UiCard, Field, Heading, IconButton, Input, Modal, Text } from "../../ui";
+import { Plus, Upload, Download, Pencil, ArrowUp, Layers, Play } from "lucide-react";
+import { Button, ButtonLink, Card as UiCard, Field, Heading, IconButton, Input, Modal, Text } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import AddCardModal from "../../components/AddCardModal";
@@ -182,11 +182,18 @@ export default function CollectionEditPage() {
   };
 
   const cardCount = collection?.cards.length ?? 0;
+  // Слова есть — главное действие «Учить», чтобы из редактора не приходилось искать, где начать тренировку
+  const studyTo = `/collection/${id}/flashcards`;
   const actions = (compact: boolean) => (
     <>
       {compact ? (
         <>
-          <IconButton variant="soft" label={e.addCard} onClick={() => setIsAddModalOpen(true)}>
+          {cardCount > 0 && (
+            <IconButton variant="soft" label={e.study} onClick={() => navigate(studyTo)}>
+              <Play size={18} />
+            </IconButton>
+          )}
+          <IconButton variant={cardCount > 0 ? "surface" : "soft"} label={e.addCard} onClick={() => setIsAddModalOpen(true)}>
             <Plus size={18} />
           </IconButton>
           <IconButton variant="surface" label={e.import} onClick={() => setIsImportModalOpen(true)}>
@@ -198,7 +205,12 @@ export default function CollectionEditPage() {
         </>
       ) : (
         <>
-          <Button iconLeft={<Plus size={18} />} onClick={() => setIsAddModalOpen(true)}>
+          {cardCount > 0 && (
+            <ButtonLink to={studyTo} iconLeft={<Play size={18} />}>
+              {e.study}
+            </ButtonLink>
+          )}
+          <Button variant={cardCount > 0 ? "secondary" : "primary"} iconLeft={<Plus size={18} />} onClick={() => setIsAddModalOpen(true)}>
             {e.addCard}
           </Button>
           <Button variant="secondary" iconLeft={<Upload size={18} />} onClick={() => setIsImportModalOpen(true)}>
@@ -264,14 +276,22 @@ export default function CollectionEditPage() {
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-surface text-accent-ink">
               <Layers size={26} />
             </span>
-            <div className="grid gap-1">
+            <div className="grid max-w-md gap-2">
               <Heading size={3} as="h3">
                 {e.noCards}
               </Heading>
+              <Text size="sm" tone="muted">
+                {e.noCardsDesc}
+              </Text>
             </div>
-            <Button iconLeft={<Plus size={18} />} onClick={() => setIsAddModalOpen(true)}>
-              {e.addCard}
-            </Button>
+            <div className="flex flex-wrap justify-center gap-2">
+              <Button iconLeft={<Plus size={18} />} onClick={() => setIsAddModalOpen(true)}>
+                {e.addCard}
+              </Button>
+              <Button variant="secondary" iconLeft={<Upload size={18} />} onClick={() => setIsImportModalOpen(true)}>
+                {e.import}
+              </Button>
+            </div>
           </UiCard>
         ) : (
           <div className="grid gap-3">

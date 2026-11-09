@@ -48,7 +48,9 @@
         "Progress is now counted by the server, so it can't get lost or faked.",
         "A session done offline no longer disappears — it counts as soon as Kolo is back online.",
         "The new Orbit design and a new heading font.",
-        "Writing to support is simpler: pick a topic, type your message, and we'll reply to your account email. Messages with characters like _ or * now send without an error."
+        "Writing to support is simpler: pick a topic, type your message, and we'll reply to your account email. Messages with characters like _ or * now send without an error.",
+        "New here? A short intro and First steps on the home screen take you from your first set to your first session — with hints along the way.",
+        "The home screen no longer says everything is reviewed while new words are waiting, and a set's page now has a Study button."
       ]
     },
     {

@@ -1,4 +1,4 @@
-import { Trophy } from "lucide-react";
+import { Lightbulb, Trophy } from "lucide-react";
 import { FlashcardStats } from "../types";
 import { useI18n } from "../contexts/I18nContext";
 import { cx } from "../ui";
@@ -9,10 +9,11 @@ interface FlashcardStatsModalProps {
   stats: FlashcardStats;
   onClose: () => void;
   onRestart: () => void;
+  coach?: boolean; // первая тренировка новичка — объяснить, что будет со словами дальше
 }
 
 // Итог флэшкарт и повторения: сколько карточек, сколько времени и как распределились оценки
-export default function FlashcardStatsModal({ isOpen, stats, onClose, onRestart }: FlashcardStatsModalProps) {
+export default function FlashcardStatsModal({ isOpen, stats, onClose, onRestart, coach = false }: FlashcardStatsModalProps) {
   const { t } = useI18n();
   const fs = t.words.flashcards.stats;
   const levels = t.words.flashcards.levels;
@@ -59,6 +60,12 @@ export default function FlashcardStatsModal({ isOpen, stats, onClose, onRestart 
             </li>
           ))}
         </ul>
+        {coach && (
+          <div className="mt-1 flex gap-2.5 rounded-2xl bg-accent-soft p-3 text-left text-sm text-accent-ink">
+            <Lightbulb size={16} className="mt-0.5 shrink-0" />
+            <p className="leading-snug">{fs.coach}</p>
+          </div>
+        )}
       </div>
     </SessionResult>
   );
