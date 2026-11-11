@@ -11,4 +11,4 @@ export { Modal } from "./Modal";
 export { Spinner } from "./Spinner";
 export { Alert } from "./Alert";
 export { cx } from "./cx";
-export { Logo, LogoMark, AppIcon, MARK_RING, MARK_DOT } from "./Logo";
+export { Logo, LogoMark, PerigeeMark, AppIcon, MARK_RING, MARK_DOT } from "./Logo";

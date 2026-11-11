@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { Badge, ButtonLink, Card, Eyebrow, Heading, LogoMark, Spinner, Text, cx } from "../../ui";
+import { Badge, ButtonLink, Card, Eyebrow, Heading, PerigeeMark, Spinner, Text, cx } from "../../ui";
 import { useAuth } from "../../contexts/AuthContext";
 import { courseFlag } from "../../courses/languages";
 import { usePageMeta } from "../../utils/pageMeta";
@@ -48,7 +48,7 @@ const ART: Record<string, { node: ReactNode; inverse?: boolean }> = {
   speed: { node: <SpeedPreview /> },
   survival: { node: <SurvivalPreview /> },
   match: { node: <MatchPreview /> },
-  name: { node: <LogoMark size={140} /> },
+  name: { node: <PerigeeMark size={140} /> },
   curve: { node: <ForgettingCurve />, inverse: true },
 };
 

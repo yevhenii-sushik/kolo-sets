@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useId, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, MotionConfig, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Check, Mail, Monitor, Plus, Rocket, Smartphone, TabletSmartphone } from "lucide-react";
-import { Badge, ButtonLink, Card, Heading, Logo, LogoMark, Ring, Text, buttonStyles, cx } from "../../ui";
+import { Badge, ButtonLink, Card, Heading, Logo, LogoMark, PerigeeMark, Ring, Text, buttonStyles, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
 import { APP_LANGUAGES, LANGUAGES, getLanguageInfo } from "../../locales/languages";
 import { FEATURES } from "../../config/features";
@@ -368,7 +368,7 @@ export default function LandingPage() {
                 <motion.div {...reveal} className="grid justify-items-start gap-5">
                   {/* Perigee — движок повторений: перигей — точка орбиты, где спутник ближе всего */}
                   <span className="inline-flex items-center gap-2 rounded-full border border-on-inverse/15 py-1.5 pl-2 pr-3.5 text-sm font-semibold text-on-inverse">
-                    <LogoMark size={20} tone="inverse" />
+                    <PerigeeMark size={20} tone="inverse" />
                     Perigee
                   </span>
                   <Heading size={1} as="h2" tone="inverse">

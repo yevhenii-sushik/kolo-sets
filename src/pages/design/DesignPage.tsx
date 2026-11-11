@@ -15,6 +15,7 @@ import {
   Logo,
   LogoMark,
   Modal,
+  PerigeeMark,
   Ring,
   Switch,
   Text,
@@ -142,6 +143,28 @@ export default function DesignPage() {
             {[16, 24, 32, 48].map((s) => (
               <LogoMark key={s} size={s} />
             ))}
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Card tone="surface" padding="lg" className="grid gap-4">
+              <Text size="xs" tone="faint">
+                PerigeeMark — знак движка повторений Perigee. Свой силуэт: с кольцом Kolo не смешивать
+              </Text>
+              <div className="flex flex-wrap items-end gap-4">
+                {[16, 20, 24, 32, 48, 96].map((s) => (
+                  <PerigeeMark key={s} size={s} />
+                ))}
+              </div>
+            </Card>
+            <Card tone="inverse" padding="lg" className="grid gap-4">
+              <Text size="xs" className="text-on-inverse/60">
+                tone="inverse" — на bg-fg
+              </Text>
+              <div className="flex flex-wrap items-end gap-4">
+                {[16, 20, 24, 32, 48, 96].map((s) => (
+                  <PerigeeMark key={s} size={s} tone="inverse" />
+                ))}
+              </div>
+            </Card>
           </div>
         </Section>
 

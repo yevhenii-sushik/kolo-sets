@@ -74,6 +74,48 @@ export function Logo({ size = "md", tone = "brand", className }: { size?: keyof 
   );
 }
 
+// Знак Perigee «Апсида» — движок повторений, а не приложение, поэтому у него свой силуэт: никаких колец.
+// Крылья — тяжёлая дуга перигея: толще всего у вершины, где спутник летит быстрее всего, к концам сходятся в иглу.
+// Точка под вершиной — ученик, к которому слово подходит ближе всего. Квадрат 100×100, вершина в (50, 66).
+const PERIGEE_WINGS = "M10 14C30 40 44 58 50 66C56 58 70 40 90 14C70 30 58 38 50 40C42 38 30 30 10 14Z";
+// Меньше 24 px точка крупнее, иначе она теряется рядом с крыльями
+const perigeeDot = (size: number) => ({ cx: 50, cy: 82, r: size < 24 ? 12 : 10 });
+
+const PERIGEE_INK: Record<LogoTone, string> = { brand: "text-fg", inverse: "text-on-inverse", night: "text-white", mono: "" };
+
+export function PerigeeMark({
+  size = 32,
+  tone = "brand",
+  label,
+  className,
+}: {
+  size?: number;
+  tone?: LogoTone;
+  label?: string; // только если знак стоит один, без надписи рядом
+  className?: string;
+}) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="7 9 86 86"
+      className={cx("shrink-0", className)}
+      {...(label ? { role: "img", "aria-label": label } : { "aria-hidden": true })}
+    >
+      {/* Обводка того же цвета скругляет иглы и вершину */}
+      <path
+        d={PERIGEE_WINGS}
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth={3}
+        strokeLinejoin="round"
+        className={PERIGEE_INK[tone]}
+      />
+      <circle {...perigeeDot(size)} className={RING[tone]} />
+    </svg>
+  );
+}
+
 // Иконка приложения: знак на ночном квадрате — как на домашнем экране. Цвета не зависят от темы.
 export function AppIcon({ size = 48, className }: { size?: number; className?: string }) {
   return (
