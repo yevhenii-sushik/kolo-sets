@@ -20,6 +20,7 @@ import { RepairLine, Shields, WeekDays, WeekStatus } from "../../components/prog
 import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
 import { AvatarFrame } from "../../components/rewards/AvatarFrame";
 import { BackgroundArt, TitleBadge } from "../../components/rewards/ItemArt";
+import { TeamBadges } from "../../components/profile/TeamBadges";
 import { CapsuleArt } from "../../components/rewards/CapsuleArt";
 import { CapsuleOpenModal } from "../../components/rewards/CapsuleOpenModal";
 import { ShowcaseModal, ShowcaseTile } from "../../components/rewards/Showcase";
@@ -349,7 +350,11 @@ export default function ProfilePage() {
                 <Heading size={1} className="break-words">
                   {profile.displayName}
                 </Heading>
-                {loot.equipped.title && <TitleBadge id={loot.equipped.title} className="mt-1.5" />}
+                {/* Значки команды и титул — одной строкой; без них строки нет совсем (empty:hidden) */}
+                <div className="mt-1.5 flex flex-wrap gap-1.5 empty:hidden">
+                  <TeamBadges />
+                  {loot.equipped.title && <TitleBadge id={loot.equipped.title} />}
+                </div>
                 <p className="mt-1 truncate text-sm text-muted">
                   {editForm.username && <span className="font-semibold text-fg">@{editForm.username}</span>}
                   {editForm.username && profile.email && " · "}

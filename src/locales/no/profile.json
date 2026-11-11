@@ -16,6 +16,12 @@
   "usernameHint": "3–20 tegn: latinske bokstaver, tall, _",
   "changePhoto": "Bytt bilde",
   "memberSince": "Medlem siden {date}",
+  "team": {
+    "staff": "Dakuta-teamet",
+    "staffHint": "Jobber med Kolo",
+    "admin": "Admin",
+    "adminHint": "Har tilgang til adminpanelet"
+  },
   "toast": {
     "success": "Profilen er oppdatert",
     "error": "Kunne ikke lagre profilen – prøv igjen"

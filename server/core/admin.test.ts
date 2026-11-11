@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isAdminClaims, learningView, lookupCandidates, newestAccounts, profileView, sessionRow, summarizeAccounts, type AccountLite } from "./admin";
+import { isAdminClaims, learningView, lookupCandidates, newestAccounts, profileView, rolesOf, sessionRow, summarizeAccounts, type AccountLite } from "./admin";
 
 describe("права админа", () => {
   it("только claim admin === true", () => {
@@ -8,6 +8,18 @@ describe("права админа", () => {
     expect(isAdminClaims({ admin: 1 })).toBe(false);
     expect(isAdminClaims({})).toBe(false);
     expect(isAdminClaims(null)).toBe(false);
+  });
+});
+
+describe("роли команды", () => {
+  it("staff — отдельно от админки; админ всегда в команде", () => {
+    expect(rolesOf({ staff: true })).toEqual({ admin: false, staff: true });
+    expect(rolesOf({ admin: true })).toEqual({ admin: true, staff: true });
+    expect(rolesOf({ admin: true, staff: true })).toEqual({ admin: true, staff: true });
+  });
+  it("без claims или с чужими значениями — никаких ролей", () => {
+    expect(rolesOf(undefined)).toEqual({ admin: false, staff: false });
+    expect(rolesOf({ staff: "yes", admin: 1 })).toEqual({ admin: false, staff: false });
   });
 });
 

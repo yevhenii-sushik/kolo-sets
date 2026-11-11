@@ -72,7 +72,8 @@ function Profile({ user }: { user: AdminUser }) {
               {[p?.username && `@${p.username}`, a.email].filter(Boolean).join(" · ")}
             </Text>
             <div className="flex flex-wrap gap-1.5 pt-1">
-              {a.admin && <Badge tone="accent">Админ</Badge>}
+              {a.admin && <Badge tone="info">Админ</Badge>}
+              {a.staff && <Badge tone="neutral">Команда Dakuta</Badge>}
               {a.disabled && <Badge tone="danger">Отключён</Badge>}
               {a.email && !a.verified && <Badge tone="warning">Email не подтверждён</Badge>}
               {a.providers.map((id) => (

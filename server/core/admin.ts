@@ -4,9 +4,20 @@ import type { StudyDay } from "../../src/types";
 
 const DAY_MS = 86_400_000;
 
-// Права админа — только claim в подписанном токене; любое другое значение, кроме true, — не админ
-export const isAdminClaims = (claims: unknown) =>
-  !!claims && typeof claims === "object" && (claims as Record<string, unknown>).admin === true;
+// Роли команды — только claims в подписанном токене; любое значение, кроме true, — нет роли.
+// admin — админ-панель; staff — значок «Команда Dakuta» в профиле. Админ всегда в команде
+export interface Roles {
+  admin: boolean;
+  staff: boolean;
+}
+
+export function rolesOf(claims: unknown): Roles {
+  const c = claims && typeof claims === "object" ? (claims as Record<string, unknown>) : {};
+  const admin = c.admin === true;
+  return { admin, staff: admin || c.staff === true };
+}
+
+export const isAdminClaims = (claims: unknown) => rolesOf(claims).admin;
 
 // ── Поиск пользователя ──
 

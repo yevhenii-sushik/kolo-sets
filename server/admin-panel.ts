@@ -4,11 +4,11 @@ import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import type { UserRecord } from "firebase-admin/auth";
 import { adminAuth, db } from "./admin";
 import {
-  isAdminClaims,
   learningView,
   lookupCandidates,
   newestAccounts,
   profileView,
+  rolesOf,
   sessionRow,
   summarizeAccounts,
   type AccountLite,
@@ -139,7 +139,7 @@ export async function adminUser(admin: string, query: unknown): Promise<Reply> {
         account: {
           ...accountOf(record),
           lastSignInAt: iso(record.metadata.lastSignInTime),
-          admin: isAdminClaims(record.customClaims),
+          ...rolesOf(record.customClaims),
         },
         profile: profile.exists ? profileView(plain(profile.data())) : null,
         learning: learningView(sets.docs.map((d) => ({ courseId: d.get("courseId"), cards: cardCount(d.data()) }))),

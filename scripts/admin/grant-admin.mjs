@@ -1,8 +1,12 @@
-// Выдать или снять права админа (docs/specs/admin.md). Кнопки в приложении нет намеренно.
+// Роли команды (docs/specs/admin.md): admin — админ-панель, staff — значок «Команда Dakuta» в профиле.
+// Админ всегда в команде: выдать админку — значит и значок, убрать из команды — значит и админку.
+// Кнопки в приложении нет намеренно.
 //
-//   node scripts/admin/grant-admin.mjs <email>            выдать
-//   node scripts/admin/grant-admin.mjs <email> --revoke   снять (и выйти на всех устройствах)
-//   node scripts/admin/grant-admin.mjs --list             кто админ
+//   node scripts/admin/grant-admin.mjs <email>                   админ (и значок команды)
+//   node scripts/admin/grant-admin.mjs <email> --staff           только значок команды, без панели
+//   node scripts/admin/grant-admin.mjs <email> --revoke          снять админку (значок команды остаётся)
+//   node scripts/admin/grant-admin.mjs <email> --revoke --staff  убрать из команды совсем
+//   node scripts/admin/grant-admin.mjs --list                    кто в команде
 //
 // Ключ — тот же, что у серверных функций. Проще всего взять его из переменных Netlify:
 //   npx netlify-cli dev:exec node scripts/admin/grant-admin.mjs <email>
@@ -20,9 +24,13 @@ function app() {
   return initializeApp({ credential, projectId: PROJECT_ID });
 }
 
+// Как rolesOf в server/core/admin.ts
+const rolesOf = (claims) => ({ admin: claims?.admin === true, staff: claims?.admin === true || claims?.staff === true });
+
 const auth = getAuth(app());
 const args = process.argv.slice(2);
 const revoke = args.includes("--revoke");
+const staffOnly = args.includes("--staff");
 const list = args.includes("--list");
 const email = args.find((a) => !a.startsWith("--"));
 
@@ -32,19 +40,20 @@ if (list) {
   do {
     const res = await auth.listUsers(1000, pageToken);
     for (const u of res.users) {
-      if (u.customClaims?.admin === true) {
+      const r = rolesOf(u.customClaims);
+      if (r.staff) {
         found++;
-        console.log(`${u.email ?? "(без email)"}  ${u.uid}`);
+        console.log(`${r.admin ? "админ   " : "команда "} ${u.email ?? "(без email)"}  ${u.uid}`);
       }
     }
     pageToken = res.pageToken;
   } while (pageToken);
-  if (!found) console.log("Админов нет.");
+  if (!found) console.log("В команде никого.");
   process.exit(0);
 }
 
 if (!email) {
-  console.error("Укажи email: node scripts/admin/grant-admin.mjs <email> [--revoke] | --list");
+  console.error("Укажи email: node scripts/admin/grant-admin.mjs <email> [--staff] [--revoke] | --list");
   process.exit(1);
 }
 
@@ -54,14 +63,25 @@ if (!user) {
   process.exit(1);
 }
 
+const was = rolesOf(user.customClaims);
+const next = revoke
+  ? staffOnly
+    ? { admin: false, staff: false }
+    : { admin: false, staff: was.staff }
+  : staffOnly
+    ? { admin: was.admin, staff: true }
+    : { admin: true, staff: true };
+
 // Остальные claims (если появятся) не трогаем
-const { admin: _was, ...rest } = user.customClaims ?? {};
-if (revoke) {
-  await auth.setCustomUserClaims(user.uid, Object.keys(rest).length ? rest : null);
-  // Иначе старый токен с claim работал бы ещё до часа; сервер проверяет отзыв (adminHandler)
-  await auth.revokeRefreshTokens(user.uid);
-  console.log(`Права админа сняты: ${email}. Сессии на всех устройствах завершены.`);
-} else {
-  await auth.setCustomUserClaims(user.uid, { ...rest, admin: true });
-  console.log(`Готово: ${email} — админ. Открой https://kolo.dakuta.dev/admin (страница сама обновит токен).`);
-}
+const { admin: _admin, staff: _staff, ...rest } = user.customClaims ?? {};
+const claims = { ...rest, ...(next.admin ? { admin: true } : {}), ...(next.staff ? { staff: true } : {}) };
+await auth.setCustomUserClaims(user.uid, Object.keys(claims).length ? claims : null);
+
+// Снятая админка должна перестать работать сразу, а не через час: сервер проверяет отзыв (adminHandler)
+if (was.admin && !next.admin) await auth.revokeRefreshTokens(user.uid);
+
+const role = next.admin ? "админ и в команде Dakuta" : next.staff ? "в команде Dakuta (без админ-панели)" : "не в команде";
+console.log(`Готово: ${email} — ${role}.`);
+if (next.admin && !was.admin) console.log("Открой https://kolo.dakuta.dev/admin — страница сама обновит токен.");
+else if (next.staff && !was.staff) console.log("Значок появится в профиле в течение часа или после повторного входа.");
+if (was.admin && !next.admin) console.log("Сессии на всех устройствах завершены.");

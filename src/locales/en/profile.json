@@ -16,6 +16,12 @@
   "usernameHint": "3–20 characters: Latin letters, digits, _",
   "changePhoto": "Change photo",
   "memberSince": "Member since {date}",
+  "team": {
+    "staff": "Dakuta team",
+    "staffHint": "Works on Kolo",
+    "admin": "Admin",
+    "adminHint": "Has access to the admin panel"
+  },
   "toast": {
     "success": "Profile updated",
     "error": "Couldn't save your profile — try again"

@@ -39,6 +39,7 @@ beforeAll(async () => {
   await ensureUser(TARGET, "target@qa.test");
   // claim попадает в токен при входе — ставим до получения токена, как скрипт grant-admin
   await adminAuth().setCustomUserClaims(ADMIN, { admin: true });
+  await adminAuth().setCustomUserClaims(TARGET, { staff: true });
   adminToken = await idToken(ADMIN);
   plainToken = await idToken(PLAIN);
 
@@ -93,7 +94,8 @@ describe("POST /api/admin-user", () => {
     expect(user.profile).toMatchObject({ username: "qa_target", level: 3, xp: 400, courses: ["nb"] });
     expect(user.learning).toEqual({ sets: 1, cards: 2, byCourse: [{ courseId: "nb", sets: 1, cards: 2 }] });
     expect(user.sessions[0]).toMatchObject({ id: "t1", kind: "quiz", correct: 9 });
-    expect(user.account.admin).toBe(false);
+    // Член команды без админки: значок есть, панели нет
+    expect(user.account).toMatchObject({ admin: false, staff: true });
     expect(text).not.toContain("Секретный набор");
     expect(text).not.toContain("hemmelig");
   });
