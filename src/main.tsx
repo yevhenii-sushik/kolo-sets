@@ -7,8 +7,10 @@ import "./index.css";
 import App from "./App.tsx";
 import { setupServiceWorker } from "./utils/registerServiceWorker";
 import { APP_TITLE } from "./utils/pageMeta";
+import { initSounds } from "./utils/sounds";
 
 setupServiceWorker();
+initSounds();
 // Длинный заголовок index.html — для поиска и превью ссылок; во вкладке приложения — «Kolo»
 document.title = APP_TITLE;
 

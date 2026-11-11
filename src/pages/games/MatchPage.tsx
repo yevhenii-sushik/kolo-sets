@@ -10,11 +10,7 @@ import { plural } from "../../utils/plural";
 import SessionShell from "../../components/session/SessionShell";
 import SessionResult from "../../components/session/SessionResult";
 import { motion } from "framer-motion";
-import {
-  playCorrectIfEnabled,
-  playIncorrectIfEnabled,
-  playSessionCompleteIfEnabled,
-} from "../../utils/sounds";
+import { playSound } from "../../utils/sounds";
 import { useRoundReport } from "../../components/session/useRoundReport";
 
 const PAIRS_PER_ROUND = 6;
@@ -128,7 +124,9 @@ export default function MatchPage() {
     const isMatch = wTile.cardId === tTile.cardId;
 
     if (isMatch) {
-      playCorrectIfEnabled();
+      const newMatched = matched + 1;
+      // Последняя пара сразу звучит итогом раунда, без «верно» поверх него
+      playSound(newMatched >= roundCards.length ? "session-complete" : "answer-correct");
       setWords(prev =>
         prev.map(w => (w.id === wordId ? { ...w, state: "matched" } : w))
       );
@@ -138,16 +136,14 @@ export default function MatchPage() {
       setSelectedWord(null);
       setSelectedTrans(null);
 
-      const newMatched = matched + 1;
       setMatched(newMatched);
       setChecking(false);
 
       if (newMatched >= roundCards.length) {
-        playSessionCompleteIfEnabled();
         setTimeout(() => setPhase("finished"), 500);
       }
     } else {
-      playIncorrectIfEnabled();
+      playSound("answer-wrong");
       setMistakes(m => m + 1);
       setWords(prev =>
         prev.map(w => (w.id === wordId ? { ...w, state: "wrong" } : w))
@@ -175,7 +171,9 @@ export default function MatchPage() {
     if (!tile || tile.state === "matched" || tile.state === "wrong") return;
     if (selectedWord === tileId) { setSelectedWord(null); return; }
     setSelectedWord(tileId);
+    // Выбор плитки — тихий «поп»; если пара собрана, вместо него прозвучит результат
     if (selectedTrans) tryMatch(tileId, selectedTrans);
+    else playSound("ui-tap");
   };
 
   const handleTransClick = (tileId: string) => {
@@ -185,6 +183,7 @@ export default function MatchPage() {
     if (selectedTrans === tileId) { setSelectedTrans(null); return; }
     setSelectedTrans(tileId);
     if (selectedWord) tryMatch(selectedWord, tileId);
+    else playSound("ui-tap");
   };
 
   const tileStyle = (tile: Tile, isSelected: boolean): string => {

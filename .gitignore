@@ -32,3 +32,6 @@ md
 # Логи эмуляторов Firebase
 firebase-debug.log*
 firestore-debug.log*
+
+# Мастера звуков (WAV) и калибровка — собираются заново: python3 scripts/sounds/synth.py
+scripts/sounds/out

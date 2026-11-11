@@ -10,11 +10,7 @@ import SessionShell from "../../components/session/SessionShell";
 import SessionResult from "../../components/session/SessionResult";
 import ChoiceButton, { choiceState } from "../../components/session/ChoiceButton";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  playCorrectIfEnabled,
-  playIncorrectIfEnabled,
-  playSessionCompleteIfEnabled,
-} from "../../utils/sounds";
+import { playSound, semitones } from "../../utils/sounds";
 import { useRoundReport } from "../../components/session/useRoundReport";
 
 const ROUND_DURATION = 60;
@@ -25,6 +21,9 @@ function multiplierFor(streak: number): number {
   if (streak >= 3) return 2;
   return 1;
 }
+
+// Ступени streak-up для ×2, ×3, ×4 в полутонах: G → A → C (scripts/sounds/README.md)
+const STREAK_STEP: Record<number, number> = { 2: 0, 3: 2, 4: 5 };
 
 type Phase = "loading" | "playing" | "finished";
 interface Feedback { chosen: string; correct: boolean; }
@@ -80,8 +79,17 @@ export default function SpeedRoundPage() {
   useEffect(() => {
     if (phase !== "playing" || timeLeft > 0) return;
     clearInterval(timerRef.current!);
-    playSessionCompleteIfEnabled();
+    // Колокол «время вышло», следом — итог раунда (праздничные звуки идут по очереди)
+    playSound("time-up");
+    playSound("session-complete");
     setPhase("finished");
+  }, [timeLeft, phase]);
+
+  // Последние 10 секунд тикают часы, последние три — на тон выше
+  useEffect(() => {
+    if (phase === "playing" && timeLeft > 0 && timeLeft <= 10) {
+      playSound("timer-tick", { rate: timeLeft <= 3 ? semitones(2) : 1 });
+    }
   }, [timeLeft, phase]);
 
   const advance = useCallback((nextIdx: number, col: Collection, q: Card[]) => {
@@ -99,18 +107,23 @@ export default function SpeedRoundPage() {
     const card = queue[qIdx % queue.length];
     const isCorrect = choice === card.translation;
 
-    isCorrect ? playCorrectIfEnabled() : playIncorrectIfEnabled();
+    // Никаких side-effects внутри апдейтеров: StrictMode вызывает их дважды,
+    // и счёт удваивался бы. Считаем новую серию снаружи.
+    const nextStreak = isCorrect ? streak + 1 : 0;
+
+    // Множитель вырос — вместо обычного «верно» звучит серия, каждая ступень выше
+    const nextMult = multiplierFor(nextStreak);
+    if (!isCorrect) playSound("answer-wrong");
+    else if (nextMult > multiplierFor(streak)) playSound("streak-up", { rate: semitones(STREAK_STEP[nextMult]) });
+    else playSound("answer-correct");
 
     setFeedback({ chosen: choice, correct: isCorrect });
     setTotal(t => t + 1);
 
-    // Никаких side-effects внутри апдейтеров: StrictMode вызывает их дважды,
-    // и счёт удваивался бы. Считаем новую серию снаружи.
-    const nextStreak = isCorrect ? streak + 1 : 0;
     setStreak(nextStreak);
     setMaxStreak(m => Math.max(m, nextStreak));
     if (isCorrect) {
-      setScore(s => s + 10 * multiplierFor(nextStreak));
+      setScore(s => s + 10 * nextMult);
       setCorrect(c => c + 1);
     }
 

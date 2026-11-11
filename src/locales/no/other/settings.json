@@ -62,7 +62,7 @@
   "sound": {
     "title": "Lyd",
     "effects": "Lydeffekter",
-    "effectsDesc": "Lyder for riktige og gale svar og fullførte økter"
+    "effectsDesc": "Lyder for svar, kort, spill og belønninger"
   },
   "data": {
     "backup": "Sikkerhetskopi",

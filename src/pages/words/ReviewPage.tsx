@@ -5,7 +5,7 @@ import { getCollections, updateCollection, updateSRSData, isDueCard } from "../.
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { playSessionCompleteIfEnabled } from "../../utils/sounds";
+import { playSound, RATING_PITCH } from "../../utils/sounds";
 import SessionShell from "../../components/session/SessionShell";
 import RatingBar from "../../components/session/RatingBar";
 import { motion, useMotionValue, useTransform } from "framer-motion";
@@ -87,7 +87,7 @@ export default function ReviewPage() {
       if (showStats || !loaded) return;
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       switch (e.code) {
-        case "Space": e.preventDefault(); setIsFlipped(f => !f); break;
+        case "Space": e.preventDefault(); flip(!isFlipped); break;
         case "Digit1": case "Numpad1": if (isFlipped) handleRating(KnowledgeLevel.DONT_KNOW); break;
         case "Digit2": case "Numpad2": if (isFlipped) handleRating(KnowledgeLevel.FORGOT); break;
         case "Digit3": case "Numpad3": if (isFlipped) handleRating(KnowledgeLevel.REMEMBER); break;
@@ -98,6 +98,13 @@ export default function ReviewPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFlipped, showStats, loaded]);
 
+  // Переворот звучит; сброс стороны после оценки — нет, там звучит card-next
+  const flip = (next: boolean) => {
+    if (next === isFlipped) return;
+    playSound("card-flip");
+    setIsFlipped(next);
+  };
+
   // Одна оценка на карточку: пока сохраняем и переходим дальше, повторные нажатия игнорируем —
   // иначе двойное нажатие на последней карточке завершило бы тренировку дважды
   const ratingLockRef = useRef(false);
@@ -105,6 +112,7 @@ export default function ReviewPage() {
   const handleRating = async (level: KnowledgeLevel) => {
     if (!isFlipped || showStats || ratingLockRef.current) return;
     ratingLockRef.current = true;
+    playSound("card-next", { rate: RATING_PITCH[level] });
 
     const { card, collectionId } = reviewCards[currentIndex];
     const updatedCard = updateSRSData(card, level);
@@ -140,7 +148,7 @@ export default function ReviewPage() {
         setStats(prev => ({ ...prev, duration }));
 
         // Итоги показываем сразу; прогресс уходит на сервер в фоне, празднование — по его ответу
-        playSessionCompleteIfEnabled();
+        playSound("session-complete");
         setShowStats(true);
 
         if (user) {
@@ -191,7 +199,7 @@ export default function ReviewPage() {
               swipedRef.current = false;
             }, 80);
             if (!didSwipe || Math.abs(info.offset.x) < 60) return;
-            if (!isFlipped) setIsFlipped(true);
+            if (!isFlipped) flip(true);
             else if (info.offset.x > 0) handleRating(KnowledgeLevel.KNOW);
             else handleRating(KnowledgeLevel.DONT_KNOW);
           }}
@@ -201,13 +209,13 @@ export default function ReviewPage() {
             language={collectionsMapRef.current.get(currentReview.collectionId) ? voiceForCollection(collectionsMapRef.current.get(currentReview.collectionId)!) : undefined}
             isFlipped={isFlipped}
             onFlip={() => {
-              if (!swipedRef.current) setIsFlipped((f) => !f);
+              if (!swipedRef.current) flip(!isFlipped);
             }}
           />
         </motion.div>
       </main>
 
-      <RatingBar isFlipped={isFlipped} onFlip={() => setIsFlipped(true)} onRate={handleRating} />
+      <RatingBar isFlipped={isFlipped} onFlip={() => flip(true)} onRate={handleRating} />
 
       <FlashcardStatsModal
         isOpen={showStats}

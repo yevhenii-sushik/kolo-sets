@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { useI18n } from '../contexts/I18nContext';
 import { IconButton } from '../ui';
+import { playSound } from '../utils/sounds';
 
 const DISPLAY_DURATION = 4.5; // секунд
 
@@ -12,6 +13,14 @@ export default function AchievementUnlockBanner() {
   const { pendingUnlocks, dismissUnlock } = useData();
   const { t } = useI18n();
   const current = pendingUnlocks[0] ?? null;
+  const soundedId = useRef<string | null>(null);
+
+  // Звук — один раз на достижение (ref переживает двойной запуск эффекта в StrictMode)
+  useEffect(() => {
+    if (!current || soundedId.current === current.id) return;
+    soundedId.current = current.id;
+    playSound('achievement');
+  }, [current]);
 
   useEffect(() => {
     if (!current) return;

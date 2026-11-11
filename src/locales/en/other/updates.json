@@ -42,6 +42,10 @@
         {
           "title": "Settings that make sense",
           "text": "Account, appearance, learning, notifications and data — in short rows, like the settings on your phone, so you can see what's on at a glance. Email, password, sign-out, backup and account deletion live there too, in More → Settings. And the Other tab is now called More."
+        },
+        {
+          "title": "Sounds for practice and rewards",
+          "text": "Answers, flashcards and games now have their own sounds: soft notes for right and wrong answers, a rustle when a card flips, a ticking clock in the last seconds of a Speed round. New levels, closed orbits and capsules each get a fanfare of their own, and every rarity sounds different. You can turn sounds off in More → Settings."
         }
       ],
       "fixes": [

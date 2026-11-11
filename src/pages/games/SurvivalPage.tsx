@@ -9,14 +9,13 @@ import SessionShell from "../../components/session/SessionShell";
 import SessionResult from "../../components/session/SessionResult";
 import ChoiceButton, { choiceState } from "../../components/session/ChoiceButton";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  playCorrectIfEnabled,
-  playIncorrectIfEnabled,
-  playSessionCompleteIfEnabled,
-} from "../../utils/sounds";
+import { playSound, semitones } from "../../utils/sounds";
 import { useRoundReport } from "../../components/session/useRoundReport";
 
 const MAX_LIVES = 3;
+
+// На сериях 5 и 10 вместо «верно» звучит streak-up; вторая ступень — на тон выше (scripts/sounds/README.md)
+const STREAK_STEP: Record<number, number> = { 5: 0, 10: 2 };
 
 type Phase = "playing" | "gameover";
 interface Feedback { chosen: string; correct: boolean; }
@@ -91,13 +90,16 @@ export default function SurvivalPage() {
     const card = queue[qIdx];
     const isCorrect = choice === card.translation;
 
-    isCorrect ? playCorrectIfEnabled() : playIncorrectIfEnabled();
-    setFeedback({ chosen: choice, correct: isCorrect });
-
     // Никаких side-effects внутри апдейтеров: StrictMode вызывает их дважды,
     // и счёт удваивался бы. streak и lives берём из state (они в deps),
     // answeredRef гарантирует один вызов на вопрос.
     const nextStreak = isCorrect ? streak + 1 : 0;
+
+    // Ошибка здесь стоит сердца — вместо обычного «неверно» звучит потерянная жизнь
+    if (!isCorrect) playSound("life-lost");
+    else if (nextStreak in STREAK_STEP) playSound("streak-up", { rate: semitones(STREAK_STEP[nextStreak]) });
+    else playSound("answer-correct");
+    setFeedback({ chosen: choice, correct: isCorrect });
     setStreak(nextStreak);
     setMaxStreak(m => Math.max(m, nextStreak));
     if (isCorrect) {
@@ -112,7 +114,7 @@ export default function SurvivalPage() {
       setLives(newLives);
       if (newLives <= 0) {
         setTimeout(() => {
-          playSessionCompleteIfEnabled();
+          playSound("game-over");
           setPhase("gameover");
         }, 500);
         return;

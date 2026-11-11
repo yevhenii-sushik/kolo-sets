@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FlaskConical, Orbit, Shield, Sparkles, Wrench } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
+import { playSound, type SoundId } from "../../utils/sounds";
 import { Ring } from "../../ui";
 import type { Progression } from "../../api/progress";
 import { ORBIT_BONUS } from "../../../server/core/xp";
@@ -49,6 +50,16 @@ export function announceProgress(p: Progression) {
   if (moments.length > 0) window.dispatchEvent(new CustomEvent(PROGRESS_MOMENTS_EVENT, { detail: moments }));
 }
 
+// Звук момента. «Серию можно починить» — без звука: это подсказка, а не награда
+const MOMENT_SOUND: Partial<Record<Moment["kind"], SoundId>> = {
+  orbit: "orbit-closed",
+  level: "level-up",
+  repaired: "orbit-repaired",
+  shieldUsed: "shield",
+  capsule: "achievement",
+  beta: "achievement",
+};
+
 // Глобальный хост на уровне App: страницы тренировок идут без MainLayout. Моменты — по очереди
 let seq = 0;
 
@@ -78,6 +89,15 @@ function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }
   const m = t.orbit.moments;
   const locale = getLanguageInfo(language).htmlLang;
   const [filled, setFilled] = useState(false);
+  const sounded = useRef(false);
+
+  // Ref переживает двойной запуск эффекта в StrictMode — звук у момента один
+  useEffect(() => {
+    if (sounded.current) return;
+    sounded.current = true;
+    const sound = MOMENT_SOUND[moment.kind];
+    if (sound) playSound(sound);
+  }, [moment.kind]);
 
   // Кольцо стартует пустым и замыкается; через 4,5 секунды карточка закрывается сама
   useEffect(() => {

@@ -4,11 +4,7 @@ import { Collection, TaskType, QuizStats, QuizSettings } from "../../types";
 import { getCollection, updateCollection } from "../../utils/storage";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
-import {
-  playCorrectIfEnabled,
-  playIncorrectIfEnabled,
-  playSessionCompleteIfEnabled,
-} from "../../utils/sounds";
+import { playSound } from "../../utils/sounds";
 import { generateQuizQuestions, QuizQuestion } from "../../utils/quizGenerator";
 import QuizQuestionComponent from "../../components/quiz/QuizQuestion";
 import QuizStatsModal from "../../components/quiz/QuizStatsModal";
@@ -106,11 +102,7 @@ export default function QuizPage() {
     setIsCorrect(correct);
     setShowFeedback(true);
 
-    if (correct) {
-      playCorrectIfEnabled();
-    } else {
-      playIncorrectIfEnabled();
-    }
+    playSound(correct ? "answer-correct" : "answer-wrong");
 
     setStats(prev => {
       const next = { ...prev };
@@ -158,7 +150,7 @@ export default function QuizPage() {
       setStats(finalStats);
 
       // Итоги — сразу; прогресс, серию и достижения начисляет сервер в фоне
-      playSessionCompleteIfEnabled();
+      playSound("session-complete");
       setShowStats(true);
 
       if (user && collection) {

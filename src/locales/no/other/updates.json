@@ -42,6 +42,10 @@
         {
           "title": "Innstillinger som gir mening",
           "text": "Konto, utseende, læring, varsler og data – i korte rader, som innstillingene på telefonen, så du ser med en gang hva som er slått på. E-post, passord, utlogging, sikkerhetskopi og sletting av konto finner du der også, under «Mer → Innstillinger». Og fanen «Annet» heter nå «Mer»."
+        },
+        {
+          "title": "Lyder for øving og belønninger",
+          "text": "Svar, kort og spill har fått sine egne lyder: myke toner for riktige og gale svar, et lite sus når kortet snus, og en tikkende klokke de siste sekundene av en Hurtigrunde. Nye nivåer, lukkede baner og kapsler har hver sin fanfare, og hver sjeldenhetsgrad høres forskjellig ut. Du kan slå av lydene under «Mer → Innstillinger»."
         }
       ],
       "fixes": [

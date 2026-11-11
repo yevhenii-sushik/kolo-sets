@@ -40,8 +40,8 @@ export default defineConfig({
       },
       workbox: {
         // Прекэшируем весь билд (все чанки роутов, включая lazy-loaded) —
-        // после активации новой версии SW отдаёт уже новые файлы
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // после активации новой версии SW отдаёт уже новые файлы. Звуки (~330 КБ) — тоже, чтобы играли офлайн
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,mp3}'],
         // Картинка превью ссылок нужна только мессенджерам — не тянем её в кэш каждому пользователю
         globIgnores: ['**/og-image.png'],
         cleanupOutdatedCaches: true,

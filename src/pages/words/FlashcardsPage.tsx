@@ -11,7 +11,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { useConfirm } from "../../hooks/useConfirm";
-import { playSessionCompleteIfEnabled } from "../../utils/sounds";
+import { playSound, RATING_PITCH } from "../../utils/sounds";
 import { Shuffle } from "lucide-react";
 import { Badge, IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
@@ -102,7 +102,7 @@ export default function FlashcardsPage() {
       switch (e.code) {
         case "Space":
           e.preventDefault();
-          setIsFlipped(f => !f);
+          flip(!isFlipped);
           break;
         case "Digit1": case "Numpad1":
           if (isFlipped) handleRating(KnowledgeLevel.DONT_KNOW);
@@ -122,6 +122,13 @@ export default function FlashcardsPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFlipped, showStats, collection]);
 
+  // Переворот звучит; сброс стороны после оценки — нет, там звучит card-next
+  const flip = (next: boolean) => {
+    if (next === isFlipped) return;
+    playSound("card-flip");
+    setIsFlipped(next);
+  };
+
   // Одна оценка на карточку: пока сохраняем и переходим дальше, повторные нажатия игнорируем —
   // иначе двойное нажатие на последней карточке завершило бы тренировку дважды
   const ratingLockRef = useRef(false);
@@ -129,6 +136,7 @@ export default function FlashcardsPage() {
   const handleRating = async (level: KnowledgeLevel) => {
     if (!isFlipped || showStats || ratingLockRef.current) return;
     ratingLockRef.current = true;
+    playSound("card-next", { rate: RATING_PITCH[level] });
 
     const currentCard = cards[currentIndex];
     const updatedCard = updateSRSData(currentCard, level);
@@ -164,7 +172,7 @@ export default function FlashcardsPage() {
         setStats((prev) => ({ ...prev, duration }));
 
         // Итоги показываем сразу; прогресс уходит на сервер в фоне, празднование — по его ответу
-        playSessionCompleteIfEnabled();
+        playSound("session-complete");
         setShowStats(true);
 
         if (user && collection) {
@@ -235,7 +243,7 @@ export default function FlashcardsPage() {
               swipedRef.current = false;
             }, 80);
             if (!didSwipe || Math.abs(info.offset.x) < 60) return;
-            if (!isFlipped) setIsFlipped(true);
+            if (!isFlipped) flip(true);
             else if (info.offset.x > 0) handleRating(KnowledgeLevel.KNOW);
             else handleRating(KnowledgeLevel.DONT_KNOW);
           }}
@@ -245,13 +253,13 @@ export default function FlashcardsPage() {
             language={voiceForCollection(collection)}
             isFlipped={isFlipped}
             onFlip={() => {
-              if (!swipedRef.current) setIsFlipped((f) => !f);
+              if (!swipedRef.current) flip(!isFlipped);
             }}
           />
         </motion.div>
       </main>
 
-      <RatingBar isFlipped={isFlipped} onFlip={() => setIsFlipped(true)} onRate={handleRating} coach={!!coach} />
+      <RatingBar isFlipped={isFlipped} onFlip={() => flip(true)} onRate={handleRating} coach={!!coach} />
 
       <FlashcardStatsModal
         isOpen={showStats}

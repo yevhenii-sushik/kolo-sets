@@ -40,7 +40,7 @@ import {
   type ReminderSettings,
   type NotificationAccess,
 } from "../../utils/notifications";
-import { getSoundEnabled, setSoundEnabled } from "../../utils/sounds";
+import { getSoundEnabled, playSound, setSoundEnabled } from "../../utils/sounds";
 import { APP_LANGUAGES, getLanguageInfo } from "../../locales/languages";
 import { courseFlag, courseName } from "../../courses/languages";
 import { plural } from "../../utils/plural";
@@ -115,6 +115,8 @@ export default function SettingsPage() {
   const handleSoundToggle = (next: boolean) => {
     setSoundState(next);
     setSoundEnabled(next);
+    // Включили — сразу слышно, как звучит
+    if (next) playSound("answer-correct");
   };
 
   const handleEnableNotifications = async () => {

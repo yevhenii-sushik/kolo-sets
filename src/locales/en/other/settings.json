@@ -62,7 +62,7 @@
   "sound": {
     "title": "Sound",
     "effects": "Sound effects",
-    "effectsDesc": "Sounds for right and wrong answers and finished sessions"
+    "effectsDesc": "Sounds for answers, flashcards, games and rewards"
   },
   "data": {
     "backup": "Backup",

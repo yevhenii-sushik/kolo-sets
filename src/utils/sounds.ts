@@ -1,101 +1,170 @@
-// Звуковые эффекты для приложения
+import { KnowledgeLevel } from "../types";
 
-// Генерация звука с помощью Web Audio API
-const playTone = (frequency: number, duration: number, type: OscillatorType = 'sine') => {
-  try {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+// Звуковые эффекты: файлы public/sounds/<id>.mp3 собирает scripts/sounds/synth.py (там же README с высотами
+// и громкостью). Играем через один общий AudioContext: каждый файл декодируется один раз, высота меняется
+// через playbackRate, а петля капсулы звучит без щелчка на стыке (у <audio loop> с mp3 он бывает).
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+const SOUND_IDS = [
+  "answer-correct",
+  "answer-wrong",
+  "card-flip",
+  "card-next",
+  "ui-tap",
+  "streak-up",
+  "timer-tick",
+  "time-up",
+  "life-lost",
+  "game-over",
+  "session-complete",
+  "achievement",
+  "level-up",
+  "orbit-closed",
+  "shield",
+  "orbit-repaired",
+  "capsule-shake",
+  "capsule-open",
+  "reveal-common",
+  "reveal-rare",
+  "reveal-epic",
+  "reveal-legendary",
+  "dust",
+  "item-equip",
+] as const;
 
-    oscillator.frequency.value = frequency;
-    oscillator.type = type;
+export type SoundId = (typeof SOUND_IDS)[number];
 
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+// Праздничные звуки не накладываются: итог сессии, уровень, орбита и медаль, пришедшие одним ответом
+// сервера, звучат по очереди — каждый ждёт, пока доиграет предыдущий
+const CEREMONY = new Set<SoundId>([
+  "session-complete",
+  "time-up",
+  "game-over",
+  "achievement",
+  "level-up",
+  "orbit-closed",
+  "shield",
+  "orbit-repaired",
+]);
 
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + duration);
-  } catch (error) {
-    console.error('Error playing sound:', error);
-  }
+// Отклик на ответ, опоздавший больше чем на четверть секунды (файл ещё грузился), хуже тишины
+const MAX_LATE = 0.25;
+
+// Длина петли capsule-shake: mp3 добавляет тишину энкодера, границы петли её отрезают
+const SHAKE_LOOP = 0.75;
+
+// Сдвиг на n полутонов. Шаги из scripts/sounds/README.md держат звуки в до-мажорной пентатонике
+export const semitones = (n: number) => 2 ** (n / 12);
+
+// Самооценка — не ошибка: один и тот же «тик», только «знаю» чуть выше, а «не знаю» чуть ниже
+export const RATING_PITCH: Record<KnowledgeLevel, number> = {
+  [KnowledgeLevel.DONT_KNOW]: semitones(-2),
+  [KnowledgeLevel.FORGOT]: semitones(-1),
+  [KnowledgeLevel.REMEMBER]: 1,
+  [KnowledgeLevel.KNOW]: semitones(2),
 };
 
-// Воспроизведение последовательности нот
-const playSequence = (notes: { frequency: number; duration: number; delay: number }[]) => {
-  notes.forEach(note => {
-    setTimeout(() => {
-      playTone(note.frequency, note.duration);
-    }, note.delay);
-  });
-};
-
-// Звук правильного ответа (веселый восходящий)
-export const playCorrectSound = () => {
-  playSequence([
-    { frequency: 523.25, duration: 0.1, delay: 0 },    // C5
-    { frequency: 659.25, duration: 0.1, delay: 100 },  // E5
-    { frequency: 783.99, duration: 0.2, delay: 200 }   // G5
-  ]);
-};
-
-// Звук неправильного ответа (мягкий нисходящий)
-export const playIncorrectSound = () => {
-  playSequence([
-    { frequency: 392.00, duration: 0.15, delay: 0 },   // G4
-    { frequency: 329.63, duration: 0.25, delay: 150 }  // E4
-  ]);
-};
-
-// Звук завершения сессии (победная фанфара)
-export const playSessionCompleteSound = () => {
-  playSequence([
-    { frequency: 523.25, duration: 0.15, delay: 0 },    // C5
-    { frequency: 659.25, duration: 0.15, delay: 150 },  // E5
-    { frequency: 783.99, duration: 0.15, delay: 300 },  // G5
-    { frequency: 1046.50, duration: 0.4, delay: 450 }   // C6
-  ]);
-};
-
-// Звук достижения (короткий всплеск)
-export const playAchievementSound = () => {
-  playSequence([
-    { frequency: 880.00, duration: 0.1, delay: 0 },    // A5
-    { frequency: 1046.50, duration: 0.1, delay: 80 },  // C6
-    { frequency: 1318.51, duration: 0.25, delay: 160 } // E6
-  ]);
-};
-
-// Звук кнопки (короткий клик)
-export const playClickSound = () => {
-  playTone(800, 0.05, 'square');
-};
-
-// Настройки звука (можно сохранять в localStorage)
+// Настройка в localStorage (ключ указан в политике cookies)
 export const getSoundEnabled = (): boolean => {
-  const saved = localStorage.getItem('soundEnabled');
-  return saved !== 'false'; // По умолчанию включено
+  const saved = localStorage.getItem("soundEnabled");
+  return saved !== "false"; // По умолчанию включено
 };
 
 export const setSoundEnabled = (enabled: boolean): void => {
-  localStorage.setItem('soundEnabled', String(enabled));
+  localStorage.setItem("soundEnabled", String(enabled));
 };
 
-// Обертки с проверкой настроек
-export const playCorrectIfEnabled = () => {
-  if (getSoundEnabled()) playCorrectSound();
-};
+let ctx: AudioContext | null = null;
+const buffers = new Map<SoundId, Promise<AudioBuffer | null>>();
+let ceremonyEnd = 0;
 
-export const playIncorrectIfEnabled = () => {
-  if (getSoundEnabled()) playIncorrectSound();
-};
+function audio(): AudioContext | null {
+  if (!("AudioContext" in window)) return null;
+  ctx ??= new AudioContext();
+  // До первого жеста и после сворачивания приложения (iOS) контекст стоит на паузе
+  if (ctx.state !== "running") ctx.resume().catch(() => {});
+  return ctx;
+}
 
-export const playSessionCompleteIfEnabled = () => {
-  if (getSoundEnabled()) playSessionCompleteSound();
-};
+function load(c: AudioContext, id: SoundId): Promise<AudioBuffer | null> {
+  let buffer = buffers.get(id);
+  if (!buffer) {
+    buffer = fetch(`/sounds/${id}.mp3`)
+      .then((res) => (res.ok ? res.arrayBuffer() : Promise.reject(new Error(res.statusText))))
+      .then((data) => c.decodeAudioData(data))
+      .catch(() => {
+        buffers.delete(id); // офлайн до первого кэша — попробуем в следующий раз
+        return null;
+      });
+    buffers.set(id, buffer);
+  }
+  return buffer;
+}
 
-export const playAchievementIfEnabled = () => {
-  if (getSoundEnabled()) playAchievementSound();
-};
+// Браузеры дают звуку зазвучать только после жеста: на касании или клавише будим контекст и заранее
+// загружаем весь набор (~330 КБ, обычно из кэша service worker), чтобы первый же ответ прозвучал вовремя
+export function initSounds(): void {
+  const wake = () => {
+    if (!getSoundEnabled()) return;
+    const c = audio();
+    if (c && buffers.size < SOUND_IDS.length) for (const id of SOUND_IDS) void load(c, id);
+  };
+  // Касание даёт право на звук на pointerup, мышь — на pointerdown
+  for (const type of ["pointerdown", "pointerup", "keydown"]) {
+    window.addEventListener(type, wake, { capture: true, passive: true });
+  }
+}
+
+interface PlayOptions {
+  rate?: number; // playbackRate: высота вместе со скоростью
+  delay?: number; // секунды от текущего момента
+}
+
+export function playSound(id: SoundId, { rate = 1, delay = 0 }: PlayOptions = {}): void {
+  if (!getSoundEnabled()) return;
+  const c = audio();
+  if (!c) return;
+  const asked = c.currentTime + delay;
+  void load(c, id).then((buffer) => {
+    if (!buffer) return;
+    const ceremony = CEREMONY.has(id);
+    if (!ceremony && c.currentTime - asked > MAX_LATE) return;
+    const source = c.createBufferSource();
+    source.buffer = buffer;
+    source.playbackRate.value = rate;
+    source.connect(c.destination);
+    let at = Math.max(asked, c.currentTime);
+    if (ceremony) {
+      at = Math.max(at, ceremonyEnd);
+      ceremonyEnd = at + buffer.duration / rate;
+    }
+    source.start(at);
+  });
+}
+
+// Петля (тряска капсулы) играет, пока не вызовут возвращённую функцию, и гаснет за ~0,1 с, без щелчка
+export function startLoop(id: SoundId): () => void {
+  if (!getSoundEnabled()) return () => {};
+  const c = audio();
+  if (!c) return () => {};
+  let stopped = false;
+  let fadeOut = () => {};
+  void load(c, id).then((buffer) => {
+    if (!buffer || stopped) return;
+    const source = c.createBufferSource();
+    const gain = c.createGain();
+    source.buffer = buffer;
+    source.loop = true;
+    source.loopStart = 0;
+    source.loopEnd = Math.min(SHAKE_LOOP, buffer.duration);
+    source.connect(gain).connect(c.destination);
+    source.start();
+    fadeOut = () => {
+      gain.gain.setTargetAtTime(0, c.currentTime, 0.02);
+      source.stop(c.currentTime + 0.12);
+    };
+  });
+  return () => {
+    stopped = true;
+    fadeOut();
+  };
+}

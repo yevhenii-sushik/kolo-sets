@@ -74,6 +74,7 @@ Client side: `src/api/progress.ts` posts with a Bearer token. If the network or 
   - New users get the weekly-goal prompt only after their first session (`MainLayout`).
 - Feature flags for built but hidden UI: `src/config/features.ts`.
 - Admin panel (docs/specs/admin.md): `/admin`, read-only for now. Rights are the Firebase Auth custom claim `admin: true`, granted only by `scripts/admin/grant-admin.mjs` (`npx netlify-cli dev:exec node scripts/admin/grant-admin.mjs <email> [--revoke] | --list`). Admin functions use `adminHandler()` from `server/http.ts`, which also checks token revocation. It is an internal tool: Russian only, outside i18n, and it never shows set names or words. The "sessions in 7 days" count needs the collection-group index in `firestore.indexes.json` (`firebase deploy --only firestore:indexes`).
+- Sounds: `src/utils/sounds.ts` plays `public/sounds/<id>.mp3` through one shared AudioContext (`playSound(id, { rate, delay })`, `startLoop` for the capsule shake). Ceremony sounds (session end, level, orbit, medals) queue instead of overlapping. The files come from `scripts/sounds/synth.py`, whose README lists the pitch steps; a new sound needs an entry there and its id in `SOUND_IDS`.
 - Legal: `src/pages/legal/legalInfo.ts` (`LEGAL.version`). Bump it on material changes to Terms or Privacy: users accept it at sign-up, and `LegalUpdateBanner` shows a one-time notice. Document texts are in `locales/<lang>/legal-docs.json` (all 8 languages, English is the original).
 
 ## Internationalization

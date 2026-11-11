@@ -5,6 +5,7 @@ import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
+import { playSound, startLoop } from "../../utils/sounds";
 import { Alert, Button, Modal, cx } from "../../ui";
 import { equipItem, openCapsule, saveSatellites, type CapsuleResult } from "../../api/progress";
 import { itemById } from "../../../server/core/items";
@@ -36,9 +37,16 @@ export function CapsuleOpenModal({ open, onClose }: { open: boolean; onClose: ()
   const start = async () => {
     setPhase("opening");
     setFailed(false);
+    const stopShake = startLoop("capsule-shake");
     try {
-      const [res] = await Promise.all([openCapsule(), new Promise((ok) => setTimeout(ok, MIN_SHAKE_MS))]);
+      const [res] = await Promise.all([openCapsule(), new Promise((ok) => setTimeout(ok, MIN_SHAKE_MS))]).finally(stopShake);
       const opened = res as CapsuleResult;
+      // Хлопок капсулы; предмет появляется, когда она улетает (~0,25 с), — тогда и звук его редкости.
+      // Пыль за дубликат и медаль за собранную коллекцию — следом
+      playSound("capsule-open");
+      playSound(`reveal-${opened.rarity}`, { delay: 0.2 });
+      if (opened.duplicate) playSound("dust", { delay: 0.9 });
+      if (opened.completed) playSound("achievement", { delay: 1.4 });
       applyLoot(opened.loot);
       setResult(opened);
       setPhase("revealed");
@@ -60,6 +68,7 @@ export function CapsuleOpenModal({ open, onClose }: { open: boolean; onClose: ()
     try {
       const next = replaces ? [...sats.slice(0, -1), item.id] : [...sats, item.id];
       applyLoot((item.kind === "satellite" ? await saveSatellites(next) : await equipItem(item.kind, item.id)).loot);
+      playSound("item-equip");
     } catch {
       setFailed(true);
     } finally {

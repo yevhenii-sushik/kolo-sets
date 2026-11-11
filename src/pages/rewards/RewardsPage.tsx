@@ -7,6 +7,7 @@ import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
+import { playSound } from "../../utils/sounds";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
 import { Badge, Button, Card, Heading, Text, cx } from "../../ui";
@@ -56,6 +57,7 @@ export default function RewardsPage() {
       const res = await buyShield();
       applyLoot({ ...loot, dust: res.loot.dust });
       applyProgression(res.progression, false);
+      playSound("shield");
       success(r.dust.shieldDone);
     });
 
@@ -70,19 +72,22 @@ export default function RewardsPage() {
     await run(item.id, async () => {
       const res = await craftItem(item.id);
       applyLoot(res.loot);
+      playSound(`reveal-${item.rarity}`);
       success(r.dust.crafted.replace("{item}", name(item.id)));
     });
   };
 
   const toggle = (item: Item) =>
     run(item.id, async () => {
+      // Звук — только когда предмет надет; снятие проходит тихо
+      const on = !isOn(item);
       if (item.kind === "satellite") {
-        const next = sats.includes(item.id) ? sats.filter((id) => id !== item.id) : [...sats, item.id];
+        const next = on ? [...sats, item.id] : sats.filter((id) => id !== item.id);
         applyLoot((await saveSatellites(next)).loot);
-        return;
+      } else {
+        applyLoot((await equipItem(item.kind, on ? item.id : null)).loot);
       }
-      const on = loot.equipped[item.kind] !== item.id;
-      applyLoot((await equipItem(item.kind, on ? item.id : null)).loot);
+      if (on) playSound("item-equip");
     });
 
   const left = PITY_AT - loot.pity;
