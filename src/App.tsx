@@ -51,6 +51,8 @@ const ExplorePage = lazy(() => import("./pages/other/ExplorePage"));
 const StartPage = lazy(() => import("./pages/courses/StartPage"));
 const CoursesPage = lazy(() => import("./pages/courses/CoursesPage"));
 const AddCoursePage = lazy(() => import("./pages/courses/AddCoursePage"));
+// Админ-панель — отдельный чанк, обычные пользователи его не загружают (docs/specs/admin.md)
+const AdminPage = lazy(() => import("./pages/admin/AdminPage"));
 
 function ReminderScheduler() {
   // Напоминание считает карточки всех курсов
@@ -195,6 +197,7 @@ function AppContent() {
         <Route path="/other/data-management" element={<Navigate to="/other/settings" replace />} />
         <Route path="/other/support" element={<SupportPage />} />
         <Route path="/other/explore" element={<ExplorePage />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Route>
 
       {/* 4. Публичные правовые страницы — доступны всем без авторизации */}

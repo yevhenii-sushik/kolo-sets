@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronRight, Cookie, Languages, LifeBuoy, Rocket, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
+import { ArrowRight, ChevronRight, Cookie, Languages, LayoutDashboard, LifeBuoy, Rocket, Scale, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import type { ElementType } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
+import { useIsAdmin } from "../../api/admin";
 import { Card, Heading, Text } from "../../ui";
 import { DakutaLogo } from "../../components/brand/DakutaLogo";
 
@@ -43,6 +44,7 @@ function Group({ title, children }: { title: string; children: React.ReactNode }
 export default function OtherPage() {
   const { t } = useI18n();
   const { courses } = useData();
+  const isAdmin = useIsAdmin();
   const learnsNorwegian = courses.some((c) => c.id === "nb");
   const o = t.other;
   const promo = t.explore.promo;
@@ -58,6 +60,8 @@ export default function OtherPage() {
           <Row to="/other/settings" icon={SlidersHorizontal} label={o.settings} hint={o.hints.settings} />
           <Row to="/other/updates" icon={Rocket} label={o.updates} hint={o.hints.updates} />
           <Row to="/other/support" icon={LifeBuoy} label={o.support} hint={o.hints.support} />
+          {/* Только у команды; внутренний инструмент — по-русски, без перевода (docs/specs/admin.md) */}
+          {isAdmin && <Row to="/admin" icon={LayoutDashboard} label="Админ-панель" hint="Сводка и поиск пользователей" />}
         </Group>
 
         <Group title={o.groups.docs}>

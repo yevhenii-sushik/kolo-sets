@@ -53,6 +53,7 @@ Client side: `src/api/progress.ts` posts with a Bearer token. If the network or 
 - `users/{uid}/sessions/{id}`: training log, written only by the server. The owner can read and delete.
 - `usernames/{name}`: uniqueness registry, claimed in a transaction (`claimUsername`).
 - `dailyGame/{date}/scores/{uid}`: daily game leaderboard. The feature is hidden behind a flag.
+- `adminLog/{id}`: who viewed which user in the admin panel. Server-only; the catch-all rule keeps clients out.
 
 ### Client
 
@@ -72,6 +73,7 @@ Client side: `src/api/progress.ts` posts with a Bearer token. If the network or 
   - All "seen" flags live in `src/utils/firstRun.ts` (localStorage); `restartOnboarding()` resets them.
   - New users get the weekly-goal prompt only after their first session (`MainLayout`).
 - Feature flags for built but hidden UI: `src/config/features.ts`.
+- Admin panel (docs/specs/admin.md): `/admin`, read-only for now. Rights are the Firebase Auth custom claim `admin: true`, granted only by `scripts/admin/grant-admin.mjs` (`npx netlify-cli dev:exec node scripts/admin/grant-admin.mjs <email> [--revoke] | --list`). Admin functions use `adminHandler()` from `server/http.ts`, which also checks token revocation. It is an internal tool: Russian only, outside i18n, and it never shows set names or words. The "sessions in 7 days" count needs the collection-group index in `firestore.indexes.json` (`firebase deploy --only firestore:indexes`).
 - Legal: `src/pages/legal/legalInfo.ts` (`LEGAL.version`). Bump it on material changes to Terms or Privacy: users accept it at sign-up, and `LegalUpdateBanner` shows a one-time notice. Document texts are in `locales/<lang>/legal-docs.json` (all 8 languages, English is the original).
 
 ## Internationalization
