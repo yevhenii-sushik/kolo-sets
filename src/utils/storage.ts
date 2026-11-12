@@ -1,4 +1,4 @@
-import { Collection, Card, SRSData, KnowledgeLevel } from '../types';
+import { Collection, Card, SRSData } from '../types';
 import { auth } from '../firebase/config';
 import {
   getUserCollections,
@@ -7,6 +7,9 @@ import {
   updateUserCollectionFields,
   deleteUserCollection as deleteFirestoreCollection
 } from '../firebase/firestore';
+
+// SRS-логика живёт в чистом модуле srs.ts (с тестами); реэкспорт — для существующих импортов
+export { isNewCard, isDueCard, updateSRSData } from './srs';
 
 const STORAGE_KEY = 'language_cards_collections';
 const THEME_KEY = 'language_cards_theme';
@@ -127,7 +130,7 @@ export const updateCollection = async (updatedCollection: Collection): Promise<v
 // undefined = удалить поле. Для гостей — обычное локальное обновление.
 export const updateCollectionMeta = async (
   coll: Collection,
-  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language' | 'courseId'>>
+  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language' | 'courseId' | 'lastStudied'>>
 ): Promise<void> => {
   const user = auth.currentUser;
 
@@ -177,67 +180,6 @@ export const createCard = (
     partOfSpeech,
     srsData: initialSRS,
     createdAt: new Date()
-  };
-};
-
-// Новая карточка: ещё ни разу не тренировалась (после первой же оценки interval ≥ 1)
-export const isNewCard = (card: Card): boolean => !card.srsData || card.srsData.interval === 0;
-
-// Карточка ожидает повторения? (interval === 0 = ещё не изучалась)
-// Единственная точка правды для due-логики — используется в App, HomePage,
-// ReviewPage, FlashcardsPage и CollectionCard.
-export const isDueCard = (card: Card): boolean => {
-  if (!card.srsData?.nextReview || card.srsData.interval === 0) return false;
-  const next = card.srsData.nextReview;
-  const d = next instanceof Date ? next : new Date((next as any)?.toDate?.() ?? next);
-  return d <= new Date();
-};
-
-// Обновить SRS данные карточки на основе оценки
-export const updateSRSData = (card: Card, level: KnowledgeLevel): Card => {
-  const srs = { ...card.srsData };
-  const now = new Date();
-
-  // Алгоритм SM-2 (упрощенная версия)
-  let quality = 0;
-  switch (level) {
-    case KnowledgeLevel.DONT_KNOW:  quality = 0; break;
-    case KnowledgeLevel.FORGOT:     quality = 2; break;
-    case KnowledgeLevel.REMEMBER:   quality = 3; break;
-    case KnowledgeLevel.KNOW:       quality = 5; break;
-  }
-
-  if (quality >= 3) {
-    if (srs.repetitions === 0) {
-      srs.interval = 1;
-    } else if (srs.repetitions === 1) {
-      srs.interval = 6;
-    } else {
-      srs.interval = Math.round(srs.interval * srs.easinessFactor);
-    }
-    srs.repetitions += 1;
-  } else {
-    srs.repetitions = 0;
-    srs.interval = 1;
-  }
-
-  srs.easinessFactor = Math.max(
-    1.3,
-    srs.easinessFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
-  );
-
-  const nextReview = new Date(now);
-  nextReview.setDate(nextReview.getDate() + srs.interval);
-  srs.nextReview = nextReview;
-  srs.lastReviewed = now;
-
-  // Per-card review counters
-  srs.totalReviews = (srs.totalReviews ?? 0) + 1;
-  if (quality >= 3) srs.correctReviews = (srs.correctReviews ?? 0) + 1;
-
-  return {
-    ...card,
-    srsData: srs
   };
 };
 

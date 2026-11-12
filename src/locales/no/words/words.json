@@ -103,12 +103,13 @@
   "flashcards": {
     "shuffle": "Bland",
     "shuffleConfirm": "Bland kortstokken og start på nytt?",
+    "undo": "Angre siste vurdering",
     "back": "Tilbake",
     "explanation": "Forklaring",
     "example": "Eksempel",
     "showTranslation": "Vis oversettelse",
     "hideTranslation": "Skjul oversettelse",
-    "keyboardHint": "Mellomrom for å snu · 1–4 for å vurdere",
+    "keyboardHint": "Mellomrom for å snu · 1–4 for å vurdere · Backspace for å angre",
     "dueOnly": "Forfallne kort",
     "hints": {
       "clickToFlip": "Trykk på kortet for å snu det",
@@ -142,8 +143,15 @@
   "quiz": {
     "correct": "Riktig!",
     "incorrect": "Feil",
+    "almost": "Nesten!",
+    "closeReasons": {
+      "article": "Godkjent – men pass på artikkelen.",
+      "accents": "Godkjent – men sjekk spesialbokstavene (som å, é, ü).",
+      "typo": "Godkjent – det er en liten skrivefeil."
+    },
     "correctAnswer": "Riktig svar:",
     "yourAnswer": "Ditt svar:",
+    "overrule": "Svaret mitt var riktig",
     "moreInfo": "Mer informasjon",
     "next": "Neste →",
     "check": "Sjekk",
@@ -277,7 +285,12 @@
     "streak": "Rekke",
     "review": "Repetisjon",
     "rate": "Hvor godt kan du ordet?",
-    "settings": "Innstillinger"
+    "settings": "Innstillinger",
+    "loadError": {
+      "title": "Kunne ikke laste inn ordene",
+      "text": "Sjekk internettforbindelsen og prøv igjen.",
+      "retry": "Prøv igjen"
+    }
   },
   "soonTitle": "Kommer snart",
   "pos": {

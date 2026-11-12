@@ -8,6 +8,7 @@ import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import SessionShell from "../../components/session/SessionShell";
+import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionResult from "../../components/session/SessionResult";
 import { motion } from "framer-motion";
 import { playSound } from "../../utils/sounds";
@@ -65,6 +66,9 @@ export default function MatchPage() {
   const ss = t.words.session;
 
   const [phase, setPhase] = useState<Phase>("loading");
+  // Набор не загрузился (нет сети и копии в кэше) — экран с «Попробовать снова» вместо пустой страницы
+  const [loadError, setLoadError] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
   const [collection, setCollection] = useState<Collection | null>(null);
   const [roundCards, setRoundCards] = useState<Card[]>([]);
   const [words, setWords] = useState<Tile[]>([]);
@@ -99,12 +103,18 @@ export default function MatchPage() {
 
   useEffect(() => {
     if (!id) return;
-    getCollection(id).then(col => {
-      if (!col || col.cards.length < 4) { navigate(-1); return; }
-      setCollection(col);
-      pickRound(col);
-    });
-  }, [id]);
+    setLoadError(false);
+    getCollection(id)
+      .then(col => {
+        if (!col || col.cards.length < 4) { navigate(-1); return; }
+        setCollection(col);
+        pickRound(col);
+      })
+      .catch(err => {
+        console.error("Не удалось загрузить набор", err);
+        setLoadError(true);
+      });
+  }, [id, reloadKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (phase !== "playing") return;
@@ -194,6 +204,7 @@ export default function MatchPage() {
     return `${base} border-line bg-surface text-fg hover:border-accent/50`;
   };
 
+  if (loadError) return <SessionLoadError onRetry={() => setReloadKey(k => k + 1)} onExit={() => navigate(-1)} />;
   if (phase === "loading" || !collection) return null;
 
   const column = (title: string, tiles: Tile[], selected: string | null, onClick: (id: string) => void) => (

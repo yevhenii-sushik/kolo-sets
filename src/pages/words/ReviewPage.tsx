@@ -1,77 +1,62 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Collection, Card, KnowledgeLevel, FlashcardStats } from "../../types";
-import { getCollections, updateCollection, updateSRSData, isDueCard } from "../../utils/storage";
+import { Collection, KnowledgeLevel } from "../../types";
+import { getCollections, isDueCard } from "../../utils/storage";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { playSound, RATING_PITCH } from "../../utils/sounds";
+import { Undo2 } from "lucide-react";
+import { IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import RatingBar from "../../components/session/RatingBar";
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import Flashcard from "../../components/cards/Flashcard";
+import CardStage from "../../components/session/CardStage";
+import SessionLoadError from "../../components/session/SessionLoadError";
+import { SessionItem, useCardSession } from "../../components/session/useCardSession";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import { courseCodeFromLanguage } from "../../courses/languages";
-
-interface ReviewCard {
-  card: Card;
-  collectionId: string;
-  collectionName: string;
-}
 
 export default function ReviewPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const { reportSession, refreshCollections, activeCourse, coursesReady, voiceForCollection } = useData();
+  const { reportSession, activeCourse, coursesReady, voiceForCollection } = useData();
 
-  const [reviewCards, setReviewCards] = useState<ReviewCard[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [showStats, setShowStats] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const startTimeRef = useRef(Date.now());
-  const [stats, setStats] = useState<FlashcardStats>({
-    totalCards: 0, dontKnow: 0, forgot: 0, remember: 0, know: 0, duration: 0,
+  const [collections, setCollections] = useState<Map<string, Collection>>(new Map());
+  const [loadError, setLoadError] = useState(false);
+
+  const session = useCardSession((result) => {
+    if (!user) return;
+    reportSession({
+      kind: "review",
+      collectionIds: result.collectionIds,
+      cards: result.cards,
+      allKnow: result.allKnow,
+      durationSec: result.durationSec,
+    });
   });
-
-  // Map of collectionId → Collection for efficient in-memory updates
-  const collectionsMapRef = useRef<Map<string, Collection>>(new Map());
-
-  const swipedRef = useRef(false);
-  const dragX = useMotionValue(0);
-  const dragRotate = useTransform(dragX, [-160, 0, 160], [-6, 0, 6]);
 
   // Повторение — только карточки активного курса; набор старой версии без courseId относим к курсу по языку
   const loadData = async () => {
     if (!activeCourse) { navigate("/"); return; }
-    collectionsMapRef.current.clear();
-    const allCollections = (await getCollections()).filter(
-      (c) => (c.courseId ?? courseCodeFromLanguage(c.language)) === activeCourse.id,
-    );
-    if (allCollections.length === 0) { navigate("/"); return; }
-
-    allCollections.forEach(col => collectionsMapRef.current.set(col.id, col));
-
-    const cards: ReviewCard[] = [];
-    for (const col of allCollections) {
-      for (const card of col.cards) {
-        if (isDueCard(card)) {
-          cards.push({ card, collectionId: col.id, collectionName: col.name });
-        }
-      }
+    setLoadError(false);
+    let all: Collection[];
+    try {
+      all = (await getCollections()).filter(
+        (c) => (c.courseId ?? courseCodeFromLanguage(c.language)) === activeCourse.id,
+      );
+    } catch (err) {
+      console.error("Не удалось загрузить наборы", err);
+      setLoadError(true);
+      return;
     }
 
-    if (cards.length === 0) { navigate("/"); return; }
+    const items: SessionItem[] = all.flatMap((col) =>
+      col.cards.filter(isDueCard).map((card) => ({ card, collectionId: col.id })),
+    );
+    if (items.length === 0) { navigate("/"); return; }
 
-    setReviewCards(cards);
-    setStats({ totalCards: cards.length, dontKnow: 0, forgot: 0, remember: 0, know: 0, duration: 0 });
-    setCurrentIndex(0);
-    setIsFlipped(false);
-    setShowStats(false);
-    startTimeRef.current = Date.now();
-    ratingLockRef.current = false;
-    setLoaded(true);
+    setCollections(new Map(all.map((c) => [c.id, c])));
+    session.start(items, all);
   };
 
   // Ждём, пока станет известен активный курс; дальше не перезагружаем, чтобы не сбить сессию
@@ -82,144 +67,38 @@ export default function ReviewPage() {
     loadData();
   }, [coursesReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (showStats || !loaded) return;
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      switch (e.code) {
-        case "Space": e.preventDefault(); flip(!isFlipped); break;
-        case "Digit1": case "Numpad1": if (isFlipped) handleRating(KnowledgeLevel.DONT_KNOW); break;
-        case "Digit2": case "Numpad2": if (isFlipped) handleRating(KnowledgeLevel.FORGOT); break;
-        case "Digit3": case "Numpad3": if (isFlipped) handleRating(KnowledgeLevel.REMEMBER); break;
-        case "Digit4": case "Numpad4": if (isFlipped) handleRating(KnowledgeLevel.KNOW); break;
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isFlipped, showStats, loaded]);
-
-  // Переворот звучит; сброс стороны после оценки — нет, там звучит card-next
-  const flip = (next: boolean) => {
-    if (next === isFlipped) return;
-    playSound("card-flip");
-    setIsFlipped(next);
-  };
-
-  // Одна оценка на карточку: пока сохраняем и переходим дальше, повторные нажатия игнорируем —
-  // иначе двойное нажатие на последней карточке завершило бы тренировку дважды
-  const ratingLockRef = useRef(false);
-
-  const handleRating = async (level: KnowledgeLevel) => {
-    if (!isFlipped || showStats || ratingLockRef.current) return;
-    ratingLockRef.current = true;
-    playSound("card-next", { rate: RATING_PITCH[level] });
-
-    const { card, collectionId } = reviewCards[currentIndex];
-    const updatedCard = updateSRSData(card, level);
-
-    const collection = collectionsMapRef.current.get(collectionId);
-    if (collection) {
-      const updatedCollection = {
-        ...collection,
-        cards: collection.cards.map(c => c.id === updatedCard.id ? updatedCard : c),
-        lastStudied: new Date(),
-      };
-      collectionsMapRef.current.set(collectionId, updatedCollection);
-      await updateCollection(updatedCollection);
-    }
-
-    setStats(prev => ({
-      ...prev,
-      dontKnow: level === KnowledgeLevel.DONT_KNOW ? prev.dontKnow + 1 : prev.dontKnow,
-      forgot:   level === KnowledgeLevel.FORGOT     ? prev.forgot + 1   : prev.forgot,
-      remember: level === KnowledgeLevel.REMEMBER   ? prev.remember + 1 : prev.remember,
-      know:     level === KnowledgeLevel.KNOW       ? prev.know + 1     : prev.know,
-    }));
-
-    setIsFlipped(false);
-
-    setTimeout(async () => {
-      if (currentIndex < reviewCards.length - 1) {
-        setCurrentIndex(prev => prev + 1);
-        ratingLockRef.current = false;
-      } else {
-        const duration = Math.floor((Date.now() - startTimeRef.current) / 1000);
-        const finalKnow = stats.know + (level === KnowledgeLevel.KNOW ? 1 : 0);
-        setStats(prev => ({ ...prev, duration }));
-
-        // Итоги показываем сразу; прогресс уходит на сервер в фоне, празднование — по его ответу
-        playSound("session-complete");
-        setShowStats(true);
-
-        if (user) {
-          await reportSession({
-            kind: "review",
-            collectionIds: [...new Set(reviewCards.map((r) => r.collectionId))],
-            cards: reviewCards.length,
-            allKnow: finalKnow === reviewCards.length,
-            durationSec: duration,
-          });
-          refreshCollections();
-        }
-
-      }
-    }, 200);
-  };
-
-  if (!loaded || reviewCards.length === 0) return null;
-
-  const currentReview = reviewCards[currentIndex];
+  if (loadError) return <SessionLoadError onRetry={loadData} onExit={() => navigate("/")} />;
+  const current = session.current;
+  if (!current) return null;
+  const currentCollection = collections.get(current.collectionId);
 
   return (
     <SessionShell
       title={t.words.session.review}
-      subtitle={currentReview.collectionName}
+      subtitle={currentCollection?.name}
       onClose={() => navigate("/")}
-      progress={(currentIndex + 1) / reviewCards.length}
-      meta={`${currentIndex + 1} / ${reviewCards.length}`}
+      action={
+        <IconButton label={t.words.flashcards.undo} onClick={session.undo} disabled={!session.canUndo}>
+          <Undo2 size={20} />
+        </IconButton>
+      }
+      progress={(session.index + 1) / session.items.length}
+      meta={`${session.index + 1} / ${session.items.length}`}
     >
-      {/* Карточка — свайп: до переворота переворачивает, после — вправо «знаю», влево «не знаю» */}
-      <main className="flex min-h-0 flex-1 items-center justify-center overflow-auto px-4 py-4 sm:px-6">
-        <motion.div
-          className="w-full max-w-3xl shrink-0 touch-pan-y"
-          style={{ x: dragX, rotate: dragRotate }}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.25}
-          dragMomentum={false}
-          onDragStart={() => {
-            swipedRef.current = false;
-          }}
-          onDrag={(_, info) => {
-            if (Math.abs(info.offset.x) > 8) swipedRef.current = true;
-          }}
-          onDragEnd={(_, info) => {
-            const didSwipe = swipedRef.current;
-            setTimeout(() => {
-              swipedRef.current = false;
-            }, 80);
-            if (!didSwipe || Math.abs(info.offset.x) < 60) return;
-            if (!isFlipped) flip(true);
-            else if (info.offset.x > 0) handleRating(KnowledgeLevel.KNOW);
-            else handleRating(KnowledgeLevel.DONT_KNOW);
-          }}
-        >
-          <Flashcard
-            card={currentReview.card}
-            language={collectionsMapRef.current.get(currentReview.collectionId) ? voiceForCollection(collectionsMapRef.current.get(currentReview.collectionId)!) : undefined}
-            isFlipped={isFlipped}
-            onFlip={() => {
-              if (!swipedRef.current) flip(!isFlipped);
-            }}
-          />
-        </motion.div>
-      </main>
+      <CardStage
+        cardKey={`${session.index}:${current.card.id}`}
+        card={current.card}
+        language={currentCollection ? voiceForCollection(currentCollection) : undefined}
+        flipped={session.flipped}
+        onFlip={() => session.flip()}
+        onSwipe={(dir) => session.rate(dir === "right" ? KnowledgeLevel.KNOW : KnowledgeLevel.DONT_KNOW)}
+      />
 
-      <RatingBar isFlipped={isFlipped} onFlip={() => flip(true)} onRate={handleRating} />
+      <RatingBar isFlipped={session.flipped} onFlip={() => session.flip(true)} onRate={session.rate} />
 
       <FlashcardStatsModal
-        isOpen={showStats}
-        stats={stats}
+        isOpen={session.finished}
+        stats={session.stats}
         onClose={() => navigate("/")}
         onRestart={loadData}
       />

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -22,7 +22,13 @@ const app = initializeApp(firebaseConfig);
 
 // Сервисы Firebase
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+// Кэш Firestore в IndexedDB: открытые раньше наборы загружаются без сети, а оценки офлайн ложатся в очередь
+// и уходят на сервер, когда появится связь (даже после перезапуска). Без него тренировка без интернета
+// зависала после первой оценки. Несколько вкладок делят один кэш; если IndexedDB недоступен,
+// Firestore сам откатывается на кэш в памяти.
+export const db = initializeFirestore(app, {
+  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+});
 export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
 

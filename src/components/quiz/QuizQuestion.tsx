@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Check, X } from "lucide-react";
+import { ArrowRight, Check, CheckCheck, X } from "lucide-react";
 import { TaskType } from "../../types";
 import { QuizQuestion } from "../../utils/quizGenerator";
+import { AnswerVerdict } from "../../utils/answerCheck";
 import { useI18n } from "../../contexts/I18nContext";
 import { Button, Card, Input, cx } from "../../ui";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
@@ -13,12 +14,14 @@ interface QuizQuestionProps {
   userAnswer: string;
   showFeedback: boolean;
   isCorrect: boolean;
+  verdict?: AnswerVerdict | null; // «почти» — засчитано, но покажем правильное написание
+  onOverride?: () => void; // «Мой ответ верный» после письменного ответа
   onAnswer: (answer: string) => void;
   onNext: () => void;
 }
 
 // Вопрос теста: выбор из вариантов или ввод слова; после ответа — разбор карточки и «Дальше» (или Enter)
-export default function QuizQuestionComponent({ question, userAnswer, showFeedback, isCorrect, onAnswer, onNext }: QuizQuestionProps) {
+export default function QuizQuestionComponent({ question, userAnswer, showFeedback, isCorrect, verdict, onOverride, onAnswer, onNext }: QuizQuestionProps) {
   const { t } = useI18n();
   const q = t.words.quiz;
   const [textInput, setTextInput] = useState("");
@@ -53,6 +56,7 @@ export default function QuizQuestionComponent({ question, userAnswer, showFeedba
   }
 
   const isWriteType = question.type === TaskType.WRITE_WORD_BY_TRANSLATION || question.type === TaskType.WRITE_WORD_BY_EXPLANATION;
+  const close = isCorrect && verdict?.result === "close" ? verdict.reason : null;
 
   const submitText = () => {
     if (!textInput.trim()) return;
@@ -97,6 +101,11 @@ export default function QuizQuestionComponent({ question, userAnswer, showFeedba
             placeholder={q.placeholder}
             invalid={showFeedback && !isCorrect}
             aria-label={q.placeholder}
+            // Иначе телефон «исправляет» иностранное слово на слово своего языка и ставит заглавную
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="off"
+            spellCheck={false}
           />
           {!showFeedback && (
             <Button type="submit" size="lg" fullWidth disabled={!textInput.trim()}>
@@ -117,8 +126,9 @@ export default function QuizQuestionComponent({ question, userAnswer, showFeedba
           >
             {isCorrect ? <Check size={20} className="mt-0.5 shrink-0" /> : <X size={20} className="mt-0.5 shrink-0" />}
             <div className="grid gap-0.5">
-              <p className="font-semibold">{isCorrect ? q.correct : q.incorrect}</p>
-              {!isCorrect && (
+              <p className="font-semibold">{close ? q.almost : isCorrect ? q.correct : q.incorrect}</p>
+              {close && <p className="text-sm text-fg">{q.closeReasons[close]}</p>}
+              {(!isCorrect || close) && (
                 <p className="text-sm text-fg">
                   <span className="text-muted">{q.correctAnswer}</span> <strong className="font-semibold">{question.correctAnswer}</strong>
                 </p>
@@ -130,6 +140,12 @@ export default function QuizQuestionComponent({ question, userAnswer, showFeedba
               )}
             </div>
           </div>
+
+          {!isCorrect && isWriteType && onOverride && (
+            <Button variant="ghost" size="sm" iconLeft={<CheckCheck size={16} />} onClick={onOverride} className="justify-self-center">
+              {q.overrule}
+            </Button>
+          )}
 
           {/* Разбор карточки: слово, перевод, объяснение, пример */}
           <Card tone="inset" padding="sm" className="grid gap-1 text-left">

@@ -103,12 +103,13 @@
   "flashcards": {
     "shuffle": "Shuffle",
     "shuffleConfirm": "Shuffle the deck and start over?",
+    "undo": "Undo last rating",
     "back": "Back",
     "explanation": "Explanation",
     "example": "Example",
     "showTranslation": "Show translation",
     "hideTranslation": "Hide translation",
-    "keyboardHint": "Space to flip · 1–4 to rate",
+    "keyboardHint": "Space to flip · 1–4 to rate · Backspace to undo",
     "dueOnly": "Due cards",
     "hints": {
       "clickToFlip": "Tap the card to flip it",
@@ -142,8 +143,15 @@
   "quiz": {
     "correct": "Correct!",
     "incorrect": "Incorrect",
+    "almost": "Almost!",
+    "closeReasons": {
+      "article": "Counted — but mind the article.",
+      "accents": "Counted — but check the special letters (like å, é, ü).",
+      "typo": "Counted — there's a small typo."
+    },
     "correctAnswer": "Correct answer:",
     "yourAnswer": "Your answer:",
+    "overrule": "My answer was right",
     "moreInfo": "More information",
     "next": "Next →",
     "check": "Check",
@@ -277,7 +285,12 @@
     "streak": "Streak",
     "review": "Review",
     "rate": "How well do you know it?",
-    "settings": "Settings"
+    "settings": "Settings",
+    "loadError": {
+      "title": "Couldn't load the words",
+      "text": "Check your internet connection and try again.",
+      "retry": "Try again"
+    }
   },
   "soonTitle": "Coming soon",
   "pos": {

@@ -49,6 +49,11 @@
         }
       ],
       "fixes": [
+        "Kortene husker hver vurdering igjen: på grunn av en feil ble bare det siste kortet i en økt lagret.",
+        "Du kan øve uten nett: sett du har åpnet før, lastes inn offline, og vurderingene sendes så snart du er på nett igjen.",
+        "Vurderte du feil? Angre med pilknappen øverst eller med Backspace.",
+        "Testen tilgir småting: en skrivefeil, manglende spesialbokstaver eller en glemt artikkel godkjennes, og riktig skrivemåte vises ved siden av. Var svaret riktig, men ble ikke godkjent, trykker du «Svaret mitt var riktig». Telefonen retter ikke lenger fremmedord mens du skriver.",
+        "Å øve på et helt sett før det er tid, sender ikke lenger ordene måneder frem i tid, og ord som skal repeteres, venter fra morgenen av.",
         "Fremgangen telles nå av serveren, så den kan ikke forsvinne eller forfalskes.",
         "En økt uten nett forsvinner ikke lenger – den telles så snart Kolo er på nett igjen.",
         "Det nye «Bane»-designet og ny skrift i overskrifter.",

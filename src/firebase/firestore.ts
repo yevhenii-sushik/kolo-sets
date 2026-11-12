@@ -106,7 +106,7 @@ export const saveUserCollection = async (
 export const updateUserCollectionFields = async (
   userId: string,
   collectionId: string,
-  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language' | 'courseId'>>
+  fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language' | 'courseId' | 'lastStudied'>>
 ): Promise<void> => {
   const docRef = doc(db, 'users', userId, 'collections', collectionId);
   const payload: Record<string, any> = {};

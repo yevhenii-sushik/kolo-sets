@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Collection, TaskType, QuizStats, QuizSettings } from "../../types";
-import { getCollection, updateCollection } from "../../utils/storage";
+import { getCollection, updateCollectionMeta } from "../../utils/storage";
+import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { playSound } from "../../utils/sounds";
@@ -12,7 +13,20 @@ import QuizSettingsModal from "../../components/quiz/QuizSettingsModal";
 import { Check, Settings, X } from "lucide-react";
 import { IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
+import SessionLoadError from "../../components/session/SessionLoadError";
 import { useI18n } from "../../contexts/I18nContext";
+
+// Учесть ответ в статистике. Без мутаций: StrictMode вызывает апдейтер дважды, и ошибки задваивались
+function tally(prev: QuizStats, type: TaskType, correct: boolean, mistake?: QuizStats["mistakes"][number]): QuizStats {
+  const byType = prev.byTaskType[type] ?? { correct: 0, total: 0 };
+  return {
+    ...prev,
+    correctAnswers: prev.correctAnswers + (correct ? 1 : 0),
+    wrongAnswers: prev.wrongAnswers + (correct ? 0 : 1),
+    mistakes: !correct && mistake ? [...prev.mistakes, mistake] : prev.mistakes,
+    byTaskType: { ...prev.byTaskType, [type]: { correct: byType.correct + (correct ? 1 : 0), total: byType.total + 1 } },
+  };
+}
 
 export default function QuizPage() {
   const { id } = useParams<{ id: string }>();
@@ -26,6 +40,10 @@ export default function QuizPage() {
   const [userAnswer, setUserAnswer] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  // Разбор письменного ответа: «почти» (артикль, диакритика, опечатка) тоже засчитывается
+  const [verdict, setVerdict] = useState<AnswerVerdict | null>(null);
+  const [loadError, setLoadError] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
   const [stats, setStats] = useState<QuizStats>({
     totalQuestions: 0,
     correctAnswers: 0,
@@ -49,7 +67,9 @@ export default function QuizPage() {
 
   useEffect(() => {
     const loadCollection = async () => {
-      if (id) {
+      if (!id) return;
+      setLoadError(false);
+      try {
         const loaded = await getCollection(id);
         if (loaded && loaded.cards.length >= 4) {
           setCollection(loaded);
@@ -57,10 +77,13 @@ export default function QuizPage() {
         } else {
           navigate("/");
         }
+      } catch (err) {
+        console.error("Не удалось загрузить набор", err);
+        setLoadError(true);
       }
     };
     loadCollection();
-  }, [id, navigate]);
+  }, [id, navigate, reloadKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const initializeQuiz = (coll: Collection, quizSettings: QuizSettings) => {
     const generatedQuestions = generateQuizQuestions(coll.cards, quizSettings);
@@ -71,6 +94,7 @@ export default function QuizPage() {
     }));
   };
 
+  if (loadError) return <SessionLoadError onRetry={() => setReloadKey((k) => k + 1)} onExit={() => navigate(-1)} />;
   if (!collection || questions.length === 0) {
     return (
       <div className="flex h-64 items-center justify-center text-muted">{t.loading}</div>
@@ -82,47 +106,49 @@ export default function QuizPage() {
   const handleAnswer = (answer: string) => {
     // Matching completes its own UI flow — just update stats silently
     if (currentQuestion.type === TaskType.MATCHING) {
-      setStats(prev => {
-        const next = { ...prev };
-        next.correctAnswers++;
-        if (!next.byTaskType[currentQuestion.type]) {
-          next.byTaskType[currentQuestion.type] = { correct: 0, total: 0 };
-        }
-        next.byTaskType[currentQuestion.type]!.total++;
-        next.byTaskType[currentQuestion.type]!.correct++;
-        return next;
-      });
+      setStats(prev => tally(prev, currentQuestion.type, true));
       return;
     }
 
     setUserAnswer(answer);
-    const correct =
-      answer.toLowerCase().trim() ===
-      currentQuestion.correctAnswer.toLowerCase().trim();
+    const isWrite = currentQuestion.type === TaskType.WRITE_WORD_BY_TRANSLATION || currentQuestion.type === TaskType.WRITE_WORD_BY_EXPLANATION;
+    // Варианты ответа сравниваем как есть; письменный ответ — мягко (src/utils/answerCheck.ts).
+    // Слова других карточек передаём, чтобы «hand» вместо «hund» не сошло за опечатку
+    const result: AnswerVerdict = isWrite
+      ? checkAnswer(answer, currentQuestion.correctAnswer, collection.cards.map((c) => c.word))
+      : { result: answer.trim().toLowerCase() === currentQuestion.correctAnswer.trim().toLowerCase() ? "exact" : "wrong" };
+    const correct = result.result !== "wrong";
+    setVerdict(result);
     setIsCorrect(correct);
     setShowFeedback(true);
 
     playSound(correct ? "answer-correct" : "answer-wrong");
 
-    setStats(prev => {
-      const next = { ...prev };
-      if (correct) {
-        next.correctAnswers++;
-      } else {
-        next.wrongAnswers++;
-        next.mistakes.push({
-          question: currentQuestion.question,
-          userAnswer: answer,
-          correctAnswer: currentQuestion.correctAnswer,
-          taskType: currentQuestion.type,
-        });
-      }
-      if (!next.byTaskType[currentQuestion.type]) {
-        next.byTaskType[currentQuestion.type] = { correct: 0, total: 0 };
-      }
-      next.byTaskType[currentQuestion.type]!.total++;
-      if (correct) next.byTaskType[currentQuestion.type]!.correct++;
-      return next;
+    setStats(prev =>
+      tally(prev, currentQuestion.type, correct, {
+        question: currentQuestion.question,
+        userAnswer: answer,
+        correctAnswer: currentQuestion.correctAnswer,
+        taskType: currentQuestion.type,
+      }),
+    );
+  };
+
+  // «Мой ответ верный»: проверка не знает всех синонимов — даём засчитать ответ вручную
+  const handleOverride = () => {
+    if (!showFeedback || isCorrect) return;
+    playSound("answer-correct");
+    setIsCorrect(true);
+    setVerdict({ result: "exact" });
+    setStats((prev) => {
+      const byType = prev.byTaskType[currentQuestion.type];
+      return {
+        ...prev,
+        correctAnswers: prev.correctAnswers + 1,
+        wrongAnswers: prev.wrongAnswers - 1,
+        mistakes: prev.mistakes.slice(0, -1),
+        byTaskType: byType ? { ...prev.byTaskType, [currentQuestion.type]: { ...byType, correct: byType.correct + 1 } } : prev.byTaskType,
+      };
     });
   };
 
@@ -135,16 +161,17 @@ export default function QuizPage() {
       setUserAnswer("");
       setShowFeedback(false);
       setIsCorrect(false);
+      setVerdict(null);
     } else {
       if (finishedRef.current) return;
       finishedRef.current = true;
       // Quiz завершен
       const duration = Math.floor((Date.now() - startTime) / 1000);
-      const updatedCollection = {
-        ...collection,
-        lastStudied: new Date(),
-      };
-      await updateCollection(updatedCollection);
+      // Только дата занятия, а не весь набор: старая копия карточек затёрла бы интервалы, обновлённые
+      // в другой вкладке. Не ждём сети — офлайн итоги иначе не показались бы
+      updateCollectionMeta(collection, { lastStudied: new Date() }).catch((err) =>
+        console.error("Не удалось сохранить дату занятия", err),
+      );
 
       const finalStats = { ...stats, duration };
       setStats(finalStats);
@@ -173,6 +200,7 @@ export default function QuizPage() {
     setUserAnswer("");
     setShowFeedback(false);
     setIsCorrect(false);
+    setVerdict(null);
     setStats({
       totalQuestions: 0,
       correctAnswers: 0,
@@ -193,6 +221,7 @@ export default function QuizPage() {
     setUserAnswer("");
     setShowFeedback(false);
     setIsCorrect(false);
+    setVerdict(null);
     setStats({
       totalQuestions: 0,
       correctAnswers: 0,
@@ -237,6 +266,8 @@ export default function QuizPage() {
           userAnswer={userAnswer}
           showFeedback={showFeedback}
           isCorrect={isCorrect}
+          verdict={verdict}
+          onOverride={handleOverride}
           onAnswer={handleAnswer}
           onNext={handleNext}
         />

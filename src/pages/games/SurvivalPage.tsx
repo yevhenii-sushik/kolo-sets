@@ -6,6 +6,7 @@ import { shuffle, makeChoices } from "../../utils/gameUtils";
 import { Check, Flame, Heart } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import SessionShell from "../../components/session/SessionShell";
+import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionResult from "../../components/session/SessionResult";
 import ChoiceButton, { choiceState } from "../../components/session/ChoiceButton";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,6 +28,9 @@ export default function SurvivalPage() {
   const ss = t.words.session;
 
   const [phase, setPhase] = useState<Phase>("playing");
+  // Набор не загрузился (нет сети и копии в кэше) — экран с «Попробовать снова» вместо пустой страницы
+  const [loadError, setLoadError] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
   const [collection, setCollection] = useState<Collection | null>(null);
   const [queue, setQueue] = useState<Card[]>([]);
   const [qIdx, setQIdx] = useState(0);
@@ -60,14 +64,20 @@ export default function SurvivalPage() {
 
   useEffect(() => {
     if (!id) return;
-    getCollection(id).then(col => {
-      if (!col || col.cards.length < 4) { navigate(-1); return; }
-      setCollection(col);
-      const shuffled = shuffle(col.cards);
-      setQueue(shuffled);
-      setChoices(makeChoices(shuffled[0], col.cards));
-    });
-  }, [id]);
+    setLoadError(false);
+    getCollection(id)
+      .then(col => {
+        if (!col || col.cards.length < 4) { navigate(-1); return; }
+        setCollection(col);
+        const shuffled = shuffle(col.cards);
+        setQueue(shuffled);
+        setChoices(makeChoices(shuffled[0], col.cards));
+      })
+      .catch(err => {
+        console.error("Не удалось загрузить набор", err);
+        setLoadError(true);
+      });
+  }, [id, reloadKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const advance = useCallback((nextIdx: number, col: Collection, q: Card[]) => {
     let finalQueue = q;
@@ -151,6 +161,7 @@ export default function SurvivalPage() {
     setPhase("playing");
   };
 
+  if (loadError) return <SessionLoadError onRetry={() => setReloadKey(k => k + 1)} onExit={() => navigate(-1)} />;
   if (!collection || queue.length === 0) return null;
 
   const currentCard = queue[qIdx];
