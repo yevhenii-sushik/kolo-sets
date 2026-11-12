@@ -13,6 +13,7 @@ export default function CardStage({
   flipped,
   onFlip,
   onSwipe,
+  reverse = false,
 }: {
   cardKey: string;
   card: Card;
@@ -20,6 +21,7 @@ export default function CardStage({
   flipped: boolean;
   onFlip: () => void;
   onSwipe: (direction: "left" | "right") => void;
+  reverse?: boolean;
 }) {
   const dragX = useMotionValue(0);
   const dragRotate = useTransform(dragX, [-160, 0, 160], [-6, 0, 6]);
@@ -56,6 +58,7 @@ export default function CardStage({
             card={card}
             language={language}
             isFlipped={flipped}
+            reverse={reverse}
             onFlip={() => {
               if (!swipedRef.current) onFlip();
             }}

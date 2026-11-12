@@ -1,15 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Card, Collection, FlashcardStats, KnowledgeLevel } from "../../types";
-import { updateCollection, updateSRSData } from "../../utils/storage";
 import { shuffle as shuffled } from "../../utils/gameUtils";
 import { playSound, RATING_PITCH } from "../../utils/sounds";
-import { useData } from "../../contexts/DataContext";
+import { useSrsWriter } from "./useSrsWriter";
 
 // Общий ход тренировки по карточкам — для флэшкарт набора и для повторения.
 // Раньше у каждой страницы была своя копия, и во флэшкартах каждая оценка перезаписывала набор
-// исходной версией карточек: из сессии сохранялась только последняя. Теперь актуальные наборы живут
-// здесь, оценки пишутся пачкой (через паузу, при уходе со страницы и в конце), а интерфейс не ждёт сети:
-// офлайн запись ляжет в кэш Firestore и уйдёт, когда появится связь.
+// исходной версией карточек: из сессии сохранялась только последняя. Запись — через useSrsWriter.
 
 export interface SessionItem {
   card: Card;
@@ -30,7 +27,6 @@ interface Rated {
   level: KnowledgeLevel;
 }
 
-const SAVE_DELAY_MS = 1500;
 const LEVEL_KEYS: Record<string, KnowledgeLevel> = {
   Digit1: KnowledgeLevel.DONT_KNOW, Numpad1: KnowledgeLevel.DONT_KNOW,
   Digit2: KnowledgeLevel.FORGOT, Numpad2: KnowledgeLevel.FORGOT,
@@ -39,7 +35,7 @@ const LEVEL_KEYS: Record<string, KnowledgeLevel> = {
 };
 
 export function useCardSession(onFinish: (result: CardSessionResult) => void) {
-  const { setCollections } = useData();
+  const writer = useSrsWriter();
   const [items, setItems] = useState<SessionItem[]>([]);
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -48,62 +44,13 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   const [duration, setDuration] = useState(0);
 
   const startedAt = useRef(Date.now());
-  const collections = useRef(new Map<string, Collection>());
-  const dirty = useRef(new Set<string>());
-  const touched = useRef(new Set<string>());
-  const saveTimer = useRef<ReturnType<typeof setTimeout>>();
   // Одна оценка на показ карточки: свайп и клик могут прийти в одном кадре. Снимается переворотом
   const lock = useRef(false);
   const onFinishRef = useRef(onFinish);
   onFinishRef.current = onFinish;
 
-  const flush = useCallback(() => {
-    clearTimeout(saveTimer.current);
-    for (const id of dirty.current) {
-      const col = collections.current.get(id);
-      if (col) updateCollection(col).catch((err) => console.error("Не удалось сохранить оценки", err));
-    }
-    dirty.current.clear();
-  }, []);
-
-  // Новые интервалы сразу видны на главной (счётчики «к повторению») — без повторной загрузки наборов
-  const publish = useCallback(() => {
-    if (touched.current.size === 0) return;
-    const changed = new Map([...touched.current].map((id) => [id, collections.current.get(id)!]));
-    touched.current.clear();
-    setCollections((prev) => prev.map((c) => changed.get(c.id) ?? c));
-  }, [setCollections]);
-
-  // Свернули приложение или закрыли вкладку — сохраняем, не дожидаясь паузы. Ушли со страницы — тоже
-  useEffect(() => {
-    const onHide = () => document.visibilityState === "hidden" && flush();
-    document.addEventListener("visibilitychange", onHide);
-    window.addEventListener("pagehide", flush);
-    return () => {
-      document.removeEventListener("visibilitychange", onHide);
-      window.removeEventListener("pagehide", flush);
-      flush();
-      publish();
-    };
-  }, [flush, publish]);
-
-  const writeCard = (collectionId: string, card: Card) => {
-    const col = collections.current.get(collectionId);
-    if (!col) return;
-    collections.current.set(collectionId, {
-      ...col,
-      cards: col.cards.map((c) => (c.id === card.id ? card : c)),
-      lastStudied: new Date(),
-    });
-    dirty.current.add(collectionId);
-    touched.current.add(collectionId);
-    clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(flush, SAVE_DELAY_MS);
-  };
-
   // Актуальная версия карточки: после перемешивания её могут показать второй раз
-  const latest = (item: SessionItem) =>
-    collections.current.get(item.collectionId)?.cards.find((c) => c.id === item.card.id) ?? item.card;
+  const latest = (item: SessionItem) => writer.card(item.collectionId, item.card.id) ?? item.card;
 
   const reset = (next: SessionItem[]) => {
     setItems(next);
@@ -118,12 +65,10 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
 
   const start = useCallback(
     (next: SessionItem[], cols: Collection[]) => {
-      flush();
-      publish();
-      collections.current = new Map(cols.map((c) => [c.id, c]));
+      writer.load(cols);
       reset(next);
     },
-    [flush, publish],
+    [writer],
   );
 
   const shuffle = () => reset(shuffled(items).map((item) => ({ ...item, card: latest(item) })));
@@ -140,7 +85,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     lock.current = true;
     const item = items[index];
     const before = latest(item);
-    writeCard(item.collectionId, updateSRSData(before, level));
+    writer.record(item.collectionId, item.card.id, level);
     playSound("card-next", { rate: RATING_PITCH[level] });
 
     const nextRated = [...rated, { index, collectionId: item.collectionId, before, level }];
@@ -155,8 +100,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     const durationSec = Math.floor((Date.now() - startedAt.current) / 1000);
     setDuration(durationSec);
     setFinished(true);
-    flush();
-    publish();
+    writer.commit();
     playSound("session-complete");
     onFinishRef.current({
       cards: items.length,
@@ -170,7 +114,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   const undo = () => {
     const last = rated[rated.length - 1];
     if (!last || finished) return;
-    writeCard(last.collectionId, last.before);
+    writer.restore(last.collectionId, last.before);
     setRated(rated.slice(0, -1));
     setIndex(last.index);
     setFlipped(true);

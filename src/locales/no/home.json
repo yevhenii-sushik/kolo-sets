@@ -57,8 +57,11 @@
       "one": "{n} nytt ord venter på første økt",
       "other": "{n} nye ord venter på første økt"
     },
-    "newText": "Gå gjennom dem på kort – Perigee merker seg hva du kan og legger opp repetisjonene.",
-    "newButton": "Studer"
+    "newText": "Perigee introduserer dem steg for steg og lager en repetisjonsplan.",
+    "newButton": "Studer",
+    "limitTitle": "Det holder med nye ord for i dag",
+    "limitText": "I morgen tar Perigee frem dagens ord igjen – slik sitter de bedre. Vil du ha flere likevel? Bare kjør på.",
+    "limitButton": "Flere nye ord"
   },
   "goal": {
     "label": "Dagens mål",

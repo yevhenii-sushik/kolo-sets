@@ -74,6 +74,7 @@ export default function ReviewPage() {
 
   return (
     <SessionShell
+      perigee
       title={t.words.session.review}
       subtitle={currentCollection?.name}
       onClose={() => navigate("/")}

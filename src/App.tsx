@@ -37,6 +37,7 @@ const WordsPage = lazy(() => import("./pages/words/WordsPage"));
 const CollectionEditPage = lazy(() => import("./pages/words/CollectionEditPage"));
 const FlashcardsPage = lazy(() => import("./pages/words/FlashcardsPage"));
 const ReviewPage = lazy(() => import("./pages/words/ReviewPage"));
+const PerigeeSessionPage = lazy(() => import("./pages/learn/PerigeeSessionPage"));
 const QuizPage = lazy(() => import("./pages/words/QuizPage"));
 const SpeedRoundPage = lazy(() => import("./pages/games/SpeedRoundPage"));
 const SurvivalPage = lazy(() => import("./pages/games/SurvivalPage"));
@@ -178,6 +179,7 @@ function AppContent() {
         <Route path="/collection/:id/survival" element={<SurvivalPage />} />
         <Route path="/collection/:id/match" element={<MatchPage />} />
         <Route path="/review" element={<ReviewPage />} />
+        <Route path="/learn" element={<PerigeeSessionPage />} />
       </Route>
 
       <Route

@@ -8,7 +8,8 @@ import { achievementXp, capDaily, FIRST_SESSION_BONUS, ORBIT_BONUS, sessionXp } 
 import { recordSession, type OrbitEvent } from "./orbit";
 import { prepare, settle, type ProgressionPatch, type ProgressionState, type ProgressionView } from "./progression";
 
-export const SESSION_KINDS = ["flashcards", "review", "quiz", "speed", "survival", "match"] as const;
+// perigee — сессия Perigee по всему курсу (docs/specs/perigee.md)
+export const SESSION_KINDS = ["flashcards", "review", "quiz", "speed", "survival", "match", "perigee"] as const;
 export type SessionKind = (typeof SESSION_KINDS)[number];
 const GAMES: readonly SessionKind[] = ["speed", "survival", "match"];
 
@@ -187,7 +188,8 @@ export function applySession(
   // ── Счётчики: игры не трогают счётчики флэшкарт и тестов (от них зависят достижения)
   const stats: Stats = { ...STAT_DEFAULTS, ...state.stats };
   stats.totalStudyTime += s.durationSec;
-  if (s.kind === "flashcards" || s.kind === "review") stats.flashcardSessions += 1;
+  const isCards = s.kind === "flashcards" || s.kind === "review" || s.kind === "perigee";
+  if (isCards) stats.flashcardSessions += 1;
   if (s.kind === "quiz") {
     stats.quizzesTaken += 1;
     if (s.correct === s.cards) stats.perfectQuizzes += 1;
@@ -200,7 +202,7 @@ export function applySession(
     collectionsCount: info.collectionsCount,
     session: {
       duration: s.durationSec,
-      allKnow: (s.kind === "flashcards" || s.kind === "review") && s.allKnow === true,
+      allKnow: isCards && s.allKnow === true,
       quizQuestions: s.kind === "quiz" ? s.cards : undefined,
       isComeback,
       hour: hourIn(now, tz),

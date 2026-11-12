@@ -304,5 +304,31 @@
     "interjection": "interjeksjon",
     "numeral": "tallord",
     "phrase": "frase"
+  },
+  "perigee": {
+    "title": "Perigee-økt",
+    "tagHint": "Svarene her går inn i Perigee-repetisjonsplanen",
+    "legend": "svarene teller i Perigee-planen",
+    "newWord": "Nytt ord",
+    "gotIt": "Skjønner, videre",
+    "pickTranslation": "Velg oversettelsen",
+    "pickWord": "Velg ordet",
+    "typeWord": "Skriv ordet",
+    "dontRemember": "Husker ikke",
+    "continue": "Videre",
+    "result": {
+      "title": "Økten er ferdig",
+      "reviewed": "Repetert",
+      "learned": "Nye ord",
+      "accuracy": "På første forsøk",
+      "tomorrow": {
+        "one": "I morgen venter {n} ord",
+        "other": "I morgen venter {n} ord"
+      },
+      "tomorrowNone": "Ingen repetisjoner i morgen",
+      "again": "En økt til",
+      "extra": "Flere nye ord",
+      "toSets": "Til settene"
+    }
   }
 }

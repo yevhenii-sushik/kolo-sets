@@ -91,6 +91,7 @@ export default function FlashcardsPage() {
 
   return (
     <SessionShell
+      perigee
       title={collection.name}
       subtitle={dueOnly ? <Badge tone="accent">{t.words.flashcards.dueOnly}</Badge> : undefined}
       onClose={() => navigate(-1)}

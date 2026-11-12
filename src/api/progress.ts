@@ -11,7 +11,8 @@ import type { CollectionDone, Equipped, Slot } from "../../server/core/loot";
 export type Progression = ProgressionView;
 export type OrbitEventName = Progression["events"][number];
 
-export type SessionKind = "flashcards" | "review" | "quiz" | "speed" | "survival" | "match";
+// Тот же список, что SESSION_KINDS на сервере (server/core/session.ts)
+export type SessionKind = "flashcards" | "review" | "quiz" | "speed" | "survival" | "match" | "perigee";
 
 export interface SessionPayload {
   kind: SessionKind;

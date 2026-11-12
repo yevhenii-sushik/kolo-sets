@@ -63,7 +63,8 @@ const firestoreToCollection = (data: any): Collection => {
         nextReview: card.srsData.nextReview.toDate(),
         lastReviewed: card.srsData.lastReviewed
           ? card.srsData.lastReviewed.toDate()
-          : undefined
+          : undefined,
+        introducedAt: card.srsData.introducedAt?.toDate?.() ?? undefined
       }
     }))
   };

@@ -11,10 +11,11 @@ interface FlashcardProps {
   isFlipped: boolean;
   language?: string;
   onFlip: () => void;
+  reverse?: boolean; // наоборот: на лице перевод, на обороте слово — вспоминаем слово (сессия Perigee)
 }
 
 // Флэшкарта с переворотом (стили .flip-card в index.css): лицо — слово на тёмном, оборот — объяснение и пример
-export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip }: FlashcardProps) {
+export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip, reverse = false }: FlashcardProps) {
   const { t } = useI18n();
   const f = t.words.flashcards;
   const [showTranslation, setShowTranslation] = useState(false);
@@ -34,7 +35,7 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
         {/* Лицо: слово */}
         <div className="flip-card-front absolute h-full w-full">
           <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-4xl bg-fg p-8 text-on-inverse shadow-xl">
-            <h2 dir="auto" className="text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{card.word}</h2>
+            <h2 dir="auto" className="text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{reverse ? card.translation : card.word}</h2>
             {card.partOfSpeech && (
               <span className="rounded-full bg-on-inverse/10 px-3 py-1 text-sm font-medium text-on-inverse/80">{posLabel(card.partOfSpeech, t.words.pos)}</span>
             )}
@@ -56,20 +57,23 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip 
               ) : (
                 <span />
               )}
-              <IconButton
-                variant="surface"
-                label={showTranslation ? f.hideTranslation : f.showTranslation}
-                onClick={stop(() => setShowTranslation((v) => !v))}
-              >
-                {showTranslation ? <EyeOff size={20} /> : <Eye size={20} />}
-              </IconButton>
+              {/* Наоборот перевод уже был на лице — прятать нечего */}
+              {!reverse && (
+                <IconButton
+                  variant="surface"
+                  label={showTranslation ? f.hideTranslation : f.showTranslation}
+                  onClick={stop(() => setShowTranslation((v) => !v))}
+                >
+                  {showTranslation ? <EyeOff size={20} /> : <Eye size={20} />}
+                </IconButton>
+              )}
             </div>
 
             <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center gap-6 pt-10 text-center">
               <div className="grid gap-2">
                 <h3 dir="auto" className="font-display text-3xl font-extrabold text-fg md:text-4xl">{card.word}</h3>
                 {card.partOfSpeech && <p className="text-sm text-faint">{posLabel(card.partOfSpeech, t.words.pos)}</p>}
-                {showTranslation && <p dir="auto" className="text-2xl font-semibold text-accent-ink md:text-3xl">{card.translation}</p>}
+                {(showTranslation || reverse) && <p dir="auto" className="text-2xl font-semibold text-accent-ink md:text-3xl">{card.translation}</p>}
               </div>
 
               {card.explanation && (

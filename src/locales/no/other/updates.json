@@ -16,6 +16,10 @@
       "intro": "Den største Kolo-oppdateringen så langt. Daglige flammer har gitt plass til ukentlige baner, øving gir nå belønninger, og hvert språk har fått sitt eget kurs.",
       "features": [
         {
+          "title": "Perigee-økter",
+          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, 3–5 minutter. Perigee viser deg nye ord først, ber deg så finne dem blant alternativer, og sjekker kjente ord etter hvor godt du kan dem – med alternativer, skriving eller et kort. En feil kommer tilbake noen steg senere til den sitter. Svar i «Quiz», «Hurtigrunde» og «Overlevelse» teller nå også i planen – de modusene har Perigee-merket."
+        },
+        {
           "title": "Et kurs for hvert språk",
           "text": "Norsk for seg, spansk for seg: hvert kurs har egne sett og mapper, så ingenting blandes. Du velger språket én gang og bytter kurs rett i toppfeltet."
         },

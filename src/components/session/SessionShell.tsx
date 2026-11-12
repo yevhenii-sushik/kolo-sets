@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import { IconButton, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
+import PerigeeTag from "./PerigeeTag";
 
 const BAR_TONES = { accent: "bg-accent", success: "bg-success", danger: "bg-danger" };
 
@@ -16,6 +17,7 @@ export default function SessionShell({
   progress,
   progressTone = "accent",
   meta,
+  perigee = false,
   children,
 }: {
   title: ReactNode;
@@ -25,6 +27,7 @@ export default function SessionShell({
   progress?: number; // 0..1; без него полосы нет
   progressTone?: keyof typeof BAR_TONES;
   meta?: ReactNode; // справа от полосы: «3 / 8», таймер, счёт
+  perigee?: boolean; // ответы идут в расписание Perigee — пометка рядом с названием
   children: ReactNode;
 }) {
   const { t } = useI18n();
@@ -37,7 +40,10 @@ export default function SessionShell({
               <X size={22} />
             </IconButton>
             <div className="min-w-0 flex-1">
-              <h1 className="truncate font-display text-lg font-extrabold text-fg">{title}</h1>
+              <div className="flex min-w-0 items-center gap-2">
+                <h1 className="truncate font-display text-lg font-extrabold text-fg">{title}</h1>
+                {perigee && <PerigeeTag />}
+              </div>
               {subtitle && <p className="truncate text-sm text-muted">{subtitle}</p>}
             </div>
             {action}

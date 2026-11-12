@@ -304,5 +304,31 @@
     "interjection": "interjection",
     "numeral": "numeral",
     "phrase": "phrase"
+  },
+  "perigee": {
+    "title": "Perigee session",
+    "tagHint": "Your answers here feed the Perigee review schedule",
+    "legend": "answers count towards your Perigee schedule",
+    "newWord": "New word",
+    "gotIt": "Got it",
+    "pickTranslation": "Pick the translation",
+    "pickWord": "Pick the word",
+    "typeWord": "Write the word",
+    "dontRemember": "I don't remember",
+    "continue": "Continue",
+    "result": {
+      "title": "Session complete",
+      "reviewed": "Reviewed",
+      "learned": "New words",
+      "accuracy": "First try",
+      "tomorrow": {
+        "one": "Tomorrow {n} word will be waiting",
+        "other": "Tomorrow {n} words will be waiting"
+      },
+      "tomorrowNone": "Nothing is due tomorrow",
+      "again": "Another session",
+      "extra": "More new words",
+      "toSets": "My sets"
+    }
   }
 }

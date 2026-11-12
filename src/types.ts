@@ -89,6 +89,7 @@ export interface SRSData {
   lastReviewed?: Date;      // Дата последнего повторения
   totalReviews?: number;    // Всего показов этой карточки
   correctReviews?: number;  // Успешных (quality >= 3)
+  introducedAt?: Date;      // Первая оценка — для дневного лимита новых слов (docs/specs/perigee.md)
 }
 
 // Карточка слова

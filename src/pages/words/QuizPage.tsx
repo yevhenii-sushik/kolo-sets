@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Collection, TaskType, QuizStats, QuizSettings } from "../../types";
+import { Card, Collection, KnowledgeLevel, TaskType, QuizStats, QuizSettings } from "../../types";
 import { getCollection, updateCollectionMeta } from "../../utils/storage";
 import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
+import { levelForAnswer } from "../../utils/srs";
+import { useSrsWriter } from "../../components/session/useSrsWriter";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { playSound } from "../../utils/sounds";
@@ -43,6 +45,10 @@ export default function QuizPage() {
   // Разбор письменного ответа: «почти» (артикль, диакритика, опечатка) тоже засчитывается
   const [verdict, setVerdict] = useState<AnswerVerdict | null>(null);
   const [loadError, setLoadError] = useState(false);
+  // Ответы идут в расписание Perigee: первый ответ на каждое слово за тест (docs/specs/perigee.md).
+  // Храним версию карточки до ответа — для «Мой ответ верный»
+  const writer = useSrsWriter();
+  const answeredRef = useRef(new Map<string, Card>());
   const [reloadKey, setReloadKey] = useState(0);
   const [stats, setStats] = useState<QuizStats>({
     totalQuestions: 0,
@@ -73,6 +79,7 @@ export default function QuizPage() {
         const loaded = await getCollection(id);
         if (loaded && loaded.cards.length >= 4) {
           setCollection(loaded);
+          writer.load([loaded]);
           initializeQuiz(loaded, settings);
         } else {
           navigate("/");
@@ -118,6 +125,12 @@ export default function QuizPage() {
       ? checkAnswer(answer, currentQuestion.correctAnswer, collection.cards.map((c) => c.word))
       : { result: answer.trim().toLowerCase() === currentQuestion.correctAnswer.trim().toLowerCase() ? "exact" : "wrong" };
     const correct = result.result !== "wrong";
+    const cardId = currentQuestion.card.id;
+    if (!answeredRef.current.has(cardId)) {
+      const level = levelForAnswer(isWrite ? { kind: "type", result: result.result } : { kind: "choice", correct });
+      const before = writer.record(collection.id, cardId, level);
+      if (before) answeredRef.current.set(cardId, before);
+    }
     setVerdict(result);
     setIsCorrect(correct);
     setShowFeedback(true);
@@ -140,6 +153,12 @@ export default function QuizPage() {
     playSound("answer-correct");
     setIsCorrect(true);
     setVerdict({ result: "exact" });
+    // В расписании — «Помню», как за ответ с опечаткой: проверка ошиблась, но уверенности «Знаю» нет
+    const before = answeredRef.current.get(currentQuestion.card.id);
+    if (before) {
+      writer.restore(collection.id, before);
+      writer.record(collection.id, before.id, KnowledgeLevel.REMEMBER);
+    }
     setStats((prev) => {
       const byType = prev.byTaskType[currentQuestion.type];
       return {
@@ -167,9 +186,10 @@ export default function QuizPage() {
       finishedRef.current = true;
       // Quiz завершен
       const duration = Math.floor((Date.now() - startTime) / 1000);
-      // Только дата занятия, а не весь набор: старая копия карточек затёрла бы интервалы, обновлённые
-      // в другой вкладке. Не ждём сети — офлайн итоги иначе не показались бы
-      updateCollectionMeta(collection, { lastStudied: new Date() }).catch((err) =>
+      // Оценки вместе с датой занятия сохраняет writer. Если оценок не было (только «Пары») — пишем одну
+      // дату, а не весь набор. Сети не ждём: офлайн итоги иначе не показались бы
+      writer.commit();
+      if (answeredRef.current.size === 0) updateCollectionMeta(collection, { lastStudied: new Date() }).catch((err) =>
         console.error("Не удалось сохранить дату занятия", err),
       );
 
@@ -195,6 +215,7 @@ export default function QuizPage() {
 
   const handleRestart = () => {
     finishedRef.current = false;
+    answeredRef.current.clear();
     initializeQuiz(collection, settings);
     setCurrentIndex(0);
     setUserAnswer("");
@@ -214,6 +235,7 @@ export default function QuizPage() {
 
   const handleSettingsChange = (newSettings: QuizSettings) => {
     finishedRef.current = false;
+    answeredRef.current.clear();
     setSettings(newSettings);
     setShowSettings(false);
     initializeQuiz(collection, newSettings);
@@ -234,6 +256,7 @@ export default function QuizPage() {
 
   return (
     <SessionShell
+      perigee
       title={collection.name}
       onClose={() => navigate(-1)}
       action={

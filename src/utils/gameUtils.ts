@@ -11,21 +11,32 @@ export function shuffle<T>(arr: readonly T[]): T[] {
   return out;
 }
 
-// 4 варианта ответа: правильный перевод + 3 дистрактора.
-// Дедуп без учёта регистра, чтобы две карточки с одинаковым переводом
-// не давали две одинаковые «правильные» кнопки.
-export function makeChoices(card: Card, allCards: Card[]): string[] {
-  const correct = card.translation;
+// 4 варианта ответа: правильный + 3 дистрактора. field — что выбираем: перевод (по умолчанию) или слово.
+// Сначала берём слова той же части речи: «бежать» среди трёх существительных угадывается исключением.
+// Дедуп без учёта регистра, чтобы две карточки с одинаковым ответом не давали две «правильные» кнопки.
+export function makeChoicesFor(card: Card, pool: Card[], field: 'word' | 'translation' = 'translation'): string[] {
+  const correct = card[field];
   const seen = new Set([correct.trim().toLowerCase()]);
-  const pool: string[] = [];
-  for (const c of allCards) {
+  const same: string[] = [];
+  const other: string[] = [];
+  for (const c of pool) {
     if (c.id === card.id) continue;
-    const key = c.translation.trim().toLowerCase();
-    if (seen.has(key)) continue;
+    const value = c[field] ?? '';
+    const key = value.trim().toLowerCase();
+    if (!key || seen.has(key)) continue;
     seen.add(key);
-    pool.push(c.translation);
+    (card.partOfSpeech && c.partOfSpeech === card.partOfSpeech ? same : other).push(value);
   }
-  const distractors = shuffle(pool).slice(0, 3);
+  const distractors = [...shuffle(same), ...shuffle(other)].slice(0, 3);
   while (distractors.length < 3) distractors.push('—');
   return shuffle([...distractors, correct]);
+}
+
+export function makeChoices(card: Card, allCards: Card[]): string[] {
+  return makeChoicesFor(card, allCards, 'translation');
+}
+
+// Достаточно ли разных ответов для четырёх вариантов
+export function canMakeChoices(pool: Card[], field: 'word' | 'translation' = 'translation'): boolean {
+  return new Set(pool.map((c) => (c[field] ?? '').trim().toLowerCase()).filter(Boolean)).size >= 4;
 }

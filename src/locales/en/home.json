@@ -57,8 +57,11 @@
       "one": "{n} new word to learn",
       "other": "{n} new words to learn"
     },
-    "newText": "Go through them on flashcards — Perigee will note what you know and plan your reviews.",
-    "newButton": "Start learning"
+    "newText": "Perigee will introduce them step by step and build your review schedule.",
+    "newButton": "Start learning",
+    "limitTitle": "That's enough new words for today",
+    "limitText": "Perigee will bring today's words back tomorrow — that's how they stick. Want more anyway? Go ahead.",
+    "limitButton": "More new words"
   },
   "goal": {
     "label": "Daily goal",

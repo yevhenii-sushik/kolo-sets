@@ -21,6 +21,8 @@ const day = (n: number) => `2026-11-0${n}`; // 2 ноября 2026 — поне�
 describe("опыт и уровни", () => {
   it("опыт за тренировку", () => {
     expect(sessionXp("flashcards", 12)).toBe(12);
+    expect(sessionXp("perigee", 12, 9)).toBe(21);
+    expect(sessionXp("perigee", 12, 99)).toBe(24);
     expect(sessionXp("quiz", 10, 7)).toBe(17);
     expect(sessionXp("quiz", 10, 10)).toBe(30); // +10 за тест без ошибок
     expect(sessionXp("speed", 80, 55)).toBe(20); // игра — не больше 20 за раунд

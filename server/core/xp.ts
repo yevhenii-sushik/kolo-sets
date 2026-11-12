@@ -7,7 +7,7 @@ export const ORBIT_BONUS = 50;
 const GAME_ROUND_MAX = 20;
 const PERFECT_QUIZ_BONUS = 10;
 
-export type Kind = "flashcards" | "review" | "quiz" | "speed" | "survival" | "match";
+export type Kind = "flashcards" | "review" | "quiz" | "speed" | "survival" | "match" | "perigee";
 
 // Опыт за саму тренировку (до потолка)
 export function sessionXp(kind: Kind, cards: number, correct?: number): number {
@@ -15,6 +15,9 @@ export function sessionXp(kind: Kind, cards: number, correct?: number): number {
     case "flashcards":
     case "review":
       return cards;
+    // Сессия Perigee: 1 за слово + 1 за верный первый ответ, без бонуса за идеальный тест
+    case "perigee":
+      return cards + Math.min(correct ?? 0, cards);
     case "quiz": {
       const right = correct ?? 0;
       return cards + right + (right === cards && cards > 0 ? PERFECT_QUIZ_BONUS : 0);

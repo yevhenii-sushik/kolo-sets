@@ -16,6 +16,10 @@
       "intro": "The biggest Kolo update yet. Daily flames have made way for weekly orbits, practising now earns you rewards, and every language gets its own course.",
       "features": [
         {
+          "title": "Perigee sessions",
+          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, 3–5 minutes. Perigee first shows you new words, then asks you to spot them among options, and checks familiar ones by how well you know them — with options, typing or a flashcard. A mistake comes back a few steps later until it sticks. Answers in the Quiz, Speed round and Survival now count towards your schedule too — those modes carry the Perigee mark."
+        },
+        {
           "title": "A course for every language",
           "text": "Norwegian over here, Spanish over there: each course has its own sets and folders, so nothing gets mixed up. Pick your language once and switch courses right from the header."
         },

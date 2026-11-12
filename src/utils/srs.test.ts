@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { Card, KnowledgeLevel } from "../types";
-import { dayDiff, isDueAt, updateSRSData } from "./srs";
+import { dayDiff, introducedOn, isDueAt, levelForAnswer, updateSRSData } from "./srs";
 
 // Местное время: тесты не зависят от часового пояса машины
 const at = (day: number, hour = 12) => new Date(2026, 10, day, hour);
@@ -77,5 +77,27 @@ describe("updateSRSData", () => {
   it("карточка без srsData не ломается", () => {
     const card = { ...newCard(), srsData: undefined } as unknown as Card;
     expect(updateSRSData(card, KNOW, at(1)).srsData.interval).toBe(1);
+  });
+});
+
+describe("levelForAnswer", () => {
+  it("узнал — «Помню», вспомнил сам — «Знаю», ошибся — «Забыл»", () => {
+    expect(levelForAnswer({ kind: "choice", correct: true })).toBe(REMEMBER);
+    expect(levelForAnswer({ kind: "choice", correct: false })).toBe(KnowledgeLevel.FORGOT);
+    expect(levelForAnswer({ kind: "type", result: "exact" })).toBe(KNOW);
+    expect(levelForAnswer({ kind: "type", result: "close" })).toBe(REMEMBER);
+    expect(levelForAnswer({ kind: "type", result: "wrong" })).toBe(KnowledgeLevel.FORGOT);
+    expect(levelForAnswer({ kind: "self", level: DONT_KNOW })).toBe(DONT_KNOW);
+  });
+});
+
+describe("introducedAt", () => {
+  it("ставится при первой оценке и не меняется дальше", () => {
+    let card = updateSRSData(newCard(), REMEMBER, at(3, 9));
+    expect(card.srsData.introducedAt).toEqual(at(3, 9));
+    card = updateSRSData(card, KNOW, at(4));
+    expect(card.srsData.introducedAt).toEqual(at(3, 9));
+    expect(introducedOn([card, newCard()], at(3, 22))).toBe(1);
+    expect(introducedOn([card], at(4))).toBe(0);
   });
 });

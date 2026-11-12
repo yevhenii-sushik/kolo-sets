@@ -12,6 +12,8 @@ import ChoiceButton, { choiceState } from "../../components/session/ChoiceButton
 import { motion, AnimatePresence } from "framer-motion";
 import { playSound, semitones } from "../../utils/sounds";
 import { useRoundReport } from "../../components/session/useRoundReport";
+import { useSrsWriter } from "../../components/session/useSrsWriter";
+import { levelForAnswer } from "../../utils/srs";
 
 const MAX_LIVES = 3;
 
@@ -44,6 +46,13 @@ export default function SurvivalPage() {
   const [shakingLives, setShakingLives] = useState(false);
 
   const answeredRef = useRef(false);
+  // Первый ответ на каждое слово за раунд идёт в расписание Perigee (docs/specs/perigee.md):
+  // ошибка возвращает слово на завтра, верный ответ закрывает повторение, если слово пора было повторить
+  const writer = useSrsWriter();
+  const gradedRef = useRef(new Set<string>());
+  useEffect(() => {
+    if (phase === "gameover") writer.commit();
+  }, [phase, writer]);
   const startedAtRef = useRef(Date.now());
 
   useEffect(() => {
@@ -69,6 +78,7 @@ export default function SurvivalPage() {
       .then(col => {
         if (!col || col.cards.length < 4) { navigate(-1); return; }
         setCollection(col);
+        writer.load([col]);
         const shuffled = shuffle(col.cards);
         setQueue(shuffled);
         setChoices(makeChoices(shuffled[0], col.cards));
@@ -99,6 +109,10 @@ export default function SurvivalPage() {
 
     const card = queue[qIdx];
     const isCorrect = choice === card.translation;
+    if (!gradedRef.current.has(card.id)) {
+      gradedRef.current.add(card.id);
+      writer.record(collection.id, card.id, levelForAnswer({ kind: "choice", correct: isCorrect }));
+    }
 
     // Никаких side-effects внутри апдейтеров: StrictMode вызывает их дважды,
     // и счёт удваивался бы. streak и lives берём из state (они в deps),
@@ -145,6 +159,7 @@ export default function SurvivalPage() {
   }, [phase, choices, handleAnswer]);
 
   const restart = () => {
+    gradedRef.current.clear();
     if (!collection) return;
     const shuffled = shuffle(collection.cards);
     setQueue(shuffled);
@@ -168,6 +183,7 @@ export default function SurvivalPage() {
 
   return (
     <SessionShell
+      perigee
       title={t.words.collectionCard.modal.survival}
       subtitle={collection.name}
       onClose={() => navigate(-1)}

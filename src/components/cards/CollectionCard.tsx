@@ -29,6 +29,7 @@ import { Button, IconButton, Modal, cx } from "../../ui";
 import { useData } from "../../contexts/DataContext";
 import { courseName } from "../../courses/languages";
 import CourseFlag from "../courses/CourseFlag";
+import PerigeeTag from "../session/PerigeeTag";
 
 type MenuView = "main" | "folders" | "courses";
 
@@ -274,13 +275,14 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
       <Modal open={showModeModal} onClose={() => setShowModeModal(false)} title={collection.name} size="sm">
         <p className="-mt-2 mb-4 text-sm text-muted">{m.chooseMode}</p>
         <div className="grid gap-2">
-          <ModeButton icon={<Zap size={18} />} label={m.flashcards} desc={m.flashcardsDesc} onClick={() => start("flashcards")} />
+          <ModeButton icon={<Zap size={18} />} label={m.flashcards} desc={m.flashcardsDesc} onClick={() => start("flashcards")} perigee />
           <ModeButton
             icon={<BookOpen size={18} />}
             label={m.quiz}
             desc={tooFewQuiz ? m.quizNeedsMore : m.quizDesc}
             disabled={tooFewQuiz}
             onClick={() => start("quiz")}
+            perigee
           />
           <ModeButton
             icon={<Clock size={18} />}
@@ -288,6 +290,7 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
             desc={dueToday === 0 ? m.noDue : m.studyDueDesc}
             disabled={dueToday === 0}
             onClick={() => start("flashcards?due=1")}
+            perigee
           />
 
           <p className="mt-3 px-1 text-sm font-semibold text-fg">{m.games}</p>
@@ -297,6 +300,7 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
             desc={tooFewQuiz ? m.needMore : m.speedDesc}
             disabled={tooFewQuiz}
             onClick={() => start("speed")}
+            perigee
           />
           <ModeButton
             icon={<Shield size={18} />}
@@ -304,6 +308,7 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
             desc={tooFewQuiz ? m.needMore : m.survivalDesc}
             disabled={tooFewQuiz}
             onClick={() => start("survival")}
+            perigee
           />
           <ModeButton
             icon={<Link2 size={18} />}
@@ -313,12 +318,17 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
             onClick={() => start("match")}
           />
         </div>
+        {/* Что значит знак у режимов — одна строка внизу */}
+        <p className="mt-4 flex items-center gap-2 px-1 text-xs text-muted">
+          <PerigeeTag compact />
+          {t.words.perigee.legend}
+        </p>
       </Modal>
     </>
   );
 }
 
-function ModeButton({ icon, label, desc, onClick, disabled }: { icon: ReactNode; label: string; desc: string; onClick: () => void; disabled?: boolean }) {
+function ModeButton({ icon, label, desc, onClick, disabled, perigee = false }: { icon: ReactNode; label: string; desc: string; onClick: () => void; disabled?: boolean; perigee?: boolean }) {
   return (
     <button
       type="button"
@@ -327,10 +337,11 @@ function ModeButton({ icon, label, desc, onClick, disabled }: { icon: ReactNode;
       className="group flex w-full items-center gap-3 rounded-2xl border border-transparent bg-inset p-3 text-left transition-colors hover:border-accent/40 disabled:pointer-events-none disabled:opacity-45"
     >
       <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface text-accent-ink">{icon}</span>
-      <span className="min-w-0">
+      <span className="min-w-0 flex-1">
         <span className="block text-sm font-semibold text-fg">{label}</span>
         <span className="block text-xs text-muted">{desc}</span>
       </span>
+      {perigee && <PerigeeTag compact />}
     </button>
   );
 }

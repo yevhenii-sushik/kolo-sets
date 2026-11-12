@@ -10,6 +10,7 @@ import DailyGameWidget from "../../components/game/DailyGameWidget";
 import { FirstSteps, FirstStepsGuides, useFirstSteps } from "../../components/onboarding/FirstSteps";
 import { FEATURES } from "../../config/features";
 import { getDailyGoal, isDueCard, isNewCard } from "../../utils/storage";
+import { newLeftToday } from "../../perigee/plan";
 import { localDateKey } from "../../utils/progress";
 import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import { getLanguageInfo } from "../../locales/languages";
@@ -43,20 +44,20 @@ export default function HomePage() {
   // ── Что делать сейчас и цель дня ──
   const dueCount = useMemo(() => collections.reduce((n, col) => n + col.cards.filter(isDueCard).length, 0), [collections]);
   // Новые слова ещё не тренировались — они не «к повторению», но и «всё повторено» про них говорить нельзя
-  const newBySet = useMemo(
-    () => collections.map((c) => ({ id: c.id, n: c.cards.filter(isNewCard).length })).sort((a, b) => b.n - a.n),
-    [collections],
-  );
-  const newCount = newBySet.reduce((sum, c) => sum + c.n, 0);
+  const newCount = useMemo(() => collections.reduce((n, col) => n + col.cards.filter(isNewCard).length, 0), [collections]);
+  // Главная кнопка — сессия Perigee (docs/specs/perigee.md); исчерпан дневной лимит новых — предлагаем ещё, но не навязываем
+  const newAllowed = useMemo(() => newLeftToday(collections, new Date()), [collections]);
   const now =
     dueCount > 0
-      ? { title: count(dueCount, h.review.dueTitle), text: h.review.dueText, button: h.review.dueButton, to: "/review" }
+      ? { title: count(dueCount, h.review.dueTitle), text: h.review.dueText, button: h.review.dueButton, to: "/learn" }
       : collections.length === 0
         ? { title: h.review.startTitle, text: h.review.startText, button: h.review.startButton, to: "/words?new=1" }
         : totalCards === 0
           ? { title: h.review.emptyTitle, text: h.review.emptyText, button: h.review.emptyButton, to: `/collection/${collections[0].id}/edit` }
-          : newCount > 0
-            ? { title: count(newCount, h.review.newTitle), text: h.review.newText, button: h.review.newButton, to: `/collection/${newBySet[0].id}/flashcards` }
+          : newCount > 0 && newAllowed > 0
+            ? { title: count(newCount, h.review.newTitle), text: h.review.newText, button: h.review.newButton, to: "/learn" }
+            : newCount > 0
+            ? { title: h.review.limitTitle, text: h.review.limitText, button: h.review.limitButton, to: "/learn?extra=1" }
             : { title: h.review.doneTitle, text: h.review.doneText, button: h.review.doneButton, to: "/words" };
   const dailyGoal = getDailyGoal();
   const todayStudied = useMemo(() => {

@@ -50,6 +50,31 @@ const QUALITY: Record<KnowledgeLevel, number> = {
   [KnowledgeLevel.KNOW]: 5,
 };
 
+// Ответ в любом режиме → оценка SM-2 (docs/specs/perigee.md, «Что пишется в расписание»).
+// Узнать среди вариантов — «Помню»: слегка снижает лёгкость, и такие слова растут медленнее вспомненных
+export type AnswerOutcome =
+  | { kind: 'choice'; correct: boolean }
+  | { kind: 'type'; result: 'exact' | 'close' | 'wrong' }
+  | { kind: 'self'; level: KnowledgeLevel };
+
+export const levelForAnswer = (outcome: AnswerOutcome): KnowledgeLevel => {
+  switch (outcome.kind) {
+    case 'choice':
+      return outcome.correct ? KnowledgeLevel.REMEMBER : KnowledgeLevel.FORGOT;
+    case 'type':
+      return outcome.result === 'exact' ? KnowledgeLevel.KNOW : outcome.result === 'close' ? KnowledgeLevel.REMEMBER : KnowledgeLevel.FORGOT;
+    case 'self':
+      return outcome.level;
+  }
+};
+
+// Сколько слов впервые оценено сегодня — для дневного лимита новых слов
+export const introducedOn = (cards: Card[], now: Date): number =>
+  cards.filter((c) => {
+    const d = toDate(c.srsData?.introducedAt);
+    return !!d && dayDiff(d, now) === 0;
+  }).length;
+
 // Обновить SRS-данные карточки по оценке
 export const updateSRSData = (card: Card, level: KnowledgeLevel, now: Date = new Date()): Card => {
   const srs: SRSData = { ...(card.srsData ?? initialSRS(now)) };
@@ -84,6 +109,7 @@ export const updateSRSData = (card: Card, level: KnowledgeLevel, now: Date = new
     srs.nextReview = addDays(now, srs.interval);
   }
 
+  if (isNewCard(card)) srs.introducedAt = now;
   srs.lastReviewed = now;
   srs.totalReviews = (srs.totalReviews ?? 0) + 1;
   if (quality >= 3) srs.correctReviews = (srs.correctReviews ?? 0) + 1;

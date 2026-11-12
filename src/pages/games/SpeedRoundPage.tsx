@@ -13,6 +13,8 @@ import ChoiceButton, { choiceState } from "../../components/session/ChoiceButton
 import { motion, AnimatePresence } from "framer-motion";
 import { playSound, semitones } from "../../utils/sounds";
 import { useRoundReport } from "../../components/session/useRoundReport";
+import { useSrsWriter } from "../../components/session/useSrsWriter";
+import { levelForAnswer } from "../../utils/srs";
 
 const ROUND_DURATION = 60;
 
@@ -53,6 +55,13 @@ export default function SpeedRoundPage() {
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const answeredRef = useRef(false);
+  // Первый ответ на каждое слово за раунд идёт в расписание Perigee (docs/specs/perigee.md):
+  // ошибка возвращает слово на завтра, верный ответ закрывает повторение, если слово пора было повторить
+  const writer = useSrsWriter();
+  const gradedRef = useRef(new Set<string>());
+  useEffect(() => {
+    if (phase === "finished") writer.commit();
+  }, [phase, writer]);
 
   useRoundReport(phase === "finished", () =>
     collection ? { kind: "speed", collectionIds: [collection.id], cards: total, correct, durationSec: ROUND_DURATION - timeLeft } : null,
@@ -65,6 +74,7 @@ export default function SpeedRoundPage() {
       .then(col => {
         if (!col || col.cards.length < 4) { navigate(-1); return; }
         setCollection(col);
+        writer.load([col]);
         const shuffled = shuffle(col.cards);
         setQueue(shuffled);
         setChoices(makeChoices(shuffled[0], col.cards));
@@ -116,6 +126,10 @@ export default function SpeedRoundPage() {
 
     const card = queue[qIdx % queue.length];
     const isCorrect = choice === card.translation;
+    if (!gradedRef.current.has(card.id)) {
+      gradedRef.current.add(card.id);
+      writer.record(collection.id, card.id, levelForAnswer({ kind: "choice", correct: isCorrect }));
+    }
 
     // Никаких side-effects внутри апдейтеров: StrictMode вызывает их дважды,
     // и счёт удваивался бы. Считаем новую серию снаружи.
@@ -151,6 +165,7 @@ export default function SpeedRoundPage() {
   }, [phase, choices, handleAnswer]);
 
   const restart = () => {
+    gradedRef.current.clear();
     if (!collection) return;
     const shuffled = shuffle(collection.cards);
     clearInterval(timerRef.current!);
@@ -178,6 +193,7 @@ export default function SpeedRoundPage() {
 
   return (
     <SessionShell
+      perigee
       title={t.words.collectionCard.modal.speed}
       subtitle={collection.name}
       onClose={() => navigate(-1)}

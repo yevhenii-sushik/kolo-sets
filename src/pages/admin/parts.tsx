@@ -55,6 +55,7 @@ export const KINDS: Record<string, string> = {
   speed: "На скорость",
   survival: "Выживание",
   match: "Пары",
+  perigee: "Perigee",
 };
 
 // ── Загрузка ──
