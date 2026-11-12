@@ -113,11 +113,12 @@ export default function FlashcardsPage() {
         card={session.current.card}
         language={voiceForCollection(collection)}
         flipped={session.flipped}
+        exitTo={session.exitTo}
         onFlip={() => session.flip()}
         onSwipe={(dir) => session.rate(dir === "right" ? KnowledgeLevel.KNOW : KnowledgeLevel.DONT_KNOW)}
       />
 
-      <RatingBar isFlipped={session.flipped} onFlip={() => session.flip(true)} onRate={session.rate} coach={!!coach} />
+      <RatingBar isFlipped={session.flipped} onFlip={() => session.flip(true)} onRate={session.rate} previews={session.previews} coach={!!coach} />
 
       <FlashcardStatsModal
         isOpen={session.finished}

@@ -1,5 +1,6 @@
 import { Card, Collection, KnowledgeLevel } from "../types";
 import { AnswerOutcome, introducedOn, isDueAt, isNewCard, levelForAnswer, toDate } from "../utils/srs";
+import { blankExample } from "./cloze";
 
 // Сессия Perigee — чистая логика без React и Firebase: какие слова взять, какие шаги им дать,
 // куда вставить повтор после ошибки и что записать в расписание. Правила — docs/specs/perigee.md.
@@ -18,7 +19,8 @@ export interface PlanCard {
   isNew: boolean;
 }
 
-export type StepKind = "intro" | "choice" | "type" | "flash";
+// cloze — пропуск в примере, listen — аудирование (этап C): оба выбирают из вариантов и оцениваются как выбор
+export type StepKind = "intro" | "choice" | "type" | "flash" | "cloze" | "listen";
 
 export interface Step {
   id: number; // уникален в сессии — ключ для анимации
@@ -87,12 +89,28 @@ export const typeable = (word: string) => {
 
 type Draft = Omit<Step, "id">;
 
-// Формат проверки слова к повторению — по силе памяти
-function reviewStep(pc: PlanCard, random: () => number, canChoose: boolean): Draft {
+export interface QueueOptions {
+  canChoose?: boolean; // в курсе достаточно слов для четырёх вариантов
+  canListen?: (pc: PlanCard) => boolean; // есть голос для языка и звук не выключен
+}
+
+// Формат проверки слова к повторению — по силе памяти. Пропуск в примере и аудирование разбавляют
+// выбор у свежих слов и изредка появляются у выученных — для разнообразия, оцениваются как выбор
+function reviewStep(pc: PlanCard, random: () => number, { canChoose = true, canListen }: QueueOptions): Draft {
   const reps = pc.card.srsData?.repetitions ?? 0;
+  const cloze = canChoose && blankExample(pc.card) !== null;
+  const listen = canChoose && !!canListen?.(pc);
   const recall: StepKind = typeable(pc.card.word) ? "type" : "flash";
-  const kind: StepKind =
-    reps === 0 ? (canChoose ? "choice" : "flash") : reps === 1 ? recall : recall === "type" && random() < 0.5 ? "type" : "flash";
+  let kind: StepKind;
+  if (reps === 0) {
+    const options: StepKind[] = canChoose ? ["choice", ...(cloze ? ["cloze" as const] : []), ...(listen ? ["listen" as const] : [])] : ["flash"];
+    kind = options[Math.min(options.length - 1, Math.floor(random() * options.length))];
+  } else if (reps === 1) {
+    kind = recall;
+  } else {
+    const r = random();
+    kind = cloze && r < 0.2 ? "cloze" : listen && r < 0.35 ? "listen" : recall === "type" && random() < 0.5 ? "type" : "flash";
+  }
   return { key: pc.key, kind, reverse: true, graded: true };
 }
 
@@ -100,14 +118,18 @@ const chunk = <T,>(arr: T[], size: number): T[][] =>
   Array.from({ length: Math.ceil(arr.length / size) }, (_, i) => arr.slice(i * size, i * size + size));
 
 /**
- * Очередь шагов. Новые: знакомство → выбор перевода → выбор слова, группами по три.
+ * Очередь шагов. Новые: знакомство → выбор перевода (или аудирование) → выбор слова, группами по три.
  * Слова к повторению делятся между группами: сессия начинается с разминки знакомыми словами.
- * canChoose — в курсе достаточно слов для четырёх вариантов ответа.
  */
-export function buildQueue(cards: PlanCard[], random: () => number = Math.random, canChoose = true): Step[] {
-  const reviews = cards.filter((c) => !c.isNew).map((c) => reviewStep(c, random, canChoose));
-  const check = (c: PlanCard, reverse: boolean): Draft =>
-    canChoose ? { key: c.key, kind: "choice", reverse, graded: true } : { key: c.key, kind: "flash", reverse: true, graded: true };
+export function buildQueue(cards: PlanCard[], random: () => number = Math.random, options: QueueOptions = {}): Step[] {
+  const { canChoose = true, canListen } = options;
+  const reviews = cards.filter((c) => !c.isNew).map((c) => reviewStep(c, random, options));
+  const check = (c: PlanCard, reverse: boolean): Draft => {
+    if (!canChoose) return { key: c.key, kind: "flash", reverse: true, graded: true };
+    // Услышать только что выученное слово — половине новых слов вместо выбора перевода
+    const listen = !reverse && !!canListen?.(c) && random() < 0.5;
+    return { key: c.key, kind: listen ? "listen" : "choice", reverse, graded: true };
+  };
   const groups = chunk(cards.filter((c) => c.isNew), GROUP).map((g) => [
     ...g.map((c): Draft => ({ key: c.key, kind: "intro", reverse: false, graded: false })),
     ...g.map((c) => check(c, false)),
@@ -124,8 +146,9 @@ export function buildQueue(cards: PlanCard[], random: () => number = Math.random
   return drafts.map((d, id) => ({ ...d, id }));
 }
 
-export function startSession(cards: PlanCard[], random: () => number = Math.random, canChoose = true): SessionState {
-  const queue = buildQueue(cards, random, canChoose);
+export function startSession(cards: PlanCard[], random: () => number = Math.random, options: QueueOptions = {}): SessionState {
+  const canChoose = options.canChoose ?? true;
+  const queue = buildQueue(cards, random, options);
   return {
     cards: Object.fromEntries(cards.map((c) => [c.key, c])),
     queue,

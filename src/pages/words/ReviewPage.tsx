@@ -91,11 +91,12 @@ export default function ReviewPage() {
         card={current.card}
         language={currentCollection ? voiceForCollection(currentCollection) : undefined}
         flipped={session.flipped}
+        exitTo={session.exitTo}
         onFlip={() => session.flip()}
         onSwipe={(dir) => session.rate(dir === "right" ? KnowledgeLevel.KNOW : KnowledgeLevel.DONT_KNOW)}
       />
 
-      <RatingBar isFlipped={session.flipped} onFlip={() => session.flip(true)} onRate={session.rate} />
+      <RatingBar isFlipped={session.flipped} onFlip={() => session.flip(true)} onRate={session.rate} previews={session.previews} />
 
       <FlashcardStatsModal
         isOpen={session.finished}

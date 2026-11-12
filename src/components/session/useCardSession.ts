@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Card, Collection, FlashcardStats, KnowledgeLevel } from "../../types";
 import { shuffle as shuffled } from "../../utils/gameUtils";
+import { previewIntervals } from "../../utils/srs";
 import { playSound, RATING_PITCH } from "../../utils/sounds";
 import { useSrsWriter } from "./useSrsWriter";
 
@@ -42,6 +43,8 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   const [finished, setFinished] = useState(false);
   const [rated, setRated] = useState<Rated[]>([]);
   const [duration, setDuration] = useState(0);
+  // Куда улетает оценённая карточка (CardStage): вправо — вспомнил, влево — нет, 0 — отмена и перемешивание
+  const [exitTo, setExitTo] = useState<-1 | 0 | 1>(0);
 
   const startedAt = useRef(Date.now());
   // Одна оценка на показ карточки: свайп и клик могут прийти в одном кадре. Снимается переворотом
@@ -59,6 +62,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     setFinished(false);
     setRated([]);
     setDuration(0);
+    setExitTo(0);
     startedAt.current = Date.now();
     lock.current = false;
   };
@@ -86,6 +90,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     const item = items[index];
     const before = latest(item);
     writer.record(item.collectionId, item.card.id, level);
+    setExitTo(level === KnowledgeLevel.REMEMBER || level === KnowledgeLevel.KNOW ? 1 : -1);
     playSound("card-next", { rate: RATING_PITCH[level] });
 
     const nextRated = [...rated, { index, collectionId: item.collectionId, before, level }];
@@ -117,6 +122,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     writer.restore(last.collectionId, last.before);
     setRated(rated.slice(0, -1));
     setIndex(last.index);
+    setExitTo(0);
     setFlipped(true);
     lock.current = false;
     playSound("card-flip");
@@ -159,9 +165,15 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     };
   }, [rated, items.length, duration]);
 
+  // Подписи на кнопках оценки — по актуальной версии карточки
+  const currentItem = items[index] as SessionItem | undefined;
+  const previews = currentItem && flipped && !finished ? previewIntervals(latest(currentItem)) : undefined;
+
   return {
     items,
     index,
+    exitTo,
+    previews,
     current: items[index] as SessionItem | undefined,
     flipped,
     finished,

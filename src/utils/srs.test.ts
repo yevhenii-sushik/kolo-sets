@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { Card, KnowledgeLevel } from "../types";
-import { dayDiff, introducedOn, isDueAt, levelForAnswer, updateSRSData } from "./srs";
+import { dayDiff, introducedOn, isDueAt, levelForAnswer, previewIntervals, updateSRSData } from "./srs";
 
 // Местное время: тесты не зависят от часового пояса машины
 const at = (day: number, hour = 12) => new Date(2026, 10, day, hour);
@@ -99,5 +99,20 @@ describe("introducedAt", () => {
     expect(card.srsData.introducedAt).toEqual(at(3, 9));
     expect(introducedOn([card, newCard()], at(3, 22))).toBe(1);
     expect(introducedOn([card], at(4))).toBe(0);
+  });
+});
+
+describe("previewIntervals", () => {
+  it("показывает, через сколько дней слово вернётся при каждой оценке", () => {
+    let card = updateSRSData(newCard(), KNOW, at(1));
+    card = updateSRSData(card, KNOW, at(2)); // 6 дней, срок 8-го
+    expect(previewIntervals(card, at(8))).toEqual({
+      [DONT_KNOW]: 1,
+      [KnowledgeLevel.FORGOT]: 1,
+      [REMEMBER]: Math.round(6 * 2.7),
+      [KNOW]: Math.round(6 * 2.7),
+    });
+    // Назавтра после повтора «Знаю» не сдвигает расписание: до срока остаётся 5 дней
+    expect(previewIntervals(card, at(3))[KNOW]).toBe(5);
   });
 });

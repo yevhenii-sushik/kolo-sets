@@ -16,14 +16,23 @@ export default function RatingBar({
   onFlip,
   onRate,
   coach = false,
+  previews,
 }: {
   isFlipped: boolean;
   onFlip: () => void;
   onRate: (level: KnowledgeLevel) => void;
   coach?: boolean;
+  previews?: Record<KnowledgeLevel, number>; // через сколько дней слово вернётся при каждой оценке
 }) {
   const { t } = useI18n();
   const f = t.words.flashcards;
+  // «1 д», «3 мес», «2 г» — коротко, чтобы влезло под оценку
+  const interval = (days: number) =>
+    days < 30
+      ? f.interval.days.replace("{n}", String(Math.max(1, days)))
+      : days < 365
+        ? f.interval.months.replace("{n}", String(Math.round(days / 30.4)))
+        : f.interval.years.replace("{n}", String(Math.round(days / 365)));
 
   return (
     <div className="shrink-0 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-8">
@@ -46,7 +55,10 @@ export default function RatingBar({
                 )}
               >
                 <span className="hidden h-5 w-5 place-items-center rounded-md bg-surface/60 text-2xs sm:grid">{i + 1}</span>
-                {f.levels[key]}
+                <span className="grid leading-tight">
+                  <span>{f.levels[key]}</span>
+                  {previews && <span className="text-2xs font-medium opacity-75">{interval(previews[level])}</span>}
+                </span>
               </button>
             ))}
           </div>

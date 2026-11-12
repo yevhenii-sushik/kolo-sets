@@ -27,6 +27,11 @@ export const getAvailableVoices = (lang?: string): VoiceOption[] => {
   }));
 };
 
+// Есть ли голос для языка (nb-NO → любой nb-*). Без него браузер читает слово чужим голосом —
+// для аудирования это хуже, чем ничего
+export const hasVoiceFor = (lang?: string): boolean =>
+  isTTSSupported() && !!lang && getAvailableVoices(lang.split('-')[0]).length > 0;
+
 // Озвучить текст
 export const speak = (
   text: string,

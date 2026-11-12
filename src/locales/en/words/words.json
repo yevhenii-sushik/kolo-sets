@@ -121,6 +121,11 @@
       "remember": "Remember",
       "know": "Know"
     },
+    "interval": {
+      "days": "{n} d",
+      "months": "{n} mo",
+      "years": "{n} y"
+    },
     "stats": {
       "title": "Great job!",
       "subtitle": "Session complete. You did great!",
@@ -314,6 +319,9 @@
     "pickTranslation": "Pick the translation",
     "pickWord": "Pick the word",
     "typeWord": "Write the word",
+    "fillGap": "Which word is missing?",
+    "listen": "What do you hear?",
+    "listenAgain": "Tap to listen again",
     "dontRemember": "I don't remember",
     "continue": "Continue",
     "result": {

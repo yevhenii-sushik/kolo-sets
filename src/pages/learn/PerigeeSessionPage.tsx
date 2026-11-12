@@ -6,7 +6,8 @@ import { getCollections } from "../../utils/storage";
 import { AnswerOutcome } from "../../utils/srs";
 import { canMakeChoices } from "../../utils/gameUtils";
 import { plural } from "../../utils/plural";
-import { playSound } from "../../utils/sounds";
+import { getSoundEnabled, playSound } from "../../utils/sounds";
+import { hasVoiceFor, isTTSSupported } from "../../utils/tts";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
@@ -17,7 +18,7 @@ import SessionShell from "../../components/session/SessionShell";
 import SessionResult from "../../components/session/SessionResult";
 import SessionLoadError from "../../components/session/SessionLoadError";
 import { useSrsWriter } from "../../components/session/useSrsWriter";
-import { ChoiceStep, FlashStep, IntroStep, TypeStep } from "../../components/perigee/Steps";
+import { ChoiceStep, ClozeStep, FlashStep, IntroStep, ListenStep, TypeStep } from "../../components/perigee/Steps";
 import {
   answer,
   dueTomorrow,
@@ -67,7 +68,16 @@ export default function PerigeeSessionPage() {
     const everyCard = all.flatMap((c) => c.cards);
     setPool(everyCard);
     setCollections(new Map(all.map((c) => [c.id, c])));
-    const fresh = startSession(cards, Math.random, canMakeChoices(everyCard, "translation") && canMakeChoices(everyCard, "word"));
+    const byId = new Map(all.map((c) => [c.id, c]));
+    // Аудирование — только если звук не выключен и у браузера есть голос языка курса
+    const canListen = (pc: { collectionId: string }) => {
+      const col = byId.get(pc.collectionId);
+      return getSoundEnabled() && !!col && hasVoiceFor(voiceForCollection(col));
+    };
+    const fresh = startSession(cards, Math.random, {
+      canChoose: canMakeChoices(everyCard, "translation") && canMakeChoices(everyCard, "word"),
+      canListen,
+    });
     stateRef.current = fresh;
     setState(fresh);
     setOutcome(null);
@@ -90,6 +100,11 @@ export default function PerigeeSessionPage() {
       setLoadError(true);
     }
   };
+
+  // Голоса браузер грузит не сразу — просим список заранее, к началу сессии он будет готов
+  useEffect(() => {
+    if (isTTSSupported()) window.speechSynthesis.getVoices();
+  }, []);
 
   const startedRef = useRef(false);
   useEffect(() => {
@@ -175,7 +190,13 @@ export default function PerigeeSessionPage() {
           {step.kind === "type" && (
             <TypeStep card={item.card} others={others} voice={voice} onAnswer={(result) => onAnswer({ kind: "type", result })} />
           )}
-          {step.kind === "flash" && <FlashStep card={item.card} voice={voice} onRate={(level) => onAnswer({ kind: "self", level })} />}
+          {step.kind === "flash" && (
+            <FlashStep card={item.card} voice={voice} graded={step.graded} onRate={(level) => onAnswer({ kind: "self", level })} />
+          )}
+          {step.kind === "cloze" && <ClozeStep card={item.card} pool={pool} onAnswer={(correct) => onAnswer({ kind: "choice", correct })} />}
+          {step.kind === "listen" && (
+            <ListenStep card={item.card} pool={pool} voice={voice} onAnswer={(correct) => onAnswer({ kind: "choice", correct })} />
+          )}
         </motion.div>
       </AnimatePresence>
 

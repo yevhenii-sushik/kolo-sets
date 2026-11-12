@@ -6,7 +6,9 @@ import { useI18n } from "../../contexts/I18nContext";
 import { posLabel } from "../../data/partsOfSpeech";
 import { isTTSSupported, speak } from "../../utils/tts";
 import { playSound, RATING_PITCH } from "../../utils/sounds";
+import { previewIntervals } from "../../utils/srs";
 import { makeChoicesFor } from "../../utils/gameUtils";
+import { blankExample } from "../../perigee/cloze";
 import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
 import CardStage from "../session/CardStage";
@@ -93,21 +95,26 @@ export function IntroStep({ card, voice, onNext }: { card: CardData; voice?: str
   );
 }
 
-// ── Выбор из четырёх: слово → перевод или перевод → слово ──
-export function ChoiceStep({
+// ── Выбор из четырёх: общая основа для выбора, пропуска в примере и аудирования ──
+function ChoiceBase({
   card,
   pool,
-  reverse,
+  field,
+  label,
+  prompt,
+  reveal,
   onAnswer,
 }: {
   card: CardData;
   pool: CardData[];
-  reverse: boolean;
+  field: "word" | "translation";
+  label: string;
+  prompt: (answered: boolean, right: boolean) => React.ReactNode;
+  reveal?: React.ReactNode; // что показать после ответа (слово, которое прозвучало)
   onAnswer: (correct: boolean) => void;
 }) {
   const { t } = useI18n();
   const p = t.words.perigee;
-  const field = reverse ? "word" : "translation";
   const options = useMemo(() => makeChoicesFor(card, pool, field), [card, pool, field]);
   const correct = card[field];
   const [chosen, setChosen] = useState<string | null>(null);
@@ -120,7 +127,7 @@ export function ChoiceStep({
     setChosen(option);
     const right = option === correct;
     playSound(right ? "answer-correct" : "answer-wrong");
-    if (right) timer.current = setTimeout(() => onAnswer(true), AUTO_NEXT_MS);
+    if (right) timer.current = setTimeout(() => onAnswer(true), reveal ? AUTO_NEXT_MS * 2 : AUTO_NEXT_MS);
   };
 
   useEffect(() => {
@@ -135,18 +142,109 @@ export function ChoiceStep({
 
   return (
     <Shell>
-      <Prompt label={reverse ? p.pickWord : p.pickTranslation} text={reverse ? card.translation : card.word} pos={card.partOfSpeech} />
+      <div className="grid gap-2 text-center">
+        <p className="text-sm font-medium text-muted">{label}</p>
+        {prompt(chosen !== null, chosen === correct)}
+      </div>
       <div className="grid gap-2 sm:grid-cols-2">
         {options.map((option, i) => (
           <ChoiceButton key={`${option}-${i}`} label={option} hint={String(i + 1)} state={choiceState(option, chosen, correct)} onClick={() => pick(option)} />
         ))}
       </div>
+      {chosen !== null && reveal}
       {wrong && (
         <Button size="lg" variant="inverse" fullWidth iconRight={<ArrowRight size={18} />} onClick={() => onAnswer(false)}>
           {p.continue}
         </Button>
       )}
     </Shell>
+  );
+}
+
+const promptText = (text: string, pos?: string, posName?: (pos: string) => string) => (
+  <>
+    <h2 dir="auto" className="font-display text-3xl font-extrabold leading-tight text-fg wrap-break-word sm:text-4xl">{text}</h2>
+    {pos && posName && <p className="text-sm text-faint">{posName(pos)}</p>}
+  </>
+);
+
+// Слово → выбрать перевод (forward) или перевод → выбрать слово (reverse)
+export function ChoiceStep({ card, pool, reverse, onAnswer }: { card: CardData; pool: CardData[]; reverse: boolean; onAnswer: (correct: boolean) => void }) {
+  const { t } = useI18n();
+  const p = t.words.perigee;
+  return (
+    <ChoiceBase
+      card={card}
+      pool={pool}
+      field={reverse ? "word" : "translation"}
+      label={reverse ? p.pickWord : p.pickTranslation}
+      prompt={() => promptText(reverse ? card.translation : card.word, card.partOfSpeech, (pos) => posLabel(pos, t.words.pos))}
+      onAnswer={onAnswer}
+    />
+  );
+}
+
+// Пропуск в примере: какое слово пропущено (src/perigee/cloze.ts)
+export function ClozeStep({ card, pool, onAnswer }: { card: CardData; pool: CardData[]; onAnswer: (correct: boolean) => void }) {
+  const { t } = useI18n();
+  const blank = useMemo(() => blankExample(card), [card]);
+  if (!blank) return <ChoiceStep card={card} pool={pool} reverse onAnswer={onAnswer} />;
+  return (
+    <ChoiceBase
+      card={card}
+      pool={pool}
+      field="word"
+      label={t.words.perigee.fillGap}
+      prompt={(answered, right) => (
+        <p dir="auto" className="text-2xl font-semibold leading-snug text-fg sm:text-3xl">
+          {blank.before}
+          {answered ? (
+            <span className={cx("rounded-md px-1", right ? "bg-success-soft text-success" : "bg-danger-soft text-danger")}>{blank.answer}</span>
+          ) : (
+            <span className="mx-1 inline-block min-w-16 border-b-2 border-accent align-baseline">&nbsp;</span>
+          )}
+          {blank.after}
+        </p>
+      )}
+      reveal={<p className="text-center text-sm text-muted">{card.word} — <span className="text-accent-ink">{card.translation}</span></p>}
+      onAnswer={onAnswer}
+    />
+  );
+}
+
+// Аудирование: слово звучит само (и по кнопке), выбрать перевод; после ответа видно, что прозвучало
+export function ListenStep({ card, pool, voice, onAnswer }: { card: CardData; pool: CardData[]; voice?: string; onAnswer: (correct: boolean) => void }) {
+  const { t } = useI18n();
+  const p = t.words.perigee;
+  useEffect(() => {
+    speak(card.word, voice);
+  }, [card.word, voice]);
+  return (
+    <ChoiceBase
+      card={card}
+      pool={pool}
+      field="translation"
+      label={p.listen}
+      prompt={() => (
+        <div className="grid justify-items-center gap-2 py-2">
+          <button
+            type="button"
+            aria-label={p.listenAgain}
+            onClick={() => speak(card.word, voice)}
+            className="grid h-20 w-20 place-items-center rounded-full bg-accent-soft text-accent-ink transition-colors hover:bg-accent/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            <Volume2 size={36} />
+          </button>
+          <p className="text-xs text-faint">{p.listenAgain}</p>
+        </div>
+      )}
+      reveal={
+        <p dir="auto" className="text-center font-display text-2xl font-extrabold text-fg">
+          {card.word}
+        </p>
+      }
+      onAnswer={onAnswer}
+    />
   );
 }
 
@@ -261,7 +359,7 @@ export function TypeStep({
 }
 
 // ── Флэшкарта наоборот: перевод → вспомнить слово → оценить ──
-export function FlashStep({ card, voice, onRate }: { card: CardData; voice?: string; onRate: (level: KnowledgeLevel) => void }) {
+export function FlashStep({ card, voice, graded = true, onRate }: { card: CardData; voice?: string; graded?: boolean; onRate: (level: KnowledgeLevel) => void }) {
   const [flipped, setFlipped] = useState(false);
   const rated = useRef(false);
   const flip = (next = !flipped) => {
@@ -304,7 +402,8 @@ export function FlashStep({ card, voice, onRate }: { card: CardData; voice?: str
         onFlip={() => flip()}
         onSwipe={(dir) => rate(dir === "right" ? KnowledgeLevel.KNOW : KnowledgeLevel.DONT_KNOW)}
       />
-      <RatingBar isFlipped={flipped} onFlip={() => flip(true)} onRate={rate} />
+      {/* Интервалы на кнопках — только когда оценка пойдёт в расписание, а не на повторе после ошибки */}
+      <RatingBar isFlipped={flipped} onFlip={() => flip(true)} onRate={rate} previews={flipped && graded ? previewIntervals(card) : undefined} />
     </>
   );
 }

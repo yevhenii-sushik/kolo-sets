@@ -121,6 +121,11 @@
       "remember": "Husker",
       "know": "Kan"
     },
+    "interval": {
+      "days": "{n} d",
+      "months": "{n} mnd",
+      "years": "{n} år"
+    },
     "stats": {
       "title": "Bra jobbet!",
       "subtitle": "Sesjonen er fullført. Du gjorde det bra!",
@@ -314,6 +319,9 @@
     "pickTranslation": "Velg oversettelsen",
     "pickWord": "Velg ordet",
     "typeWord": "Skriv ordet",
+    "fillGap": "Hvilket ord mangler?",
+    "listen": "Hva hører du?",
+    "listenAgain": "Trykk for å høre igjen",
     "dontRemember": "Husker ikke",
     "continue": "Videre",
     "result": {

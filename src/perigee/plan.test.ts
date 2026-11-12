@@ -77,7 +77,7 @@ describe("buildQueue", () => {
   });
 
   it("в маленьком курсе вместо выбора — флэшкарта", () => {
-    const steps = buildQueue([plan(card(), true), plan(due(1, 0), false)], Math.random, false);
+    const steps = buildQueue([plan(card(), true), plan(due(1, 0), false)], Math.random, { canChoose: false });
     expect(steps.map((s) => s.kind)).toEqual(["flash", "intro", "flash"]);
   });
 });
@@ -133,5 +133,26 @@ describe("dueTomorrow", () => {
     const tomorrowCard = card({ interval: 1, repetitions: 1, nextReview: new Date(2026, 10, 13, 9) });
     const later = card({ interval: 6, repetitions: 2, nextReview: new Date(2026, 10, 18) });
     expect(dueTomorrow([set([tomorrowCard, later, due(2)])], now)).toBe(2);
+  });
+});
+
+describe("пропуск и аудирование", () => {
+  const withExample = (reps: number) => plan({ ...due(1, reps), word: "hus", example: "Huset er gammelt." }, false);
+
+  it("у свежего слова пропуск и аудирование разбавляют выбор", () => {
+    const kinds = [0, 0.4, 0.8].map((r) => buildQueue([withExample(0)], () => r, { canListen: () => true })[0].kind);
+    expect(kinds).toEqual(["choice", "cloze", "listen"]);
+  });
+
+  it("пропуск — только если слово нашлось в примере; аудирование — только с голосом", () => {
+    expect(buildQueue([plan(due(1, 0), false)], () => 0.9)[0].kind).toBe("choice");
+    expect(buildQueue([withExample(3)], () => 0.1)[0].kind).toBe("cloze");
+    expect(buildQueue([withExample(3)], () => 0.3, { canListen: () => true })[0].kind).toBe("listen");
+    expect(buildQueue([withExample(3)], () => 0.3)[0].kind).toBe("type");
+  });
+
+  it("новое слово с голосом может начать проверку с аудирования", () => {
+    const steps = buildQueue([plan(card(), true)], () => 0.1, { canListen: () => true });
+    expect(steps.map((s) => s.kind)).toEqual(["intro", "listen", "choice"]);
   });
 });

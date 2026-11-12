@@ -125,6 +125,11 @@
       "remember": "Пам'ятаю",
       "know": "Знаю"
     },
+    "interval": {
+      "days": "{n} д",
+      "months": "{n} міс",
+      "years": "{n} р"
+    },
     "stats": {
       "title": "Чудово!",
       "subtitle": "Сесію завершено. Чудова робота!",
@@ -322,6 +327,9 @@
     "pickTranslation": "Обери переклад",
     "pickWord": "Обери слово",
     "typeWord": "Напиши слово",
+    "fillGap": "Яке слово пропущено?",
+    "listen": "Що ти чуєш?",
+    "listenAgain": "Натисни, щоб послухати ще раз",
     "dontRemember": "Не пам'ятаю",
     "continue": "Далі",
     "result": {

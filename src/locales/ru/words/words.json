@@ -125,6 +125,11 @@
       "remember": "Помню",
       "know": "Знаю"
     },
+    "interval": {
+      "days": "{n} д",
+      "months": "{n} мес",
+      "years": "{n} г"
+    },
     "stats": {
       "title": "Отлично!",
       "subtitle": "Сессия завершена. Хорошая работа!",
@@ -322,6 +327,9 @@
     "pickTranslation": "Выбери перевод",
     "pickWord": "Выбери слово",
     "typeWord": "Напиши слово",
+    "fillGap": "Какое слово пропущено?",
+    "listen": "Что ты слышишь?",
+    "listenAgain": "Нажми, чтобы послушать ещё раз",
     "dontRemember": "Не помню",
     "continue": "Дальше",
     "result": {

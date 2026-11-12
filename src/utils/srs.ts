@@ -116,3 +116,14 @@ export const updateSRSData = (card: Card, level: KnowledgeLevel, now: Date = new
 
   return { ...card, srsData: srs };
 };
+
+// Через сколько дней слово вернётся при каждой оценке — подписи на кнопках оценки
+export const previewIntervals = (card: Card, now: Date = new Date()): Record<KnowledgeLevel, number> => {
+  const days = (level: KnowledgeLevel) => Math.max(0, dayDiff(now, toDate(updateSRSData(card, level, now).srsData.nextReview) ?? now));
+  return {
+    [KnowledgeLevel.DONT_KNOW]: days(KnowledgeLevel.DONT_KNOW),
+    [KnowledgeLevel.FORGOT]: days(KnowledgeLevel.FORGOT),
+    [KnowledgeLevel.REMEMBER]: days(KnowledgeLevel.REMEMBER),
+    [KnowledgeLevel.KNOW]: days(KnowledgeLevel.KNOW),
+  };
+};

@@ -10,7 +10,7 @@ export type AnswerVerdict =
 
 // Артикли и частицы инфинитива, которые часто пишут (или не пишут) перед словом.
 // Неоднозначные слова («at», «as», «o», «i») не берём: «i dag» без «i» — уже другое слово.
-const ARTICLES = new Set([
+export const ARTICLES = new Set([
   "a", "an", "the", "to", // en
   "en", "ei", "et", "ett", "å", "att", // nb, sv, da
   "der", "die", "das", "ein", "eine", "einen", "zu", // de
