@@ -18,39 +18,40 @@ import CookieConsentBanner from "./components/legal/CookieConsentBanner";
 import MainLayout from "./pages/layouts/MainLayout";
 import EmptyLayout from "./pages/layouts/EmptyLayout";
 import NavLayout from "./pages/layouts/NavLayout";
+import { pages } from "./pages/lazyPages";
+import AppSplash from "./components/AppSplash";
 
-// Pages (lazy — каждая в отдельном чанке)
-const LandingPage = lazy(() => import("./pages/auth/LandingPage"));
-const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
-const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
-const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPasswordPage"));
-const HomePage = lazy(() => import("./pages/home/HomePage"));
+// Pages (lazy — каждая в отдельном чанке; загрузчики — в pages/lazyPages.ts, оттуда же фоновая подгрузка)
+const LandingPage = lazy(pages.landing);
+const LoginPage = lazy(pages.login);
+const RegisterPage = lazy(pages.register);
+const ForgotPasswordPage = lazy(pages.forgotPassword);
+const HomePage = lazy(pages.home);
 // Public legal & support pages
-const LegalLayout = lazy(() => import("./pages/legal/LegalLayout"));
-const LegalDocumentPage = lazy(() => import("./pages/legal/LegalDocumentPage"));
-const GuideLayout = lazy(() => import("./pages/guide/GuideLayout"));
-const GuidePage = lazy(() => import("./pages/guide/GuidePage"));
+const LegalLayout = lazy(pages.legalLayout);
+const LegalDocumentPage = lazy(pages.legalDocument);
+const GuideLayout = lazy(pages.guideLayout);
+const GuidePage = lazy(pages.guide);
 // Витрина дизайн-системы — только в режиме разработки, в продакшен-сборку не попадает
 const DesignPage = import.meta.env.DEV ? lazy(() => import("./pages/design/DesignPage")) : null;
-const NotFoundPage = lazy(() => import("./pages/error/NotFoundPage"));
-const WordsPage = lazy(() => import("./pages/words/WordsPage"));
-const CollectionEditPage = lazy(() => import("./pages/words/CollectionEditPage"));
-const FlashcardsPage = lazy(() => import("./pages/words/FlashcardsPage"));
-const PerigeeSessionPage = lazy(() => import("./pages/learn/PerigeeSessionPage"));
-const QuizPage = lazy(() => import("./pages/words/QuizPage"));
-const SpeedRoundPage = lazy(() => import("./pages/games/SpeedRoundPage"));
-const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
-const RewardsPage = lazy(() => import("./pages/rewards/RewardsPage"));
-const OtherPage = lazy(() => import("./pages/other/OtherPage"));
-const SettingsPage = lazy(() => import("./pages/other/SettingsPage"));
-const UpdatesPage = lazy(() => import("./pages/other/UpdatesPage"));
-const SupportPage = lazy(() => import("./pages/other/SupportPage"));
-const ExplorePage = lazy(() => import("./pages/other/ExplorePage"));
-const StartPage = lazy(() => import("./pages/courses/StartPage"));
-const CoursesPage = lazy(() => import("./pages/courses/CoursesPage"));
-const AddCoursePage = lazy(() => import("./pages/courses/AddCoursePage"));
-// Админ-панель — отдельный чанк, обычные пользователи его не загружают (docs/specs/admin.md)
-const AdminPage = lazy(() => import("./pages/admin/AdminPage"));
+const NotFoundPage = lazy(pages.notFound);
+const WordsPage = lazy(pages.words);
+const CollectionEditPage = lazy(pages.collectionEdit);
+const FlashcardsPage = lazy(pages.flashcards);
+const PerigeeSessionPage = lazy(pages.perigee);
+const QuizPage = lazy(pages.quiz);
+const SpeedRoundPage = lazy(pages.speed);
+const ProfilePage = lazy(pages.profile);
+const RewardsPage = lazy(pages.rewards);
+const OtherPage = lazy(pages.other);
+const SettingsPage = lazy(pages.settings);
+const UpdatesPage = lazy(pages.updates);
+const SupportPage = lazy(pages.support);
+const ExplorePage = lazy(pages.explore);
+const StartPage = lazy(pages.start);
+const CoursesPage = lazy(pages.courses);
+const AddCoursePage = lazy(pages.addCourse);
+const AdminPage = lazy(pages.admin);
 
 // Ссылка на убранный режим набора → похожий режим того же набора
 function SetRedirect({ to }: { to: "speed" | "learn" }) {
@@ -101,10 +102,12 @@ function AppContent() {
   return (
     <ErrorBoundary>
     <ReminderScheduler />
-    <Suspense fallback={null}>
     <AchievementUnlockBanner />
     <ProgressMomentsHost />
     <CookieConsentBanner />
+    {/* Граница для страниц без своего макета (вход, лендинг, выбор языка) и для ленивых макетов.
+        У MainLayout, EmptyLayout и NavLayout — свои границы: шапка и меню не пропадают, пока грузится страница */}
+    <Suspense fallback={<AppSplash />}>
     <Routes>
       {/* 1. Группа публичных маршрутов */}
       <Route
@@ -233,7 +236,9 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
+    // v7_startTransition: переход — в startTransition, и пока грузится код новой страницы,
+    // на экране остаётся прежняя, а не пустое место (src/design/README.md → «Загрузка»)
+    <BrowserRouter future={{ v7_startTransition: true }}>
       <I18nProvider>
         <AuthProvider>
           <DataProvider>

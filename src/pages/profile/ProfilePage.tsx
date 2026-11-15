@@ -45,7 +45,7 @@ import {
   User,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Badge, Button, ButtonLink, Card, Field, Heading, IconButton, Input, Spinner, Text, cx } from "../../ui";
+import { Badge, Button, ButtonLink, Card, Field, Heading, IconButton, Input, Loading, Skeleton, Spinner, Text, cx } from "../../ui";
 
 const ACHIEVEMENTS_PREVIEW_COUNT = 3;
 
@@ -243,15 +243,18 @@ export default function ProfilePage() {
     return ALL_ACHIEVEMENTS.filter((a) => !previewIds.has(a.id));
   }, [previewAchievements]);
 
+  // Скелетон — только при первом входе с устройства: дальше профиль сразу берётся из копии
   if (profileLoading && !profile)
     return (
-      <div className="grid animate-pulse gap-4 sm:gap-5">
-        <div className="h-40 rounded-4xl border border-line bg-surface" />
-        <div className="grid gap-4 sm:gap-5 md:grid-cols-[7fr_5fr]">
-          <div className="h-64 rounded-4xl bg-inset" />
-          <div className="h-64 rounded-4xl border border-line bg-surface" />
+      <Loading label={t.loading}>
+        <div className="grid gap-4 sm:gap-5">
+          <Skeleton tone="surface" className="h-40 rounded-4xl" />
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-[7fr_5fr]">
+            <Skeleton className="h-64 rounded-4xl" />
+            <Skeleton tone="surface" className="h-64 rounded-4xl" />
+          </div>
         </div>
-      </div>
+      </Loading>
     );
 
   // Заглушка когда профиль не загрузился

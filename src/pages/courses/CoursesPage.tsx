@@ -8,7 +8,7 @@ import { useToast } from "../../hooks/useToast";
 import { getLanguageInfo } from "../../locales/languages";
 import { courseEndonym, courseName, getCourseLanguage, variantRegionName } from "../../courses/languages";
 import { plural } from "../../utils/plural";
-import { Badge, Button, ButtonLink, Card, Field, Select } from "../../ui";
+import { Badge, Button, ButtonLink, Card, Field, Select, Skeleton } from "../../ui";
 import CourseFlag from "../../components/courses/CourseFlag";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
@@ -20,7 +20,7 @@ export default function CoursesPage() {
   const c = t.courses;
   const locale = getLanguageInfo(language).htmlLang;
   const navigate = useNavigate();
-  const { courses, activeCourse, allCollections, setActiveCourse, updateCourseVoice, removeCourse } = useData();
+  const { courses, activeCourse, allCollections, collectionsLoading, setActiveCourse, updateCourseVoice, removeCourse } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { error, toastState, hideToast } = useToast();
   const [removing, setRemoving] = useState<string | null>(null);
@@ -77,13 +77,20 @@ export default function CoursesPage() {
                   <p className="font-display text-xl font-extrabold text-fg">{name}</p>
                   {active && <Badge tone="accent">{c.current}</Badge>}
                 </div>
-                <p className="text-sm text-muted">
+                <p className="text-sm text-muted" aria-busy={collectionsLoading || undefined}>
                   {endonym !== name && (
                     <span lang={course.id} dir="auto">
                       {endonym} ·{" "}
                     </span>
                   )}
-                  {plural(locale, s.words, t.words.collectionCard.words)} · {plural(locale, s.sets, t.words.library.setsCount)}
+                  {/* Наборы ещё грузятся — не пишем «0 слов» */}
+                  {collectionsLoading ? (
+                    <Skeleton inline className="h-3.5 w-28" />
+                  ) : (
+                    <>
+                      {plural(locale, s.words, t.words.collectionCard.words)} · {plural(locale, s.sets, t.words.library.setsCount)}
+                    </>
+                  )}
                 </p>
               </div>
               {!active && (
@@ -128,6 +135,8 @@ export default function CoursesPage() {
                   size="sm"
                   iconLeft={<Trash2 size={15} />}
                   loading={removing === course.id}
+                  // Пока наборы не загрузились, подтверждение назвало бы курс пустым
+                  disabled={collectionsLoading}
                   onClick={() => handleRemove(course.id)}
                 >
                   {c.remove}

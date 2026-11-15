@@ -3,7 +3,7 @@
 import { Fragment, useCallback, useEffect, useState, type ReactNode } from "react";
 import { RefreshCw } from "lucide-react";
 import { ApiError } from "../../api/http";
-import { Alert, Button, Card, Heading, Spinner, Text, cx } from "../../ui";
+import { Alert, Button, Card, Heading, Loading as KitLoading, Text, cx } from "../../ui";
 
 const LOCALE = "ru";
 
@@ -79,12 +79,9 @@ export function useLoad<T>(load: () => Promise<T>, key: string) {
   return { ...state, reload };
 }
 
+// Админка вне i18n — подпись по-русски; спиннер общий, с задержкой, чтобы не мигал
 export function Loading() {
-  return (
-    <div className="grid place-items-center py-16 text-muted">
-      <Spinner size={24} />
-    </div>
-  );
+  return <KitLoading label="Загрузка" />;
 }
 
 // В npm run dev /api уходит на продакшен: пока функции не выложены, там 404

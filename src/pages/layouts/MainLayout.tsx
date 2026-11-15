@@ -4,7 +4,7 @@ import { APP_LANGUAGES } from "../../locales/languages";
 import BottomNav from "../../components/ui/BottomNav";
 import { Outlet, Link, Navigate } from "react-router-dom";
 import { Menu, Languages, ChevronRight, Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
 import { getLanguageInfo } from "../../locales/languages";
@@ -20,6 +20,8 @@ import CourseSwitcher from "../../components/courses/CourseSwitcher";
 import { OrbitRing } from "../../components/progress/OrbitRing";
 import { WeekCard } from "../../components/progress/WeekOrbit";
 import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
+import PageLoading from "../../components/ui/PageLoading";
+import { prefetchAppPages } from "../lazyPages";
 
 const SIDEBAR_KEY = "sidebar-open";
 
@@ -46,6 +48,10 @@ export default function MainLayout() {
   useEffect(() => {
     localStorage.setItem(SIDEBAR_KEY, String(open));
   }, [open]);
+
+  // Приложение открылось — в свободное время подгружаем код вкладок и сессий,
+  // чтобы первый переход на них был без ожидания
+  useEffect(prefetchAppPages, []);
 
   // Show onboarding once for new users
   useEffect(() => {
@@ -263,7 +269,10 @@ export default function MainLayout() {
         <main className="flex-1 w-full max-w-5xl mx-auto pt-6 pb-24 md:pb-6 px-5 sm:px-6 lg:px-8">
           <VerifyEmailBanner />
           <LegalUpdateBanner />
-          <Outlet />
+          {/* Своя граница: шапка и меню не пропадают, пока грузится код вкладки */}
+          <Suspense fallback={<PageLoading />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
 

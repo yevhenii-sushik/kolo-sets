@@ -16,6 +16,7 @@ import { Check, Settings, X } from "lucide-react";
 import { IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import SessionLoadError from "../../components/session/SessionLoadError";
+import SessionLoading from "../../components/session/SessionLoading";
 import { useI18n } from "../../contexts/I18nContext";
 
 // Учесть ответ в статистике. Без мутаций: StrictMode вызывает апдейтер дважды, и ошибки задваивались
@@ -105,11 +106,7 @@ export default function QuizPage() {
   };
 
   if (loadError) return <SessionLoadError onRetry={() => setReloadKey((k) => k + 1)} onExit={() => navigate(-1)} />;
-  if (!collection || questions.length === 0) {
-    return (
-      <div className="flex h-64 items-center justify-center text-muted">{t.loading}</div>
-    );
-  }
+  if (!collection || questions.length === 0) return <SessionLoading onExit={() => navigate(-1)} />;
 
   const currentQuestion = questions[currentIndex];
 

@@ -9,6 +9,7 @@ export type { BadgeTone } from "./Badge";
 export { Ring } from "./Ring";
 export { Modal } from "./Modal";
 export { Spinner } from "./Spinner";
+export { Loading, Skeleton, useDelayed, LOADING_DELAY } from "./Loading";
 export { Alert } from "./Alert";
 export { cx } from "./cx";
 export { Logo, LogoMark, PerigeeMark, AppIcon, MARK_RING, MARK_DOT } from "./Logo";

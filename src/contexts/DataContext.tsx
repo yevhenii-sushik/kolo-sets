@@ -35,6 +35,7 @@ import {
 } from '../api/progress';
 import { announceMedals, announceProgress } from '../components/progress/ProgressMoments';
 import { localDateKey } from '../utils/progress';
+import { readCache, writeCache, profileCacheKey, progressionCacheKey } from '../utils/profileCache';
 
 interface DataContextType {
   profile: any | null;
@@ -100,23 +101,6 @@ export function useData(): DataContextType {
   return ctx;
 }
 
-function readCache(key: string): any | null {
-  try {
-    return JSON.parse(localStorage.getItem(key) ?? 'null');
-  } catch {
-    return null;
-  }
-}
-
-function writeCache(key: string, value: unknown) {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-  } catch {}
-}
-
-const profileCacheKey = (uid: string) => `profile_cache_${uid}`;
-// Шапка показывает орбиту сразу, не дожидаясь сервера
-const progressionCacheKey = (uid: string) => `progression_cache_${uid}`;
 const readProfileCache = (uid: string) => readCache(profileCacheKey(uid));
 const writeProfileCache = (uid: string, profile: any) => writeCache(profileCacheKey(uid), profile);
 

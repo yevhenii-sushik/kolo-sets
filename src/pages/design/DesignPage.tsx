@@ -12,11 +12,13 @@ import {
   Heading,
   IconButton,
   Input,
+  Loading,
   Logo,
   LogoMark,
   Modal,
   PerigeeMark,
   Ring,
+  Skeleton,
   Switch,
   Text,
   Textarea,
@@ -311,6 +313,21 @@ export default function DesignPage() {
             <Ring value={0.5} size={96} stroke={9} tone="info" label="Выучено 50%">
               <span className="font-display font-extrabold text-xl text-fg">50</span>
             </Ring>
+          </div>
+        </Section>
+
+        <Section title="Загрузка" note="Loading показывает индикатор через 200 мс — быстрый ответ из кэша не мигает. Скелетон повторяет форму содержимого.">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Loading label="Загрузка">
+              <div className="grid gap-3">
+                <Skeleton tone="surface" className="h-28 rounded-4xl" />
+                <Skeleton className="h-5 w-2/3" />
+                <Skeleton className="h-5 w-1/3" />
+              </div>
+            </Loading>
+            <Card tone="inset">
+              <Loading label="Загрузка" />
+            </Card>
           </div>
         </Section>
 

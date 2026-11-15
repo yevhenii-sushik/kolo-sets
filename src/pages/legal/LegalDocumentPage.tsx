@@ -2,7 +2,7 @@ import { Fragment, MouseEvent, ReactNode, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUp, ArrowUpRight, ChevronDown, Hash, Info, Languages, Mail } from "lucide-react";
-import { Badge, Button, Card, Heading, Text, buttonStyles, cx } from "../../ui";
+import { Badge, Button, Card, Heading, Loading, Skeleton, Text, buttonStyles, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo, type Language } from "../../locales/languages";
 import { openCookieSettings } from "../../utils/consent";
@@ -256,11 +256,13 @@ export default function LegalDocumentPage({ doc }: { doc: DocKey }) {
 
   if (!content) {
     return (
-      <div className="animate-pulse space-y-6" aria-busy>
-        <div className="h-8 w-40 rounded-full bg-inset" />
-        <div className="h-14 w-3/4 rounded-2xl bg-inset" />
-        <div className="h-40 rounded-4xl bg-inset" />
-      </div>
+      <Loading label={t.loading}>
+        <div className="space-y-6">
+          <Skeleton className="h-8 w-40 rounded-full" />
+          <Skeleton className="h-14 w-3/4 rounded-2xl" />
+          <Skeleton className="h-40 rounded-4xl" />
+        </div>
+      </Loading>
     );
   }
 

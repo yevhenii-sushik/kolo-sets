@@ -10,7 +10,7 @@ import { plural } from "../../utils/plural";
 import { playSound } from "../../utils/sounds";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
-import { Badge, Button, Card, Heading, Text, cx } from "../../ui";
+import { Badge, Button, Card, Heading, Loading, Skeleton, Text, cx } from "../../ui";
 import { buyShield, craftItem, equipItem, saveSatellites } from "../../api/progress";
 import { CapsuleArt } from "../../components/rewards/CapsuleArt";
 import { CapsuleOpenModal } from "../../components/rewards/CapsuleOpenModal";
@@ -24,7 +24,7 @@ export default function RewardsPage() {
   const { t, language } = useI18n();
   const r = t.rewards;
   const locale = getLanguageInfo(language).htmlLang;
-  const { loot, applyLoot, progression, applyProgression } = useData();
+  const { loot, applyLoot, progression, applyProgression, profile, profileLoading } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
   const [opening, setOpening] = useState(false);
@@ -92,13 +92,36 @@ export default function RewardsPage() {
 
   const left = PITY_AT - loot.pity;
 
+  const header = (
+    <header className="grid gap-1">
+      <Heading size={1}>{r.title}</Heading>
+      <Text tone="muted">{r.subtitle}</Text>
+    </header>
+  );
+
+  // Первый вход с устройства: капсулы, пыль и предметы живут в профиле — без него показали бы нули.
+  // Дальше профиль берётся из копии, и скелетона не видно
+  if (!profile && profileLoading) {
+    return (
+      <div className="grid grid-cols-1 gap-4 sm:gap-5">
+        {header}
+        <Loading label={t.loading}>
+          <div className="grid gap-4 sm:gap-5">
+            <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-[3fr_2fr]">
+              <Skeleton className="h-64 rounded-4xl" />
+              <Skeleton tone="surface" className="h-64 rounded-4xl" />
+            </div>
+            <Skeleton tone="surface" className="h-72 rounded-4xl" />
+          </div>
+        </Loading>
+      </div>
+    );
+  }
+
   // grid-cols-1 = minmax(0, 1fr): длинные названия не растягивают колонку шире экрана
   return (
     <div className="grid grid-cols-1 gap-4 sm:gap-5">
-      <header className="grid gap-1">
-        <Heading size={1}>{r.title}</Heading>
-        <Text tone="muted">{r.subtitle}</Text>
-      </header>
+      {header}
 
       <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-[3fr_2fr]">
         {/* ── Капсулы ── */}

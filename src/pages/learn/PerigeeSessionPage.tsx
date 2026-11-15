@@ -17,6 +17,7 @@ import { PerigeeMark } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import SessionResult from "../../components/session/SessionResult";
 import SessionLoadError from "../../components/session/SessionLoadError";
+import SessionLoading from "../../components/session/SessionLoading";
 import { useSrsWriter } from "../../components/session/useSrsWriter";
 import { ChoiceStep, ClozeStep, FlashStep, IntroStep, ListenStep, TypeStep } from "../../components/perigee/Steps";
 import {
@@ -159,7 +160,7 @@ export default function PerigeeSessionPage() {
   const others = useMemo(() => pool.map((c) => c.word), [pool]);
 
   if (loadError) return <SessionLoadError onRetry={load} onExit={leave} />;
-  if (!state) return null;
+  if (!state) return <SessionLoading onExit={leave} />;
 
   const step = state.queue[Math.min(state.pos, state.queue.length - 1)];
   const item = state.cards[step.key];

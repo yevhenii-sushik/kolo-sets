@@ -16,7 +16,7 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
-import { Badge, Button, Card, Field, Heading, IconButton, Input, Modal, Text, cx } from "../../ui";
+import { Badge, Button, Card, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text, cx } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { courseName } from "../../courses/languages";
@@ -122,15 +122,18 @@ function TabButton({
   );
 }
 
-const CollectionSkeleton = () => (
-  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-    {[1, 2, 3, 4, 5, 6].map((i) => (
-      <div key={i} className="h-44 animate-pulse rounded-4xl border border-line bg-surface p-5">
-        <div className="mb-3 h-6 w-3/4 rounded-lg bg-inset" />
-        <div className="h-4 w-1/3 rounded-lg bg-inset" />
-      </div>
-    ))}
-  </div>
+// Форма списка наборов на время загрузки — те же карточки, что у CollectionCard
+const CollectionSkeleton = ({ label }: { label: string }) => (
+  <Loading label={label}>
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {[1, 2, 3, 4, 5, 6].map((i) => (
+        <div key={i} className="h-44 rounded-4xl border border-line bg-surface p-5">
+          <Skeleton className="mb-3 h-6 w-3/4" />
+          <Skeleton className="h-4 w-1/3" />
+        </div>
+      ))}
+    </div>
+  </Loading>
 );
 
 // ── Окно папки: новая (folder = null) или изменить название и цвет ──
@@ -356,6 +359,7 @@ export default function WordsPage() {
     collections,
     collectionsLoading,
     coursesReady,
+    profileLoading,
     setCollections,
     checkAchievements,
     activeCourse,
@@ -708,8 +712,9 @@ export default function WordsPage() {
 
       {/* ── Content ── */}
       <div className="min-h-100">
-        {collectionsLoading || !coursesReady ? (
-          <CollectionSkeleton />
+        {/* Профиль не загрузился (нет сети и копии) — не держим скелетон вечно, как и на главной */}
+        {collectionsLoading || (!coursesReady && profileLoading) ? (
+          <CollectionSkeleton label={t.loading} />
         ) : activeTab === "my" ? (
           <>
             {collections.length === 0 && folders.length === 0 ? (

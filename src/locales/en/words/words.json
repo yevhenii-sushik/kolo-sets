@@ -56,7 +56,6 @@
     "wordList": "Word list",
     "noCards": "No words in this set yet",
     "noCardsDesc": "A word and its translation are enough to start. Got a ready-made list? Paste it all at once with Import.",
-    "loading": "Loading...",
     "exportSuccess": "Collection exported",
     "exportError": "Export failed",
     "importSuccess": "Words imported",

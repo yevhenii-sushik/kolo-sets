@@ -84,9 +84,16 @@
         }
       })();
     </script>
+    <style>
+      .boot-splash { position: fixed; inset: 0; display: grid; place-items: center; opacity: 0; animation: boot-in 300ms ease-out 400ms forwards; }
+      @keyframes boot-in { to { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) { .boot-splash { animation-duration: 1ms; } }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Заставка, пока грузится код: появляется только если ждать дольше 400 мс, чтобы быстрый
+         запуск не мигал. React заменит её своей копией (src/components/AppSplash.tsx) или страницей -->
+    <div id="root"><div class="boot-splash" aria-hidden="true"><svg width="56" height="56" viewBox="7 7 86 86"><path style="fill: var(--color-accent, #FF5A1F)" d="M87.85 31.81A42 42 0 1 1 68.19 12.15A15 15 0 0 0 59.05 25.62A26 26 0 1 0 74.38 40.95A15 15 0 0 0 87.85 31.81Z"/><circle style="fill: var(--color-fg, #101426)" cx="74.04" cy="25.96" r="10"/></svg></div></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -17,6 +17,8 @@ import {
   getUserProfile
 } from '../firebase/firestore';
 import { getLocalCollections } from '../utils/storage';
+import { hasCachedProfile } from '../utils/profileCache';
+import AppSplash from '../components/AppSplash';
 
 interface AuthContextType {
   user: User | null;
@@ -54,7 +56,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(firebaseUser);
       
       if (firebaseUser) {
-        await getUserProfile(firebaseUser.uid);
+        // Первый вход с этого устройства: дожидаемся профиля — getUserProfile создаст его новичку.
+        // Если копия профиля уже есть, документ точно существует, и свежий профиль загрузит
+        // DataContext: приложение не ждёт сети перед первым кадром
+        if (!hasCachedProfile(firebaseUser.uid)) await getUserProfile(firebaseUser.uid);
 
         // Синхронизируем локальные данные один раз — при первом входе с этого устройства.
         // При каждом reload не синхронизируем: локальные данные могут быть устаревшими
@@ -132,7 +137,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {/* Пока Firebase вспоминает, кто вошёл, — заставка (видна, только если ждать дольше 400 мс) */}
+      {loading ? <AppSplash /> : children}
     </AuthContext.Provider>
   );
 };

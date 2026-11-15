@@ -8,6 +8,7 @@ import { Badge } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
 import SessionShell from "../../components/session/SessionShell";
 import SessionLoadError from "../../components/session/SessionLoadError";
+import SessionLoading from "../../components/session/SessionLoading";
 import SessionResult from "../../components/session/SessionResult";
 import ChoiceButton, { choiceState } from "../../components/session/ChoiceButton";
 import { motion, AnimatePresence } from "framer-motion";
@@ -185,7 +186,7 @@ export default function SpeedRoundPage() {
   };
 
   if (loadError) return <SessionLoadError onRetry={() => setReloadKey(k => k + 1)} onExit={() => navigate(-1)} />;
-  if (phase === "loading" || !collection || queue.length === 0) return null;
+  if (phase === "loading" || !collection || queue.length === 0) return <SessionLoading onExit={() => navigate(-1)} />;
 
   const currentCard = queue[qIdx % queue.length];
   const mult = multiplierFor(streak);

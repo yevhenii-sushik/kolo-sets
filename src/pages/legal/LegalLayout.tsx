@@ -1,6 +1,7 @@
+import { Suspense } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { ButtonLink, Logo, cx } from "../../ui";
+import { ButtonLink, Loading, Logo, cx } from "../../ui";
 import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
 import SiteLanguagePicker from "../../components/landing/SiteLanguagePicker";
@@ -62,7 +63,10 @@ export default function LegalLayout() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 pb-24 pt-10 sm:px-8 sm:pt-14">
-        <Outlet />
+        {/* Своя граница: шапка с вкладками остаётся, пока грузится код страницы */}
+        <Suspense fallback={<Loading label={t.loading} />}>
+          <Outlet />
+        </Suspense>
       </main>
 
       <LandingFooter />

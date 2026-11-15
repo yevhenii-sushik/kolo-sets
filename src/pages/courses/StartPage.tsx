@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { Heading, Logo, Spinner, Text } from "../../ui";
+import { Heading, Loading, Logo, Text } from "../../ui";
 import LanguagePicker from "../../components/courses/LanguagePicker";
 
 // Первый вход: без курса дальше не пройти — сначала выбираем язык
@@ -12,8 +12,8 @@ export default function StartPage() {
 
   if (!coursesReady) {
     return (
-      <div className="grid min-h-dvh place-items-center text-muted">
-        <Spinner size={24} />
+      <div className="grid min-h-dvh place-items-center">
+        <Loading label={t.loading} />
       </div>
     );
   }

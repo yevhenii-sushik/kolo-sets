@@ -1,8 +1,9 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { Badge, ButtonLink, Card, Eyebrow, Heading, PerigeeMark, Spinner, Text, cx } from "../../ui";
+import { Badge, ButtonLink, Card, Eyebrow, Heading, Loading, PerigeeMark, Text, cx } from "../../ui";
 import { useAuth } from "../../contexts/AuthContext";
+import { useI18n } from "../../contexts/I18nContext";
 import { courseFlag } from "../../courses/languages";
 import { usePageMeta } from "../../utils/pageMeta";
 import {
@@ -122,6 +123,7 @@ function Section({ section, step, flip }: { section: GuideSection; step?: number
 // Страница «О Kolo»: заголовок, блоки с макетами через один, призыв попробовать и ссылка на следующую страницу
 export default function GuidePage({ page }: { page: GuidePageKey }) {
   const { user } = useAuth();
+  const { t } = useI18n();
   const guide = useGuide();
   const content = guide?.pages[page];
   const index = GUIDE_PAGES.findIndex((p) => p.key === page);
@@ -131,9 +133,7 @@ export default function GuidePage({ page }: { page: GuidePageKey }) {
 
   if (!guide || !content) {
     return (
-      <div className="grid min-h-dvh place-items-start justify-center pt-24">
-        <Spinner size={24} />
-      </div>
+      <Loading label={t.loading} className="min-h-dvh pt-8" />
     );
   }
 

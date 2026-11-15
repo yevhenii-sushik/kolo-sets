@@ -15,7 +15,7 @@ import { localDateKey } from "../../utils/progress";
 import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural, type PluralForms } from "../../utils/plural";
-import { ButtonLink, Card, Heading, IconButton, Ring, Text, cx } from "../../ui";
+import { ButtonLink, Card, Heading, IconButton, Loading, Ring, Skeleton, Text, cx } from "../../ui";
 
 const MILESTONES = [10, 25, 50, 100, 200, 500];
 
@@ -24,7 +24,7 @@ const MILESTONES = [10, 25, 50, 100, 200, 500];
 export default function HomePage() {
   const { t, language } = useI18n();
   const h = t.home;
-  const { profile, collections, totalCards, profileLoading } = useData();
+  const { profile, collections, totalCards, profileLoading, collectionsLoading, coursesReady } = useData();
   const { user } = useAuth();
   const locale = getLanguageInfo(language).htmlLang;
   const count = (n: number, forms: PluralForms) => plural(locale, n, forms);
@@ -40,6 +40,10 @@ export default function HomePage() {
   const refreshTip = () => setTipKey(tipKeys[Math.floor(Math.random() * tipKeys.length)]);
 
   const firstSteps = useFirstSteps();
+  // Пока наборы и свежий профиль не пришли, главная соврала бы: «Создай первый набор», «0 слов»,
+  // а через полсекунды перескочила бы на «12 слов к повторению». Показываем скелетон.
+  // Не загрузился профиль (нет сети и копии) — не держим скелетон вечно, показываем что есть
+  const loading = collectionsLoading || (!coursesReady && profileLoading);
 
   // ── Что делать сейчас и цель дня ──
   const dueCount = useMemo(() => collections.reduce((n, col) => n + col.cards.filter(isDueCard).length, 0), [collections]);
@@ -110,6 +114,10 @@ export default function HomePage() {
 
       {/* ── Что делать сейчас: у новичка — «Первые шаги»; потом — повторение, новые слова или наборы; справа — цель дня ── */}
       <FirstStepsGuides model={firstSteps} />
+      {loading ? (
+        <HomeSkeleton label={t.loading} />
+      ) : (
+      <>
       {firstSteps.mode !== "hidden" ? (
         <FirstSteps model={firstSteps} />
       ) : (
@@ -172,6 +180,9 @@ export default function HomePage() {
         </Card>
       </div>
 
+      </>
+      )}
+
       {/* ── Игра дня и совет ── */}
       <div className={cx("grid gap-4", FEATURES.dailyGame && "md:grid-cols-2")}>
         {FEATURES.dailyGame && <DailyGameWidget />}
@@ -208,6 +219,22 @@ export default function HomePage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+// Форма главной на время загрузки: крупная карточка «что делать сейчас», две цифры и веха
+function HomeSkeleton({ label }: { label: string }) {
+  return (
+    <Loading label={label}>
+      <div className="grid gap-4 sm:gap-5">
+        <Skeleton className="h-96 rounded-4xl sm:h-64" />
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <Skeleton tone="surface" className="h-40 rounded-4xl" />
+          <Skeleton tone="surface" className="h-40 rounded-4xl" />
+          <Skeleton tone="surface" className="col-span-2 h-32 rounded-4xl lg:h-40" />
+        </div>
+      </div>
+    </Loading>
   );
 }
 

@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import { IconButton } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
+import PageLoading from "../../components/ui/PageLoading";
 
 // Макет внутренних страниц (набор, настройки, поддержка, обновления…): кнопка «назад» и короткий подвал
 export default function NavLayout() {
@@ -20,7 +22,10 @@ export default function NavLayout() {
 
       {/* max-w-5xl — место для боковой колонки «Обновлений»; узкие страницы сужают себя сами */}
       <main className="mx-auto max-w-5xl px-5 pb-16 pt-24 sm:px-6 lg:px-8">
-        <Outlet />
+        {/* Своя граница: кнопка «назад» остаётся на месте, пока грузится код страницы */}
+        <Suspense fallback={<PageLoading />}>
+          <Outlet />
+        </Suspense>
       </main>
 
       <footer className="border-t border-line py-8">

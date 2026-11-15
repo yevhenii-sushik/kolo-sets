@@ -12,6 +12,7 @@ import SessionShell from "../../components/session/SessionShell";
 import RatingBar from "../../components/session/RatingBar";
 import CardStage from "../../components/session/CardStage";
 import SessionLoadError from "../../components/session/SessionLoadError";
+import SessionLoading from "../../components/session/SessionLoading";
 import { useCardSession } from "../../components/session/useCardSession";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import { coachSeen, markCoachSeen } from "../../utils/firstRun";
@@ -94,7 +95,7 @@ export default function FlashcardsPage() {
   };
 
   if (loadError) return <SessionLoadError onRetry={() => loadData()} onExit={() => navigate(-1)} />;
-  if (!collection || !session.current || !round) return null;
+  if (!collection || !session.current || !round) return <SessionLoading onExit={() => navigate(-1)} />;
 
   const total = collection.cards.length;
   const multi = hasRounds(total);

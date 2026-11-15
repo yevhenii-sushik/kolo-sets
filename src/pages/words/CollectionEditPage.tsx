@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { Card, Collection } from "../../types";
@@ -10,10 +10,11 @@ import {
 } from "../../utils/storage";
 import { exportCollectionToJSON, downloadJSON } from "../../utils/exportImport";
 import { useI18n } from "../../contexts/I18nContext";
+import { useData } from "../../contexts/DataContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
-import { Plus, Upload, Download, Pencil, ArrowUp, Layers, Play } from "lucide-react";
-import { Button, ButtonLink, Card as UiCard, Field, Heading, IconButton, Input, Modal, Text } from "../../ui";
+import { Plus, Upload, Download, Pencil, ArrowUp, Layers, Play, CloudOff, RotateCw } from "lucide-react";
+import { Button, ButtonLink, Card as UiCard, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import AddCardModal from "../../components/AddCardModal";
@@ -36,8 +37,24 @@ export default function CollectionEditPage() {
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
-  const [collection, setCollection] = useState<Collection | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { allCollections, setCollections } = useData();
+
+  // Набор уже есть в памяти (его загрузил DataContext) — показываем сразу, без скелетона,
+  // а свежую версию из базы подтягиваем в фоне: вдруг слова меняли на другом устройстве
+  const [collection, setCollectionState] = useState<Collection | null>(() => allCollections.find((c) => c.id === id) ?? null);
+  const [loading, setLoading] = useState(() => !allCollections.some((c) => c.id === id));
+  const [loadError, setLoadError] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
+  // Пользователь уже поменял набор — фоновая загрузка не должна вернуть старую версию поверх
+  const editedRef = useRef(false);
+
+  // Каждую правку отдаём и в общий список: без этого главная, «Слова» и «Первые шаги»
+  // показывали старое число слов до перезагрузки приложения
+  const setCollection = (updated: Collection) => {
+    editedRef.current = true;
+    setCollectionState(updated);
+    setCollections((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
+  };
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
@@ -58,19 +75,30 @@ export default function CollectionEditPage() {
   });
 
   useEffect(() => {
-    const loadCollection = async () => {
-      if (id) {
-        const loaded = await getCollection(id);
-        if (loaded) {
-          setCollection(loaded as Collection);
-        } else {
+    if (!id) return;
+    let alive = true;
+    setLoadError(false);
+    getCollection(id)
+      .then((loaded) => {
+        if (!alive) return;
+        if (!loaded) {
           navigate("/");
+          return;
         }
-        setLoading(false);
-      }
+        if (editedRef.current) return;
+        setCollectionState(loaded);
+        setCollections((prev) => prev.map((c) => (c.id === loaded.id ? loaded : c)));
+      })
+      .catch((err) => {
+        console.error("Не удалось загрузить набор", err);
+        // Есть копия из памяти — молча остаёмся на ней; нет — экран ошибки с повтором
+        if (alive) setLoadError(true);
+      })
+      .finally(() => alive && setLoading(false));
+    return () => {
+      alive = false;
     };
-    loadCollection();
-  }, [id, navigate]);
+  }, [id, navigate, reloadKey, setCollections]);
 
   const learnedCount = useMemo(() => {
     return (
@@ -224,22 +252,63 @@ export default function CollectionEditPage() {
     </>
   );
 
+  // Набора нет в памяти (открыли по ссылке, перезагрузили страницу) — форма страницы до ответа базы
+  if (loading && !collection) {
+    return (
+      <Loading label={t.loading} className="mx-auto max-w-3xl pb-24">
+        <div className="mb-10 grid gap-5">
+          <div className="grid gap-3">
+            <Skeleton className="h-10 w-2/3 rounded-xl sm:h-12" />
+            <Skeleton className="h-5 w-40" />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Skeleton className="h-11 w-40 rounded-full" />
+            <Skeleton className="h-11 w-28 rounded-full" />
+          </div>
+        </div>
+        <Skeleton className="mb-4 h-4 w-24" />
+        <div className="grid gap-3">
+          {[1, 2, 3].map((i) => (
+            <Skeleton key={i} tone="surface" className="h-36 rounded-3xl" />
+          ))}
+        </div>
+      </Loading>
+    );
+  }
+
+  // Раньше при сбое сети скелетон висел вечно
+  if (loadError && !collection) {
+    const le = t.words.session.loadError;
+    return (
+      <UiCard tone="inset" padding="lg" className="mx-auto grid max-w-3xl justify-items-center gap-4 py-14 text-center">
+        <span className="grid h-14 w-14 place-items-center rounded-full bg-surface text-muted">
+          <CloudOff size={26} />
+        </span>
+        <div className="grid max-w-sm gap-1">
+          <Heading size={3}>{le.title}</Heading>
+          <Text tone="muted">{le.text}</Text>
+        </div>
+        <Button iconLeft={<RotateCw size={18} />} onClick={() => setReloadKey((k) => k + 1)}>
+          {le.retry}
+        </Button>
+      </UiCard>
+    );
+  }
+
   return (
     <div className="mx-auto max-w-3xl pb-24">
       {/* ── Шапка набора: тает по прокрутке ── */}
       <motion.header className="mb-10 grid gap-5" {...fadeUp(0)}>
         <motion.div style={{ opacity: headerScrollOpacity }} className="grid gap-2">
           <div className="flex items-start gap-1">
-            <Heading size="display" className={loading ? "opacity-20" : undefined}>
-              {loading ? e.loading : collection?.name}
-            </Heading>
-            {!loading && (
+            <Heading size="display">{collection?.name}</Heading>
+            {collection && (
               <IconButton label={e.rename} onClick={handleRenameCollection} className="mt-0.5 sm:mt-2">
                 <Pencil size={20} />
               </IconButton>
             )}
           </div>
-          {!loading && (
+          {collection && (
             <Text tone="muted">
               {plural(getLanguageInfo(language).htmlLang, cardCount, t.words.collectionCard.words)} · {e.learned}: {learnedCount}
             </Text>
@@ -249,7 +318,7 @@ export default function CollectionEditPage() {
       </motion.header>
 
       {/* ── Закреплённая полоса: появляется, когда заголовок ушёл вверх ── */}
-      {!loading && (
+      {collection && (
         <motion.div
           style={{ opacity: dockedOpacity }}
           className={`fixed inset-x-0 top-14 z-40 border-b border-line bg-bg/90 backdrop-blur-xl ${isDocked ? "" : "pointer-events-none"}`}
@@ -265,13 +334,7 @@ export default function CollectionEditPage() {
       <motion.section {...fadeUp(0.05)}>
         <h2 className="mb-4 text-sm font-semibold text-fg">{e.wordList}</h2>
 
-        {loading ? (
-          <div className="grid gap-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-36 animate-pulse rounded-3xl border border-line bg-surface" />
-            ))}
-          </div>
-        ) : !collection || collection.cards.length === 0 ? (
+        {!collection || collection.cards.length === 0 ? (
           <UiCard tone="inset" padding="lg" className="grid justify-items-center gap-4 py-14 text-center">
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-surface text-accent-ink">
               <Layers size={26} />
