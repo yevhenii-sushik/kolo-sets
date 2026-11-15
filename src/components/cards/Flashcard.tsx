@@ -17,7 +17,7 @@ interface FlashcardProps {
 
 const STRENGTH_KEYS = ["new", "learning", "growing", "strong"] as const;
 
-// Флэшкарта с переворотом (стили .flip-card в index.css): лицо — слово на тёмном, оборот — ответ крупно,
+// Флэшкарта с переворотом (стили .flip-card в index.css): лицо — слово, оборот — ответ крупно,
 // под ним объяснение и пример. Ответ виден сразу: раньше перевод прятался за значком глаза, и после
 // «Показать ответ» человек видел то же слово ещё раз (docs/specs/perigee.md, «Флэшкарты»)
 export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip, reverse = false, strength }: FlashcardProps) {
@@ -35,23 +35,29 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip,
   return (
     <div className={`flip-card h-[min(52vh,400px)] min-h-70 w-full sm:h-[min(58vh,460px)] md:h-[min(60vh,480px)] ${isFlipped ? "flipped" : ""}`} onClick={onFlip}>
       <div className="flip-card-inner relative h-full w-full cursor-pointer select-none">
-        {/* Лицо: слово */}
+        {/* Лицо: слово. Обе стороны — одна «бумага» (surface), как у настоящей карточки: раньше лицо было
+            инверсным (bg-fg), и в тёмной теме переворот бил ярко-белым по глазам. Лицо отличает знак
+            «Орбиты» — приглушённое кольцо со спутником */}
         <div className="flip-card-front absolute h-full w-full">
-          <div className="relative flex h-full w-full flex-col items-center justify-center gap-4 rounded-4xl bg-fg p-8 text-on-inverse shadow-xl">
+          <div className="relative flex h-full w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-4xl border border-line bg-surface p-8 text-fg shadow-xl">
+            <svg viewBox="0 0 200 200" aria-hidden className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 text-track">
+              <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="2" />
+              <circle cx="36" cy="36" r="6" className="fill-accent" />
+            </svg>
             {/* Сила памяти: три точки-спутника заполняются по мере того, как слово крепнет */}
             {strength !== undefined && (
-              <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-on-inverse/10 px-3 py-1 text-xs font-semibold text-on-inverse/80">
+              <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-inset px-3 py-1 text-xs font-semibold text-muted">
                 <span className="flex gap-0.5" aria-hidden>
                   {[1, 2, 3].map((i) => (
-                    <span key={i} className={cx("h-1.5 w-1.5 rounded-full", i <= strength ? "bg-on-inverse" : "bg-on-inverse/25")} />
+                    <span key={i} className={cx("h-1.5 w-1.5 rounded-full", i <= strength ? "bg-accent" : "bg-faint/30")} />
                   ))}
                 </span>
                 {f.strength[STRENGTH_KEYS[strength]]}
               </span>
             )}
-            <h2 dir="auto" className="text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{reverse ? card.translation : card.word}</h2>
+            <h2 dir="auto" className="relative text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{reverse ? card.translation : card.word}</h2>
             {card.partOfSpeech && (
-              <span className="rounded-full bg-on-inverse/10 px-3 py-1 text-sm font-medium text-on-inverse/80">{posLabel(card.partOfSpeech, t.words.pos)}</span>
+              <span className="relative rounded-full bg-inset px-3 py-1 text-sm font-medium text-muted">{posLabel(card.partOfSpeech, t.words.pos)}</span>
             )}
           </div>
         </div>

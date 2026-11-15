@@ -197,6 +197,7 @@ export default function FlashcardsPage() {
         language={voice}
         reverse={!!session.current.reverse}
         strength={memoryStrength(session.currentCard)}
+        deck={session.items.length - session.index - 1}
         flipped={session.flipped}
         exitTo={session.exitTo}
         onFlip={() => session.flip()}
