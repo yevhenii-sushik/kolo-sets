@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { AnimatePresence, motion, useMotionValue, useTransform, Variants } from "framer-motion";
 import { Card } from "../../types";
 import { Strength } from "../../utils/srs";
-import Flashcard from "../cards/Flashcard";
+import Flashcard, { CardFront } from "../cards/Flashcard";
 
 // Карточка тренировки со свайпом: до переворота свайп переворачивает, после — вправо «Помню», влево
 // «Не знаю» (SWIPE в ratingLabels.ts). Пока тянешь, на карточке проступает, какая оценка поставится и
@@ -11,14 +11,14 @@ import Flashcard from "../cards/Flashcard";
 // посреди анимации обратного переворота, и мог мелькнуть оборот следующей карточки.
 // exitTo — куда улетает оценённая карточка: вправо «помню/знаю», влево «не знаю/забыл», 0 — просто гаснет.
 //
-// Колода (deck): под верхней карточкой видны края следующих, каскадом вниз. Оценённая улетает, а новая
-// поднимается с места первой карточки стопки (enter = DECK[0]) — как будто снимаешь верхнюю с колоды.
-// Края — пустые «рубашки»: они одинаковые, поэтому стопке не нужно сдвигаться, хватает подъёма новой.
+// Колода (deck): под верхней карточкой видны края следующих, каскадом вниз. Первая под верхней — настоящая
+// следующая карточка (next): её слово видно, пока верхняя переворачивается или уезжает под пальцем.
+// Оценённая улетает, а следующая поднимается ровно с этого места (enter = DECK[0]) — как будто снимаешь
+// верхнюю с колоды. Вторая под ней — только край, чуть темнее: глубина, как у настоящей стопки.
 // Чем меньше осталось, тем тоньше колода: последняя карточка лежит одна
-// Нижняя карточка чуть темнее (band темнее surface в обеих темах) — глубина, как у настоящей стопки
 const DECK = [
-  { y: 12, scale: 0.95, className: "translate-y-3 scale-95 bg-surface shadow-md" },
-  { y: 24, scale: 0.9, className: "translate-y-6 scale-90 bg-band shadow-sm" },
+  { y: 12, scale: 0.95, className: "translate-y-3 scale-95" },
+  { y: 24, scale: 0.9, className: "translate-y-6 scale-90 brightness-95" },
 ];
 
 const FLY: Variants = {
@@ -40,6 +40,7 @@ export default function CardStage({
   reverse = false,
   strength,
   deck = 0,
+  next,
   exitTo = 0,
 }: {
   cardKey: string;
@@ -51,7 +52,8 @@ export default function CardStage({
   swipe?: { left: string; right: string }; // подписи оценок для свайпа после переворота
   reverse?: boolean;
   strength?: Strength;
-  deck?: number; // сколько карточек лежит под верхней (покажем края максимум двух)
+  deck?: number; // сколько карточек лежит под верхней (покажем максимум две)
+  next?: { card: Card; reverse?: boolean; strength?: Strength }; // следующая — её лицо под верхней
   exitTo?: -1 | 0 | 1;
 }) {
   const dragX = useMotionValue(0);
@@ -69,9 +71,15 @@ export default function CardStage({
       <div className="relative mb-6 w-full max-w-3xl shrink-0">
       {/* Края колоды не двигаются вместе со свайпом: тянешь только верхнюю карточку */}
       {DECK.slice(0, Math.min(deck, DECK.length))
-        .map((layer, i) => (
-          <div key={i} aria-hidden className={`pointer-events-none absolute inset-0 origin-bottom rounded-4xl border border-line ${layer.className}`} />
-        ))
+        .map((layer, i) =>
+          i === 0 && next ? (
+            <div key={`${i}:${next.card.id}`} aria-hidden className={`pointer-events-none absolute inset-0 origin-bottom ${layer.className}`}>
+              <CardFront card={next.card} reverse={next.reverse} strength={next.strength} />
+            </div>
+          ) : (
+            <div key={i} aria-hidden className={`pointer-events-none absolute inset-0 origin-bottom rounded-4xl border border-accent/15 bg-accent-soft shadow-md ${layer.className}`} />
+          ),
+        )
         .reverse()}
       <motion.div
         className="relative touch-pan-y"

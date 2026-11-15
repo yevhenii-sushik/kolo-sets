@@ -35,31 +35,8 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip,
   return (
     <div className={`flip-card h-[min(52vh,400px)] min-h-70 w-full sm:h-[min(58vh,460px)] md:h-[min(60vh,480px)] ${isFlipped ? "flipped" : ""}`} onClick={onFlip}>
       <div className="flip-card-inner relative h-full w-full cursor-pointer select-none">
-        {/* Лицо: слово. Обе стороны — одна «бумага» (surface), как у настоящей карточки: раньше лицо было
-            инверсным (bg-fg), и в тёмной теме переворот бил ярко-белым по глазам. Лицо отличает знак
-            «Орбиты» — приглушённое кольцо со спутником */}
         <div className="flip-card-front absolute h-full w-full">
-          <div className="relative flex h-full w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-4xl border border-line bg-surface p-8 text-fg shadow-xl">
-            <svg viewBox="0 0 200 200" aria-hidden className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 text-track">
-              <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="2" />
-              <circle cx="36" cy="36" r="6" className="fill-accent" />
-            </svg>
-            {/* Сила памяти: три точки-спутника заполняются по мере того, как слово крепнет */}
-            {strength !== undefined && (
-              <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-inset px-3 py-1 text-xs font-semibold text-muted">
-                <span className="flex gap-0.5" aria-hidden>
-                  {[1, 2, 3].map((i) => (
-                    <span key={i} className={cx("h-1.5 w-1.5 rounded-full", i <= strength ? "bg-accent" : "bg-faint/30")} />
-                  ))}
-                </span>
-                {f.strength[STRENGTH_KEYS[strength]]}
-              </span>
-            )}
-            <h2 dir="auto" className="relative text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{reverse ? card.translation : card.word}</h2>
-            {card.partOfSpeech && (
-              <span className="relative rounded-full bg-inset px-3 py-1 text-sm font-medium text-muted">{posLabel(card.partOfSpeech, t.words.pos)}</span>
-            )}
-          </div>
+          <CardFront card={card} reverse={reverse} strength={strength} />
         </div>
 
         {/* Оборот: ответ крупно, объяснение, пример */}
@@ -107,6 +84,39 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip,
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Лицо карточки — отдельно, потому что его же показывает колода (CardStage): под верхней карточкой лежит
+// настоящая следующая, а не пустая «рубашка». Лицо тёплое (accent-soft), оборот нейтральный (surface):
+// стороны различаются оттенком, а не яркостью. Инверсное лицо (bg-fg) в тёмной теме было ярко-белым и
+// било по глазам при перевороте, а одинаковые стороны не отличались друг от друга
+export function CardFront({ card, reverse = false, strength }: { card: Card; reverse?: boolean; strength?: Strength }) {
+  const { t } = useI18n();
+  const f = t.words.flashcards;
+  return (
+    <div className="relative flex h-full w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-4xl border border-accent/15 bg-accent-soft p-8 text-fg shadow-xl">
+      {/* Знак «Орбиты» — кольцо со спутником, приглушённо */}
+      <svg viewBox="0 0 200 200" aria-hidden className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 text-accent/20">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="2" />
+        <circle cx="36" cy="36" r="6" className="fill-accent" />
+      </svg>
+      {/* Сила памяти: три точки-спутника заполняются по мере того, как слово крепнет */}
+      {strength !== undefined && (
+        <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-surface/70 px-3 py-1 text-xs font-semibold text-muted">
+          <span className="flex gap-0.5" aria-hidden>
+            {[1, 2, 3].map((i) => (
+              <span key={i} className={cx("h-1.5 w-1.5 rounded-full", i <= strength ? "bg-accent" : "bg-faint/30")} />
+            ))}
+          </span>
+          {f.strength[STRENGTH_KEYS[strength]]}
+        </span>
+      )}
+      <h2 dir="auto" className="relative text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">
+        {reverse ? card.translation : card.word}
+      </h2>
+      {card.partOfSpeech && <span className="relative rounded-full bg-surface/70 px-3 py-1 text-sm font-medium text-muted">{posLabel(card.partOfSpeech, t.words.pos)}</span>}
     </div>
   );
 }

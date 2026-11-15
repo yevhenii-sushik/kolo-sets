@@ -280,6 +280,9 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     current: currentItem,
     // Актуальная версия текущей карточки: на повторе у неё уже новая сила памяти
     currentCard: currentItem ? latest(currentItem) : undefined,
+    // Следующая карточка — её лицо лежит в колоде под текущей
+    nextItem: items[index + 1] as SessionItem | undefined,
+    nextCard: items[index + 1] ? latest(items[index + 1]) : undefined,
     flipped,
     finished,
     practice,
