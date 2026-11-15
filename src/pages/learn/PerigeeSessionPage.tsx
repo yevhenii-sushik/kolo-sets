@@ -24,6 +24,7 @@ import { useSrsWriter } from "../../components/session/useSrsWriter";
 import AnswerSheet, { SHEET_MAX } from "../../components/session/AnswerSheet";
 import { ChoiceStep, ClozeStep, FlashStep, IntroStep, ListenStep, TypeStep } from "../../components/perigee/Steps";
 import { answer, dueTomorrow, isFinished, pickCards, SessionState, SessionSummary, startSession, summarize, answerSheet } from "../../perigee/plan";
+import { readDailyNew } from "../../perigee/prefs";
 
 // Сессия Perigee — главная тренировка: до 20 слов из всех наборов курса, формат по силе памяти,
 // ошибки возвращаются в той же сессии (docs/specs/perigee.md). Логика — в src/perigee/plan.ts.
@@ -58,7 +59,8 @@ export default function PerigeeSessionPage() {
   const startedAt = useRef(Date.now());
 
   const begin = (all: Collection[], extra: boolean) => {
-    let cards = pickCards(all, new Date(), extra, setId);
+    // Темп новых слов — выбор человека (5 / 12 / 20 в день)
+    let cards = pickCards(all, new Date(), extra, setId, readDailyNew());
     // В набор пришли сознательно: если новые слова не влезают в дневной лимит — берём их сверх лимита
     if (cards.length === 0 && setId && !extra) cards = pickCards(all, new Date(), true, setId);
     if (cards.length === 0) {
@@ -129,7 +131,7 @@ export default function PerigeeSessionPage() {
     setOutcome({
       summary,
       tomorrow: dueTomorrow(scope, now),
-      next: pickCards(latest, now, false, setId).length > 0 ? "again" : hasNew ? "extra" : "sets",
+      next: pickCards(latest, now, false, setId, readDailyNew()).length > 0 ? "again" : hasNew ? "extra" : "sets",
     });
     if (!user) return;
     reportSession({

@@ -50,6 +50,13 @@ describe("pickCards", () => {
     expect(pickCards([set(cards)], now).filter((p) => p.isNew)).toHaveLength(0);
     expect(pickCards([set(cards)], now, true).filter((p) => p.isNew)).toHaveLength(2);
   });
+
+  it("темп новых слов выбирает человек: 5 в день — после пяти начатых новых больше нет", () => {
+    const learnedToday = Array.from({ length: 5 }, () => updateSRSData(card(), REMEMBER, now));
+    const cards = [...learnedToday, card(), card()];
+    expect(pickCards([set(cards)], now, false, undefined, 5).filter((p) => p.isNew)).toHaveLength(0);
+    expect(pickCards([set(cards)], now, false, undefined, 20).filter((p) => p.isNew)).toHaveLength(2);
+  });
 });
 
 describe("pickCards по одному набору", () => {

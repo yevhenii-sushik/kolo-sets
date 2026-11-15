@@ -277,6 +277,21 @@
       "mistakes": "Tes erreurs"
     }
   },
+  "setPlan": {
+    "title": "Plan du set",
+    "strong": "Solides",
+    "growing": "Se consolident",
+    "learning": "En cours",
+    "fresh": "Nouveaux",
+    "eta": {
+      "one": "À {d} nouveaux mots par jour, tout le set sera lancé dans {n} jour",
+      "other": "À {d} nouveaux mots par jour, tout le set sera lancé dans {n} jours"
+    },
+    "today": "Tu peux commencer dès aujourd'hui tous les nouveaux mots de ce set",
+    "allStarted": "Tous les mots sont déjà lancés : Perigee ramènera chacun au bon moment",
+    "dailyNew": "Nouveaux mots par jour",
+    "dailyNewHint": "Combien de nouveaux mots Perigee commence chaque jour dans tout ton cours. Jusqu'à 6 par séance ; les révisions des mots déjà vus s'ajoutent."
+  },
   "pos": {
     "noun": "nom",
     "verb": "verbe",

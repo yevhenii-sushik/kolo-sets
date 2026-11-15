@@ -277,6 +277,21 @@
       "mistakes": "Tus errores"
     }
   },
+  "setPlan": {
+    "title": "Plan del set",
+    "strong": "Firmes",
+    "growing": "Afianzándose",
+    "learning": "Aprendiendo",
+    "fresh": "Nuevas",
+    "eta": {
+      "one": "Con {d} palabras nuevas al día, todo el set estará en marcha en {n} día",
+      "other": "Con {d} palabras nuevas al día, todo el set estará en marcha en {n} días"
+    },
+    "today": "Puedes empezar hoy mismo todas las palabras nuevas de este set",
+    "allStarted": "Todas las palabras ya están en marcha: Perigee traerá cada una cuando toque",
+    "dailyNew": "Palabras nuevas al día",
+    "dailyNewHint": "Cuántas palabras nuevas empieza Perigee cada día en todo tu curso. Hasta 6 por sesión; los repasos de palabras anteriores van aparte."
+  },
   "pos": {
     "noun": "sustantivo",
     "verb": "verbo",

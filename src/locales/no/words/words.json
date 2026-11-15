@@ -407,6 +407,21 @@
       "mistakes": "Feilene dine"
     }
   },
+  "setPlan": {
+    "title": "Plan for settet",
+    "strong": "Sitter",
+    "growing": "Festner seg",
+    "learning": "Læres",
+    "fresh": "Nye",
+    "eta": {
+      "one": "Med {d} nye ord om dagen er hele settet i gang om {n} dag",
+      "other": "Med {d} nye ord om dagen er hele settet i gang om {n} dager"
+    },
+    "today": "Du kan begynne på alle de nye ordene i settet allerede i dag",
+    "allStarted": "Alle ordene er allerede i gang: Perigee henter hvert ord tilbake når det er tid",
+    "dailyNew": "Nye ord om dagen",
+    "dailyNewHint": "Hvor mange nye ord Perigee begynner på hver dag i hele kurset. Opptil 6 i én økt; repetisjon av tidligere ord kommer i tillegg."
+  },
   "soonTitle": "Kommer snart",
   "pos": {
     "noun": "substantiv",

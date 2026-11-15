@@ -407,6 +407,21 @@
       "mistakes": "Your mistakes"
     }
   },
+  "setPlan": {
+    "title": "Set plan",
+    "strong": "Strong",
+    "growing": "Growing",
+    "learning": "Learning",
+    "fresh": "New",
+    "eta": {
+      "one": "At {d} new words a day, the whole set is in rotation in {n} day",
+      "other": "At {d} new words a day, the whole set is in rotation in {n} days"
+    },
+    "today": "You can start all the new words in this set today",
+    "allStarted": "Every word is already in rotation: Perigee brings each one back when it's due",
+    "dailyNew": "New words a day",
+    "dailyNewHint": "How many new words Perigee starts each day across your course. Up to 6 in one session; reviews of earlier words come on top."
+  },
   "soonTitle": "Coming soon",
   "pos": {
     "noun": "noun",

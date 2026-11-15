@@ -277,6 +277,21 @@
       "mistakes": "Deine Fehler"
     }
   },
+  "setPlan": {
+    "title": "Plan für dieses Set",
+    "strong": "Sitzen",
+    "growing": "Festigen sich",
+    "learning": "Im Lernen",
+    "fresh": "Neu",
+    "eta": {
+      "one": "Bei {d} neuen Wörtern am Tag ist das ganze Set in {n} Tag in Arbeit",
+      "other": "Bei {d} neuen Wörtern am Tag ist das ganze Set in {n} Tagen in Arbeit"
+    },
+    "today": "Alle neuen Wörter dieses Sets kannst du schon heute beginnen",
+    "allStarted": "Alle Wörter sind schon in Arbeit: Perigee holt jedes zurück, wenn es fällig ist",
+    "dailyNew": "Neue Wörter pro Tag",
+    "dailyNewHint": "Wie viele neue Wörter Perigee pro Tag in deinem ganzen Kurs beginnt. Bis zu 6 pro Session; Wiederholungen früherer Wörter kommen dazu."
+  },
   "pos": {
     "noun": "Substantiv",
     "verb": "Verb",

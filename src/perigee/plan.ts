@@ -7,7 +7,7 @@ import { blankExample } from "./cloze";
 
 export const SESSION_CARDS = 20;
 export const NEW_PER_SESSION = 6;
-export const DAILY_NEW = 12;
+export const DAILY_NEW = 12; // по умолчанию; темп 5 / 12 / 20 выбирает человек (src/perigee/prefs.ts)
 const GROUP = 3; // новые слова идут группами: знакомство с тремя, потом проверка каждого
 const RETRY_GAP = 3; // повтор после ошибки — через три шага
 const MAX_RETRIES = 3;
@@ -56,9 +56,9 @@ export interface SrsEffect {
 
 const time = (value: unknown) => toDate(value)?.getTime() ?? 0;
 
-/** Сколько новых слов ещё можно начать сегодня */
-export const newLeftToday = (collections: Collection[], now: Date) =>
-  Math.max(0, DAILY_NEW - introducedOn(collections.flatMap((c) => c.cards), now));
+/** Сколько новых слов ещё можно начать сегодня при темпе dailyNew */
+export const newLeftToday = (collections: Collection[], now: Date, dailyNew: number = DAILY_NEW) =>
+  Math.max(0, dailyNew - introducedOn(collections.flatMap((c) => c.cards), now));
 
 /**
  * Слова для сессии: сначала к повторению (самые просроченные), потом новые (старые первыми)
@@ -66,7 +66,7 @@ export const newLeftToday = (collections: Collection[], now: Date) =>
  */
 // only — сессия по одному набору (кнопка «Учить» в наборе). Дневной лимит новых слов всё равно считаем
 // по всему курсу: иначе его легко обойти, проходя наборы по очереди
-export function pickCards(collections: Collection[], now: Date, extra = false, only?: string): PlanCard[] {
+export function pickCards(collections: Collection[], now: Date, extra = false, only?: string, dailyNew: number = DAILY_NEW): PlanCard[] {
   const all = collections
     .filter((col) => !only || col.id === only)
     .flatMap((col) => col.cards.map((card) => ({ key: `${col.id}/${card.id}`, card, collectionId: col.id })));
@@ -75,7 +75,7 @@ export function pickCards(collections: Collection[], now: Date, extra = false, o
     .sort((a, b) => time(a.card.srsData.nextReview) - time(b.card.srsData.nextReview))
     .slice(0, SESSION_CARDS)
     .map((c) => ({ ...c, isNew: false }));
-  const allowance = extra ? NEW_PER_SESSION : newLeftToday(collections, now);
+  const allowance = extra ? NEW_PER_SESSION : newLeftToday(collections, now, dailyNew);
   const fresh = all
     .filter((c) => isNewCard(c.card))
     .sort((a, b) => time(a.card.createdAt) - time(b.card.createdAt))

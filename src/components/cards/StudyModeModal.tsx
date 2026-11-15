@@ -7,6 +7,7 @@ import { canAsk } from "../../blitz/plan";
 import { useI18n } from "../../contexts/I18nContext";
 import { Modal, PerigeeMark } from "../../ui";
 import PerigeeTag from "../session/PerigeeTag";
+import { SetPlanPanel } from "./SetPlanView";
 
 // Выбор режима для набора — одно окно и на карточке набора в «Словах», и в редакторе набора.
 // Раньше «Учить» в редакторе сразу открывало флэшкарты, а на карточке набора «Учить» — сессию Perigee:
@@ -31,7 +32,9 @@ export default function StudyModeModal({ collection, open, onClose }: { collecti
 
   return (
     <Modal open={open} onClose={onClose} title={collection.name} size="sm">
-      <p className="-mt-2 mb-4 text-sm text-muted">{m.chooseMode}</p>
+      {/* План набора: где он сейчас и когда все новые слова будут в работе — 300 слов перестают быть стеной */}
+      <SetPlanPanel collection={collection} />
+      <p className="mb-3 mt-4 text-sm text-muted">{m.chooseMode}</p>
       <div className="grid gap-2">
         {/* Четыре режима, у каждого своя задача (docs/specs/perigee.md, «Режимы после чистки»):
             учить по расписанию, прогнать весь набор, проверить себя, поиграть */}

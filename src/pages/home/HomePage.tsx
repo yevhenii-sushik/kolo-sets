@@ -11,6 +11,7 @@ import { FirstSteps, FirstStepsGuides, useFirstSteps } from "../../components/on
 import { FEATURES } from "../../config/features";
 import { getDailyGoal, isDueCard, isNewCard } from "../../utils/storage";
 import { newLeftToday } from "../../perigee/plan";
+import { readDailyNew } from "../../perigee/prefs";
 import { localDateKey } from "../../utils/progress";
 import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import { getLanguageInfo } from "../../locales/languages";
@@ -50,7 +51,8 @@ export default function HomePage() {
   // Новые слова ещё не тренировались — они не «к повторению», но и «всё повторено» про них говорить нельзя
   const newCount = useMemo(() => collections.reduce((n, col) => n + col.cards.filter(isNewCard).length, 0), [collections]);
   // Главная кнопка — сессия Perigee (docs/specs/perigee.md); исчерпан дневной лимит новых — предлагаем ещё, но не навязываем
-  const newAllowed = useMemo(() => newLeftToday(collections, new Date()), [collections]);
+  const dailyNew = readDailyNew();
+  const newAllowed = useMemo(() => newLeftToday(collections, new Date(), dailyNew), [collections, dailyNew]);
   const now =
     dueCount > 0
       ? { title: count(dueCount, h.review.dueTitle), text: h.review.dueText, button: h.review.dueButton, to: "/learn" }

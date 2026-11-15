@@ -8,6 +8,7 @@ import {
   Compass,
   Database,
   Download,
+  Sprout,
   GraduationCap,
   KeyRound,
   Languages,
@@ -49,6 +50,7 @@ import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
 import { PageHeader } from "../../components/other/PageSection";
 import { Segmented, SettingsGroup, SettingsRow } from "../../components/other/SettingsList";
+import { DAILY_NEW_OPTIONS, DailyNew, readDailyNew, saveDailyNew } from "../../perigee/prefs";
 import { restartOnboarding } from "../../utils/firstRun";
 
 type Theme = "light" | "dark" | "system";
@@ -82,6 +84,7 @@ export default function SettingsPage() {
   const [currentTheme, setCurrentTheme] = useState<Theme>(getThemePref());
   const [soundEnabled, setSoundState] = useState(getSoundEnabled());
   const [dailyGoal, setDailyGoalState] = useState(getDailyGoal);
+  const [dailyNew, setDailyNewState] = useState<DailyNew>(readDailyNew);
   const [reminder, setReminder] = useState<ReminderSettings>(getReminderSettings);
   const [notifAccess, setNotifAccess] = useState<NotificationAccess>(getNotificationAccess);
   const [busy, setBusy] = useState<"export" | "import" | "password" | "delete" | null>(null);
@@ -320,6 +323,25 @@ export default function SettingsPage() {
             title={s.goal.title}
             value={plural(locale, dailyGoal, s.goal.value)}
             onClick={() => setPicker("goal")}
+          />
+          {/* Темп новых слов: сколько новых Perigee начинает в день (docs/specs/perigee.md, «План набора и темп») */}
+          <SettingsRow
+            icon={<Sprout size={16} />}
+            tone="info"
+            title={t.words.setPlan.dailyNew}
+            description={t.words.setPlan.dailyNewHint}
+            below={
+              <Segmented<string>
+                label={t.words.setPlan.dailyNew}
+                value={String(dailyNew)}
+                onChange={(v) => {
+                  const n = Number(v) as DailyNew;
+                  setDailyNewState(n);
+                  saveDailyNew(n);
+                }}
+                options={DAILY_NEW_OPTIONS.map((n) => ({ value: String(n), label: String(n) }))}
+              />
+            }
           />
           {activeCourse && (
             <SettingsRow

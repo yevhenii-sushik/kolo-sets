@@ -16,6 +16,8 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Collection, Folder as FolderType } from "../../types";
 import { isDueCard } from "../../utils/storage";
+import { setPlan } from "../../perigee/setPlan";
+import { SetPlanBar } from "./SetPlanView";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
@@ -89,6 +91,8 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
                 </span>
               )}
             </p>
+            {/* План набора одной полосой: крепкие, крепнут, учатся; пустая часть — ещё не начатые */}
+            {!isEmpty && <SetPlanBar plan={setPlan(collection.cards)} thin className="mt-3 w-40 max-w-full" />}
           </div>
           {onToggleFavorite && (
             <IconButton

@@ -72,7 +72,7 @@
           "id": "session",
           "title": "Perigee-økt",
           "tags": ["Hovedknapp"],
-          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, noen minutter. Først ordene som skal repeteres, så noen nye – ikke mer enn 12 om dagen, så repetisjonene ikke hoper seg opp. Et nytt ord viser Perigee deg først, og så ber den deg finne det blant alternativer. Kjente ord sjekkes etter hvor godt du kan dem: med alternativer, skriving, et kort, på gehør eller et hull i eksempelsetningen. En feil kommer tilbake noen steg senere til den sitter. I et sett starter Lær-knappen den samme økten, bare med ordene i settet."
+          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, noen minutter. Først ordene som skal repeteres, så noen nye – 12 om dagen som standard (eller 5 eller 20, i innstillingene eller i settets plan), så repetisjonene ikke hoper seg opp. Et nytt ord viser Perigee deg først, og så ber den deg finne det blant alternativer. Kjente ord sjekkes etter hvor godt du kan dem: med alternativer, skriving, et kort, på gehør eller et hull i eksempelsetningen. En feil kommer tilbake noen steg senere til den sitter. I et sett starter Lær-knappen den samme økten, bare med ordene i settet."
         },
         {
           "id": "flashcards",
@@ -161,7 +161,7 @@
             { "title": "Vurder ærlig", "text": "Et rundhåndet «Kan» sender ordet for langt av gårde. Nølte du, trykk «Husker»." },
             { "title": "Litt hver dag", "text": "Fem minutter om dagen virker bedre enn en time én gang i uken." },
             { "title": "Start med Perigee-økten", "text": "Den begynner med ordene som skal repeteres, og legger til nye når de er unnagjort." },
-            { "title": "Nye ord, litt om gangen", "text": "Økten legger til opptil 12 nye ord om dagen, så repetisjonene aldri hoper seg opp." }
+            { "title": "Nye ord, litt om gangen", "text": "Økten legger til 12 nye ord om dagen som standard – eller 5, eller 20, som du vil – så repetisjonene aldri hoper seg opp. Settets plan viser når alle de nye ordene er i gang." }
           ]
         }
       ]

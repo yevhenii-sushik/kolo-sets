@@ -72,7 +72,7 @@
           "id": "session",
           "title": "Perigee session",
           "tags": ["Main button"],
-          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, a few minutes. First the words that are due, then a few new ones — no more than 12 a day, so reviews don't pile up. Perigee shows you a new word first, then asks you to spot it among options. Familiar words are checked by how well you know them: with options, typing, a flashcard, by ear or a gap in an example sentence. A mistake comes back a few steps later until it sticks. Inside a set, the Learn button starts the same session with just that set's words."
+          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, a few minutes. First the words that are due, then a few new ones — 12 a day by default (5 or 20 if you like, in Settings or in a set's plan), so reviews don't pile up. Perigee shows you a new word first, then asks you to spot it among options. Familiar words are checked by how well you know them: with options, typing, a flashcard, by ear or a gap in an example sentence. A mistake comes back a few steps later until it sticks. Inside a set, the Learn button starts the same session with just that set's words."
         },
         {
           "id": "flashcards",
@@ -161,7 +161,7 @@
             { "title": "Rate honestly", "text": "A generous “Know” sends a word away too early. If you hesitated, press “Remember”." },
             { "title": "A little every day", "text": "Five minutes a day works better than an hour once a week." },
             { "title": "Start with the Perigee session", "text": "It begins with the words that are due and adds new ones once those are done." },
-            { "title": "New words, a few at a time", "text": "The session adds up to 12 new words a day, so reviews never pile up into a wall." }
+            { "title": "New words, a few at a time", "text": "The session adds 12 new words a day by default — or 5, or 20, as you choose — so reviews never pile up into a wall. A set's plan shows when all its new words will be in rotation." }
           ]
         }
       ]
