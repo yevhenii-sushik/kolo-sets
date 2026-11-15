@@ -28,7 +28,7 @@ interface Step {
 // hidden — список не нужен (всё сделано раньше или его закрыли). /?guide=set — сразу открыть сценарий
 export function useFirstSteps() {
   const { user } = useAuth();
-  const { profile, collections, totalCards, activeCourse, coursesReady, progression } = useData();
+  const { profile, collections, totalCards, activeCourse, contentReady, progression } = useData();
   const uid = user?.uid ?? "";
   const [mark, setMark] = useState(() => (uid ? getFirstSteps(uid) : null));
   const [guide, setGuide] = useState<Guide | null>(null);
@@ -58,8 +58,9 @@ export function useFirstSteps() {
 
   const doneCount = steps.filter((s) => s.done).length;
   const allDone = doneCount === steps.length;
-  // Пока профиль, курсы и прогресс не загрузились, не решаем — иначе список мигнёт у тех, кому он не нужен
-  const ready = !!uid && !!profile && coursesReady && !!progression;
+  // Пока профиль, наборы и прогресс не загрузились, не решаем — иначе список мигнёт у тех, кому он не нужен.
+  // Копий с устройства достаточно: шаги только прибавляются, и устаревшая копия не спрячет нужный список
+  const ready = !!uid && !!profile && contentReady && !!progression;
   // Тем, кто уже занимается, а не выбрал только цель недели (её спросят отдельно), список не показываем
   const onlyGoalLeft = steps.every((s) => s.done || s.id === "goal");
 

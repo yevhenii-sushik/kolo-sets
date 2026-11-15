@@ -11,6 +11,7 @@ import {
 import { useAuth } from './AuthContext';
 import {
   getUserProfile,
+  getUserCollectionsFromCache,
   updateUserCollectionFields,
   parseCourses,
   parseFolders,
@@ -49,8 +50,12 @@ interface DataContextType {
   /** Курсы пользователя (docs/specs/01-courses.md) */
   courses: Course[];
   activeCourse: Course | null;
-  /** Профиль и наборы загружены, курсы известны — можно решать, нужен ли выбор языка */
+  /** Профиль и наборы пришли с сервера, курсы известны — можно решать, нужен ли выбор языка,
+   *  и записывать миграцию курсов */
   coursesReady: boolean;
+  /** Есть что показать: наборы (из кэша устройства или с сервера) и профиль (из копии или с сервера).
+   *  По нему страницы решают, нужен ли скелетон (src/design/README.md → «Загрузка») */
+  contentReady: boolean;
   /** Папки активного курса */
   folders: Folder[];
   setActiveCourse: (id: string) => Promise<void>;
@@ -119,6 +124,11 @@ export function DataProvider({ children }: { children: ReactNode }) {
   );
   // Профиль загружен с сервера (не из кэша) — только тогда можно мигрировать курсы
   const [profileFresh, setProfileFresh] = useState(false);
+  // То же для наборов: на экране может быть копия из кэша Firestore, а решать по ней нельзя
+  const [collectionsFresh, setCollectionsFresh] = useState(false);
+  const collectionsFreshRef = useRef(false);
+  // Чей ответ ждём: пришедший позже ответ для прежнего аккаунта не должен попасть в новый
+  const uidRef = useRef<string | null>(null);
 
   // Ref для sync-доступа к collections внутри колбэков без stale closure
   const collectionsRef = useRef<Collection[]>([]);
@@ -165,12 +175,17 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   const refreshCollections = useCallback(async () => {
     if (!user) return;
-    setCollectionsLoading(true);
+    const uid = user.uid;
+    // Наборы уже на экране (из кэша или прошлой загрузки) — обновляем молча, без скелетона
+    if (collectionsRef.current.length === 0) setCollectionsLoading(true);
     try {
       const loaded = await getCollections();
+      if (uidRef.current !== uid) return;
+      collectionsFreshRef.current = true;
       setCollections(loaded);
+      setCollectionsFresh(true);
     } finally {
-      setCollectionsLoading(false);
+      if (uidRef.current === uid) setCollectionsLoading(false);
     }
   }, [user, setCollections]);
 
@@ -230,6 +245,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [showUnlocks, applyProgression, refreshProfile]);
 
   useEffect(() => {
+    uidRef.current = user?.uid ?? null;
+    collectionsFreshRef.current = false;
+    setCollectionsFresh(false);
     if (!user?.uid) {
       setProfileState(null);
       setProgressionState(null);
@@ -247,6 +265,17 @@ export function DataProvider({ children }: { children: ReactNode }) {
     setProfileFresh(false);
     setProfileLoading(!cached);
     setCollectionsLoading(true);
+
+    // Наборы из кэша Firestore на устройстве — сразу на экран, сервер ответит следом и заменит их.
+    // Пустой кэш не показываем: «наборов нет» могло бы оказаться неправдой — тогда ждём сервер
+    const uid = user.uid;
+    getUserCollectionsFromCache(uid)
+      .then((cachedCollections) => {
+        if (uidRef.current !== uid || collectionsFreshRef.current || cachedCollections.length === 0) return;
+        setCollections(cachedCollections);
+        setCollectionsLoading(false);
+      })
+      .catch(() => {});
 
     Promise.all([refreshProfile(), refreshCollections()]);
   }, [user?.uid]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -283,7 +312,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
   );
   const activeCourse = courses.find(c => c.id === plan.activeCourseId) ?? null;
   const activeId = activeCourse?.id ?? null;
-  const coursesReady = profileFresh && !collectionsLoading;
+  // Решения (выбор языка, миграция) — только по ответу сервера, показ — уже по копиям
+  const coursesReady = profileFresh && collectionsFresh;
+  // Не загрузился профиль (нет сети и копии) — не держим скелетон вечно, показываем что есть
+  const contentReady = !collectionsLoading && (!!profile || !profileLoading);
 
   const collections = useMemo(
     () => (activeId ? allCollections.filter(c => c.courseId === activeId) : []),
@@ -484,6 +516,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         courses,
         activeCourse,
         coursesReady,
+        contentReady,
         folders,
         setActiveCourse,
         addCourse,

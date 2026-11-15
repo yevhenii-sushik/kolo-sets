@@ -20,7 +20,7 @@ export default function CoursesPage() {
   const c = t.courses;
   const locale = getLanguageInfo(language).htmlLang;
   const navigate = useNavigate();
-  const { courses, activeCourse, allCollections, collectionsLoading, setActiveCourse, updateCourseVoice, removeCourse } = useData();
+  const { courses, activeCourse, allCollections, collectionsLoading, coursesReady, setActiveCourse, updateCourseVoice, removeCourse } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { error, toastState, hideToast } = useToast();
   const [removing, setRemoving] = useState<string | null>(null);
@@ -135,8 +135,9 @@ export default function CoursesPage() {
                   size="sm"
                   iconLeft={<Trash2 size={15} />}
                   loading={removing === course.id}
-                  // Пока наборы не загрузились, подтверждение назвало бы курс пустым
-                  disabled={collectionsLoading}
+                  // Удаляем только по ответу сервера: в копии из кэша может не быть наборов,
+                  // добавленных на другом устройстве, — подтверждение назвало бы курс пустым
+                  disabled={!coursesReady}
                   onClick={() => handleRemove(course.id)}
                 >
                   {c.remove}

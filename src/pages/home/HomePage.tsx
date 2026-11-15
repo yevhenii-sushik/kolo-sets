@@ -24,7 +24,7 @@ const MILESTONES = [10, 25, 50, 100, 200, 500];
 export default function HomePage() {
   const { t, language } = useI18n();
   const h = t.home;
-  const { profile, collections, totalCards, profileLoading, collectionsLoading, coursesReady } = useData();
+  const { profile, collections, totalCards, profileLoading, contentReady } = useData();
   const { user } = useAuth();
   const locale = getLanguageInfo(language).htmlLang;
   const count = (n: number, forms: PluralForms) => plural(locale, n, forms);
@@ -40,10 +40,10 @@ export default function HomePage() {
   const refreshTip = () => setTipKey(tipKeys[Math.floor(Math.random() * tipKeys.length)]);
 
   const firstSteps = useFirstSteps();
-  // Пока наборы и свежий профиль не пришли, главная соврала бы: «Создай первый набор», «0 слов»,
-  // а через полсекунды перескочила бы на «12 слов к повторению». Показываем скелетон.
-  // Не загрузился профиль (нет сети и копии) — не держим скелетон вечно, показываем что есть
-  const loading = collectionsLoading || (!coursesReady && profileLoading);
+  // Без наборов главная соврала бы: «Начни с первого набора», «0 слов», а через полсекунды
+  // перескочила бы на «12 слов к повторению». Обычно наборы уже есть в кэше устройства и
+  // скелетона не видно; он нужен при первом входе с устройства и пока наборов ещё нет
+  const loading = !contentReady;
 
   // ── Что делать сейчас и цель дня ──
   const dueCount = useMemo(() => collections.reduce((n, col) => n + col.cards.filter(isDueCard).length, 0), [collections]);

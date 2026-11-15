@@ -3,6 +3,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  getDocsFromCache,
   setDoc,
   updateDoc,
   deleteDoc,
@@ -75,6 +76,13 @@ export const getUserCollections = async (userId: string): Promise<Collection[]> 
   const collectionsRef = collection(db, 'users', userId, 'collections');
   const snapshot = await getDocs(collectionsRef);
   
+  return snapshot.docs.map(doc => firestoreToCollection(doc.data()));
+};
+
+// Наборы из локального кэша Firestore (IndexedDB) — без сети, за десятки миллисекунд.
+// Пусто, если на этом устройстве их ещё не загружали
+export const getUserCollectionsFromCache = async (userId: string): Promise<Collection[]> => {
+  const snapshot = await getDocsFromCache(collection(db, 'users', userId, 'collections'));
   return snapshot.docs.map(doc => firestoreToCollection(doc.data()));
 };
 

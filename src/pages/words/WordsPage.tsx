@@ -359,7 +359,7 @@ export default function WordsPage() {
     collections,
     collectionsLoading,
     coursesReady,
-    profileLoading,
+    contentReady,
     setCollections,
     checkAchievements,
     activeCourse,
@@ -712,8 +712,7 @@ export default function WordsPage() {
 
       {/* ── Content ── */}
       <div className="min-h-100">
-        {/* Профиль не загрузился (нет сети и копии) — не держим скелетон вечно, как и на главной */}
-        {collectionsLoading || (!coursesReady && profileLoading) ? (
+        {!contentReady ? (
           <CollectionSkeleton label={t.loading} />
         ) : activeTab === "my" ? (
           <>

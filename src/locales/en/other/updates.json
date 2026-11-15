@@ -69,7 +69,7 @@
         "The home screen no longer says everything is reviewed while new words are waiting, and a set's page now has a Study button.",
         "Folders work properly: rename and recolour them, delete only after a confirmation (the sets stay), the Back button closes a folder, and after a session you return to the same folder. You can create a folder straight from a set’s menu, and starred sets from folders show up in Favourites.",
         "The daily reminder now speaks your app language and counts words waiting for review.",
-        "Kolo opens faster and no longer flashes a blank screen when you switch tabs. While your words are loading, the home screen shows their outline instead of “0 words” and “Start with your first set”.",
+        "Kolo opens faster: your words and sets appear straight away and refresh quietly in the background, and switching tabs no longer flashes a blank screen. The home screen no longer says “Start with your first set” or “0 words” for a moment while loading.",
         "Words you add to a set now show up straight away on the home screen, in Words and in First steps, without reloading the app. A set’s page opens instantly too."
       ]
     },
