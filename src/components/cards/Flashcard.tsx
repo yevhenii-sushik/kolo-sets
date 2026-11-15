@@ -1,6 +1,6 @@
 import { BookOpen, Quote, Volume2 } from "lucide-react";
 import { Card } from "../../types";
-import { speak, isTTSSupported } from "../../utils/tts";
+import { speakWord, isTTSSupported } from "../../utils/tts";
 import { useI18n } from "../../contexts/I18nContext";
 import { Badge, IconButton, cx } from "../../ui";
 import { Strength } from "../../utils/srs";
@@ -45,7 +45,7 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip,
             {/* Озвучка — голосом браузера, качество зависит от устройства: пока честно помечаем бетой */}
             {isTTSSupported() && (
               <div className="absolute left-4 top-4 flex items-center gap-2" title={f.ttsBetaHint} onClick={(e) => e.stopPropagation()}>
-                <IconButton variant="soft" label={f.speak} onClick={stop(() => speak(card.word, language))}>
+                <IconButton variant="soft" label={f.speak} onClick={stop(() => speakWord(card.word, language))}>
                   <Volume2 size={20} />
                 </IconButton>
                 <Badge tone="special">{f.ttsBeta}</Badge>
@@ -94,7 +94,6 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip,
 // било по глазам при перевороте, а одинаковые стороны не отличались друг от друга
 export function CardFront({ card, reverse = false, strength }: { card: Card; reverse?: boolean; strength?: Strength }) {
   const { t } = useI18n();
-  const f = t.words.flashcards;
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-4xl border border-accent/15 bg-accent-soft p-8 text-fg shadow-xl">
       {/* Знак «Орбиты» — кольцо со спутником, приглушённо */}
@@ -103,20 +102,27 @@ export function CardFront({ card, reverse = false, strength }: { card: Card; rev
         <circle cx="36" cy="36" r="6" className="fill-accent" />
       </svg>
       {/* Сила памяти: три точки-спутника заполняются по мере того, как слово крепнет */}
-      {strength !== undefined && (
-        <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-surface/70 px-3 py-1 text-xs font-semibold text-muted">
-          <span className="flex gap-0.5" aria-hidden>
-            {[1, 2, 3].map((i) => (
-              <span key={i} className={cx("h-1.5 w-1.5 rounded-full", i <= strength ? "bg-accent" : "bg-faint/30")} />
-            ))}
-          </span>
-          {f.strength[STRENGTH_KEYS[strength]]}
-        </span>
-      )}
+      {strength !== undefined && <StrengthChip strength={strength} className="absolute left-5 top-5" />}
       <h2 dir="auto" className="relative text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">
         {reverse ? card.translation : card.word}
       </h2>
       {card.partOfSpeech && <span className="relative rounded-full bg-surface/70 px-3 py-1 text-sm font-medium text-muted">{posLabel(card.partOfSpeech, t.words.pos)}</span>}
     </div>
+  );
+}
+
+// Сила памяти слова: три точки-спутника заполняются по мере того, как слово крепнет. Общая для лица
+// флэшкарты и карточки вопроса в тесте
+export function StrengthChip({ strength, className }: { strength: Strength; className?: string }) {
+  const { t } = useI18n();
+  return (
+    <span className={cx("inline-flex items-center gap-2 rounded-full bg-surface/70 px-3 py-1 text-xs font-semibold text-muted", className)}>
+      <span className="flex gap-0.5" aria-hidden>
+        {[1, 2, 3].map((i) => (
+          <span key={i} className={cx("h-1.5 w-1.5 rounded-full transition-colors duration-500", i <= strength ? "bg-accent" : "bg-faint/30")} />
+        ))}
+      </span>
+      {t.words.flashcards.strength[STRENGTH_KEYS[strength]]}
+    </span>
   );
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { answerVariants, checkAnswer, spellingDiff } from "./answerCheck";
+import { answerVariants, checkAnswer, spellingDiff, canAddVariant, withVariant } from "./answerCheck";
 
 const result = (input: string, correct: string, others?: string[]) => {
   const v = checkAnswer(input, correct, others);
@@ -105,5 +105,24 @@ describe("где ошибка: вариант для сравнения", () => 
     expect(checkAnswer("ei bil", "en bil")).toEqual({ result: "wrong", expected: "en bil" });
     expect(checkAnswer("katt", "hund")).toEqual({ result: "wrong", expected: undefined });
     expect(checkAnswer("ja", "nei")).toEqual({ result: "wrong", expected: undefined });
+  });
+});
+
+describe("«Добавить в карточку» вместо «Мой ответ верный»", () => {
+  const others = ["glad", "hus", "bil"];
+
+  it("предлагаем только для другого слова: не опечатка и не слово другой карточки", () => {
+    expect(canAddVariant("lykkelig", checkAnswer("lykkelig", "glad", others), others)).toBe(true);
+    expect(canAddVariant("gald", checkAnswer("gald", "glad", others), others)).toBe(false); // почти — засчитано
+    expect(canAddVariant("hus", checkAnswer("hus", "glad", others), others)).toBe(false); // слово другой карточки
+    expect(canAddVariant("", checkAnswer("", "glad", others), others)).toBe(false); // «Не помню»
+    expect(canAddVariant("glad", checkAnswer("glad", "glad", others), others)).toBe(false); // и так верно
+  });
+
+  it("вариант дописывается в слово, и со следующего раза проверка его принимает", () => {
+    const word = withVariant("glad", "  lykkelig! ");
+    expect(word).toBe("glad / lykkelig");
+    expect(checkAnswer("lykkelig", word).result).toBe("exact");
+    expect(checkAnswer("glad", word).result).toBe("exact");
   });
 });

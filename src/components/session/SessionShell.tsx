@@ -17,6 +17,7 @@ export default function SessionShell({
   progress,
   progressTone = "accent",
   meta,
+  bar,
   perigee = false,
   children,
 }: {
@@ -25,6 +26,7 @@ export default function SessionShell({
   onClose: () => void;
   action?: ReactNode;
   progress?: number; // 0..1; без него полосы нет
+  bar?: ReactNode; // своя полоса вместо обычной (лист ответов теста)
   progressTone?: keyof typeof BAR_TONES;
   meta?: ReactNode; // справа от полосы: «3 / 8», таймер, счёт
   perigee?: boolean; // ответы идут в расписание Perigee — пометка рядом с названием
@@ -48,9 +50,10 @@ export default function SessionShell({
             </div>
             {action}
           </div>
-          {(progress !== undefined || meta) && (
-            <div className={cx("flex items-center gap-3 pb-1", progress === undefined && "justify-end")}>
-              {progress !== undefined && (
+          {(progress !== undefined || meta || bar) && (
+            <div className={cx("flex items-center gap-3 pb-1", progress === undefined && !bar && "justify-end")}>
+              {bar}
+              {!bar && progress !== undefined && (
                 <div className="h-2 flex-1 overflow-hidden rounded-full bg-track">
                   <div
                     className={cx("h-full rounded-full transition-[width] duration-500 ease-out", BAR_TONES[progressTone])}

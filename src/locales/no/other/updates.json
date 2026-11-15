@@ -25,7 +25,7 @@
         },
         {
           "title": "Quiz",
-          "text": "Quizen er nå en eksamen i settet: 20 spørsmål (eller 10, eller hele settet), og først kommer ordene du bommet på sist og de som skal repeteres. Svar med flervalg, skriving eller en blanding – da kommer svake ord oftere som flervalg og sterke som skriving, og av og til svarer du på lyd. Et riktig svar går videre av seg selv, tre på rad blir en rekke, og lyden stiger med den. Etter quizen kan du gå rett til «Gå gjennom feilene» til hvert ord er riktig. Kolo husker hvor mange ord i settet du har svart riktig på, sammenligner poengsummen med forrige gang, merker en rekord for settet og feirer når hele settet er bestått. En feil på et ord du ikke har lært ennå, forstyrrer ikke lenger planen, og bonusen for en feilfri quiz gjelder nå fra 10 spørsmål."
+          "text": "Quizen er nå en eksamen i settet: 20 spørsmål (eller 10, eller hele settet), og først kommer ordene du bommet på sist og de som skal repeteres. Svar med flervalg, skriving eller en blanding – da kommer svake ord oftere som flervalg og sterke som skriving, og av og til svarer du på lyd. Et riktig svar går videre av seg selv, tre på rad blir en rekke, og lyden stiger med den. Etter quizen kan du gå rett til «Gå gjennom feilene» til hvert ord er riktig. Kolo husker hvor mange ord i settet du har svart riktig på, sammenligner poengsummen med forrige gang, merker en rekord for settet og feirer når hele settet er bestått. En feil på et ord du ikke har lært ennå, forstyrrer ikke lenger planen, og bonusen for en feilfri quiz gjelder nå fra 10 spørsmål. Hvert spørsmål står på et kort, som i flashkortene, med ordets styrke og ordklasse, og svararket øverst viser hvordan resultatet tar form. Vet du ikke? Trykk «Vet ikke» i stedet for å gjette."
         },
         {
           "title": "Et kurs for hvert språk",
@@ -66,7 +66,7 @@
         "Vurderte du feil? Angre med pilknappen øverst eller med Backspace, så kommer kortet tilbake fra siden det fløy ut til.",
         "Går du midt i en økt? Kolo viser hvor mye som gjenstår og spør om du er sikker: bare en fullført økt teller, og svarene lagres uansett.",
         "Kortet hopper ikke lenger når du viser svaret.",
-        "Testen tilgir småting: en skrivefeil, manglende spesialbokstaver eller en glemt artikkel godkjennes, og akkurat hvor feilen er, markeres i selve ordet: ekstra, manglende og ombyttede bokstaver. Var svaret riktig, men ble ikke godkjent, trykker du «Svaret mitt var riktig». Telefonen retter ikke lenger fremmedord mens du skriver.",
+        "Testen tilgir småting: en skrivefeil, manglende spesialbokstaver eller en glemt artikkel godkjennes, og akkurat hvor feilen er, markeres i selve ordet: ekstra, manglende og ombyttede bokstaver. Er svaret ditt også riktig, men står ikke på kortet, kan du legge det til – fra da av godtar testen det. Telefonen retter ikke lenger fremmedord mens du skriver.",
         "Testen åpner seg igjen: en feil lukket den rett etter at settet var lastet inn.",
         "Å øve på et helt sett før det er tid, sender ikke lenger ordene måneder frem i tid, og ord som skal repeteres, venter fra morgenen av.",
         "Fremgangen telles nå av serveren, så den kan ikke forsvinne eller forfalskes.",

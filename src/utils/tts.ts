@@ -70,6 +70,28 @@ export const speak = (
   window.speechSynthesis.speak(utterance);
 };
 
+// Слово с вариантами («glad / lykkelig», «(to) run») читаем по первому варианту и без скобок — так же
+// варианты понимает проверка ответа (src/utils/answerCheck.ts). Иначе голос читал бы «glad слэш lykkelig»
+export const wordForSpeech = (word: string): string =>
+  (word.split(/[,;/]/)[0] ?? "").replace(/[()]/g, " ").replace(/\s+/g, " ").trim() || word.trim();
+
+// Озвучить слово карточки
+export const speakWord = (word: string, lang?: string): void => speak(wordForSpeech(word), lang);
+
+// Голоса браузер отдаёт не сразу (Chrome — после события voiceschanged). Ждём их перед тестом, но не
+// дольше timeoutMs: без голосов тест просто обойдётся без вопросов на слух
+export const voicesReady = (timeoutMs = 800): Promise<void> =>
+  new Promise((resolve) => {
+    if (!isTTSSupported() || window.speechSynthesis.getVoices().length > 0) return resolve();
+    const done = () => {
+      window.speechSynthesis.removeEventListener("voiceschanged", done);
+      clearTimeout(timer);
+      resolve();
+    };
+    const timer = setTimeout(done, timeoutMs);
+    window.speechSynthesis.addEventListener("voiceschanged", done);
+  });
+
 // Остановить озвучку
 export const stopSpeaking = (): void => {
   window.speechSynthesis.cancel();

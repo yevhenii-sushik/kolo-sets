@@ -84,7 +84,7 @@
           "id": "quiz",
           "title": "Quiz",
           "tags": ["From 4 words"],
-          "text": "An exam on a set: 10 or 20 questions or the whole set, starting with your mistakes from last time and the words that are due. Choose the answer, type the word, or mix both: in a mix, weak words come more often as a choice and strong ones as typing. Sometimes you answer by ear. The quiz accepts a typo and shows you where it is, and your mistakes go into a mistake review right after. It remembers how many words of the set you've got right, compares your score with last time and counts your streak. The goal is to pass the whole set."
+          "text": "An exam on a set: 10 or 20 questions or the whole set, starting with your mistakes from last time and the words that are due. Choose the answer, type the word, or mix both: in a mix, weak words come more often as a choice and strong ones as typing. Sometimes you answer by ear. The quiz accepts a typo and shows you where it is, and your mistakes go into a mistake review right after. It remembers how many words of the set you've got right, compares your score with last time and counts your streak. The goal is to pass the whole set. Don't know the answer? Tap «I don't know»: an honest mistake is better for your schedule than a lucky guess."
         },
         {
           "id": "speed",

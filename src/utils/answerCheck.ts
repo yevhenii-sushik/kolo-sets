@@ -153,6 +153,22 @@ export function checkAnswer(input: string, correct: string, others: string[] = [
   return wrong();
 }
 
+// ── «Добавить в карточку» вместо «Мой ответ верный» (docs/specs/perigee.md, «Тест: честный ответ») ──
+//
+// Засчитать ответ «на слово» нельзя: это обман одним нажатием (набор «сдан», рекорд, «Знаю всё!»).
+// Если проверка не знала верного варианта, его можно дописать в карточку — текущий ответ остаётся
+// ошибкой, а со следующего раза проверка примет его сама.
+
+/** Предлагать ли «Добавить в карточку»: другое слово, а не опечатка (её видно в разборе) и не слово другой карточки */
+export function canAddVariant(input: string, verdict: AnswerVerdict, others: string[]): boolean {
+  const answer = normalizeAnswer(input);
+  if (!answer || verdict.result !== "wrong" || verdict.expected) return false;
+  return !others.some((o) => answerVariants(o).includes(answer));
+}
+
+/** Слово карточки с ещё одним допустимым вариантом — в той же записи, что понимает проверка: «glad / lykkelig» */
+export const withVariant = (word: string, answer: string): string => `${word.trim()} / ${tidy(answer)}`;
+
 // ── Где ошибка: побуквенное сравнение ответа с правильным написанием ──
 //
 // typed — ответ пользователя: wrong — не та буква, extra — лишняя, missing — здесь пропущена буква

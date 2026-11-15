@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Check, Settings, X, Zap } from "lucide-react";
+import { Check, Settings, X } from "lucide-react";
 import { Card, Collection, KnowledgeLevel } from "../../types";
 import { getCollection } from "../../utils/storage";
-import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
+import { AnswerVerdict, canAddVariant, checkAnswer, withVariant } from "../../utils/answerCheck";
 import { AnswerOutcome, isNewCard, levelForAnswer, memoryStrength } from "../../utils/srs";
 import { shuffle } from "../../utils/gameUtils";
 import { useSrsWriter } from "../../components/session/useSrsWriter";
@@ -12,7 +11,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { getSoundEnabled, playSound, semitones } from "../../utils/sounds";
-import { hasVoiceFor } from "../../utils/tts";
+import { hasVoiceFor, voicesReady } from "../../utils/tts";
+import { coachSeen, markCoachSeen } from "../../utils/firstRun";
 import {
   QuizQuestion,
   QuizSettings,
@@ -32,7 +32,8 @@ import { markAnswer, readChecks, readHistory, readQuizPrefs, saveHistory, saveQu
 import QuizQuestionComponent, { QuizFeedback } from "../../components/quiz/QuizQuestion";
 import QuizStatsModal, { QuizContext, QuizGrowth } from "../../components/quiz/QuizStatsModal";
 import QuizSettingsModal from "../../components/quiz/QuizSettingsModal";
-import { Badge, IconButton } from "../../ui";
+import AnswerSheet, { SHEET_MAX } from "../../components/quiz/AnswerSheet";
+import { IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionLoading from "../../components/session/SessionLoading";
@@ -52,10 +53,9 @@ interface Answer {
   question: QuizQuestion;
   answer: string;
   correct: boolean;
-  overruled: boolean;
 }
 
-// Расписание: версия карточки до первого ответа — для «Мой ответ верный» и итогов «стали крепче»
+// Расписание: версия карточки до первого ответа — для итогов «стали крепче»
 interface First {
   before: Card;
   level?: KnowledgeLevel; // что записано; нет — ответ в расписание не пошёл (ошибка на новом слове)
@@ -89,6 +89,8 @@ export default function QuizPage() {
   // показывать (правило: никаких серий за самооценку). «Мой ответ верный» серию не продлевает
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
+  // Первый тест: строка о том, как он устроен; после первого ответа больше не показываем
+  const [coach, setCoach] = useState(() => !coachSeen("quiz"));
   const [nextCount, setNextCount] = useState(0);
   const [confirmLeave, setConfirmLeave] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -140,7 +142,9 @@ export default function QuizPage() {
     if (!id) return;
     let cancelled = false;
     setLoadError(false);
-    getCollection(id)
+    // Голоса ждём вместе с набором: иначе в первом тесте не было бы вопросов на слух (Chrome отдаёт их не сразу)
+    Promise.all([getCollection(id), voicesReady()])
+      .then(([loaded]) => loaded)
       .then((loaded) => {
         if (cancelled) return;
         if (!loaded || loaded.cards.length < 4) {
@@ -206,7 +210,7 @@ export default function QuizPage() {
     const correct = verdict.result !== "wrong";
     const first = !answers.some((a) => a.question.card.id === card.id);
     if (first) {
-      setAnswers((prev) => [...prev, { question, answer, correct, overruled: false }]);
+      setAnswers((prev) => [...prev, { question, answer, correct }]);
       if (!run.practice) {
         recordFirst(card, typing ? { kind: "type", result: verdict.result } : { kind: "choice", correct });
         markAnswer(col.id, card.id, correct, pool.map((c) => c.id));
@@ -226,38 +230,26 @@ export default function QuizPage() {
 
     const auto = verdict.result === "exact";
     setSynonym(null);
-    setFeedback({ answer, verdict, correct, auto });
+    setFeedback({ answer, verdict, correct, auto, canAddVariant: typing && canAddVariant(answer, verdict, pool.map((c) => c.word)) });
+    if (coach) {
+      markCoachSeen("quiz");
+      setCoach(false);
+    }
     if (correct) playSound("answer-correct", { rate: semitones(streakPitch(nextStreak)) });
     else playSound("answer-wrong");
     if (auto) timer.current = setTimeout(() => nextRef.current(), AUTO_NEXT_MS);
   };
 
-  // «Мой ответ верный»: проверка не знает всех синонимов — даём засчитать ответ вручную. В расписании —
-  // «Помню», как за ответ с опечаткой. В бонус за тест без ошибок такой ответ не идёт: это самооценка
-  const handleOverride = () => {
-    if (!feedback || feedback.correct) return;
-    const question = current;
-    const card = question.card;
-    playSound("answer-correct");
-    setFeedback({ ...feedback, correct: true, overruled: true, verdict: { result: "exact" }, auto: false });
-    setAnswers((prev) => prev.map((a) => (a.question === question ? { ...a, correct: true, overruled: true } : a)));
-    if (run.practice) {
-      // Слово уже поставлено в конец как ошибка — убираем этот повтор
-      setCleared((n) => n + 1);
-      setRun((r) => {
-        if (!r) return r;
-        const last = r.questions.map((x) => x.card.id).lastIndexOf(card.id);
-        return last > index ? { ...r, questions: r.questions.filter((_, i) => i !== last) } : r;
-      });
-      return;
-    }
-    const f = firstRef.current.get(card.id);
-    if (f) {
-      if (f.level) writer.restore(col.id, f.before);
-      writer.record(col.id, card.id, KnowledgeLevel.REMEMBER);
-      firstRef.current.set(card.id, { ...f, level: KnowledgeLevel.REMEMBER });
-    }
-    markAnswer(col.id, card.id, true, pool.map((c) => c.id));
+  // «Добавить в карточку» вместо «Мой ответ верный»: засчитать ответ «на слово» было обманом одним нажатием
+  // (набор «сдан», рекорд). Теперь ответ остаётся ошибкой — в счёте, расписании и пути по набору, — а в
+  // карточку дописывается вариант («glad / lykkelig»): со следующего раза проверка примет его сама
+  const handleAddVariant = () => {
+    if (!feedback || feedback.correct || !feedback.canAddVariant) return;
+    const card = current.card;
+    const latest = writer.card(col.id, card.id) ?? card;
+    const word = withVariant(latest.word, feedback.answer);
+    writer.restore(col.id, { ...latest, word });
+    setCollection((c) => c && { ...c, cards: c.cards.map((x) => (x.id === card.id ? { ...x, word } : x)) });
   };
 
   const finish = () => {
@@ -299,7 +291,7 @@ export default function QuizPage() {
     // Прогресс, серию и достижения начисляет сервер в фоне. Засчитанное вручную в счёт не идёт: иначе
     // «Мой ответ верный» открывал бы бонус за тест без ошибок. Работа над ошибками — практика, не тест
     if (user) {
-      const right = answers.filter((a) => a.correct && !a.overruled).length;
+      const right = answers.filter((a) => a.correct).length;
       reportSession({
         kind: "quiz",
         collectionIds: [col.id],
@@ -344,6 +336,8 @@ export default function QuizPage() {
   const requestExit = () => (!run.practice && !finished && answers.length > 0 ? setConfirmLeave(true) : exit());
 
   const progress = run.practice ? cleared / run.words : answers.length / run.words;
+  // Лист ответов — у теста до 30 вопросов: по сегменту на вопрос ещё различимо
+  const sheet = !run.practice && run.questions.length <= SHEET_MAX;
   const voice = voiceForCollection(col);
   // Путь по набору в шапке — когда тест уже что-то проверил: цель «сдать набор» видна с начала
   const setLine =
@@ -361,6 +355,12 @@ export default function QuizPage() {
         </IconButton>
       }
       progress={progress}
+      // Лист ответов: сегмент на вопрос, видно, как складывается результат. Длинный тест — обычная полоса
+      bar={
+        sheet ? (
+          <AnswerSheet results={run.questions.map((_, i) => answers[i]?.correct)} current={feedback ? -1 : index} label={`${answers.length} / ${run.words}`} />
+        ) : undefined
+      }
       meta={
         run.practice ? (
           <span>
@@ -371,42 +371,39 @@ export default function QuizPage() {
             <span>
               {Math.min(index + 1, run.questions.length)} / {run.questions.length}
             </span>
-            <span className="flex items-center gap-1 text-success">
-              <Check size={15} strokeWidth={3} />
-              {correctCount}
-            </span>
-            <span className="flex items-center gap-1 text-danger">
-              <X size={15} strokeWidth={3} />
-              {answers.length - correctCount}
-            </span>
-            {/* Серия с трёх подряд; каждое новое верное — короткий «щелчок» значка */}
-            {streak >= 3 && (
-              <motion.span key={streak} initial={{ scale: 1.25 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 500, damping: 18 }}>
-                <Badge tone="accent">
-                  <Zap size={12} />
-                  {q.streak.replace("{n}", String(streak))}
-                </Badge>
-              </motion.span>
+            {/* Счётчики — только у длинного теста: в листе ответов их и так видно */}
+            {!sheet && (
+              <>
+                <span className="flex items-center gap-1 text-success">
+                  <Check size={15} strokeWidth={3} />
+                  {correctCount}
+                </span>
+                <span className="flex items-center gap-1 text-danger">
+                  <X size={15} strokeWidth={3} />
+                  {answers.length - correctCount}
+                </span>
+              </>
             )}
           </>
         )
       }
     >
-      {/* my-auto — по центру, пока помещается; иначе прокрутка */}
-      <main className="flex min-h-0 flex-1 flex-col overflow-auto px-4 py-6 sm:px-6">
-        <div className="my-auto">
-          <QuizQuestionComponent
-            key={`${run.practice ? "p" : "t"}${index}`}
-            question={current}
-            feedback={feedback}
-            synonym={synonym}
-            voice={voice}
-            speakable={hasVoiceFor(voice)}
-            onOverride={handleOverride}
-            onAnswer={handleAnswer}
-            onNext={next}
-          />
-        </div>
+      {/* На телефоне карточка вопроса занимает свободное место, ответы — внизу; на широком экране всё по центру */}
+      <main className="flex min-h-0 flex-1 flex-col overflow-auto px-4 pb-6 pt-3 sm:px-6 sm:py-6">
+        <QuizQuestionComponent
+          key={`${run.practice ? "p" : "t"}${index}`}
+          question={current}
+          feedback={feedback}
+          synonym={synonym}
+          voice={voice}
+          speakable={hasVoiceFor(voice)}
+          strength={memoryStrength(writer.card(col.id, current.card.id) ?? current.card)}
+          streak={run.practice ? 0 : streak}
+          coach={coach && !run.practice}
+          onAddVariant={handleAddVariant}
+          onAnswer={handleAnswer}
+          onNext={next}
+        />
       </main>
 
       <QuizStatsModal

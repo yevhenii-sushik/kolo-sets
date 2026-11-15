@@ -19,6 +19,7 @@ import LeaveSessionDialog from "../../components/session/LeaveSessionDialog";
 import SessionResult from "../../components/session/SessionResult";
 import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionLoading from "../../components/session/SessionLoading";
+import { withVariant } from "../../utils/answerCheck";
 import { useSrsWriter } from "../../components/session/useSrsWriter";
 import { ChoiceStep, ClozeStep, FlashStep, IntroStep, ListenStep, TypeStep } from "../../components/perigee/Steps";
 import {
@@ -159,6 +160,21 @@ export default function PerigeeSessionPage() {
     if (isFinished(next)) finish(next);
   };
 
+  // «Добавить в карточку» после неверного ввода: ответ остаётся ошибкой, а вариант дописывается в слово
+  // карточки (в расписании Perigee карточка та же) — со следующего раза проверка примет его сама
+  const addVariant = (key: string, answer: string) => {
+    const current = stateRef.current;
+    const pc = current?.cards[key];
+    if (!current || !pc) return;
+    const latest = writer.card(pc.collectionId, pc.card.id) ?? pc.card;
+    const word = withVariant(latest.word, answer);
+    writer.restore(pc.collectionId, { ...latest, word });
+    const next = { ...current, cards: { ...current.cards, [key]: { ...pc, card: { ...pc.card, word } } } };
+    stateRef.current = next;
+    setState(next);
+    setPool((prev) => prev.map((c) => (c.id === pc.card.id ? { ...c, word } : c)));
+  };
+
   const others = useMemo(() => pool.map((c) => c.word), [pool]);
 
   if (loadError) return <SessionLoadError onRetry={load} onExit={leave} />;
@@ -203,7 +219,13 @@ export default function PerigeeSessionPage() {
             <ChoiceStep card={item.card} pool={pool} reverse={step.reverse} onAnswer={(correct) => onAnswer({ kind: "choice", correct })} />
           )}
           {step.kind === "type" && (
-            <TypeStep card={item.card} others={others} voice={voice} onAnswer={(result) => onAnswer({ kind: "type", result })} />
+            <TypeStep
+              card={item.card}
+              others={others}
+              voice={voice}
+              onAnswer={(result) => onAnswer({ kind: "type", result })}
+              onAddVariant={(answer) => addVariant(step.key, answer)}
+            />
           )}
           {step.kind === "flash" && (
             <FlashStep card={item.card} voice={voice} graded={step.graded} onRate={(level) => onAnswer({ kind: "self", level })} />

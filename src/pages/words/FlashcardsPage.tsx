@@ -21,7 +21,7 @@ import { coachSeen, markCoachSeen } from "../../utils/firstRun";
 import { hasRounds, lastRoundResult, readRoundState, Round, RoundResult, roundAt, saveRoundResult, saveRoundState } from "../../utils/flashRounds";
 import { FlashPrefs, pickReverse, readFlashPrefs, saveFlashPrefs } from "../../utils/flashPrefs";
 import { memoryStrength } from "../../utils/srs";
-import { hasVoiceFor, speak } from "../../utils/tts";
+import { hasVoiceFor, speakWord } from "../../utils/tts";
 import { getSoundEnabled } from "../../utils/sounds";
 import { shuffle } from "../../utils/gameUtils";
 
@@ -89,7 +89,7 @@ export default function FlashcardsPage() {
   const voice = collection ? voiceForCollection(collection) : undefined;
   const voiceState = !getSoundEnabled() ? "soundOff" : !hasVoiceFor(voice) ? "noVoice" : "ok";
   useEffect(() => {
-    if (session.flipped && session.currentCard && prefs.speak && getSoundEnabled() && hasVoiceFor(voice)) speak(session.currentCard.word, voice);
+    if (session.flipped && session.currentCard && prefs.speak && getSoundEnabled() && hasVoiceFor(voice)) speakWord(session.currentCard.word, voice);
   }, [session.flipped, session.index]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Настройки меняют только то, что впереди: круг заново не начинается, оценки не теряются

@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, Check, CheckCheck, Volume2, X } from "lucide-react";
+import { ArrowRight, Check, Plus, Volume2, X } from "lucide-react";
 import { Card as CardData, KnowledgeLevel } from "../../types";
 import { Badge, Button, Card, IconButton, Input, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
 import { posLabel } from "../../data/partsOfSpeech";
-import { isTTSSupported, speak } from "../../utils/tts";
+import { isTTSSupported, speakWord } from "../../utils/tts";
 import { playSound, RATING_PITCH } from "../../utils/sounds";
 import { previewIntervals } from "../../utils/srs";
 import { makeChoicesFor } from "../../utils/gameUtils";
 import { blankExample } from "../../perigee/cloze";
-import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
+import { AnswerVerdict, canAddVariant, checkAnswer } from "../../utils/answerCheck";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
 import CardStage from "../session/CardStage";
 import RatingBar from "../session/RatingBar";
@@ -64,7 +64,7 @@ function SpeakButton({ word, voice }: { word: string; voice?: string }) {
   const { t } = useI18n();
   if (!isTTSSupported()) return null;
   return (
-    <IconButton variant="soft" label={t.words.flashcards.speak} onClick={() => speak(word, voice)} className="justify-self-center">
+    <IconButton variant="soft" label={t.words.flashcards.speak} onClick={() => speakWord(word, voice)} className="justify-self-center">
       <Volume2 size={20} />
     </IconButton>
   );
@@ -219,7 +219,7 @@ export function ListenStep({ card, pool, voice, onAnswer }: { card: CardData; po
   const { t } = useI18n();
   const p = t.words.perigee;
   useEffect(() => {
-    speak(card.word, voice);
+    speakWord(card.word, voice);
   }, [card.word, voice]);
   return (
     <ChoiceBase
@@ -232,7 +232,7 @@ export function ListenStep({ card, pool, voice, onAnswer }: { card: CardData; po
           <button
             type="button"
             aria-label={p.listenAgain}
-            onClick={() => speak(card.word, voice)}
+            onClick={() => speakWord(card.word, voice)}
             className="grid h-20 w-20 place-items-center rounded-full bg-accent-soft text-accent-ink transition-colors hover:bg-accent/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             <Volume2 size={36} />
@@ -251,27 +251,32 @@ export function ListenStep({ card, pool, voice, onAnswer }: { card: CardData; po
 }
 
 // ── Ввод слова по переводу: мягкая проверка из src/utils/answerCheck.ts ──
+// Вместо «Мой ответ верный» — «Добавить в карточку»: ответ остаётся ошибкой (засчитать «на слово» значило
+// открыть +1 опыта и «Знаю всё!» одним нажатием), а вариант дописывается в карточку и со следующего раза
+// принимается сам (docs/specs/perigee.md, «Тест: честный ответ и карточка вопроса»)
 export function TypeStep({
   card,
   others,
   voice,
   onAnswer,
+  onAddVariant,
 }: {
   card: CardData;
   others: string[];
   voice?: string;
   onAnswer: (result: AnswerVerdict["result"]) => void;
+  onAddVariant?: (answer: string) => void;
 }) {
   const { t } = useI18n();
   const p = t.words.perigee;
   const q = t.words.quiz;
   const [text, setText] = useState("");
   const [verdict, setVerdict] = useState<AnswerVerdict | null>(null);
-  const [overruled, setOverruled] = useState(false);
+  const [added, setAdded] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  const result: AnswerVerdict["result"] | null = verdict ? (overruled ? "close" : verdict.result) : null;
+  const result: AnswerVerdict["result"] | null = verdict ? verdict.result : null;
   const check = (given: string) => {
     if (verdict) return;
     const v = given.trim() ? checkAnswer(given, card.word, others) : ({ result: "wrong" } as const);
@@ -326,8 +331,8 @@ export function TypeStep({
           <div role="status" className={cx("flex items-start gap-3 rounded-2xl px-4 py-3", right ? "bg-success-soft text-success" : "bg-danger-soft text-danger")}>
             {right ? <Check size={20} className="mt-0.5 shrink-0" /> : <X size={20} className="mt-0.5 shrink-0" />}
             <div className="grid gap-0.5">
-              <p className="font-semibold">{close && !overruled ? q.almost : right ? q.correct : q.incorrect}</p>
-              {close && !overruled && <p className="text-sm text-fg">{q.closeReasons[close]}</p>}
+              <p className="font-semibold">{close ? q.almost : right ? q.correct : q.incorrect}</p>
+              {close && <p className="text-sm text-fg">{q.closeReasons[close]}</p>}
               {diffTarget ? (
                 <AnswerDiff typed={text} expected={diffTarget} />
               ) : (
@@ -349,12 +354,27 @@ export function TypeStep({
               )}
               <div className="flex flex-wrap justify-center gap-2">
                 <SpeakButton word={card.word} voice={voice} />
-                {verdict.result === "wrong" && text.trim() && !overruled && (
-                  <Button variant="ghost" size="sm" iconLeft={<CheckCheck size={16} />} onClick={() => setOverruled(true)}>
-                    {q.overrule}
+                {onAddVariant && canAddVariant(text, verdict, others) && !added && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    iconLeft={<Plus size={16} />}
+                    onClick={() => {
+                      onAddVariant(text.trim());
+                      setAdded(true);
+                    }}
+                  >
+                    {q.addVariant.replace("{answer}", text.trim())}
                   </Button>
                 )}
               </div>
+              {added ? (
+                <p role="status" className="text-center text-sm text-success">
+                  {q.variantAdded.replace("{answer}", text.trim())}
+                </p>
+              ) : (
+                onAddVariant && canAddVariant(text, verdict, others) && <p className="-mt-1 text-center text-xs text-faint">{q.addVariantHint}</p>
+              )}
               <Button size="lg" variant="inverse" fullWidth iconRight={<ArrowRight size={18} />} onClick={() => result && onAnswer(result)}>
                 {p.continue}
               </Button>
