@@ -10,7 +10,8 @@ import { GUIDE_PAGES, useGuide } from "./guideContent";
 
 // Макет страниц «О Kolo» — как у юридических: шапка с вкладками страниц, текст, общий подвал сайта
 export default function GuideLayout() {
-  const { user } = useAuth();
+  // До ответа Firebase — догадка по устройству, чтобы кнопка не менялась на глазах
+  const { expectUser: user } = useAuth();
   const { t } = useI18n();
   const guide = useGuide();
   const page = t.legal.page;

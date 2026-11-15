@@ -84,16 +84,19 @@ function ReminderScheduler() {
   return null;
 }
 
-// Защищенный маршрут
+// Защищенный маршрут: ждём ответа Firebase (заставка видна, только если дольше 400 мс)
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) return <AppSplash />;
   // Если юзера нет, отправляем на лендинг
   return user ? <>{children}</> : <Navigate to="/welcome" replace />;
 }
 
-// Публичный маршрут
+// Публичный маршрут (лендинг, вход, регистрация). Новый посетитель видит страницу сразу, не дожидаясь
+// Firebase; если на устройстве уже входили — ждём, чтобы не мигнуть лендингом перед приложением
 function PublicRoute({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
+  const { user, loading, expectUser } = useAuth();
+  if (loading && expectUser) return <AppSplash />;
   // Если юзер уже залогинен, отправляем его в приложение
   return !user ? <>{children}</> : <Navigate to="/" replace />;
 }

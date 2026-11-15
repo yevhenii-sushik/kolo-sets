@@ -1,5 +1,4 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebase/config';
+import app from '../firebase/config';
 
 // Ограничения загрузки аватара — держим Storage-лимиты под контролем:
 // - сырой файл не больше 8 МБ (просто чтобы не пытаться грузить в canvas
@@ -63,7 +62,10 @@ export async function uploadAvatar(userId: string, file: File): Promise<string> 
   }
 
   const compressed = await compressImage(file);
-  const avatarRef = ref(storage, `avatars/${userId}/avatar.jpg`);
+  // Хранилище Firebase нужно только здесь — грузим его код при первой загрузке аватара,
+  // а не на каждом запуске (минус ~130 КБ исходников из основного файла)
+  const { getStorage, ref, uploadBytes, getDownloadURL } = await import('firebase/storage');
+  const avatarRef = ref(getStorage(app), `avatars/${userId}/avatar.jpg`);
   await uploadBytes(avatarRef, compressed, { contentType: 'image/jpeg' });
   return getDownloadURL(avatarRef);
 }

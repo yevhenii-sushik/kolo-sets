@@ -17,12 +17,14 @@ import {
   getUserProfile
 } from '../firebase/firestore';
 import { getLocalCollections } from '../utils/storage';
-import { hasCachedProfile } from '../utils/profileCache';
-import AppSplash from '../components/AppSplash';
+import { hasCachedProfile, hadSignInOnDevice } from '../utils/profileCache';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  /** Показывать ли интерфейс «вошёл»: после ответа Firebase — есть ли пользователь, до ответа —
+   *  входили ли на этом устройстве раньше. Публичные страницы по нему решают, ждать ли Firebase */
+  expectUser: boolean;
   register: (email: string, password: string, displayName: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   loginGoogle: () => Promise<void>;
@@ -50,6 +52,7 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [hadSignIn] = useState(hadSignInOnDevice);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -125,6 +128,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const value = {
     user,
     loading,
+    expectUser: loading ? hadSignIn : !!user,
     register,
     login,
     loginGoogle,
@@ -137,8 +141,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {/* Пока Firebase вспоминает, кто вошёл, — заставка (видна, только если ждать дольше 400 мс) */}
-      {loading ? <AppSplash /> : children}
+      {/* Не ждём Firebase здесь: на телефонах и в Safari он перед ответом грузит скрипты входа Google
+          (так окно входа не блокируется), и лендинг ждал бы их. Ждут только маршруты, которым нужен
+          пользователь, — ProtectedRoute и PublicRoute в App.tsx */}
+      {children}
     </AuthContext.Provider>
   );
 };

@@ -10,7 +10,8 @@ import { LEGAL_DOCS } from "./legalInfo";
 
 // Макет юридических страниц: шапка с вкладками документов, текст, общий подвал сайта
 export default function LegalLayout() {
-  const { user } = useAuth();
+  // До ответа Firebase — догадка по устройству, чтобы кнопка не менялась на глазах
+  const { expectUser: user } = useAuth();
   const { t } = useI18n();
   const page = t.legal.page;
 

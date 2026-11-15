@@ -122,7 +122,7 @@ function Section({ section, step, flip }: { section: GuideSection; step?: number
 
 // Страница «О Kolo»: заголовок, блоки с макетами через один, призыв попробовать и ссылка на следующую страницу
 export default function GuidePage({ page }: { page: GuidePageKey }) {
-  const { user } = useAuth();
+  const { expectUser: user } = useAuth();
   const { t } = useI18n();
   const guide = useGuide();
   const content = guide?.pages[page];
