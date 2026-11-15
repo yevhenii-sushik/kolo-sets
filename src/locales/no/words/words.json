@@ -310,6 +310,18 @@
     "streak": "Rekke",
     "rate": "Hvor godt kan du ordet?",
     "settings": "Innstillinger",
+    "leave": {
+      "titleNear": "Nesten i mål",
+      "title": "Fullføre det du har startet?",
+      "left": {
+        "one": "{n} ord igjen",
+        "other": "{n} ord igjen"
+      },
+      "reward": "Kom deg til slutten, så teller økten: XP og en dag i ukens bane.",
+      "loss": "Hvis du går nå, lagres svarene, men økten teller ikke.",
+      "stay": "Fortsett",
+      "leave": "Avslutt"
+    },
     "loadError": {
       "title": "Kunne ikke laste inn ordene",
       "text": "Sjekk internettforbindelsen og prøv igjen.",

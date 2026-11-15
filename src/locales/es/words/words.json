@@ -122,6 +122,18 @@
     "streak": "Racha",
     "rate": "¿Qué tal la conoces?",
     "settings": "Ajustes",
+    "leave": {
+      "titleNear": "Ya casi está",
+      "title": "¿Terminamos lo empezado?",
+      "left": {
+        "one": "Queda {n} palabra",
+        "other": "Quedan {n} palabras"
+      },
+      "reward": "Llega al final y la sesión contará: XP y un día para la órbita de la semana.",
+      "loss": "Si sales ahora, tus respuestas se guardan, pero la sesión no cuenta.",
+      "stay": "Seguir",
+      "leave": "Salir"
+    },
     "loadError": {
       "title": "No se pudieron cargar las palabras",
       "text": "Comprueba tu conexión a internet e inténtalo de nuevo.",

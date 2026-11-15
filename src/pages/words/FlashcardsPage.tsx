@@ -14,6 +14,7 @@ import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionLoading from "../../components/session/SessionLoading";
 import { CarriedRating, SessionItem, useCardSession } from "../../components/session/useCardSession";
 import FlashSettingsModal from "../../components/session/FlashSettingsModal";
+import LeaveSessionDialog from "../../components/session/LeaveSessionDialog";
 import { SWIPE, swipeLabels } from "../../components/session/ratingLabels";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import { coachSeen, markCoachSeen } from "../../utils/firstRun";
@@ -47,6 +48,7 @@ export default function FlashcardsPage() {
   // Направление, порядок, озвучка (src/utils/flashPrefs.ts) — помнятся на устройстве
   const [prefs, setPrefs] = useState<FlashPrefs>(readFlashPrefs);
   const [showSettings, setShowSettings] = useState(false);
+  const [confirmLeave, setConfirmLeave] = useState(false);
   // Прошлый проход этого круга — итог сравнит, вспомнилось ли больше
   const [previous, setPrevious] = useState<RoundResult | undefined>();
 
@@ -150,6 +152,11 @@ export default function FlashcardsPage() {
     loadData();
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Начал круг — перед выходом спросим: брошенный круг не засчитывается. Закрепление трудных — по желанию,
+  // круг уже засчитан, держать в нём незачем
+  const exit = () => navigate(-1);
+  const requestExit = () => (session.canUndo && !session.practice ? setConfirmLeave(true) : exit());
+
   if (loadError) return <SessionLoadError onRetry={() => loadData()} onExit={() => navigate(-1)} />;
   if (!collection || !session.current || !session.currentCard || !round) return <SessionLoading onExit={() => navigate(-1)} />;
 
@@ -165,7 +172,7 @@ export default function FlashcardsPage() {
       perigee={!session.practice}
       title={collection.name}
       subtitle={session.practice ? f.practiceTitle : multi ? range : undefined}
-      onClose={() => navigate(-1)}
+      onClose={requestExit}
       action={
         <>
           <IconButton label={f.undo} onClick={session.undo} disabled={!session.canUndo}>
@@ -222,6 +229,14 @@ export default function FlashcardsPage() {
         onFromStart={() => loadData(true)}
         growth={session.practice ? undefined : session.growth}
         previous={session.practice ? undefined : previous}
+      />
+
+      <LeaveSessionDialog
+        open={confirmLeave && !session.finished}
+        done={session.stats.dontKnow + session.stats.forgot + session.stats.remember + session.stats.know}
+        total={session.stats.totalCards}
+        onStay={() => setConfirmLeave(false)}
+        onLeave={exit}
       />
 
       <FlashSettingsModal open={showSettings} onClose={() => setShowSettings(false)} prefs={prefs} onChange={changePrefs} voice={voiceState} />

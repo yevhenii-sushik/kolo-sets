@@ -122,6 +122,18 @@
     "streak": "Sequência",
     "rate": "Quão bem você conhece?",
     "settings": "Ajustes",
+    "leave": {
+      "titleNear": "Quase lá",
+      "title": "Vamos terminar o que começou?",
+      "left": {
+        "one": "Falta {n} palavra",
+        "other": "Faltam {n} palavras"
+      },
+      "reward": "Chegue ao fim e a sessão conta: XP e um dia para a órbita da semana.",
+      "loss": "Se sair agora, suas respostas ficam salvas, mas a sessão não conta.",
+      "stay": "Continuar",
+      "leave": "Sair"
+    },
     "loadError": {
       "title": "Não foi possível carregar as palavras",
       "text": "Verifique sua conexão com a internet e tente de novo.",

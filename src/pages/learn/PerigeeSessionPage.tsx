@@ -15,6 +15,7 @@ import { getLanguageInfo } from "../../locales/languages";
 import { courseCodeFromLanguage } from "../../courses/languages";
 import { PerigeeMark } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
+import LeaveSessionDialog from "../../components/session/LeaveSessionDialog";
 import SessionResult from "../../components/session/SessionResult";
 import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionLoading from "../../components/session/SessionLoading";
@@ -55,6 +56,7 @@ export default function PerigeeSessionPage() {
   const [loadError, setLoadError] = useState(false);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [round, setRound] = useState(0); // номер сессии на странице — ключи шагов не совпадут со «Ещё сессией»
+  const [confirmLeave, setConfirmLeave] = useState(false);
   const [pool, setPool] = useState<Card[]>([]);
   const [collections, setCollections] = useState<Map<string, Collection>>(new Map());
   // Ответ читает актуальное состояние из ref: шаги зовут onAnswer из таймера, а запись в расписание
@@ -169,6 +171,8 @@ export default function PerigeeSessionPage() {
   const total = Object.keys(state.cards).length;
   const done = Object.values(state.progress).filter((x) => x.done).length;
   const locale = getLanguageInfo(language).htmlLang;
+  // Начал сессию — перед выходом спросим: брошенная сессия не засчитывается (LeaveSessionDialog)
+  const requestExit = () => (state.pos > 0 && !outcome ? setConfirmLeave(true) : leave());
   const accuracy = outcome && outcome.summary.cards > 0 ? Math.round((outcome.summary.correctFirst / outcome.summary.cards) * 100) : 0;
 
   const again = {
@@ -181,7 +185,7 @@ export default function PerigeeSessionPage() {
     <SessionShell
       title={p.title}
       subtitle={collection?.name}
-      onClose={leave}
+      onClose={requestExit}
       progress={state.pos / state.queue.length}
       meta={`${done} / ${total}`}
     >
@@ -226,6 +230,8 @@ export default function PerigeeSessionPage() {
         onAgain={again.run}
         onExit={leave}
       />
+
+      <LeaveSessionDialog open={confirmLeave && !outcome} done={done} total={total} onStay={() => setConfirmLeave(false)} onLeave={leave} />
     </SessionShell>
   );
 }

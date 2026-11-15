@@ -122,6 +122,18 @@
     "streak": "Serie",
     "rate": "Wie gut kennst du es?",
     "settings": "Einstellungen",
+    "leave": {
+      "titleNear": "Fast geschafft",
+      "title": "Zu Ende bringen?",
+      "left": {
+        "one": "Noch {n} Wort",
+        "other": "Noch {n} Wörter"
+      },
+      "reward": "Bleib bis zum Schluss dran – dann zählt die Session: XP und ein Tag für deinen Wochen-Orbit.",
+      "loss": "Wenn du jetzt gehst, bleiben deine Antworten gespeichert, aber die Session zählt nicht.",
+      "stay": "Weitermachen",
+      "leave": "Beenden"
+    },
     "loadError": {
       "title": "Die Wörter konnten nicht geladen werden",
       "text": "Prüf deine Internetverbindung und versuch es noch einmal.",

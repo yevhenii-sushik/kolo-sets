@@ -310,6 +310,18 @@
     "streak": "Streak",
     "rate": "How well do you know it?",
     "settings": "Settings",
+    "leave": {
+      "titleNear": "Almost there",
+      "title": "Finish what you started?",
+      "left": {
+        "one": "{n} word left",
+        "other": "{n} words left"
+      },
+      "reward": "Get to the end and the session counts: XP and a day towards your weekly orbit.",
+      "loss": "If you leave now, your answers are kept, but the session won't count.",
+      "stay": "Keep going",
+      "leave": "Leave"
+    },
     "loadError": {
       "title": "Couldn't load the words",
       "text": "Check your internet connection and try again.",

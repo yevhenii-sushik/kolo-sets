@@ -122,6 +122,18 @@
     "streak": "Série",
     "rate": "Tu le connais à quel point ?",
     "settings": "Réglages",
+    "leave": {
+      "titleNear": "Presque fini",
+      "title": "On finit ce qu'on a commencé ?",
+      "left": {
+        "one": "Plus que {n} mot",
+        "other": "Plus que {n} mots"
+      },
+      "reward": "Va jusqu'au bout et la séance comptera : de l'XP et un jour pour l'orbite de la semaine.",
+      "loss": "Si tu pars maintenant, tes réponses sont gardées, mais la séance ne comptera pas.",
+      "stay": "Continuer",
+      "leave": "Quitter"
+    },
     "loadError": {
       "title": "Impossible de charger les mots",
       "text": "Vérifie ta connexion internet et réessaie.",
