@@ -13,6 +13,8 @@ import { reorderFree, wordProgress } from "./cardQueue";
 // в расписание не идёт (одна оценка на слово за тренировку) и в итогах не считается.
 // «Повторить трудные» после круга — тоже закрепление (practice): расписание эти слова уже оценило.
 
+export type ExitTo = -1 | 0 | 1 | "deck";
+
 const RETRY_GAP = 3;
 const MAX_RETRIES = 3; // не зацикливаться на одном слове
 
@@ -73,8 +75,11 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   const [carried, setCarried] = useState<CarriedRating[]>([]);
   const [practice, setPractice] = useState(false);
   const [duration, setDuration] = useState(0);
-  // Куда улетает оценённая карточка (CardStage): вправо — вспомнил, влево — нет, 0 — отмена и перемешивание
-  const [exitTo, setExitTo] = useState<-1 | 0 | 1>(0);
+  // Анимация смены карточки (CardStage): куда уходит текущая — вправо «вспомнил», влево «нет», 0 — гаснет
+  // (настройки), "deck" — обратно в колоду (отмена); откуда приходит новая — 0 из колоды, ±1 сбоку (отмена:
+  // карточка возвращается с той стороны, куда улетела)
+  const [exitTo, setExitTo] = useState<ExitTo>(0);
+  const [enterFrom, setEnterFrom] = useState<-1 | 0 | 1>(0);
 
   const startedAt = useRef(Date.now());
   // Одна оценка на показ карточки: свайп и клик могут прийти в одном кадре. Снимается переворотом
@@ -95,6 +100,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     setPractice(!!opts.practice);
     setDuration(0);
     setExitTo(0);
+    setEnterFrom(0);
     startedAt.current = Date.now();
     lock.current = false;
   };
@@ -122,6 +128,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     if (next[index] !== items[index]) {
       setFlipped(false);
       setExitTo(0);
+      setEnterFrom(0);
       lock.current = false;
     }
   };
@@ -143,6 +150,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     const before = latest(item);
     if (!item.retry && !practice) writer.record(item.collectionId, item.card.id, level);
     setExitTo(level === KnowledgeLevel.REMEMBER || level === KnowledgeLevel.KNOW ? 1 : -1);
+    setEnterFrom(0);
     playSound("card-next", { rate: RATING_PITCH[level] });
 
     let nextItems = items;
@@ -186,7 +194,9 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     if (last.inserted !== undefined) setItems(items.filter((_, i) => i !== last.inserted));
     setRated(rated.slice(0, -1));
     setIndex(last.index);
-    setExitTo(0);
+    // Вернувшаяся прилетает с той стороны, куда улетела; текущая опускается обратно в колоду
+    setExitTo("deck");
+    setEnterFrom(isHardLevel(last.level) ? -1 : 1);
     setFlipped(true);
     lock.current = false;
     playSound("card-flip");
@@ -276,6 +286,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     items,
     index,
     exitTo,
+    enterFrom,
     previews,
     current: currentItem,
     // Актуальная версия текущей карточки: на повторе у неё уже новая сила памяти

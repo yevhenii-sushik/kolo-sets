@@ -3,13 +3,16 @@ import { AnimatePresence, motion, useMotionValue, useTransform, Variants } from 
 import { Card } from "../../types";
 import { Strength } from "../../utils/srs";
 import Flashcard, { CardFront } from "../cards/Flashcard";
+import type { ExitTo } from "./useCardSession";
 
 // Карточка тренировки со свайпом: до переворота свайп переворачивает, после — вправо «Помню», влево
 // «Не знаю» (SWIPE в ratingLabels.ts). Пока тянешь, на карточке проступает, какая оценка поставится и
 // когда слово вернётся (swipe) — раньше свайп был невидимым и молча ставил «Знаю».
 // cardKey меняется с каждой карточкой: новая монтируется сразу лицом вверх. Раньше слово подменялось
 // посреди анимации обратного переворота, и мог мелькнуть оборот следующей карточки.
-// exitTo — куда улетает оценённая карточка: вправо «помню/знаю», влево «не знаю/забыл», 0 — просто гаснет.
+// exitTo — куда уходит текущая карточка: вправо «помню/знаю», влево «не знаю/забыл», 0 — гаснет, "deck" —
+// обратно в колоду (отмена). enterFrom — откуда приходит новая: из колоды или сбоку (отмена возвращает
+// карточку с той стороны, куда она улетела).
 //
 // Колода (deck): под верхней карточкой видны края следующих, каскадом вниз. Первая под верхней — настоящая
 // следующая карточка (next): её слово видно, пока верхняя переворачивается или уезжает под пальцем.
@@ -21,10 +24,17 @@ const DECK = [
   { y: 24, scale: 0.9, className: "translate-y-6 scale-90 brightness-95" },
 ];
 
+// custom: from — откуда приходит новая (0 из колоды, ±1 сбоку после отмены), exit — куда уходит текущая
+type Fly = { from: -1 | 0 | 1; exit: ExitTo };
 const FLY: Variants = {
-  enter: { opacity: 1, y: DECK[0].y, scale: DECK[0].scale },
-  center: { opacity: 1, y: 0, scale: 1, x: 0, rotate: 0, transition: { duration: 0.24, ease: "easeOut" } },
-  exit: (dir: number) => ({ opacity: 0, x: dir * 420, rotate: dir * 12, transition: { duration: dir ? 0.28 : 0.12, ease: "easeIn" } }),
+  enter: ({ from }: Fly) =>
+    from ? { opacity: 0, x: from * 420, rotate: from * 12, y: 0, scale: 1 } : { opacity: 1, x: 0, rotate: 0, y: DECK[0].y, scale: DECK[0].scale },
+  center: { opacity: 1, y: 0, scale: 1, x: 0, rotate: 0, transition: { duration: 0.26, ease: "easeOut" } },
+  exit: ({ exit }: Fly) =>
+    exit === "deck"
+      ? // Отмена: текущая опускается на место первой в колоде, где её лицо уже лежит, и растворяется
+        { opacity: 0, x: 0, rotate: 0, y: DECK[0].y, scale: DECK[0].scale, transition: { duration: 0.22, ease: "easeIn" } }
+      : { opacity: 0, x: exit * 420, rotate: exit * 12, transition: { duration: exit ? 0.28 : 0.12, ease: "easeIn" } },
 };
 
 const SWIPE_DISTANCE = 60; // короче — не свайп, а дрогнувший палец
@@ -42,6 +52,7 @@ export default function CardStage({
   deck = 0,
   next,
   exitTo = 0,
+  enterFrom = 0,
 }: {
   cardKey: string;
   card: Card;
@@ -54,7 +65,8 @@ export default function CardStage({
   strength?: Strength;
   deck?: number; // сколько карточек лежит под верхней (покажем максимум две)
   next?: { card: Card; reverse?: boolean; strength?: Strength }; // следующая — её лицо под верхней
-  exitTo?: -1 | 0 | 1;
+  exitTo?: ExitTo;
+  enterFrom?: -1 | 0 | 1; // откуда приходит новая карточка: 0 — из колоды, ±1 — сбоку (отмена)
 }) {
   const dragX = useMotionValue(0);
   const dragRotate = useTransform(dragX, [-160, 0, 160], [-6, 0, 6]);
@@ -116,8 +128,9 @@ export default function CardStage({
           </>
         )}
         {/* popLayout: улетающая карточка выходит из потока, следующая сразу встаёт на её место */}
-        <AnimatePresence mode="popLayout" initial={false} custom={exitTo}>
-        <motion.div key={cardKey} custom={exitTo} variants={FLY} initial="enter" animate="center" exit="exit" style={{ originY: 1 }}>
+        {/* custom у AnimatePresence достаётся уходящей карточке, custom у motion.div — приходящей */}
+        <AnimatePresence mode="popLayout" initial={false} custom={{ from: 0, exit: exitTo }}>
+        <motion.div key={cardKey} custom={{ from: enterFrom, exit: exitTo }} variants={FLY} initial="enter" animate="center" exit="exit" style={{ originY: 1 }}>
           <Flashcard
             card={card}
             language={language}

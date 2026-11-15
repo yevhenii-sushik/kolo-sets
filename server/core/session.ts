@@ -20,6 +20,9 @@ export interface SessionInput {
   cards: number;
   correct?: number;
   allKnow?: boolean;
+  // Закрепление трудных слов сразу после круга флэшкарт: это практика — опыт, время и слова дня
+  // начисляются, но счётчики тренировок (и достижения «10 / 50 / 100 тренировок») не растут
+  practice?: boolean;
   durationSec: number;
   timezone: string;
 }
@@ -98,6 +101,7 @@ export function parseSession(body: unknown): { ok: true; session: SessionInput }
   if (!int(b.cards) || (b.cards as number) < 1 || (b.cards as number) > 2000) return { ok: false, reason: "cards" };
   if (b.correct !== undefined && (!int(b.correct) || (b.correct as number) < 0)) return { ok: false, reason: "correct" };
   if (b.allKnow !== undefined && typeof b.allKnow !== "boolean") return { ok: false, reason: "allKnow" };
+  if (b.practice !== undefined && typeof b.practice !== "boolean") return { ok: false, reason: "practice" };
   if (typeof b.durationSec !== "number" || !Number.isFinite(b.durationSec) || b.durationSec <= 0) return { ok: false, reason: "durationSec" };
   return {
     ok: true,
@@ -108,6 +112,7 @@ export function parseSession(body: unknown): { ok: true; session: SessionInput }
       cards: b.cards as number,
       correct: b.correct as number | undefined,
       allKnow: b.allKnow as boolean | undefined,
+      practice: b.practice === true ? true : undefined,
       durationSec: Math.round(b.durationSec),
       timezone: safeTimeZone(b.timezone),
     },
@@ -178,18 +183,19 @@ export function applySession(
   const history = [...(state.studyHistory ?? [])];
   const idx = history.findIndex((d) => d.date === today);
   const firstToday = idx < 0;
+  const counted = s.practice ? 0 : 1; // закрепление — не отдельная тренировка
   if (idx >= 0) {
     const d = history[idx];
-    history[idx] = { ...d, sessions: d.sessions + 1, cardsStudied: d.cardsStudied + s.cards, timeSpent: d.timeSpent + s.durationSec };
+    history[idx] = { ...d, sessions: d.sessions + counted, cardsStudied: d.cardsStudied + s.cards, timeSpent: d.timeSpent + s.durationSec };
   } else {
-    history.push({ date: today, sessions: 1, cardsStudied: s.cards, timeSpent: s.durationSec });
+    history.push({ date: today, sessions: counted, cardsStudied: s.cards, timeSpent: s.durationSec });
   }
 
   // ── Счётчики: игры не трогают счётчики флэшкарт и тестов (от них зависят достижения)
   const stats: Stats = { ...STAT_DEFAULTS, ...state.stats };
   stats.totalStudyTime += s.durationSec;
   const isCards = s.kind === "flashcards" || s.kind === "review" || s.kind === "perigee";
-  if (isCards) stats.flashcardSessions += 1;
+  if (isCards && !s.practice) stats.flashcardSessions += 1;
   if (s.kind === "quiz") {
     stats.quizzesTaken += 1;
     if (s.correct === s.cards) stats.perfectQuizzes += 1;

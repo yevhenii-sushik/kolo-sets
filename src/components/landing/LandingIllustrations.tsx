@@ -203,10 +203,12 @@ export function FlashcardsPreview() {
     return () => clearInterval(id);
   }, []);
 
+  // Как в приложении (CardStage, Flashcard): карточки лежат колодой каскадом вниз, лицо тёплое (accent-soft)
+  // со знаком «Орбиты», оборот нейтральный (surface)
   return (
-    <div className="relative w-52 h-64 sm:w-56">
-      <div className="absolute inset-0 translate-x-3 rotate-6 rounded-3xl bg-surface border border-line" />
-      <div className="absolute inset-0 -rotate-3 rounded-3xl bg-surface border border-line" />
+    <div className="relative mb-4 h-64 w-52 sm:w-56">
+      <div className="absolute inset-0 origin-bottom translate-y-4 scale-90 rounded-3xl border border-accent/15 bg-accent-soft shadow-sm brightness-95" />
+      <div className="absolute inset-0 origin-bottom translate-y-2 scale-95 rounded-3xl border border-accent/15 bg-accent-soft shadow-md" />
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={String(flipped)}
@@ -214,7 +216,10 @@ export function FlashcardsPreview() {
           animate={{ rotateY: 0, opacity: 1 }}
           exit={{ rotateY: -90, opacity: 0.6 }}
           transition={{ duration: 0.25 }}
-          className="absolute inset-0 rounded-3xl bg-surface border border-line shadow-lg grid content-center justify-items-center gap-2 p-6 text-center"
+          className={cx(
+            "absolute inset-0 grid content-center justify-items-center gap-2 overflow-hidden rounded-3xl border p-6 text-center shadow-lg",
+            flipped ? "border-line bg-surface" : "border-accent/15 bg-accent-soft",
+          )}
         >
           {flipped ? (
             <>
@@ -223,8 +228,12 @@ export function FlashcardsPreview() {
             </>
           ) : (
             <>
-              <span className="text-2xl leading-none">{card.flag}</span>
-              <div className="font-display text-4xl font-extrabold text-fg">{card.word}</div>
+              <svg viewBox="0 0 200 200" aria-hidden className="pointer-events-none absolute -bottom-16 -right-16 h-40 w-40 text-accent/20">
+                <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="3" />
+                <circle cx="36" cy="36" r="8" className="fill-accent" />
+              </svg>
+              <span className="relative text-2xl leading-none">{card.flag}</span>
+              <div className="relative font-display text-4xl font-extrabold text-fg">{card.word}</div>
             </>
           )}
         </motion.div>

@@ -22,6 +22,7 @@ export interface SessionPayload {
   cards: number;
   correct?: number;
   allKnow?: boolean;
+  practice?: boolean; // закрепление трудных после круга: опыт есть, счётчик тренировок не растёт
   durationSec: number;
 }
 

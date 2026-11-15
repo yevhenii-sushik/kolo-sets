@@ -113,6 +113,15 @@ describe("счётчики и достижения", () => {
     expect(perigee.newAchievements).toContain(AchievementType.ALL_KNOW);
   });
 
+  it("закрепление трудных даёт опыт и слова дня, но не считается отдельной тренировкой", () => {
+    const round = applySession({}, session(), info, NOON).patch;
+    const { patch } = applySession(round, session({ id: "session-0002", cards: 3, durationSec: 30, practice: true }), info, NOON);
+    expect(patch.stats.flashcardSessions).toBe(1);
+    expect(patch.studyHistory.at(-1)).toMatchObject({ sessions: 1, cardsStudied: 11 });
+    expect(patch.xp).toBeGreaterThan(round.xp);
+    expect(parseSession({ ...session(), practice: "yes" })).toEqual({ ok: false, reason: "practice" });
+  });
+
   it("уже открытые достижения не выдаются повторно", () => {
     const state = { achievements: [AchievementType.FIRST_STUDY] };
     const { patch, result } = applySession(state, session(), info, NOON);

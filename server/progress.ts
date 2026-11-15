@@ -137,6 +137,7 @@ export async function recordSession(uid: string, s: SessionInput, now = new Date
       collectionIds: s.collectionIds,
       cards: s.cards,
       ...(s.correct !== undefined ? { correct: s.correct } : {}),
+      ...(s.practice ? { practice: true } : {}),
       durationSec: s.durationSec,
       timezone: s.timezone,
       day: result.day,

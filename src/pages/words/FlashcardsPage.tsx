@@ -69,6 +69,7 @@ export default function FlashcardsPage() {
       collectionIds: result.collectionIds,
       cards: result.cards,
       durationSec: result.durationSec,
+      ...(result.practice ? { practice: true } : {}),
     });
   });
 
@@ -201,6 +202,7 @@ export default function FlashcardsPage() {
         next={session.nextItem && session.nextCard ? { card: session.nextCard, reverse: !!session.nextItem.reverse, strength: memoryStrength(session.nextCard) } : undefined}
         flipped={session.flipped}
         exitTo={session.exitTo}
+        enterFrom={session.enterFrom}
         onFlip={() => session.flip()}
         onSwipe={(dir) => session.rate(SWIPE[dir])}
         swipe={swipeLabels(f, session.previews)}

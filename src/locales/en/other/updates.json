@@ -59,7 +59,7 @@
       "fixes": [
         "Flashcards remember every rating again: because of a bug, only the last card of a session was saved.",
         "You can practise without internet: sets you've opened before load offline, and your ratings are sent once you're back online.",
-        "Rated a card by mistake? Undo it with the arrow button at the top or with Backspace.",
+        "Rated a card by mistake? Undo it with the arrow button at the top or with Backspace, and the card comes back from the side it flew off to.",
         "The card no longer jumps when you reveal the answer.",
         "The quiz forgives small things: a typo, missing special letters or a forgotten article count as correct, and the exact spot is highlighted right in the word: extra, missing and swapped letters. If your answer was right but didn't count, tap «My answer was right». Your phone no longer autocorrects foreign words as you type.",
         "The quiz opens again: a bug closed it right after the set loaded.",
