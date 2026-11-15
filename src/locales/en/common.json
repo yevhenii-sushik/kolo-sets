@@ -21,8 +21,6 @@
   },
   "shell": {
     "menu": "Show or hide menu",
-    "search": "Search",
-    "searchHint": "Search cards (⌘K)",
     "streak": {
       "days": {
         "one": "{n} day",
@@ -39,18 +37,6 @@
     "achievement": {
       "unlocked": "New achievement"
     },
-    "searchPanel": {
-      "placeholder": "Search words, translations, explanations",
-      "empty": "Start typing to search all your cards",
-      "inSets": {
-        "one": "in {n} set",
-        "other": "in {n} sets"
-      },
-      "noResults": "Nothing found",
-      "noResultsText": "No cards match “{q}”",
-      "limit": "Showing the first 50 — refine your search",
-      "clear": "Clear"
-    },
     "install": {
       "title": "Install Kolo",
       "text": "Open it from your home screen, without the address bar",
@@ -63,6 +49,17 @@
       "privacy": "Privacy",
       "ok": "Got it"
     }
+  },
+  "wordSearch": {
+    "placeholder": "Find a word or translation",
+    "clear": "Clear",
+    "found": {
+      "one": "{n} match",
+      "other": "{n} matches"
+    },
+    "noResults": "Nothing found",
+    "noResultsText": "No word, translation or explanation in this course contains “{q}”",
+    "limit": "Showing the first 50 — type a few more letters"
   },
   "orbit": {
     "label": "Weekly orbit",

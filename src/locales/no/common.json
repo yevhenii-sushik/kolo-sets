@@ -21,8 +21,6 @@
   },
   "shell": {
     "menu": "Vis eller skjul menyen",
-    "search": "Søk",
-    "searchHint": "Søk i kort (⌘K)",
     "streak": {
       "days": {
         "one": "{n} dag",
@@ -39,18 +37,6 @@
     "achievement": {
       "unlocked": "Ny prestasjon"
     },
-    "searchPanel": {
-      "placeholder": "Ord, oversettelser, forklaringer",
-      "empty": "Begynn å skrive for å søke i alle kortene",
-      "inSets": {
-        "one": "i {n} sett",
-        "other": "i {n} sett"
-      },
-      "noResults": "Ingen treff",
-      "noResultsText": "Ingen kort samsvarer med «{q}»",
-      "limit": "Viser de første 50 – avgrens søket",
-      "clear": "Tøm"
-    },
     "install": {
       "title": "Installer Kolo",
       "text": "Åpne fra Hjem-skjermen, uten adressefelt",
@@ -63,6 +49,17 @@
       "privacy": "Personvern",
       "ok": "Skjønner"
     }
+  },
+  "wordSearch": {
+    "placeholder": "Finn et ord eller en oversettelse",
+    "clear": "Tøm",
+    "found": {
+      "one": "{n} treff",
+      "other": "{n} treff"
+    },
+    "noResults": "Ingen treff",
+    "noResultsText": "Ingen ord, oversettelser eller forklaringer i dette kurset inneholder «{q}»",
+    "limit": "Viser de første 50 – skriv noen bokstaver til"
   },
   "orbit": {
     "label": "Ukens bane",

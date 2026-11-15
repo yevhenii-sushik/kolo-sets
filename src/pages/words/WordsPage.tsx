@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   Plus,
@@ -15,6 +15,8 @@ import {
   Layers,
   Pencil,
   Trash2,
+  Search,
+  X,
 } from "lucide-react";
 import { Badge, Button, Card, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text, cx } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
@@ -38,6 +40,8 @@ import CollectionCard from "../../components/cards/CollectionCard";
 import CreateCollectionModal from "../../components/CreateCollectionModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
+import WordSearchResults from "../../components/cards/WordSearchResults";
+import { FIND_WORD_EVENT, searchCards } from "../../utils/wordSearch";
 import {
   CollisionDetection,
   DndContext,
@@ -68,6 +72,9 @@ type Tab = "my" | "kolo";
 // закомментированного JSX: легко включить обратно (true), и ничего не
 // ломается из-за "неиспользуемых" импортов/стейта, как было в прошлый раз.
 const KOLO_SETS_ENABLED = false;
+
+// Подсказка к полю поиска на компьютере: на Mac — ⌘K, иначе Ctrl K
+const FIND_SHORTCUT = /Mac|iPhone|iPad/.test(navigator.userAgent) ? "⌘K" : "Ctrl K";
 
 // Цвет папки выбирает пользователь и он хранится в её данных, поэтому это значения, а не токены.
 // id — ключ названия цвета для скринридера (folderModal.colors)
@@ -407,6 +414,32 @@ export default function WordsPage() {
   useEffect(() => {
     if (openFolderId && coursesReady && !openFolder) dropParam("folder");
   }, [openFolderId, openFolder, coursesReady, dropParam]);
+  // Поиск слова по всем наборам курса. Запрос — и в адресе (/words?q=…): «Назад» из набора
+  // возвращает к тем же результатам. Поле держит свой стейт — адрес обновляется следом
+  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
+  useEffect(() => {
+    const value = query.trim() ? query : "";
+    if ((searchParams.get("q") ?? "") === value) return;
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (value) next.set("q", value);
+        else next.delete("q");
+        return next;
+      },
+      { replace: true },
+    );
+  }, [query, searchParams, setSearchParams]);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const focusSearch = useCallback(() => {
+    searchRef.current?.focus();
+    searchRef.current?.select();
+  }, []);
+  // ⌘K, когда «Слова» уже открыты, — событие из шапки; с другой вкладки — переход сюда с findWord
+  useEffect(() => {
+    window.addEventListener(FIND_WORD_EVENT, focusSearch);
+    return () => window.removeEventListener(FIND_WORD_EVENT, focusSearch);
+  }, [focusSearch]);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [orderedCollections, setOrderedCollections] = useState<Collection[]>(
     [],
@@ -635,6 +668,15 @@ export default function WordsPage() {
   );
   const activeLevel = selectedLevel ?? availableLevels[0] ?? null;
 
+  // Искать есть в чём — только когда в курсе есть слова
+  const canSearch = contentReady && activeTab === "my" && collections.some((c) => c.cards.length > 0);
+  const searching = canSearch && query.trim().length > 0;
+  const search = useMemo(() => (searching ? searchCards(collections, query) : null), [searching, collections, query]);
+  const wantsFind = Boolean((location.state as { findWord?: boolean } | null)?.findWord);
+  useEffect(() => {
+    if (wantsFind && canSearch) focusSearch();
+  }, [wantsFind, canSearch, focusSearch]);
+
   const folderCounts = useMemo(() => {
     const counts = new Map<string, number>();
     for (const c of orderedCollections) if (c.folderId) counts.set(c.folderId, (counts.get(c.folderId) ?? 0) + 1);
@@ -710,10 +752,50 @@ export default function WordsPage() {
         )}
       </div>
 
+      {/* ── Найти слово: во всех наборах курса, в том числе в папках ── */}
+      {canSearch && (
+        <Input
+          ref={searchRef}
+          role="searchbox"
+          value={query}
+          onChange={(ev) => setQuery(ev.target.value)}
+          onKeyDown={(ev) => {
+            if (ev.key === "Escape") {
+              if (query) setQuery("");
+              else ev.currentTarget.blur();
+            }
+            // Enter прячет клавиатуру на телефоне — результаты уже на экране
+            if (ev.key === "Enter") ev.currentTarget.blur();
+          }}
+          placeholder={t.wordSearch.placeholder}
+          aria-label={t.wordSearch.placeholder}
+          enterKeyHint="search"
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="none"
+          spellCheck={false}
+          iconLeft={<Search size={18} />}
+          trailing={
+            query ? (
+              <IconButton size="sm" label={t.wordSearch.clear} onClick={() => setQuery("")}>
+                <X size={16} />
+              </IconButton>
+            ) : (
+              <kbd className="mr-2.5 hidden rounded-md border border-line bg-surface px-1.5 py-0.5 text-2xs font-semibold text-faint md:inline">
+                {FIND_SHORTCUT}
+              </kbd>
+            )
+          }
+          className="mb-6 sm:mb-8"
+        />
+      )}
+
       {/* ── Content ── */}
       <div className="min-h-100">
         {!contentReady ? (
           <CollectionSkeleton label={t.loading} />
+        ) : search ? (
+          <WordSearchResults query={query} results={search.results} total={search.total} />
         ) : activeTab === "my" ? (
           <>
             {collections.length === 0 && folders.length === 0 ? (

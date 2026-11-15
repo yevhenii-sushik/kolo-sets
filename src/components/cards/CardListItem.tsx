@@ -12,11 +12,12 @@ interface CardListItemProps {
   card: Card;
   onSave: (cardData: Omit<Card, "id" | "srsData" | "createdAt">) => void;
   onDelete: () => void;
+  highlighted?: boolean; // пришли к этой карточке из поиска на вкладке «Слова»
 }
 
 // Слово в списке набора: компактно — слово, часть речи, перевод, объяснение, пример, освоение.
 // По клику (или карандашу) превращается в форму правки.
-export default function CardListItem({ card, onSave, onDelete }: CardListItemProps) {
+export default function CardListItem({ card, onSave, onDelete, highlighted = false }: CardListItemProps) {
   const { t, language } = useI18n();
   const e = t.words.editCollection;
   const [draft, setDraft] = useState<WordDraft | null>(null);
@@ -63,8 +64,12 @@ export default function CardListItem({ card, onSave, onDelete }: CardListItemPro
 
   return (
     <div
+      id={`card-${card.id}`}
       onClick={startEditing}
-      className="group cursor-pointer rounded-3xl border border-line bg-surface p-5 transition-colors hover:border-accent/40"
+      className={cx(
+        "group cursor-pointer rounded-3xl border bg-surface p-5 transition-[border-color,box-shadow] duration-500",
+        highlighted ? "border-accent ring-4 ring-accent/20" : "border-line hover:border-accent/40",
+      )}
     >
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">

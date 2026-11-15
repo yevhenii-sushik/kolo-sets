@@ -2,9 +2,9 @@ import Sidebar from "../../components/ui/Sidebar";
 import { IconButton, Logo, cx } from "../../ui";
 import { APP_LANGUAGES } from "../../locales/languages";
 import BottomNav from "../../components/ui/BottomNav";
-import { Outlet, Link, Navigate } from "react-router-dom";
-import { Menu, Languages, ChevronRight, Search } from "lucide-react";
-import { Suspense, useEffect, useState } from "react";
+import { Outlet, Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Menu, Languages, ChevronRight } from "lucide-react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
 import { getLanguageInfo } from "../../locales/languages";
@@ -15,7 +15,7 @@ import { onboardingDone } from "../../utils/firstRun";
 import VerifyEmailBanner from "../../components/VerifyEmailBanner";
 import LegalUpdateBanner from "../../components/LegalUpdateBanner";
 import InstallPrompt from "../../components/InstallPrompt";
-import SearchModal from "../../components/SearchModal";
+import { FIND_WORD_EVENT } from "../../utils/wordSearch";
 import CourseSwitcher from "../../components/courses/CourseSwitcher";
 import { OrbitRing } from "../../components/progress/OrbitRing";
 import { WeekCard } from "../../components/progress/WeekOrbit";
@@ -37,7 +37,6 @@ export default function MainLayout() {
   const [goalDismissed, setGoalDismissed] = useState(false);
 
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
   const [open, setOpen] = useState<boolean>(() => {
     const saved = localStorage.getItem(SIDEBAR_KEY);
     return saved === null ? true : saved === "true";
@@ -62,17 +61,24 @@ export default function MainLayout() {
   }, []);
 
 
-  // Cmd/Ctrl+K → open search
+  // ⌘K / Ctrl+K — найти слово: поиск живёт на вкладке «Слова», а не в шапке каждой страницы
+  // (на «Главной» или в «Наградах» искать нечего). С другой вкладки переходим туда, на ней — фокус в поле
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathRef = useRef(location.pathname);
+  pathRef.current = location.pathname;
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setShowSearch(s => !s);
-      }
+      if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== "k") return;
+      // Открытое окно (новый набор, подтверждение) не бросаем на полпути
+      if (document.querySelector('[aria-modal="true"]')) return;
+      e.preventDefault();
+      if (pathRef.current === "/words") window.dispatchEvent(new Event(FIND_WORD_EVENT));
+      else navigate("/words", { state: { findWord: true } });
     };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, []);
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [navigate]);
 
   // Цель недели: тем, кто уже занимался (первый вход после обновления), — сразу; новичку — после первой
   // тренировки, когда он понял, что такое занятие. До этого цель ждёт в «Первых шагах» на главной
@@ -142,21 +148,6 @@ export default function MainLayout() {
 
           <div className="flex items-center gap-2 md:gap-4">
             <CourseSwitcher />
-
-            {/* Поиск по карточкам */}
-            <button
-              type="button"
-              onClick={() => setShowSearch(true)}
-              title={sh.searchHint}
-              aria-label={sh.searchHint}
-              className="flex h-9 items-center gap-2 rounded-full bg-inset px-3 text-sm font-medium text-muted transition-colors hover:text-fg"
-            >
-              <Search size={16} />
-              <span className="hidden sm:inline">{sh.search}</span>
-              <kbd className="hidden rounded-md border border-line bg-surface px-1.5 py-0.5 text-2xs font-semibold text-faint md:inline">
-                ⌘K
-              </kbd>
-            </button>
 
             {/* ОРБИТА НЕДЕЛИ (docs/specs/02-progression.md) */}
             <div className="relative">
@@ -285,7 +276,6 @@ export default function MainLayout() {
 
       <OrbitGoalModal open={needsGoal} onClose={() => setGoalDismissed(true)} />
 
-      <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
       <InstallPrompt />
     </div>
   );

@@ -70,7 +70,8 @@
         "Folders work properly: rename and recolour them, delete only after a confirmation (the sets stay), the Back button closes a folder, and after a session you return to the same folder. You can create a folder straight from a set’s menu, and starred sets from folders show up in Favourites.",
         "The daily reminder now speaks your app language and counts words waiting for review.",
         "Kolo opens faster: your words and sets appear straight away and refresh quietly in the background, and switching tabs no longer flashes a blank screen. The home screen no longer says “Start with your first set” or “0 words” for a moment while loading.",
-        "Words you add to a set now show up straight away on the home screen, in Words and in First steps, without reloading the app. A set’s page opens instantly too."
+        "Words you add to a set now show up straight away on the home screen, in Words and in First steps, without reloading the app. A set’s page opens instantly too.",
+        "Search has moved from the header to the Words tab: type a word or translation at the top and you'll see which set it's in. Tap a result and the set opens right on that card. Letters like é or ü can be typed without the marks. On a computer, ⌘K or Ctrl+K takes you there from any tab."
       ]
     },
     {

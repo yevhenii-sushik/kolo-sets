@@ -21,8 +21,6 @@
   },
   "shell": {
     "menu": "Menü ein- oder ausblenden",
-    "search": "Suche",
-    "searchHint": "Karten durchsuchen (⌘K)",
     "streak": {
       "days": {
         "one": "{n} Tag",
@@ -39,18 +37,6 @@
     "achievement": {
       "unlocked": "Neuer Erfolg"
     },
-    "searchPanel": {
-      "placeholder": "Wörter, Übersetzungen, Erklärungen suchen",
-      "empty": "Tippe los, um alle deine Karten zu durchsuchen",
-      "inSets": {
-        "one": "in {n} Set",
-        "other": "in {n} Sets"
-      },
-      "noResults": "Nichts gefunden",
-      "noResultsText": "Keine Karten passen zu „{q}“",
-      "limit": "Die ersten 50 werden angezeigt – verfeinere deine Suche",
-      "clear": "Leeren"
-    },
     "install": {
       "title": "Kolo installieren",
       "text": "Öffne Kolo vom Home-Bildschirm aus, ohne Adressleiste",
@@ -63,6 +49,17 @@
       "privacy": "Datenschutz",
       "ok": "Verstanden"
     }
+  },
+  "wordSearch": {
+    "placeholder": "Wort oder Übersetzung finden",
+    "clear": "Leeren",
+    "found": {
+      "one": "{n} Treffer",
+      "other": "{n} Treffer"
+    },
+    "noResults": "Nichts gefunden",
+    "noResultsText": "Kein Wort, keine Übersetzung und keine Erklärung in diesem Kurs enthält „{q}“",
+    "limit": "Die ersten 50 werden angezeigt – tippe noch ein paar Buchstaben"
   },
   "orbit": {
     "label": "Wochen-Orbit",

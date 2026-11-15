@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { Card, Collection } from "../../types";
 import {
@@ -99,6 +99,34 @@ export default function CollectionEditPage() {
       alive = false;
     };
   }, [id, navigate, reloadKey, setCollections]);
+
+  // Пришли из поиска на вкладке «Слова» (?card=<id>): прокручиваем к карточке и ненадолго подсвечиваем.
+  // Параметр сразу убираем — при перезагрузке страница не прыгает снова
+  const [searchParams, setSearchParams] = useSearchParams();
+  const focusCardId = searchParams.get("card");
+  const [highlightId, setHighlightId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!focusCardId || !collection) return;
+    const found = collection.cards.some((c) => c.id === focusCardId);
+    if (found) {
+      // Мгновенно, а не плавно: длинная плавная прокрутка сбивается, когда набор обновляется из базы
+      document.getElementById(`card-${focusCardId}`)?.scrollIntoView({ block: "center" });
+      setHighlightId(focusCardId);
+    }
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete("card");
+        return next;
+      },
+      { replace: true },
+    );
+  }, [focusCardId, collection, setSearchParams]);
+  useEffect(() => {
+    if (!highlightId) return;
+    const timer = setTimeout(() => setHighlightId(null), 2400);
+    return () => clearTimeout(timer);
+  }, [highlightId]);
 
   const learnedCount = useMemo(() => {
     return (
@@ -360,7 +388,12 @@ export default function CollectionEditPage() {
           <div className="grid gap-3">
             {collection.cards.map((card: Card, i: number) => (
               <motion.div key={card.id} {...fadeUp(Math.min(i, 10) * 0.03)}>
-                <CardListItem card={card} onSave={(cardData) => handleEditCard(card.id, cardData)} onDelete={() => handleDeleteCard(card.id)} />
+                <CardListItem
+                  card={card}
+                  highlighted={card.id === highlightId}
+                  onSave={(cardData) => handleEditCard(card.id, cardData)}
+                  onDelete={() => handleDeleteCard(card.id)}
+                />
               </motion.div>
             ))}
           </div>
