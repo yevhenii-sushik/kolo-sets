@@ -110,8 +110,14 @@ describe("POST /api/session", () => {
     expect((await call(sessionFn, session())).status).toBe(429);
   });
 
+  it("раунд игры меньше чем из 10 ответов — 422: минута ожидания не даёт день в орбиту", async () => {
+    expect((await call(sessionFn, session({ kind: "speed", cards: 3, correct: 3, durationSec: 60 }))).status).toBe(422);
+    const profile = (await db().doc(`users/${UID}`).get()).data()!;
+    expect(profile.currentStreak).toBe(0);
+  });
+
   it("игра продлевает серию и не трогает счётчик флэшкарт", async () => {
-    const body = await (await call(sessionFn, session({ kind: "match", cards: 6, durationSec: 40 }))).json();
+    const body = await (await call(sessionFn, session({ kind: "speed", cards: 12, correct: 10, durationSec: 60 }))).json();
     expect(body.streak.extendedToday).toBe(true);
     expect(body.stats.gamesPlayed).toBe(1);
     expect(body.stats.flashcardSessions).toBe(0);
