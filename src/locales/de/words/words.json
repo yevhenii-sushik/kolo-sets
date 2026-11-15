@@ -1,0 +1,172 @@
+{
+  "collectionCard": {
+    "modal": {
+      "chooseMode": "Modus wählen",
+      "learn": "Lernen",
+      "learnDesc": "Perigee-Session für dieses Set: fällige und neue Wörter",
+      "learnDone": "Für heute alles erledigt – komm morgen wieder",
+      "flashcards": "Karteikarten",
+      "flashcardsDesc": "Das ganze Set der Reihe nach, 20 Karten pro Runde",
+      "quiz": "Quiz",
+      "quizDesc": "Teste dein Wissen",
+      "quizNeedsMore": "Mindestens 4 Karten nötig",
+      "games": "Spiele",
+      "speed": "Gegen die Uhr",
+      "speedDesc": "60 Sekunden, Multiplikator für Serien",
+      "needMore": "Mindestens 4 Wörter nötig"
+    }
+  },
+  "flashcards": {
+    "undo": "Letzte Bewertung rückgängig machen",
+    "range": "Wörter {from}–{to} von {total}",
+    "retryBadge": "Nochmal",
+    "practiceTitle": "Schwierige Wörter",
+    "settings": {
+      "title": "Karteneinstellungen",
+      "direction": "Richtung",
+      "forward": "Wort → Übersetzung",
+      "forwardHint": "Das Wort erkennen und die Bedeutung abrufen",
+      "reverse": "Übersetzung → Wort",
+      "reverseHint": "Das Wort selbst abrufen – schwerer, aber besser fürs Sprechen",
+      "mixed": "Beide Richtungen",
+      "mixedHint": "Die Seite wechselt von Karte zu Karte",
+      "order": "Reihenfolge",
+      "inOrder": "Der Reihe nach",
+      "shuffled": "Gemischt",
+      "speak": "Wort vorlesen",
+      "speakHint": "Das Wort erklingt, wenn du die Antwort aufdeckst",
+      "noVoice": "Auf diesem Gerät gibt es keine Stimme für die Sprache des Sets",
+      "soundOff": "Der Ton ist in den App-Einstellungen ausgeschaltet"
+    },
+    "strength": {
+      "new": "Neu",
+      "learning": "Im Lernen",
+      "growing": "Festigt sich",
+      "strong": "Sitzt"
+    },
+    "back": "Zurück",
+    "explanation": "Erklärung",
+    "example": "Beispiel",
+    "keyboardHint": "Leertaste zum Umdrehen · 1–4 zum Bewerten · Rücktaste zum Rückgängigmachen",
+    "hints": {
+      "clickToFlip": "Tippe auf die Karte, um sie umzudrehen",
+      "rateKnowledge": "Wie gut kennst du dieses Wort?"
+    },
+    "levels": {
+      "dontKnow": "Weiß nicht",
+      "forgot": "Vergessen",
+      "remember": "Erinnert",
+      "know": "Gewusst"
+    },
+    "interval": {
+      "again": "nochmal",
+      "days": "{n} T",
+      "months": "{n} Mon",
+      "years": "{n} J"
+    },
+    "stats": {
+      "titles": {
+        "clean": "Kein einziges schwieriges Wort",
+        "good": "Läuft gut",
+        "start": "Ein guter Anfang"
+      },
+      "notes": {
+        "clean": "Perigee bringt diese Wörter zurück, wenn sie fällig sind.",
+        "good": "Deine schwierigen Wörter stehen unten. Geh sie noch einmal durch, solange sie frisch sind.",
+        "start": "Neue Wörter bleiben selten beim ersten Mal hängen. Geh die schwierigen noch einmal durch – so setzen sie sich schneller."
+      },
+      "cards": "Karten",
+      "time": "Zeit",
+      "restart": "Ganzes Set nochmal",
+      "inSet": "Geschafft",
+      "setDone": "Du hast das ganze Set durchgearbeitet!",
+      "next": "Nächste {n}",
+      "fromStart": "Von vorn",
+      "hard": "Schwierige Wörter",
+      "practise": "Schwierige wiederholen",
+      "introduced": "Neu im Umlauf: {n}",
+      "grew": "Gefestigt: {n}",
+      "compare": "{now} von {total} erinnert, beim letzten Mal {before}",
+      "exit": "Beenden",
+      "min": "m",
+      "sec": "s",
+      "coach": "Perigee hat deine Bewertungen gespeichert. Wenn es Zeit ist, diese Wörter zu wiederholen, erscheinen sie auf der Startseite – schau morgen wieder rein."
+    },
+    "coach": {
+      "recall": "Versuch zuerst, dich selbst an die Übersetzung zu erinnern – dann deck die Antwort auf. Am Handy tippst du einfach auf die Karte.",
+      "rate": "Bewerte ehrlich – unter jedem Button siehst du, wann das Wort zurückkommt. „Weiß nicht“ zeigt es noch in dieser Session, „Gewusst“ schickt es am weitesten weg. Am Handy kannst du wischen: nach rechts für „Erinnert“, nach links für „Weiß nicht“."
+    },
+    "speak": "Aussprache abspielen",
+    "ttsBeta": "Beta",
+    "ttsBetaHint": "Die Aussprache ist in der Beta: Die Stimme hängt von deinem Gerät und Browser ab."
+  },
+  "session": {
+    "showAnswer": "Antwort zeigen",
+    "translate": "Übersetze",
+    "score": "Punkte",
+    "seconds": "{n} s",
+    "correct": "Richtig",
+    "answers": "Antworten",
+    "bestStreak": "Beste Serie",
+    "exit": "Beenden",
+    "again": "Nochmal spielen",
+    "timeUp": "Die Zeit ist um!",
+    "time": "Zeit",
+    "mistakes": "Fehler",
+    "mistakesCount": {
+      "one": "{n} Fehler",
+      "other": "{n} Fehler"
+    },
+    "word": "Wort",
+    "translation": "Übersetzung",
+    "streak": "Serie",
+    "rate": "Wie gut kennst du es?",
+    "settings": "Einstellungen",
+    "loadError": {
+      "title": "Die Wörter konnten nicht geladen werden",
+      "text": "Prüf deine Internetverbindung und versuch es noch einmal.",
+      "retry": "Erneut versuchen"
+    }
+  },
+  "pos": {
+    "noun": "Substantiv",
+    "verb": "Verb",
+    "adjective": "Adjektiv",
+    "adverb": "Adverb",
+    "pronoun": "Pronomen",
+    "preposition": "Präposition",
+    "conjunction": "Konjunktion",
+    "interjection": "Interjektion",
+    "numeral": "Zahlwort",
+    "phrase": "Wendung"
+  },
+  "perigee": {
+    "title": "Perigee-Session",
+    "tagHint": "Deine Antworten hier fließen in den Perigee-Wiederholungsplan ein",
+    "legend": "Antworten zählen für deinen Perigee-Plan",
+    "newWord": "Neues Wort",
+    "gotIt": "Verstanden",
+    "pickTranslation": "Wähle die Übersetzung",
+    "pickWord": "Wähle das Wort",
+    "typeWord": "Schreib das Wort",
+    "fillGap": "Welches Wort fehlt?",
+    "listen": "Was hörst du?",
+    "listenAgain": "Tippen, um es noch einmal zu hören",
+    "dontRemember": "Ich weiß es nicht mehr",
+    "continue": "Weiter",
+    "result": {
+      "title": "Session abgeschlossen",
+      "reviewed": "Wiederholt",
+      "learned": "Neue Wörter",
+      "accuracy": "Beim ersten Versuch",
+      "tomorrow": {
+        "one": "Morgen wartet {n} Wort",
+        "other": "Morgen warten {n} Wörter"
+      },
+      "tomorrowNone": "Morgen ist nichts fällig",
+      "again": "Noch eine Session",
+      "extra": "Mehr neue Wörter",
+      "toSets": "Meine Sets"
+    }
+  }
+}

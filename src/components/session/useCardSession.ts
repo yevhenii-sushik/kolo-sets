@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Card, Collection, FlashcardStats, KnowledgeLevel } from "../../types";
-import { shuffle as shuffled } from "../../utils/gameUtils";
-import { previewIntervals } from "../../utils/srs";
+import { memoryStrength, previewIntervals } from "../../utils/srs";
 import { playSound, RATING_PITCH } from "../../utils/sounds";
 import { useSrsWriter } from "./useSrsWriter";
-import { shuffleRest, wordProgress } from "./cardQueue";
+import { reorderFree, wordProgress } from "./cardQueue";
 
 // Ход тренировки по карточкам (флэшкарты набора). Раньше у каждой страницы была своя копия, и во
 // флэшкартах каждая оценка перезаписывала набор исходной версией карточек: из сессии сохранялась
@@ -21,6 +20,7 @@ export interface SessionItem {
   card: Card;
   collectionId: string;
   retry?: boolean;
+  reverse?: boolean; // показать переводом вверх — вспоминать слово (настройка направления)
 }
 
 // Оценка, поставленная до перерыва: круг продолжили с места — в итогах она есть, показа нет
@@ -41,6 +41,8 @@ export interface CardSessionResult {
   durationSec: number;
   collectionIds: string[];
   practice: boolean;
+  passed: number; // «Помню» и «Знаю» за весь круг, вместе с оценками до перерыва
+  total: number; // слов в круге
 }
 
 interface Rated {
@@ -107,12 +109,16 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
 
   // Прогнать трудные ещё раз, пока свежо. Наборы не перезагружаем: в writer уже свежие версии карточек
   const practise = (next: SessionItem[]) =>
-    reset(next.map((item) => ({ card: latest(item), collectionId: item.collectionId })), { practice: true });
+    reset(next.map((item) => ({ ...item, card: latest(item), retry: false })), { practice: true });
 
-  const shuffle = () => {
-    const next = shuffleRest(items, index, shuffled);
+  // Поменять то, что ещё впереди: направление (map) и порядок новых карточек (reorder). Пройденные
+  // остаются на местах — на них ссылается отмена. Текущая карточка сменилась — открывается лицом
+  const updateRest = (opts: { map?: (item: SessionItem) => SessionItem; reorder?: (xs: SessionItem[]) => SessionItem[] }) => {
+    let rest = items.slice(index);
+    if (opts.reorder) rest = reorderFree(rest, opts.reorder);
+    if (opts.map) rest = rest.map(opts.map);
+    const next = [...items.slice(0, index), ...rest];
     setItems(next);
-    // Текущая карточка сменилась — новая открывается лицом
     if (next[index] !== items[index]) {
       setFlipped(false);
       setExitTo(0);
@@ -143,7 +149,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     let inserted: number | undefined;
     if (level === KnowledgeLevel.DONT_KNOW && retriesLeft(item)) {
       inserted = Math.min(index + 1 + RETRY_GAP, items.length);
-      nextItems = [...items.slice(0, inserted), { card: item.card, collectionId: item.collectionId, retry: true }, ...items.slice(inserted)];
+      nextItems = [...items.slice(0, inserted), { ...item, retry: true }, ...items.slice(inserted)];
       setItems(nextItems);
     }
 
@@ -161,11 +167,14 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     setFinished(true);
     writer.commit();
     playSound("session-complete");
+    const firstLevels = [...carried.map((c) => c.level), ...nextRated.filter((r) => !r.retry).map((r) => r.level)];
     onFinishRef.current({
       cards: nextRated.filter((r) => !r.retry).length,
       durationSec,
       collectionIds: [...new Set(items.map((i) => i.collectionId))],
       practice,
+      passed: firstLevels.filter((l) => !isHardLevel(l)).length,
+      total: firstLevels.length,
     });
   };
 
@@ -237,6 +246,22 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     [carried, rated],
   );
 
+  // Что сдвинулось в памяти за этот заход: новые слова пошли в работу, знакомые окрепли (memoryStrength).
+  // Writer меняет карточку сразу при оценке, поэтому после rate() здесь уже свежая версия
+  const growth = useMemo(() => {
+    let introduced = 0;
+    let grew = 0;
+    if (practice) return { introduced, grew };
+    for (const r of rated) {
+      if (r.retry) continue;
+      const before = memoryStrength(r.before);
+      const after = memoryStrength(latest({ card: r.before, collectionId: r.collectionId }));
+      if (before === 0 && after > 0) introduced += 1;
+      else if (before > 0 && after > before) grew += 1;
+    }
+    return { introduced, grew };
+  }, [rated, practice]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Подписи на кнопках оценки — по актуальной версии карточки; «Не знаю» — «ещё раз» (0), пока повтор
   // возможен. На повторе и при закреплении подписей нет: оценка в расписание не идёт
   const currentItem = items[index] as SessionItem | undefined;
@@ -253,11 +278,14 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     exitTo,
     previews,
     current: currentItem,
+    // Актуальная версия текущей карточки: на повторе у неё уже новая сила памяти
+    currentCard: currentItem ? latest(currentItem) : undefined,
     flipped,
     finished,
     practice,
     stats,
     hard,
+    growth,
     firsts,
     position: progress.position,
     total: progress.total,
@@ -265,7 +293,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     canUndo: rated.length > 0 && !finished,
     start,
     practise,
-    shuffle,
+    updateRest,
     flip,
     rate,
     undo,

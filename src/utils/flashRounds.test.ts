@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { KnowledgeLevel } from "../types";
-import { hasRounds, parseRoundState, roundAt, roundTier } from "./flashRounds";
+import { hasRounds, parseRoundHistory, parseRoundState, roundAt, roundsOf, roundTier } from "./flashRounds";
 
 describe("roundAt", () => {
   it("маленький набор — целиком", () => {
@@ -47,5 +47,20 @@ describe("честный итог круга", () => {
     expect(roundTier(20, 10)).toBe("good");
     expect(roundTier(20, 11)).toBe("start");
     expect(roundTier(3, 2)).toBe("start");
+  });
+});
+
+describe("путь по набору и прошлый круг", () => {
+  it("все круги набора, хвост присоединён к последнему", () => {
+    expect(roundsOf(63)).toEqual([{ from: 0, to: 20 }, { from: 20, to: 40 }, { from: 40, to: 63 }]);
+    expect(roundsOf(12)).toEqual([{ from: 0, to: 12 }]);
+    expect(roundsOf(0)).toEqual([]);
+  });
+
+  it("история прошлых кругов: битые записи отбрасываются", () => {
+    const raw = JSON.stringify({ "0": { to: 20, passed: 9, total: 20 }, "20": { to: 40, passed: "x" }, "40": null });
+    expect(parseRoundHistory(raw)).toEqual({ "0": { to: 20, passed: 9, total: 20 } });
+    expect(parseRoundHistory("[1,2]")).toEqual({});
+    expect(parseRoundHistory(null)).toEqual({});
   });
 });

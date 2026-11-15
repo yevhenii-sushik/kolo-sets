@@ -2,7 +2,8 @@ import { BookOpen, Quote, Volume2 } from "lucide-react";
 import { Card } from "../../types";
 import { speak, isTTSSupported } from "../../utils/tts";
 import { useI18n } from "../../contexts/I18nContext";
-import { Badge, IconButton } from "../../ui";
+import { Badge, IconButton, cx } from "../../ui";
+import { Strength } from "../../utils/srs";
 import { posLabel } from "../../data/partsOfSpeech";
 
 interface FlashcardProps {
@@ -10,13 +11,16 @@ interface FlashcardProps {
   isFlipped: boolean;
   language?: string;
   onFlip: () => void;
-  reverse?: boolean; // наоборот: на лице перевод, на обороте слово — вспоминаем слово (сессия Perigee)
+  reverse?: boolean; // наоборот: на лице перевод, на обороте слово — вспоминаем слово
+  strength?: Strength; // сила памяти слова — значок на лице (флэшкарты набора)
 }
+
+const STRENGTH_KEYS = ["new", "learning", "growing", "strong"] as const;
 
 // Флэшкарта с переворотом (стили .flip-card в index.css): лицо — слово на тёмном, оборот — ответ крупно,
 // под ним объяснение и пример. Ответ виден сразу: раньше перевод прятался за значком глаза, и после
 // «Показать ответ» человек видел то же слово ещё раз (docs/specs/perigee.md, «Флэшкарты»)
-export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip, reverse = false }: FlashcardProps) {
+export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip, reverse = false, strength }: FlashcardProps) {
   const { t } = useI18n();
   const f = t.words.flashcards;
   // Сверху — то, что было на лице (напоминание), ниже крупно — то, что нужно было вспомнить
@@ -33,7 +37,18 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip,
       <div className="flip-card-inner relative h-full w-full cursor-pointer select-none">
         {/* Лицо: слово */}
         <div className="flip-card-front absolute h-full w-full">
-          <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-4xl bg-fg p-8 text-on-inverse shadow-xl">
+          <div className="relative flex h-full w-full flex-col items-center justify-center gap-4 rounded-4xl bg-fg p-8 text-on-inverse shadow-xl">
+            {/* Сила памяти: три точки-спутника заполняются по мере того, как слово крепнет */}
+            {strength !== undefined && (
+              <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-on-inverse/10 px-3 py-1 text-xs font-semibold text-on-inverse/80">
+                <span className="flex gap-0.5" aria-hidden>
+                  {[1, 2, 3].map((i) => (
+                    <span key={i} className={cx("h-1.5 w-1.5 rounded-full", i <= strength ? "bg-on-inverse" : "bg-on-inverse/25")} />
+                  ))}
+                </span>
+                {f.strength[STRENGTH_KEYS[strength]]}
+              </span>
+            )}
             <h2 dir="auto" className="text-center font-display text-4xl font-extrabold leading-tight wrap-break-word sm:text-5xl md:text-6xl">{reverse ? card.translation : card.word}</h2>
             {card.partOfSpeech && (
               <span className="rounded-full bg-on-inverse/10 px-3 py-1 text-sm font-medium text-on-inverse/80">{posLabel(card.partOfSpeech, t.words.pos)}</span>
@@ -41,7 +56,7 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip,
           </div>
         </div>
 
-        {/* Оборот: перевод по кнопке, объяснение, пример */}
+        {/* Оборот: ответ крупно, объяснение, пример */}
         <div className="flip-card-back absolute h-full w-full">
           <div className="relative flex h-full w-full flex-col overflow-y-auto rounded-4xl border border-line bg-surface p-6 shadow-xl md:p-10">
             {/* Озвучка — голосом браузера, качество зависит от устройства: пока честно помечаем бетой */}

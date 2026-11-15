@@ -156,3 +156,13 @@ export const previewIntervals = (card: Card, now: Date = new Date()): Record<Kno
     [KnowledgeLevel.KNOW]: days(KnowledgeLevel.KNOW),
   };
 };
+
+// Сила памяти слова — значок на флэшкарте: 0 новое, 1 учится (интервал меньше недели), 2 крепнет
+// (меньше месяца), 3 крепкое. Видно, что каждая честная оценка двигает слово (docs/specs/perigee.md)
+export type Strength = 0 | 1 | 2 | 3;
+
+export const memoryStrength = (card: Card): Strength => {
+  if (isNewCard(card)) return 0;
+  const interval = card.srsData.interval;
+  return interval < 7 ? 1 : interval < 30 ? 2 : 3;
+};

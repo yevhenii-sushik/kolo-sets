@@ -1,8 +1,8 @@
-import { ArrowRight, Check, Lightbulb, Sprout, Trophy } from "lucide-react";
+import { ArrowRight, Check, Lightbulb, Minus, Sprout, Trophy, TrendingDown, TrendingUp } from "lucide-react";
 import { Card, FlashcardStats } from "../types";
 import { useI18n } from "../contexts/I18nContext";
-import { Button, cx } from "../ui";
-import { roundTier } from "../utils/flashRounds";
+import { Badge, Button, cx } from "../ui";
+import { RoundResult, roundsOf, roundTier } from "../utils/flashRounds";
 import SessionResult from "./session/SessionResult";
 
 interface FlashcardStatsModalProps {
@@ -16,7 +16,11 @@ interface FlashcardStatsModalProps {
   // Большой набор идёт кругами (src/utils/flashRounds.ts): сколько пройдено и сколько в следующем круге
   rounds?: { done: number; total: number; next: number; first: boolean };
   onFromStart?: () => void;
+  growth?: { introduced: number; grew: number }; // новые слова пошли в работу, знакомые окрепли
+  previous?: RoundResult; // прошлый проход этого же круга — для сравнения
 }
+
+const MAX_SEGMENTS = 40; // больше — путь по набору сплошной полосой, иначе отрезки превращаются в пыль
 
 const TIERS = {
   clean: { icon: <Trophy size={26} />, tone: "success" },
@@ -26,7 +30,7 @@ const TIERS = {
 
 // Итог круга флэшкарт. Честный: «Отлично!» не пишем, если слова пока не держатся. Трудные слова видно
 // списком, и главная кнопка — прогнать их ещё раз, пока свежо (docs/specs/perigee.md, «Флэшкарты»)
-export default function FlashcardStatsModal({ isOpen, stats, hard, onClose, onAgain, onPractise, coach = false, rounds, onFromStart }: FlashcardStatsModalProps) {
+export default function FlashcardStatsModal({ isOpen, stats, hard, onClose, onAgain, onPractise, coach = false, rounds, onFromStart, growth, previous }: FlashcardStatsModalProps) {
   const { t } = useI18n();
   const fs = t.words.flashcards.stats;
   const levels = t.words.flashcards.levels;
@@ -42,6 +46,10 @@ export default function FlashcardStatsModal({ isOpen, stats, hard, onClose, onAg
   const againLabel = !rounds ? fs.restart : setDone ? fs.fromStart : fs.next.replace("{n}", String(rounds.next));
   const againIcon = rounds && !setDone ? <ArrowRight size={18} /> : undefined;
   const hasHard = hard.length > 0;
+  const segments = rounds ? roundsOf(rounds.total) : [];
+  const passed = stats.remember + stats.know;
+  const trend = previous ? Math.sign(passed - previous.passed) : 0;
+  const TrendIcon = trend > 0 ? TrendingUp : trend < 0 ? TrendingDown : Minus;
 
   const breakdown = [
     { label: levels.dontKnow, value: stats.dontKnow, bar: "bg-danger", text: "text-danger" },
@@ -60,7 +68,6 @@ export default function FlashcardStatsModal({ isOpen, stats, hard, onClose, onAg
       metrics={[
         { label: fs.cards, value: stats.totalCards },
         { label: fs.time, value: duration },
-        ...(rounds ? [{ label: fs.inSet, value: `${rounds.done} / ${rounds.total}` }] : []),
       ]}
       // Есть трудные — главное действие закрепить их; дальше по набору можно и без этого (кнопка ниже)
       againLabel={hasHard ? `${fs.practise} · ${hard.length}` : againLabel}
@@ -84,6 +91,45 @@ export default function FlashcardStatsModal({ isOpen, stats, hard, onClose, onAg
             </li>
           ))}
         </ul>
+
+        {/* Прогресс памяти, а не только оценки: что сдвинулось за этот круг. Нули не показываем —
+            повтор раньше срока честно не растит интервалы, и «Стали крепче: 0» только огорчал бы */}
+        {growth && (growth.introduced > 0 || growth.grew > 0) && (
+          <div className="flex flex-wrap justify-center gap-2">
+            {growth.introduced > 0 && <Badge tone="accent">{fs.introduced.replace("{n}", String(growth.introduced))}</Badge>}
+            {growth.grew > 0 && <Badge tone="success">{fs.grew.replace("{n}", String(growth.grew))}</Badge>}
+          </div>
+        )}
+
+        {previous && (
+          <p className={cx("flex items-center justify-center gap-1.5 text-sm", trend > 0 ? "text-success" : "text-muted")}>
+            <TrendIcon size={16} className="shrink-0" />
+            {fs.compare.replace("{now}", String(passed)).replace("{total}", String(stats.totalCards)).replace("{before}", String(previous.passed))}
+          </p>
+        )}
+
+        {/* Путь по набору: пройденные круги закрашены */}
+        {rounds && (
+          <div className="grid gap-1.5">
+            <div className="flex items-baseline justify-between text-xs text-muted">
+              <span>{fs.inSet}</span>
+              <span className="font-semibold tabular-nums">
+                {rounds.done} / {rounds.total}
+              </span>
+            </div>
+            {segments.length <= MAX_SEGMENTS ? (
+              <div className="flex gap-1">
+                {segments.map((r) => (
+                  <span key={r.from} className={cx("h-1.5 flex-1 rounded-full", r.to <= rounds.done ? "bg-accent" : "bg-track")} />
+                ))}
+              </div>
+            ) : (
+              <div className="h-1.5 overflow-hidden rounded-full bg-track">
+                <div className="h-full rounded-full bg-accent" style={{ width: `${Math.round((rounds.done / rounds.total) * 100)}%` }} />
+              </div>
+            )}
+          </div>
+        )}
 
         {hasHard && (
           <div className="mt-1 grid gap-2 rounded-2xl bg-inset p-3 text-left">

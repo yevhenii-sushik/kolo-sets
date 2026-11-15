@@ -62,7 +62,8 @@ import ukGame from './uk/game.json';
 import ukLegal from './uk/legal.json';
 import ukError from './uk/error.json';
 
-// Языки, у которых пока переведены только публичные страницы: лендинг, вход/регистрация, юр. тексты и Explore
+// Языки, у которых переведена часть приложения: публичные страницы (лендинг, вход, юр. тексты, Explore)
+// и разделы, до которых уже дошли. Новые строки сразу переводятся на все 8 языков (CLAUDE.md, «Internationalization»)
 import esLanding from './es/auth/landing.json';
 import esExplore from './es/other/explore.json';
 import deLanding from './de/auth/landing.json';
@@ -83,7 +84,15 @@ import esError from './es/error.json';
 import deError from './de/error.json';
 import frError from './fr/error.json';
 import ptBRError from './pt-BR/error.json';
+import deCommon from './de/common.json';
+import deGame from './de/game.json';
+import deOther from './de/other/other.json';
+import deWords from './de/words/words.json';
+import esWords from './es/words/words.json';
+import frWords from './fr/words/words.json';
+import ptBRWords from './pt-BR/words/words.json';
 import { LANGUAGES, Language, detectBrowserLanguage } from './languages';
+import { DeepPartial, fillFrom } from './fillFrom';
 
 export type { Language } from './languages';
 
@@ -162,11 +171,12 @@ const uk = {
 
 export type Translations = typeof en;
 
-// Непереведённые разделы берутся из английского
-const es: Translations = { ...en, landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError };
-const de: Translations = { ...en, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError };
-const fr: Translations = { ...en, landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError };
-const ptBR: Translations = { ...en, landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError };
+const partial = (parts: DeepPartial<Translations>): Translations => fillFrom(en, parts);
+
+const es = partial({ landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, words: esWords });
+const de = partial({ ...deCommon, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError, game: deGame, other: deOther, words: deWords });
+const fr = partial({ landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, words: frWords });
+const ptBR = partial({ landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, words: ptBRWords });
 
 export const translations: Record<Language, Translations> = {
   en,

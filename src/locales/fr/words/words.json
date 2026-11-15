@@ -1,0 +1,172 @@
+{
+  "collectionCard": {
+    "modal": {
+      "chooseMode": "Choisis un mode",
+      "learn": "Apprendre",
+      "learnDesc": "Séance Perigee pour ce set : mots à revoir et nouveaux mots",
+      "learnDone": "C'est tout pour aujourd'hui — reviens demain",
+      "flashcards": "Cartes mémoire",
+      "flashcardsDesc": "Tout le set dans l'ordre, 20 cartes à la fois",
+      "quiz": "Quiz",
+      "quizDesc": "Teste tes connaissances",
+      "quizNeedsMore": "Il faut 4 cartes ou plus",
+      "games": "Jeux",
+      "speed": "Contre la montre",
+      "speedDesc": "60 secondes, multiplicateur de série",
+      "needMore": "Il faut au moins 4 mots"
+    }
+  },
+  "flashcards": {
+    "undo": "Annuler la dernière évaluation",
+    "range": "Mots {from}–{to} sur {total}",
+    "retryBadge": "Encore",
+    "practiceTitle": "Mots difficiles",
+    "settings": {
+      "title": "Réglages des cartes",
+      "direction": "Sens",
+      "forward": "Mot → traduction",
+      "forwardHint": "Reconnaître le mot et retrouver son sens",
+      "reverse": "Traduction → mot",
+      "reverseHint": "Retrouver le mot lui-même — plus difficile, mais meilleur pour parler",
+      "mixed": "Dans les deux sens",
+      "mixedHint": "Le côté change d'une carte à l'autre",
+      "order": "Ordre",
+      "inOrder": "Dans l'ordre",
+      "shuffled": "Mélangé",
+      "speak": "Lire le mot à voix haute",
+      "speakHint": "Le mot est prononcé quand tu affiches la réponse",
+      "noVoice": "Cet appareil n'a pas de voix pour la langue du set",
+      "soundOff": "Le son est coupé dans les réglages de l'appli"
+    },
+    "strength": {
+      "new": "Nouveau",
+      "learning": "En cours",
+      "growing": "Se consolide",
+      "strong": "Solide"
+    },
+    "back": "Retour",
+    "explanation": "Explication",
+    "example": "Exemple",
+    "keyboardHint": "Espace pour retourner · 1–4 pour évaluer · Retour arrière pour annuler",
+    "hints": {
+      "clickToFlip": "Touche la carte pour la retourner",
+      "rateKnowledge": "Tu connais ce mot à quel point ?"
+    },
+    "levels": {
+      "dontKnow": "Inconnu",
+      "forgot": "Oublié",
+      "remember": "Retenu",
+      "know": "Acquis"
+    },
+    "interval": {
+      "again": "encore",
+      "days": "{n} j",
+      "months": "{n} mois",
+      "years": "{n} a"
+    },
+    "stats": {
+      "titles": {
+        "clean": "Pas un seul mot difficile",
+        "good": "Ça avance bien",
+        "start": "Un bon début"
+      },
+      "notes": {
+        "clean": "Perigee te ramènera ces mots quand ce sera le moment.",
+        "good": "Tes mots difficiles sont ci-dessous. Revois-les encore une fois tant qu'ils sont frais.",
+        "start": "Les nouveaux mots restent rarement du premier coup. Revois les difficiles encore une fois — ils se fixeront plus vite."
+      },
+      "cards": "Cartes",
+      "time": "Temps",
+      "restart": "Tout le set encore",
+      "inSet": "Parcourus",
+      "setDone": "Tu as parcouru tout le set !",
+      "next": "{n} suivantes",
+      "fromStart": "Depuis le début",
+      "hard": "Mots difficiles",
+      "practise": "Revoir les difficiles",
+      "introduced": "Nouveaux en cours : {n}",
+      "grew": "Plus solides : {n}",
+      "compare": "{now} sur {total} retenus, la dernière fois {before}",
+      "exit": "Quitter",
+      "min": "min",
+      "sec": "s",
+      "coach": "Perigee a enregistré tes évaluations. Quand il sera temps de revoir ces mots, ils apparaîtront sur l'écran d'accueil — reviens demain."
+    },
+    "coach": {
+      "recall": "Essaie d'abord de retrouver la traduction toi-même, puis affiche la réponse. Sur ton téléphone, il suffit de toucher la carte.",
+      "rate": "Évalue-toi honnêtement : sous chaque bouton, tu vois quand le mot reviendra. « Inconnu » le ramène dans cette séance, « Acquis » l'envoie le plus loin. Sur ton téléphone, tu peux glisser : à droite pour « Retenu », à gauche pour « Inconnu »."
+    },
+    "speak": "Écouter la prononciation",
+    "ttsBeta": "Bêta",
+    "ttsBetaHint": "La prononciation est en bêta : la voix dépend de ton appareil et de ton navigateur."
+  },
+  "session": {
+    "showAnswer": "Afficher la réponse",
+    "translate": "Traduis",
+    "score": "Score",
+    "seconds": "{n} s",
+    "correct": "Bonnes réponses",
+    "answers": "Réponses",
+    "bestStreak": "Meilleure série",
+    "exit": "Quitter",
+    "again": "Rejouer",
+    "timeUp": "Temps écoulé !",
+    "time": "Temps",
+    "mistakes": "Erreurs",
+    "mistakesCount": {
+      "one": "{n} erreur",
+      "other": "{n} erreurs"
+    },
+    "word": "Mot",
+    "translation": "Traduction",
+    "streak": "Série",
+    "rate": "Tu le connais à quel point ?",
+    "settings": "Réglages",
+    "loadError": {
+      "title": "Impossible de charger les mots",
+      "text": "Vérifie ta connexion internet et réessaie.",
+      "retry": "Réessayer"
+    }
+  },
+  "pos": {
+    "noun": "nom",
+    "verb": "verbe",
+    "adjective": "adjectif",
+    "adverb": "adverbe",
+    "pronoun": "pronom",
+    "preposition": "préposition",
+    "conjunction": "conjonction",
+    "interjection": "interjection",
+    "numeral": "numéral",
+    "phrase": "expression"
+  },
+  "perigee": {
+    "title": "Séance Perigee",
+    "tagHint": "Tes réponses ici alimentent le planning de révision Perigee",
+    "legend": "les réponses comptent pour ton planning Perigee",
+    "newWord": "Nouveau mot",
+    "gotIt": "Compris",
+    "pickTranslation": "Choisis la traduction",
+    "pickWord": "Choisis le mot",
+    "typeWord": "Écris le mot",
+    "fillGap": "Quel mot manque ?",
+    "listen": "Qu'entends-tu ?",
+    "listenAgain": "Touche pour réécouter",
+    "dontRemember": "Je ne m'en souviens pas",
+    "continue": "Continuer",
+    "result": {
+      "title": "Séance terminée",
+      "reviewed": "Révisés",
+      "learned": "Nouveaux mots",
+      "accuracy": "Du premier coup",
+      "tomorrow": {
+        "one": "Demain, {n} mot t'attendra",
+        "other": "Demain, {n} mots t'attendront"
+      },
+      "tomorrowNone": "Rien à revoir demain",
+      "again": "Une autre séance",
+      "extra": "Plus de nouveaux mots",
+      "toSets": "Mes sets"
+    }
+  }
+}

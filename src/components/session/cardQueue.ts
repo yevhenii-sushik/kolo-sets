@@ -4,16 +4,20 @@ export interface QueueItem {
   retry?: boolean; // повтор после «Не знаю»: закрепление, в расписание и итоги не идёт
 }
 
-// «Перемешать» мешает только то, что ещё впереди. Пройденные карточки остаются на местах (на них
-// ссылается отмена), повторы — тоже: их место выбрано так, чтобы между ошибкой и повтором прошло
-// несколько карточек. Круг заново не начинается, оценки не теряются
-export function shuffleRest<T extends QueueItem>(items: T[], index: number, shuffle: (xs: T[]) => T[]): T[] {
-  const head = items.slice(0, index);
-  const tail = items.slice(index);
-  const free = shuffle(tail.filter((item) => !item.retry));
+// Переставить новые карточки (вперемешку или обратно по порядку набора), не трогая повторы: их место
+// выбрано так, чтобы между ошибкой и повтором прошло несколько карточек
+export function reorderFree<T extends QueueItem>(items: T[], reorder: (xs: T[]) => T[]): T[] {
+  const free = reorder(items.filter((item) => !item.retry));
   let k = 0;
-  return [...head, ...tail.map((item) => (item.retry ? item : free[k++]))];
+  return items.map((item) => (item.retry ? item : free[k++]));
 }
+
+// Порядок меняется только у того, что ещё впереди. Пройденные карточки остаются на местах (на них
+// ссылается отмена). Круг заново не начинается, оценки не теряются
+export const shuffleRest = <T extends QueueItem>(items: T[], index: number, reorder: (xs: T[]) => T[]): T[] => [
+  ...items.slice(0, index),
+  ...reorderFree(items.slice(index), reorder),
+];
 
 // Счётчик по словам, а не по показам: повтор после ошибки не прибавляет карточек в «6 / 20».
 // carried — слова круга, оценённые до перерыва (круг продолжили с места)

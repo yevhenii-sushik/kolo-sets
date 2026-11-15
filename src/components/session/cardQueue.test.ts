@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { shuffleRest, wordProgress } from "./cardQueue";
+import { reorderFree, shuffleRest, wordProgress } from "./cardQueue";
 
 type Item = { id: string; retry?: boolean };
 const reverse = (xs: Item[]) => [...xs].reverse();
@@ -36,5 +36,14 @@ describe("счётчик по словам", () => {
     const before = wordProgress(three, 1).progress;
     const after = wordProgress([...three, { id: "b", retry: true }], 2).progress;
     expect(after).toBeGreaterThan(before);
+  });
+});
+
+describe("порядок обратно по набору", () => {
+  it("новые карточки встают по порядку, повторы на местах", () => {
+    const order = ["a", "b", "c", "d"];
+    const byOrder = (xs: Item[]) => [...xs].sort((x, y) => order.indexOf(x.id) - order.indexOf(y.id));
+    const rest: Item[] = [{ id: "d" }, { id: "b", retry: true }, { id: "c" }, { id: "a" }];
+    expect(ids(reorderFree(rest, byOrder))).toEqual(["a", "b*", "c", "d"]);
   });
 });

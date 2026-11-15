@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { Card, KnowledgeLevel } from "../types";
-import { dayDiff, introducedOn, isDueAt, levelForAnswer, previewIntervals, updateSRSData } from "./srs";
+import { dayDiff, introducedOn, isDueAt, levelForAnswer, memoryStrength, previewIntervals, updateSRSData } from "./srs";
 
 // Местное время: тесты не зависят от часового пояса машины
 const at = (day: number, hour = 12) => new Date(2026, 10, day, hour);
@@ -149,5 +149,22 @@ describe("previewIntervals", () => {
       expect(p[REMEMBER]).toBeGreaterThan(p[FORGOT]);
       expect(p[KNOW]).toBeGreaterThan(p[REMEMBER]);
     }
+  });
+});
+
+describe("memoryStrength", () => {
+  const withInterval = (interval: number): Card => ({ ...newCard(), srsData: { ...newCard().srsData, interval, repetitions: 2 } });
+
+  it("новое → учится → крепнет → крепкое по интервалу", () => {
+    expect(memoryStrength(newCard())).toBe(0);
+    expect(memoryStrength(withInterval(1))).toBe(1);
+    expect(memoryStrength(withInterval(6))).toBe(1);
+    expect(memoryStrength(withInterval(7))).toBe(2);
+    expect(memoryStrength(withInterval(29))).toBe(2);
+    expect(memoryStrength(withInterval(30))).toBe(3);
+  });
+
+  it("первая оценка нового слова выводит его из «нового»", () => {
+    expect(memoryStrength(updateSRSData(newCard(), REMEMBER, at(1)))).toBe(1);
   });
 });

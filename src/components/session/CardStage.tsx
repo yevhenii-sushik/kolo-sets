@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { AnimatePresence, motion, useMotionValue, useTransform, Variants } from "framer-motion";
 import { Card } from "../../types";
+import { Strength } from "../../utils/srs";
 import Flashcard from "../cards/Flashcard";
 
 // Карточка тренировки со свайпом: до переворота свайп переворачивает, после — вправо «Помню», влево
@@ -26,6 +27,7 @@ export default function CardStage({
   onSwipe,
   swipe,
   reverse = false,
+  strength,
   exitTo = 0,
 }: {
   cardKey: string;
@@ -36,6 +38,7 @@ export default function CardStage({
   onSwipe: (direction: "left" | "right") => void;
   swipe?: { left: string; right: string }; // подписи оценок для свайпа после переворота
   reverse?: boolean;
+  strength?: Strength;
   exitTo?: -1 | 0 | 1;
 }) {
   const dragX = useMotionValue(0);
@@ -91,6 +94,7 @@ export default function CardStage({
             language={language}
             isFlipped={flipped}
             reverse={reverse}
+            strength={strength}
             onFlip={() => {
               if (!swipedRef.current) onFlip();
             }}

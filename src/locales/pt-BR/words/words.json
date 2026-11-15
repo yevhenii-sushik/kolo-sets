@@ -1,0 +1,172 @@
+{
+  "collectionCard": {
+    "modal": {
+      "chooseMode": "Escolha um modo",
+      "learn": "Aprender",
+      "learnDesc": "Sessão Perigee deste set: palavras para revisar e novas",
+      "learnDone": "Tudo pronto por hoje — volte amanhã",
+      "flashcards": "Flashcards",
+      "flashcardsDesc": "O set inteiro em ordem, 20 cards por vez",
+      "quiz": "Quiz",
+      "quizDesc": "Teste o que você sabe",
+      "quizNeedsMore": "Precisa de 4+ cards",
+      "games": "Jogos",
+      "speed": "Contra o relógio",
+      "speedDesc": "60 segundos, multiplicador por sequência",
+      "needMore": "Precisa de pelo menos 4 palavras"
+    }
+  },
+  "flashcards": {
+    "undo": "Desfazer a última avaliação",
+    "range": "Palavras {from}–{to} de {total}",
+    "retryBadge": "De novo",
+    "practiceTitle": "Palavras difíceis",
+    "settings": {
+      "title": "Ajustes dos cards",
+      "direction": "Direção",
+      "forward": "Palavra → tradução",
+      "forwardHint": "Reconhecer a palavra e lembrar o significado",
+      "reverse": "Tradução → palavra",
+      "reverseHint": "Lembrar a própria palavra — mais difícil, mas melhor para falar",
+      "mixed": "Nos dois sentidos",
+      "mixedHint": "O lado muda de um card para outro",
+      "order": "Ordem",
+      "inOrder": "Em ordem",
+      "shuffled": "Embaralhado",
+      "speak": "Ler a palavra em voz alta",
+      "speakHint": "A palavra toca quando você mostra a resposta",
+      "noVoice": "Este dispositivo não tem voz para o idioma do set",
+      "soundOff": "O som está desligado nos ajustes do app"
+    },
+    "strength": {
+      "new": "Nova",
+      "learning": "Aprendendo",
+      "growing": "Firmando",
+      "strong": "Firme"
+    },
+    "back": "Voltar",
+    "explanation": "Explicação",
+    "example": "Exemplo",
+    "keyboardHint": "Espaço para virar · 1–4 para avaliar · Backspace para desfazer",
+    "hints": {
+      "clickToFlip": "Toque no card para virá-lo",
+      "rateKnowledge": "Quão bem você conhece esta palavra?"
+    },
+    "levels": {
+      "dontKnow": "Não sei",
+      "forgot": "Esqueci",
+      "remember": "Lembro",
+      "know": "Sei"
+    },
+    "interval": {
+      "again": "de novo",
+      "days": "{n} d",
+      "months": "{n} m",
+      "years": "{n} a"
+    },
+    "stats": {
+      "titles": {
+        "clean": "Nenhuma palavra difícil",
+        "good": "Indo bem",
+        "start": "Um bom começo"
+      },
+      "notes": {
+        "clean": "O Perigee vai trazer estas palavras de volta na hora certa.",
+        "good": "Suas palavras difíceis estão abaixo. Revise mais uma vez enquanto estão frescas.",
+        "start": "Palavras novas raramente ficam de primeira. Revise as difíceis de novo — assim elas se fixam mais rápido."
+      },
+      "cards": "Cards",
+      "time": "Tempo",
+      "restart": "O set inteiro de novo",
+      "inSet": "Feitas",
+      "setDone": "Você passou pelo set inteiro!",
+      "next": "Próximas {n}",
+      "fromStart": "Do começo",
+      "hard": "Palavras difíceis",
+      "practise": "Revisar as difíceis",
+      "introduced": "Novas em andamento: {n}",
+      "grew": "Ficaram mais firmes: {n}",
+      "compare": "Lembrou {now} de {total}; da última vez, {before}",
+      "exit": "Sair",
+      "min": "min",
+      "sec": "s",
+      "coach": "O Perigee salvou suas avaliações. Quando for hora de revisar estas palavras, elas vão aparecer na tela inicial — volte amanhã."
+    },
+    "coach": {
+      "recall": "Primeiro tente lembrar a tradução por conta própria — depois mostre a resposta. No celular, é só tocar no card.",
+      "rate": "Avalie com sinceridade — embaixo de cada botão você vê quando a palavra volta. “Não sei” traz de volta nesta sessão, “Sei” manda para o mais longe. No celular, dá para deslizar: para a direita é “Lembro”, para a esquerda é “Não sei”."
+    },
+    "speak": "Ouvir a pronúncia",
+    "ttsBeta": "Beta",
+    "ttsBetaHint": "A pronúncia está em beta: a voz depende do seu dispositivo e navegador."
+  },
+  "session": {
+    "showAnswer": "Mostrar resposta",
+    "translate": "Traduza",
+    "score": "Pontos",
+    "seconds": "{n} s",
+    "correct": "Acertos",
+    "answers": "Respostas",
+    "bestStreak": "Melhor sequência",
+    "exit": "Sair",
+    "again": "Jogar de novo",
+    "timeUp": "O tempo acabou!",
+    "time": "Tempo",
+    "mistakes": "Erros",
+    "mistakesCount": {
+      "one": "{n} erro",
+      "other": "{n} erros"
+    },
+    "word": "Palavra",
+    "translation": "Tradução",
+    "streak": "Sequência",
+    "rate": "Quão bem você conhece?",
+    "settings": "Ajustes",
+    "loadError": {
+      "title": "Não foi possível carregar as palavras",
+      "text": "Verifique sua conexão com a internet e tente de novo.",
+      "retry": "Tentar de novo"
+    }
+  },
+  "pos": {
+    "noun": "substantivo",
+    "verb": "verbo",
+    "adjective": "adjetivo",
+    "adverb": "advérbio",
+    "pronoun": "pronome",
+    "preposition": "preposição",
+    "conjunction": "conjunção",
+    "interjection": "interjeição",
+    "numeral": "numeral",
+    "phrase": "expressão"
+  },
+  "perigee": {
+    "title": "Sessão Perigee",
+    "tagHint": "Suas respostas aqui alimentam o plano de revisão do Perigee",
+    "legend": "as respostas contam para o seu plano do Perigee",
+    "newWord": "Palavra nova",
+    "gotIt": "Entendi",
+    "pickTranslation": "Escolha a tradução",
+    "pickWord": "Escolha a palavra",
+    "typeWord": "Escreva a palavra",
+    "fillGap": "Qual palavra está faltando?",
+    "listen": "O que você ouve?",
+    "listenAgain": "Toque para ouvir de novo",
+    "dontRemember": "Não lembro",
+    "continue": "Continuar",
+    "result": {
+      "title": "Sessão concluída",
+      "reviewed": "Revisadas",
+      "learned": "Palavras novas",
+      "accuracy": "De primeira",
+      "tomorrow": {
+        "one": "Amanhã {n} palavra vai estar esperando",
+        "other": "Amanhã {n} palavras vão estar esperando"
+      },
+      "tomorrowNone": "Nada para revisar amanhã",
+      "again": "Outra sessão",
+      "extra": "Mais palavras novas",
+      "toSets": "Meus sets"
+    }
+  }
+}

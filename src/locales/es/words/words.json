@@ -1,0 +1,172 @@
+{
+  "collectionCard": {
+    "modal": {
+      "chooseMode": "Elige un modo",
+      "learn": "Aprender",
+      "learnDesc": "Sesión Perigee de este set: palabras pendientes y nuevas",
+      "learnDone": "Por hoy, todo listo: vuelve mañana",
+      "flashcards": "Tarjetas",
+      "flashcardsDesc": "Todo el set en orden, de 20 en 20",
+      "quiz": "Test",
+      "quizDesc": "Pon a prueba lo que sabes",
+      "quizNeedsMore": "Necesitas 4+ tarjetas",
+      "games": "Juegos",
+      "speed": "Contrarreloj",
+      "speedDesc": "60 segundos, multiplicador por racha",
+      "needMore": "Necesitas al menos 4 palabras"
+    }
+  },
+  "flashcards": {
+    "undo": "Deshacer la última valoración",
+    "range": "Palabras {from}–{to} de {total}",
+    "retryBadge": "Otra vez",
+    "practiceTitle": "Palabras difíciles",
+    "settings": {
+      "title": "Ajustes de las tarjetas",
+      "direction": "Dirección",
+      "forward": "Palabra → traducción",
+      "forwardHint": "Reconocer la palabra y recordar su significado",
+      "reverse": "Traducción → palabra",
+      "reverseHint": "Recordar la palabra en sí: más difícil, pero mejor para hablar",
+      "mixed": "En ambos sentidos",
+      "mixedHint": "La cara cambia de una tarjeta a otra",
+      "order": "Orden",
+      "inOrder": "En orden",
+      "shuffled": "Al azar",
+      "speak": "Leer la palabra en voz alta",
+      "speakHint": "La palabra suena cuando muestras la respuesta",
+      "noVoice": "Este dispositivo no tiene voz para el idioma del set",
+      "soundOff": "El sonido está desactivado en los ajustes de la app"
+    },
+    "strength": {
+      "new": "Nueva",
+      "learning": "Aprendiendo",
+      "growing": "Afianzándose",
+      "strong": "Firme"
+    },
+    "back": "Atrás",
+    "explanation": "Explicación",
+    "example": "Ejemplo",
+    "keyboardHint": "Espacio para girar · 1–4 para valorar · Retroceso para deshacer",
+    "hints": {
+      "clickToFlip": "Toca la tarjeta para girarla",
+      "rateKnowledge": "¿Qué tal conoces esta palabra?"
+    },
+    "levels": {
+      "dontKnow": "No lo sé",
+      "forgot": "Lo olvidé",
+      "remember": "Lo recuerdo",
+      "know": "Lo sé"
+    },
+    "interval": {
+      "again": "otra vez",
+      "days": "{n} d",
+      "months": "{n} m",
+      "years": "{n} a"
+    },
+    "stats": {
+      "titles": {
+        "clean": "Ni una sola palabra difícil",
+        "good": "Vas bien",
+        "start": "Un buen comienzo"
+      },
+      "notes": {
+        "clean": "Perigee te traerá de vuelta estas palabras cuando toque.",
+        "good": "Tus palabras difíciles están abajo. Repásalas una vez más mientras están frescas.",
+        "start": "Las palabras nuevas casi nunca se quedan a la primera. Repasa las difíciles otra vez: así se fijan antes."
+      },
+      "cards": "Tarjetas",
+      "time": "Tiempo",
+      "restart": "Todo el set otra vez",
+      "inSet": "Hechas",
+      "setDone": "¡Has repasado el set completo!",
+      "next": "Siguientes {n}",
+      "fromStart": "Desde el principio",
+      "hard": "Palabras difíciles",
+      "practise": "Repasar las difíciles",
+      "introduced": "Nuevas en marcha: {n}",
+      "grew": "Más firmes: {n}",
+      "compare": "Recordaste {now} de {total}; la última vez, {before}",
+      "exit": "Salir",
+      "min": "min",
+      "sec": "s",
+      "coach": "Perigee ha guardado tus valoraciones. Cuando toque repasar estas palabras, aparecerán en la pantalla de inicio: vuelve mañana."
+    },
+    "coach": {
+      "recall": "Primero intenta recordar la traducción por tu cuenta y luego muestra la respuesta. En el móvil, basta con tocar la tarjeta.",
+      "rate": "Valora con sinceridad: debajo de cada botón ves cuándo volverá la palabra. «No lo sé» la trae de vuelta en esta sesión y «Lo sé» la manda lo más lejos. En el móvil puedes deslizar: a la derecha para «Lo recuerdo», a la izquierda para «No lo sé»."
+    },
+    "speak": "Escuchar la pronunciación",
+    "ttsBeta": "Beta",
+    "ttsBetaHint": "La pronunciación está en beta: la voz depende de tu dispositivo y navegador."
+  },
+  "session": {
+    "showAnswer": "Mostrar respuesta",
+    "translate": "Traduce",
+    "score": "Puntos",
+    "seconds": "{n} s",
+    "correct": "Correctas",
+    "answers": "Respuestas",
+    "bestStreak": "Mejor racha",
+    "exit": "Salir",
+    "again": "Jugar otra vez",
+    "timeUp": "¡Se acabó el tiempo!",
+    "time": "Tiempo",
+    "mistakes": "Errores",
+    "mistakesCount": {
+      "one": "{n} error",
+      "other": "{n} errores"
+    },
+    "word": "Palabra",
+    "translation": "Traducción",
+    "streak": "Racha",
+    "rate": "¿Qué tal la conoces?",
+    "settings": "Ajustes",
+    "loadError": {
+      "title": "No se pudieron cargar las palabras",
+      "text": "Comprueba tu conexión a internet e inténtalo de nuevo.",
+      "retry": "Reintentar"
+    }
+  },
+  "pos": {
+    "noun": "sustantivo",
+    "verb": "verbo",
+    "adjective": "adjetivo",
+    "adverb": "adverbio",
+    "pronoun": "pronombre",
+    "preposition": "preposición",
+    "conjunction": "conjunción",
+    "interjection": "interjección",
+    "numeral": "numeral",
+    "phrase": "expresión"
+  },
+  "perigee": {
+    "title": "Sesión Perigee",
+    "tagHint": "Tus respuestas aquí alimentan el plan de repaso de Perigee",
+    "legend": "las respuestas cuentan para tu plan de Perigee",
+    "newWord": "Palabra nueva",
+    "gotIt": "Entendido",
+    "pickTranslation": "Elige la traducción",
+    "pickWord": "Elige la palabra",
+    "typeWord": "Escribe la palabra",
+    "fillGap": "¿Qué palabra falta?",
+    "listen": "¿Qué oyes?",
+    "listenAgain": "Toca para volver a escuchar",
+    "dontRemember": "No me acuerdo",
+    "continue": "Continuar",
+    "result": {
+      "title": "Sesión completada",
+      "reviewed": "Repasadas",
+      "learned": "Palabras nuevas",
+      "accuracy": "A la primera",
+      "tomorrow": {
+        "one": "Mañana te espera {n} palabra",
+        "other": "Mañana te esperan {n} palabras"
+      },
+      "tomorrowNone": "Mañana no hay nada pendiente",
+      "again": "Otra sesión",
+      "extra": "Más palabras nuevas",
+      "toSets": "Mis sets"
+    }
+  }
+}

@@ -59,12 +59,12 @@ Client side: `src/api/progress.ts` posts with a Bearer token. If the network or 
 
 - `src/App.tsx`: provider order `I18nProvider → AuthProvider → DataProvider`. Pages are lazy-loaded. Layouts:
   - `MainLayout`: tabs `/`, `/words`, `/profile`, `/rewards`, `/other` (shown as «More»).
-  - `EmptyLayout`: full-screen study and game modes under `/collection/:id/*` and `/review`.
+  - `EmptyLayout`: full-screen study modes: `/learn` (Perigee session; `?set=<id>` for one set) and `/collection/:id/{flashcards,quiz,speed}`. Old `/review`, `survival` and `match` routes only redirect.
   - `NavLayout`: sub-pages with a back bar.
   - `LegalLayout`: public legal pages.
   - `/design`: design-system showcase, available in dev only.
 - Courses (docs/specs/01-courses.md): one course per language. `courses: Course[]`, `activeCourseId` and `coursesVersion` live on the profile. The catalog is in `src/courses/languages.ts`. `src/courses/plan.ts` handles migration and self-healing and is tested. The Norwegian course id is `nb`, but the Norwegian UI language code is `no`.
-- SRS: `updateSRSData` and `isDueCard` in `src/utils/storage.ts`, a simplified SM-2. `storage.ts` falls back to localStorage when nobody is signed in.
+- SRS (Perigee): `src/utils/srs.ts` is pure and tested (`storage.ts` re-exports it). It is a modified SM-2 where each of the four ratings has a distinct outcome. The session engine is `src/perigee/plan.ts`. Every mode writes ratings through `components/session/useSrsWriter.ts`, using the first answer per word per session. The spec is `docs/specs/perigee.md`. `storage.ts` falls back to localStorage when nobody is signed in.
 - Progression UI: `components/progress/*` (OrbitRing, WeekOrbit, OrbitGoalModal, ProgressMoments) and `components/rewards/*` (ItemArt, AvatarFrame, CapsuleArt, CapsuleOpenModal, Showcase). Item visuals are in `src/progression/looks.ts`, item display names in `locales/*/rewards.json`, and the catalog (kind, rarity, collection) in `server/core/items.ts`. A new item touches all three.
 - Onboarding teaches by doing:
   - `OnboardingModal`: a 3-step intro that ends in "Create my first set" (`/words?new=1` opens the create modal).
@@ -79,9 +79,9 @@ Client side: `src/api/progress.ts` posts with a Bearer token. If the network or 
 
 ## Internationalization
 
-- Eight UI languages are listed in `src/locales/languages.ts`, sorted alphabetically by their own names; insert a new one in alphabetical order. `app: true` means the whole app is translated. Currently that is en, ru, uk and no. de, es, fr and pt-BR have only landing, auth, legal, error and explore; `src/locales/index.ts` fills every other namespace from English.
-- `src/locales/index.ts` imports every JSON file by hand. `Translations = typeof en`, so **English is the schema**: a key added to `en` must be added to every language that has that file. Use it with `const { t } = useI18n(); t.settings.foo`.
-- Product rule: every UI string ships in en, ru, uk and no at the same time. A partially translated language stays unwired (German is in progress: `de/common.json`, `de/game.json` and `de/other/other.json` exist but are not imported yet). Flip `app: true` only when that language is complete.
+- Eight UI languages are listed in `src/locales/languages.ts`, sorted alphabetically by their own names; insert a new one in alphabetical order. `app: true` means the whole app is translated. Currently that is en, ru, uk and no. de, es, fr and pt-BR are partial: landing, auth, legal, error, explore, the learning screens in `words/words.json` (flashcards, session, pos, perigee, mode picker) and, for German, common, game and other.
+- `src/locales/index.ts` imports every JSON file by hand. `Translations = typeof en`, so **English is the schema**: a key added to `en` must be added to every language that has that file. For de/es/fr/pt-BR, `fillFrom` (`src/locales/fillFrom.ts`) fills anything missing from English **per key**, so a partial namespace file is safe to import. Use it with `const { t } = useI18n(); t.settings.foo`.
+- Product rule (user, 2026-11-15): every new or changed UI string ships in **all 8 languages** at the same time. If de/es/fr/pt-BR have no file for that namespace yet, create it with the whole block you touch and import it. Long documents («What's new», «About Kolo» guide) for those languages go through dedicated translation sessions. Flip `app: true` only when a language is complete.
 - Tone: product copy talks to the user informally (Russian «ты»), legal documents formally («вы»). Never write «start free»: all learning is free.
 - «What's new» lives in `locales/*/other/updates.json` → `versions[0]`, written as release notes (headline, intro, feature paragraphs, a «fixes» list), not as a changelog. User-facing changes are added to the current open version entry; do not create a new version number unless asked.
 
@@ -99,7 +99,7 @@ Read `src/design/README.md` before UI work. Core rules (checked by `scripts/chec
 
 - Code comments are written in **Russian** and explain *why*, often pointing to a spec (`docs/specs/…`). Match that.
 - Commit messages are in English and describe the user-visible outcome (for example «Settings as a grouped list: rows, values and pickers instead of a stack of cards»), with a bullet body when needed.
-- Product decisions, stage order and parked work are in `docs/roadmap.md`. Specs per stage are in `docs/specs/` (00 server, 01 courses, 02 progression). Write a spec in `docs/specs/` before starting a new stage.
+- Product decisions, stage order and parked work are in `docs/roadmap.md`. Specs per stage are in `docs/specs/` (00 server, 01 courses, 02 progression, perigee: learning modes). Write a spec in `docs/specs/` before starting a new stage.
 - Rewards come only from practice; nothing random is ever sold. Social and competitive features are parked (branch `feature/social`).
 
 ## Deploy

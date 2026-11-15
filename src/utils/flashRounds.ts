@@ -76,3 +76,63 @@ export function roundTier(total: number, hard: number): RoundTier {
   if (hard === 0) return "clean";
   return hard * 2 <= total ? "good" : "start";
 }
+
+// Все круги набора по порядку — для «пути по набору» в итогах
+export function roundsOf(total: number): Round[] {
+  const rounds: Round[] = [];
+  for (let from = 0; from < total; ) {
+    const round = roundAt(total, from);
+    rounds.push(round);
+    from = round.to;
+  }
+  return rounds;
+}
+
+// Итог прошлого прохода того же круга — чтобы показать, вспомнилось ли больше, чем в прошлый раз.
+// Ключ — начало круга; если круг с тех пор сдвинулся (другой конец), сравнивать не с чем
+export interface RoundResult {
+  passed: number; // «Помню» и «Знаю»
+  total: number;
+}
+
+type RoundHistory = Record<string, RoundResult & { to: number }>;
+
+const lastKey = (collectionId: string) => `kolo_flash_last_${collectionId}`;
+
+export function parseRoundHistory(raw: string | null): RoundHistory {
+  try {
+    const value: unknown = raw ? JSON.parse(raw) : null;
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    const clean: RoundHistory = {};
+    for (const [from, r] of Object.entries(value as Record<string, unknown>)) {
+      const { to, passed, total } = (r ?? {}) as Record<string, unknown>;
+      if ([to, passed, total].every((n) => typeof n === "number" && n >= 0)) clean[from] = { to: to as number, passed: passed as number, total: total as number };
+    }
+    return clean;
+  } catch {
+    return {};
+  }
+}
+
+const readHistory = (collectionId: string): RoundHistory => {
+  try {
+    return parseRoundHistory(localStorage.getItem(lastKey(collectionId)));
+  } catch {
+    return {};
+  }
+};
+
+export function lastRoundResult(collectionId: string, round: Round): RoundResult | undefined {
+  const last = readHistory(collectionId)[String(round.from)];
+  return last && last.to === round.to ? { passed: last.passed, total: last.total } : undefined;
+}
+
+export function saveRoundResult(collectionId: string, round: Round, result: RoundResult) {
+  try {
+    const history = readHistory(collectionId);
+    history[String(round.from)] = { to: round.to, ...result };
+    localStorage.setItem(lastKey(collectionId), JSON.stringify(history));
+  } catch {
+    // Без хранилища просто не с чем будет сравнить
+  }
+}

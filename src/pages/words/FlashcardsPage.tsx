@@ -5,18 +5,30 @@ import { getCollection } from "../../utils/storage";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { RotateCcw, Shuffle, Undo2 } from "lucide-react";
+import { RotateCcw, SlidersHorizontal, Undo2 } from "lucide-react";
 import { Badge, IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import RatingBar from "../../components/session/RatingBar";
 import CardStage from "../../components/session/CardStage";
 import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionLoading from "../../components/session/SessionLoading";
-import { CarriedRating, useCardSession } from "../../components/session/useCardSession";
+import { CarriedRating, SessionItem, useCardSession } from "../../components/session/useCardSession";
+import FlashSettingsModal from "../../components/session/FlashSettingsModal";
 import { SWIPE, swipeLabels } from "../../components/session/ratingLabels";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import { coachSeen, markCoachSeen } from "../../utils/firstRun";
-import { hasRounds, readRoundState, Round, roundAt, saveRoundState } from "../../utils/flashRounds";
+import { hasRounds, lastRoundResult, readRoundState, Round, RoundResult, roundAt, saveRoundResult, saveRoundState } from "../../utils/flashRounds";
+import { FlashPrefs, pickReverse, readFlashPrefs, saveFlashPrefs } from "../../utils/flashPrefs";
+import { memoryStrength } from "../../utils/srs";
+import { hasVoiceFor, speak } from "../../utils/tts";
+import { getSoundEnabled } from "../../utils/sounds";
+import { shuffle } from "../../utils/gameUtils";
+
+// Порядок набора — чтобы «По порядку» вернул оставшиеся карточки на свои места
+const setOrder = (collection: Collection) => {
+  const pos = new Map(collection.cards.map((card, i) => [card.id, i]));
+  return (items: SessionItem[]) => [...items].sort((a, b) => (pos.get(a.card.id) ?? 0) - (pos.get(b.card.id) ?? 0));
+};
 
 export default function FlashcardsPage() {
   const { id } = useParams<{ id: string }>();
@@ -32,12 +44,25 @@ export default function FlashcardsPage() {
   const [round, setRound] = useState<Round | null>(null);
   // Оценки этого круга, поставленные до перерыва: круг продолжили с места
   const carriedDone = useRef<Record<string, KnowledgeLevel>>({});
+  // Направление, порядок, озвучка (src/utils/flashPrefs.ts) — помнятся на устройстве
+  const [prefs, setPrefs] = useState<FlashPrefs>(readFlashPrefs);
+  const [showSettings, setShowSettings] = useState(false);
+  // Прошлый проход этого круга — итог сравнит, вспомнилось ли больше
+  const [previous, setPrevious] = useState<RoundResult | undefined>();
+
+  // Порядок и направление по настройкам: вперемешку — случайно, в обе стороны — сторона на каждое слово
+  const arrange = (items: SessionItem[], p: FlashPrefs = prefs) =>
+    (p.shuffle ? shuffle(items) : items).map((item) => ({ ...item, reverse: pickReverse(p.direction) }));
 
   // Прогресс, серию и достижения начисляет сервер; празднование — по его ответу
   const session = useCardSession((result) => {
     // Круг пройден — следующий начнётся с места, где остановились; весь набор пройден — с начала.
     // Закрепление трудных круг не двигает: он уже засчитан
-    if (collection && round && !result.practice) saveRoundState(collection.id, { pos: round.to >= collection.cards.length ? 0 : round.to, done: {} });
+    if (collection && round && !result.practice) {
+      saveRoundState(collection.id, { pos: round.to >= collection.cards.length ? 0 : round.to, done: {} });
+      setPrevious(lastRoundResult(collection.id, round));
+      saveRoundResult(collection.id, round, { passed: result.passed, total: result.total });
+    }
     if (!user) return;
     reportSession({
       kind: "flashcards",
@@ -55,6 +80,23 @@ export default function FlashcardsPage() {
     for (const r of session.firsts) done[r.cardId] = r.level;
     saveRoundState(collection.id, { pos: round.from, done });
   }, [session.firsts]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Озвучка при перевороте: слово звучит, когда открываешь ответ — звук и написание запоминаются вместе.
+  // Только с голосом языка набора и если звук не выключен: чужой голос учит неправильному произношению
+  const voice = collection ? voiceForCollection(collection) : undefined;
+  const voiceState = !getSoundEnabled() ? "soundOff" : !hasVoiceFor(voice) ? "noVoice" : "ok";
+  useEffect(() => {
+    if (session.flipped && session.currentCard && prefs.speak && getSoundEnabled() && hasVoiceFor(voice)) speak(session.currentCard.word, voice);
+  }, [session.flipped, session.index]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Настройки меняют только то, что впереди: круг заново не начинается, оценки не теряются
+  const changePrefs = (next: FlashPrefs) => {
+    saveFlashPrefs(next);
+    const reorder = next.shuffle !== prefs.shuffle && collection ? (next.shuffle ? shuffle : setOrder(collection)) : undefined;
+    const map = next.direction !== prefs.direction ? (item: SessionItem) => ({ ...item, reverse: pickReverse(next.direction) }) : undefined;
+    setPrefs(next);
+    if ((reorder || map) && !session.finished) session.updateRest({ reorder, map });
+  };
 
   // Первая тренировка новичка: подсказки, как вспоминать и оценивать, и что будет дальше. Решаем один раз,
   // когда профиль загружен: после тренировки в нём появится история, а подсказка в итоге должна остаться
@@ -99,7 +141,8 @@ export default function FlashcardsPage() {
 
     setCollection(loaded);
     setRound(next);
-    session.start(rest.map((card) => ({ card, collectionId: loaded.id })), [loaded], { carried });
+    setPrevious(undefined);
+    session.start(arrange(rest.map((card) => ({ card, collectionId: loaded.id }))), [loaded], { carried });
   };
 
   useEffect(() => {
@@ -107,7 +150,7 @@ export default function FlashcardsPage() {
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loadError) return <SessionLoadError onRetry={() => loadData()} onExit={() => navigate(-1)} />;
-  if (!collection || !session.current || !round) return <SessionLoading onExit={() => navigate(-1)} />;
+  if (!collection || !session.current || !session.currentCard || !round) return <SessionLoading onExit={() => navigate(-1)} />;
 
   const total = collection.cards.length;
   const multi = hasRounds(total);
@@ -115,8 +158,6 @@ export default function FlashcardsPage() {
     .replace("{from}", String(round.from + 1))
     .replace("{to}", String(round.to))
     .replace("{total}", String(total));
-  // Перемешивать есть что, если впереди хотя бы две новые карточки
-  const canShuffle = session.items.slice(session.index).filter((item) => !item.retry).length > 1;
 
   return (
     <SessionShell
@@ -129,8 +170,8 @@ export default function FlashcardsPage() {
           <IconButton label={f.undo} onClick={session.undo} disabled={!session.canUndo}>
             <Undo2 size={20} />
           </IconButton>
-          <IconButton label={f.shuffle} onClick={session.shuffle} disabled={!canShuffle}>
-            <Shuffle size={20} />
+          <IconButton label={f.settings.title} onClick={() => setShowSettings(true)}>
+            <SlidersHorizontal size={20} />
           </IconButton>
         </>
       }
@@ -151,9 +192,11 @@ export default function FlashcardsPage() {
       }
     >
       <CardStage
-        cardKey={`${session.index}:${session.current.card.id}`}
-        card={session.current.card}
-        language={voiceForCollection(collection)}
+        cardKey={`${session.index}:${session.current.card.id}:${session.current.reverse ? "r" : "f"}`}
+        card={session.currentCard}
+        language={voice}
+        reverse={!!session.current.reverse}
+        strength={memoryStrength(session.currentCard)}
         flipped={session.flipped}
         exitTo={session.exitTo}
         onFlip={() => session.flip()}
@@ -171,9 +214,13 @@ export default function FlashcardsPage() {
         rounds={multi ? { done: round.to, total, next: round.to >= total ? 0 : roundAt(total, round.to).to - round.to, first: round.from === 0 } : undefined}
         onClose={() => navigate(-1)}
         onAgain={() => loadData()}
-        onPractise={() => session.practise(session.hard)}
+        onPractise={() => session.practise(arrange(session.hard))}
         onFromStart={() => loadData(true)}
+        growth={session.practice ? undefined : session.growth}
+        previous={session.practice ? undefined : previous}
       />
+
+      <FlashSettingsModal open={showSettings} onClose={() => setShowSettings(false)} prefs={prefs} onChange={changePrefs} voice={voiceState} />
     </SessionShell>
   );
 }
