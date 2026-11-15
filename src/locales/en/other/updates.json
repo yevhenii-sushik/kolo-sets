@@ -80,7 +80,8 @@
         "Kolo opens faster: your words and sets appear straight away and refresh quietly in the background, and switching tabs no longer flashes a blank screen. The home screen no longer says “Start with your first set” or “0 words” for a moment while loading.",
         "Words you add to a set now show up straight away on the home screen, in Words and in First steps, without reloading the app. A set’s page opens instantly too.",
         "Search has moved from the header to the Words tab: type a word or translation at the top and you'll see which set it's in. Tap a result and the set opens right on that card. Letters like é or ü can be typed without the marks. On a computer, ⌘K or Ctrl+K takes you there from any tab.",
-        "If two words share a translation, the second one no longer shows up among the answer options, where a right answer used to count as a mistake. Type a synonym in the quiz, and Kolo will recognise it and ask for the other word."
+        "If two words share a translation, the second one no longer shows up among the answer options, where a right answer used to count as a mistake. Type a synonym in the quiz, and Kolo will recognise it and ask for the other word.",
+        "Flashcards and the Perigee session show the same answer sheet in the header as the quiz: a cell per word, coloured by your answer. And a long set name no longer pushes the header buttons off the screen."
       ]
     },
     {

@@ -5,7 +5,7 @@ import { getCollection } from "../../utils/storage";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { RotateCcw, SlidersHorizontal, Undo2 } from "lucide-react";
+import { RotateCcw, Settings, Undo2 } from "lucide-react";
 import { Badge, IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import RatingBar from "../../components/session/RatingBar";
@@ -15,6 +15,7 @@ import SessionLoading from "../../components/session/SessionLoading";
 import { CarriedRating, SessionItem, useCardSession } from "../../components/session/useCardSession";
 import FlashSettingsModal from "../../components/session/FlashSettingsModal";
 import LeaveSessionDialog from "../../components/session/LeaveSessionDialog";
+import AnswerSheet, { SHEET_MAX, SheetTone } from "../../components/session/AnswerSheet";
 import { SWIPE, swipeLabels } from "../../components/session/ratingLabels";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import { coachSeen, markCoachSeen } from "../../utils/firstRun";
@@ -29,6 +30,14 @@ import { shuffle } from "../../utils/gameUtils";
 const setOrder = (collection: Collection) => {
   const pos = new Map(collection.cards.map((card, i) => [card.id, i]));
   return (items: SessionItem[]) => [...items].sort((a, b) => (pos.get(a.card.id) ?? 0) - (pos.get(b.card.id) ?? 0));
+};
+
+// Цвет клетки листа ответов по оценке — как полоса в итогах круга (FlashcardStatsModal)
+const LEVEL_TONE: Record<KnowledgeLevel, SheetTone> = {
+  [KnowledgeLevel.DONT_KNOW]: "danger",
+  [KnowledgeLevel.FORGOT]: "warning",
+  [KnowledgeLevel.REMEMBER]: "info",
+  [KnowledgeLevel.KNOW]: "success",
 };
 
 export default function FlashcardsPage() {
@@ -179,11 +188,22 @@ export default function FlashcardsPage() {
             <Undo2 size={20} />
           </IconButton>
           <IconButton label={f.settings.title} onClick={() => setShowSettings(true)}>
-            <SlidersHorizontal size={20} />
+            <Settings size={20} />
           </IconButton>
         </>
       }
       progress={session.progress}
+      // Лист ответов, как в тесте: клетка на слово круга, цвет — первая оценка (те же цвета, что в итогах)
+      bar={
+        !session.practice && session.total <= SHEET_MAX ? (
+          <AnswerSheet
+            marks={session.firstLevels.map((level) => LEVEL_TONE[level])}
+            total={session.total}
+            current={session.current.retry ? -1 : session.firstLevels.length}
+            label={`${session.position} / ${session.total}`}
+          />
+        ) : undefined
+      }
       meta={
         <>
           {/* Карточка вернулась после «Не знаю»: слов от этого не прибавилось */}

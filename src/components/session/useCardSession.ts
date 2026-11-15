@@ -233,9 +233,12 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     [rated],
   );
 
+  // Первая оценка каждого слова круга по порядку, вместе с оценками до перерыва — для итогов и листа ответов в шапке
+  const firstLevels = useMemo(() => [...carried.map((c) => c.level), ...firsts.map((r) => r.level)], [carried, firsts]);
+
   // Итоги — по первому показу каждой карточки, без повторов, вместе с оценками до перерыва
   const stats: FlashcardStats = useMemo(() => {
-    const levels = [...carried.map((c) => c.level), ...firsts.map((r) => r.level)];
+    const levels = firstLevels;
     const count = (level: KnowledgeLevel) => levels.filter((l) => l === level).length;
     return {
       totalCards: carried.length + items.filter((item) => !item.retry).length,
@@ -245,7 +248,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
       know: count(KnowledgeLevel.KNOW),
       duration,
     };
-  }, [carried, firsts, items, duration]);
+  }, [carried, firstLevels, items, duration]);
 
   // Трудные слова («Не знаю», «Забылось») — список в итогах и «Повторить трудные»
   const hard: SessionItem[] = useMemo(
@@ -301,6 +304,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     hard,
     growth,
     firsts,
+    firstLevels,
     position: progress.position,
     total: progress.total,
     progress: progress.progress,

@@ -32,7 +32,7 @@ import { markAnswer, readChecks, readHistory, readQuizPrefs, saveHistory, saveQu
 import QuizQuestionComponent, { QuizFeedback } from "../../components/quiz/QuizQuestion";
 import QuizStatsModal, { QuizContext, QuizGrowth } from "../../components/quiz/QuizStatsModal";
 import QuizSettingsModal from "../../components/quiz/QuizSettingsModal";
-import AnswerSheet, { SHEET_MAX } from "../../components/quiz/AnswerSheet";
+import AnswerSheet, { SHEET_MAX } from "../../components/session/AnswerSheet";
 import { IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import SessionLoadError from "../../components/session/SessionLoadError";
@@ -358,7 +358,12 @@ export default function QuizPage() {
       // Лист ответов: сегмент на вопрос, видно, как складывается результат. Длинный тест — обычная полоса
       bar={
         sheet ? (
-          <AnswerSheet results={run.questions.map((_, i) => answers[i]?.correct)} current={feedback ? -1 : index} label={`${answers.length} / ${run.words}`} />
+          <AnswerSheet
+            marks={answers.map((a) => (a.correct ? "success" : "danger"))}
+            total={run.questions.length}
+            current={feedback ? -1 : index}
+            label={`${answers.length} / ${run.words}`}
+          />
         ) : undefined
       }
       meta={

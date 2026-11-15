@@ -21,17 +21,9 @@ import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionLoading from "../../components/session/SessionLoading";
 import { withVariant } from "../../utils/answerCheck";
 import { useSrsWriter } from "../../components/session/useSrsWriter";
+import AnswerSheet, { SHEET_MAX } from "../../components/session/AnswerSheet";
 import { ChoiceStep, ClozeStep, FlashStep, IntroStep, ListenStep, TypeStep } from "../../components/perigee/Steps";
-import {
-  answer,
-  dueTomorrow,
-  isFinished,
-  pickCards,
-  SessionState,
-  SessionSummary,
-  startSession,
-  summarize,
-} from "../../perigee/plan";
+import { answer, dueTomorrow, isFinished, pickCards, SessionState, SessionSummary, startSession, summarize, answerSheet } from "../../perigee/plan";
 
 // Сессия Perigee — главная тренировка: до 20 слов из всех наборов курса, формат по силе памяти,
 // ошибки возвращаются в той же сессии (docs/specs/perigee.md). Логика — в src/perigee/plan.ts.
@@ -203,6 +195,12 @@ export default function PerigeeSessionPage() {
       subtitle={collection?.name}
       onClose={requestExit}
       progress={state.pos / state.queue.length}
+      // Лист ответов, как в тесте и флэшкартах: клетка на слово, зелёная — верно с первого раза
+      bar={
+        total <= SHEET_MAX ? (
+          <AnswerSheet marks={answerSheet(state).map((right) => (right ? "success" : "danger"))} total={total} current={done} label={`${done} / ${total}`} />
+        ) : undefined
+      }
       meta={`${done} / ${total}`}
     >
       <AnimatePresence mode="wait" initial={false}>

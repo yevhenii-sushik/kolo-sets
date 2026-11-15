@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { Card, Collection, KnowledgeLevel } from "../types";
-import { answer, buildQueue, DAILY_NEW, dueTomorrow, isFinished, NEW_PER_SESSION, pickCards, PlanCard, SESSION_CARDS, startSession, summarize } from "./plan";
+import { answer, answerSheet, buildQueue, DAILY_NEW, dueTomorrow, isFinished, NEW_PER_SESSION, pickCards, PlanCard, SESSION_CARDS, startSession, summarize } from "./plan";
 import { updateSRSData } from "../utils/srs";
 
 const now = new Date(2026, 10, 12, 12);
@@ -119,6 +119,18 @@ describe("answer", () => {
     expect(rev.effect?.level).toBe(REMEMBER);
     expect(isFinished(rev.state)).toBe(true);
     expect(summarize(rev.state)).toEqual({ cards: 1, reviewed: 0, learned: 1, correctFirst: 1 });
+  });
+
+  it("лист ответов в шапке: завершённые слова по порядку, верно ли с первого раза", () => {
+    const reviews = Array.from({ length: 3 }, () => plan(due(1, 3), false));
+    let s = startSession(reviews, () => 0); // все — ввод
+    expect(answerSheet(s)).toEqual([]);
+    s = answer(s, { kind: "type", result: "exact" }).state;
+    s = answer(s, { kind: "type", result: "wrong" }).state; // слово завершено с ошибкой, повтор впереди
+    s = answer(s, { kind: "type", result: "exact" }).state;
+    expect(answerSheet(s)).toEqual([true, false, true]);
+    s = answer(s, { kind: "choice", correct: true }).state; // повтор не меняет лист
+    expect(answerSheet(s)).toEqual([true, false, true]);
   });
 
   it("новое слово с ошибкой — «Забыл» после закрепления", () => {

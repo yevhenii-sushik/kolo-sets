@@ -80,7 +80,8 @@
         "Kolo åpner raskere: ordene og settene dine vises med en gang og oppdateres stille i bakgrunnen, og det blinker ikke lenger en tom skjerm når du bytter fane. Og startsiden skriver ikke lenger «Begynn med ditt første sett» og «0 ord» et øyeblikk mens alt lastes.",
         "Ord du legger til i et sett, vises med en gang på startsiden, i Ord og i Første steg, uten å laste appen på nytt. Og siden til et sett åpner seg nå med en gang.",
         "Søket har flyttet fra toppfeltet til Ord-fanen: skriv et ord eller en oversettelse øverst, så ser du med en gang hvilket sett det ligger i. Trykk på et treff, så åpnes settet rett på det kortet. Bokstaver som é og ü kan skrives uten tegnene. På datamaskin tar ⌘K eller Ctrl+K deg dit fra hvilken som helst fane.",
-        "Har to ord samme oversettelse, dukker ikke det andre lenger opp blant svaralternativene – før ble et riktig svar regnet som feil. Skriver du et synonym i quizen, kjenner Kolo det igjen og ber om det andre ordet."
+        "Har to ord samme oversettelse, dukker ikke det andre lenger opp blant svaralternativene – før ble et riktig svar regnet som feil. Skriver du et synonym i quizen, kjenner Kolo det igjen og ber om det andre ordet.",
+        "Flashkortene og Perigee-økten viser det samme svararket øverst som quizen: én rute per ord, farget etter svaret ditt. Og et langt settnavn skyver ikke lenger knappene øverst ut av skjermen."
       ]
     },
     {

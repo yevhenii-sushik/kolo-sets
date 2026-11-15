@@ -34,6 +34,7 @@ interface CardProgress {
   mistakes: number;
   first?: boolean; // верно ли с первого раза
   done: boolean; // оценка уже записана
+  order?: number; // каким по счёту слово завершилось — лист ответов в шапке заполняется слева направо
 }
 
 export interface SessionState {
@@ -204,14 +205,17 @@ export function answer(s: SessionState, outcome: AnswerOutcome | null): { state:
 
   let effect: SrsEffect | undefined;
   const target = { collectionId: pc.collectionId, cardId: pc.card.id };
+  const doneBefore = Object.values(s.progress).filter((p) => p.done).length;
   if (!pc.isNew && step.graded && outcome && progress.first === undefined) {
     progress.first = right;
     progress.done = true;
+    progress.order = doneBefore;
     effect = { ...target, level: levelForAnswer(outcome) };
   }
   if (pc.isNew && !progress.done && !queue.slice(s.pos + 1).some((x) => x.key === step.key)) {
     progress.first = progress.mistakes === 0;
     progress.done = true;
+    progress.order = doneBefore;
     effect = { ...target, level: progress.mistakes === 0 ? KnowledgeLevel.REMEMBER : KnowledgeLevel.FORGOT };
   }
 
@@ -219,6 +223,14 @@ export function answer(s: SessionState, outcome: AnswerOutcome | null): { state:
     state: { ...s, queue, nextId, retries, pos: s.pos + 1, progress: { ...s.progress, [step.key]: progress } },
     effect,
   };
+}
+
+/** Лист ответов: завершённые слова по порядку — верно ли с первого раза (как в тесте и флэшкартах) */
+export function answerSheet(s: SessionState): boolean[] {
+  return Object.values(s.progress)
+    .filter((p) => p.done)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .map((p) => p.first === true);
 }
 
 export interface SessionSummary {

@@ -36,7 +36,9 @@ export default function SessionShell({
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 flex flex-col overflow-hidden bg-bg">
       <header className="shrink-0 px-4 pt-3 sm:px-6">
-        <div className="mx-auto grid max-w-3xl gap-2">
+        {/* grid-cols-1 (minmax(0, 1fr)): иначе колонка растягивалась по длинному названию набора, и кнопки
+            справа и счёт «7 / 20» уходили за край экрана */}
+        <div className="mx-auto grid max-w-3xl grid-cols-1 gap-2">
           <div className="flex items-center gap-2">
             <IconButton label={t.close} onClick={onClose} className="-ml-2">
               <X size={22} />
