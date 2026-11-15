@@ -77,7 +77,7 @@
   },
   "modes": {
     "title": "Uma sessão inteligente e três jeitos de praticar",
-    "text": "O Perigee escolhe o formato certo para cada palavra. Prefere escolher você mesmo? Flashcards, quiz ou contra o relógio.",
+    "text": "O Perigee escolhe o formato certo para cada palavra. Prefere escolher você mesmo? Flashcards, quiz ou rodada relâmpago.",
     "items": {
       "perigee": {
         "name": "Sessão Perigee",
@@ -92,8 +92,8 @@
         "text": "Escolha a resposta ou digite a palavra — e descubra o que você sabe de verdade."
       },
       "speed": {
-        "name": "Contra o relógio",
-        "text": "O máximo de respostas que conseguir em 60 segundos."
+        "name": "Rodada relâmpago",
+        "text": "Um minuto de reconhecimento rápido, palavras fracas primeiro."
       }
     },
     "preview": {

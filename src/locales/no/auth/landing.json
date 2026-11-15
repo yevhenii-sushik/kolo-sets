@@ -77,7 +77,7 @@
   },
   "modes": {
     "title": "Én smart økt og tre måter å øve på",
-    "text": "Perigee velger riktig format for hvert ord. Vil du velge selv? Flashkort, quiz eller hurtigrunde.",
+    "text": "Perigee velger riktig format for hvert ord. Vil du velge selv? Flashkort, quiz eller lynrunde.",
     "items": {
       "perigee": {
         "name": "Perigee-økt",
@@ -92,8 +92,8 @@
         "text": "Velg svaret eller skriv ordet – og se hva du faktisk kan."
       },
       "speed": {
-        "name": "Hurtigrunde",
-        "text": "Så mange svar du klarer på 60 sekunder."
+        "name": "Lynrunde",
+        "text": "Ett minutt med lynrask gjenkjenning, svake ord først."
       }
     },
     "preview": {

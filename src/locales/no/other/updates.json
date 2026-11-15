@@ -17,7 +17,7 @@
       "features": [
         {
           "title": "Perigee-økter",
-          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, 3–5 minutter. Perigee viser deg nye ord først, ber deg så finne dem blant alternativer, og sjekker kjente ord etter hvor godt du kan dem – med alternativer, skriving, et kort, et hull i eksempelsetningen eller på gehør. En feil kommer tilbake noen steg senere til den sitter. Hver av de fire vurderingene har sin egen frist: «Vet ikke» viser ordet igjen senere i samme økt, «Glemte» – i morgen, «Husker» – om noen dager, «Kan» – senest. Fristen står under knappen, og et vurdert kort flyr til siden. Svar i «Quiz» og «Hurtigrunde» teller nå også i planen – de modusene har Perigee-merket. I et sett starter Lær-knappen den samme økten, bare med ordene i settet. Det er færre moduser nå, hver med sin egen oppgave: «Overlevelse», «Finn par» og den egne dagens repetisjon er borte – Perigee-økten erstatter dem."
+          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, 3–5 minutter. Perigee viser deg nye ord først, ber deg så finne dem blant alternativer, og sjekker kjente ord etter hvor godt du kan dem – med alternativer, skriving, et kort, et hull i eksempelsetningen eller på gehør. En feil kommer tilbake noen steg senere til den sitter. Hver av de fire vurderingene har sin egen frist: «Vet ikke» viser ordet igjen senere i samme økt, «Glemte» – i morgen, «Husker» – om noen dager, «Kan» – senest. Fristen står under knappen, og et vurdert kort flyr til siden. Svar i «Quiz» og «Lynrunde» teller nå også i planen – de modusene har Perigee-merket. I et sett starter Lær-knappen den samme økten, bare med ordene i settet. Det er færre moduser nå, hver med sin egen oppgave: «Overlevelse», «Finn par» og den egne dagens repetisjon er borte – Perigee-økten erstatter dem."
         },
         {
           "title": "Flashkort",
@@ -26,6 +26,10 @@
         {
           "title": "Quiz",
           "text": "Quizen er nå en eksamen i settet: 20 spørsmål (eller 10, eller hele settet), og først kommer ordene du bommet på sist og de som skal repeteres. Svar med flervalg, skriving eller en blanding – da kommer svake ord oftere som flervalg og sterke som skriving, og av og til svarer du på lyd. Et riktig svar går videre av seg selv, tre på rad blir en rekke, og lyden stiger med den. Etter quizen kan du gå rett til «Gå gjennom feilene» til hvert ord er riktig. Kolo husker hvor mange ord i settet du har svart riktig på, sammenligner poengsummen med forrige gang, merker en rekord for settet og feirer når hele settet er bestått. En feil på et ord du ikke har lært ennå, forstyrrer ikke lenger planen, og bonusen for en feilfri quiz gjelder nå fra 10 spørsmål. Hvert spørsmål står på et kort, som i flashkortene, med ordets styrke og ordklasse, og svararket øverst viser hvordan resultatet tar form. Vet du ikke? Trykk «Vet ikke» i stedet for å gjette."
+        },
+        {
+          "title": "Lynrunde",
+          "text": "Hurtigrunden heter nå Lynrunde, og minuttet jobber for hukommelsen din: ord som skal repeteres og svake ord kommer først, og et ord du bommer på, kommer tilbake noen spørsmål senere. Klokka starter etter en kort nedtelling 3-2-1, og hvis du forlater appen, settes runden på pause. Etter en feil vises riktig svar litt lenger mens klokka går, så gjetting lønner seg ikke – og når du virkelig ikke vet, finnes «Vet ikke». Hvert sett har sin egen rekord: toppen viser når du slår den, og oppsummeringen sammenligner poengene med forrige gang og viser ordene du bommet på, med lyd. Du kan bli spurt motsatt vei, begge veier eller på gehør. Nye ord er bare for leken her: de havner ikke lenger i planen din, Perigee introduserer dem. En runde teller fra 10 svar, og Lynrask-merket kan nå også tjenes i lynrunden."
         },
         {
           "title": "Et kurs for hvert språk",
@@ -57,7 +61,7 @@
         },
         {
           "title": "Lyder for øving og belønninger",
-          "text": "Svar, kort og spill har fått sine egne lyder: myke toner for riktige og gale svar, et lite sus når kortet snus, og en tikkende klokke de siste sekundene av en Hurtigrunde. Nye nivåer, lukkede baner og kapsler har hver sin fanfare, og hver sjeldenhetsgrad høres forskjellig ut. Du kan slå av lydene under «Mer → Innstillinger»."
+          "text": "Svar, kort og spill har fått sine egne lyder: myke toner for riktige og gale svar, et lite sus når kortet snus, og en tikkende klokke de siste sekundene av en lynrunde. Nye nivåer, lukkede baner og kapsler har hver sin fanfare, og hver sjeldenhetsgrad høres forskjellig ut. Du kan slå av lydene under «Mer → Innstillinger»."
         }
       ],
       "fixes": [
@@ -81,7 +85,8 @@
         "Ord du legger til i et sett, vises med en gang på startsiden, i Ord og i Første steg, uten å laste appen på nytt. Og siden til et sett åpner seg nå med en gang.",
         "Søket har flyttet fra toppfeltet til Ord-fanen: skriv et ord eller en oversettelse øverst, så ser du med en gang hvilket sett det ligger i. Trykk på et treff, så åpnes settet rett på det kortet. Bokstaver som é og ü kan skrives uten tegnene. På datamaskin tar ⌘K eller Ctrl+K deg dit fra hvilken som helst fane.",
         "Har to ord samme oversettelse, dukker ikke det andre lenger opp blant svaralternativene – før ble et riktig svar regnet som feil. Skriver du et synonym i quizen, kjenner Kolo det igjen og ber om det andre ordet.",
-        "Flashkortene og Perigee-økten viser det samme svararket øverst som quizen: én rute per ord, farget etter svaret ditt. Og et langt settnavn skyver ikke lenger knappene øverst ut av skjermen."
+        "Flashkortene og Perigee-økten viser det samme svararket øverst som quizen: én rute per ord, farget etter svaret ditt. Og et langt settnavn skyver ikke lenger knappene øverst ut av skjermen.",
+        "«Spill igjen» rett etter en runde viser ikke lenger svaralternativer som ikke passer til ordet."
       ]
     },
     {

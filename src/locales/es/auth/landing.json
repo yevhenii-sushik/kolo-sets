@@ -77,7 +77,7 @@
   },
   "modes": {
     "title": "Una sesión inteligente y tres formas de practicar",
-    "text": "Perigee elige el formato adecuado para cada palabra. ¿Prefieres elegir tú? Tarjetas, test o contrarreloj.",
+    "text": "Perigee elige el formato adecuado para cada palabra. ¿Prefieres elegir tú? Tarjetas, test o ronda relámpago.",
     "items": {
       "perigee": {
         "name": "Sesión Perigee",
@@ -92,8 +92,8 @@
         "text": "Elige la respuesta o escribe la palabra, y descubre lo que sabes de verdad."
       },
       "speed": {
-        "name": "Contrarreloj",
-        "text": "Tantas respuestas como puedas en 60 segundos."
+        "name": "Ronda relámpago",
+        "text": "Un minuto de reconocimiento rápido, primero las palabras débiles."
       }
     },
     "preview": {

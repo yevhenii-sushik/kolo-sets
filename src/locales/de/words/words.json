@@ -11,8 +11,8 @@
       "quizDesc": "Teste dich: Ergebnis und Fehler üben",
       "quizNeedsMore": "Mindestens 4 Karten nötig",
       "games": "Spiele",
-      "speed": "Gegen die Uhr",
-      "speedDesc": "60 Sekunden, Multiplikator für Serien",
+      "speed": "Blitzrunde",
+      "speedDesc": "Eine Minute blitzschnelles Erkennen, schwache Wörter zuerst",
       "needMore": "Mindestens 4 Wörter nötig"
     }
   },
@@ -187,15 +187,12 @@
   },
   "session": {
     "showAnswer": "Antwort zeigen",
-    "translate": "Übersetze",
     "score": "Punkte",
-    "seconds": "{n} s",
     "correct": "Richtig",
     "answers": "Antworten",
     "bestStreak": "Beste Serie",
     "exit": "Beenden",
     "again": "Nochmal spielen",
-    "timeUp": "Die Zeit ist um!",
     "time": "Zeit",
     "mistakes": "Fehler",
     "mistakesCount": {
@@ -223,6 +220,61 @@
       "title": "Die Wörter konnten nicht geladen werden",
       "text": "Prüf deine Internetverbindung und versuch es noch einmal.",
       "retry": "Erneut versuchen"
+    }
+  },
+  "blitz": {
+    "title": "Blitzrunde",
+    "ready": {
+      "label": "60 Sekunden",
+      "text": "Erkenne Wörter so schnell du kannst. Richtige Antworten in Folge vervielfachen deine Punkte, ein Fehler kostet Zeit.",
+      "deck": {
+        "one": "{n} Wort in dieser Runde: fällige und schwache zuerst",
+        "other": "{n} Wörter in dieser Runde: fällige und schwache zuerst"
+      },
+      "newOnly": "Neue Wörter sind hier nur zum Spielen: Sie landen nicht in deinem Plan, Perigee stellt sie dir richtig vor.",
+      "record": "Set-Rekord: {n}",
+      "last": "letztes Mal: {n}",
+      "start": "Start"
+    },
+    "countdown": "Mach dich bereit",
+    "paused": "Pause",
+    "pausedText": "Die Runde wartet auf dich. Die Uhr läuft nach einem kurzen Countdown weiter.",
+    "resume": "Weiter",
+    "streak": "×{m} · {n} in Folge",
+    "recordShort": "Rekord {n}",
+    "newRecord": "neuer Rekord!",
+    "leftSeconds": {
+      "one": "Noch {n} Sekunde",
+      "other": "Noch {n} Sekunden"
+    },
+    "leaveReward": "Spiel die Minute zu Ende: Ab {n} Antworten zählt die Runde – XP und ein Tag für deinen Wochen-Orbit.",
+    "settings": {
+      "title": "Einstellungen der Blitzrunde",
+      "mode": "Abfragen als",
+      "forward": "Wort → Übersetzung",
+      "forwardHint": "Wort sehen, Bedeutung wählen: blitzschnelles Erkennen",
+      "reverse": "Übersetzung → Wort",
+      "reverseHint": "Schwieriger: das Wort in deiner Lernsprache finden",
+      "mixed": "Beide Richtungen",
+      "mixedHint": "Wechselt von Frage zu Frage",
+      "listen": "Nach Gehör",
+      "listenHint": "Wort hören, Bedeutung wählen – wie im echten Gespräch",
+      "listenOff": "Braucht eine Stimme für diese Sprache auf deinem Gerät und eingeschalteten Ton",
+      "recordNote": "Jede Art hat ihren eigenen Set-Rekord."
+    },
+    "result": {
+      "record": "Neuer Rekord!",
+      "great": "Starke Runde!",
+      "good": "Gute Runde",
+      "slow": "Genauigkeit zuerst",
+      "slowNote": "Fehler kosten Zeit: Lieber eine Sekunde nachdenken als raten.",
+      "uncounted": "Runde zählt nicht",
+      "uncountedNote": "Eine Runde zählt ab {n} Antworten. Diesmal: {k}.",
+      "accuracy": "Genauigkeit: {pct} %",
+      "previousRecord": "Bisheriger Rekord: {n}",
+      "best": "Set-Rekord: {n}",
+      "last": "Letztes Mal: {n}",
+      "mistakes": "Deine Fehler"
     }
   },
   "pos": {

@@ -217,7 +217,7 @@
     },
     "speed_demon": {
       "name": "Speed demon",
-      "description": "Answer quiz questions in under 5 seconds each, with at least 80% correct"
+      "description": "Answer quiz questions in under 5 seconds each, or give 30 answers in one Blitz round — with at least 80% correct"
     },
     "all_know": {
       "name": "Know it all!",

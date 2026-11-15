@@ -32,8 +32,8 @@
       "quizDesc": "Test deg selv: poengsum og gjennomgang av feil",
       "quizNeedsMore": "Trenger 4+ kort",
       "games": "Spill",
-      "speed": "Hurtigrunde",
-      "speedDesc": "60 sekunder, multiplikator for rekker",
+      "speed": "Lynrunde",
+      "speedDesc": "Ett minutt med lynrask gjenkjenning, svake ord først",
       "needMore": "Trenger minst 4 ord"
     },
     "words": {
@@ -317,15 +317,12 @@
   },
   "session": {
     "showAnswer": "Vis svaret",
-    "translate": "Oversett",
     "score": "Poeng",
-    "seconds": "{n} s",
     "correct": "Riktig",
     "answers": "Svar",
     "bestStreak": "Beste rekke",
     "exit": "Avslutt",
     "again": "Spill igjen",
-    "timeUp": "Tiden er ute!",
     "time": "Tid",
     "mistakes": "Feil",
     "mistakesCount": {
@@ -353,6 +350,61 @@
       "title": "Kunne ikke laste inn ordene",
       "text": "Sjekk internettforbindelsen og prøv igjen.",
       "retry": "Prøv igjen"
+    }
+  },
+  "blitz": {
+    "title": "Lynrunde",
+    "ready": {
+      "label": "60 sekunder",
+      "text": "Kjenn igjen ordene så raskt du kan. Riktige svar på rad ganger opp poengene, og en feil koster tid.",
+      "deck": {
+        "one": "{n} ord i runden: de som skal repeteres og de svake først",
+        "other": "{n} ord i runden: de som skal repeteres og de svake først"
+      },
+      "newOnly": "Nye ord er bare for leken her: de havner ikke i planen din, Perigee introduserer dem skikkelig.",
+      "record": "Rekord for settet: {n}",
+      "last": "sist: {n}",
+      "start": "Start"
+    },
+    "countdown": "Gjør deg klar",
+    "paused": "Pause",
+    "pausedText": "Runden venter på deg. Klokka går igjen etter en kort nedtelling.",
+    "resume": "Fortsett",
+    "streak": "×{m} · {n} på rad",
+    "recordShort": "rekord {n}",
+    "newRecord": "ny rekord!",
+    "leftSeconds": {
+      "one": "{n} sekund igjen",
+      "other": "{n} sekunder igjen"
+    },
+    "leaveReward": "Spill minuttet ut: med {n} svar eller flere teller runden – XP og en dag i ukens bane.",
+    "settings": {
+      "title": "Innstillinger for lynrunde",
+      "mode": "Hvordan spørre",
+      "forward": "Ord → oversettelse",
+      "forwardHint": "Se ordet, velg betydningen: lynrask gjenkjenning",
+      "reverse": "Oversettelse → ord",
+      "reverseHint": "Vanskeligere: finn ordet på språket du lærer",
+      "mixed": "Begge veier",
+      "mixedHint": "Skifter fra spørsmål til spørsmål",
+      "listen": "På gehør",
+      "listenHint": "Hør ordet, velg betydningen, som i en ekte samtale",
+      "listenOff": "Krever en stemme for dette språket på enheten og at lyd er på",
+      "recordNote": "Hver måte har sin egen rekord for settet."
+    },
+    "result": {
+      "record": "Ny rekord!",
+      "great": "Flott runde!",
+      "good": "God runde",
+      "slow": "Nøyaktighet først",
+      "slowNote": "Feil koster tid: bedre å tenke et sekund enn å gjette.",
+      "uncounted": "Runden telte ikke",
+      "uncountedNote": "En runde teller fra {n} svar. Denne gangen: {k}.",
+      "accuracy": "Nøyaktighet: {pct} %",
+      "previousRecord": "Forrige rekord: {n}",
+      "best": "Rekord for settet: {n}",
+      "last": "Sist: {n}",
+      "mistakes": "Feilene dine"
     }
   },
   "soonTitle": "Kommer snart",

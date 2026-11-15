@@ -112,6 +112,15 @@ describe("счётчики и достижения", () => {
     expect(fast.newAchievements).toContain(AchievementType.SPEED_DEMON);
   });
 
+  it("«Скоростной демон» за Блиц — 30 ответов за раунд и от 80% верно", () => {
+    const few = applySession({}, session({ kind: "speed", cards: 25, correct: 25, durationSec: 60 }), info, NOON).result;
+    expect(few.newAchievements).not.toContain(AchievementType.SPEED_DEMON);
+    const sloppy = applySession({}, session({ kind: "speed", cards: 40, correct: 30, durationSec: 60 }), info, NOON).result;
+    expect(sloppy.newAchievements).not.toContain(AchievementType.SPEED_DEMON);
+    const fast = applySession({}, session({ kind: "speed", cards: 32, correct: 28, durationSec: 60 }), info, NOON).result;
+    expect(fast.newAchievements).toContain(AchievementType.SPEED_DEMON);
+  });
+
   it("игра продлевает серию, но не трогает счётчики флэшкарт и тестов", () => {
     const { patch, result } = applySession({}, session({ kind: "speed", cards: 40, durationSec: 60 }), info, NOON);
     expect(result.streak.extendedToday).toBe(true);
@@ -174,6 +183,10 @@ describe("правдоподобие", () => {
   it("в играх слова повторяются, но не быстрее двух ответов в секунду", () => {
     expect(checkPlausibility(session({ kind: "speed", cards: 100, durationSec: 60 }), info)).toBeNull();
     expect(checkPlausibility(session({ kind: "speed", cards: 500, durationSec: 60 }), info)).toBe("too-fast");
+  });
+  it("раунд игры — тренировка от 10 ответов: один ответ и минута ожидания не дают день в орбиту", () => {
+    expect(checkPlausibility(session({ kind: "speed", cards: 3, correct: 3, durationSec: 60 }), info)).toBe("too-few");
+    expect(checkPlausibility(session({ kind: "speed", cards: 10, correct: 4, durationSec: 60 }), info)).toBeNull();
   });
 });
 

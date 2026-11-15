@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BookOpen, Timer, Zap } from "lucide-react";
 import { Collection } from "../../types";
 import { isDueCard, isNewCard } from "../../utils/storage";
+import { canAsk } from "../../blitz/plan";
 import { useI18n } from "../../contexts/I18nContext";
 import { Modal, PerigeeMark } from "../../ui";
 import PerigeeTag from "../session/PerigeeTag";
@@ -16,6 +17,8 @@ export default function StudyModeModal({ collection, open, onClose }: { collecti
   const m = t.words.collectionCard.modal;
 
   const tooFewQuiz = collection.cards.length < 4;
+  // Блицу нужны четыре разных варианта ответа хотя бы у одного слова: набор из синонимов спросить нечем
+  const tooFewBlitz = tooFewQuiz || !collection.cards.some((c) => canAsk(c, collection.cards));
   const dueToday = collection.cards.filter(isDueCard).length;
   // Сессии Perigee по набору есть что предложить: слова на сегодня или новые
   const canLearn = dueToday > 0 || collection.cards.some(isNewCard);
@@ -54,8 +57,8 @@ export default function StudyModeModal({ collection, open, onClose }: { collecti
         <ModeButton
           icon={<Timer size={18} />}
           label={m.speed}
-          desc={tooFewQuiz ? m.needMore : m.speedDesc}
-          disabled={tooFewQuiz}
+          desc={tooFewBlitz ? m.needMore : m.speedDesc}
+          disabled={tooFewBlitz}
           onClick={() => start("speed")}
           perigee
         />

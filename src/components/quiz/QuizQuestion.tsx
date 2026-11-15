@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Check, Info, Lightbulb, Plus, Volume2, X, Zap } from "lucide-react";
+import { ArrowRight, Check, Info, Lightbulb, Plus, Volume2, X } from "lucide-react";
 import { TaskType } from "../../types";
 import { QuizQuestion, isTyping } from "../../quiz/plan";
 import { speakWord } from "../../utils/tts";
@@ -9,7 +8,7 @@ import { AnswerVerdict } from "../../utils/answerCheck";
 import { useI18n } from "../../contexts/I18nContext";
 import { Button, Card, IconButton, Input, cx } from "../../ui";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
-import { StrengthChip } from "../cards/Flashcard";
+import QuestionCard, { ListenButton, QuestionPrompt, QuestionTag, StreakChip } from "../session/QuestionCard";
 import { posLabel } from "../../data/partsOfSpeech";
 import AnswerDiff from "../session/AnswerDiff";
 
@@ -118,57 +117,19 @@ export default function QuizQuestionComponent({
 
   return (
     <div className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-4 sm:my-auto sm:flex-none">
-      {/* Карточка вопроса */}
-      <div className="relative flex min-h-44 flex-1 flex-col items-center justify-center gap-3 overflow-hidden rounded-4xl border border-accent/15 bg-accent-soft px-6 pb-8 pt-14 text-center text-fg sm:min-h-64 sm:flex-none">
-        {/* Кольцо «Орбиты», как на лице флэшкарты, но без спутника: на короткой карточке он налезал на слово */}
-        <svg viewBox="0 0 200 200" aria-hidden className="pointer-events-none absolute -bottom-28 -right-28 h-64 w-64 text-accent/20">
-          <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="2" />
-        </svg>
-        <div className="absolute inset-x-4 top-4 flex items-center justify-between gap-2">
-          {strength !== undefined ? <StrengthChip strength={strength} /> : <span />}
-          {/* Серия с трёх подряд; каждое новое верное — короткий «щелчок» значка */}
-          {streak >= 3 && (
-            <motion.span
-              key={streak}
-              initial={{ scale: 1.25 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 500, damping: 18 }}
-              className="inline-flex items-center gap-1 rounded-full bg-surface/70 px-3 py-1 text-xs font-semibold text-accent-ink"
-            >
-              <Zap size={12} />
-              {q.streak.replace("{n}", String(streak))}
-            </motion.span>
-          )}
-        </div>
-
-        <p className="relative text-base font-semibold text-accent-ink">{q.prompts[question.type as keyof typeof q.prompts]}</p>
+      <QuestionCard
+        label={q.prompts[question.type as keyof typeof q.prompts]}
+        strength={strength}
+        // Серия с трёх подряд
+        badge={streak >= 3 ? <StreakChip value={streak}>{q.streak.replace("{n}", String(streak))}</StreakChip> : undefined}
+      >
         {listening && !feedback ? (
-          <div className="relative grid justify-items-center gap-2">
-            <button
-              type="button"
-              aria-label={q.listenAgain}
-              onClick={() => speakWord(question.card.word, voice)}
-              className="grid h-20 w-20 place-items-center rounded-full bg-surface text-accent-ink shadow-sm transition-colors hover:bg-surface/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-            >
-              <Volume2 size={36} />
-            </button>
-            <p className="text-xs text-muted">{q.listenAgain}</p>
-          </div>
+          <ListenButton label={q.listenAgain} onClick={() => speakWord(question.card.word, voice)} />
         ) : (
-          <h2
-            dir="auto"
-            className={cx(
-              "relative wrap-break-word",
-              described ? "text-xl font-semibold leading-snug sm:text-2xl" : "font-display text-3xl font-extrabold leading-tight sm:text-4xl",
-            )}
-          >
-            {question.prompt}
-          </h2>
+          <QuestionPrompt described={described}>{question.prompt}</QuestionPrompt>
         )}
-        {question.card.partOfSpeech && (
-          <span className="relative rounded-full bg-surface/70 px-3 py-1 text-sm font-medium text-muted">{posLabel(question.card.partOfSpeech, t.words.pos)}</span>
-        )}
-      </div>
+        {question.card.partOfSpeech && <QuestionTag>{posLabel(question.card.partOfSpeech, t.words.pos)}</QuestionTag>}
+      </QuestionCard>
 
       {coach && !feedback && (
         <div className="flex gap-2.5 rounded-2xl bg-inset p-3 text-left text-sm text-muted">

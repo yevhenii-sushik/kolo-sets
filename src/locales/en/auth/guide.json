@@ -30,7 +30,7 @@
         {
           "id": "practise",
           "title": "Practise for a few minutes",
-          "text": "The heart of Kolo is the Perigee session: a few minutes a day, and Kolo decides which words to review and in what format. Flashcards, the quiz and the speed round give you the same words when you want to choose yourself. Five minutes a day is enough to make progress."
+          "text": "The heart of Kolo is the Perigee session: a few minutes a day, and Kolo decides which words to review and in what format. Flashcards, the quiz and Blitz give you the same words when you want to choose yourself. Five minutes a day is enough to make progress."
         },
         {
           "id": "return",
@@ -63,10 +63,10 @@
       "tab": "Training modes",
       "meta": {
         "title": "Training modes in Kolo — Perigee session, flashcards, quiz and game",
-        "description": "Perigee session, flashcards, quiz and speed round: four training modes, what each one is best for and how they shape your review schedule."
+        "description": "Perigee session, flashcards, quiz and Blitz: four training modes, what each one is best for and how they shape your review schedule."
       },
       "title": "Four training modes",
-      "lead": "The Perigee session is the main mode: it decides which words to review and in what format. Flashcards, the quiz and the speed round are there when you want to choose yourself. All four teach Perigee what you know.",
+      "lead": "The Perigee session is the main mode: it decides which words to review and in what format. Flashcards, the quiz and Blitz are there when you want to choose yourself. All four teach Perigee what you know.",
       "sections": [
         {
           "id": "session",
@@ -88,14 +88,14 @@
         },
         {
           "id": "speed",
-          "title": "Speed round",
+          "title": "Blitz",
           "tags": ["From 4 words"],
-          "text": "60 seconds to give as many correct answers as you can, and a streak without mistakes multiplies your score. Quick decisions train instant recognition — exactly what you need in a real conversation."
+          "text": "A minute of quick recognition: due and weak words come first, and a word you miss comes back a few questions later. Right answers in a row multiply your points, and a mistake costs time, so guessing doesn't pay. Every set keeps a record. You can be asked the other way round, both ways or by ear — instant recognition is exactly what you need in a real conversation. New words are just for play here: Perigee introduces them."
         },
         {
           "id": "schedule",
           "title": "How the modes shape your schedule",
-          "text": "Every mode tells Perigee how well you know a word — one answer per word per session, the first one. Flashcards use your rating. In the session, the quiz and the game, typing the word exactly counts as “Know”, a correct choice or an answer with a typo as “Remember”, and a mistake as “Forgot”. A quiz mistake on a word you haven't met yet doesn't count: Perigee will introduce it properly. Reviewing early won't send a word far ahead, and a mistake honestly brings it back."
+          "text": "Every mode tells Perigee how well you know a word — one answer per word per session, the first one. Flashcards use your rating. In the session, the quiz and the game, typing the word exactly counts as “Know”, a correct choice or an answer with a typo as “Remember”, and a mistake as “Forgot”. A quiz mistake on a word you haven't met yet doesn't count, and in Blitz new words don't count at all: Perigee will introduce them properly. Reviewing early won't send a word far ahead, and a mistake honestly brings it back."
         },
         {
           "id": "xp",
@@ -104,7 +104,7 @@
             { "title": "Perigee session", "text": "1 XP for every word, plus 1 more if you got it right the first time." },
             { "title": "Flashcards", "text": "1 XP for every card." },
             { "title": "Quiz", "text": "1 XP per question and 1 more per correct answer, plus 10 for a quiz of 10+ questions without mistakes." },
-            { "title": "Speed round", "text": "1 XP per correct answer, up to 20 per round." },
+            { "title": "Blitz", "text": "1 XP per correct answer, up to 20 per round. A round counts from 10 answers." },
             { "title": "Bonuses", "text": "+5 for the first session of the day and +50 for closing the week's orbit. Training XP is capped at 400 a day." }
           ]
         }

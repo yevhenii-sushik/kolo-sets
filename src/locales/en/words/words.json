@@ -32,8 +32,8 @@
       "quizDesc": "Check yourself: a score and a mistake review",
       "quizNeedsMore": "Need 4+ cards",
       "games": "Games",
-      "speed": "Speed round",
-      "speedDesc": "60 seconds, streak multiplier",
+      "speed": "Blitz",
+      "speedDesc": "A minute of quick recognition, weak words first",
       "needMore": "Needs at least 4 words"
     },
     "words": {
@@ -317,15 +317,12 @@
   },
   "session": {
     "showAnswer": "Show answer",
-    "translate": "Translate",
     "score": "Score",
-    "seconds": "{n} s",
     "correct": "Correct",
     "answers": "Answers",
     "bestStreak": "Best streak",
     "exit": "Exit",
     "again": "Play again",
-    "timeUp": "Time's up!",
     "time": "Time",
     "mistakes": "Mistakes",
     "mistakesCount": {
@@ -353,6 +350,61 @@
       "title": "Couldn't load the words",
       "text": "Check your internet connection and try again.",
       "retry": "Try again"
+    }
+  },
+  "blitz": {
+    "title": "Blitz",
+    "ready": {
+      "label": "60 seconds",
+      "text": "Recognise words as fast as you can. Right answers in a row multiply your points, and a mistake costs you time.",
+      "deck": {
+        "one": "{n} word in this round: due and weak ones first",
+        "other": "{n} words in this round: due and weak ones first"
+      },
+      "newOnly": "New words here are just for play: they don't go into your schedule, Perigee will introduce them properly.",
+      "record": "Set record: {n}",
+      "last": "last time: {n}",
+      "start": "Start"
+    },
+    "countdown": "Get ready",
+    "paused": "Paused",
+    "pausedText": "The round is waiting for you. The clock starts again after a short countdown.",
+    "resume": "Continue",
+    "streak": "×{m} · {n} in a row",
+    "recordShort": "record {n}",
+    "newRecord": "new record!",
+    "leftSeconds": {
+      "one": "{n} second left",
+      "other": "{n} seconds left"
+    },
+    "leaveReward": "Play the minute out: with {n} or more answers the round counts — XP and a day towards your weekly orbit.",
+    "settings": {
+      "title": "Blitz settings",
+      "mode": "How to ask",
+      "forward": "Word → translation",
+      "forwardHint": "See the word, pick its meaning: instant recognition",
+      "reverse": "Translation → word",
+      "reverseHint": "Harder: find the word in the language you're learning",
+      "mixed": "Both ways",
+      "mixedHint": "Switches from question to question",
+      "listen": "By ear",
+      "listenHint": "Hear the word, pick its meaning, like in a real conversation",
+      "listenOff": "Needs a voice for this language on your device and sounds turned on",
+      "recordNote": "Each way keeps its own set record."
+    },
+    "result": {
+      "record": "New record!",
+      "great": "Great round!",
+      "good": "Good round",
+      "slow": "Accuracy first",
+      "slowNote": "Mistakes cost time: better to think for a second than to guess.",
+      "uncounted": "Round not counted",
+      "uncountedNote": "A round counts from {n} answers. This time: {k}.",
+      "accuracy": "Accuracy: {pct}%",
+      "previousRecord": "Previous record: {n}",
+      "best": "Set record: {n}",
+      "last": "Last time: {n}",
+      "mistakes": "Your mistakes"
     }
   },
   "soonTitle": "Coming soon",

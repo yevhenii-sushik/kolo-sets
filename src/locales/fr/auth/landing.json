@@ -77,7 +77,7 @@
   },
   "modes": {
     "title": "Une séance intelligente et trois façons de s’entraîner",
-    "text": "Perigee choisit le bon format pour chaque mot. Tu préfères choisir toi-même ? Cartes mémoire, quiz ou contre la montre.",
+    "text": "Perigee choisit le bon format pour chaque mot. Tu préfères choisir toi-même ? Cartes mémoire, quiz ou Blitz.",
     "items": {
       "perigee": {
         "name": "Séance Perigee",
@@ -92,8 +92,8 @@
         "text": "Choisis la réponse ou écris le mot — et découvre ce que tu sais vraiment."
       },
       "speed": {
-        "name": "Contre la montre",
-        "text": "Un maximum de réponses en 60 secondes."
+        "name": "Blitz",
+        "text": "Une minute de reconnaissance éclair, les mots fragiles d'abord."
       }
     },
     "preview": {

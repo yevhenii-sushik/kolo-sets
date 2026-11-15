@@ -4,7 +4,7 @@
 import { AchievementType } from "../../src/types";
 import { checkAndUnlockAchievements } from "../../src/utils/achievements";
 import { addDays, dayKey, daysBetween, hourIn, safeTimeZone } from "./time";
-import { achievementXp, capDaily, FIRST_SESSION_BONUS, isPerfectQuiz, ORBIT_BONUS, sessionXp } from "./xp";
+import { achievementXp, capDaily, FIRST_SESSION_BONUS, GAME_MIN_ANSWERS, isPerfectQuiz, ORBIT_BONUS, sessionXp } from "./xp";
 import { recordSession, type OrbitEvent } from "./orbit";
 import { prepare, settle, type ProgressionPatch, type ProgressionState, type ProgressionView } from "./progression";
 
@@ -127,6 +127,8 @@ export function checkPlausibility(s: SessionInput, info: CollectionsInfo): strin
   if (isGame) {
     // В играх слова повторяются по кругу — ограничиваем скоростью: не больше двух ответов в секунду
     if (s.cards > s.durationSec * 2) return "too-fast";
+    // Раунд из пары ответов — не тренировка: клиент такой не отправляет, старые копии и подделки отсекаем здесь
+    if (s.cards < GAME_MIN_ANSWERS) return "too-few";
   } else {
     // Тест может спросить одно слово дважды (разные типы заданий) — запас в два раза
     if (s.cards > info.cardsInSession * 2) return "more-cards-than-sets";
@@ -214,6 +216,8 @@ export function applySession(
       allKnow: s.kind === "perigee" && s.allKnow === true,
       quizQuestions: isQuiz ? s.cards : undefined,
       quizCorrect: isQuiz ? (s.correct ?? 0) : undefined,
+      blitzAnswers: s.kind === "speed" ? s.cards : undefined,
+      blitzCorrect: s.kind === "speed" ? (s.correct ?? 0) : undefined,
       isComeback,
       hour: hourIn(now, tz),
     },

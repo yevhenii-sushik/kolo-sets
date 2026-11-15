@@ -30,7 +30,7 @@
         {
           "id": "practise",
           "title": "Øv noen minutter",
-          "text": "Kjernen i Kolo er Perigee-økten: noen minutter om dagen, og Kolo bestemmer hvilke ord du skal repetere og i hvilket format. Flashkort, quiz og hurtigrunde gir deg de samme ordene når du vil velge selv. Fem minutter om dagen er nok til å komme videre."
+          "text": "Kjernen i Kolo er Perigee-økten: noen minutter om dagen, og Kolo bestemmer hvilke ord du skal repetere og i hvilket format. Flashkort, quiz og lynrunde gir deg de samme ordene når du vil velge selv. Fem minutter om dagen er nok til å komme videre."
         },
         {
           "id": "return",
@@ -63,10 +63,10 @@
       "tab": "Treningsmoduser",
       "meta": {
         "title": "Treningsmoduser i Kolo – Perigee-økt, flashkort, quiz og spill",
-        "description": "Perigee-økt, flashkort, quiz og hurtigrunde: fire treningsmoduser, hva hver av dem passer best til, og hvordan de former repetisjonsplanen din."
+        "description": "Perigee-økt, flashkort, quiz og lynrunde: fire treningsmoduser, hva hver av dem passer best til, og hvordan de former repetisjonsplanen din."
       },
       "title": "Fire treningsmoduser",
-      "lead": "Perigee-økten er hovedmodusen: den bestemmer selv hvilke ord du skal repetere og i hvilket format. Flashkort, quiz og hurtigrunde er der når du vil velge selv. Alle fire lærer Perigee hva du kan.",
+      "lead": "Perigee-økten er hovedmodusen: den bestemmer selv hvilke ord du skal repetere og i hvilket format. Flashkort, quiz og lynrunde er der når du vil velge selv. Alle fire lærer Perigee hva du kan.",
       "sections": [
         {
           "id": "session",
@@ -88,14 +88,14 @@
         },
         {
           "id": "speed",
-          "title": "Hurtigrunde",
+          "title": "Lynrunde",
           "tags": ["Fra 4 ord"],
-          "text": "60 sekunder på å gi så mange riktige svar som mulig, og en rekke uten feil ganger poengene. Raske avgjørelser trener opp umiddelbar gjenkjenning – akkurat det du trenger i en ekte samtale."
+          "text": "Ett minutt med lynrask gjenkjenning: ord som skal repeteres og svake ord kommer først, og et ord du bommer på, kommer tilbake noen spørsmål senere. Riktige svar på rad ganger opp poengene, og en feil koster tid, så gjetting lønner seg ikke. Hvert sett har sin egen rekord. Du kan bli spurt motsatt vei, begge veier eller på gehør – lynrask gjenkjenning er akkurat det du trenger i en ekte samtale. Nye ord er bare for leken her: Perigee introduserer dem."
         },
         {
           "id": "schedule",
           "title": "Slik former modusene planen din",
-          "text": "Hver modus forteller Perigee hvor godt du kan et ord – ett svar per ord per økt, det første. Flashkort bruker vurderingen din. I økten, quizen og spillet teller et ord skrevet helt riktig som «Kan», et riktig valg eller et svar med skrivefeil som «Husker», og en feil som «Glemte». En feil i quizen på et ord du ikke har lært ennå, teller ikke: Perigee introduserer det skikkelig. Repetisjon før tiden sender ikke ordet langt frem, og en feil henter det ærlig tilbake."
+          "text": "Hver modus forteller Perigee hvor godt du kan et ord – ett svar per ord per økt, det første. Flashkort bruker vurderingen din. I økten, quizen og spillet teller et ord skrevet helt riktig som «Kan», et riktig valg eller et svar med skrivefeil som «Husker», og en feil som «Glemte». En feil i quizen på et ord du ikke har lært ennå, teller ikke, og i lynrunden teller nye ord ikke i det hele tatt: Perigee introduserer dem skikkelig. Repetisjon før tiden sender ikke ordet langt frem, og en feil henter det ærlig tilbake."
         },
         {
           "id": "xp",
@@ -104,7 +104,7 @@
             { "title": "Perigee-økt", "text": "1 XP for hvert ord, pluss 1 til hvis du svarte riktig på første forsøk." },
             { "title": "Flashkort", "text": "1 XP for hvert kort." },
             { "title": "Quiz", "text": "1 XP per spørsmål og 1 til per riktig svar, pluss 10 for en quiz med 10+ spørsmål uten feil." },
-            { "title": "Hurtigrunde", "text": "1 XP per riktig svar, opptil 20 per runde." },
+            { "title": "Lynrunde", "text": "1 XP per riktig svar, opptil 20 per runde. En runde teller fra 10 svar." },
             { "title": "Bonuser", "text": "+5 for dagens første økt og +50 for å lukke ukens bane. XP fra øving er begrenset til 400 om dagen." }
           ]
         }

@@ -17,7 +17,7 @@
       "features": [
         {
           "title": "Perigee sessions",
-          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, 3–5 minutes. Perigee first shows you new words, then asks you to spot them among options, and checks familiar ones by how well you know them — with options, typing, a flashcard, a gap in the example sentence or by ear. A mistake comes back a few steps later until it sticks. Each of the four ratings has its own timing: “Don't know” shows the word again later in the same session, “Forgot” — tomorrow, “Remember” — in a few days, “Know” — the latest. The timing is shown under each button, and a rated card flies off to the side. Answers in the Quiz and the Speed round now count towards your schedule too — those modes carry the Perigee mark. Inside a set, the Learn button starts the same session with just that set's words. There are fewer modes now, each with its own job: Survival, Match pairs and the separate daily review are gone — the Perigee session replaces them."
+          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, 3–5 minutes. Perigee first shows you new words, then asks you to spot them among options, and checks familiar ones by how well you know them — with options, typing, a flashcard, a gap in the example sentence or by ear. A mistake comes back a few steps later until it sticks. Each of the four ratings has its own timing: “Don't know” shows the word again later in the same session, “Forgot” — tomorrow, “Remember” — in a few days, “Know” — the latest. The timing is shown under each button, and a rated card flies off to the side. Answers in the Quiz and Blitz now count towards your schedule too — those modes carry the Perigee mark. Inside a set, the Learn button starts the same session with just that set's words. There are fewer modes now, each with its own job: Survival, Match pairs and the separate daily review are gone — the Perigee session replaces them."
         },
         {
           "title": "Flashcards",
@@ -26,6 +26,10 @@
         {
           "title": "Quiz",
           "text": "The quiz is now an exam on your set: 20 questions (or 10, or the whole set), starting with the words you got wrong last time and the ones that are due. Answer by choice, by typing or a mix — in a mix, weak words come as a choice more often and strong ones as typing, and now and then you answer by ear. A correct answer moves on by itself, three in a row start a streak, and the sound climbs with it. After the quiz you can go straight into a mistake review until every word is right. Kolo remembers how many words of the set you've got right, compares your score with last time, notes a set record and celebrates when the whole set is passed. A mistake on a word you haven't learned yet no longer upsets your schedule, and the bonus for a flawless quiz now starts at 10 questions. Each question sits on a card, like in flashcards, with the word's strength and part of speech, and the answer sheet in the header shows how your result is shaping up. Don't know? Tap «I don't know» instead of guessing."
+        },
+        {
+          "title": "Blitz",
+          "text": "The speed round is now called Blitz, and its minute works for your memory: due and weak words come first, and a word you miss comes back a few questions later. A short 3-2-1 countdown starts the clock, and if you leave the app, the round pauses. After a mistake the right answer stays on screen a little longer while the clock keeps running, so guessing doesn't pay — and when you really don't know, there's “I don't know”. Every set keeps a record: the header shows when you beat it, and the summary compares your score with last time and lists the words you missed, with sound. You can be asked the other way round, both ways or by ear. New words are just for play here: they no longer land in your schedule, Perigee introduces them. A round counts from 10 answers, and the Speed demon achievement can now be earned in Blitz too."
         },
         {
           "title": "A course for every language",
@@ -57,7 +61,7 @@
         },
         {
           "title": "Sounds for practice and rewards",
-          "text": "Answers, flashcards and games now have their own sounds: soft notes for right and wrong answers, a rustle when a card flips, a ticking clock in the last seconds of a Speed round. New levels, closed orbits and capsules each get a fanfare of their own, and every rarity sounds different. You can turn sounds off in More → Settings."
+          "text": "Answers, flashcards and games now have their own sounds: soft notes for right and wrong answers, a rustle when a card flips, a ticking clock in the last seconds of a Blitz round. New levels, closed orbits and capsules each get a fanfare of their own, and every rarity sounds different. You can turn sounds off in More → Settings."
         }
       ],
       "fixes": [
@@ -81,7 +85,8 @@
         "Words you add to a set now show up straight away on the home screen, in Words and in First steps, without reloading the app. A set’s page opens instantly too.",
         "Search has moved from the header to the Words tab: type a word or translation at the top and you'll see which set it's in. Tap a result and the set opens right on that card. Letters like é or ü can be typed without the marks. On a computer, ⌘K or Ctrl+K takes you there from any tab.",
         "If two words share a translation, the second one no longer shows up among the answer options, where a right answer used to count as a mistake. Type a synonym in the quiz, and Kolo will recognise it and ask for the other word.",
-        "Flashcards and the Perigee session show the same answer sheet in the header as the quiz: a cell per word, coloured by your answer. And a long set name no longer pushes the header buttons off the screen."
+        "Flashcards and the Perigee session show the same answer sheet in the header as the quiz: a cell per word, coloured by your answer. And a long set name no longer pushes the header buttons off the screen.",
+        "“Play again” right after a round no longer shows answer options that don't match the word."
       ]
     },
     {

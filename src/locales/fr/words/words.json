@@ -11,8 +11,8 @@
       "quizDesc": "Teste-toi : un score et tes erreurs à revoir",
       "quizNeedsMore": "Il faut 4 cartes ou plus",
       "games": "Jeux",
-      "speed": "Contre la montre",
-      "speedDesc": "60 secondes, multiplicateur de série",
+      "speed": "Blitz",
+      "speedDesc": "Une minute de reconnaissance éclair, les mots fragiles d'abord",
       "needMore": "Il faut au moins 4 mots"
     }
   },
@@ -187,15 +187,12 @@
   },
   "session": {
     "showAnswer": "Afficher la réponse",
-    "translate": "Traduis",
     "score": "Score",
-    "seconds": "{n} s",
     "correct": "Bonnes réponses",
     "answers": "Réponses",
     "bestStreak": "Meilleure série",
     "exit": "Quitter",
     "again": "Rejouer",
-    "timeUp": "Temps écoulé !",
     "time": "Temps",
     "mistakes": "Erreurs",
     "mistakesCount": {
@@ -223,6 +220,61 @@
       "title": "Impossible de charger les mots",
       "text": "Vérifie ta connexion internet et réessaie.",
       "retry": "Réessayer"
+    }
+  },
+  "blitz": {
+    "title": "Blitz",
+    "ready": {
+      "label": "60 secondes",
+      "text": "Reconnais les mots le plus vite possible. Les bonnes réponses d'affilée multiplient tes points, et une erreur te coûte du temps.",
+      "deck": {
+        "one": "{n} mot dans cette manche : d'abord ceux à réviser et les plus fragiles",
+        "other": "{n} mots dans cette manche : d'abord ceux à réviser et les plus fragiles"
+      },
+      "newOnly": "Ici, les nouveaux mots servent seulement au jeu : ils n'entrent pas dans ton planning, Perigee te les présentera comme il faut.",
+      "record": "Record du set : {n}",
+      "last": "la dernière fois : {n}",
+      "start": "C'est parti"
+    },
+    "countdown": "Prépare-toi",
+    "paused": "Pause",
+    "pausedText": "La manche t'attend. Le chrono repart après un court compte à rebours.",
+    "resume": "Continuer",
+    "streak": "×{m} · {n} d'affilée",
+    "recordShort": "record {n}",
+    "newRecord": "nouveau record !",
+    "leftSeconds": {
+      "one": "Encore {n} seconde",
+      "other": "Encore {n} secondes"
+    },
+    "leaveReward": "Joue la minute jusqu'au bout : à partir de {n} réponses, la manche compte — de l'XP et un jour pour l'orbite de la semaine.",
+    "settings": {
+      "title": "Réglages du Blitz",
+      "mode": "Comment demander",
+      "forward": "Mot → traduction",
+      "forwardHint": "Tu vois le mot, tu choisis le sens : reconnaissance immédiate",
+      "reverse": "Traduction → mot",
+      "reverseHint": "Plus difficile : trouver le mot dans la langue que tu apprends",
+      "mixed": "Dans les deux sens",
+      "mixedHint": "Change d'une question à l'autre",
+      "listen": "À l'oreille",
+      "listenHint": "Tu entends le mot, tu choisis le sens, comme dans une vraie conversation",
+      "listenOff": "Nécessite une voix pour cette langue sur ton appareil et le son activé",
+      "recordNote": "Chaque façon a son propre record du set."
+    },
+    "result": {
+      "record": "Nouveau record !",
+      "great": "Superbe manche !",
+      "good": "Bonne manche",
+      "slow": "La précision d'abord",
+      "slowNote": "Les erreurs coûtent du temps : mieux vaut réfléchir une seconde que deviner.",
+      "uncounted": "Manche non comptée",
+      "uncountedNote": "Une manche compte à partir de {n} réponses. Cette fois : {k}.",
+      "accuracy": "Précision : {pct} %",
+      "previousRecord": "Ancien record : {n}",
+      "best": "Record du set : {n}",
+      "last": "La dernière fois : {n}",
+      "mistakes": "Tes erreurs"
     }
   },
   "pos": {

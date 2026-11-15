@@ -217,7 +217,7 @@
     },
     "speed_demon": {
       "name": "Lynrask",
-      "description": "Svar på spørsmålene i en quiz på under 5 sekunder hver, med minst 80 % riktige"
+      "description": "Svar på spørsmålene i en quiz på under 5 sekunder hver, eller gi 30 svar i én lynrunde – med minst 80 % riktige"
     },
     "all_know": {
       "name": "Kan alt!",

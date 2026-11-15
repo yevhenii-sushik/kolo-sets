@@ -14,7 +14,7 @@
     },
     "speed_demon": {
       "name": "Relâmpago",
-      "description": "Responda às perguntas de um quiz em menos de 5 segundos cada, com pelo menos 80% de acertos"
+      "description": "Responda às perguntas de um quiz em menos de 5 segundos cada ou dê 30 respostas numa rodada relâmpago, com pelo menos 80% de acertos"
     }
   }
 }

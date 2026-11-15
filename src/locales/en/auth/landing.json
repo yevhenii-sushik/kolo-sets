@@ -77,7 +77,7 @@
   },
   "modes": {
     "title": "One smart session, three ways to practise",
-    "text": "Perigee picks the right format for every word. Prefer to choose yourself? Flashcards, a quiz or a speed round.",
+    "text": "Perigee picks the right format for every word. Prefer to choose yourself? Flashcards, a quiz or Blitz.",
     "items": {
       "perigee": {
         "name": "Perigee session",
@@ -92,8 +92,8 @@
         "text": "Pick the answer or type the word — and see what you really know."
       },
       "speed": {
-        "name": "Speed round",
-        "text": "As many answers as you can in 60 seconds."
+        "name": "Blitz",
+        "text": "A minute of quick recognition, weak words first."
       }
     },
     "preview": {

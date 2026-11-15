@@ -14,7 +14,7 @@
     },
     "speed_demon": {
       "name": "Éclair",
-      "description": "Réponds aux questions d'un quiz en moins de 5 secondes chacune, avec au moins 80 % de bonnes réponses"
+      "description": "Réponds aux questions d'un quiz en moins de 5 secondes chacune ou donne 30 réponses en une manche de Blitz, avec au moins 80 % de bonnes réponses"
     }
   }
 }

@@ -11,8 +11,8 @@
       "quizDesc": "Ponte a prueba: puntuación y repaso de errores",
       "quizNeedsMore": "Necesitas 4+ tarjetas",
       "games": "Juegos",
-      "speed": "Contrarreloj",
-      "speedDesc": "60 segundos, multiplicador por racha",
+      "speed": "Ronda relámpago",
+      "speedDesc": "Un minuto de reconocimiento rápido, primero las palabras débiles",
       "needMore": "Necesitas al menos 4 palabras"
     }
   },
@@ -187,15 +187,12 @@
   },
   "session": {
     "showAnswer": "Mostrar respuesta",
-    "translate": "Traduce",
     "score": "Puntos",
-    "seconds": "{n} s",
     "correct": "Correctas",
     "answers": "Respuestas",
     "bestStreak": "Mejor racha",
     "exit": "Salir",
     "again": "Jugar otra vez",
-    "timeUp": "¡Se acabó el tiempo!",
     "time": "Tiempo",
     "mistakes": "Errores",
     "mistakesCount": {
@@ -223,6 +220,61 @@
       "title": "No se pudieron cargar las palabras",
       "text": "Comprueba tu conexión a internet e inténtalo de nuevo.",
       "retry": "Reintentar"
+    }
+  },
+  "blitz": {
+    "title": "Ronda relámpago",
+    "ready": {
+      "label": "60 segundos",
+      "text": "Reconoce las palabras lo más rápido que puedas. Las respuestas correctas seguidas multiplican tus puntos, y un error te cuesta tiempo.",
+      "deck": {
+        "one": "{n} palabra en esta ronda: primero las pendientes y las débiles",
+        "other": "{n} palabras en esta ronda: primero las pendientes y las débiles"
+      },
+      "newOnly": "Aquí las palabras nuevas son solo para jugar: no entran en tu plan, Perigee te las presentará como es debido.",
+      "record": "Récord del set: {n}",
+      "last": "la última vez: {n}",
+      "start": "Empezar"
+    },
+    "countdown": "Prepárate",
+    "paused": "En pausa",
+    "pausedText": "La ronda te espera. El reloj vuelve a correr tras una breve cuenta atrás.",
+    "resume": "Continuar",
+    "streak": "×{m} · {n} seguidas",
+    "recordShort": "récord {n}",
+    "newRecord": "¡nuevo récord!",
+    "leftSeconds": {
+      "one": "Queda {n} segundo",
+      "other": "Quedan {n} segundos"
+    },
+    "leaveReward": "Juega el minuto entero: con {n} respuestas o más la ronda cuenta — XP y un día para la órbita de la semana.",
+    "settings": {
+      "title": "Ajustes de la ronda relámpago",
+      "mode": "Cómo preguntar",
+      "forward": "Palabra → traducción",
+      "forwardHint": "Ves la palabra y eliges su significado: reconocimiento al instante",
+      "reverse": "Traducción → palabra",
+      "reverseHint": "Más difícil: encontrar la palabra en el idioma que aprendes",
+      "mixed": "En ambos sentidos",
+      "mixedHint": "Cambia de una pregunta a otra",
+      "listen": "De oído",
+      "listenHint": "Oyes la palabra y eliges su significado, como en una conversación real",
+      "listenOff": "Necesita una voz para este idioma en tu dispositivo y el sonido activado",
+      "recordNote": "Cada forma tiene su propio récord del set."
+    },
+    "result": {
+      "record": "¡Nuevo récord!",
+      "great": "¡Gran ronda!",
+      "good": "Buena ronda",
+      "slow": "Primero, la precisión",
+      "slowNote": "Los errores cuestan tiempo: mejor pensar un segundo que adivinar.",
+      "uncounted": "La ronda no cuenta",
+      "uncountedNote": "Una ronda cuenta a partir de {n} respuestas. Esta vez: {k}.",
+      "accuracy": "Precisión: {pct} %",
+      "previousRecord": "Récord anterior: {n}",
+      "best": "Récord del set: {n}",
+      "last": "La última vez: {n}",
+      "mistakes": "Tus errores"
     }
   },
   "pos": {

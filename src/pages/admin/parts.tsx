@@ -52,7 +52,7 @@ export const KINDS: Record<string, string> = {
   flashcards: "Карточки",
   review: "Повторение",
   quiz: "Тест",
-  speed: "На скорость",
+  speed: "Блиц",
   survival: "Выживание",
   match: "Пары",
   perigee: "Perigee",

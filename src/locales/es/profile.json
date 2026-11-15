@@ -14,7 +14,7 @@
     },
     "speed_demon": {
       "name": "Rayo",
-      "description": "Responde las preguntas de un test en menos de 5 segundos cada una, con al menos un 80 % de aciertos"
+      "description": "Responde las preguntas de un test en menos de 5 segundos cada una o da 30 respuestas en una ronda relámpago, con al menos un 80 % de aciertos"
     }
   }
 }

@@ -46,6 +46,9 @@ export const ALL_ACHIEVEMENTS: Achievement[] = [
   { id: AchievementType.COMEBACK, icon: '🔄' },
 ];
 
+// «Скоростной демон» в Блице: столько ответов за минутный раунд (в среднем быстрее 2 с на ответ)
+export const BLITZ_DEMON_ANSWERS = 30;
+
 // Какие достижения открылись. «За тренировку» (сова, марафон, без ошибок…) проверяются,
 // только если передан session — иначе создание набора ночью открыло бы «Сову».
 export const checkAndUnlockAchievements = (
@@ -130,6 +133,10 @@ export const checkAndUnlockAchievements = (
       const secPerQuestion = extras.duration / extras.quizQuestions;
       const accuracy = (extras.quizCorrect ?? 0) / extras.quizQuestions;
       check(AchievementType.SPEED_DEMON, secPerQuestion < 5 && accuracy >= 0.8);
+    }
+    // В Блице время у всех одно — минута, поэтому мерило другое: 30 ответов за раунд, и тоже от 80% верно
+    if (extras?.blitzAnswers !== undefined && extras.blitzAnswers >= BLITZ_DEMON_ANSWERS) {
+      check(AchievementType.SPEED_DEMON, (extras.blitzCorrect ?? 0) / extras.blitzAnswers >= 0.8);
     }
 
     if (extras?.isComeback) {

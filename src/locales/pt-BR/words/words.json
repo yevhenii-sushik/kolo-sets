@@ -11,8 +11,8 @@
       "quizDesc": "Teste-se: pontuação e revisão dos erros",
       "quizNeedsMore": "Precisa de 4+ cards",
       "games": "Jogos",
-      "speed": "Contra o relógio",
-      "speedDesc": "60 segundos, multiplicador por sequência",
+      "speed": "Rodada relâmpago",
+      "speedDesc": "Um minuto de reconhecimento rápido, palavras fracas primeiro",
       "needMore": "Precisa de pelo menos 4 palavras"
     }
   },
@@ -187,15 +187,12 @@
   },
   "session": {
     "showAnswer": "Mostrar resposta",
-    "translate": "Traduza",
     "score": "Pontos",
-    "seconds": "{n} s",
     "correct": "Acertos",
     "answers": "Respostas",
     "bestStreak": "Melhor sequência",
     "exit": "Sair",
     "again": "Jogar de novo",
-    "timeUp": "O tempo acabou!",
     "time": "Tempo",
     "mistakes": "Erros",
     "mistakesCount": {
@@ -223,6 +220,61 @@
       "title": "Não foi possível carregar as palavras",
       "text": "Verifique sua conexão com a internet e tente de novo.",
       "retry": "Tentar de novo"
+    }
+  },
+  "blitz": {
+    "title": "Rodada relâmpago",
+    "ready": {
+      "label": "60 segundos",
+      "text": "Reconheça as palavras o mais rápido que puder. Respostas certas seguidas multiplicam seus pontos, e um erro custa tempo.",
+      "deck": {
+        "one": "{n} palavra nesta rodada: primeiro as pendentes e as fracas",
+        "other": "{n} palavras nesta rodada: primeiro as pendentes e as fracas"
+      },
+      "newOnly": "Aqui as palavras novas são só para jogar: elas não entram no seu plano, o Perigee vai apresentá-las direito.",
+      "record": "Recorde do set: {n}",
+      "last": "da última vez: {n}",
+      "start": "Começar"
+    },
+    "countdown": "Prepare-se",
+    "paused": "Pausado",
+    "pausedText": "A rodada está esperando por você. O relógio volta a correr depois de uma contagem curta.",
+    "resume": "Continuar",
+    "streak": "×{m} · {n} seguidas",
+    "recordShort": "recorde {n}",
+    "newRecord": "novo recorde!",
+    "leftSeconds": {
+      "one": "Falta {n} segundo",
+      "other": "Faltam {n} segundos"
+    },
+    "leaveReward": "Jogue o minuto até o fim: com {n} respostas ou mais a rodada conta — XP e um dia para a órbita da semana.",
+    "settings": {
+      "title": "Ajustes da rodada relâmpago",
+      "mode": "Como perguntar",
+      "forward": "Palavra → tradução",
+      "forwardHint": "Veja a palavra e escolha o significado: reconhecimento instantâneo",
+      "reverse": "Tradução → palavra",
+      "reverseHint": "Mais difícil: encontrar a palavra no idioma que você aprende",
+      "mixed": "Nos dois sentidos",
+      "mixedHint": "Muda de uma pergunta para outra",
+      "listen": "De ouvido",
+      "listenHint": "Ouça a palavra e escolha o significado, como numa conversa de verdade",
+      "listenOff": "Precisa de uma voz para este idioma no seu dispositivo e do som ativado",
+      "recordNote": "Cada forma tem seu próprio recorde do set."
+    },
+    "result": {
+      "record": "Novo recorde!",
+      "great": "Ótima rodada!",
+      "good": "Boa rodada",
+      "slow": "Precisão primeiro",
+      "slowNote": "Erros custam tempo: melhor pensar um segundo do que chutar.",
+      "uncounted": "A rodada não contou",
+      "uncountedNote": "Uma rodada conta a partir de {n} respostas. Desta vez: {k}.",
+      "accuracy": "Precisão: {pct}%",
+      "previousRecord": "Recorde anterior: {n}",
+      "best": "Recorde do set: {n}",
+      "last": "Da última vez: {n}",
+      "mistakes": "Seus erros"
     }
   },
   "pos": {

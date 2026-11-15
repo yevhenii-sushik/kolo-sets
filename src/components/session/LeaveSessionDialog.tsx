@@ -12,12 +12,16 @@ export default function LeaveSessionDialog({
   open,
   done,
   total,
+  left: leftText,
+  reward,
   onStay,
   onLeave,
 }: {
   open: boolean;
-  done: number; // слов уже пройдено
+  done: number; // слов уже пройдено (в Блице — секунд)
   total: number;
+  left?: string; // своя строка «осталось…» — у Блица секунды, а не слова
+  reward?: string; // что даст конец, если у режима своё условие (Блиц — от 10 ответов)
   onStay: () => void;
   onLeave: () => void;
 }) {
@@ -51,9 +55,9 @@ export default function LeaveSessionDialog({
           <div className="h-2.5 overflow-hidden rounded-full bg-track">
             <div className="h-full rounded-full bg-accent" style={{ width: `${total > 0 ? Math.round((done / total) * 100) : 0}%` }} />
           </div>
-          <p className="text-sm font-semibold text-fg">{plural(getLanguageInfo(language).htmlLang, left, l.left)}</p>
+          <p className="text-sm font-semibold text-fg">{leftText ?? plural(getLanguageInfo(language).htmlLang, left, l.left)}</p>
         </div>
-        <p className="text-sm text-muted">{l.reward}</p>
+        <p className="text-sm text-muted">{reward ?? l.reward}</p>
         <p className="text-xs text-faint">{l.loss}</p>
       </div>
     </Modal>

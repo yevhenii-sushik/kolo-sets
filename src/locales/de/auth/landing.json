@@ -77,7 +77,7 @@
   },
   "modes": {
     "title": "Eine smarte Session und drei Arten zu üben",
-    "text": "Perigee wählt für jedes Wort das passende Format. Lieber selbst entscheiden? Karteikarten, Quiz oder Gegen die Uhr.",
+    "text": "Perigee wählt für jedes Wort das passende Format. Lieber selbst entscheiden? Karteikarten, Quiz oder Blitzrunde.",
     "items": {
       "perigee": {
         "name": "Perigee-Session",
@@ -92,8 +92,8 @@
         "text": "Wähl die Antwort oder tipp das Wort – und sieh, was du wirklich kannst."
       },
       "speed": {
-        "name": "Gegen die Uhr",
-        "text": "So viele Antworten wie möglich in 60 Sekunden."
+        "name": "Blitzrunde",
+        "text": "Eine Minute blitzschnelles Erkennen, schwache Wörter zuerst."
       }
     },
     "preview": {

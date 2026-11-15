@@ -70,6 +70,8 @@ export interface SessionExtras {
   allKnow?: boolean;       // сессия Perigee без единой ошибки — для ALL_KNOW (самооценка флэшкарт не в счёт)
   quizQuestions?: number;  // question count — for SPEED_DEMON check
   quizCorrect?: number;    // верных ответов — «Скоростной демон» только при точности от 80%
+  blitzAnswers?: number;   // ответов за раунд Блица — «Скоростной демон» и за игру
+  blitzCorrect?: number;
   isComeback?: boolean;    // returning after 7+ day gap — for COMEBACK
   hour?: number;           // час тренировки в часовом поясе пользователя — для NIGHT_OWL / EARLY_BIRD
 }

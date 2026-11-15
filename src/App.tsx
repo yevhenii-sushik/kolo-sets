@@ -40,7 +40,7 @@ const CollectionEditPage = lazy(pages.collectionEdit);
 const FlashcardsPage = lazy(pages.flashcards);
 const PerigeeSessionPage = lazy(pages.perigee);
 const QuizPage = lazy(pages.quiz);
-const SpeedRoundPage = lazy(pages.speed);
+const BlitzPage = lazy(pages.speed);
 const ProfilePage = lazy(pages.profile);
 const RewardsPage = lazy(pages.rewards);
 const OtherPage = lazy(pages.other);
@@ -184,7 +184,7 @@ function AppContent() {
       >
         <Route path="/collection/:id/flashcards" element={<FlashcardsPage />} />
         <Route path="/collection/:id/quiz" element={<QuizPage />} />
-        <Route path="/collection/:id/speed" element={<SpeedRoundPage />} />
+        <Route path="/collection/:id/speed" element={<BlitzPage />} />
         {/* Убранные режимы (docs/specs/perigee.md, «Режимы после чистки»): старые ссылки и ярлыки ведут в похожий */}
         <Route path="/collection/:id/survival" element={<SetRedirect to="speed" />} />
         <Route path="/collection/:id/match" element={<SetRedirect to="learn" />} />
