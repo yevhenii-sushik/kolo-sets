@@ -76,39 +76,30 @@
     ]
   },
   "modes": {
-    "title": "Sechs Wege, damit ein Wort hängen bleibt",
-    "text": "Dieselben Wörter in verschiedenen Formaten – wähl den Modus, der zu deiner Laune passt.",
+    "title": "Eine smarte Session und drei Arten zu üben",
+    "text": "Perigee wählt für jedes Wort das passende Format. Lieber selbst entscheiden? Karteikarten, Quiz oder Gegen die Uhr.",
     "items": {
+      "perigee": {
+        "name": "Perigee-Session",
+        "text": "Ein paar Minuten am Tag: Perigee entscheidet, welche Wörter du wiederholst und wie – mit Auswahl, Tippen, nach Gehör oder einer Lücke im Satz."
+      },
       "flashcards": {
         "name": "Karteikarten",
         "text": "Vorne das Wort, hinten die Übersetzung. Markiere, wie gut du es wusstest."
       },
-      "review": {
-        "name": "Wiederholen",
-        "text": "Nur die Wörter, die heute fällig sind."
-      },
       "quiz": {
         "name": "Quiz",
-        "text": "Wähle die richtige Antwort, tippe das Wort oder ordne Paare zu."
+        "text": "Wähl die Antwort oder tipp das Wort – und sieh, was du wirklich kannst."
       },
       "speed": {
         "name": "Gegen die Uhr",
         "text": "So viele Antworten wie möglich in 60 Sekunden."
-      },
-      "survival": {
-        "name": "Überleben",
-        "text": "Drei Leben. Jeder Fehler kostet eins."
-      },
-      "match": {
-        "name": "Paare finden",
-        "text": "Verbinde sechs Wörter mit ihren Übersetzungen – auf Zeit."
       }
     },
     "preview": {
       "question": "Wähle die Übersetzung",
       "due": "heute fällig",
-      "score": "Antworten",
-      "best": "Rekord"
+      "score": "Antworten"
     }
   },
   "method": {

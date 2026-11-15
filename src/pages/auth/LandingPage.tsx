@@ -18,14 +18,12 @@ import {
   ForgettingCurve,
   HeroPhone,
   HomeScreenPhone,
-  MatchPreview,
   OrbitPreview,
   QuizPreview,
   ReviewPreview,
   RewardsPreview,
   SetsPreview,
   SpeedPreview,
-  SurvivalPreview,
 } from "../../components/landing/LandingIllustrations";
 
 // Лендинг /welcome. Порядок блоков: что это → как работает → что внутри → почему не бросишь → где → вопросы.
@@ -349,11 +347,9 @@ export default function LandingPage() {
                   className="sm:col-span-2 lg:row-span-2"
                   previewClassName="flex-1 min-h-80"
                 />
-                <PreviewCard {...mode("review")} preview={<ReviewPreview />} className="sm:col-span-2" />
+                <PreviewCard {...mode("perigee")} preview={<ReviewPreview />} className="sm:col-span-2" />
                 <PreviewCard {...mode("quiz")} preview={<QuizPreview />} />
                 <PreviewCard {...mode("speed")} preview={<SpeedPreview />} />
-                <PreviewCard {...mode("survival")} preview={<SurvivalPreview />} className="lg:col-span-2" />
-                <PreviewCard {...mode("match")} preview={<MatchPreview />} className="lg:col-span-2" />
               </div>
               <div className="mt-10 flex justify-center">
                 <MoreLink to="/modes" label={l.learnMore} />

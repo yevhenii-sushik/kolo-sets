@@ -76,39 +76,30 @@
     ]
   },
   "modes": {
-    "title": "Seis maneras de fijar una palabra",
-    "text": "Las mismas palabras en distintos formatos: elige el modo según tu ánimo.",
+    "title": "Una sesión inteligente y tres formas de practicar",
+    "text": "Perigee elige el formato adecuado para cada palabra. ¿Prefieres elegir tú? Tarjetas, test o contrarreloj.",
     "items": {
+      "perigee": {
+        "name": "Sesión Perigee",
+        "text": "Unos minutos al día: Perigee decide qué palabras repasar y cómo: con opciones, escribiendo, de oído o con un hueco en una frase."
+      },
       "flashcards": {
         "name": "Tarjetas",
         "text": "La palabra en una cara y la traducción en la otra. Marca qué tal la recordabas."
       },
-      "review": {
-        "name": "Repaso del día",
-        "text": "Solo las palabras que toca repasar hoy."
-      },
       "quiz": {
         "name": "Test",
-        "text": "Elige la respuesta, escribe la palabra o une parejas."
+        "text": "Elige la respuesta o escribe la palabra, y descubre lo que sabes de verdad."
       },
       "speed": {
         "name": "Contrarreloj",
         "text": "Tantas respuestas como puedas en 60 segundos."
-      },
-      "survival": {
-        "name": "Supervivencia",
-        "text": "Tres vidas. Cada error cuesta una."
-      },
-      "match": {
-        "name": "Parejas",
-        "text": "Une seis palabras con sus traducciones contrarreloj."
       }
     },
     "preview": {
       "question": "Elige la traducción",
       "due": "para hoy",
-      "score": "respuestas",
-      "best": "récord"
+      "score": "respuestas"
     }
   },
   "method": {

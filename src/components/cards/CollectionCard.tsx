@@ -5,14 +5,11 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  Clock,
   EllipsisVertical,
   Folder,
   FolderPlus,
   Languages,
-  Link2,
   Pencil,
-  Shield,
   Star,
   Timer,
   Trash2,
@@ -21,11 +18,11 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Collection, Folder as FolderType } from "../../types";
-import { isDueCard } from "../../utils/storage";
+import { isDueCard, isNewCard } from "../../utils/storage";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
-import { Button, IconButton, Modal, cx } from "../../ui";
+import { Button, IconButton, Modal, PerigeeMark, cx } from "../../ui";
 import { useData } from "../../contexts/DataContext";
 import { courseName } from "../../courses/languages";
 import CourseFlag from "../courses/CourseFlag";
@@ -75,6 +72,8 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
   const isEmpty = total === 0;
   const tooFewQuiz = total < 4;
   const dueToday = collection.cards.filter(isDueCard).length;
+  // Сессии Perigee по набору есть что предложить: слова на сегодня или новые
+  const canLearn = dueToday > 0 || collection.cards.some(isNewCard);
 
   const start = (path: string) => {
     setShowModeModal(false);
@@ -275,6 +274,19 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
       <Modal open={showModeModal} onClose={() => setShowModeModal(false)} title={collection.name} size="sm">
         <p className="-mt-2 mb-4 text-sm text-muted">{m.chooseMode}</p>
         <div className="grid gap-2">
+          {/* Четыре режима, у каждого своя задача (docs/specs/perigee.md, «Режимы после чистки»):
+              учить по расписанию, прогнать весь набор, проверить себя, поиграть */}
+          <ModeButton
+            icon={<PerigeeMark size={18} tone="mono" />}
+            label={dueToday > 0 ? `${m.learn} · ${dueToday}` : m.learn}
+            desc={canLearn ? m.learnDesc : m.learnDone}
+            disabled={!canLearn}
+            onClick={() => {
+              setShowModeModal(false);
+              navigate(`/learn?set=${collection.id}`);
+            }}
+            perigee
+          />
           <ModeButton icon={<Zap size={18} />} label={m.flashcards} desc={m.flashcardsDesc} onClick={() => start("flashcards")} perigee />
           <ModeButton
             icon={<BookOpen size={18} />}
@@ -282,14 +294,6 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
             desc={tooFewQuiz ? m.quizNeedsMore : m.quizDesc}
             disabled={tooFewQuiz}
             onClick={() => start("quiz")}
-            perigee
-          />
-          <ModeButton
-            icon={<Clock size={18} />}
-            label={dueToday > 0 ? `${m.studyDue} · ${dueToday}` : m.studyDue}
-            desc={dueToday === 0 ? m.noDue : m.studyDueDesc}
-            disabled={dueToday === 0}
-            onClick={() => start("flashcards?due=1")}
             perigee
           />
 
@@ -301,21 +305,6 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
             disabled={tooFewQuiz}
             onClick={() => start("speed")}
             perigee
-          />
-          <ModeButton
-            icon={<Shield size={18} />}
-            label={m.survival}
-            desc={tooFewQuiz ? m.needMore : m.survivalDesc}
-            disabled={tooFewQuiz}
-            onClick={() => start("survival")}
-            perigee
-          />
-          <ModeButton
-            icon={<Link2 size={18} />}
-            label={m.match}
-            desc={tooFewQuiz ? m.needMore : m.matchDesc}
-            disabled={tooFewQuiz}
-            onClick={() => start("match")}
           />
         </div>
         {/* Что значит знак у режимов — одна строка внизу */}

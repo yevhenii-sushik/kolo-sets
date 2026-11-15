@@ -25,7 +25,7 @@ const due = (overdueDays: number, repetitions = 2) =>
 const set = (cards: Card[], id = "s1"): Collection => ({ id, name: id, language: "nb-NO", cards, createdAt: daysAgo(40) });
 const plan = (c: Card, isNew: boolean, col = "s1"): PlanCard => ({ key: `${col}/${c.id}`, card: c, collectionId: col, isNew });
 
-const { KNOW, REMEMBER, FORGOT } = KnowledgeLevel;
+const { REMEMBER, FORGOT } = KnowledgeLevel;
 
 describe("pickCards", () => {
   it("сначала самые просроченные, потом новые — не больше лимита за сессию", () => {
@@ -49,6 +49,18 @@ describe("pickCards", () => {
     const cards = [...learnedToday, card(), card()];
     expect(pickCards([set(cards)], now).filter((p) => p.isNew)).toHaveLength(0);
     expect(pickCards([set(cards)], now, true).filter((p) => p.isNew)).toHaveLength(2);
+  });
+});
+
+describe("pickCards по одному набору", () => {
+  it("слова только из набора, а дневной лимит — общий для курса", () => {
+    const learnedToday = Array.from({ length: DAILY_NEW - 2 }, () => updateSRSData(card(), REMEMBER, now));
+    const other = set([...learnedToday, due(3)], "other");
+    const mine = set([due(1), card(), card(), card()], "mine");
+    const picked = pickCards([other, mine], now, false, "mine");
+    expect(picked.every((p) => p.collectionId === "mine")).toBe(true);
+    expect(picked.filter((p) => !p.isNew)).toHaveLength(1);
+    expect(picked.filter((p) => p.isNew)).toHaveLength(2); // осталось 2 из дневного лимита
   });
 });
 
@@ -97,27 +109,37 @@ describe("answer", () => {
     expect(retry.effect).toBeUndefined(); // повтор не оценивается
   });
 
-  it("новое слово оценивается после последнего шага: без ошибок — «Знаю»", () => {
+  it("новое слово оценивается после последнего шага: без ошибок — «Помню»", () => {
     let s = startSession([plan(card(), true)]);
     expect(answer(s, null).effect).toBeUndefined();
     s = answer(s, null).state;
     const fwd = answer(s, { kind: "choice", correct: true });
     expect(fwd.effect).toBeUndefined();
     const rev = answer(fwd.state, { kind: "choice", correct: true });
-    expect(rev.effect?.level).toBe(KNOW);
+    expect(rev.effect?.level).toBe(REMEMBER);
     expect(isFinished(rev.state)).toBe(true);
     expect(summarize(rev.state)).toEqual({ cards: 1, reviewed: 0, learned: 1, correctFirst: 1 });
   });
 
-  it("новое слово с ошибкой — «Помню» после закрепления", () => {
+  it("новое слово с ошибкой — «Забыл» после закрепления", () => {
     let s = startSession([plan(card(), true)]);
     s = answer(s, null).state;
     const wrong = answer(s, { kind: "choice", correct: false });
     expect(wrong.effect).toBeUndefined(); // впереди ещё обратный выбор и повтор
     s = answer(wrong.state, { kind: "choice", correct: true }).state;
     const last = answer(s, { kind: "choice", correct: true });
-    expect(last.effect?.level).toBe(REMEMBER);
+    expect(last.effect?.level).toBe(FORGOT);
     expect(summarize(last.state).correctFirst).toBe(0);
+  });
+
+  it("«Не знаю» во флэшкарте возвращает слово в сессии, «Забыл» — нет", () => {
+    const flash = () => startSession([plan(due(1, 3), false)], () => 0.9); // ввод недоступен → флэшкарта
+    const lost = answer(flash(), { kind: "self", level: KnowledgeLevel.DONT_KNOW });
+    expect(lost.state.queue).toHaveLength(2);
+    const forgot = answer(flash(), { kind: "self", level: FORGOT });
+    expect(forgot.effect?.level).toBe(FORGOT);
+    expect(forgot.state.queue).toHaveLength(1);
+    expect(isFinished(forgot.state)).toBe(true);
   });
 
   it("не больше трёх повторов на слово", () => {

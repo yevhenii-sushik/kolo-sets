@@ -17,7 +17,7 @@
       "features": [
         {
           "title": "Perigee sessions",
-          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, 3–5 minutes. Perigee first shows you new words, then asks you to spot them among options, and checks familiar ones by how well you know them — with options, typing, a flashcard, a gap in the example sentence or by ear. A mistake comes back a few steps later until it sticks. Under the rating buttons you can see when a word will return, and a rated card flies off to the side. Answers in the Quiz, Speed round and Survival now count towards your schedule too — those modes carry the Perigee mark."
+          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, 3–5 minutes. Perigee first shows you new words, then asks you to spot them among options, and checks familiar ones by how well you know them — with options, typing, a flashcard, a gap in the example sentence or by ear. A mistake comes back a few steps later until it sticks. Each of the four ratings has its own timing: “Don't know” shows the word again later in the same session, “Forgot” — tomorrow, “Remember” — in a few days, “Know” — the latest. The timing is shown under each button, and a rated card flies off to the side. Answers in the Quiz and the Speed round now count towards your schedule too — those modes carry the Perigee mark. Inside a set, the Learn button starts the same session with just that set's words. There are fewer modes now, each with its own job: Survival, Match pairs and the separate daily review are gone — the Perigee session replaces them."
         },
         {
           "title": "A course for every language",
@@ -56,7 +56,9 @@
         "Flashcards remember every rating again: because of a bug, only the last card of a session was saved.",
         "You can practise without internet: sets you've opened before load offline, and your ratings are sent once you're back online.",
         "Rated a card by mistake? Undo it with the arrow button at the top or with Backspace.",
-        "The quiz forgives small things: a typo, missing special letters or a forgotten article count as correct, and the right spelling is shown next to your answer. If your answer was right but didn't count, tap «My answer was right». Your phone no longer autocorrects foreign words as you type.",
+        "The card no longer jumps when you reveal the answer.",
+        "The quiz forgives small things: a typo, missing special letters or a forgotten article count as correct, and the exact spot is highlighted right in the word: extra, missing and swapped letters. If your answer was right but didn't count, tap «My answer was right». Your phone no longer autocorrects foreign words as you type.",
+        "The quiz opens again: a bug closed it right after the set loaded.",
         "Practising a whole set before it's due no longer pushes words months ahead, and words due today are waiting from the morning on.",
         "Progress is now counted by the server, so it can't get lost or faked.",
         "A session done offline no longer disappears — it counts as soon as Kolo is back online.",

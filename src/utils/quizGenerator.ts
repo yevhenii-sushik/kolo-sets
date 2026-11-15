@@ -1,21 +1,17 @@
 import { Card, TaskType, QuizSettings } from '../types';
 
-export interface MatchingPair {
-  word: string;
-  translation: string;
-}
-
 export interface QuizQuestion {
   type: TaskType;
   question: string;
   options?: string[];
   correctAnswer: string;
   card: Card;
-  pairs?: MatchingPair[]; // only for MATCHING type
 }
 
-const MATCHING_BATCH_SIZE = 6;
-const MATCHING_MIN_SIZE = 4;
+const WITHOUT_EXPLANATION: Partial<Record<TaskType, TaskType>> = {
+  [TaskType.WORD_BY_EXPLANATION]: TaskType.WORD_BY_TRANSLATION,
+  [TaskType.WRITE_WORD_BY_EXPLANATION]: TaskType.WRITE_WORD_BY_TRANSLATION,
+};
 
 export const generateQuizQuestions = (
   cards: Card[],
@@ -23,34 +19,17 @@ export const generateQuizQuestions = (
 ): QuizQuestion[] => {
   const questions: QuizQuestion[] = [];
   const enabledTypes = settings.enabledTaskTypes;
-  const nonMatchingTypes = enabledTypes.filter(t => t !== TaskType.MATCHING);
-  const includeMatching = enabledTypes.includes(TaskType.MATCHING);
 
-  // Per-card questions for non-matching types
-  if (nonMatchingTypes.length > 0) {
-    cards.forEach(card => {
-      const randomType = nonMatchingTypes[Math.floor(Math.random() * nonMatchingTypes.length)];
-      const question = generateQuestion(card, randomType, cards);
-      if (question) questions.push(question);
-    });
-  }
-
-  // Matching rounds: batch cards into groups of MATCHING_BATCH_SIZE
-  if (includeMatching && cards.length >= MATCHING_MIN_SIZE) {
-    const shuffled = [...cards].sort(() => Math.random() - 0.5);
-    for (let i = 0; i < shuffled.length; i += MATCHING_BATCH_SIZE) {
-      const group = shuffled.slice(i, Math.min(i + MATCHING_BATCH_SIZE, shuffled.length));
-      if (group.length >= MATCHING_MIN_SIZE) {
-        questions.push({
-          type: TaskType.MATCHING,
-          question: '',
-          correctAnswer: 'matched',
-          card: group[0],
-          pairs: group.map(c => ({ word: c.word, translation: c.translation })),
-        });
-      }
-    }
-  }
+  cards.forEach(card => {
+    // Без объяснения вопрос «по объяснению» не задать — спрашиваем то же по переводу. Раньше такое
+    // слово молча выпадало из теста, а при одних «объяснительных» типах тест оставался пустым
+    const types = card.explanation
+      ? enabledTypes
+      : [...new Set(enabledTypes.map(t => WITHOUT_EXPLANATION[t] ?? t))];
+    const randomType = types[Math.floor(Math.random() * types.length)];
+    const question = generateQuestion(card, randomType, cards);
+    if (question) questions.push(question);
+  });
 
   return questions.sort(() => Math.random() - 0.5);
 };
@@ -152,7 +131,6 @@ export const getTaskTypeName = (type: TaskType | string): string => {
     case TaskType.WORD_BY_EXPLANATION: return 'Word by description';
     case TaskType.WRITE_WORD_BY_TRANSLATION: return 'Write word by translation';
     case TaskType.WRITE_WORD_BY_EXPLANATION: return 'Write word by description';
-    case TaskType.MATCHING: return 'Match the pairs';
     default: return String(type);
   }
 };

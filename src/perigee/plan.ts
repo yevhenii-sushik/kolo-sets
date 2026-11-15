@@ -63,10 +63,12 @@ export const newLeftToday = (collections: Collection[], now: Date) =>
  * Слова для сессии: сначала к повторению (самые просроченные), потом новые (старые первыми)
  * в пределах лимита. extra — «Ещё новые слова» в обход дневного лимита.
  */
-export function pickCards(collections: Collection[], now: Date, extra = false): PlanCard[] {
-  const all = collections.flatMap((col) =>
-    col.cards.map((card) => ({ key: `${col.id}/${card.id}`, card, collectionId: col.id })),
-  );
+// only — сессия по одному набору (кнопка «Учить» в наборе). Дневной лимит новых слов всё равно считаем
+// по всему курсу: иначе его легко обойти, проходя наборы по очереди
+export function pickCards(collections: Collection[], now: Date, extra = false, only?: string): PlanCard[] {
+  const all = collections
+    .filter((col) => !only || col.id === only)
+    .flatMap((col) => col.cards.map((card) => ({ key: `${col.id}/${card.id}`, card, collectionId: col.id })));
   const due = all
     .filter((c) => isDueAt(c.card, now))
     .sort((a, b) => time(a.card.srsData.nextReview) - time(b.card.srsData.nextReview))
@@ -166,9 +168,10 @@ const isRight = (o: AnswerOutcome) =>
   o.kind === "choice" ? o.correct : o.kind === "type" ? o.result !== "wrong" : o.level === KnowledgeLevel.REMEMBER || o.level === KnowledgeLevel.KNOW;
 
 /**
- * Ответ на текущий шаг (null — «Дальше» на знакомстве). Ошибка ставит повтор через три шага.
+ * Ответ на текущий шаг (null — «Дальше» на знакомстве). Ошибка ставит повтор через три шага —
+ * кроме «Забыл» во флэшкарте: ответ увиден и узнан, слово вернётся завтра (как во флэшкартах набора).
  * В расписание идёт одна оценка на слово: у слова к повторению — по первому ответу,
- * у нового — после его последнего шага («Знаю» без ошибок, иначе «Помню»).
+ * у нового — после его последнего шага («Помню» без ошибок, иначе «Забыл»: ещё один короткий шаг).
  */
 export function answer(s: SessionState, outcome: AnswerOutcome | null): { state: SessionState; effect?: SrsEffect } {
   const step = s.queue[s.pos];
@@ -183,7 +186,8 @@ export function answer(s: SessionState, outcome: AnswerOutcome | null): { state:
   if (!right) {
     progress.mistakes += 1;
     const used = retries[step.key] ?? 0;
-    if (used < MAX_RETRIES) {
+    const forgotSelf = outcome?.kind === "self" && outcome.level === KnowledgeLevel.FORGOT;
+    if (used < MAX_RETRIES && !forgotSelf) {
       // После ввода и флэшкарты — выбор полегче; после выбора — тот же выбор заново
       const retry: Step = {
         id: nextId++,
@@ -208,7 +212,7 @@ export function answer(s: SessionState, outcome: AnswerOutcome | null): { state:
   if (pc.isNew && !progress.done && !queue.slice(s.pos + 1).some((x) => x.key === step.key)) {
     progress.first = progress.mistakes === 0;
     progress.done = true;
-    effect = { ...target, level: progress.mistakes === 0 ? KnowledgeLevel.KNOW : KnowledgeLevel.REMEMBER };
+    effect = { ...target, level: progress.mistakes === 0 ? KnowledgeLevel.REMEMBER : KnowledgeLevel.FORGOT };
   }
 
   return {

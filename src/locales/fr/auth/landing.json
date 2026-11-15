@@ -76,39 +76,30 @@
     ]
   },
   "modes": {
-    "title": "Six façons de retenir un mot",
-    "text": "Les mêmes mots sous différentes formes — choisis le mode selon ton humeur.",
+    "title": "Une séance intelligente et trois façons de s’entraîner",
+    "text": "Perigee choisit le bon format pour chaque mot. Tu préfères choisir toi-même ? Cartes mémoire, quiz ou contre la montre.",
     "items": {
+      "perigee": {
+        "name": "Séance Perigee",
+        "text": "Quelques minutes par jour : Perigee décide quels mots réviser et comment — choix multiple, saisie, à l’oreille ou un trou dans une phrase."
+      },
       "flashcards": {
         "name": "Cartes mémoire",
         "text": "Le mot d'un côté, la traduction de l'autre. Indique si tu t'en souvenais bien."
       },
-      "review": {
-        "name": "Révision du jour",
-        "text": "Uniquement les mots à réviser aujourd'hui."
-      },
       "quiz": {
         "name": "Quiz",
-        "text": "Choisis la bonne réponse, écris le mot ou associe des paires."
+        "text": "Choisis la réponse ou écris le mot — et découvre ce que tu sais vraiment."
       },
       "speed": {
         "name": "Contre la montre",
         "text": "Un maximum de réponses en 60 secondes."
-      },
-      "survival": {
-        "name": "Survie",
-        "text": "Trois vies. Chaque erreur en coûte une."
-      },
-      "match": {
-        "name": "Paires",
-        "text": "Relie six mots à leurs traductions, contre la montre."
       }
     },
     "preview": {
       "question": "Choisis la traduction",
       "due": "aujourd'hui",
-      "score": "réponses",
-      "best": "record"
+      "score": "réponses"
     }
   },
   "method": {

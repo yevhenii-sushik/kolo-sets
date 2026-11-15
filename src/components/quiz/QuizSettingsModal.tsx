@@ -16,7 +16,6 @@ const ALL_TASK_TYPES = [
   TaskType.WORD_BY_EXPLANATION,
   TaskType.WRITE_WORD_BY_TRANSLATION,
   TaskType.WRITE_WORD_BY_EXPLANATION,
-  TaskType.MATCHING,
 ];
 
 // Типы заданий теста; хотя бы один должен остаться включённым

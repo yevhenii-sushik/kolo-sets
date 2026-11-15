@@ -76,39 +76,30 @@
     ]
   },
   "modes": {
-    "title": "Six ways to make a word stick",
-    "text": "The same words in different formats — pick the mode that suits your mood.",
+    "title": "One smart session, three ways to practise",
+    "text": "Perigee picks the right format for every word. Prefer to choose yourself? Flashcards, a quiz or a speed round.",
     "items": {
+      "perigee": {
+        "name": "Perigee session",
+        "text": "A few minutes a day: Perigee decides which words to review and how — options, typing, by ear or a gap in a sentence."
+      },
       "flashcards": {
         "name": "Flashcards",
         "text": "The word on one side, the translation on the other. Mark how well you knew it."
       },
-      "review": {
-        "name": "Daily review",
-        "text": "Only the words that are due today."
-      },
       "quiz": {
         "name": "Quiz",
-        "text": "Pick the right answer, type the word or match pairs."
+        "text": "Pick the answer or type the word — and see what you really know."
       },
       "speed": {
         "name": "Speed round",
         "text": "As many answers as you can in 60 seconds."
-      },
-      "survival": {
-        "name": "Survival",
-        "text": "Three lives. Every mistake costs one."
-      },
-      "match": {
-        "name": "Match pairs",
-        "text": "Connect six words with their translations against the clock."
       }
     },
     "preview": {
       "question": "Choose the translation",
       "due": "due today",
-      "score": "answers",
-      "best": "best"
+      "score": "answers"
     }
   },
   "method": {

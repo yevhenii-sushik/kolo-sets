@@ -7,7 +7,7 @@ import { useI18n } from "../../contexts/I18nContext";
 import { Button, Card, Input, cx } from "../../ui";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
 import { posLabel } from "../../data/partsOfSpeech";
-import MatchingExercise from "./MatchingExercise";
+import AnswerDiff from "../session/AnswerDiff";
 
 interface QuizQuestionProps {
   question: QuizQuestion;
@@ -43,20 +43,10 @@ export default function QuizQuestionComponent({ question, userAnswer, showFeedba
     return () => window.removeEventListener("keydown", handler);
   }, [showFeedback, onNext]);
 
-  if (question.type === TaskType.MATCHING) {
-    return (
-      <MatchingExercise
-        pairs={question.pairs!}
-        onComplete={() => {
-          onAnswer("matched");
-          onNext();
-        }}
-      />
-    );
-  }
-
   const isWriteType = question.type === TaskType.WRITE_WORD_BY_TRANSLATION || question.type === TaskType.WRITE_WORD_BY_EXPLANATION;
   const close = isCorrect && verdict?.result === "close" ? verdict.reason : null;
+  // Побуквенный разбор — для «почти» и небольшого промаха: видно, где именно опечатка
+  const diffTarget = isWriteType && verdict && verdict.result !== "exact" ? verdict.expected : undefined;
 
   const submitText = () => {
     if (!textInput.trim()) return;
@@ -128,15 +118,21 @@ export default function QuizQuestionComponent({ question, userAnswer, showFeedba
             <div className="grid gap-0.5">
               <p className="font-semibold">{close ? q.almost : isCorrect ? q.correct : q.incorrect}</p>
               {close && <p className="text-sm text-fg">{q.closeReasons[close]}</p>}
-              {(!isCorrect || close) && (
-                <p className="text-sm text-fg">
-                  <span className="text-muted">{q.correctAnswer}</span> <strong className="font-semibold">{question.correctAnswer}</strong>
-                </p>
-              )}
-              {!isCorrect && isWriteType && (
-                <p className="text-sm text-fg">
-                  <span className="text-muted">{q.yourAnswer}</span> {userAnswer}
-                </p>
+              {diffTarget && (!isCorrect || close) ? (
+                <AnswerDiff typed={userAnswer} expected={diffTarget} />
+              ) : (
+                <>
+                  {(!isCorrect || close) && (
+                    <p className="text-sm text-fg">
+                      <span className="text-muted">{q.correctAnswer}</span> <strong className="font-semibold">{question.correctAnswer}</strong>
+                    </p>
+                  )}
+                  {!isCorrect && isWriteType && (
+                    <p className="text-sm text-fg">
+                      <span className="text-muted">{q.yourAnswer}</span> {userAnswer}
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </div>

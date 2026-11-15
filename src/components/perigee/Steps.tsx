@@ -13,6 +13,7 @@ import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
 import CardStage from "../session/CardStage";
 import RatingBar from "../session/RatingBar";
+import AnswerDiff from "../session/AnswerDiff";
 
 // Шаги сессии Perigee (docs/specs/perigee.md): знакомство, выбор, ввод, флэшкарта наоборот.
 // Каждый шаг сам показывает разбор и зовёт onAnswer один раз — когда пользователь готов идти дальше.
@@ -281,6 +282,8 @@ export function TypeStep({
 
   const close = verdict?.result === "close" ? verdict.reason : null;
   const right = result !== null && result !== "wrong";
+  // Побуквенный разбор — для «почти» и небольшого промаха: видно, где именно опечатка
+  const diffTarget = verdict && verdict.result !== "exact" && text.trim() ? verdict.expected : undefined;
 
   return (
     <Shell>
@@ -324,10 +327,14 @@ export function TypeStep({
             <div className="grid gap-0.5">
               <p className="font-semibold">{close && !overruled ? q.almost : right ? q.correct : q.incorrect}</p>
               {close && !overruled && <p className="text-sm text-fg">{q.closeReasons[close]}</p>}
-              {verdict.result !== "exact" && (
-                <p className="text-sm text-fg">
-                  <span className="text-muted">{q.correctAnswer}</span> <strong className="font-semibold">{card.word}</strong>
-                </p>
+              {diffTarget ? (
+                <AnswerDiff typed={text} expected={diffTarget} />
+              ) : (
+                verdict.result !== "exact" && (
+                  <p className="text-sm text-fg">
+                    <span className="text-muted">{q.correctAnswer}</span> <strong className="font-semibold">{card.word}</strong>
+                  </p>
+                )
               )}
             </div>
           </div>
@@ -403,7 +410,7 @@ export function FlashStep({ card, voice, graded = true, onRate }: { card: CardDa
         onSwipe={(dir) => rate(dir === "right" ? KnowledgeLevel.KNOW : KnowledgeLevel.DONT_KNOW)}
       />
       {/* Интервалы на кнопках — только когда оценка пойдёт в расписание, а не на повторе после ошибки */}
-      <RatingBar isFlipped={flipped} onFlip={() => flip(true)} onRate={rate} previews={flipped && graded ? previewIntervals(card) : undefined} />
+      <RatingBar isFlipped={flipped} onFlip={() => flip(true)} onRate={rate} previews={flipped && graded ? { ...previewIntervals(card), [KnowledgeLevel.DONT_KNOW]: 0 } : undefined} />
     </>
   );
 }

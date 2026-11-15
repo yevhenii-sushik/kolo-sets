@@ -23,21 +23,17 @@
     "confirmDelete": "This collection and all its cards will be permanently deleted. This action cannot be undone.",
     "modal": {
       "chooseMode": "Choose mode",
+      "learn": "Learn",
+      "learnDesc": "Perigee session for this set: due words and new ones",
+      "learnDone": "All done for today — come back tomorrow",
       "flashcards": "Flashcards",
       "flashcardsDesc": "Flip and rate",
       "quiz": "Quiz",
       "quizDesc": "Test your knowledge",
       "quizNeedsMore": "Need 4+ cards",
-      "studyDue": "Study due cards",
-      "studyDueDesc": "Only cards due for review",
-      "noDue": "No cards due today",
       "games": "Games",
       "speed": "Speed round",
       "speedDesc": "60 seconds, streak multiplier",
-      "survival": "Survival",
-      "survivalDesc": "Three lives — how far can you go?",
-      "match": "Match pairs",
-      "matchDesc": "Connect words with their translations",
       "needMore": "Needs at least 4 words"
     },
     "words": {
@@ -110,7 +106,6 @@
     "showTranslation": "Show translation",
     "hideTranslation": "Hide translation",
     "keyboardHint": "Space to flip · 1–4 to rate · Backspace to undo",
-    "dueOnly": "Due cards",
     "hints": {
       "clickToFlip": "Tap the card to flip it",
       "rateKnowledge": "How well do you know this word?"
@@ -122,6 +117,7 @@
       "know": "Know"
     },
     "interval": {
+      "again": "again",
       "days": "{n} d",
       "months": "{n} mo",
       "years": "{n} y"
@@ -139,7 +135,7 @@
     },
     "coach": {
       "recall": "First try to recall the translation yourself — then show the answer. On your phone, just tap the card.",
-      "rate": "Rate honestly: after “Don't know” and “Forgot” the word comes back soon, after “Remember” and “Know” — in a few days. That's how Perigee builds your schedule."
+      "rate": "Rate honestly: “Don't know” brings the word back later in this session, “Forgot” — tomorrow, “Remember” — in a few days, and “Know” — the furthest. Each button shows when the word will return."
     },
     "speak": "Play pronunciation",
     "ttsBeta": "Beta",
@@ -152,7 +148,7 @@
     "closeReasons": {
       "article": "Counted — but mind the article.",
       "accents": "Counted — but check the special letters (like å, é, ü).",
-      "typo": "Counted — there's a small typo."
+      "typo": "Counted — but there's a typo. It's marked below."
     },
     "correctAnswer": "Correct answer:",
     "yourAnswer": "Your answer:",
@@ -161,12 +157,6 @@
     "next": "Next →",
     "check": "Check",
     "placeholder": "Type your answer...",
-    "matching": {
-      "title": "Match the pairs",
-      "hint": "Select a word, then its translation",
-      "complete": "Round complete!",
-      "progress": "matched"
-    },
     "settings": {
       "title": "Quiz settings",
       "subtitle": "Choose exercise types to include",
@@ -179,16 +169,14 @@
         "translation_by_word": "Translation by word",
         "word_by_explanation": "Word by description",
         "write_word_by_translation": "Write word by translation",
-        "write_word_by_explanation": "Write word by description",
-        "matching": "Match the pairs"
+        "write_word_by_explanation": "Write word by description"
       },
       "typeDescs": {
         "word_by_translation": "Choose the correct word from 4 options given its translation",
         "translation_by_word": "Choose the correct translation from 4 options given the word",
         "word_by_explanation": "Choose the correct word from 4 options given its description",
         "write_word_by_translation": "Type the word given its translation",
-        "write_word_by_explanation": "Type the word given its description",
-        "matching": "Match words with their translations in groups"
+        "write_word_by_explanation": "Type the word given its description"
       }
     },
     "stats": {
@@ -272,23 +260,16 @@
     "bestStreak": "Best streak",
     "exit": "Exit",
     "again": "Play again",
-    "newRound": "New round",
     "timeUp": "Time's up!",
-    "gameOver": "Out of lives",
-    "matchDone": "All pairs found",
     "time": "Time",
-    "pairs": "Pairs",
     "mistakes": "Mistakes",
-    "perfect": "No mistakes!",
     "mistakesCount": {
       "one": "{n} mistake",
       "other": "{n} mistakes"
     },
     "word": "Word",
     "translation": "Translation",
-    "lives": "Lives",
     "streak": "Streak",
-    "review": "Review",
     "rate": "How well do you know it?",
     "settings": "Settings",
     "loadError": {

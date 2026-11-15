@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Collection, KnowledgeLevel } from "../../types";
-import { getCollection, isDueCard } from "../../utils/storage";
+import { getCollection } from "../../utils/storage";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { Shuffle, Undo2 } from "lucide-react";
-import { Badge, IconButton } from "../../ui";
+import { IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import RatingBar from "../../components/session/RatingBar";
 import CardStage from "../../components/session/CardStage";
@@ -19,8 +19,6 @@ import ConfirmDialog from "../../components/ConfirmDialog";
 
 export default function FlashcardsPage() {
   const { id } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
-  const dueOnly = searchParams.get("due") === "1";
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
@@ -66,7 +64,8 @@ export default function FlashcardsPage() {
     }
     if (!loaded) { navigate("/"); return; }
 
-    const cards = dueOnly ? loaded.cards.filter(isDueCard) : loaded.cards;
+    // Слова на сегодня — в сессии Perigee по набору (/learn?set=…); здесь — весь набор
+    const cards = loaded.cards;
     if (cards.length === 0) { navigate(-1); return; }
 
     setCollection(loaded);
@@ -93,7 +92,6 @@ export default function FlashcardsPage() {
     <SessionShell
       perigee
       title={collection.name}
-      subtitle={dueOnly ? <Badge tone="accent">{t.words.flashcards.dueOnly}</Badge> : undefined}
       onClose={() => navigate(-1)}
       action={
         <>

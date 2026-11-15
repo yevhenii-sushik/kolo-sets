@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { answerVariants, checkAnswer } from "./answerCheck";
+import { answerVariants, checkAnswer, spellingDiff } from "./answerCheck";
 
 const result = (input: string, correct: string, others?: string[]) => {
   const v = checkAnswer(input, correct, others);
@@ -60,5 +60,50 @@ describe("checkAnswer", () => {
 describe("answerVariants", () => {
   it("целиком и по частям", () => {
     expect(answerVariants("bil, auto")).toEqual(["bil auto", "bil", "auto"]);
+  });
+});
+
+// Ответ пользователя: [не та буква], (лишняя), _ пропуск; правильное написание: [исправленные буквы]
+const diff = (input: string, expected: string) => {
+  const { typed, fixed } = spellingDiff(input, expected);
+  const show = (parts: typeof typed) =>
+    parts.map((p) => (p.mark === "same" ? p.text : p.mark === "extra" ? `(${p.text})` : p.mark === "missing" ? "_" : `[${p.text}]`)).join("");
+  return `${show(typed)} → ${show(fixed)}`;
+};
+
+describe("spellingDiff", () => {
+  it("пропущенная, лишняя и не та буква", () => {
+    expect(diff("kjøken", "kjøkken")).toBe("kjø_ken → kjø[k]ken");
+    expect(diff("huus", "hus")).toBe("h(u)us → hus"); // какая из двух «u» лишняя — неважно
+    expect(diff("bok", "bak")).toBe("b[o]k → b[a]k");
+  });
+
+  it("перестановка — одна ошибка из двух букв", () => {
+    expect(diff("vinude", "vindue")).toBe("vin[ud]e → vin[du]e");
+  });
+
+  it("диакритика подсвечивается, регистр — нет", () => {
+    expect(diff("smorbrod", "smørbrød")).toBe("sm[o]rbr[o]d → sm[ø]rbr[ø]d");
+    expect(diff("haus", "Haus")).toBe("haus → Haus");
+  });
+
+  it("артикль: пропущенный и лишний", () => {
+    expect(diff("bil", "en bil")).toBe("_bil → [en ]bil");
+    expect(diff("der hund", "Hund")).toBe("(der )hund → Hund");
+  });
+});
+
+describe("где ошибка: вариант для сравнения", () => {
+  it("«почти» — с вариантом, который совпал, в написании карточки", () => {
+    expect(checkAnswer("kjøken", "kjøkken")).toEqual({ result: "close", reason: "typo", expected: "kjøkken" });
+    expect(checkAnswer("haus", "das Haus")).toEqual({ result: "close", reason: "article", expected: "das Haus" });
+    expect(checkAnswer("sprnit", "run, sprint")).toEqual({ result: "close", reason: "typo", expected: "sprint" });
+  });
+
+  it("небольшой промах в неверном ответе тоже показываем; другое слово — нет", () => {
+    expect(checkAnswer("hsu", "hus")).toEqual({ result: "wrong", expected: "hus" });
+    expect(checkAnswer("ei bil", "en bil")).toEqual({ result: "wrong", expected: "en bil" });
+    expect(checkAnswer("katt", "hund")).toEqual({ result: "wrong", expected: undefined });
+    expect(checkAnswer("ja", "nei")).toEqual({ result: "wrong", expected: undefined });
   });
 });

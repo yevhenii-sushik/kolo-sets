@@ -12,6 +12,8 @@ export type Progression = ProgressionView;
 export type OrbitEventName = Progression["events"][number];
 
 // Тот же список, что SESSION_KINDS на сервере (server/core/session.ts)
+// review, survival и match убраны из приложения (docs/specs/perigee.md, «Режимы после чистки»), но такие
+// тренировки ещё могут ждать отправки в офлайн-очереди — сервер их принимает
 export type SessionKind = "flashcards" | "review" | "quiz" | "speed" | "survival" | "match" | "perigee";
 
 export interface SessionPayload {

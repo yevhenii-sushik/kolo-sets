@@ -23,21 +23,17 @@
     "confirmDelete": "Denne samlingen og alle kortene i den vil bli slettet permanent. Denne handlingen kan ikke angres.",
     "modal": {
       "chooseMode": "Velg modus",
+      "learn": "Lær",
+      "learnDesc": "Perigee-økt for dette settet: ord som skal repeteres og nye ord",
+      "learnDone": "Ferdig for i dag – kom tilbake i morgen",
       "flashcards": "Flashkort",
       "flashcardsDesc": "Vend og vurder",
       "quiz": "Quiz",
       "quizDesc": "Test kunnskapen din",
       "quizNeedsMore": "Trenger 4+ kort",
-      "studyDue": "Studer forfallne kort",
-      "studyDueDesc": "Bare kort som skal gjentas",
-      "noDue": "Ingen kort forfaller i dag",
       "games": "Spill",
       "speed": "Hurtigrunde",
       "speedDesc": "60 sekunder, multiplikator for rekker",
-      "survival": "Overlevelse",
-      "survivalDesc": "Tre liv – hvor langt kommer du?",
-      "match": "Finn par",
-      "matchDesc": "Koble ord med oversettelsene",
       "needMore": "Trenger minst 4 ord"
     },
     "words": {
@@ -110,7 +106,6 @@
     "showTranslation": "Vis oversettelse",
     "hideTranslation": "Skjul oversettelse",
     "keyboardHint": "Mellomrom for å snu · 1–4 for å vurdere · Backspace for å angre",
-    "dueOnly": "Forfallne kort",
     "hints": {
       "clickToFlip": "Trykk på kortet for å snu det",
       "rateKnowledge": "Hvor godt kjenner du dette ordet?"
@@ -122,6 +117,7 @@
       "know": "Kan"
     },
     "interval": {
+      "again": "igjen",
       "days": "{n} d",
       "months": "{n} mnd",
       "years": "{n} år"
@@ -139,7 +135,7 @@
     },
     "coach": {
       "recall": "Prøv først å huske oversettelsen selv – vis så svaret. På mobilen kan du bare trykke på kortet.",
-      "rate": "Vurder ærlig: etter «Vet ikke» og «Glemte» kommer ordet snart tilbake, etter «Husker» og «Kan» – om noen dager. Slik legger Perigee opp timeplanen din."
+      "rate": "Vurder ærlig: etter «Vet ikke» kommer ordet tilbake allerede i denne økten, etter «Glemte» – i morgen, etter «Husker» – om noen dager, og etter «Kan» – senest. Under hver knapp ser du når ordet kommer tilbake."
     },
     "speak": "Spill av uttale",
     "ttsBeta": "Beta",
@@ -152,7 +148,7 @@
     "closeReasons": {
       "article": "Godkjent – men pass på artikkelen.",
       "accents": "Godkjent – men sjekk spesialbokstavene (som å, é, ü).",
-      "typo": "Godkjent – det er en liten skrivefeil."
+      "typo": "Godkjent – men det er en skrivefeil, den er markert under."
     },
     "correctAnswer": "Riktig svar:",
     "yourAnswer": "Ditt svar:",
@@ -161,12 +157,6 @@
     "next": "Neste →",
     "check": "Sjekk",
     "placeholder": "Skriv svaret ditt...",
-    "matching": {
-      "title": "Match parene",
-      "hint": "Velg et ord, deretter oversettelsen",
-      "complete": "Runden er fullført!",
-      "progress": "matchet"
-    },
     "settings": {
       "title": "Quiz-innstillinger",
       "subtitle": "Velg oppgavetyper å inkludere",
@@ -179,16 +169,14 @@
         "translation_by_word": "Oversettelse etter ord",
         "word_by_explanation": "Ord etter beskrivelse",
         "write_word_by_translation": "Skriv ord etter oversettelse",
-        "write_word_by_explanation": "Skriv ord etter beskrivelse",
-        "matching": "Match parene"
+        "write_word_by_explanation": "Skriv ord etter beskrivelse"
       },
       "typeDescs": {
         "word_by_translation": "Velg riktig ord fra 4 alternativer gitt oversettelsen",
         "translation_by_word": "Velg riktig oversettelse fra 4 alternativer gitt ordet",
         "word_by_explanation": "Velg riktig ord fra 4 alternativer gitt beskrivelsen",
         "write_word_by_translation": "Skriv ordet gitt oversettelsen",
-        "write_word_by_explanation": "Skriv ordet gitt beskrivelsen",
-        "matching": "Match ord med oversettelsene i grupper"
+        "write_word_by_explanation": "Skriv ordet gitt beskrivelsen"
       }
     },
     "stats": {
@@ -272,23 +260,16 @@
     "bestStreak": "Beste rekke",
     "exit": "Avslutt",
     "again": "Spill igjen",
-    "newRound": "Ny runde",
     "timeUp": "Tiden er ute!",
-    "gameOver": "Tom for liv",
-    "matchDone": "Alle par funnet",
     "time": "Tid",
-    "pairs": "Par",
     "mistakes": "Feil",
-    "perfect": "Ingen feil!",
     "mistakesCount": {
       "one": "{n} feil",
       "other": "{n} feil"
     },
     "word": "Ord",
     "translation": "Oversettelse",
-    "lives": "Liv",
     "streak": "Rekke",
-    "review": "Repetisjon",
     "rate": "Hvor godt kan du ordet?",
     "settings": "Innstillinger",
     "loadError": {

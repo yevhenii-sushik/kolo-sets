@@ -16,7 +16,7 @@ const newCard = (): Card => ({
   srsData: { easinessFactor: 2.5, interval: 0, repetitions: 0, nextReview: at(1) },
 });
 
-const { KNOW, REMEMBER, DONT_KNOW } = KnowledgeLevel;
+const { KNOW, REMEMBER, FORGOT, DONT_KNOW } = KnowledgeLevel;
 
 describe("isDueAt", () => {
   it("новая карточка не ждёт повторения", () => {
@@ -24,7 +24,7 @@ describe("isDueAt", () => {
   });
 
   it("срок считается по дням: оценённое вечером ждёт уже с утра", () => {
-    const card = updateSRSData(newCard(), KNOW, at(1, 20)); // интервал 1 день → завтра в 20:00
+    const card = updateSRSData(newCard(), FORGOT, at(1, 20)); // 1 день → завтра в 20:00
     expect(isDueAt(card, at(2, 8))).toBe(true);
     expect(isDueAt(card, at(1, 23))).toBe(false);
   });
@@ -37,46 +37,61 @@ describe("isDueAt", () => {
 });
 
 describe("updateSRSData", () => {
-  it("новое слово: 1 день, потом 6, потом × лёгкость", () => {
-    let card = updateSRSData(newCard(), KNOW, at(1));
+  it("«Помню»: лесенка 1 → 6 → × лёгкость, лёгкость не меняется; новое слово — не раньше чем через 2 дня", () => {
+    let card = updateSRSData(newCard(), REMEMBER, at(1));
     expect(card.srsData.interval).toBe(1);
-    card = updateSRSData(card, KNOW, at(2));
+    expect(dayDiff(at(1), card.srsData.nextReview)).toBe(2); // на день дальше «Забыл»
+    card = updateSRSData(card, REMEMBER, at(3));
     expect(card.srsData.interval).toBe(6);
-    card = updateSRSData(card, KNOW, at(8));
-    expect(card.srsData.interval).toBe(Math.round(6 * 2.7));
+    card = updateSRSData(card, REMEMBER, at(9));
+    expect(card.srsData.interval).toBe(15);
+    expect(card.srsData.easinessFactor).toBeCloseTo(2.5);
   });
 
-  it("повтор набора каждый день не раздувает интервал", () => {
+  it("«Знаю»: 3 → 8 → × лёгкость × 1,3, лёгкость растёт", () => {
     let card = updateSRSData(newCard(), KNOW, at(1));
-    card = updateSRSData(card, KNOW, at(2)); // в срок → 6 дней, ждёт 8-го
-    for (const day of [3, 4, 5, 6]) card = updateSRSData(card, KNOW, at(day));
-    expect(card.srsData.interval).toBe(6);
-    expect(dayDiff(at(1), card.srsData.nextReview)).toBe(7); // расписание не сдвинулось
-    expect(card.srsData.easinessFactor).toBeCloseTo(2.7); // свайпы раньше срока не накручивают лёгкость
+    expect(card.srsData.interval).toBe(3);
+    card = updateSRSData(card, KNOW, at(4));
+    expect(card.srsData.interval).toBe(8);
+    card = updateSRSData(card, KNOW, at(12));
+    expect(card.srsData.interval).toBe(Math.round(8 * 2.8 * 1.3));
+    expect(card.srsData.easinessFactor).toBeCloseTo(2.95);
+  });
+
+  it("повтор набора каждый день сдвигает слово на день, а не умножает интервал", () => {
+    let card = updateSRSData(newCard(), KNOW, at(1));
+    card = updateSRSData(card, KNOW, at(4)); // в срок → 8 дней, ждёт 12-го
+    for (const day of [5, 6, 7, 8]) card = updateSRSData(card, KNOW, at(day));
+    expect(card.srsData.interval).toBe(8);
+    expect(dayDiff(at(8), card.srsData.nextReview)).toBe(8); // не дальше, чем «Помню» + день
+    expect(card.srsData.easinessFactor).toBeCloseTo(2.8); // раньше срока лёгкость не накручивается
     expect(card.srsData.totalReviews).toBe(6);
   });
 
   it("незадолго до срока интервал растёт по прошедшему времени", () => {
-    let card = updateSRSData(newCard(), KNOW, at(1));
-    card = updateSRSData(card, KNOW, at(2)); // 6 дней, срок 8-го
-    card = updateSRSData(card, REMEMBER, at(7)); // прошло 5 дней из 6
-    expect(card.srsData.interval).toBe(Math.round(5 * 2.7));
+    let card = updateSRSData(newCard(), REMEMBER, at(1));
+    card = updateSRSData(card, REMEMBER, at(3)); // 6 дней, срок 9-го
+    card = updateSRSData(card, REMEMBER, at(8)); // прошло 5 дней из 6
+    expect(card.srsData.interval).toBe(Math.round(5 * 2.5));
     expect(card.srsData.repetitions).toBe(3);
-    expect(dayDiff(at(7), card.srsData.nextReview)).toBe(card.srsData.interval);
+    expect(dayDiff(at(8), card.srsData.nextReview)).toBe(card.srsData.interval);
   });
 
-  it("забыл раньше срока — начинаем заново", () => {
+  it("«Не знаю» — с нуля; «Забыл» — завтра, но потом сразу 6 дней", () => {
     let card = updateSRSData(newCard(), KNOW, at(1));
-    card = updateSRSData(card, KNOW, at(2));
-    card = updateSRSData(card, DONT_KNOW, at(4));
-    expect(card.srsData.interval).toBe(1);
-    expect(card.srsData.repetitions).toBe(0);
-    expect(card.srsData.easinessFactor).toBeLessThan(2.7);
+    card = updateSRSData(card, KNOW, at(4)); // 8 дней
+    const lost = updateSRSData(card, DONT_KNOW, at(6));
+    expect(lost.srsData).toMatchObject({ interval: 1, repetitions: 0 });
+    expect(lost.srsData.easinessFactor).toBeCloseTo(2.6);
+    const forgot = updateSRSData(card, FORGOT, at(6));
+    expect(forgot.srsData).toMatchObject({ interval: 1, repetitions: 1 });
+    expect(updateSRSData(forgot, REMEMBER, at(7)).srsData.interval).toBe(6);
+    expect(updateSRSData(lost, REMEMBER, at(7)).srsData.interval).toBe(1);
   });
 
   it("карточка без srsData не ломается", () => {
     const card = { ...newCard(), srsData: undefined } as unknown as Card;
-    expect(updateSRSData(card, KNOW, at(1)).srsData.interval).toBe(1);
+    expect(updateSRSData(card, KNOW, at(1)).srsData.interval).toBe(3);
   });
 });
 
@@ -105,14 +120,34 @@ describe("introducedAt", () => {
 describe("previewIntervals", () => {
   it("показывает, через сколько дней слово вернётся при каждой оценке", () => {
     let card = updateSRSData(newCard(), KNOW, at(1));
-    card = updateSRSData(card, KNOW, at(2)); // 6 дней, срок 8-го
-    expect(previewIntervals(card, at(8))).toEqual({
+    card = updateSRSData(card, KNOW, at(4)); // 8 дней, срок 12-го, лёгкость 2,8
+    expect(previewIntervals(card, at(12))).toEqual({
       [DONT_KNOW]: 1,
-      [KnowledgeLevel.FORGOT]: 1,
-      [REMEMBER]: Math.round(6 * 2.7),
-      [KNOW]: Math.round(6 * 2.7),
+      [FORGOT]: 1,
+      [REMEMBER]: Math.round(8 * 2.8),
+      [KNOW]: Math.round(8 * 2.8 * 1.3),
     });
-    // Назавтра после повтора «Знаю» не сдвигает расписание: до срока остаётся 5 дней
-    expect(previewIntervals(card, at(3))[KNOW]).toBe(5);
+    // Назавтра после повтора «Помню» расписание не трогает (до срока 7 дней), «Знаю» — на день дальше
+    expect(previewIntervals(card, at(5))).toMatchObject({ [REMEMBER]: 7, [KNOW]: 8 });
+  });
+
+  it("у «Забыл», «Помню» и «Знаю» сроки всегда разные", () => {
+    const due = (interval: number, repetitions: number, nextDay: number, lastDay: number): Card => ({
+      ...newCard(),
+      srsData: { easinessFactor: 1.3, interval, repetitions, nextReview: at(nextDay), lastReviewed: at(lastDay) },
+    });
+    const cards: [Card, number][] = [
+      [newCard(), 1], // новое
+      [due(1, 0, 10, 9), 10], // после «Не знаю», в срок
+      [due(1, 1, 10, 9), 10], // ступень 6 дней
+      [due(1, 1, 11, 9), 10], // ждёт завтра
+      [due(30, 4, 20, 1), 10], // далеко до срока
+      [due(2, 2, 10, 8), 10], // маленький интервал, минимальная лёгкость
+    ];
+    for (const [card, day] of cards) {
+      const p = previewIntervals(card, at(day));
+      expect(p[REMEMBER]).toBeGreaterThan(p[FORGOT]);
+      expect(p[KNOW]).toBeGreaterThan(p[REMEMBER]);
+    }
   });
 });

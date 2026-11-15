@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { I18nProvider, useI18n } from "./contexts/I18nContext";
 import { DataProvider, useData } from "./contexts/DataContext";
@@ -36,12 +36,9 @@ const NotFoundPage = lazy(() => import("./pages/error/NotFoundPage"));
 const WordsPage = lazy(() => import("./pages/words/WordsPage"));
 const CollectionEditPage = lazy(() => import("./pages/words/CollectionEditPage"));
 const FlashcardsPage = lazy(() => import("./pages/words/FlashcardsPage"));
-const ReviewPage = lazy(() => import("./pages/words/ReviewPage"));
 const PerigeeSessionPage = lazy(() => import("./pages/learn/PerigeeSessionPage"));
 const QuizPage = lazy(() => import("./pages/words/QuizPage"));
 const SpeedRoundPage = lazy(() => import("./pages/games/SpeedRoundPage"));
-const SurvivalPage = lazy(() => import("./pages/games/SurvivalPage"));
-const MatchPage = lazy(() => import("./pages/games/MatchPage"));
 const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
 const RewardsPage = lazy(() => import("./pages/rewards/RewardsPage"));
 const OtherPage = lazy(() => import("./pages/other/OtherPage"));
@@ -54,6 +51,12 @@ const CoursesPage = lazy(() => import("./pages/courses/CoursesPage"));
 const AddCoursePage = lazy(() => import("./pages/courses/AddCoursePage"));
 // Админ-панель — отдельный чанк, обычные пользователи его не загружают (docs/specs/admin.md)
 const AdminPage = lazy(() => import("./pages/admin/AdminPage"));
+
+// Ссылка на убранный режим набора → похожий режим того же набора
+function SetRedirect({ to }: { to: "speed" | "learn" }) {
+  const { id } = useParams<{ id: string }>();
+  return <Navigate to={to === "learn" ? `/learn?set=${id}` : `/collection/${id}/${to}`} replace />;
+}
 
 function ReminderScheduler() {
   // Напоминание считает карточки всех курсов
@@ -176,9 +179,10 @@ function AppContent() {
         <Route path="/collection/:id/flashcards" element={<FlashcardsPage />} />
         <Route path="/collection/:id/quiz" element={<QuizPage />} />
         <Route path="/collection/:id/speed" element={<SpeedRoundPage />} />
-        <Route path="/collection/:id/survival" element={<SurvivalPage />} />
-        <Route path="/collection/:id/match" element={<MatchPage />} />
-        <Route path="/review" element={<ReviewPage />} />
+        {/* Убранные режимы (docs/specs/perigee.md, «Режимы после чистки»): старые ссылки и ярлыки ведут в похожий */}
+        <Route path="/collection/:id/survival" element={<SetRedirect to="speed" />} />
+        <Route path="/collection/:id/match" element={<SetRedirect to="learn" />} />
+        <Route path="/review" element={<Navigate to="/learn" replace />} />
         <Route path="/learn" element={<PerigeeSessionPage />} />
       </Route>
 

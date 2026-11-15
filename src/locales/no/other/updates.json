@@ -17,7 +17,7 @@
       "features": [
         {
           "title": "Perigee-økter",
-          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, 3–5 minutter. Perigee viser deg nye ord først, ber deg så finne dem blant alternativer, og sjekker kjente ord etter hvor godt du kan dem – med alternativer, skriving, et kort, et hull i eksempelsetningen eller på gehør. En feil kommer tilbake noen steg senere til den sitter. Under vurderingsknappene ser du når ordet kommer tilbake, og et vurdert kort flyr til siden. Svar i «Quiz», «Hurtigrunde» og «Overlevelse» teller nå også i planen – de modusene har Perigee-merket."
+          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, 3–5 minutter. Perigee viser deg nye ord først, ber deg så finne dem blant alternativer, og sjekker kjente ord etter hvor godt du kan dem – med alternativer, skriving, et kort, et hull i eksempelsetningen eller på gehør. En feil kommer tilbake noen steg senere til den sitter. Hver av de fire vurderingene har sin egen frist: «Vet ikke» viser ordet igjen senere i samme økt, «Glemte» – i morgen, «Husker» – om noen dager, «Kan» – senest. Fristen står under knappen, og et vurdert kort flyr til siden. Svar i «Quiz» og «Hurtigrunde» teller nå også i planen – de modusene har Perigee-merket. I et sett starter Lær-knappen den samme økten, bare med ordene i settet. Det er færre moduser nå, hver med sin egen oppgave: «Overlevelse», «Finn par» og den egne dagens repetisjon er borte – Perigee-økten erstatter dem."
         },
         {
           "title": "Et kurs for hvert språk",
@@ -56,7 +56,9 @@
         "Kortene husker hver vurdering igjen: på grunn av en feil ble bare det siste kortet i en økt lagret.",
         "Du kan øve uten nett: sett du har åpnet før, lastes inn offline, og vurderingene sendes så snart du er på nett igjen.",
         "Vurderte du feil? Angre med pilknappen øverst eller med Backspace.",
-        "Testen tilgir småting: en skrivefeil, manglende spesialbokstaver eller en glemt artikkel godkjennes, og riktig skrivemåte vises ved siden av. Var svaret riktig, men ble ikke godkjent, trykker du «Svaret mitt var riktig». Telefonen retter ikke lenger fremmedord mens du skriver.",
+        "Kortet hopper ikke lenger når du viser svaret.",
+        "Testen tilgir småting: en skrivefeil, manglende spesialbokstaver eller en glemt artikkel godkjennes, og akkurat hvor feilen er, markeres i selve ordet: ekstra, manglende og ombyttede bokstaver. Var svaret riktig, men ble ikke godkjent, trykker du «Svaret mitt var riktig». Telefonen retter ikke lenger fremmedord mens du skriver.",
+        "Testen åpner seg igjen: en feil lukket den rett etter at settet var lastet inn.",
         "Å øve på et helt sett før det er tid, sender ikke lenger ordene måneder frem i tid, og ord som skal repeteres, venter fra morgenen av.",
         "Fremgangen telles nå av serveren, så den kan ikke forsvinne eller forfalskes.",
         "En økt uten nett forsvinner ikke lenger – den telles så snart Kolo er på nett igjen.",

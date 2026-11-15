@@ -31,7 +31,8 @@ import {
 } from "../../perigee/plan";
 
 // Сессия Perigee — главная тренировка: до 20 слов из всех наборов курса, формат по силе памяти,
-// ошибки возвращаются в той же сессии (docs/specs/perigee.md). Логика — в src/perigee/plan.ts
+// ошибки возвращаются в той же сессии (docs/specs/perigee.md). Логика — в src/perigee/plan.ts.
+// ?set=<id> — та же сессия по одному набору (кнопка «Учить» в наборе)
 interface Outcome {
   summary: SessionSummary;
   tomorrow: number;
@@ -46,6 +47,8 @@ export default function PerigeeSessionPage() {
   const p = t.words.perigee;
   const { reportSession, activeCourse, coursesReady, voiceForCollection } = useData();
   const writer = useSrsWriter();
+  const setId = params.get("set") ?? undefined;
+  const leave = () => (setId ? navigate(-1) : navigate("/"));
 
   const [state, setState] = useState<SessionState | null>(null);
   const [loadError, setLoadError] = useState(false);
@@ -59,9 +62,11 @@ export default function PerigeeSessionPage() {
   const startedAt = useRef(Date.now());
 
   const begin = (all: Collection[], extra: boolean) => {
-    const cards = pickCards(all, new Date(), extra);
+    let cards = pickCards(all, new Date(), extra, setId);
+    // В набор пришли сознательно: если новые слова не влезают в дневной лимит — берём их сверх лимита
+    if (cards.length === 0 && setId && !extra) cards = pickCards(all, new Date(), true, setId);
     if (cards.length === 0) {
-      navigate("/");
+      leave();
       return;
     }
     writer.load(all);
@@ -85,16 +90,20 @@ export default function PerigeeSessionPage() {
     startedAt.current = Date.now();
   };
 
-  // Только активный курс; набор старой версии без courseId относим к курсу по языку
+  // Наборы одного курса: активного или того, к которому относится набор из «Учить». Набор старой
+  // версии без courseId относим к курсу по языку
   const load = async () => {
-    if (!activeCourse) {
-      navigate("/");
-      return;
-    }
     setLoadError(false);
     try {
-      const all = (await getCollections()).filter((c) => (c.courseId ?? courseCodeFromLanguage(c.language)) === activeCourse.id);
-      begin(all, params.get("extra") === "1");
+      const every = await getCollections();
+      const courseOf = (c: Collection) => c.courseId ?? courseCodeFromLanguage(c.language);
+      const set = setId ? every.find((c) => c.id === setId) : undefined;
+      const course = set ? courseOf(set) : setId ? undefined : activeCourse?.id;
+      if (!course) {
+        navigate(setId ? "/words" : "/");
+        return;
+      }
+      begin(every.filter((c) => courseOf(c) === course), params.get("extra") === "1");
     } catch (err) {
       console.error("Не удалось загрузить наборы", err);
       setLoadError(true);
@@ -119,11 +128,12 @@ export default function PerigeeSessionPage() {
     const summary = summarize(s);
     const latest = writer.collections();
     const now = new Date();
-    const hasNew = latest.some((c) => c.cards.some((card) => !card.srsData || card.srsData.interval === 0));
+    const scope = latest.filter((c) => !setId || c.id === setId);
+    const hasNew = scope.some((c) => c.cards.some((card) => !card.srsData || card.srsData.interval === 0));
     setOutcome({
       summary,
-      tomorrow: dueTomorrow(latest, now),
-      next: pickCards(latest, now).length > 0 ? "again" : hasNew ? "extra" : "sets",
+      tomorrow: dueTomorrow(scope, now),
+      next: pickCards(latest, now, false, setId).length > 0 ? "again" : hasNew ? "extra" : "sets",
     });
     if (!user) return;
     reportSession({
@@ -148,7 +158,7 @@ export default function PerigeeSessionPage() {
 
   const others = useMemo(() => pool.map((c) => c.word), [pool]);
 
-  if (loadError) return <SessionLoadError onRetry={load} onExit={() => navigate("/")} />;
+  if (loadError) return <SessionLoadError onRetry={load} onExit={leave} />;
   if (!state) return null;
 
   const step = state.queue[Math.min(state.pos, state.queue.length - 1)];
@@ -170,7 +180,7 @@ export default function PerigeeSessionPage() {
     <SessionShell
       title={p.title}
       subtitle={collection?.name}
-      onClose={() => navigate("/")}
+      onClose={leave}
       progress={state.pos / state.queue.length}
       meta={`${done} / ${total}`}
     >
@@ -213,7 +223,7 @@ export default function PerigeeSessionPage() {
         againLabel={again.label}
         exitLabel={t.words.session.exit}
         onAgain={again.run}
-        onExit={() => navigate("/")}
+        onExit={leave}
       />
     </SessionShell>
   );

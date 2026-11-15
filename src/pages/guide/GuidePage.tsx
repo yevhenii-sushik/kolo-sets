@@ -8,14 +8,12 @@ import { usePageMeta } from "../../utils/pageMeta";
 import {
   FlashcardsPreview,
   ForgettingCurve,
-  MatchPreview,
   OrbitPreview,
   QuizPreview,
   ReviewPreview,
   RewardsPreview,
   SetsPreview,
   SpeedPreview,
-  SurvivalPreview,
 } from "../../components/landing/LandingIllustrations";
 import { GUIDE_PAGES, useGuide, type GuidePageKey, type GuideSection } from "./guideContent";
 
@@ -41,13 +39,11 @@ const ART: Record<string, { node: ReactNode; inverse?: boolean }> = {
   practise: { node: <FlashcardsPreview /> },
   flashcards: { node: <FlashcardsPreview /> },
   return: { node: <ReviewPreview /> },
-  review: { node: <ReviewPreview /> },
+  session: { node: <ReviewPreview /> },
   goal: { node: <OrbitPreview /> },
   rewards: { node: <RewardsPreview /> },
   quiz: { node: <QuizPreview /> },
   speed: { node: <SpeedPreview /> },
-  survival: { node: <SurvivalPreview /> },
-  match: { node: <MatchPreview /> },
   name: { node: <PerigeeMark size={140} /> },
   curve: { node: <ForgettingCurve />, inverse: true },
 };

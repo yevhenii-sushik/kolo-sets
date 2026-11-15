@@ -5,9 +5,7 @@ import {
   Check,
   ClipboardPaste,
   Folder,
-  Heart,
   Signal,
-  Timer,
   Volume2,
   Wifi,
 } from "lucide-react";
@@ -291,62 +289,6 @@ export function SpeedPreview() {
       <div>
         <div className="font-display text-3xl font-extrabold text-fg">12</div>
         <div className="text-xs text-faint">{t.landing.modes.preview.score}</div>
-      </div>
-    </div>
-  );
-}
-
-export function SurvivalPreview() {
-  const { t } = useI18n();
-  const card = t.landing.hero.cards[2];
-  return (
-    <div className="grid justify-items-center gap-4">
-      <div className="flex gap-2">
-        {[0, 1, 2].map((i) => (
-          <Heart key={i} size={30} className={i < 2 ? "text-danger fill-danger" : "text-track fill-track"} />
-        ))}
-      </div>
-      <span className="rounded-full bg-surface border border-line px-4 py-1.5 font-display text-base font-extrabold text-fg">
-        {card.word}
-      </span>
-    </div>
-  );
-}
-
-export function MatchPreview() {
-  const { t } = useI18n();
-  const cards = t.landing.hero.cards;
-  // Справа переводы в другом порядке; первая пара уже найдена, второе слово выбрано
-  const right = [cards[1], cards[0], cards[2]];
-  const tile = "rounded-xl border px-3 py-1.5 text-xs font-semibold text-center truncate";
-  return (
-    <div className="grid gap-2.5 w-full max-w-sm px-4">
-      <div className="grid grid-cols-2 gap-2">
-        {cards.map((c, i) => (
-          <div key={c.word} className="contents">
-            <div
-              className={cx(
-                tile,
-                i === 0 && "border-success bg-success-soft text-success",
-                i === 1 && "border-accent bg-accent-soft text-accent-ink",
-                i === 2 && "border-line bg-surface text-fg",
-              )}
-            >
-              {c.word}
-            </div>
-            <div
-              className={cx(
-                tile,
-                right[i] === cards[0] ? "border-success bg-success-soft text-success" : "border-line bg-surface text-muted",
-              )}
-            >
-              {right[i].translation}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="flex items-center justify-center gap-1.5 text-xs text-faint tabular-nums">
-        <Timer size={13} /> 0:18 · {t.landing.modes.preview.best} 0:31
       </div>
     </div>
   );

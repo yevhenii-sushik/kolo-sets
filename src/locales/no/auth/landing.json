@@ -76,39 +76,30 @@
     ]
   },
   "modes": {
-    "title": "Seks måter å få et ord til å sitte på",
-    "text": "De samme ordene i ulike formater – velg modusen som passer humøret.",
+    "title": "Én smart økt og tre måter å øve på",
+    "text": "Perigee velger riktig format for hvert ord. Vil du velge selv? Flashkort, quiz eller hurtigrunde.",
     "items": {
+      "perigee": {
+        "name": "Perigee-økt",
+        "text": "Noen minutter om dagen: Perigee bestemmer hvilke ord du skal repetere og hvordan – med alternativer, skriving, på gehør eller et hull i en setning."
+      },
       "flashcards": {
         "name": "Flashkort",
         "text": "Ordet på den ene siden, oversettelsen på den andre. Marker hvor godt du husket det."
       },
-      "review": {
-        "name": "Dagens repetisjon",
-        "text": "Bare ordene som skal repeteres i dag."
-      },
       "quiz": {
         "name": "Quiz",
-        "text": "Velg riktig svar, skriv ordet eller sett sammen par."
+        "text": "Velg svaret eller skriv ordet – og se hva du faktisk kan."
       },
       "speed": {
         "name": "Hurtigrunde",
         "text": "Så mange svar du klarer på 60 sekunder."
-      },
-      "survival": {
-        "name": "Overlevelse",
-        "text": "Tre liv. Hver feil koster ett."
-      },
-      "match": {
-        "name": "Finn par",
-        "text": "Koble seks ord med oversettelsene sine på tid."
       }
     },
     "preview": {
       "question": "Velg oversettelsen",
       "due": "i dag",
-      "score": "svar",
-      "best": "rekord"
+      "score": "svar"
     }
   },
   "method": {

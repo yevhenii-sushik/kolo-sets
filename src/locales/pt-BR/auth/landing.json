@@ -76,39 +76,30 @@
     ]
   },
   "modes": {
-    "title": "Seis jeitos de fixar uma palavra",
-    "text": "As mesmas palavras em formatos diferentes — escolha o modo de acordo com o seu humor.",
+    "title": "Uma sessão inteligente e três jeitos de praticar",
+    "text": "O Perigee escolhe o formato certo para cada palavra. Prefere escolher você mesmo? Flashcards, quiz ou contra o relógio.",
     "items": {
+      "perigee": {
+        "name": "Sessão Perigee",
+        "text": "Alguns minutos por dia: o Perigee decide quais palavras revisar e como — com opções, digitando, de ouvido ou com uma lacuna na frase."
+      },
       "flashcards": {
         "name": "Flashcards",
         "text": "A palavra de um lado, a tradução do outro. Marque o quanto você lembrava."
       },
-      "review": {
-        "name": "Revisão do dia",
-        "text": "Só as palavras que estão na hora de revisar hoje."
-      },
       "quiz": {
         "name": "Quiz",
-        "text": "Escolha a resposta, digite a palavra ou ligue os pares."
+        "text": "Escolha a resposta ou digite a palavra — e descubra o que você sabe de verdade."
       },
       "speed": {
         "name": "Contra o relógio",
         "text": "O máximo de respostas que conseguir em 60 segundos."
-      },
-      "survival": {
-        "name": "Sobrevivência",
-        "text": "Três vidas. Cada erro custa uma."
-      },
-      "match": {
-        "name": "Pares",
-        "text": "Ligue seis palavras às traduções contra o relógio."
       }
     },
     "preview": {
       "question": "Escolha a tradução",
       "due": "para hoje",
-      "score": "respostas",
-      "best": "recorde"
+      "score": "respostas"
     }
   },
   "method": {

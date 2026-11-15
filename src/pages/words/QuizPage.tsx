@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, Collection, KnowledgeLevel, TaskType, QuizStats, QuizSettings } from "../../types";
-import { getCollection, updateCollectionMeta } from "../../utils/storage";
+import { getCollection } from "../../utils/storage";
 import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
 import { levelForAnswer } from "../../utils/srs";
 import { useSrsWriter } from "../../components/session/useSrsWriter";
@@ -49,6 +49,9 @@ export default function QuizPage() {
   // Храним версию карточки до ответа — для «Мой ответ верный»
   const writer = useSrsWriter();
   const answeredRef = useRef(new Map<string, Card>());
+  // Тест завершается один раз, даже если «Далее» нажали дважды. Все хуки — до ранних return ниже:
+  // хук после них появлялся только после загрузки набора, и React падал («Rendered more hooks»)
+  const finishedRef = useRef(false);
   const [reloadKey, setReloadKey] = useState(0);
   const [stats, setStats] = useState<QuizStats>({
     totalQuestions: 0,
@@ -111,12 +114,6 @@ export default function QuizPage() {
   const currentQuestion = questions[currentIndex];
 
   const handleAnswer = (answer: string) => {
-    // Matching completes its own UI flow — just update stats silently
-    if (currentQuestion.type === TaskType.MATCHING) {
-      setStats(prev => tally(prev, currentQuestion.type, true));
-      return;
-    }
-
     setUserAnswer(answer);
     const isWrite = currentQuestion.type === TaskType.WRITE_WORD_BY_TRANSLATION || currentQuestion.type === TaskType.WRITE_WORD_BY_EXPLANATION;
     // Варианты ответа сравниваем как есть; письменный ответ — мягко (src/utils/answerCheck.ts).
@@ -171,9 +168,6 @@ export default function QuizPage() {
     });
   };
 
-  // Тест завершается один раз, даже если «Далее» нажали дважды
-  const finishedRef = useRef(false);
-
   const handleNext = async () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -186,12 +180,8 @@ export default function QuizPage() {
       finishedRef.current = true;
       // Quiz завершен
       const duration = Math.floor((Date.now() - startTime) / 1000);
-      // Оценки вместе с датой занятия сохраняет writer. Если оценок не было (только «Пары») — пишем одну
-      // дату, а не весь набор. Сети не ждём: офлайн итоги иначе не показались бы
+      // Оценки вместе с датой занятия сохраняет writer. Сети не ждём: офлайн итоги иначе не показались бы
       writer.commit();
-      if (answeredRef.current.size === 0) updateCollectionMeta(collection, { lastStudied: new Date() }).catch((err) =>
-        console.error("Не удалось сохранить дату занятия", err),
-      );
 
       const finalStats = { ...stats, duration };
       setStats(finalStats);
