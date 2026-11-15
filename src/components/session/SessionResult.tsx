@@ -27,6 +27,7 @@ export default function SessionResult({
   metrics,
   children,
   againLabel,
+  againIcon,
   exitLabel,
   onAgain,
   onExit,
@@ -40,6 +41,7 @@ export default function SessionResult({
   metrics: ResultMetric[];
   children?: ReactNode;
   againLabel: string;
+  againIcon?: ReactNode; // по умолчанию «ещё раз»; «дальше» — для следующего круга
   exitLabel: string;
   onAgain: () => void;
   onExit: () => void;
@@ -55,7 +57,7 @@ export default function SessionResult({
           <Button variant="secondary" fullWidth onClick={onExit}>
             {exitLabel}
           </Button>
-          <Button fullWidth iconLeft={<RotateCcw size={18} />} onClick={onAgain}>
+          <Button fullWidth iconLeft={againIcon ?? <RotateCcw size={18} />} onClick={onAgain}>
             {againLabel}
           </Button>
         </>

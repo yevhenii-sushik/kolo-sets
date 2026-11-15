@@ -15,6 +15,7 @@ import SessionLoadError from "../../components/session/SessionLoadError";
 import { useCardSession } from "../../components/session/useCardSession";
 import FlashcardStatsModal from "../../components/FlashcardStatsModal";
 import { coachSeen, markCoachSeen } from "../../utils/firstRun";
+import { hasRounds, readRoundPos, Round, roundAt, saveRoundPos } from "../../utils/flashRounds";
 import ConfirmDialog from "../../components/ConfirmDialog";
 
 export default function FlashcardsPage() {
@@ -27,9 +28,13 @@ export default function FlashcardsPage() {
 
   const [collection, setCollection] = useState<Collection | null>(null);
   const [loadError, setLoadError] = useState(false);
+  // Большой набор — кругами по 20 по порядку (src/utils/flashRounds.ts); маленький — целиком
+  const [round, setRound] = useState<Round | null>(null);
 
   // Прогресс, серию и достижения начисляет сервер; празднование — по его ответу
   const session = useCardSession((result) => {
+    // Круг пройден — следующий начнётся с места, где остановились; весь набор пройден — с начала
+    if (collection && round) saveRoundPos(collection.id, round.to >= collection.cards.length ? 0 : round.to);
     if (!user) return;
     reportSession({
       kind: "flashcards",
@@ -51,7 +56,7 @@ export default function FlashcardsPage() {
     if (coach && session.finished) markCoachSeen("flashcards");
   }, [coach, session.finished]);
 
-  const loadData = async () => {
+  const loadData = async (fromStart = false) => {
     if (!id) return;
     setLoadError(false);
     let loaded: Collection | undefined;
@@ -64,11 +69,14 @@ export default function FlashcardsPage() {
     }
     if (!loaded) { navigate("/"); return; }
 
-    // Слова на сегодня — в сессии Perigee по набору (/learn?set=…); здесь — весь набор
-    const cards = loaded.cards;
-    if (cards.length === 0) { navigate(-1); return; }
+    // Слова на сегодня — в сессии Perigee по набору (/learn?set=…); здесь — весь набор, кругами
+    if (loaded.cards.length === 0) { navigate(-1); return; }
+    if (fromStart) saveRoundPos(loaded.id, 0);
+    const next = roundAt(loaded.cards.length, readRoundPos(loaded.id));
+    const cards = loaded.cards.slice(next.from, next.to);
 
     setCollection(loaded);
+    setRound(next);
     session.start(cards.map((card) => ({ card, collectionId: loaded.id })), [loaded]);
   };
 
@@ -85,13 +93,21 @@ export default function FlashcardsPage() {
     if (ok) session.shuffle();
   };
 
-  if (loadError) return <SessionLoadError onRetry={loadData} onExit={() => navigate(-1)} />;
-  if (!collection || !session.current) return null;
+  if (loadError) return <SessionLoadError onRetry={() => loadData()} onExit={() => navigate(-1)} />;
+  if (!collection || !session.current || !round) return null;
+
+  const total = collection.cards.length;
+  const multi = hasRounds(total);
+  const range = t.words.flashcards.range
+    .replace("{from}", String(round.from + 1))
+    .replace("{to}", String(round.to))
+    .replace("{total}", String(total));
 
   return (
     <SessionShell
       perigee
       title={collection.name}
+      subtitle={multi ? range : undefined}
       onClose={() => navigate(-1)}
       action={
         <>
@@ -122,8 +138,10 @@ export default function FlashcardsPage() {
         isOpen={session.finished}
         stats={session.stats}
         coach={!!coach}
+        rounds={multi ? { done: round.to, total, next: round.to >= total ? 0 : roundAt(total, round.to).to - round.to } : undefined}
         onClose={() => navigate(-1)}
-        onRestart={loadData}
+        onRestart={() => loadData()}
+        onFromStart={() => loadData(true)}
       />
 
       <ConfirmDialog

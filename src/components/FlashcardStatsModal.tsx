@@ -1,7 +1,7 @@
-import { Lightbulb, Trophy } from "lucide-react";
+import { ArrowRight, Lightbulb, Trophy } from "lucide-react";
 import { FlashcardStats } from "../types";
 import { useI18n } from "../contexts/I18nContext";
-import { cx } from "../ui";
+import { Button, cx } from "../ui";
 import SessionResult from "./session/SessionResult";
 
 interface FlashcardStatsModalProps {
@@ -10,10 +10,13 @@ interface FlashcardStatsModalProps {
   onClose: () => void;
   onRestart: () => void;
   coach?: boolean; // первая тренировка новичка — объяснить, что будет со словами дальше
+  // Большой набор идёт кругами (src/utils/flashRounds.ts): сколько пройдено и сколько в следующем круге
+  rounds?: { done: number; total: number; next: number };
+  onFromStart?: () => void;
 }
 
 // Итог флэшкарт и повторения: сколько карточек, сколько времени и как распределились оценки
-export default function FlashcardStatsModal({ isOpen, stats, onClose, onRestart, coach = false }: FlashcardStatsModalProps) {
+export default function FlashcardStatsModal({ isOpen, stats, onClose, onRestart, coach = false, rounds, onFromStart }: FlashcardStatsModalProps) {
   const { t } = useI18n();
   const fs = t.words.flashcards.stats;
   const levels = t.words.flashcards.levels;
@@ -22,6 +25,11 @@ export default function FlashcardStatsModal({ isOpen, stats, onClose, onRestart,
   const seconds = stats.duration % 60;
   const duration = minutes > 0 ? `${minutes}${fs.min} ${seconds}${fs.sec}` : `${seconds}${fs.sec}`;
   const pct = (value: number) => (stats.totalCards > 0 ? Math.round((value / stats.totalCards) * 100) : 0);
+
+  // Кругами: «Пройдено 40 из 300» и «Ещё 20»; весь набор пройден — «С начала набора»
+  const setDone = !!rounds && rounds.next === 0;
+  const subtitle = !rounds ? fs.subtitle : setDone ? fs.setDone : fs.progress.replace("{done}", String(rounds.done)).replace("{total}", String(rounds.total));
+  const againLabel = !rounds ? fs.restart : setDone ? fs.fromStart : fs.next.replace("{n}", String(rounds.next));
 
   const breakdown = [
     { label: levels.dontKnow, value: stats.dontKnow, bar: "bg-danger", text: "text-danger" },
@@ -35,12 +43,13 @@ export default function FlashcardStatsModal({ isOpen, stats, onClose, onRestart,
       open={isOpen}
       icon={<Trophy size={26} />}
       title={fs.title}
-      subtitle={fs.subtitle}
+      subtitle={subtitle}
       metrics={[
         { label: fs.cards, value: stats.totalCards },
         { label: fs.time, value: duration },
       ]}
-      againLabel={fs.restart}
+      againLabel={againLabel}
+      againIcon={rounds && !setDone ? <ArrowRight size={18} /> : undefined}
       exitLabel={fs.exit}
       onAgain={onRestart}
       onExit={onClose}
@@ -60,6 +69,12 @@ export default function FlashcardStatsModal({ isOpen, stats, onClose, onRestart,
             </li>
           ))}
         </ul>
+        {/* Круг был не первым — можно вернуться к началу набора */}
+        {rounds && !setDone && rounds.done > stats.totalCards && onFromStart && (
+          <Button variant="ghost" size="sm" onClick={onFromStart} className="justify-self-center">
+            {fs.fromStart}
+          </Button>
+        )}
         {coach && (
           <div className="mt-1 flex gap-2.5 rounded-2xl bg-accent-soft p-3 text-left text-sm text-accent-ink">
             <Lightbulb size={16} className="mt-0.5 shrink-0" />
