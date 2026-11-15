@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Check, CheckCheck, Info, X } from "lucide-react";
+import { ArrowRight, Check, CheckCheck, Info, Volume2, X } from "lucide-react";
+import { TaskType } from "../../types";
 import { QuizQuestion, isTyping } from "../../quiz/plan";
+import { speak } from "../../utils/tts";
 import { AnswerVerdict } from "../../utils/answerCheck";
 import { useI18n } from "../../contexts/I18nContext";
-import { Button, Card, Input, cx } from "../../ui";
+import { Button, Card, IconButton, Input, cx } from "../../ui";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
 import { posLabel } from "../../data/partsOfSpeech";
 import AnswerDiff from "../session/AnswerDiff";
@@ -20,6 +22,8 @@ interface QuizQuestionProps {
   question: QuizQuestion;
   feedback: QuizFeedback | null;
   synonym?: { word: string; translation: string } | null; // ввели другое слово набора с тем же переводом
+  voice?: string; // язык озвучки набора
+  speakable?: boolean; // есть голос для языка: чужим голосом слово лучше не читать
   onAnswer: (answer: string) => void;
   onOverride?: () => void; // «Мой ответ верный» после письменного ответа
   onNext: () => void;
@@ -29,12 +33,18 @@ const KEYS = ["Digit1", "Digit2", "Digit3", "Digit4"];
 
 // Вопрос теста: выбор из вариантов (клавиши 1–4) или ввод слова. Верный ответ — короткая вспышка
 // зелёного, дальше тест идёт сам (как в Perigee). Ошибка или «почти» — разбор карточки и «Дальше» (или Enter)
-export default function QuizQuestionComponent({ question, feedback, synonym, onAnswer, onOverride, onNext }: QuizQuestionProps) {
+export default function QuizQuestionComponent({ question, feedback, synonym, voice, speakable, onAnswer, onOverride, onNext }: QuizQuestionProps) {
   const { t } = useI18n();
   const q = t.words.quiz;
   const [textInput, setTextInput] = useState("");
   const lastSubmitTimeRef = useRef(0);
   const typing = isTyping(question.type);
+  const listening = question.type === TaskType.LISTEN;
+
+  // Вопрос на слух: слово звучит сразу, повторить — кнопкой
+  useEffect(() => {
+    if (listening) speak(question.card.word, voice);
+  }, [listening, question, voice]);
 
   useEffect(() => {
     setTextInput("");
@@ -81,9 +91,23 @@ export default function QuizQuestionComponent({ question, feedback, synonym, onA
     <div className="mx-auto grid max-w-2xl gap-5">
       <div className="grid gap-2 text-center">
         <p className="text-sm font-medium text-muted">{q.prompts[question.type as keyof typeof q.prompts]}</p>
-        <h2 dir="auto" className="font-display text-2xl font-extrabold text-fg sm:text-3xl">
-          {question.prompt}
-        </h2>
+        {listening && !feedback ? (
+          <div className="grid justify-items-center gap-2 py-1">
+            <button
+              type="button"
+              aria-label={q.listenAgain}
+              onClick={() => speak(question.card.word, voice)}
+              className="grid h-20 w-20 place-items-center rounded-full bg-accent-soft text-accent-ink transition-colors hover:bg-accent/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              <Volume2 size={36} />
+            </button>
+            <p className="text-xs text-faint">{q.listenAgain}</p>
+          </div>
+        ) : (
+          <h2 dir="auto" className="font-display text-2xl font-extrabold text-fg sm:text-3xl">
+            {question.prompt}
+          </h2>
+        )}
       </div>
 
       {question.options && !typing && (
@@ -183,10 +207,18 @@ export default function QuizQuestionComponent({ question, feedback, synonym, onA
           {/* Разбор карточки: слово, перевод, объяснение, пример */}
           <Card tone="inset" padding="sm" className="grid gap-1 text-left">
             <p className="text-xs font-semibold text-muted">{q.moreInfo}</p>
-            <p dir="auto" className="font-semibold text-fg">
-              {question.card.word}
-              {question.card.partOfSpeech && <span className="ml-2 text-sm font-normal text-faint">{posLabel(question.card.partOfSpeech, t.words.pos)}</span>}
-            </p>
+            <div className="flex items-start justify-between gap-2">
+              <p dir="auto" className="font-semibold text-fg">
+                {question.card.word}
+                {question.card.partOfSpeech && <span className="ml-2 text-sm font-normal text-faint">{posLabel(question.card.partOfSpeech, t.words.pos)}</span>}
+              </p>
+              {/* Услышать правильное слово после ошибки — так оно запоминается и на слух */}
+              {speakable && (
+                <IconButton variant="soft" size="sm" label={q.speak} onClick={() => speak(question.card.word, voice)} className="-my-1 shrink-0">
+                  <Volume2 size={16} />
+                </IconButton>
+              )}
+            </div>
             <p dir="auto" className="text-sm text-accent-ink">
               {question.card.translation}
             </p>

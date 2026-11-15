@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { Card, TaskType } from "../types";
-import { buildQuestions, isTyping, pickQuizCards, portionSize, questionFor, synonymsOf } from "./plan";
-import { parseMisses, parseQuizPrefs } from "./storage";
+import { buildQuestions, isSetPassed, isTyping, pickQuizCards, portionSize, questionFor, recordHistory, setProgress, streakPitch, synonymsOf } from "./plan";
+import { parseChecks, parseHistory, parseQuizPrefs } from "./storage";
 import { DEFAULT_QUIZ_SETTINGS } from "./plan";
 
 const NOW = new Date(2026, 10, 15, 12);
@@ -49,7 +49,7 @@ describe("pickQuizCards", () => {
   it("порядок важности: ошибки прошлого теста, к повторению, слабые, крепкие, новые в конце", () => {
     // 7 слов + 10 новых в хвосте: порция 10 — все выученные и ошибка, потом новые по порядку набора
     const big = [...cards, ...Array.from({ length: 10 }, (_, i) => card(`tail${i}`))];
-    const first = new Set(pickQuizCards(big, { length: 10, misses: new Set(["missed"]), now: NOW }).map((c) => c.id));
+    const first = new Set(pickQuizCards(big, { length: 10, checks: { missed: false }, now: NOW }).map((c) => c.id));
     for (const id of ["missed", "overdue", "due", "weak", "strong", "new1", "new2"]) expect(first.has(id)).toBe(true);
     expect([...first].filter((id) => id.startsWith("tail"))).toEqual(expect.arrayContaining(["tail0", "tail1", "tail2"]));
     expect([...first].filter((id) => id.startsWith("tail"))).toHaveLength(3);
@@ -58,7 +58,7 @@ describe("pickQuizCards", () => {
 
   it("ошибка прошлого теста идёт раньше просроченных", () => {
     const many = [...Array.from({ length: 12 }, (_, i) => studied(`due${i}`, 6, -3)), studied("missed", 40, 30)];
-    const picked = pickQuizCards(many, { length: 10, misses: new Set(["missed"]), now: NOW });
+    const picked = pickQuizCards(many, { length: 10, checks: { missed: false }, now: NOW });
     expect(picked.some((c) => c.id === "missed")).toBe(true);
   });
 
@@ -66,6 +66,13 @@ describe("pickQuizCards", () => {
     const many = [...Array.from({ length: 30 }, (_, i) => card(`n${i}`)), ...Array.from({ length: 10 }, (_, i) => studied(`s${i}`, 10, 5))];
     const picked = pickQuizCards(many, { length: 10, now: NOW });
     expect(picked.every((c) => c.id.startsWith("s"))).toBe(true);
+  });
+
+  it("среди крепких сначала ещё не проверенные тестом — за несколько тестов проходим весь набор", () => {
+    const strong = Array.from({ length: 30 }, (_, i) => studied(`s${i}`, 40, 20 + i));
+    const checks = Object.fromEntries(strong.slice(0, 20).map((c) => [c.id, true]));
+    const picked = pickQuizCards(strong, { length: 10, checks, now: NOW });
+    expect(picked.every((c) => !(c.id in checks))).toBe(true);
   });
 
   it("«Следующие 20» — без уже спрошенных", () => {
@@ -128,6 +135,30 @@ describe("questionFor", () => {
     expect(plain.has(TaskType.WORD_BY_EXPLANATION) || plain.has(TaskType.WRITE_WORD_BY_EXPLANATION)).toBe(false);
   });
 
+  it("вперемешку по силе слова: новые чаще выбором, крепкие чаще вводом", () => {
+    const pool = set(8);
+    const fresh = pool[0];
+    const strong = studied("strong", 40, 20);
+    const share = (c: Card) => Array.from({ length: 400 }, () => questionFor(c, "mixed", [c, ...pool])).filter((q) => isTyping(q.type)).length / 400;
+    expect(share(fresh)).toBeLessThan(0.3);
+    expect(share(strong)).toBeGreaterThan(0.7);
+  });
+
+  it("на слух — изредка, только с голосом и не в режиме ввода; выбираем перевод", () => {
+    const pool = set(8);
+    const heard = Array.from({ length: 300 }, () => questionFor(pool[0], "choice", pool, { canListen: true })).filter((q) => q.type === TaskType.LISTEN);
+    expect(heard.length).toBeGreaterThan(20);
+    expect(heard.length).toBeLessThan(120);
+    for (const q of heard) {
+      expect(q.correctAnswer).toBe(pool[0].translation);
+      expect(q.options).toContain(pool[0].translation);
+    }
+    const silent = Array.from({ length: 200 }, () => questionFor(pool[0], "choice", pool)).some((q) => q.type === TaskType.LISTEN);
+    expect(silent).toBe(false);
+    const typed = Array.from({ length: 200 }, () => questionFor(pool[0], "type", pool, { canListen: true })).some((q) => q.type === TaskType.LISTEN);
+    expect(typed).toBe(false);
+  });
+
   it("по вопросу на каждое слово, ответ — с карточки", () => {
     const pool = set(10);
     const qs = buildQuestions(pool, "mixed", pool);
@@ -161,9 +192,36 @@ describe("хранилище теста", () => {
     expect(parseQuizPrefs(JSON.stringify({ length: 15, answers: "type" }))).toEqual({ length: 20, answers: "type" });
   });
 
-  it("ошибки прошлого теста", () => {
-    expect([...parseMisses(JSON.stringify(["a", 3, "b"]))]).toEqual(["a", "b"]);
-    expect(parseMisses("nope").size).toBe(0);
-    expect(parseMisses(null).size).toBe(0);
+  it("итоги проверок и история точности", () => {
+    expect(parseChecks(JSON.stringify({ a: true, b: false, c: 1 }))).toEqual({ a: true, b: false });
+    expect(parseChecks(JSON.stringify(["a"]))).toEqual({});
+    expect(parseChecks("nope")).toEqual({});
+    expect(parseHistory(JSON.stringify({ last: 70, best: 140 }))).toEqual({ last: 70, best: undefined });
+    expect(parseHistory(null)).toEqual({});
+  });
+});
+
+describe("счёт в контексте и путь по набору", () => {
+  it("путь по набору: верно / ошибка / не проверено; удалённые слова не в счёт", () => {
+    const cards = set(5);
+    const p = setProgress(cards, { c0: true, c1: true, c2: false, gone: true });
+    expect(p).toEqual({ total: 5, right: 2, wrong: 1 });
+    expect(isSetPassed(p)).toBe(false);
+    expect(isSetPassed(setProgress(cards, Object.fromEntries(cards.map((c) => [c.id, true]))))).toBe(true);
+  });
+
+  it("рекорд — только у полноценного теста и не с первого раза", () => {
+    const first = recordHistory({}, 80, 20, 300);
+    expect(first).toEqual({ history: { last: 80, best: 80 }, previous: undefined, record: false });
+    const better = recordHistory(first.history, 90, 20, 300);
+    expect(better.record).toBe(true);
+    expect(better.previous).toBe(80);
+    const short = recordHistory(better.history, 100, 4, 300); // четыре вопроса — не рекорд
+    expect(short).toEqual({ history: { last: 100, best: 90 }, previous: 90, record: false });
+    expect(recordHistory({ last: 50, best: 50 }, 100, 6, 6).record).toBe(true); // маленький набор целиком
+  });
+
+  it("звук серии — ступенями пентатоники", () => {
+    expect([1, 2, 3, 5, 6, 9, 10, 30].map(streakPitch)).toEqual([0, 0, 2, 2, 5, 5, 7, 7]);
   });
 });

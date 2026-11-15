@@ -1,11 +1,13 @@
 // Удобства теста на этом устройстве, как и у флэшкарт, — в localStorage: настройки (общие для всех
-// наборов) и ошибки прошлого теста по каждому набору — с них начнётся следующий тест.
+// наборов), итог последней проверки каждого слова по набору (с ошибок начнётся следующий тест, из
+// верных складывается путь «верно 48 из 300») и точность прошлых тестов для сравнения.
 // Это не данные аккаунта: память о словах — в расписании Perigee
 
-import { DEFAULT_QUIZ_SETTINGS, QUIZ_ANSWERS, QUIZ_LENGTHS, QuizAnswers, QuizLength, QuizSettings } from "./plan";
+import { DEFAULT_QUIZ_SETTINGS, QUIZ_ANSWERS, QUIZ_LENGTHS, QuizAnswers, QuizChecks, QuizHistory, QuizLength, QuizSettings } from "./plan";
 
 const PREFS_KEY = "kolo_quiz_prefs";
-const missKey = (collectionId: string) => `kolo_quiz_miss_${collectionId}`;
+const checksKey = (collectionId: string) => `kolo_quiz_checks_${collectionId}`;
+const historyKey = (collectionId: string) => `kolo_quiz_hist_${collectionId}`;
 
 export function parseQuizPrefs(raw: string | null): QuizSettings {
   if (!raw) return DEFAULT_QUIZ_SETTINGS;
@@ -37,34 +39,67 @@ export function saveQuizPrefs(prefs: QuizSettings) {
   }
 }
 
-export function parseMisses(raw: string | null): Set<string> {
-  if (!raw) return new Set();
+export function parseChecks(raw: string | null): Record<string, boolean> {
+  if (!raw) return {};
   try {
     const v: unknown = JSON.parse(raw);
-    return new Set(Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []);
+    if (!v || typeof v !== "object" || Array.isArray(v)) return {};
+    const out: Record<string, boolean> = {};
+    for (const [id, ok] of Object.entries(v)) if (typeof ok === "boolean") out[id] = ok;
+    return out;
   } catch {
-    return new Set();
+    return {};
   }
 }
 
-export function readMisses(collectionId: string): Set<string> {
+export function readChecks(collectionId: string): QuizChecks {
   try {
-    return parseMisses(localStorage.getItem(missKey(collectionId)));
+    return parseChecks(localStorage.getItem(checksKey(collectionId)));
   } catch {
-    return new Set();
+    return {};
   }
 }
 
-// Первый ответ на слово в тесте: ошибка — слово в список, верно — из списка. Пишем сразу, а не в конце:
-// ошибки брошенного теста тоже стоит проверить первыми
-export function markAnswer(collectionId: string, cardId: string, correct: boolean) {
+// Первый ответ на слово в тесте: верно или ошибка. Пишем сразу, а не в конце: ошибки брошенного теста
+// тоже стоит проверить первыми. Удалённые из набора слова вычищаем, чтобы запись не росла
+export function markAnswer(collectionId: string, cardId: string, correct: boolean, cardIds?: readonly string[]) {
   try {
-    const misses = readMisses(collectionId);
-    if (correct) misses.delete(cardId);
-    else misses.add(cardId);
-    if (misses.size) localStorage.setItem(missKey(collectionId), JSON.stringify([...misses]));
-    else localStorage.removeItem(missKey(collectionId));
+    const checks = parseChecks(localStorage.getItem(checksKey(collectionId)));
+    checks[cardId] = correct;
+    if (cardIds) {
+      const alive = new Set(cardIds);
+      for (const id of Object.keys(checks)) if (!alive.has(id)) delete checks[id];
+    }
+    localStorage.setItem(checksKey(collectionId), JSON.stringify(checks));
   } catch {
     // Без хранилища тест просто начнётся без приоритета ошибок
+  }
+}
+
+export function parseHistory(raw: string | null): QuizHistory {
+  if (!raw) return {};
+  try {
+    const v = JSON.parse(raw) as Partial<Record<keyof QuizHistory, unknown>>;
+    if (!v || typeof v !== "object") return {};
+    const pct = (x: unknown) => (typeof x === "number" && x >= 0 && x <= 100 ? x : undefined);
+    return { last: pct(v.last), best: pct(v.best) };
+  } catch {
+    return {};
+  }
+}
+
+export function readHistory(collectionId: string): QuizHistory {
+  try {
+    return parseHistory(localStorage.getItem(historyKey(collectionId)));
+  } catch {
+    return {};
+  }
+}
+
+export function saveHistory(collectionId: string, history: QuizHistory) {
+  try {
+    localStorage.setItem(historyKey(collectionId), JSON.stringify(history));
+  } catch {
+    // Сравнение с прошлым разом просто не покажется
   }
 }

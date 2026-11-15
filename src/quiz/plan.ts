@@ -43,9 +43,15 @@ export function portionSize(available: number, length: QuizLength): number {
 
 const time = (value: unknown) => toDate(value)?.getTime() ?? 0;
 
+/**
+ * Итог последней проверки каждого слова в тесте по набору: true — верно, false — ошибка, нет — ещё не
+ * проверялось. Из этого — ошибки прошлого теста (их спрашиваем первыми) и путь «верно 48 из 300»
+ */
+export type QuizChecks = Readonly<Record<string, boolean>>;
+
 // Чем меньше, тем раньше в порции
-function rank(card: Card, misses: ReadonlySet<string>, now: Date): number {
-  if (misses.has(card.id)) return 0; // ошиблся в прошлом тесте — проверим первым
+function rank(card: Card, checks: QuizChecks, now: Date): number {
+  if (checks[card.id] === false) return 0; // ошибся в прошлый раз — проверим первым
   if (isNewCard(card)) return 4; // ещё не встречал — в самом конце
   if (isDueAt(card, now)) return 1;
   if (memoryStrength(card) === 1) return 2; // учится: интервал меньше недели
@@ -54,27 +60,33 @@ function rank(card: Card, misses: ReadonlySet<string>, now: Date): number {
 
 /**
  * Слова для теста по важности, в случайном порядке вопросов.
- * misses — ошибки прошлого теста по этому набору; exclude — уже спрошенные в этот заход («Следующие 20»)
+ * checks — итоги прошлых проверок по этому набору; exclude — уже спрошенные в этот заход («Следующие 20»)
  */
 export function pickQuizCards(
   cards: Card[],
-  { length, misses = new Set(), exclude = new Set(), now = new Date() }: { length: QuizLength; misses?: ReadonlySet<string>; exclude?: ReadonlySet<string>; now?: Date },
+  { length, checks = {}, exclude = new Set(), now = new Date() }: { length: QuizLength; checks?: QuizChecks; exclude?: ReadonlySet<string>; now?: Date },
 ): Card[] {
-  const pool = cards.map((card, index) => ({ card, index, rank: rank(card, misses, now) })).filter((x) => !exclude.has(x.card.id));
+  const pool = cards
+    .map((card, index) => ({ card, index, rank: rank(card, checks, now), checked: card.id in checks }))
+    .filter((x) => !exclude.has(x.card.id));
   pool.sort(
     (a, b) =>
       a.rank - b.rank ||
+      // Слабые и крепкие: сначала ещё не проверенные тестом — так за несколько заходов тест проходит весь набор
+      (a.rank === 2 || a.rank === 3 ? Number(a.checked) - Number(b.checked) : 0) ||
       // Новые — по порядку набора; остальные — кому раньше на повторение (самые просроченные первыми)
       (a.rank === 4 ? a.index - b.index : time(a.card.srsData?.nextReview) - time(b.card.srsData?.nextReview)),
   );
   return shuffle(pool.slice(0, portionSize(pool.length, length)).map((x) => x.card));
 }
 
-const fieldOf = (type: TaskType): "word" | "translation" => (type === TaskType.TRANSLATION_BY_WORD ? "translation" : "word");
+const fieldOf = (type: TaskType): "word" | "translation" =>
+  type === TaskType.TRANSLATION_BY_WORD || type === TaskType.LISTEN ? "translation" : "word";
 
 function promptOf(card: Card, type: TaskType): string {
   switch (type) {
     case TaskType.TRANSLATION_BY_WORD:
+    case TaskType.LISTEN: // звучит слово; на экране оно появится после ответа
       return card.word;
     case TaskType.WORD_BY_EXPLANATION:
     case TaskType.WRITE_WORD_BY_EXPLANATION:
@@ -84,12 +96,24 @@ function promptOf(card: Card, type: TaskType): string {
   }
 }
 
+// «Вперемешку»: доля ввода по силе памяти слова (memoryStrength 0–3). Узнать среди вариантов легче,
+// вспомнить и написать — труднее и полезнее: свежие слова чаще выбором, крепкие чаще вводом. Не всегда:
+// разнообразие держит в тонусе
+export const MIXED_TYPING = [0.15, 0.35, 0.65, 0.85] as const;
+// Вопрос на слух — изредка, вместо одного из заданий с выбором (как аудирование в сессии Perigee)
+const LISTEN_SHARE = 0.2;
+
+export interface QuestionOptions {
+  random?: () => number;
+  canListen?: boolean; // есть голос для языка курса и звук не выключен
+}
+
 /**
  * Вопрос о слове. Формат — по настройке «Как отвечать»; вопрос по описанию появляется сам, если оно
- * есть у слова. Вариантов без синонимов меньше трёх — спрашиваем вводом (раньше на кнопках были
- * заглушки «[2]»); длинную фразу печатать мучительно — её спрашиваем выбором
+ * есть у слова, на слух — если есть голос. Вариантов без синонимов меньше трёх — спрашиваем вводом
+ * (раньше на кнопках были заглушки «[2]»); длинную фразу печатать мучительно — её спрашиваем выбором
  */
-export function questionFor(card: Card, answers: QuizAnswers, pool: Card[], random: () => number = Math.random): QuizQuestion {
+export function questionFor(card: Card, answers: QuizAnswers, pool: Card[], { random = Math.random, canListen = false }: QuestionOptions = {}): QuizQuestion {
   const explained = !!card.explanation?.trim();
   const distractors = {
     word: distractorsFor(card, pool, "word"),
@@ -100,11 +124,13 @@ export function questionFor(card: Card, answers: QuizAnswers, pool: Card[], rand
   );
   const typing = typeable(card.word) ? [TaskType.WRITE_WORD_BY_TRANSLATION, ...(explained ? [TaskType.WRITE_WORD_BY_EXPLANATION] : [])] : [];
 
-  // «Вперемешку» — сначала выбор или ввод поровну, потом задание внутри: иначе слова с описанием
+  // «Вперемешку» — сначала выбор или ввод (по силе слова), потом задание внутри: иначе слова с описанием
   // чаще получали бы выбор
-  const wanted = answers === "choice" ? choice : answers === "type" ? typing : choice.length && typing.length ? (random() < 0.5 ? choice : typing) : [];
+  const wanted =
+    answers === "choice" ? choice : answers === "type" ? typing : choice.length && typing.length ? (random() < MIXED_TYPING[memoryStrength(card)] ? typing : choice) : [];
   const types = wanted.length ? wanted : choice.length ? choice : typing.length ? typing : [TaskType.WRITE_WORD_BY_TRANSLATION];
-  const type = types[Math.min(types.length - 1, Math.floor(random() * types.length))];
+  const listen = canListen && types === choice && distractors.translation.length >= 3 && random() < LISTEN_SHARE;
+  const type = listen ? TaskType.LISTEN : types[Math.min(types.length - 1, Math.floor(random() * types.length))];
 
   const field = fieldOf(type);
   return {
@@ -116,8 +142,8 @@ export function questionFor(card: Card, answers: QuizAnswers, pool: Card[], rand
   };
 }
 
-export const buildQuestions = (cards: Card[], answers: QuizAnswers, pool: Card[], random: () => number = Math.random): QuizQuestion[] =>
-  cards.map((card) => questionFor(card, answers, pool, random));
+export const buildQuestions = (cards: Card[], answers: QuizAnswers, pool: Card[], options: QuestionOptions = {}): QuizQuestion[] =>
+  cards.map((card) => questionFor(card, answers, pool, options));
 
 /**
  * Слова набора с тем же переводом — при вводе их засчитать нельзя (спрашиваем конкретное слово),
@@ -129,3 +155,45 @@ export function synonymsOf(card: Card, pool: Card[]): string[] {
   if (!meaning) return [];
   return pool.filter((c) => c.id !== card.id && normalizeAnswer(c.translation) === meaning && normalizeAnswer(c.word) !== own).map((c) => c.word);
 }
+
+// ── Путь по набору и счёт в контексте (docs/specs/perigee.md, «Тест, шаг 2») ──
+
+export interface SetProgress {
+  total: number; // слов в наборе
+  right: number; // последняя проверка — верно
+  wrong: number; // последняя проверка — ошибка
+}
+
+/** Сколько слов набора уже проверено тестом и с каким итогом. Удалённые из набора слова не в счёт */
+export function setProgress(cards: Card[], checks: QuizChecks): SetProgress {
+  let right = 0;
+  let wrong = 0;
+  for (const c of cards) {
+    if (checks[c.id] === true) right += 1;
+    else if (checks[c.id] === false) wrong += 1;
+  }
+  return { total: cards.length, right, wrong };
+}
+
+/** Набор сдан: каждое слово в последней проверке отвечено верно */
+export const isSetPassed = (p: SetProgress) => p.total > 0 && p.right === p.total;
+
+export interface QuizHistory {
+  last?: number; // точность прошлого теста по набору, %
+  best?: number; // лучшая точность среди полноценных тестов, %
+}
+
+/**
+ * Записать точность теста. Рекорд — только у полноценного теста: от 10 вопросов или весь набор, если он
+ * меньше. Иначе четыре слова на 100% ставили бы рекорд, который не побить. Первый тест рекордом не считаем
+ */
+export function recordHistory(prev: QuizHistory, pct: number, questions: number, setSize: number) {
+  const full = questions >= Math.min(10, setSize);
+  const record = full && prev.best !== undefined && pct > prev.best;
+  const history: QuizHistory = { last: pct, best: full ? Math.max(prev.best ?? 0, pct) : prev.best };
+  return { history, previous: prev.last, record };
+}
+
+// Серия верных ответов: звук «верно» поднимается ступенями и остаётся в до-мажорной пентатонике
+// (у answer-correct квинта G–D: сдвиги 0, +2, +5, +7 полутонов — scripts/sounds/README.md)
+export const streakPitch = (streak: number) => (streak >= 10 ? 7 : streak >= 6 ? 5 : streak >= 3 ? 2 : 0);

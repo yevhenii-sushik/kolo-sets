@@ -1,8 +1,8 @@
-import { ArrowRight, CheckCheck, Target } from "lucide-react";
+import { ArrowRight, CheckCheck, Minus, Target, TrendingDown, TrendingUp, Trophy } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
-import { Badge, Button } from "../../ui";
+import { Badge, Button, cx } from "../../ui";
 import SessionResult from "../session/SessionResult";
-import { QuizQuestion } from "../../quiz/plan";
+import { QuizQuestion, SetProgress } from "../../quiz/plan";
 import { PERFECT_QUIZ_MIN } from "../../../server/core/xp";
 
 export interface QuizMistake {
@@ -17,6 +17,15 @@ export interface QuizGrowth {
   tomorrow: number;
 }
 
+// Счёт в контексте: прошлый тест по набору, рекорд, путь по набору (docs/specs/perigee.md, «Тест, шаг 2»)
+export interface QuizContext {
+  previous?: number; // точность прошлого теста, %
+  record: boolean; // побит рекорд набора
+  bestStreak: number;
+  set: SetProgress;
+  passed: boolean; // набор сдан: каждое слово в последней проверке отвечено верно
+}
+
 interface QuizStatsModalProps {
   isOpen: boolean;
   practice: boolean; // итог работы над ошибками
@@ -25,16 +34,17 @@ interface QuizStatsModalProps {
   duration: number; // секунд
   mistakes: QuizMistake[];
   growth?: QuizGrowth | null;
+  context?: QuizContext | null;
   nextCount: number; // сколько слов во «Следующих N»; 0 — набор пройден
   onPractise: () => void;
   onNext: () => void;
   onClose: () => void;
 }
 
-// Итог теста (docs/specs/perigee.md, «Тест: понятность и честность»). Есть ошибки — главное действие
-// «Работа над ошибками»; нет — следующие слова набора. Повторять те же слова сразу не предлагаем:
+// Итог теста (docs/specs/perigee.md, «Тест: понятность и честность», «Тест, шаг 2»). Есть ошибки — главное
+// действие «Работа над ошибками»; нет — следующие слова набора. Повторять те же слова сразу не предлагаем:
 // по свежей памяти тест проходится идеально, но ничего не проверяет
-export default function QuizStatsModal({ isOpen, practice, total, correct, duration, mistakes, growth, nextCount, onPractise, onNext, onClose }: QuizStatsModalProps) {
+export default function QuizStatsModal({ isOpen, practice, total, correct, duration, mistakes, growth, context, nextCount, onPractise, onNext, onClose }: QuizStatsModalProps) {
   const { t } = useI18n();
   const qs = t.words.quiz.stats;
   const prompts = t.words.quiz.prompts;
@@ -67,8 +77,9 @@ export default function QuizStatsModal({ isOpen, practice, total, correct, durat
     );
   }
 
-  const verdict =
-    pct === 100
+  const verdict = context?.passed
+    ? { text: qs.setPassed, tone: "success" as const }
+    : pct === 100
       ? { text: qs.great, tone: "success" as const }
       : pct >= 75
         ? { text: qs.good, tone: "info" as const }
@@ -81,23 +92,31 @@ export default function QuizStatsModal({ isOpen, practice, total, correct, durat
     : nextCount > 0
       ? { label: nextLabel, icon: <ArrowRight size={18} />, run: onNext }
       : null;
-  const badges = growth ? [
-    { n: growth.introduced, text: qs.introduced, tone: "accent" as const },
-    { n: growth.grew, text: qs.grew, tone: "success" as const },
-    { n: growth.tomorrow, text: qs.tomorrow, tone: "warning" as const },
-  ].filter((b) => b.n > 0) : [];
+  const badges = growth
+    ? [
+        { n: growth.introduced, text: qs.introduced, tone: "accent" as const },
+        { n: growth.grew, text: qs.grew, tone: "success" as const },
+        { n: growth.tomorrow, text: qs.tomorrow, tone: "warning" as const },
+      ].filter((b) => b.n > 0)
+    : [];
+
+  const previous = context?.previous;
+  const trend = previous === undefined ? 0 : Math.sign(pct - previous);
+  const TrendIcon = trend > 0 ? TrendingUp : trend < 0 ? TrendingDown : Minus;
+  const set = context?.set;
+  const share = (n: number) => (set && set.total > 0 ? `${(n / set.total) * 100}%` : "0%");
 
   return (
     <SessionResult
       open={isOpen}
-      icon={<Target size={26} />}
+      icon={context?.passed ? <Trophy size={26} /> : <Target size={26} />}
       tone={verdict.tone}
       title={verdict.text}
       subtitle={`${qs.accuracy}: ${pct}% · ${time}`}
       metrics={[
-        { label: qs.total, value: total },
         { label: qs.correct, value: correct, tone: "success" },
         { label: qs.wrong, value: total - correct, tone: total - correct > 0 ? "danger" : "default" },
+        { label: qs.bestStreak, value: context?.bestStreak ?? 0, tone: (context?.bestStreak ?? 0) >= 3 ? "accent" : "default" },
       ]}
       againLabel={action?.label}
       againIcon={action?.icon}
@@ -107,6 +126,26 @@ export default function QuizStatsModal({ isOpen, practice, total, correct, durat
       size={hasMistakes ? "lg" : "sm"}
     >
       <div className="grid gap-3">
+        {context?.passed && <p className="text-center text-sm text-muted">{qs.setPassedNote}</p>}
+
+        {/* С чем сравнить счёт: прошлый тест по этому набору и рекорд */}
+        {(previous !== undefined || context?.record) && (
+          <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
+            {context?.record && (
+              <Badge tone="special">
+                <Trophy size={12} />
+                {qs.record}
+              </Badge>
+            )}
+            {previous !== undefined && (
+              <span className={cx("flex items-center gap-1.5", trend > 0 ? "text-success" : "text-muted")}>
+                <TrendIcon size={16} className="shrink-0" />
+                {qs.previous.replace("{pct}", String(previous))}
+              </span>
+            )}
+          </div>
+        )}
+
         {/* Прогресс памяти, а не только счёт. Нули не показываем: верный ответ раньше срока честно не растит интервал */}
         {badges.length > 0 && (
           <div className="flex flex-wrap justify-center gap-2">
@@ -115,6 +154,38 @@ export default function QuizStatsModal({ isOpen, practice, total, correct, durat
                 {b.text.replace("{n}", String(b.n))}
               </Badge>
             ))}
+          </div>
+        )}
+
+        {/* Путь по набору: верно в последней проверке / ошибка / ещё не проверено тестом. Цель — сдать набор */}
+        {set && set.total > 0 && !context?.passed && (
+          <div className="grid gap-1.5 text-left">
+            <div className="flex items-baseline justify-between gap-3 text-xs text-muted">
+              <span>{qs.inSet}</span>
+              <span className="font-semibold tabular-nums text-fg">{qs.setCount.replace("{n}", String(set.right)).replace("{total}", String(set.total))}</span>
+            </div>
+            <div className="flex h-2 overflow-hidden rounded-full bg-track">
+              <div className="h-full bg-success transition-[width] duration-700" style={{ width: share(set.right) }} />
+              <div className="h-full bg-danger transition-[width] duration-700" style={{ width: share(set.wrong) }} />
+            </div>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
+              <span className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-success" />
+                {qs.legendRight} {set.right}
+              </span>
+              {set.wrong > 0 && (
+                <span className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-danger" />
+                  {qs.legendWrong} {set.wrong}
+                </span>
+              )}
+              {set.total - set.right - set.wrong > 0 && (
+                <span className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-track" />
+                  {qs.legendNone} {set.total - set.right - set.wrong}
+                </span>
+              )}
+            </div>
           </div>
         )}
 

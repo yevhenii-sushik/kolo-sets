@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Check, Settings, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, Settings, X, Zap } from "lucide-react";
 import { Card, Collection, KnowledgeLevel } from "../../types";
 import { getCollection } from "../../utils/storage";
 import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
@@ -10,13 +11,28 @@ import { useSrsWriter } from "../../components/session/useSrsWriter";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { playSound } from "../../utils/sounds";
-import { QuizQuestion, QuizSettings, buildQuestions, isTyping, pickQuizCards, portionSize, questionFor, synonymsOf } from "../../quiz/plan";
-import { markAnswer, readMisses, readQuizPrefs, saveQuizPrefs } from "../../quiz/storage";
+import { getSoundEnabled, playSound, semitones } from "../../utils/sounds";
+import { hasVoiceFor } from "../../utils/tts";
+import {
+  QuizQuestion,
+  QuizSettings,
+  SetProgress,
+  buildQuestions,
+  isSetPassed,
+  isTyping,
+  pickQuizCards,
+  portionSize,
+  questionFor,
+  recordHistory,
+  setProgress,
+  streakPitch,
+  synonymsOf,
+} from "../../quiz/plan";
+import { markAnswer, readChecks, readHistory, readQuizPrefs, saveHistory, saveQuizPrefs } from "../../quiz/storage";
 import QuizQuestionComponent, { QuizFeedback } from "../../components/quiz/QuizQuestion";
-import QuizStatsModal, { QuizGrowth } from "../../components/quiz/QuizStatsModal";
+import QuizStatsModal, { QuizContext, QuizGrowth } from "../../components/quiz/QuizStatsModal";
 import QuizSettingsModal from "../../components/quiz/QuizSettingsModal";
-import { IconButton } from "../../ui";
+import { Badge, IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionLoading from "../../components/session/SessionLoading";
@@ -51,7 +67,7 @@ export default function QuizPage() {
   const { user } = useAuth();
   const { t } = useI18n();
   const q = t.words.quiz;
-  const { reportSession } = useData();
+  const { reportSession, voiceForCollection } = useData();
   const writer = useSrsWriter();
 
   const [collection, setCollection] = useState<Collection | null>(null);
@@ -67,6 +83,12 @@ export default function QuizPage() {
   const [finished, setFinished] = useState(false);
   const [duration, setDuration] = useState(0);
   const [growth, setGrowth] = useState<QuizGrowth | null>(null);
+  const [context, setContext] = useState<QuizContext | null>(null);
+  const [setInfo, setSetInfo] = useState<SetProgress | null>(null); // путь по набору на начало теста — в шапке
+  // Серия верных ответов подряд. Ответы проверены, а не оценены самим человеком, поэтому серию можно
+  // показывать (правило: никаких серий за самооценку). «Мой ответ верный» серию не продлевает
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
   const [nextCount, setNextCount] = useState(0);
   const [confirmLeave, setConfirmLeave] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -93,17 +115,25 @@ export default function QuizPage() {
     setCleared(0);
     setFinished(false);
     setGrowth(null);
+    setContext(null);
+    setStreak(0);
+    setBestStreak(0);
     setConfirmLeave(false);
     finishedRef.current = false;
     firstRef.current.clear();
     startRef.current = Date.now();
   };
 
+  // Вопрос на слух — только если есть голос для языка набора и звук не выключен в настройках
+  const canListen = (col: Collection) => getSoundEnabled() && hasVoiceFor(voiceForCollection(col));
+
   const startTest = (col: Collection, settings: QuizSettings) => {
     const cards = latestCards(col);
-    const picked = pickQuizCards(cards, { length: settings.length, misses: readMisses(col.id), exclude: askedRef.current });
+    const checks = readChecks(col.id);
+    const picked = pickQuizCards(cards, { length: settings.length, checks, exclude: askedRef.current });
     reset();
-    setRun({ practice: false, questions: buildQuestions(picked, settings.answers, cards), words: picked.length });
+    setSetInfo(setProgress(cards, checks));
+    setRun({ practice: false, questions: buildQuestions(picked, settings.answers, cards, { canListen: canListen(col) }), words: picked.length });
   };
 
   useEffect(() => {
@@ -179,19 +209,26 @@ export default function QuizPage() {
       setAnswers((prev) => [...prev, { question, answer, correct, overruled: false }]);
       if (!run.practice) {
         recordFirst(card, typing ? { kind: "type", result: verdict.result } : { kind: "choice", correct });
-        markAnswer(col.id, card.id, correct);
+        markAnswer(col.id, card.id, correct, pool.map((c) => c.id));
       }
+    }
+    // Серия — только в самом тесте; звук «верно» с каждой ступенью серии чуть выше
+    const nextStreak = !run.practice && correct ? streak + 1 : 0;
+    if (!run.practice) {
+      setStreak(nextStreak);
+      setBestStreak((b) => Math.max(b, nextStreak));
     }
     if (run.practice) {
       // Работа над ошибками: неверно — слово вернётся в конце, пока не ответишь верно
       if (correct) setCleared((n) => n + 1);
-      else setRun((r) => r && { ...r, questions: [...r.questions, questionFor(card, prefs.answers, pool)] });
+      else setRun((r) => r && { ...r, questions: [...r.questions, questionFor(card, prefs.answers, pool, { canListen: canListen(col) })] });
     }
 
     const auto = verdict.result === "exact";
     setSynonym(null);
     setFeedback({ answer, verdict, correct, auto });
-    playSound(correct ? "answer-correct" : "answer-wrong");
+    if (correct) playSound("answer-correct", { rate: semitones(streakPitch(nextStreak)) });
+    else playSound("answer-wrong");
     if (auto) timer.current = setTimeout(() => nextRef.current(), AUTO_NEXT_MS);
   };
 
@@ -220,7 +257,7 @@ export default function QuizPage() {
       writer.record(col.id, card.id, KnowledgeLevel.REMEMBER);
       firstRef.current.set(card.id, { ...f, level: KnowledgeLevel.REMEMBER });
     }
-    markAnswer(col.id, card.id, true);
+    markAnswer(col.id, card.id, true, pool.map((c) => c.id));
   };
 
   const finish = () => {
@@ -244,6 +281,14 @@ export default function QuizPage() {
         if (f.level === KnowledgeLevel.FORGOT) g.tomorrow += 1;
       }
       setGrowth(g);
+
+      // Счёт в контексте: прошлый тест по набору, рекорд, путь по набору и «Набор сдан»
+      const cards = latestCards(col);
+      const progress = setProgress(cards, readChecks(col.id));
+      const pct = answers.length > 0 ? Math.round((answers.filter((a) => a.correct).length / answers.length) * 100) : 0;
+      const { history, previous, record } = recordHistory(readHistory(col.id), pct, answers.length, cards.length);
+      saveHistory(col.id, history);
+      setContext({ previous, record, bestStreak, set: progress, passed: isSetPassed(progress) });
     }
     const remaining = latestCards(col).filter((c) => !askedRef.current.has(c.id)).length;
     setNextCount(remaining > 0 ? portionSize(remaining, prefs.length) : 0);
@@ -282,7 +327,7 @@ export default function QuizPage() {
   const startPractice = () => {
     const missed = answers.filter((a) => !a.correct).map((a) => a.question.card);
     reset();
-    setRun({ practice: true, questions: buildQuestions(shuffle(missed), prefs.answers, pool), words: missed.length });
+    setRun({ practice: true, questions: buildQuestions(shuffle(missed), prefs.answers, pool, { canListen: canListen(col) }), words: missed.length });
   };
 
   // Пока не дан первый ответ, новые настройки пересобирают тест сразу; потом — со следующего теста
@@ -299,12 +344,16 @@ export default function QuizPage() {
   const requestExit = () => (!run.practice && !finished && answers.length > 0 ? setConfirmLeave(true) : exit());
 
   const progress = run.practice ? cleared / run.words : answers.length / run.words;
+  const voice = voiceForCollection(col);
+  // Путь по набору в шапке — когда тест уже что-то проверил: цель «сдать набор» видна с начала
+  const setLine =
+    setInfo && setInfo.right + setInfo.wrong > 0 ? q.setLine.replace("{n}", String(setInfo.right)).replace("{total}", String(setInfo.total)) : undefined;
 
   return (
     <SessionShell
       perigee={!run.practice}
       title={col.name}
-      subtitle={run.practice ? q.practiceTitle : undefined}
+      subtitle={run.practice ? q.practiceTitle : setLine}
       onClose={requestExit}
       action={
         <IconButton label={q.settings.title} onClick={() => setShowSettings(true)}>
@@ -330,6 +379,15 @@ export default function QuizPage() {
               <X size={15} strokeWidth={3} />
               {answers.length - correctCount}
             </span>
+            {/* Серия с трёх подряд; каждое новое верное — короткий «щелчок» значка */}
+            {streak >= 3 && (
+              <motion.span key={streak} initial={{ scale: 1.25 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 500, damping: 18 }}>
+                <Badge tone="accent">
+                  <Zap size={12} />
+                  {q.streak.replace("{n}", String(streak))}
+                </Badge>
+              </motion.span>
+            )}
           </>
         )
       }
@@ -342,6 +400,8 @@ export default function QuizPage() {
             question={current}
             feedback={feedback}
             synonym={synonym}
+            voice={voice}
+            speakable={hasVoiceFor(voice)}
             onOverride={handleOverride}
             onAnswer={handleAnswer}
             onNext={next}
@@ -357,6 +417,7 @@ export default function QuizPage() {
         duration={duration}
         mistakes={answers.filter((a) => !a.correct)}
         growth={growth}
+        context={context}
         nextCount={nextCount}
         onPractise={startPractice}
         onNext={() => startTest(col, prefs)}

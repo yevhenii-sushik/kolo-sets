@@ -7,6 +7,7 @@ export enum TaskType {
   WORD_BY_EXPLANATION = 'word_by_explanation',
   WRITE_WORD_BY_TRANSLATION = 'write_word_by_translation',
   WRITE_WORD_BY_EXPLANATION = 'write_word_by_explanation',
+  LISTEN = 'listen', // услышать слово и выбрать перевод — только если есть голос для языка
 }
 
 // Оценка знания слова (для флешкарточек)
