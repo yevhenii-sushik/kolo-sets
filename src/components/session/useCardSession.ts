@@ -4,13 +4,15 @@ import { shuffle as shuffled } from "../../utils/gameUtils";
 import { previewIntervals } from "../../utils/srs";
 import { playSound, RATING_PITCH } from "../../utils/sounds";
 import { useSrsWriter } from "./useSrsWriter";
+import { shuffleRest, wordProgress } from "./cardQueue";
 
-// Общий ход тренировки по карточкам — для флэшкарт набора и для повторения.
-// Раньше у каждой страницы была своя копия, и во флэшкартах каждая оценка перезаписывала набор
-// исходной версией карточек: из сессии сохранялась только последняя. Запись — через useSrsWriter.
+// Ход тренировки по карточкам (флэшкарты набора). Раньше у каждой страницы была своя копия, и во
+// флэшкартах каждая оценка перезаписывала набор исходной версией карточек: из сессии сохранялась
+// только последняя. Запись — через useSrsWriter.
 //
 // «Не знаю» возвращает карточку через три карточки (как ошибка в сессии Perigee). Повтор — закрепление:
 // в расписание не идёт (одна оценка на слово за тренировку) и в итогах не считается.
+// «Повторить трудные» после круга — тоже закрепление (practice): расписание эти слова уже оценило.
 
 const RETRY_GAP = 3;
 const MAX_RETRIES = 3; // не зацикливаться на одном слове
@@ -21,11 +23,24 @@ export interface SessionItem {
   retry?: boolean;
 }
 
+// Оценка, поставленная до перерыва: круг продолжили с места — в итогах она есть, показа нет
+export interface CarriedRating {
+  card: Card;
+  collectionId: string;
+  level: KnowledgeLevel;
+}
+
+export interface FirstRating {
+  collectionId: string;
+  cardId: string;
+  level: KnowledgeLevel;
+}
+
 export interface CardSessionResult {
-  cards: number;
-  allKnow: boolean;
+  cards: number; // разных слов за этот заход (оценённые до перерыва уже не считаем)
   durationSec: number;
   collectionIds: string[];
+  practice: boolean;
 }
 
 interface Rated {
@@ -44,6 +59,8 @@ const LEVEL_KEYS: Record<string, KnowledgeLevel> = {
   Digit4: KnowledgeLevel.KNOW, Numpad4: KnowledgeLevel.KNOW,
 };
 
+export const isHardLevel = (level: KnowledgeLevel) => level === KnowledgeLevel.DONT_KNOW || level === KnowledgeLevel.FORGOT;
+
 export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   const writer = useSrsWriter();
   const [items, setItems] = useState<SessionItem[]>([]);
@@ -51,6 +68,8 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   const [flipped, setFlipped] = useState(false);
   const [finished, setFinished] = useState(false);
   const [rated, setRated] = useState<Rated[]>([]);
+  const [carried, setCarried] = useState<CarriedRating[]>([]);
+  const [practice, setPractice] = useState(false);
   const [duration, setDuration] = useState(0);
   // Куда улетает оценённая карточка (CardStage): вправо — вспомнил, влево — нет, 0 — отмена и перемешивание
   const [exitTo, setExitTo] = useState<-1 | 0 | 1>(0);
@@ -61,15 +80,17 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   const onFinishRef = useRef(onFinish);
   onFinishRef.current = onFinish;
 
-  // Актуальная версия карточки: после перемешивания её могут показать второй раз
+  // Актуальная версия карточки: после оценки в этой тренировке её могут показать ещё раз
   const latest = (item: SessionItem) => writer.card(item.collectionId, item.card.id) ?? item.card;
 
-  const reset = (next: SessionItem[]) => {
+  const reset = (next: SessionItem[], opts: { carried?: CarriedRating[]; practice?: boolean } = {}) => {
     setItems(next);
     setIndex(0);
     setFlipped(false);
     setFinished(false);
     setRated([]);
+    setCarried(opts.carried ?? []);
+    setPractice(!!opts.practice);
     setDuration(0);
     setExitTo(0);
     startedAt.current = Date.now();
@@ -77,14 +98,27 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   };
 
   const start = useCallback(
-    (next: SessionItem[], cols: Collection[]) => {
+    (next: SessionItem[], cols: Collection[], opts: { carried?: CarriedRating[] } = {}) => {
       writer.load(cols);
-      reset(next);
+      reset(next, opts);
     },
     [writer],
   );
 
-  const shuffle = () => reset(shuffled(items.filter((item) => !item.retry)).map((item) => ({ ...item, card: latest(item) })));
+  // Прогнать трудные ещё раз, пока свежо. Наборы не перезагружаем: в writer уже свежие версии карточек
+  const practise = (next: SessionItem[]) =>
+    reset(next.map((item) => ({ card: latest(item), collectionId: item.collectionId })), { practice: true });
+
+  const shuffle = () => {
+    const next = shuffleRest(items, index, shuffled);
+    setItems(next);
+    // Текущая карточка сменилась — новая открывается лицом
+    if (next[index] !== items[index]) {
+      setFlipped(false);
+      setExitTo(0);
+      lock.current = false;
+    }
+  };
 
   const retriesLeft = (item: SessionItem) =>
     MAX_RETRIES - items.filter((x) => x.retry && x.collectionId === item.collectionId && x.card.id === item.card.id).length > 0;
@@ -101,7 +135,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     lock.current = true;
     const item = items[index];
     const before = latest(item);
-    if (!item.retry) writer.record(item.collectionId, item.card.id, level);
+    if (!item.retry && !practice) writer.record(item.collectionId, item.card.id, level);
     setExitTo(level === KnowledgeLevel.REMEMBER || level === KnowledgeLevel.KNOW ? 1 : -1);
     playSound("card-next", { rate: RATING_PITCH[level] });
 
@@ -127,12 +161,11 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     setFinished(true);
     writer.commit();
     playSound("session-complete");
-    const firsts = nextRated.filter((r) => !r.retry);
     onFinishRef.current({
-      cards: firsts.length,
-      allKnow: firsts.every((r) => r.level === KnowledgeLevel.KNOW),
+      cards: nextRated.filter((r) => !r.retry).length,
       durationSec,
       collectionIds: [...new Set(items.map((i) => i.collectionId))],
+      practice,
     });
   };
 
@@ -140,7 +173,7 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
   const undo = () => {
     const last = rated[rated.length - 1];
     if (!last || finished) return;
-    if (!last.retry) writer.restore(last.collectionId, last.before);
+    if (!last.retry && !practice) writer.restore(last.collectionId, last.before);
     if (last.inserted !== undefined) setItems(items.filter((_, i) => i !== last.inserted));
     setRated(rated.slice(0, -1));
     setIndex(last.index);
@@ -175,39 +208,63 @@ export function useCardSession(onFinish: (result: CardSessionResult) => void) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Итоги — по первому показу каждой карточки, без повторов
+  // Первые оценки этого захода — по ним страница помнит, где остановились посреди круга
+  const firsts: FirstRating[] = useMemo(
+    () => rated.filter((r) => !r.retry).map((r) => ({ collectionId: r.collectionId, cardId: r.before.id, level: r.level })),
+    [rated],
+  );
+
+  // Итоги — по первому показу каждой карточки, без повторов, вместе с оценками до перерыва
   const stats: FlashcardStats = useMemo(() => {
-    const firsts = rated.filter((r) => !r.retry);
-    const count = (level: KnowledgeLevel) => firsts.filter((r) => r.level === level).length;
+    const levels = [...carried.map((c) => c.level), ...firsts.map((r) => r.level)];
+    const count = (level: KnowledgeLevel) => levels.filter((l) => l === level).length;
     return {
-      totalCards: items.filter((item) => !item.retry).length,
+      totalCards: carried.length + items.filter((item) => !item.retry).length,
       dontKnow: count(KnowledgeLevel.DONT_KNOW),
       forgot: count(KnowledgeLevel.FORGOT),
       remember: count(KnowledgeLevel.REMEMBER),
       know: count(KnowledgeLevel.KNOW),
       duration,
     };
-  }, [rated, items, duration]);
+  }, [carried, firsts, items, duration]);
+
+  // Трудные слова («Не знаю», «Забылось») — список в итогах и «Повторить трудные»
+  const hard: SessionItem[] = useMemo(
+    () => [
+      ...carried.filter((c) => isHardLevel(c.level)).map(({ card, collectionId }) => ({ card, collectionId })),
+      ...rated.filter((r) => !r.retry && isHardLevel(r.level)).map((r) => ({ card: r.before, collectionId: r.collectionId })),
+    ],
+    [carried, rated],
+  );
 
   // Подписи на кнопках оценки — по актуальной версии карточки; «Не знаю» — «ещё раз» (0), пока повтор
-  // возможен. На повторе подписей нет: его оценка в расписание не идёт
+  // возможен. На повторе и при закреплении подписей нет: оценка в расписание не идёт
   const currentItem = items[index] as SessionItem | undefined;
   const previews =
-    currentItem && !currentItem.retry && flipped && !finished
+    currentItem && !currentItem.retry && !practice && flipped && !finished
       ? { ...previewIntervals(latest(currentItem)), [KnowledgeLevel.DONT_KNOW]: retriesLeft(currentItem) ? 0 : 1 }
       : undefined;
+
+  const progress = wordProgress(items, index, carried.length);
 
   return {
     items,
     index,
     exitTo,
     previews,
-    current: items[index] as SessionItem | undefined,
+    current: currentItem,
     flipped,
     finished,
+    practice,
     stats,
+    hard,
+    firsts,
+    position: progress.position,
+    total: progress.total,
+    progress: progress.progress,
     canUndo: rated.length > 0 && !finished,
     start,
+    practise,
     shuffle,
     flip,
     rate,

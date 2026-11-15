@@ -202,7 +202,9 @@ export function applySession(
     collectionsCount: info.collectionsCount,
     session: {
       duration: s.durationSec,
-      allKnow: isCards && s.allKnow === true,
+      // «Знаю всё!» — только за сессию Perigee, где каждое слово проверено ответом. Самооценка флэшкарт
+      // не в счёт: награда за «Знаю» на всех карточках подталкивала оценивать нечестно
+      allKnow: s.kind === "perigee" && s.allKnow === true,
       quizQuestions: s.kind === "quiz" ? s.cards : undefined,
       isComeback,
       hour: hourIn(now, tz),

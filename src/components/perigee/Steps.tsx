@@ -13,6 +13,7 @@ import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
 import ChoiceButton, { choiceState } from "../session/ChoiceButton";
 import CardStage from "../session/CardStage";
 import RatingBar from "../session/RatingBar";
+import { SWIPE, swipeLabels } from "../session/ratingLabels";
 import AnswerDiff from "../session/AnswerDiff";
 
 // Шаги сессии Perigee (docs/specs/perigee.md): знакомство, выбор, ввод, флэшкарта наоборот.
@@ -367,6 +368,7 @@ export function TypeStep({
 
 // ── Флэшкарта наоборот: перевод → вспомнить слово → оценить ──
 export function FlashStep({ card, voice, graded = true, onRate }: { card: CardData; voice?: string; graded?: boolean; onRate: (level: KnowledgeLevel) => void }) {
+  const { t } = useI18n();
   const [flipped, setFlipped] = useState(false);
   const rated = useRef(false);
   const flip = (next = !flipped) => {
@@ -380,6 +382,9 @@ export function FlashStep({ card, voice, graded = true, onRate }: { card: CardDa
     playSound("card-next", { rate: RATING_PITCH[level] });
     onRate(level);
   };
+
+  // Интервалы на кнопках и в подписи свайпа — только когда оценка пойдёт в расписание, а не на повторе после ошибки
+  const previews = flipped && graded ? { ...previewIntervals(card), [KnowledgeLevel.DONT_KNOW]: 0 } : undefined;
 
   useEffect(() => {
     const keys: Record<string, KnowledgeLevel> = {
@@ -407,10 +412,10 @@ export function FlashStep({ card, voice, graded = true, onRate }: { card: CardDa
         reverse
         flipped={flipped}
         onFlip={() => flip()}
-        onSwipe={(dir) => rate(dir === "right" ? KnowledgeLevel.KNOW : KnowledgeLevel.DONT_KNOW)}
+        onSwipe={(dir) => rate(SWIPE[dir])}
+        swipe={swipeLabels(t.words.flashcards, previews)}
       />
-      {/* Интервалы на кнопках — только когда оценка пойдёт в расписание, а не на повторе после ошибки */}
-      <RatingBar isFlipped={flipped} onFlip={() => flip(true)} onRate={rate} previews={flipped && graded ? { ...previewIntervals(card), [KnowledgeLevel.DONT_KNOW]: 0 } : undefined} />
+      <RatingBar isFlipped={flipped} onFlip={() => flip(true)} onRate={rate} previews={previews} />
     </>
   );
 }

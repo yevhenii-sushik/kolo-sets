@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { BookOpen, Eye, EyeOff, Quote, Volume2 } from "lucide-react";
+import { BookOpen, Quote, Volume2 } from "lucide-react";
 import { Card } from "../../types";
 import { speak, isTTSSupported } from "../../utils/tts";
 import { useI18n } from "../../contexts/I18nContext";
@@ -14,15 +13,15 @@ interface FlashcardProps {
   reverse?: boolean; // наоборот: на лице перевод, на обороте слово — вспоминаем слово (сессия Perigee)
 }
 
-// Флэшкарта с переворотом (стили .flip-card в index.css): лицо — слово на тёмном, оборот — объяснение и пример
+// Флэшкарта с переворотом (стили .flip-card в index.css): лицо — слово на тёмном, оборот — ответ крупно,
+// под ним объяснение и пример. Ответ виден сразу: раньше перевод прятался за значком глаза, и после
+// «Показать ответ» человек видел то же слово ещё раз (docs/specs/perigee.md, «Флэшкарты»)
 export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip, reverse = false }: FlashcardProps) {
   const { t } = useI18n();
   const f = t.words.flashcards;
-  const [showTranslation, setShowTranslation] = useState(false);
-
-  useEffect(() => {
-    if (!isFlipped) setShowTranslation(false);
-  }, [isFlipped, card.id]);
+  // Сверху — то, что было на лице (напоминание), ниже крупно — то, что нужно было вспомнить
+  const prompt = reverse ? card.translation : card.word;
+  const answer = reverse ? card.word : card.translation;
 
   const stop = (fn: () => void) => (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -45,35 +44,23 @@ export default function Flashcard({ card, isFlipped, language = "nb-NO", onFlip,
         {/* Оборот: перевод по кнопке, объяснение, пример */}
         <div className="flip-card-back absolute h-full w-full">
           <div className="relative flex h-full w-full flex-col overflow-y-auto rounded-4xl border border-line bg-surface p-6 shadow-xl md:p-10">
-            <div className="absolute left-4 top-4 right-4 flex justify-between" onClick={(e) => e.stopPropagation()}>
-              {/* Озвучка — голосом браузера, качество зависит от устройства: пока честно помечаем бетой */}
-              {isTTSSupported() ? (
-                <div className="flex items-center gap-2" title={f.ttsBetaHint}>
-                  <IconButton variant="soft" label={f.speak} onClick={stop(() => speak(card.word, language))}>
-                    <Volume2 size={20} />
-                  </IconButton>
-                  <Badge tone="special">{f.ttsBeta}</Badge>
-                </div>
-              ) : (
-                <span />
-              )}
-              {/* Наоборот перевод уже был на лице — прятать нечего */}
-              {!reverse && (
-                <IconButton
-                  variant="surface"
-                  label={showTranslation ? f.hideTranslation : f.showTranslation}
-                  onClick={stop(() => setShowTranslation((v) => !v))}
-                >
-                  {showTranslation ? <EyeOff size={20} /> : <Eye size={20} />}
+            {/* Озвучка — голосом браузера, качество зависит от устройства: пока честно помечаем бетой */}
+            {isTTSSupported() && (
+              <div className="absolute left-4 top-4 flex items-center gap-2" title={f.ttsBetaHint} onClick={(e) => e.stopPropagation()}>
+                <IconButton variant="soft" label={f.speak} onClick={stop(() => speak(card.word, language))}>
+                  <Volume2 size={20} />
                 </IconButton>
-              )}
-            </div>
+                <Badge tone="special">{f.ttsBeta}</Badge>
+              </div>
+            )}
 
             <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center gap-6 pt-10 text-center">
               <div className="grid gap-2">
-                <h3 dir="auto" className="font-display text-3xl font-extrabold text-fg md:text-4xl">{card.word}</h3>
-                {card.partOfSpeech && <p className="text-sm text-faint">{posLabel(card.partOfSpeech, t.words.pos)}</p>}
-                {(showTranslation || reverse) && <p dir="auto" className="text-2xl font-semibold text-accent-ink md:text-3xl">{card.translation}</p>}
+                <p dir="auto" className="text-lg font-semibold text-muted md:text-xl">
+                  {prompt}
+                  {card.partOfSpeech && <span className="ml-2 text-sm font-medium text-faint">{posLabel(card.partOfSpeech, t.words.pos)}</span>}
+                </p>
+                <h3 dir="auto" className="font-display text-4xl font-extrabold leading-tight text-accent-ink wrap-break-word md:text-5xl">{answer}</h3>
               </div>
 
               {card.explanation && (

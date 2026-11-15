@@ -14,13 +14,14 @@ import { useData } from "../../contexts/DataContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
 import { Plus, Upload, Download, Pencil, ArrowUp, Layers, Play, CloudOff, RotateCw } from "lucide-react";
-import { Button, ButtonLink, Card as UiCard, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text } from "../../ui";
+import { Button, Card as UiCard, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import AddCardModal from "../../components/AddCardModal";
 import ImportCardsModal from "../../components/ImportCardsModal";
 import CardListItem from "../../components/cards/CardListItem";
 import ConfirmDialog from "../../components/ConfirmDialog";
+import StudyModeModal from "../../components/cards/StudyModeModal";
 import Toast from "../../components/ui/Toast";
 
 const fadeUp = (delay = 0) => ({
@@ -59,6 +60,7 @@ export default function CollectionEditPage() {
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
+  const [showModes, setShowModes] = useState(false);
   const [renameValue, setRenameValue] = useState("");
 
   // Большой заголовок тает по прокрутке, и в то же время (одна и та же позиция прокрутки, без
@@ -238,14 +240,15 @@ export default function CollectionEditPage() {
   };
 
   const cardCount = collection?.cards.length ?? 0;
-  // Слова есть — главное действие «Учить», чтобы из редактора не приходилось искать, где начать тренировку
-  const studyTo = `/collection/${id}/flashcards`;
+  // Слова есть — главное действие «Учить», чтобы из редактора не приходилось искать, где начать тренировку.
+  // Открывает тот же выбор режима, что и «Учить» на карточке набора: одно слово — одно действие
+  const openModes = () => setShowModes(true);
   const actions = (compact: boolean) => (
     <>
       {compact ? (
         <>
           {cardCount > 0 && (
-            <IconButton variant="soft" label={e.study} onClick={() => navigate(studyTo)}>
+            <IconButton variant="soft" label={e.study} onClick={openModes}>
               <Play size={18} />
             </IconButton>
           )}
@@ -262,9 +265,9 @@ export default function CollectionEditPage() {
       ) : (
         <>
           {cardCount > 0 && (
-            <ButtonLink to={studyTo} iconLeft={<Play size={18} />}>
+            <Button iconLeft={<Play size={18} />} onClick={openModes}>
               {e.study}
-            </ButtonLink>
+            </Button>
           )}
           <Button variant={cardCount > 0 ? "secondary" : "primary"} iconLeft={<Plus size={18} />} onClick={() => setIsAddModalOpen(true)}>
             {e.addCard}
@@ -403,6 +406,7 @@ export default function CollectionEditPage() {
       <AddCardModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSave={handleAddCard} />
       <ImportCardsModal isOpen={isImportModalOpen} onClose={() => setIsImportModalOpen(false)} onImport={handleImportCards} />
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
+      {collection && <StudyModeModal collection={collection} open={showModes} onClose={() => setShowModes(false)} />}
       <Toast
         isOpen={toastState.isOpen}
         message={toastState.message}

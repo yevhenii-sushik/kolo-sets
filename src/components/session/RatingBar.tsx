@@ -1,6 +1,7 @@
 import { KnowledgeLevel } from "../../types";
 import { Button, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
+import { intervalLabel } from "./ratingLabels";
 
 const LEVELS = [
   { level: KnowledgeLevel.DONT_KNOW, key: "dontKnow", tone: "bg-danger-soft text-danger hover:bg-danger/15" },
@@ -28,15 +29,7 @@ export default function RatingBar({
 }) {
   const { t } = useI18n();
   const f = t.words.flashcards;
-  // «ещё раз», «1 д», «3 мес», «2 г» — коротко, чтобы влезло под оценку
-  const interval = (days: number) =>
-    days <= 0
-      ? f.interval.again
-      : days < 30
-        ? f.interval.days.replace("{n}", String(days))
-        : days < 365
-          ? f.interval.months.replace("{n}", String(Math.round(days / 30.4)))
-          : f.interval.years.replace("{n}", String(Math.round(days / 365)));
+  const interval = (days: number) => intervalLabel(days, f.interval);
   const hint = (flipped: boolean) => (coach ? (flipped ? f.coach.rate : f.coach.recall) : flipped ? t.words.session.rate : "");
   const layer = (active: boolean) => cx("col-start-1 row-start-1", !active && "invisible");
 

@@ -78,7 +78,7 @@
           "id": "flashcards",
           "title": "Flashcards",
           "tags": ["Whole set"],
-          "text": "See the word, recall the translation, flip the card and rate yourself: “Don't know” brings the word back later in this session, “Forgot” — tomorrow, “Remember” — in a few days, “Know” — the latest. Each button shows when the word will return. Best for running through a whole set: a new one, or before a lesson."
+          "text": "See the word, recall the translation, flip the card and rate yourself: “Don't know” brings the word back later in this session, “Forgot” — tomorrow, “Remember” — in a few days, “Know” — the latest. Each button shows when the word will return; on your phone you can swipe: right for “Remember”, left for “Don't know”. A big set goes in rounds of 20 words, and Kolo remembers where you stopped. At the end of a round you see your tough words and can run through them again right away. Best for running through a whole set: a new one, or before a lesson."
         },
         {
           "id": "quiz",

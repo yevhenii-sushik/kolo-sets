@@ -66,7 +66,7 @@ export enum AchievementType {
 // Контекст сессии для проверки особых достижений
 export interface SessionExtras {
   duration?: number;       // seconds — for MARATHON, SPEED_DEMON
-  allKnow?: boolean;       // all cards rated KNOW — for ALL_KNOW
+  allKnow?: boolean;       // сессия Perigee без единой ошибки — для ALL_KNOW (самооценка флэшкарт не в счёт)
   quizQuestions?: number;  // question count — for SPEED_DEMON check
   isComeback?: boolean;    // returning after 7+ day gap — for COMEBACK
   hour?: number;           // час тренировки в часовом поясе пользователя — для NIGHT_OWL / EARLY_BIRD

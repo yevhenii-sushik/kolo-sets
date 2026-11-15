@@ -106,6 +106,13 @@ describe("счётчики и достижения", () => {
     );
   });
 
+  it("«Знаю всё!» — за сессию Perigee без ошибок, а не за самооценку флэшкарт", () => {
+    const flash = applySession({}, session({ allKnow: true }), info, NOON).result;
+    expect(flash.newAchievements).not.toContain(AchievementType.ALL_KNOW);
+    const perigee = applySession({}, session({ kind: "perigee", cards: 8, correct: 8, allKnow: true }), info, NOON).result;
+    expect(perigee.newAchievements).toContain(AchievementType.ALL_KNOW);
+  });
+
   it("уже открытые достижения не выдаются повторно", () => {
     const state = { achievements: [AchievementType.FIRST_STUDY] };
     const { patch, result } = applySession(state, session(), info, NOON);

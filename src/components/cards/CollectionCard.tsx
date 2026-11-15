@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  BookOpen,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -11,22 +10,20 @@ import {
   Languages,
   Pencil,
   Star,
-  Timer,
   Trash2,
   X,
-  Zap,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Collection, Folder as FolderType } from "../../types";
-import { isDueCard, isNewCard } from "../../utils/storage";
+import { isDueCard } from "../../utils/storage";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
-import { Button, IconButton, Modal, PerigeeMark, cx } from "../../ui";
+import { Button, IconButton, cx } from "../../ui";
 import { useData } from "../../contexts/DataContext";
 import { courseName } from "../../courses/languages";
 import CourseFlag from "../courses/CourseFlag";
-import PerigeeTag from "../session/PerigeeTag";
+import StudyModeModal from "./StudyModeModal";
 
 type MenuView = "main" | "folders" | "courses";
 
@@ -47,7 +44,6 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
   const navigate = useNavigate();
   const { t, language } = useI18n();
   const c = t.words.collectionCard;
-  const m = c.modal;
   const { courses } = useData();
   const otherCourses = onMoveToCourse ? courses.filter((x) => x.id !== collection.courseId) : [];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -70,15 +66,7 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
 
   const total = collection.cards.length;
   const isEmpty = total === 0;
-  const tooFewQuiz = total < 4;
   const dueToday = collection.cards.filter(isDueCard).length;
-  // Сессии Perigee по набору есть что предложить: слова на сегодня или новые
-  const canLearn = dueToday > 0 || collection.cards.some(isNewCard);
-
-  const start = (path: string) => {
-    setShowModeModal(false);
-    navigate(`/collection/${collection.id}/${path}`);
-  };
 
   return (
     <>
@@ -270,67 +258,7 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
         </div>
       </div>
 
-      {/* ── Выбор режима ── */}
-      <Modal open={showModeModal} onClose={() => setShowModeModal(false)} title={collection.name} size="sm">
-        <p className="-mt-2 mb-4 text-sm text-muted">{m.chooseMode}</p>
-        <div className="grid gap-2">
-          {/* Четыре режима, у каждого своя задача (docs/specs/perigee.md, «Режимы после чистки»):
-              учить по расписанию, прогнать весь набор, проверить себя, поиграть */}
-          <ModeButton
-            icon={<PerigeeMark size={18} tone="mono" />}
-            label={dueToday > 0 ? `${m.learn} · ${dueToday}` : m.learn}
-            desc={canLearn ? m.learnDesc : m.learnDone}
-            disabled={!canLearn}
-            onClick={() => {
-              setShowModeModal(false);
-              navigate(`/learn?set=${collection.id}`);
-            }}
-            perigee
-          />
-          <ModeButton icon={<Zap size={18} />} label={m.flashcards} desc={m.flashcardsDesc} onClick={() => start("flashcards")} perigee />
-          <ModeButton
-            icon={<BookOpen size={18} />}
-            label={m.quiz}
-            desc={tooFewQuiz ? m.quizNeedsMore : m.quizDesc}
-            disabled={tooFewQuiz}
-            onClick={() => start("quiz")}
-            perigee
-          />
-
-          <p className="mt-3 px-1 text-sm font-semibold text-fg">{m.games}</p>
-          <ModeButton
-            icon={<Timer size={18} />}
-            label={m.speed}
-            desc={tooFewQuiz ? m.needMore : m.speedDesc}
-            disabled={tooFewQuiz}
-            onClick={() => start("speed")}
-            perigee
-          />
-        </div>
-        {/* Что значит знак у режимов — одна строка внизу */}
-        <p className="mt-4 flex items-center gap-2 px-1 text-xs text-muted">
-          <PerigeeTag compact />
-          {t.words.perigee.legend}
-        </p>
-      </Modal>
+      <StudyModeModal collection={collection} open={showModeModal} onClose={() => setShowModeModal(false)} />
     </>
-  );
-}
-
-function ModeButton({ icon, label, desc, onClick, disabled, perigee = false }: { icon: ReactNode; label: string; desc: string; onClick: () => void; disabled?: boolean; perigee?: boolean }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className="group flex w-full items-center gap-3 rounded-2xl border border-transparent bg-inset p-3 text-left transition-colors hover:border-accent/40 disabled:pointer-events-none disabled:opacity-45"
-    >
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface text-accent-ink">{icon}</span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm font-semibold text-fg">{label}</span>
-        <span className="block text-xs text-muted">{desc}</span>
-      </span>
-      {perigee && <PerigeeTag compact />}
-    </button>
   );
 }

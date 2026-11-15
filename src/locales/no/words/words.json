@@ -27,7 +27,7 @@
       "learnDesc": "Perigee-økt for dette settet: ord som skal repeteres og nye ord",
       "learnDone": "Ferdig for i dag – kom tilbake i morgen",
       "flashcards": "Flashkort",
-      "flashcardsDesc": "Vend og vurder",
+      "flashcardsDesc": "Hele settet i rekkefølge, 20 kort om gangen",
       "quiz": "Quiz",
       "quizDesc": "Test kunnskapen din",
       "quizNeedsMore": "Trenger 4+ kort",
@@ -96,15 +96,14 @@
     "scrollTop": "Til toppen"
   },
   "flashcards": {
-    "shuffle": "Bland",
-    "shuffleConfirm": "Bland kortstokken og start på nytt?",
+    "shuffle": "Bland resten",
     "undo": "Angre siste vurdering",
     "range": "Ord {from}–{to} av {total}",
+    "retryBadge": "Igjen",
+    "practiceTitle": "Vanskelige ord",
     "back": "Tilbake",
     "explanation": "Forklaring",
     "example": "Eksempel",
-    "showTranslation": "Vis oversettelse",
-    "hideTranslation": "Skjul oversettelse",
     "keyboardHint": "Mellomrom for å snu · 1–4 for å vurdere · Backspace for å angre",
     "hints": {
       "clickToFlip": "Trykk på kortet for å snu det",
@@ -123,15 +122,25 @@
       "years": "{n} år"
     },
     "stats": {
-      "title": "Bra jobbet!",
-      "subtitle": "Sesjonen er fullført. Du gjorde det bra!",
+      "titles": {
+        "clean": "Ingen vanskelige ord",
+        "good": "Det går bra",
+        "start": "En god start"
+      },
+      "notes": {
+        "clean": "Perigee henter fram disse ordene når det er tid.",
+        "good": "De vanskelige ordene står nedenfor. Gå gjennom dem én gang til mens de er ferske.",
+        "start": "Nye ord sitter sjelden første gang. Gå gjennom de vanskelige igjen – da fester de seg raskere."
+      },
       "cards": "Kort",
       "time": "Tid",
-      "restart": "Start på nytt",
-      "progress": "{done} av {total} gjennomgått",
+      "restart": "Hele settet igjen",
+      "inSet": "Gjennomgått",
       "setDone": "Du har gått gjennom hele settet!",
       "next": "Neste {n}",
       "fromStart": "Fra starten",
+      "hard": "Vanskelige ord",
+      "practise": "Øv på vanskelige",
       "exit": "Avslutt",
       "min": "m",
       "sec": "s",
@@ -139,7 +148,7 @@
     },
     "coach": {
       "recall": "Prøv først å huske oversettelsen selv – vis så svaret. På mobilen kan du bare trykke på kortet.",
-      "rate": "Vurder ærlig: etter «Vet ikke» kommer ordet tilbake allerede i denne økten, etter «Glemte» – i morgen, etter «Husker» – om noen dager, og etter «Kan» – senest. Under hver knapp ser du når ordet kommer tilbake."
+      "rate": "Vurder ærlig – under hver knapp ser du når ordet kommer tilbake. «Vet ikke» viser det igjen i denne økten, «Kan» sender det lengst. På mobilen kan du sveipe: til høyre for «Husker», til venstre for «Vet ikke»."
     },
     "speak": "Spill av uttale",
     "ttsBeta": "Beta",

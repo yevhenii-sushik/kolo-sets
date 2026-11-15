@@ -221,7 +221,7 @@
     },
     "all_know": {
       "name": "Kan alt!",
-      "description": "Gi alle kortene «Kan» i én økt"
+      "description": "Svar riktig på første forsøk på alle ordene i en Perigee-økt"
     },
     "comeback": {
       "name": "Comeback",

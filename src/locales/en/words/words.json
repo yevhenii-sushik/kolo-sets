@@ -27,7 +27,7 @@
       "learnDesc": "Perigee session for this set: due words and new ones",
       "learnDone": "All done for today — come back tomorrow",
       "flashcards": "Flashcards",
-      "flashcardsDesc": "Flip and rate",
+      "flashcardsDesc": "The whole set in order, 20 cards at a time",
       "quiz": "Quiz",
       "quizDesc": "Test your knowledge",
       "quizNeedsMore": "Need 4+ cards",
@@ -96,15 +96,14 @@
     "scrollTop": "Back to top"
   },
   "flashcards": {
-    "shuffle": "Shuffle",
-    "shuffleConfirm": "Shuffle the deck and start over?",
+    "shuffle": "Shuffle the rest",
     "undo": "Undo last rating",
     "range": "Words {from}–{to} of {total}",
+    "retryBadge": "Again",
+    "practiceTitle": "Tough words",
     "back": "Back",
     "explanation": "Explanation",
     "example": "Example",
-    "showTranslation": "Show translation",
-    "hideTranslation": "Hide translation",
     "keyboardHint": "Space to flip · 1–4 to rate · Backspace to undo",
     "hints": {
       "clickToFlip": "Tap the card to flip it",
@@ -123,15 +122,25 @@
       "years": "{n} y"
     },
     "stats": {
-      "title": "Great job!",
-      "subtitle": "Session complete. You did great!",
+      "titles": {
+        "clean": "Not a single tough word",
+        "good": "Going well",
+        "start": "A good start"
+      },
+      "notes": {
+        "clean": "Perigee will bring these words back when they're due.",
+        "good": "Your tough words are below. Run through them once more while they're fresh.",
+        "start": "New words rarely stick the first time. Run through the tough ones again — they'll settle faster."
+      },
       "cards": "Cards",
       "time": "Time",
-      "restart": "Restart",
-      "progress": "{done} of {total} done",
+      "restart": "Whole set again",
+      "inSet": "Done",
       "setDone": "You've gone through the whole set!",
       "next": "Next {n}",
       "fromStart": "From the start",
+      "hard": "Tough words",
+      "practise": "Repeat tough words",
       "exit": "Exit",
       "min": "m",
       "sec": "s",
@@ -139,7 +148,7 @@
     },
     "coach": {
       "recall": "First try to recall the translation yourself — then show the answer. On your phone, just tap the card.",
-      "rate": "Rate honestly: “Don't know” brings the word back later in this session, “Forgot” — tomorrow, “Remember” — in a few days, and “Know” — the furthest. Each button shows when the word will return."
+      "rate": "Rate honestly — each button shows when the word will return. “Don't know” brings it back in this session, “Know” sends it the furthest. On your phone you can swipe: right for “Remember”, left for “Don't know”."
     },
     "speak": "Play pronunciation",
     "ttsBeta": "Beta",
