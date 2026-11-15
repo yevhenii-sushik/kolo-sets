@@ -1,0 +1,20 @@
+{
+  "achievementsList": {
+    "perfect_quiz": {
+      "name": "Perfeito!",
+      "description": "Conclua um quiz de 10+ perguntas sem nenhum erro"
+    },
+    "perfect_quizzes_3": {
+      "name": "Perfeccionista",
+      "description": "Conclua 3 quizzes de 10+ perguntas sem erros"
+    },
+    "perfect_quizzes_10": {
+      "name": "Máquina",
+      "description": "Conclua 10 quizzes de 10+ perguntas sem erros"
+    },
+    "speed_demon": {
+      "name": "Relâmpago",
+      "description": "Responda às perguntas de um quiz em menos de 5 segundos cada, com pelo menos 80% de acertos"
+    }
+  }
+}

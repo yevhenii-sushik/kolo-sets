@@ -1,0 +1,20 @@
+{
+  "achievementsList": {
+    "perfect_quiz": {
+      "name": "Perfekt!",
+      "description": "Schließe ein Quiz mit 10+ Fragen ohne einen einzigen Fehler ab"
+    },
+    "perfect_quizzes_3": {
+      "name": "Perfektionist",
+      "description": "Schließe 3 Quizze mit 10+ Fragen fehlerfrei ab"
+    },
+    "perfect_quizzes_10": {
+      "name": "Maschine",
+      "description": "Schließe 10 Quizze mit 10+ Fragen fehlerfrei ab"
+    },
+    "speed_demon": {
+      "name": "Blitzschnell",
+      "description": "Beantworte Quizfragen in unter 5 Sekunden pro Frage – mit mindestens 80 % richtig"
+    }
+  }
+}

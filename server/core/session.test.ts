@@ -88,6 +88,30 @@ describe("счётчики и достижения", () => {
     expect(result.newAchievements).toEqual(expect.arrayContaining([AchievementType.QUIZ_1, AchievementType.PERFECT_QUIZ]));
   });
 
+  it("короткий тест без ошибок — не идеальный: «Идеально» и бонус от 10 вопросов", () => {
+    const { patch, result } = applySession({}, session({ kind: "quiz", cards: 4, correct: 4, durationSec: 40 }), info, NOON);
+    expect(patch.stats.quizzesTaken).toBe(1);
+    expect(patch.stats.perfectQuizzes).toBe(0);
+    expect(result.newAchievements).not.toContain(AchievementType.PERFECT_QUIZ);
+  });
+
+  it("работа над ошибками после теста — практика: опыт есть, тестом и тренировкой не считается", () => {
+    const test = applySession({}, session({ kind: "quiz", cards: 10, correct: 7, durationSec: 200 }), info, NOON).patch;
+    const { patch, result } = applySession(test, session({ id: "session-0002", kind: "quiz", cards: 3, correct: 3, durationSec: 40, practice: true }), info, NOON);
+    expect(patch.stats.quizzesTaken).toBe(1);
+    expect(patch.stats.perfectQuizzes).toBe(0);
+    expect(patch.studyHistory.at(-1)).toMatchObject({ sessions: 1, cardsStudied: 13 });
+    expect(patch.xp).toBeGreaterThan(test.xp);
+    expect(result.newAchievements).not.toContain(AchievementType.SPEED_DEMON);
+  });
+
+  it("«Скоростной демон» — быстро и при этом верно, а не нажатия наугад", () => {
+    const guess = applySession({}, session({ kind: "quiz", cards: 10, correct: 5, durationSec: 30 }), info, NOON).result;
+    expect(guess.newAchievements).not.toContain(AchievementType.SPEED_DEMON);
+    const fast = applySession({}, session({ kind: "quiz", cards: 10, correct: 8, durationSec: 30 }), info, NOON).result;
+    expect(fast.newAchievements).toContain(AchievementType.SPEED_DEMON);
+  });
+
   it("игра продлевает серию, но не трогает счётчики флэшкарт и тестов", () => {
     const { patch, result } = applySession({}, session({ kind: "speed", cards: 40, durationSec: 60 }), info, NOON);
     expect(result.streak.extendedToday).toBe(true);

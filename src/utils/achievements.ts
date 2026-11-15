@@ -125,9 +125,11 @@ export const checkAndUnlockAchievements = (
       check(AchievementType.ALL_KNOW, true);
     }
 
+    // Быстро — и при этом верно: раньше достижение давали за быстрые нажатия наугад
     if (extras?.quizQuestions !== undefined && extras?.duration !== undefined && extras.quizQuestions >= 5) {
       const secPerQuestion = extras.duration / extras.quizQuestions;
-      check(AchievementType.SPEED_DEMON, secPerQuestion < 5);
+      const accuracy = (extras.quizCorrect ?? 0) / extras.quizQuestions;
+      check(AchievementType.SPEED_DEMON, secPerQuestion < 5 && accuracy >= 0.8);
     }
 
     if (extras?.isComeback) {

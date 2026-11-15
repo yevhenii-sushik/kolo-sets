@@ -185,15 +185,15 @@
     },
     "perfect_quiz": {
       "name": "Perfekt!",
-      "description": "Fullfør en quiz uten en eneste feil"
+      "description": "Fullfør en quiz med 10+ spørsmål uten en eneste feil"
     },
     "perfect_quizzes_3": {
       "name": "Perfeksjonist",
-      "description": "Fullfør 3 quizer uten feil"
+      "description": "Fullfør 3 quizer med 10+ spørsmål uten feil"
     },
     "perfect_quizzes_10": {
       "name": "Maskin",
-      "description": "Fullfør 10 quizer uten feil"
+      "description": "Fullfør 10 quizer med 10+ spørsmål uten feil"
     },
     "collections_3": {
       "name": "Bibliotekar",
@@ -217,7 +217,7 @@
     },
     "speed_demon": {
       "name": "Lynrask",
-      "description": "Svar på alle spørsmålene i en quiz på under 5 sekunder hver"
+      "description": "Svar på spørsmålene i en quiz på under 5 sekunder hver, med minst 80 % riktige"
     },
     "all_know": {
       "name": "Kan alt!",

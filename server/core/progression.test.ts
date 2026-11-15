@@ -25,6 +25,8 @@ describe("опыт и уровни", () => {
     expect(sessionXp("perigee", 12, 99)).toBe(24);
     expect(sessionXp("quiz", 10, 7)).toBe(17);
     expect(sessionXp("quiz", 10, 10)).toBe(30); // +10 за тест без ошибок
+    expect(sessionXp("quiz", 4, 4)).toBe(8); // бонус — от 10 вопросов
+    expect(sessionXp("quiz", 10, 10, true)).toBe(20); // работа над ошибками — без бонуса
     expect(sessionXp("speed", 80, 55)).toBe(20); // игра — не больше 20 за раунд
   });
 

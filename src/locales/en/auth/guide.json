@@ -84,7 +84,7 @@
           "id": "quiz",
           "title": "Quiz",
           "tags": ["From 4 words"],
-          "text": "A mix of tasks: pick the translation, pick the word, recognise a word from its explanation or type it yourself. The quiz accepts a typo and shows you where it is. You choose which task types to include. A quiz without mistakes earns bonus XP. Best for checking what you really know."
+          "text": "An exam on a set: 10 or 20 questions or the whole set, starting with your mistakes from last time and the words that are due. Choose the answer, type the word yourself, or mix both. The quiz accepts a typo and shows you where it is. Your mistakes go into a mistake review right after. Best for checking what you really know."
         },
         {
           "id": "speed",
@@ -95,7 +95,7 @@
         {
           "id": "schedule",
           "title": "How the modes shape your schedule",
-          "text": "Every mode tells Perigee how well you know a word — one answer per word per session, the first one. Flashcards use your rating. In the session, the quiz and the game, typing the word exactly counts as “Know”, a correct choice or an answer with a typo as “Remember”, and a mistake as “Forgot”. Reviewing early won't send a word far ahead, and a mistake honestly brings it back."
+          "text": "Every mode tells Perigee how well you know a word — one answer per word per session, the first one. Flashcards use your rating. In the session, the quiz and the game, typing the word exactly counts as “Know”, a correct choice or an answer with a typo as “Remember”, and a mistake as “Forgot”. A quiz mistake on a word you haven't met yet doesn't count: Perigee will introduce it properly. Reviewing early won't send a word far ahead, and a mistake honestly brings it back."
         },
         {
           "id": "xp",
@@ -103,7 +103,7 @@
           "points": [
             { "title": "Perigee session", "text": "1 XP for every word, plus 1 more if you got it right the first time." },
             { "title": "Flashcards", "text": "1 XP for every card." },
-            { "title": "Quiz", "text": "1 XP per question and 1 more per correct answer, plus 10 for a quiz without mistakes." },
+            { "title": "Quiz", "text": "1 XP per question and 1 more per correct answer, plus 10 for a quiz of 10+ questions without mistakes." },
             { "title": "Speed round", "text": "1 XP per correct answer, up to 20 per round." },
             { "title": "Bonuses", "text": "+5 for the first session of the day and +50 for closing the week's orbit. Training XP is capped at 400 a day." }
           ]

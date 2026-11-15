@@ -24,6 +24,10 @@
           "text": "Snu kortet, så ser du oversettelsen med en gang, stort og tydelig: du trenger ikke lenger lete etter den bak et ikon. I kortinnstillingene kan du velge retning: å huske ordet ut fra oversettelsen er vanskeligere, men bedre for å snakke, og med «Begge veier» skifter siden fra kort til kort. Der finner du også blandet rekkefølge og opplesing: ordet spilles av når du viser svaret. Hvert kort viser hvor godt ordet sitter i minnet. Kortene ligger i en bunke: ta av det øverste, så venter neste ord allerede under. Forsiden er varm, baksiden rolig, og i mørk modus blinker det ikke lenger skarpt når du snur kortet. Et stort sett går i runder på 20 ord, og Kolo husker hvor du slapp, selv midt i en runde. På slutten av runden ser du de vanskelige ordene og kan gå gjennom dem igjen til ingen er igjen. Oppsummeringen er ærlig nå: den forteller hvordan runden gikk, sammenligner med forrige gang og viser veien gjennom settet. Sveip til høyre betyr nå «Husker», ikke «Kan», og mens du drar kortet, ser du hvilken vurdering du er i ferd med å gi. Og «Studer» på siden til et sett åpner valg av modus, akkurat som i listen over sett."
         },
         {
+          "title": "Quiz",
+          "text": "Quizen er nå en eksamen i settet: 20 spørsmål (eller 10, eller hele settet), og først kommer ordene du bommet på sist og de som skal repeteres. Svar med flervalg, skriving eller en blanding – Kolo husker valget. Et riktig svar går videre av seg selv, og etter quizen kan du gå rett til «Gå gjennom feilene» til hvert ord er riktig. Ingen feil? «Neste 20» fortsetter gjennom settet. En feil på et ord du ikke har lært ennå, forstyrrer ikke lenger planen, og bonusen for en feilfri quiz gjelder nå fra 10 spørsmål."
+        },
+        {
           "title": "Et kurs for hvert språk",
           "text": "Norsk for seg, spansk for seg: hvert kurs har egne sett og mapper, så ingenting blandes. Du velger språket én gang og bytter kurs rett i toppfeltet."
         },
@@ -75,7 +79,8 @@
         "Den daglige påminnelsen kommer nå på appens språk og forteller hvor mange ord som venter på repetisjon.",
         "Kolo åpner raskere: ordene og settene dine vises med en gang og oppdateres stille i bakgrunnen, og det blinker ikke lenger en tom skjerm når du bytter fane. Og startsiden skriver ikke lenger «Begynn med ditt første sett» og «0 ord» et øyeblikk mens alt lastes.",
         "Ord du legger til i et sett, vises med en gang på startsiden, i Ord og i Første steg, uten å laste appen på nytt. Og siden til et sett åpner seg nå med en gang.",
-        "Søket har flyttet fra toppfeltet til Ord-fanen: skriv et ord eller en oversettelse øverst, så ser du med en gang hvilket sett det ligger i. Trykk på et treff, så åpnes settet rett på det kortet. Bokstaver som é og ü kan skrives uten tegnene. På datamaskin tar ⌘K eller Ctrl+K deg dit fra hvilken som helst fane."
+        "Søket har flyttet fra toppfeltet til Ord-fanen: skriv et ord eller en oversettelse øverst, så ser du med en gang hvilket sett det ligger i. Trykk på et treff, så åpnes settet rett på det kortet. Bokstaver som é og ü kan skrives uten tegnene. På datamaskin tar ⌘K eller Ctrl+K deg dit fra hvilken som helst fane.",
+        "Har to ord samme oversettelse, dukker ikke det andre lenger opp blant svaralternativene – før ble et riktig svar regnet som feil. Skriver du et synonym i quizen, kjenner Kolo det igjen og ber om det andre ordet."
       ]
     },
     {

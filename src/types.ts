@@ -68,6 +68,7 @@ export interface SessionExtras {
   duration?: number;       // seconds — for MARATHON, SPEED_DEMON
   allKnow?: boolean;       // сессия Perigee без единой ошибки — для ALL_KNOW (самооценка флэшкарт не в счёт)
   quizQuestions?: number;  // question count — for SPEED_DEMON check
+  quizCorrect?: number;    // верных ответов — «Скоростной демон» только при точности от 80%
   isComeback?: boolean;    // returning after 7+ day gap — for COMEBACK
   hour?: number;           // час тренировки в часовом поясе пользователя — для NIGHT_OWL / EARLY_BIRD
 }
@@ -133,11 +134,6 @@ export interface Collection {
   courseId?: string;         // ID курса; у старых наборов нет — проставляется при загрузке
 }
 
-// Настройки Quiz
-export interface QuizSettings {
-  enabledTaskTypes: TaskType[];
-}
-
 // Статистика сессии флешкарточек
 export interface FlashcardStats {
   totalCards: number;
@@ -146,29 +142,6 @@ export interface FlashcardStats {
   remember: number;
   know: number;
   duration: number;  // В секундах
-}
-
-// Статистика Quiz
-export interface QuizStats {
-  totalQuestions: number;
-  correctAnswers: number;
-  wrongAnswers: number;
-  byTaskType: {
-    [key in TaskType]?: {
-      correct: number;
-      total: number;
-    }
-  };
-  duration: number;  // В секундах
-  mistakes: QuizMistake[];
-}
-
-// Ошибка в Quiz
-export interface QuizMistake {
-  question: string;
-  userAnswer: string;
-  correctAnswer: string;
-  taskType: TaskType;
 }
 
 // Профиль пользователя

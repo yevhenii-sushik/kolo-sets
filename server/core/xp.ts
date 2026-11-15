@@ -6,11 +6,18 @@ export const FIRST_SESSION_BONUS = 5;
 export const ORBIT_BONUS = 50;
 const GAME_ROUND_MAX = 20;
 const PERFECT_QUIZ_BONUS = 10;
+// Тест без ошибок засчитывается от 10 вопросов: тест из четырёх слов, пройденный по второму разу,
+// угадывается по свежей памяти и превращал бонус и достижения «Идеально» в накрутку
+export const PERFECT_QUIZ_MIN = 10;
+
+// Идеальный тест: все ответы верные, вопросов не меньше PERFECT_QUIZ_MIN. Работа над ошибками — не тест
+export const isPerfectQuiz = (cards: number, correct: number | undefined, practice?: boolean) =>
+  !practice && cards >= PERFECT_QUIZ_MIN && correct === cards;
 
 export type Kind = "flashcards" | "review" | "quiz" | "speed" | "survival" | "match" | "perigee";
 
 // Опыт за саму тренировку (до потолка)
-export function sessionXp(kind: Kind, cards: number, correct?: number): number {
+export function sessionXp(kind: Kind, cards: number, correct?: number, practice?: boolean): number {
   switch (kind) {
     case "flashcards":
     case "review":
@@ -19,8 +26,8 @@ export function sessionXp(kind: Kind, cards: number, correct?: number): number {
     case "perigee":
       return cards + Math.min(correct ?? 0, cards);
     case "quiz": {
-      const right = correct ?? 0;
-      return cards + right + (right === cards && cards > 0 ? PERFECT_QUIZ_BONUS : 0);
+      const right = Math.min(correct ?? 0, cards);
+      return cards + right + (isPerfectQuiz(cards, correct, practice) ? PERFECT_QUIZ_BONUS : 0);
     }
     default:
       return Math.min(correct ?? 0, GAME_ROUND_MAX);

@@ -4,7 +4,7 @@
 import { AchievementType } from "../../src/types";
 import { checkAndUnlockAchievements } from "../../src/utils/achievements";
 import { addDays, dayKey, daysBetween, hourIn, safeTimeZone } from "./time";
-import { achievementXp, capDaily, FIRST_SESSION_BONUS, ORBIT_BONUS, sessionXp } from "./xp";
+import { achievementXp, capDaily, FIRST_SESSION_BONUS, isPerfectQuiz, ORBIT_BONUS, sessionXp } from "./xp";
 import { recordSession, type OrbitEvent } from "./orbit";
 import { prepare, settle, type ProgressionPatch, type ProgressionState, type ProgressionView } from "./progression";
 
@@ -20,8 +20,8 @@ export interface SessionInput {
   cards: number;
   correct?: number;
   allKnow?: boolean;
-  // Закрепление трудных слов сразу после круга флэшкарт: это практика — опыт, время и слова дня
-  // начисляются, но счётчики тренировок (и достижения «10 / 50 / 100 тренировок») не растут
+  // Закрепление трудных слов сразу после круга флэшкарт и работа над ошибками после теста: это практика —
+  // опыт, время и слова дня начисляются, но счётчики тренировок и тестов (и их достижения) не растут
   practice?: boolean;
   durationSec: number;
   timezone: string;
@@ -196,9 +196,10 @@ export function applySession(
   stats.totalStudyTime += s.durationSec;
   const isCards = s.kind === "flashcards" || s.kind === "review" || s.kind === "perigee";
   if (isCards && !s.practice) stats.flashcardSessions += 1;
-  if (s.kind === "quiz") {
+  const isQuiz = s.kind === "quiz" && !s.practice;
+  if (isQuiz) {
     stats.quizzesTaken += 1;
-    if (s.correct === s.cards) stats.perfectQuizzes += 1;
+    if (isPerfectQuiz(s.cards, s.correct)) stats.perfectQuizzes += 1;
   }
   if (GAMES.includes(s.kind)) stats.gamesPlayed += 1;
 
@@ -211,7 +212,8 @@ export function applySession(
       // «Знаю всё!» — только за сессию Perigee, где каждое слово проверено ответом. Самооценка флэшкарт
       // не в счёт: награда за «Знаю» на всех карточках подталкивала оценивать нечестно
       allKnow: s.kind === "perigee" && s.allKnow === true,
-      quizQuestions: s.kind === "quiz" ? s.cards : undefined,
+      quizQuestions: isQuiz ? s.cards : undefined,
+      quizCorrect: isQuiz ? (s.correct ?? 0) : undefined,
       isComeback,
       hour: hourIn(now, tz),
     },
@@ -219,7 +221,7 @@ export function applySession(
 
   // ── Орбита недели и опыт: тренировка (до дневного потолка) + бонусы сверх потолка; капсулы
   const orbit = recordSession(prep.orbit, today, events);
-  const capped = capDaily(sessionXp(s.kind, s.cards, s.correct), state.xpDay, today);
+  const capped = capDaily(sessionXp(s.kind, s.cards, s.correct, s.practice), state.xpDay, today);
   const gained =
     capped.gained +
     (firstToday ? FIRST_SESSION_BONUS : 0) +

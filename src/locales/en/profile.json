@@ -185,15 +185,15 @@
     },
     "perfect_quiz": {
       "name": "Perfect!",
-      "description": "Complete a quiz without a single mistake"
+      "description": "Complete a quiz of 10+ questions without a single mistake"
     },
     "perfect_quizzes_3": {
       "name": "Perfectionist",
-      "description": "Complete 3 quizzes without mistakes"
+      "description": "Complete 3 quizzes of 10+ questions without mistakes"
     },
     "perfect_quizzes_10": {
       "name": "Machine",
-      "description": "Complete 10 quizzes without mistakes"
+      "description": "Complete 10 quizzes of 10+ questions without mistakes"
     },
     "collections_3": {
       "name": "Librarian",
@@ -217,7 +217,7 @@
     },
     "speed_demon": {
       "name": "Speed demon",
-      "description": "Answer every quiz question in under 5 seconds"
+      "description": "Answer quiz questions in under 5 seconds each, with at least 80% correct"
     },
     "all_know": {
       "name": "Know it all!",

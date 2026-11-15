@@ -84,7 +84,7 @@
           "id": "quiz",
           "title": "Quiz",
           "tags": ["Fra 4 ord"],
-          "text": "En blanding av oppgaver: velg oversettelsen, velg ordet, kjenn igjen et ord ut fra forklaringen eller skriv det selv. En skrivefeil godkjennes, og du ser hvor den er. Du velger hvilke oppgavetyper som er med. En quiz uten feil gir bonus-XP. Passer best til å sjekke hva du faktisk kan."
+          "text": "En eksamen i settet: 10 eller 20 spørsmål eller hele settet, og først feilene fra sist og ordene som skal repeteres. Velg svaret, skriv ordet selv eller bland begge. En skrivefeil godkjennes, og du ser hvor den er. Feilene kan du øve på med en gang i «Gå gjennom feilene». Passer best til å sjekke hva du faktisk kan."
         },
         {
           "id": "speed",
@@ -95,7 +95,7 @@
         {
           "id": "schedule",
           "title": "Slik former modusene planen din",
-          "text": "Hver modus forteller Perigee hvor godt du kan et ord – ett svar per ord per økt, det første. Flashkort bruker vurderingen din. I økten, quizen og spillet teller et ord skrevet helt riktig som «Kan», et riktig valg eller et svar med skrivefeil som «Husker», og en feil som «Glemte». Repetisjon før tiden sender ikke ordet langt frem, og en feil henter det ærlig tilbake."
+          "text": "Hver modus forteller Perigee hvor godt du kan et ord – ett svar per ord per økt, det første. Flashkort bruker vurderingen din. I økten, quizen og spillet teller et ord skrevet helt riktig som «Kan», et riktig valg eller et svar med skrivefeil som «Husker», og en feil som «Glemte». En feil i quizen på et ord du ikke har lært ennå, teller ikke: Perigee introduserer det skikkelig. Repetisjon før tiden sender ikke ordet langt frem, og en feil henter det ærlig tilbake."
         },
         {
           "id": "xp",
@@ -103,7 +103,7 @@
           "points": [
             { "title": "Perigee-økt", "text": "1 XP for hvert ord, pluss 1 til hvis du svarte riktig på første forsøk." },
             { "title": "Flashkort", "text": "1 XP for hvert kort." },
-            { "title": "Quiz", "text": "1 XP per spørsmål og 1 til per riktig svar, pluss 10 for en quiz uten feil." },
+            { "title": "Quiz", "text": "1 XP per spørsmål og 1 til per riktig svar, pluss 10 for en quiz med 10+ spørsmål uten feil." },
             { "title": "Hurtigrunde", "text": "1 XP per riktig svar, opptil 20 per runde." },
             { "title": "Bonuser", "text": "+5 for dagens første økt og +50 for å lukke ukens bane. XP fra øving er begrenset til 400 om dagen." }
           ]

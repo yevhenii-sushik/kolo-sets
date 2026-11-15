@@ -17,7 +17,8 @@ export interface ResultMetric {
   tone?: keyof typeof VALUE_TONES;
 }
 
-// Итог тренировки или игры: иконка, заголовок, цифры, «Выйти» и «Ещё раз». Esc и клик мимо — выход
+// Итог тренировки или игры: иконка, заголовок, цифры, «Выйти» и «Ещё раз». Esc и клик мимо — выход.
+// Без onAgain остаётся одна главная кнопка выхода: предлагать нечего (тест по всему набору пройден без ошибок)
 export default function SessionResult({
   open,
   icon,
@@ -40,10 +41,10 @@ export default function SessionResult({
   subtitle?: ReactNode;
   metrics: ResultMetric[];
   children?: ReactNode;
-  againLabel: string;
+  againLabel?: string;
   againIcon?: ReactNode; // по умолчанию «ещё раз»; «дальше» — для следующего круга
   exitLabel: string;
-  onAgain: () => void;
+  onAgain?: () => void;
   onExit: () => void;
   size?: "sm" | "md" | "lg";
 }) {
@@ -53,14 +54,20 @@ export default function SessionResult({
       onClose={onExit}
       size={size ?? (children ? "md" : "sm")}
       footer={
-        <>
-          <Button variant="secondary" fullWidth onClick={onExit}>
+        onAgain && againLabel ? (
+          <>
+            <Button variant="secondary" fullWidth onClick={onExit}>
+              {exitLabel}
+            </Button>
+            <Button fullWidth iconLeft={againIcon ?? <RotateCcw size={18} />} onClick={onAgain}>
+              {againLabel}
+            </Button>
+          </>
+        ) : (
+          <Button fullWidth onClick={onExit}>
             {exitLabel}
           </Button>
-          <Button fullWidth iconLeft={againIcon ?? <RotateCcw size={18} />} onClick={onAgain}>
-            {againLabel}
-          </Button>
-        </>
+        )
       }
     >
       <div className="grid justify-items-center gap-3 pt-2 text-center">

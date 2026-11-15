@@ -19,9 +19,13 @@ describe("частичный перевод", () => {
     expect(fillFrom(en, { a: 5, nested: "oops" })).toEqual(en);
   });
 
-  it("немецкие флэшкарты — по-немецки, непереведённый тест — по-английски", () => {
+  it("немецкие флэшкарты и тест — по-немецки, непереведённый редактор набора — по-английски", () => {
     expect(translations.de.words.flashcards.settings.title).toBe("Karteneinstellungen");
-    expect(translations.de.words.quiz).toEqual(translations.en.words.quiz);
+    expect(translations.de.words.quiz.settings.title).toBe("Quiz-Einstellungen");
+    expect(translations.de.words.editCollection).toEqual(translations.en.words.editCollection);
+    // Профиль переведён частично: достижения теста по-немецки, остальное — из английского
+    expect(translations.de.profile.achievementsList.speed_demon.name).toBe("Blitzschnell");
+    expect(translations.de.profile.achievementsList.streak_3).toEqual(translations.en.profile.achievementsList.streak_3);
     expect(translations.es.words.flashcards.levels.know).toBe("Lo sé");
     expect(translations.fr.close).toBe(translations.en.close); // common у французского ещё не переведён
     expect(translations.de.close).toBe("Schließen");

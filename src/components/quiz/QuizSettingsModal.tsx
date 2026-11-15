@@ -1,87 +1,73 @@
-import { useState, useEffect } from "react";
-import { QuizSettings, TaskType } from "../../types";
+import { Check } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
-import { Alert, Button, Modal, Text, cx } from "../../ui";
+import { Alert, Modal, cx } from "../../ui";
+import { Segmented } from "../other/SettingsList";
+import { QUIZ_ANSWERS, QUIZ_LENGTHS, QuizAnswers, QuizLength, QuizSettings } from "../../quiz/plan";
 
 interface QuizSettingsModalProps {
   isOpen: boolean;
   settings: QuizSettings;
+  locked: boolean; // тест уже идёт — изменения начнутся со следующего
   onClose: () => void;
-  onSave: (settings: QuizSettings) => void;
+  onChange: (settings: QuizSettings) => void;
 }
 
-const ALL_TASK_TYPES = [
-  TaskType.WORD_BY_TRANSLATION,
-  TaskType.TRANSLATION_BY_WORD,
-  TaskType.WORD_BY_EXPLANATION,
-  TaskType.WRITE_WORD_BY_TRANSLATION,
-  TaskType.WRITE_WORD_BY_EXPLANATION,
-];
-
-// Типы заданий теста; хотя бы один должен остаться включённым
-export default function QuizSettingsModal({ isOpen, settings, onClose, onSave }: QuizSettingsModalProps) {
+// Настройки теста (docs/specs/perigee.md, «Тест: понятность и честность»): сколько вопросов и как отвечать.
+// Раньше было пять галочек типов заданий, а «Применить» молча стирал уже отвеченное. Теперь настройки
+// запоминаются на устройстве; пока не дан первый ответ, тест пересобирается сразу, потом — со следующего
+export default function QuizSettingsModal({ isOpen, settings, locked, onClose, onChange }: QuizSettingsModalProps) {
   const { t } = useI18n();
-  const qs = t.words.quiz.settings;
-  const [local, setLocal] = useState<QuizSettings>(settings);
-
-  useEffect(() => {
-    setLocal(settings);
-  }, [settings, isOpen]);
-
-  const toggle = (type: TaskType) => {
-    const next = local.enabledTaskTypes.includes(type) ? local.enabledTaskTypes.filter((x) => x !== type) : [...local.enabledTaskTypes, type];
-    if (next.length > 0) setLocal({ enabledTaskTypes: next });
+  const s = t.words.quiz.settings;
+  const answerText: Record<QuizAnswers, { label: string; hint: string }> = {
+    choice: { label: s.choice, hint: s.choiceHint },
+    type: { label: s.type, hint: s.typeHint },
+    mixed: { label: s.mixed, hint: s.mixedHint },
   };
-  const empty = local.enabledTaskTypes.length === 0;
 
   return (
-    <Modal
-      open={isOpen}
-      onClose={onClose}
-      title={qs.title}
-      size="lg"
-      footer={
-        <>
-          <Button variant="secondary" onClick={onClose}>
-            {qs.cancel}
-          </Button>
-          <Button onClick={() => !empty && onSave(local)} disabled={empty}>
-            {qs.apply}
-          </Button>
-        </>
-      }
-    >
-      <Text size="sm" tone="muted" className="-mt-2 mb-4">
-        {qs.subtitle}
-      </Text>
-      <div className="grid gap-2">
-        {ALL_TASK_TYPES.map((type) => {
-          const on = local.enabledTaskTypes.includes(type);
-          return (
-            <label
-              key={type}
-              className={cx(
-                "flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-3.5 transition-colors",
-                on ? "border-accent bg-accent-soft" : "border-line bg-surface hover:border-accent/40",
-              )}
-            >
-              <input type="checkbox" checked={on} onChange={() => toggle(type)} className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-accent" />
-              <span className="min-w-0">
-                <span className="block text-sm font-semibold text-fg">{qs.types[type as keyof typeof qs.types]}</span>
-                <span className="block text-xs leading-snug text-muted">{qs.typeDescs[type as keyof typeof qs.typeDescs]}</span>
-              </span>
-            </label>
-          );
-        })}
+    <Modal open={isOpen} onClose={onClose} title={s.title} size="sm">
+      <div className="grid gap-6">
+        {locked && <Alert tone="info">{s.nextTest}</Alert>}
+
+        <section className="grid gap-2">
+          <p className="text-sm font-semibold text-fg">{s.length}</p>
+          <Segmented<string>
+            label={s.length}
+            value={String(settings.length)}
+            options={QUIZ_LENGTHS.map((n) => ({ value: String(n), label: n === 0 ? s.all : String(n) }))}
+            onChange={(v) => onChange({ ...settings, length: Number(v) as QuizLength })}
+          />
+        </section>
+
+        <section className="grid gap-2">
+          <p className="text-sm font-semibold text-fg">{s.answers}</p>
+          <div role="radiogroup" aria-label={s.answers} className="grid gap-2">
+            {QUIZ_ANSWERS.map((answers) => {
+              const active = settings.answers === answers;
+              return (
+                <button
+                  key={answers}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => onChange({ ...settings, answers })}
+                  className={cx(
+                    "flex items-center gap-3 rounded-2xl border p-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+                    active ? "border-accent bg-accent-soft" : "border-transparent bg-inset hover:border-accent/40",
+                  )}
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold text-fg">{answerText[answers].label}</span>
+                    <span className="block text-xs text-muted">{answerText[answers].hint}</span>
+                  </span>
+                  {active && <Check size={18} className="shrink-0 text-accent-ink" />}
+                </button>
+              );
+            })}
+          </div>
+          <p className="text-xs text-muted">{s.explanationNote}</p>
+        </section>
       </div>
-      {empty && (
-        <Alert tone="warning" className="mt-4">
-          {qs.minOneType}
-        </Alert>
-      )}
-      <Text size="sm" tone="muted" className="mt-4">
-        {qs.tip}
-      </Text>
     </Modal>
   );
 }

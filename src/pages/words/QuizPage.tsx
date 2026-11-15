@@ -1,34 +1,48 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, Collection, KnowledgeLevel, TaskType, QuizStats, QuizSettings } from "../../types";
+import { Check, Settings, X } from "lucide-react";
+import { Card, Collection, KnowledgeLevel } from "../../types";
 import { getCollection } from "../../utils/storage";
 import { AnswerVerdict, checkAnswer } from "../../utils/answerCheck";
-import { levelForAnswer } from "../../utils/srs";
+import { AnswerOutcome, isNewCard, levelForAnswer, memoryStrength } from "../../utils/srs";
+import { shuffle } from "../../utils/gameUtils";
 import { useSrsWriter } from "../../components/session/useSrsWriter";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
+import { useI18n } from "../../contexts/I18nContext";
 import { playSound } from "../../utils/sounds";
-import { generateQuizQuestions, QuizQuestion } from "../../utils/quizGenerator";
-import QuizQuestionComponent from "../../components/quiz/QuizQuestion";
-import QuizStatsModal from "../../components/quiz/QuizStatsModal";
+import { QuizQuestion, QuizSettings, buildQuestions, isTyping, pickQuizCards, portionSize, questionFor, synonymsOf } from "../../quiz/plan";
+import { markAnswer, readMisses, readQuizPrefs, saveQuizPrefs } from "../../quiz/storage";
+import QuizQuestionComponent, { QuizFeedback } from "../../components/quiz/QuizQuestion";
+import QuizStatsModal, { QuizGrowth } from "../../components/quiz/QuizStatsModal";
 import QuizSettingsModal from "../../components/quiz/QuizSettingsModal";
-import { Check, Settings, X } from "lucide-react";
 import { IconButton } from "../../ui";
 import SessionShell from "../../components/session/SessionShell";
 import SessionLoadError from "../../components/session/SessionLoadError";
 import SessionLoading from "../../components/session/SessionLoading";
-import { useI18n } from "../../contexts/I18nContext";
+import LeaveSessionDialog from "../../components/session/LeaveSessionDialog";
 
-// Учесть ответ в статистике. Без мутаций: StrictMode вызывает апдейтер дважды, и ошибки задваивались
-function tally(prev: QuizStats, type: TaskType, correct: boolean, mistake?: QuizStats["mistakes"][number]): QuizStats {
-  const byType = prev.byTaskType[type] ?? { correct: 0, total: 0 };
-  return {
-    ...prev,
-    correctAnswers: prev.correctAnswers + (correct ? 1 : 0),
-    wrongAnswers: prev.wrongAnswers + (correct ? 0 : 1),
-    mistakes: !correct && mistake ? [...prev.mistakes, mistake] : prev.mistakes,
-    byTaskType: { ...prev.byTaskType, [type]: { correct: byType.correct + (correct ? 1 : 0), total: byType.total + 1 } },
-  };
+const AUTO_NEXT_MS = 650; // как в Perigee: успеть увидеть зелёный, и дальше
+
+// Тест или работа над ошибками после него (docs/specs/perigee.md, «Тест: понятность и честность»)
+interface Run {
+  practice: boolean;
+  questions: QuizQuestion[]; // в работе над ошибками неверно отвеченное слово добавляется в конец
+  words: number; // разных слов
+}
+
+// Первый ответ на слово — в тесте он один на слово, в работе над ошибками — первый из попыток
+interface Answer {
+  question: QuizQuestion;
+  answer: string;
+  correct: boolean;
+  overruled: boolean;
+}
+
+// Расписание: версия карточки до первого ответа — для «Мой ответ верный» и итогов «стали крепче»
+interface First {
+  before: Card;
+  level?: KnowledgeLevel; // что записано; нет — ответ в расписание не пошёл (ошибка на новом слове)
 }
 
 export default function QuizPage() {
@@ -36,266 +50,325 @@ export default function QuizPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
+  const q = t.words.quiz;
   const { reportSession } = useData();
-  const [collection, setCollection] = useState<Collection | null>(null);
-  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [userAnswer, setUserAnswer] = useState("");
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
-  // Разбор письменного ответа: «почти» (артикль, диакритика, опечатка) тоже засчитывается
-  const [verdict, setVerdict] = useState<AnswerVerdict | null>(null);
-  const [loadError, setLoadError] = useState(false);
-  // Ответы идут в расписание Perigee: первый ответ на каждое слово за тест (docs/specs/perigee.md).
-  // Храним версию карточки до ответа — для «Мой ответ верный»
   const writer = useSrsWriter();
-  const answeredRef = useRef(new Map<string, Card>());
-  // Тест завершается один раз, даже если «Далее» нажали дважды. Все хуки — до ранних return ниже:
-  // хук после них появлялся только после загрузки набора, и React падал («Rendered more hooks»)
-  const finishedRef = useRef(false);
+
+  const [collection, setCollection] = useState<Collection | null>(null);
+  const [loadError, setLoadError] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
-  const [stats, setStats] = useState<QuizStats>({
-    totalQuestions: 0,
-    correctAnswers: 0,
-    wrongAnswers: 0,
-    byTaskType: {},
-    duration: 0,
-    mistakes: [],
-  });
-  const [startTime] = useState(Date.now());
-  const [showStats, setShowStats] = useState(false);
+  const [prefs, setPrefs] = useState<QuizSettings>(readQuizPrefs);
+  const [run, setRun] = useState<Run | null>(null);
+  const [index, setIndex] = useState(0);
+  const [feedback, setFeedback] = useState<QuizFeedback | null>(null);
+  const [synonym, setSynonym] = useState<{ word: string; translation: string } | null>(null);
+  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [cleared, setCleared] = useState(0); // работа над ошибками: слов, отвеченных верно
+  const [finished, setFinished] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [growth, setGrowth] = useState<QuizGrowth | null>(null);
+  const [nextCount, setNextCount] = useState(0);
+  const [confirmLeave, setConfirmLeave] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [settings, setSettings] = useState<QuizSettings>({
-    enabledTaskTypes: [
-      TaskType.WORD_BY_TRANSLATION,
-      TaskType.TRANSLATION_BY_WORD,
-      TaskType.WORD_BY_EXPLANATION,
-      TaskType.WRITE_WORD_BY_TRANSLATION,
-      TaskType.WRITE_WORD_BY_EXPLANATION,
-    ],
-  });
+
+  const startRef = useRef(Date.now());
+  const askedRef = useRef(new Set<string>()); // слова, уже спрошенные в тестах этого захода — для «Следующих 20»
+  const firstRef = useRef(new Map<string, First>());
+  const finishedRef = useRef(false); // тест завершается один раз, даже если «Дальше» нажали дважды
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+  // Автопереход вызывает свежую версию next: за 650 мс ответ уже попал в состояние
+  const nextRef = useRef<() => void>(() => {});
+
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  // Актуальные карточки: после ответов writer держит новые интервалы — по ним приоритеты следующего теста
+  const latestCards = (col: Collection) => writer.collections().find((c) => c.id === col.id)?.cards ?? col.cards;
+
+  const reset = () => {
+    clearTimeout(timer.current);
+    setIndex(0);
+    setFeedback(null);
+    setSynonym(null);
+    setAnswers([]);
+    setCleared(0);
+    setFinished(false);
+    setGrowth(null);
+    setConfirmLeave(false);
+    finishedRef.current = false;
+    firstRef.current.clear();
+    startRef.current = Date.now();
+  };
+
+  const startTest = (col: Collection, settings: QuizSettings) => {
+    const cards = latestCards(col);
+    const picked = pickQuizCards(cards, { length: settings.length, misses: readMisses(col.id), exclude: askedRef.current });
+    reset();
+    setRun({ practice: false, questions: buildQuestions(picked, settings.answers, cards), words: picked.length });
+  };
 
   useEffect(() => {
-    const loadCollection = async () => {
-      if (!id) return;
-      setLoadError(false);
-      try {
-        const loaded = await getCollection(id);
-        if (loaded && loaded.cards.length >= 4) {
-          setCollection(loaded);
-          writer.load([loaded]);
-          initializeQuiz(loaded, settings);
-        } else {
+    if (!id) return;
+    let cancelled = false;
+    setLoadError(false);
+    getCollection(id)
+      .then((loaded) => {
+        if (cancelled) return;
+        if (!loaded || loaded.cards.length < 4) {
           navigate("/");
+          return;
         }
-      } catch (err) {
+        writer.load([loaded]);
+        askedRef.current.clear();
+        setCollection(loaded);
+        startTest(loaded, prefs);
+      })
+      .catch((err) => {
         console.error("Не удалось загрузить набор", err);
-        setLoadError(true);
-      }
+        if (!cancelled) setLoadError(true);
+      });
+    return () => {
+      cancelled = true;
     };
-    loadCollection();
   }, [id, navigate, reloadKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const initializeQuiz = (coll: Collection, quizSettings: QuizSettings) => {
-    const generatedQuestions = generateQuizQuestions(coll.cards, quizSettings);
-    setQuestions(generatedQuestions);
-    setStats((prev) => ({
-      ...prev,
-      totalQuestions: generatedQuestions.length,
-    }));
-  };
-
   if (loadError) return <SessionLoadError onRetry={() => setReloadKey((k) => k + 1)} onExit={() => navigate(-1)} />;
-  if (!collection || questions.length === 0) return <SessionLoading onExit={() => navigate(-1)} />;
+  if (!collection || !run || run.questions.length === 0) return <SessionLoading onExit={() => navigate(-1)} />;
 
-  const currentQuestion = questions[currentIndex];
+  const col = collection;
+  const current = run.questions[Math.min(index, run.questions.length - 1)];
+  const pool = col.cards;
+  const correctCount = answers.filter((a) => a.correct).length;
+
+  // Первый ответ на слово в тесте — в расписание Perigee. Ошибка на слове, которого человек ещё не видел,
+  // туда не идёт: она ничего не говорит о памяти, а сразу ставила бы новое слово «на завтра» в обход
+  // дневного лимита новых слов. Познакомит с ним Perigee — карточкой, как положено
+  const recordFirst = (card: Card, outcome: AnswerOutcome) => {
+    const before = writer.card(col.id, card.id) ?? card;
+    const level = levelForAnswer(outcome);
+    if (isNewCard(before) && level === KnowledgeLevel.FORGOT) {
+      firstRef.current.set(card.id, { before });
+      return;
+    }
+    writer.record(col.id, card.id, level);
+    firstRef.current.set(card.id, { before, level });
+  };
 
   const handleAnswer = (answer: string) => {
-    setUserAnswer(answer);
-    const isWrite = currentQuestion.type === TaskType.WRITE_WORD_BY_TRANSLATION || currentQuestion.type === TaskType.WRITE_WORD_BY_EXPLANATION;
-    // Варианты ответа сравниваем как есть; письменный ответ — мягко (src/utils/answerCheck.ts).
+    if (feedback || finished) return;
+    const question = current;
+    const card = question.card;
+    const typing = isTyping(question.type);
+    // Варианты сравниваем как есть; письменный ответ — мягко (src/utils/answerCheck.ts).
     // Слова других карточек передаём, чтобы «hand» вместо «hund» не сошло за опечатку
-    const result: AnswerVerdict = isWrite
-      ? checkAnswer(answer, currentQuestion.correctAnswer, collection.cards.map((c) => c.word))
-      : { result: answer.trim().toLowerCase() === currentQuestion.correctAnswer.trim().toLowerCase() ? "exact" : "wrong" };
-    const correct = result.result !== "wrong";
-    const cardId = currentQuestion.card.id;
-    if (!answeredRef.current.has(cardId)) {
-      const level = levelForAnswer(isWrite ? { kind: "type", result: result.result } : { kind: "choice", correct });
-      const before = writer.record(collection.id, cardId, level);
-      if (before) answeredRef.current.set(cardId, before);
-    }
-    setVerdict(result);
-    setIsCorrect(correct);
-    setShowFeedback(true);
+    const verdict: AnswerVerdict = typing
+      ? checkAnswer(answer, question.correctAnswer, pool.map((c) => c.word))
+      : { result: answer === question.correctAnswer ? "exact" : "wrong" };
 
+    // Другое слово набора с тем же переводом — не ошибка, но спрашиваем это слово: подсказка, поле открыто
+    if (typing && verdict.result === "wrong") {
+      const other = synonymsOf(card, pool).find((w) => checkAnswer(answer, w).result !== "wrong");
+      if (other) {
+        setSynonym({ word: other, translation: card.translation });
+        return;
+      }
+    }
+
+    const correct = verdict.result !== "wrong";
+    const first = !answers.some((a) => a.question.card.id === card.id);
+    if (first) {
+      setAnswers((prev) => [...prev, { question, answer, correct, overruled: false }]);
+      if (!run.practice) {
+        recordFirst(card, typing ? { kind: "type", result: verdict.result } : { kind: "choice", correct });
+        markAnswer(col.id, card.id, correct);
+      }
+    }
+    if (run.practice) {
+      // Работа над ошибками: неверно — слово вернётся в конце, пока не ответишь верно
+      if (correct) setCleared((n) => n + 1);
+      else setRun((r) => r && { ...r, questions: [...r.questions, questionFor(card, prefs.answers, pool)] });
+    }
+
+    const auto = verdict.result === "exact";
+    setSynonym(null);
+    setFeedback({ answer, verdict, correct, auto });
     playSound(correct ? "answer-correct" : "answer-wrong");
-
-    setStats(prev =>
-      tally(prev, currentQuestion.type, correct, {
-        question: currentQuestion.question,
-        userAnswer: answer,
-        correctAnswer: currentQuestion.correctAnswer,
-        taskType: currentQuestion.type,
-      }),
-    );
+    if (auto) timer.current = setTimeout(() => nextRef.current(), AUTO_NEXT_MS);
   };
 
-  // «Мой ответ верный»: проверка не знает всех синонимов — даём засчитать ответ вручную
+  // «Мой ответ верный»: проверка не знает всех синонимов — даём засчитать ответ вручную. В расписании —
+  // «Помню», как за ответ с опечаткой. В бонус за тест без ошибок такой ответ не идёт: это самооценка
   const handleOverride = () => {
-    if (!showFeedback || isCorrect) return;
+    if (!feedback || feedback.correct) return;
+    const question = current;
+    const card = question.card;
     playSound("answer-correct");
-    setIsCorrect(true);
-    setVerdict({ result: "exact" });
-    // В расписании — «Помню», как за ответ с опечаткой: проверка ошиблась, но уверенности «Знаю» нет
-    const before = answeredRef.current.get(currentQuestion.card.id);
-    if (before) {
-      writer.restore(collection.id, before);
-      writer.record(collection.id, before.id, KnowledgeLevel.REMEMBER);
+    setFeedback({ ...feedback, correct: true, overruled: true, verdict: { result: "exact" }, auto: false });
+    setAnswers((prev) => prev.map((a) => (a.question === question ? { ...a, correct: true, overruled: true } : a)));
+    if (run.practice) {
+      // Слово уже поставлено в конец как ошибка — убираем этот повтор
+      setCleared((n) => n + 1);
+      setRun((r) => {
+        if (!r) return r;
+        const last = r.questions.map((x) => x.card.id).lastIndexOf(card.id);
+        return last > index ? { ...r, questions: r.questions.filter((_, i) => i !== last) } : r;
+      });
+      return;
     }
-    setStats((prev) => {
-      const byType = prev.byTaskType[currentQuestion.type];
-      return {
-        ...prev,
-        correctAnswers: prev.correctAnswers + 1,
-        wrongAnswers: prev.wrongAnswers - 1,
-        mistakes: prev.mistakes.slice(0, -1),
-        byTaskType: byType ? { ...prev.byTaskType, [currentQuestion.type]: { ...byType, correct: byType.correct + 1 } } : prev.byTaskType,
-      };
-    });
+    const f = firstRef.current.get(card.id);
+    if (f) {
+      if (f.level) writer.restore(col.id, f.before);
+      writer.record(col.id, card.id, KnowledgeLevel.REMEMBER);
+      firstRef.current.set(card.id, { ...f, level: KnowledgeLevel.REMEMBER });
+    }
+    markAnswer(col.id, card.id, true);
   };
 
-  const handleNext = async () => {
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setUserAnswer("");
-      setShowFeedback(false);
-      setIsCorrect(false);
-      setVerdict(null);
-    } else {
-      if (finishedRef.current) return;
-      finishedRef.current = true;
-      // Quiz завершен
-      const duration = Math.floor((Date.now() - startTime) / 1000);
+  const finish = () => {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
+    const durationSec = Math.max(1, Math.round((Date.now() - startRef.current) / 1000));
+    setDuration(durationSec);
+
+    if (!run.practice) {
       // Оценки вместе с датой занятия сохраняет writer. Сети не ждём: офлайн итоги иначе не показались бы
       writer.commit();
-
-      const finalStats = { ...stats, duration };
-      setStats(finalStats);
-
-      // Итоги — сразу; прогресс, серию и достижения начисляет сервер в фоне
-      playSound("session-complete");
-      setShowStats(true);
-
-      if (user && collection) {
-        await reportSession({
-          kind: "quiz",
-          collectionIds: [collection.id],
-          cards: finalStats.totalQuestions,
-          correct: finalStats.correctAnswers,
-          durationSec: duration,
-        });
+      for (const question of run.questions) askedRef.current.add(question.card.id);
+      const g: QuizGrowth = { introduced: 0, grew: 0, tomorrow: 0 };
+      for (const [cardId, f] of firstRef.current) {
+        if (!f.level) continue;
+        const after = writer.card(col.id, cardId);
+        const before = memoryStrength(f.before);
+        const now = after ? memoryStrength(after) : before;
+        if (before === 0 && now > 0) g.introduced += 1;
+        else if (before > 0 && now > before) g.grew += 1;
+        if (f.level === KnowledgeLevel.FORGOT) g.tomorrow += 1;
       }
+      setGrowth(g);
+    }
+    const remaining = latestCards(col).filter((c) => !askedRef.current.has(c.id)).length;
+    setNextCount(remaining > 0 ? portionSize(remaining, prefs.length) : 0);
 
+    playSound("session-complete");
+    setFinished(true);
+
+    // Прогресс, серию и достижения начисляет сервер в фоне. Засчитанное вручную в счёт не идёт: иначе
+    // «Мой ответ верный» открывал бы бонус за тест без ошибок. Работа над ошибками — практика, не тест
+    if (user) {
+      const right = answers.filter((a) => a.correct && !a.overruled).length;
+      reportSession({
+        kind: "quiz",
+        collectionIds: [col.id],
+        cards: answers.length,
+        correct: right,
+        durationSec,
+        ...(run.practice ? { practice: true } : {}),
+      }).catch((err) => console.error("Не удалось отправить тренировку", err));
     }
   };
 
-  const handleRestart = () => {
-    finishedRef.current = false;
-    answeredRef.current.clear();
-    initializeQuiz(collection, settings);
-    setCurrentIndex(0);
-    setUserAnswer("");
-    setShowFeedback(false);
-    setIsCorrect(false);
-    setVerdict(null);
-    setStats({
-      totalQuestions: 0,
-      correctAnswers: 0,
-      wrongAnswers: 0,
-      byTaskType: {},
-      duration: 0,
-      mistakes: [],
-    });
-    setShowStats(false);
+  const next = () => {
+    clearTimeout(timer.current);
+    if (!feedback || finishedRef.current) return;
+    if (index < run.questions.length - 1) {
+      setIndex(index + 1);
+      setFeedback(null);
+      setSynonym(null);
+    } else {
+      finish();
+    }
+  };
+  nextRef.current = next;
+
+  const startPractice = () => {
+    const missed = answers.filter((a) => !a.correct).map((a) => a.question.card);
+    reset();
+    setRun({ practice: true, questions: buildQuestions(shuffle(missed), prefs.answers, pool), words: missed.length });
   };
 
-  const handleSettingsChange = (newSettings: QuizSettings) => {
-    finishedRef.current = false;
-    answeredRef.current.clear();
-    setSettings(newSettings);
-    setShowSettings(false);
-    initializeQuiz(collection, newSettings);
-    setCurrentIndex(0);
-    setUserAnswer("");
-    setShowFeedback(false);
-    setIsCorrect(false);
-    setVerdict(null);
-    setStats({
-      totalQuestions: 0,
-      correctAnswers: 0,
-      wrongAnswers: 0,
-      byTaskType: {},
-      duration: 0,
-      mistakes: [],
-    });
+  // Пока не дан первый ответ, новые настройки пересобирают тест сразу; потом — со следующего теста
+  const locked = run.practice || answers.length > 0 || !!feedback;
+  const changePrefs = (nextPrefs: QuizSettings) => {
+    setPrefs(nextPrefs);
+    saveQuizPrefs(nextPrefs);
+    if (!locked && !finished) startTest(col, nextPrefs);
   };
+
+  // «Начал — закончи»: брошенный тест не засчитывается, поэтому с середины спрашиваем. Работа над
+  // ошибками — по желанию, тест уже засчитан
+  const exit = () => navigate(-1);
+  const requestExit = () => (!run.practice && !finished && answers.length > 0 ? setConfirmLeave(true) : exit());
+
+  const progress = run.practice ? cleared / run.words : answers.length / run.words;
 
   return (
     <SessionShell
-      perigee
-      title={collection.name}
-      onClose={() => navigate(-1)}
+      perigee={!run.practice}
+      title={col.name}
+      subtitle={run.practice ? q.practiceTitle : undefined}
+      onClose={requestExit}
       action={
-        <IconButton label={t.words.quiz.settings.title} onClick={() => setShowSettings(true)}>
+        <IconButton label={q.settings.title} onClick={() => setShowSettings(true)}>
           <Settings size={20} />
         </IconButton>
       }
-      progress={(currentIndex + 1) / questions.length}
+      progress={progress}
       meta={
-        <>
+        run.practice ? (
           <span>
-            {currentIndex + 1} / {questions.length}
+            {cleared} / {run.words}
           </span>
-          <span className="flex items-center gap-1 text-success">
-            <Check size={15} strokeWidth={3} />
-            {stats.correctAnswers}
-          </span>
-          <span className="flex items-center gap-1 text-danger">
-            <X size={15} strokeWidth={3} />
-            {stats.wrongAnswers}
-          </span>
-        </>
+        ) : (
+          <>
+            <span>
+              {Math.min(index + 1, run.questions.length)} / {run.questions.length}
+            </span>
+            <span className="flex items-center gap-1 text-success">
+              <Check size={15} strokeWidth={3} />
+              {correctCount}
+            </span>
+            <span className="flex items-center gap-1 text-danger">
+              <X size={15} strokeWidth={3} />
+              {answers.length - correctCount}
+            </span>
+          </>
+        )
       }
     >
       {/* my-auto — по центру, пока помещается; иначе прокрутка */}
       <main className="flex min-h-0 flex-1 flex-col overflow-auto px-4 py-6 sm:px-6">
         <div className="my-auto">
-        <QuizQuestionComponent
-          question={currentQuestion}
-          userAnswer={userAnswer}
-          showFeedback={showFeedback}
-          isCorrect={isCorrect}
-          verdict={verdict}
-          onOverride={handleOverride}
-          onAnswer={handleAnswer}
-          onNext={handleNext}
-        />
+          <QuizQuestionComponent
+            key={`${run.practice ? "p" : "t"}${index}`}
+            question={current}
+            feedback={feedback}
+            synonym={synonym}
+            onOverride={handleOverride}
+            onAnswer={handleAnswer}
+            onNext={next}
+          />
         </div>
       </main>
 
-      {/* Модальные окна */}
       <QuizStatsModal
-        isOpen={showStats}
-        stats={stats}
-        onClose={() => navigate(-1)}
-        onRestart={handleRestart}
+        isOpen={finished}
+        practice={run.practice}
+        total={run.practice ? run.words : answers.length}
+        correct={correctCount}
+        duration={duration}
+        mistakes={answers.filter((a) => !a.correct)}
+        growth={growth}
+        nextCount={nextCount}
+        onPractise={startPractice}
+        onNext={() => startTest(col, prefs)}
+        onClose={exit}
       />
-      <QuizSettingsModal
-        isOpen={showSettings}
-        settings={settings}
-        onClose={() => setShowSettings(false)}
-        onSave={handleSettingsChange}
+      <QuizSettingsModal isOpen={showSettings} settings={prefs} locked={locked && !finished} onClose={() => setShowSettings(false)} onChange={changePrefs} />
+      <LeaveSessionDialog
+        open={confirmLeave && !finished}
+        done={answers.length}
+        total={run.words}
+        onStay={() => setConfirmLeave(false)}
+        onLeave={exit}
       />
     </SessionShell>
   );

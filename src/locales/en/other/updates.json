@@ -24,6 +24,10 @@
           "text": "Flip a card and the translation is right there, big and clear: no more hunting for it behind an icon. In the card settings you can pick a direction: recalling the word from its translation is harder but better for speaking, and “Both ways” switches sides from card to card. You'll also find shuffled order and read-aloud there: the word plays when you show the answer. Every card shows how firmly the word sits in your memory. Cards sit in a deck: take the top one off and the next word is already waiting underneath. The front is warm, the back is calm, and flipping no longer flashes bright in dark mode. A big set goes in rounds of 20 words, and Kolo remembers where you stopped, even halfway through a round. At the end of a round you see your tough words and can run through them again until none are left. The summary is honest now: it tells you how the round went, compares it with last time and shows your path through the set. Swiping right now means “Remember”, not “Know”, and while you drag the card it shows which rating you're about to give. And “Study” on a set's page opens the mode picker, just like in the list of sets."
         },
         {
+          "title": "Quiz",
+          "text": "The quiz is now an exam on your set: 20 questions (or 10, or the whole set), starting with the words you got wrong last time and the ones that are due. Answer by choice, by typing or a mix of both, and Kolo remembers your pick. A correct answer moves on by itself, and after the quiz you can go straight into a mistake review until every word is right. No mistakes? “Next 20” carries on through the set. A mistake on a word you haven't learned yet no longer upsets your schedule, and the bonus for a flawless quiz now starts at 10 questions."
+        },
+        {
           "title": "A course for every language",
           "text": "Norwegian over here, Spanish over there: each course has its own sets and folders, so nothing gets mixed up. Pick your language once and switch courses right from the header."
         },
@@ -75,7 +79,8 @@
         "The daily reminder now speaks your app language and counts words waiting for review.",
         "Kolo opens faster: your words and sets appear straight away and refresh quietly in the background, and switching tabs no longer flashes a blank screen. The home screen no longer says “Start with your first set” or “0 words” for a moment while loading.",
         "Words you add to a set now show up straight away on the home screen, in Words and in First steps, without reloading the app. A set’s page opens instantly too.",
-        "Search has moved from the header to the Words tab: type a word or translation at the top and you'll see which set it's in. Tap a result and the set opens right on that card. Letters like é or ü can be typed without the marks. On a computer, ⌘K or Ctrl+K takes you there from any tab."
+        "Search has moved from the header to the Words tab: type a word or translation at the top and you'll see which set it's in. Tap a result and the set opens right on that card. Letters like é or ü can be typed without the marks. On a computer, ⌘K or Ctrl+K takes you there from any tab.",
+        "If two words share a translation, the second one no longer shows up among the answer options, where a right answer used to count as a mistake. Type a synonym in the quiz, and Kolo will recognise it and ask for the other word."
       ]
     },
     {

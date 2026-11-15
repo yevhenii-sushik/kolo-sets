@@ -91,6 +91,11 @@ import deWords from './de/words/words.json';
 import esWords from './es/words/words.json';
 import frWords from './fr/words/words.json';
 import ptBRWords from './pt-BR/words/words.json';
+// Профиль пока переведён частично: описания достижений теста (остальное — из английского)
+import deProfile from './de/profile.json';
+import esProfile from './es/profile.json';
+import frProfile from './fr/profile.json';
+import ptBRProfile from './pt-BR/profile.json';
 import { LANGUAGES, Language, detectBrowserLanguage } from './languages';
 import { DeepPartial, fillFrom } from './fillFrom';
 
@@ -173,10 +178,10 @@ export type Translations = typeof en;
 
 const partial = (parts: DeepPartial<Translations>): Translations => fillFrom(en, parts);
 
-const es = partial({ landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, words: esWords });
-const de = partial({ ...deCommon, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError, game: deGame, other: deOther, words: deWords });
-const fr = partial({ landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, words: frWords });
-const ptBR = partial({ landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, words: ptBRWords });
+const es = partial({ landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, words: esWords, profile: esProfile });
+const de = partial({ ...deCommon, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError, game: deGame, other: deOther, words: deWords, profile: deProfile });
+const fr = partial({ landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, words: frWords, profile: frProfile });
+const ptBR = partial({ landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, words: ptBRWords, profile: ptBRProfile });
 
 export const translations: Record<Language, Translations> = {
   en,
