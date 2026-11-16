@@ -101,7 +101,7 @@
           "id": "xp",
           "title": "How XP is earned",
           "points": [
-            { "title": "Perigee session", "text": "1 XP for every word, plus 1 more if you got it right the first time." },
+            { "title": "Perigee session", "text": "1 XP for every word, plus 1 more if you got it right the first time. A word you rate yourself on a flashcard earns just the first one." },
             { "title": "Flashcards", "text": "1 XP for every card." },
             { "title": "Quiz", "text": "1 XP per question and 1 more per correct answer, plus 10 for a quiz of 10+ questions without mistakes." },
             { "title": "Blitz", "text": "1 XP per correct answer, up to 20 per round. A round counts from 10 answers." },

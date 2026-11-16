@@ -318,6 +318,15 @@
     "listenAgain": "Toque para ouvir de novo",
     "dontRemember": "Não lembro",
     "continue": "Continuar",
+    "due": {
+      "one": "{n} para revisar",
+      "other": "{n} para revisar"
+    },
+    "fresh": {
+      "one": "{n} nova",
+      "other": "{n} novas"
+    },
+    "coach": "As palavras novas vêm de três em três: primeiro você as conhece, depois o Perigee confere cada uma. Um erro volta alguns passos depois. Não sabe? Diga: uma resposta honesta ajuda mais o seu plano do que um chute certeiro.",
     "result": {
       "title": "Sessão concluída",
       "reviewed": "Revisadas",
@@ -330,7 +339,12 @@
       "tomorrowNone": "Nada para revisar amanhã",
       "again": "Outra sessão",
       "extra": "Mais palavras novas",
-      "toSets": "Meus sets"
+      "toSets": "Meus sets",
+      "clean": "Sessão perfeita!",
+      "good": "Boa sessão",
+      "doneNote": "Os erros voltam mais cedo — é assim que as palavras fixam.",
+      "tough": "Palavras difíceis",
+      "selfNote": "As palavras que você avaliou sozinho num flashcard não contam em “De primeira”."
     }
   }
 }

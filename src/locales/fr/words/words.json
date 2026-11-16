@@ -318,6 +318,15 @@
     "listenAgain": "Touche pour réécouter",
     "dontRemember": "Je ne m'en souviens pas",
     "continue": "Continuer",
+    "due": {
+      "one": "{n} à réviser",
+      "other": "{n} à réviser"
+    },
+    "fresh": {
+      "one": "{n} nouveau",
+      "other": "{n} nouveaux"
+    },
+    "coach": "Les nouveaux mots arrivent par trois : d'abord tu les découvres, puis Perigee vérifie chacun. Une erreur revient quelques étapes plus tard. Tu ne sais pas ? Dis-le : une réponse honnête aide plus ton planning qu'un coup de chance.",
     "result": {
       "title": "Séance terminée",
       "reviewed": "Révisés",
@@ -330,7 +339,12 @@
       "tomorrowNone": "Rien à revoir demain",
       "again": "Une autre séance",
       "extra": "Plus de nouveaux mots",
-      "toSets": "Mes sets"
+      "toSets": "Mes sets",
+      "clean": "Séance sans faute !",
+      "good": "Bonne séance",
+      "doneNote": "Les erreurs reviennent plus tôt : c'est comme ça que les mots se fixent.",
+      "tough": "Mots difficiles",
+      "selfNote": "Les mots que tu as notés toi-même sur une carte ne comptent pas dans « Du premier coup »."
     }
   }
 }

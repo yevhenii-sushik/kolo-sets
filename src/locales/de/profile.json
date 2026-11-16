@@ -15,6 +15,10 @@
     "speed_demon": {
       "name": "Blitzschnell",
       "description": "Beantworte Quizfragen in unter 5 Sekunden pro Frage oder gib 30 Antworten in einer Blitzrunde – mit mindestens 80 % richtig"
+    },
+    "all_know": {
+      "name": "Alles gewusst!",
+      "description": "Beantworte in einer Perigee-Session jedes Wort beim ersten Versuch richtig – jedes per Antwort geprüft, nicht selbst bewertet"
     }
   }
 }

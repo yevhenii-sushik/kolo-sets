@@ -85,9 +85,11 @@ describe("buildQueue", () => {
       [plan(due(1, 0), false), plan(due(1, 1), false), plan(due(1, 3), false), plan(due(1, 1), false)],
       () => 0.9,
     );
-    expect(steps.map((s) => s.kind)).toEqual(["choice", "type", "flash", "type"]);
+    // Крепкое слово вспоминается вводом: флэшкарта (самооценка) — только для длинных фраз
+    expect(steps.map((s) => s.kind)).toEqual(["choice", "type", "type", "type"]);
     const longPhrase = plan({ ...due(1, 1), word: "å ta seg sammen og gjøre det" }, false);
     expect(buildQueue([longPhrase])[0].kind).toBe("flash");
+    expect(buildQueue([{ ...longPhrase, key: "s1/long3", card: { ...longPhrase.card, srsData: { ...longPhrase.card.srsData, repetitions: 3 } } }], () => 0.9)[0].kind).toBe("flash");
   });
 
   it("повторения делятся между группами новых, начиная с разминки", () => {
@@ -95,9 +97,19 @@ describe("buildQueue", () => {
     expect(steps.map((s) => s.kind)).toEqual(["type", "intro", "choice", "choice", "type"]);
   });
 
-  it("в маленьком курсе вместо выбора — флэшкарта", () => {
+  it("в маленьком курсе без выбора: знакомое слово — вводом, новое — флэшкартой", () => {
     const steps = buildQueue([plan(card(), true), plan(due(1, 0), false)], Math.random, { canChoose: false });
-    expect(steps.map((s) => s.kind)).toEqual(["flash", "intro", "flash"]);
+    expect(steps.map((s) => s.kind)).toEqual(["type", "intro", "flash"]);
+  });
+
+  it("выбор — по слову: в сторону без трёх вариантов не спрашиваем (раньше на кнопке была «—»)", () => {
+    const onlyWord = () => ({ word: true, translation: false });
+    const fresh = buildQueue([plan(card(), true)], () => 0.9, { choosable: onlyWord });
+    expect(fresh.map((s) => [s.kind, s.reverse])).toEqual([["intro", false], ["choice", true]]);
+    const none = buildQueue([plan(card(), true)], () => 0.9, { choosable: () => ({ word: false, translation: false }) });
+    expect(none.map((s) => s.kind)).toEqual(["intro", "flash"]);
+    const review = buildQueue([plan(due(1, 0), false)], () => 0, { choosable: () => ({ word: false, translation: false }) });
+    expect(review[0].kind).toBe("type");
   });
 });
 
@@ -125,7 +137,7 @@ describe("answer", () => {
     const rev = answer(fwd.state, { kind: "choice", correct: true });
     expect(rev.effect?.level).toBe(REMEMBER);
     expect(isFinished(rev.state)).toBe(true);
-    expect(summarize(rev.state)).toEqual({ cards: 1, reviewed: 0, learned: 1, correctFirst: 1 });
+    expect(summarize(rev.state)).toMatchObject({ cards: 1, reviewed: 0, learned: 1, correctFirst: 1, checked: 1, selfRated: 0, tough: [] });
   });
 
   it("лист ответов в шапке: завершённые слова по порядку, верно ли с первого раза", () => {
@@ -135,9 +147,9 @@ describe("answer", () => {
     s = answer(s, { kind: "type", result: "exact" }).state;
     s = answer(s, { kind: "type", result: "wrong" }).state; // слово завершено с ошибкой, повтор впереди
     s = answer(s, { kind: "type", result: "exact" }).state;
-    expect(answerSheet(s)).toEqual([true, false, true]);
+    expect(answerSheet(s)).toEqual(["right", "wrong", "right"]);
     s = answer(s, { kind: "choice", correct: true }).state; // повтор не меняет лист
-    expect(answerSheet(s)).toEqual([true, false, true]);
+    expect(answerSheet(s)).toEqual(["right", "wrong", "right"]);
   });
 
   it("новое слово с ошибкой — «Забыл» после закрепления", () => {
@@ -149,10 +161,25 @@ describe("answer", () => {
     const last = answer(s, { kind: "choice", correct: true });
     expect(last.effect?.level).toBe(FORGOT);
     expect(summarize(last.state).correctFirst).toBe(0);
+    expect(summarize(last.state).tough).toHaveLength(1);
+  });
+
+  it("самооценка во флэшкарте — в расписание, но не в «верно с первого раза» и не в «Знаю всё!»", () => {
+    const phrase = plan({ ...due(1, 3), word: "å ta seg sammen og gjøre det" }, false); // длинную фразу — флэшкартой
+    const typed = plan(due(1, 3), false);
+    let s = startSession([phrase, typed], () => 0.9);
+    expect(s.queue.map((x) => x.kind)).toEqual(["flash", "type"]);
+    const rated = answer(s, { kind: "self", level: KnowledgeLevel.KNOW });
+    expect(rated.effect?.level).toBe(KnowledgeLevel.KNOW);
+    s = answer(rated.state, { kind: "type", result: "exact" }).state;
+    expect(answerSheet(s)).toEqual(["self", "right"]);
+    const sum = summarize(s);
+    expect(sum).toMatchObject({ cards: 2, correctFirst: 1, checked: 1, selfRated: 1 });
+    expect(sum.correctFirst === sum.cards).toBe(false); // «Знаю всё!» не открывается
   });
 
   it("«Не знаю» во флэшкарте возвращает слово в сессии, «Забыл» — нет", () => {
-    const flash = () => startSession([plan(due(1, 3), false)], () => 0.9); // ввод недоступен → флэшкарта
+    const flash = () => startSession([plan({ ...due(1, 3), word: "å ta seg sammen og gjøre det" }, false)], () => 0.9); // длинная фраза → флэшкарта
     const lost = answer(flash(), { kind: "self", level: KnowledgeLevel.DONT_KNOW });
     expect(lost.state.queue).toHaveLength(2);
     const forgot = answer(flash(), { kind: "self", level: FORGOT });

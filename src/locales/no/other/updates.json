@@ -17,7 +17,7 @@
       "features": [
         {
           "title": "Perigee-økter",
-          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, 3–5 minutter. Perigee viser deg nye ord først, ber deg så finne dem blant alternativer, og sjekker kjente ord etter hvor godt du kan dem – med alternativer, skriving, et kort, et hull i eksempelsetningen eller på gehør. En feil kommer tilbake noen steg senere til den sitter. Hver av de fire vurderingene har sin egen frist: «Vet ikke» viser ordet igjen senere i samme økt, «Glemte» – i morgen, «Husker» – om noen dager, «Kan» – senest. Fristen står under knappen, og et vurdert kort flyr til siden. Svar i «Quiz» og «Lynrunde» teller nå også i planen – de modusene har Perigee-merket. I et sett starter Lær-knappen den samme økten, bare med ordene i settet. Det er færre moduser nå, hver med sin egen oppgave: «Overlevelse», «Finn par» og den egne dagens repetisjon er borte – Perigee-økten erstatter dem."
+          "text": "Én knapp på forsiden starter en kort økt med alle settene i kurset: opptil 20 ord, 3–5 minutter. Perigee viser deg nye ord først, ber deg så finne dem blant alternativer, og sjekker kjente ord etter hvor godt du kan dem – med alternativer, skriving, et kort, et hull i eksempelsetningen eller på gehør. En feil kommer tilbake noen steg senere til den sitter. Hver av de fire vurderingene har sin egen frist: «Vet ikke» viser ordet igjen senere i samme økt, «Glemte» – i morgen, «Husker» – om noen dager, «Kan» – senest. Fristen står under knappen, og et vurdert kort flyr til siden. Svar i «Quiz» og «Lynrunde» teller nå også i planen – de modusene har Perigee-merket. I et sett starter Lær-knappen den samme økten, bare med ordene i settet. Det er færre moduser nå, hver med sin egen oppgave: «Overlevelse», «Finn par» og den egne dagens repetisjon er borte – Perigee-økten erstatter dem. Hvert steg ligger nå på et spørsmålskort, som i quizen, med ordets styrke og settet det kommer fra, og toppen viser hva økten består av: hvor mange ord å repetere og hvor mange nye. Usikker? «Vet ikke» finnes også. Riktige svar på rad blir en rekke, og oppsummeringen forteller hvordan økten gikk, hvilke ord som ble sterkere og hvilke som var vanskelige. En vurdering på flashkort er din egen, så den gir ikke lenger bonus for riktig svar og teller ikke mot «Kan alt!», og kjente ord hentes oftere frem ved å skrive dem."
         },
         {
           "title": "Flashkort",
@@ -90,7 +90,8 @@
         "Søket har flyttet fra toppfeltet til Ord-fanen: skriv et ord eller en oversettelse øverst, så ser du med en gang hvilket sett det ligger i. Trykk på et treff, så åpnes settet rett på det kortet. Bokstaver som é og ü kan skrives uten tegnene. På datamaskin tar ⌘K eller Ctrl+K deg dit fra hvilken som helst fane.",
         "Har to ord samme oversettelse, dukker ikke det andre lenger opp blant svaralternativene – før ble et riktig svar regnet som feil. Skriver du et synonym i quizen, kjenner Kolo det igjen og ber om det andre ordet.",
         "Flashkortene og Perigee-økten viser det samme svararket øverst som quizen: én rute per ord, farget etter svaret ditt. Og et langt settnavn skyver ikke lenger knappene øverst ut av skjermen.",
-        "«Spill igjen» rett etter en runde viser ikke lenger svaralternativer som ikke passer til ordet."
+        "«Spill igjen» rett etter en runde viser ikke lenger svaralternativer som ikke passer til ordet.",
+        "En Perigee-økt viser ikke lenger en «—»-knapp når to ord har samme oversettelse."
       ]
     },
     {

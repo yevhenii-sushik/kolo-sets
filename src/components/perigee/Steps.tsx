@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, Check, Plus, Volume2, X } from "lucide-react";
+import { ArrowRight, Check, Lightbulb, Plus, Volume2, X } from "lucide-react";
 import { Card as CardData, KnowledgeLevel } from "../../types";
-import { Badge, Button, Card, IconButton, Input, cx } from "../../ui";
+import { Button, Card, IconButton, Input, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
 import { posLabel } from "../../data/partsOfSpeech";
 import { isTTSSupported, speakWord } from "../../utils/tts";
-import { playSound, RATING_PITCH } from "../../utils/sounds";
-import { previewIntervals } from "../../utils/srs";
+import { playSound, RATING_PITCH, semitones } from "../../utils/sounds";
+import { previewIntervals, Strength } from "../../utils/srs";
+import { streakPitch } from "../../quiz/plan";
 import { makeChoicesFor } from "../../utils/gameUtils";
 import { blankExample } from "../../perigee/cloze";
 import { AnswerVerdict, canAddVariant, checkAnswer } from "../../utils/answerCheck";
@@ -15,11 +16,25 @@ import CardStage from "../session/CardStage";
 import RatingBar from "../session/RatingBar";
 import { SWIPE, swipeLabels } from "../session/ratingLabels";
 import AnswerDiff from "../session/AnswerDiff";
+import QuestionCard, { ListenButton, QuestionPrompt, QuestionTag, StreakChip } from "../session/QuestionCard";
 
-// Шаги сессии Perigee (docs/specs/perigee.md): знакомство, выбор, ввод, флэшкарта наоборот.
-// Каждый шаг сам показывает разбор и зовёт onAnswer один раз — когда пользователь готов идти дальше.
+// Шаги сессии Perigee (docs/specs/perigee.md): знакомство, выбор, ввод, пропуск в примере, аудирование,
+// флэшкарта наоборот. Каждый шаг сам показывает разбор и зовёт onAnswer один раз — когда пользователь готов
+// идти дальше. Вид — как в тесте и Блице (docs/specs/perigee.md, «Perigee: понятность и честность»):
+// карточка вопроса с силой слова и серией, ответы — под большим пальцем
 
 const AUTO_NEXT_MS = 650; // верный ответ — короткая пауза, чтобы увидеть зелёный, и дальше
+
+/** Общее для шагов: сила слова, серия до этого шага, набор слова и подсказка первой сессии */
+export interface StepMeta {
+  strength?: Strength;
+  streak: number; // верных подряд до этого шага
+  setName?: string; // набор слова — когда в сессии слова из нескольких наборов
+  coach?: string; // подсказка первой сессии: как она устроена
+}
+
+// Звук «верно» поднимается вместе с серией — как в тесте
+const rightSound = (meta: StepMeta) => playSound("answer-correct", { rate: semitones(streakPitch(meta.streak + 1)) });
 
 // Enter — «Дальше», когда кнопка видна
 function useEnter(active: boolean, onEnter: () => void) {
@@ -41,21 +56,36 @@ function useEnter(active: boolean, onEnter: () => void) {
   }, [active]);
 }
 
+// На телефоне карточка занимает свободное место, ответы — внизу; на широком экране всё по центру
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <main className="flex min-h-0 flex-1 flex-col overflow-auto px-4 py-6 sm:px-6">
-      <div className="mx-auto my-auto grid w-full max-w-xl gap-5">{children}</div>
+    <main className="flex min-h-0 flex-1 flex-col overflow-auto px-4 pb-6 pt-3 sm:px-6 sm:py-6">
+      <div className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-4 sm:my-auto sm:flex-none">{children}</div>
     </main>
   );
 }
 
-function Prompt({ label, text, pos }: { label: string; text: string; pos?: string }) {
+// Карточка вопроса шага: что сделать, сила слова, серия с трёх, набор слова
+function StepCard({ label, meta, children }: { label: React.ReactNode; meta: StepMeta; children: React.ReactNode }) {
   const { t } = useI18n();
   return (
-    <div className="grid gap-2 text-center">
-      <p className="text-sm font-medium text-muted">{label}</p>
-      <h2 dir="auto" className="font-display text-3xl font-extrabold leading-tight text-fg wrap-break-word sm:text-4xl">{text}</h2>
-      {pos && <p className="text-sm text-faint">{posLabel(pos, t.words.pos)}</p>}
+    <QuestionCard
+      label={label}
+      strength={meta.strength}
+      badge={meta.streak >= 3 ? <StreakChip value={meta.streak}>{t.words.quiz.streak.replace("{n}", String(meta.streak))}</StreakChip> : undefined}
+      note={meta.setName}
+    >
+      {children}
+    </QuestionCard>
+  );
+}
+
+function Coach({ text }: { text?: string }) {
+  if (!text) return null;
+  return (
+    <div className="flex gap-2.5 rounded-2xl bg-inset p-3 text-left text-sm text-muted">
+      <Lightbulb size={16} className="mt-0.5 shrink-0 text-accent-ink" />
+      <p className="leading-snug">{text}</p>
     </div>
   );
 }
@@ -64,32 +94,39 @@ function SpeakButton({ word, voice }: { word: string; voice?: string }) {
   const { t } = useI18n();
   if (!isTTSSupported()) return null;
   return (
-    <IconButton variant="soft" label={t.words.flashcards.speak} onClick={() => speakWord(word, voice)} className="justify-self-center">
+    <IconButton variant="soft" label={t.words.flashcards.speak} onClick={() => speakWord(word, voice)} className="relative justify-self-center">
       <Volume2 size={20} />
     </IconButton>
   );
 }
 
-// ── Знакомство с новым словом ──
-export function IntroStep({ card, voice, onNext }: { card: CardData; voice?: string; onNext: () => void }) {
+const PosTag = ({ pos }: { pos?: string }) => {
+  const { t } = useI18n();
+  return pos ? <QuestionTag>{posLabel(pos, t.words.pos)}</QuestionTag> : null;
+};
+
+// ── Знакомство с новым словом: тёплая карточка, как лицо флэшкарты ──
+export function IntroStep({ card, voice, meta, onNext }: { card: CardData; voice?: string; meta: StepMeta; onNext: () => void }) {
   const { t } = useI18n();
   const p = t.words.perigee;
   useEnter(true, onNext);
   return (
     <Shell>
-      <div className="grid justify-items-center gap-3 text-center">
-        <Badge tone="special">{p.newWord}</Badge>
-        <h2 dir="auto" className="font-display text-4xl font-extrabold leading-tight text-fg wrap-break-word sm:text-5xl">{card.word}</h2>
-        {card.partOfSpeech && <p className="text-sm text-faint">{posLabel(card.partOfSpeech, t.words.pos)}</p>}
+      <StepCard label={p.newWord} meta={{ ...meta, strength: undefined }}>
+        <QuestionPrompt>{card.word}</QuestionPrompt>
+        <PosTag pos={card.partOfSpeech} />
         <SpeakButton word={card.word} voice={voice} />
-        <p dir="auto" className="text-2xl font-semibold text-accent-ink">{card.translation}</p>
-      </div>
+        <p dir="auto" className="relative text-2xl font-semibold text-accent-ink">
+          {card.translation}
+        </p>
+      </StepCard>
       {(card.explanation || card.example) && (
         <Card tone="inset" padding="sm" className="grid gap-1 text-center">
           {card.explanation && <p dir="auto" className="text-sm text-fg">{card.explanation}</p>}
           {card.example && <p dir="auto" className="text-sm italic text-muted">{card.example}</p>}
         </Card>
       )}
+      <Coach text={meta.coach} />
       <Button size="lg" fullWidth iconRight={<ArrowRight size={18} />} onClick={onNext}>
         {p.gotIt}
       </Button>
@@ -103,6 +140,7 @@ function ChoiceBase({
   pool,
   field,
   label,
+  meta,
   prompt,
   reveal,
   onAnswer,
@@ -111,8 +149,9 @@ function ChoiceBase({
   pool: CardData[];
   field: "word" | "translation";
   label: string;
+  meta: StepMeta;
   prompt: (answered: boolean, right: boolean) => React.ReactNode;
-  reveal?: React.ReactNode; // что показать после ответа (слово, которое прозвучало)
+  reveal?: React.ReactNode; // что показать после ответа под вариантами
   onAnswer: (correct: boolean) => void;
 }) {
   const { t } = useI18n();
@@ -124,11 +163,13 @@ function ChoiceBase({
   useEffect(() => () => clearTimeout(timer.current), []);
 
   const wrong = chosen !== null && chosen !== correct;
+  // "" — «Не знаю»: честная ошибка вместо угадывания (удачная догадка записалась бы как «Помню»)
   const pick = (option: string) => {
     if (chosen !== null) return;
     setChosen(option);
     const right = option === correct;
-    playSound(right ? "answer-correct" : "answer-wrong");
+    if (right) rightSound(meta);
+    else playSound("answer-wrong");
     if (right) timer.current = setTimeout(() => onAnswer(true), reveal ? AUTO_NEXT_MS * 2 : AUTO_NEXT_MS);
   };
 
@@ -144,34 +185,34 @@ function ChoiceBase({
 
   return (
     <Shell>
-      <div className="grid gap-2 text-center">
-        <p className="text-sm font-medium text-muted">{label}</p>
+      <StepCard label={label} meta={meta}>
         {prompt(chosen !== null, chosen === correct)}
+      </StepCard>
+      {chosen === null && <Coach text={meta.coach} />}
+      <div className="grid gap-3">
+        <div className="grid gap-2 sm:grid-cols-2">
+          {options.map((option, i) => (
+            <ChoiceButton key={`${option}-${i}`} label={option} hint={String(i + 1)} state={choiceState(option, chosen, correct)} onClick={() => pick(option)} />
+          ))}
+        </div>
+        {chosen === null && (
+          <Button variant="ghost" size="sm" onClick={() => pick("")} className="justify-self-center">
+            {t.words.quiz.dontKnow}
+          </Button>
+        )}
+        {chosen !== null && reveal}
+        {wrong && (
+          <Button size="lg" variant="inverse" fullWidth iconRight={<ArrowRight size={18} />} onClick={() => onAnswer(false)}>
+            {p.continue}
+          </Button>
+        )}
       </div>
-      <div className="grid gap-2 sm:grid-cols-2">
-        {options.map((option, i) => (
-          <ChoiceButton key={`${option}-${i}`} label={option} hint={String(i + 1)} state={choiceState(option, chosen, correct)} onClick={() => pick(option)} />
-        ))}
-      </div>
-      {chosen !== null && reveal}
-      {wrong && (
-        <Button size="lg" variant="inverse" fullWidth iconRight={<ArrowRight size={18} />} onClick={() => onAnswer(false)}>
-          {p.continue}
-        </Button>
-      )}
     </Shell>
   );
 }
 
-const promptText = (text: string, pos?: string, posName?: (pos: string) => string) => (
-  <>
-    <h2 dir="auto" className="font-display text-3xl font-extrabold leading-tight text-fg wrap-break-word sm:text-4xl">{text}</h2>
-    {pos && posName && <p className="text-sm text-faint">{posName(pos)}</p>}
-  </>
-);
-
 // Слово → выбрать перевод (forward) или перевод → выбрать слово (reverse)
-export function ChoiceStep({ card, pool, reverse, onAnswer }: { card: CardData; pool: CardData[]; reverse: boolean; onAnswer: (correct: boolean) => void }) {
+export function ChoiceStep({ card, pool, reverse, meta, onAnswer }: { card: CardData; pool: CardData[]; reverse: boolean; meta: StepMeta; onAnswer: (correct: boolean) => void }) {
   const { t } = useI18n();
   const p = t.words.perigee;
   return (
@@ -180,25 +221,32 @@ export function ChoiceStep({ card, pool, reverse, onAnswer }: { card: CardData; 
       pool={pool}
       field={reverse ? "word" : "translation"}
       label={reverse ? p.pickWord : p.pickTranslation}
-      prompt={() => promptText(reverse ? card.translation : card.word, card.partOfSpeech, (pos) => posLabel(pos, t.words.pos))}
+      meta={meta}
+      prompt={() => (
+        <>
+          <QuestionPrompt>{reverse ? card.translation : card.word}</QuestionPrompt>
+          <PosTag pos={card.partOfSpeech} />
+        </>
+      )}
       onAnswer={onAnswer}
     />
   );
 }
 
 // Пропуск в примере: какое слово пропущено (src/perigee/cloze.ts)
-export function ClozeStep({ card, pool, onAnswer }: { card: CardData; pool: CardData[]; onAnswer: (correct: boolean) => void }) {
+export function ClozeStep({ card, pool, meta, onAnswer }: { card: CardData; pool: CardData[]; meta: StepMeta; onAnswer: (correct: boolean) => void }) {
   const { t } = useI18n();
   const blank = useMemo(() => blankExample(card), [card]);
-  if (!blank) return <ChoiceStep card={card} pool={pool} reverse onAnswer={onAnswer} />;
+  if (!blank) return <ChoiceStep card={card} pool={pool} reverse meta={meta} onAnswer={onAnswer} />;
   return (
     <ChoiceBase
       card={card}
       pool={pool}
       field="word"
       label={t.words.perigee.fillGap}
+      meta={meta}
       prompt={(answered, right) => (
-        <p dir="auto" className="text-2xl font-semibold leading-snug text-fg sm:text-3xl">
+        <p dir="auto" className="relative text-2xl font-semibold leading-snug text-fg sm:text-3xl">
           {blank.before}
           {answered ? (
             <span className={cx("rounded-md px-1", right ? "bg-success-soft text-success" : "bg-danger-soft text-danger")}>{blank.answer}</span>
@@ -214,8 +262,8 @@ export function ClozeStep({ card, pool, onAnswer }: { card: CardData; pool: Card
   );
 }
 
-// Аудирование: слово звучит само (и по кнопке), выбрать перевод; после ответа видно, что прозвучало
-export function ListenStep({ card, pool, voice, onAnswer }: { card: CardData; pool: CardData[]; voice?: string; onAnswer: (correct: boolean) => void }) {
+// Аудирование: слово звучит само (и по кнопке), выбрать перевод; после ответа на карточке видно, что прозвучало
+export function ListenStep({ card, pool, voice, meta, onAnswer }: { card: CardData; pool: CardData[]; voice?: string; meta: StepMeta; onAnswer: (correct: boolean) => void }) {
   const { t } = useI18n();
   const p = t.words.perigee;
   useEffect(() => {
@@ -227,24 +275,8 @@ export function ListenStep({ card, pool, voice, onAnswer }: { card: CardData; po
       pool={pool}
       field="translation"
       label={p.listen}
-      prompt={() => (
-        <div className="grid justify-items-center gap-2 py-2">
-          <button
-            type="button"
-            aria-label={p.listenAgain}
-            onClick={() => speakWord(card.word, voice)}
-            className="grid h-20 w-20 place-items-center rounded-full bg-accent-soft text-accent-ink transition-colors hover:bg-accent/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-          >
-            <Volume2 size={36} />
-          </button>
-          <p className="text-xs text-faint">{p.listenAgain}</p>
-        </div>
-      )}
-      reveal={
-        <p dir="auto" className="text-center font-display text-2xl font-extrabold text-fg">
-          {card.word}
-        </p>
-      }
+      meta={meta}
+      prompt={(answered) => (answered ? <QuestionPrompt>{card.word}</QuestionPrompt> : <ListenButton label={p.listenAgain} onClick={() => speakWord(card.word, voice)} />)}
       onAnswer={onAnswer}
     />
   );
@@ -258,12 +290,14 @@ export function TypeStep({
   card,
   others,
   voice,
+  meta,
   onAnswer,
   onAddVariant,
 }: {
   card: CardData;
   others: string[];
   voice?: string;
+  meta: StepMeta;
   onAnswer: (result: AnswerVerdict["result"]) => void;
   onAddVariant?: (answer: string) => void;
 }) {
@@ -281,7 +315,8 @@ export function TypeStep({
     if (verdict) return;
     const v = given.trim() ? checkAnswer(given, card.word, others) : ({ result: "wrong" } as const);
     setVerdict(v);
-    playSound(v.result === "wrong" ? "answer-wrong" : "answer-correct");
+    if (v.result === "wrong") playSound("answer-wrong");
+    else rightSound(meta);
     if (v.result === "exact") timer.current = setTimeout(() => onAnswer("exact"), AUTO_NEXT_MS);
   };
   useEnter(!!verdict && verdict.result !== "exact", () => result && onAnswer(result));
@@ -293,7 +328,11 @@ export function TypeStep({
 
   return (
     <Shell>
-      <Prompt label={p.typeWord} text={card.translation} pos={card.partOfSpeech} />
+      <StepCard label={p.typeWord} meta={meta}>
+        <QuestionPrompt>{card.translation}</QuestionPrompt>
+        <PosTag pos={card.partOfSpeech} />
+      </StepCard>
+      {!verdict && <Coach text={meta.coach} />}
       <form
         className="grid gap-3"
         onSubmit={(e) => {

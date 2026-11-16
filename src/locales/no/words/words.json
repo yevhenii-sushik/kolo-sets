@@ -449,6 +449,15 @@
     "listenAgain": "Trykk for å høre igjen",
     "dontRemember": "Husker ikke",
     "continue": "Videre",
+    "due": {
+      "one": "{n} å repetere",
+      "other": "{n} å repetere"
+    },
+    "fresh": {
+      "one": "{n} nytt",
+      "other": "{n} nye"
+    },
+    "coach": "Nye ord kommer tre om gangen: først blir du kjent med dem, så sjekker Perigee hvert av dem. En feil kommer tilbake noen steg senere. Vet du ikke? Si det: et ærlig svar hjelper planen mer enn en heldig gjetning.",
     "result": {
       "title": "Økten er ferdig",
       "reviewed": "Repetert",
@@ -461,7 +470,12 @@
       "tomorrowNone": "Ingen repetisjoner i morgen",
       "again": "En økt til",
       "extra": "Flere nye ord",
-      "toSets": "Til settene"
+      "toSets": "Til settene",
+      "clean": "Feilfri økt!",
+      "good": "God økt",
+      "doneNote": "Feil kommer tilbake tidligere – det er slik ordene fester seg.",
+      "tough": "Vanskelige ord",
+      "selfNote": "Ord du vurderte selv på et flashkort, teller ikke med i «På første forsøk»."
     }
   }
 }

@@ -33,6 +33,7 @@ export interface Step {
 interface CardProgress {
   mistakes: number;
   first?: boolean; // верно ли с первого раза
+  self?: boolean; // ответ — самооценка во флэшкарте: в «верно с первого раза» и «Знаю всё!» не идёт
   done: boolean; // оценка уже записана
   order?: number; // каким по счёту слово завершилось — лист ответов в шапке заполняется слева направо
 }
@@ -45,6 +46,13 @@ export interface SessionState {
   progress: Record<string, CardProgress>;
   retries: Record<string, number>;
   canChoose: boolean;
+  ask: Record<string, Choosable>; // можно ли спросить слово выбором: в какую сторону хватает трёх вариантов
+}
+
+/** В какую сторону слово можно спросить выбором из четырёх (без синонимов хватает трёх неверных) */
+export interface Choosable {
+  word: boolean; // перевод → выбрать слово
+  translation: boolean; // слово → выбрать перевод
 }
 
 /** Запись в расписание после ответа */
@@ -95,24 +103,32 @@ type Draft = Omit<Step, "id">;
 export interface QueueOptions {
   canChoose?: boolean; // в курсе достаточно слов для четырёх вариантов
   canListen?: (pc: PlanCard) => boolean; // есть голос для языка и звук не выключен
+  // Выбор — по слову, а не по курсу: у слова с синонимами вариантов может не хватить, и раньше на кнопке
+  // появлялась заглушка «—»
+  choosable?: (pc: PlanCard) => Choosable;
 }
 
+const ALL: Choosable = { word: true, translation: true };
+
 // Формат проверки слова к повторению — по силе памяти. Пропуск в примере и аудирование разбавляют
-// выбор у свежих слов и изредка появляются у выученных — для разнообразия, оцениваются как выбор
-function reviewStep(pc: PlanCard, random: () => number, { canChoose = true, canListen }: QueueOptions): Draft {
+// выбор у свежих слов и изредка появляются у выученных — для разнообразия, оцениваются как выбор.
+// Вспомнить слово — вводом; флэшкарта (самооценка) — только для длинных фраз, которые мучительно печатать:
+// раньше половина крепких слов шла флэшкартой, и «Помню» засчитывалось как проверенный ответ
+function reviewStep(pc: PlanCard, random: () => number, { canChoose = true, canListen }: QueueOptions, ask: Choosable): Draft {
   const reps = pc.card.srsData?.repetitions ?? 0;
-  const cloze = canChoose && blankExample(pc.card) !== null;
-  const listen = canChoose && !!canListen?.(pc);
+  const choice = canChoose && ask.word; // у слова к повторению выбор — обратный: перевод → слово
+  const cloze = choice && blankExample(pc.card) !== null;
+  const listen = canChoose && ask.translation && !!canListen?.(pc);
   const recall: StepKind = typeable(pc.card.word) ? "type" : "flash";
   let kind: StepKind;
   if (reps === 0) {
-    const options: StepKind[] = canChoose ? ["choice", ...(cloze ? ["cloze" as const] : []), ...(listen ? ["listen" as const] : [])] : ["flash"];
-    kind = options[Math.min(options.length - 1, Math.floor(random() * options.length))];
+    const options: StepKind[] = [...(choice ? ["choice" as const] : []), ...(cloze ? ["cloze" as const] : []), ...(listen ? ["listen" as const] : [])];
+    kind = options.length ? options[Math.min(options.length - 1, Math.floor(random() * options.length))] : recall;
   } else if (reps === 1) {
     kind = recall;
   } else {
     const r = random();
-    kind = cloze && r < 0.2 ? "cloze" : listen && r < 0.35 ? "listen" : recall === "type" && random() < 0.5 ? "type" : "flash";
+    kind = cloze && r < 0.2 ? "cloze" : listen && r < 0.35 ? "listen" : recall;
   }
   return { key: pc.key, kind, reverse: true, graded: true };
 }
@@ -125,19 +141,27 @@ const chunk = <T,>(arr: T[], size: number): T[][] =>
  * Слова к повторению делятся между группами: сессия начинается с разминки знакомыми словами.
  */
 export function buildQueue(cards: PlanCard[], random: () => number = Math.random, options: QueueOptions = {}): Step[] {
-  const { canChoose = true, canListen } = options;
-  const reviews = cards.filter((c) => !c.isNew).map((c) => reviewStep(c, random, options));
-  const check = (c: PlanCard, reverse: boolean): Draft => {
-    if (!canChoose) return { key: c.key, kind: "flash", reverse: true, graded: true };
+  const { canChoose = true, canListen, choosable = () => ALL } = options;
+  const reviews = cards.filter((c) => !c.isNew).map((c) => reviewStep(c, random, options, choosable(c)));
+  // Проверка нового слова выбором; null — в эту сторону вариантов не хватает
+  const check = (c: PlanCard, reverse: boolean): Draft | null => {
+    if (!canChoose || !choosable(c)[reverse ? "word" : "translation"]) return null;
     // Услышать только что выученное слово — половине новых слов вместо выбора перевода
     const listen = !reverse && !!canListen?.(c) && random() < 0.5;
     return { key: c.key, kind: listen ? "listen" : "choice", reverse, graded: true };
   };
-  const groups = chunk(cards.filter((c) => c.isNew), GROUP).map((g) => [
-    ...g.map((c): Draft => ({ key: c.key, kind: "intro", reverse: false, graded: false })),
-    ...g.map((c) => check(c, false)),
-    ...(canChoose ? g.map((c) => check(c, true)) : []),
-  ]);
+  const groups = chunk(cards.filter((c) => c.isNew), GROUP).map((g) => {
+    const forward = g.map((c) => check(c, false));
+    const back = g.map((c) => check(c, true));
+    // Ни в одну сторону выбором не спросить — проверка флэшкартой
+    const fallback = g.flatMap((c, i): Draft[] => (forward[i] || back[i] ? [] : [{ key: c.key, kind: "flash", reverse: true, graded: true }]));
+    return [
+      ...g.map((c): Draft => ({ key: c.key, kind: "intro", reverse: false, graded: false })),
+      ...forward.filter((d): d is Draft => d !== null),
+      ...fallback,
+      ...back.filter((d): d is Draft => d !== null),
+    ];
+  });
 
   const slices = groups.length + 1;
   const per = Math.ceil(reviews.length / slices);
@@ -152,6 +176,7 @@ export function buildQueue(cards: PlanCard[], random: () => number = Math.random
 export function startSession(cards: PlanCard[], random: () => number = Math.random, options: QueueOptions = {}): SessionState {
   const canChoose = options.canChoose ?? true;
   const queue = buildQueue(cards, random, options);
+  const choosable = options.choosable ?? (() => ALL);
   return {
     cards: Object.fromEntries(cards.map((c) => [c.key, c])),
     queue,
@@ -160,7 +185,17 @@ export function startSession(cards: PlanCard[], random: () => number = Math.rand
     progress: {},
     retries: {},
     canChoose,
+    ask: Object.fromEntries(cards.map((c) => [c.key, choosable(c)])),
   };
+}
+
+// Повтор после ошибки — выбор полегче: в нужную сторону, а не хватает вариантов — в другую; никак — флэшкарта
+function retryKind(s: SessionState, step: Step): Pick<Step, "kind" | "reverse"> {
+  const reverse = step.kind === "choice" ? step.reverse : true;
+  const ask = s.ask[step.key] ?? ALL;
+  if (s.canChoose && ask[reverse ? "word" : "translation"]) return { kind: "choice", reverse };
+  if (s.canChoose && ask[reverse ? "translation" : "word"]) return { kind: "choice", reverse: !reverse };
+  return { kind: "flash", reverse: true };
 }
 
 export const isFinished = (s: SessionState) => s.pos >= s.queue.length;
@@ -190,18 +225,16 @@ export function answer(s: SessionState, outcome: AnswerOutcome | null): { state:
     const forgotSelf = outcome?.kind === "self" && outcome.level === KnowledgeLevel.FORGOT;
     if (used < MAX_RETRIES && !forgotSelf) {
       // После ввода и флэшкарты — выбор полегче; после выбора — тот же выбор заново
-      const retry: Step = {
-        id: nextId++,
-        key: step.key,
-        kind: step.kind === "choice" || s.canChoose ? "choice" : "flash",
-        reverse: step.kind === "choice" ? step.reverse : true,
-        graded: false,
-      };
+      const retry: Step = { id: nextId++, key: step.key, ...retryKind(s, step), graded: false };
       const at = Math.min(s.pos + 1 + RETRY_GAP, queue.length);
       queue = [...queue.slice(0, at), retry, ...queue.slice(at)];
       retries = { ...retries, [step.key]: used + 1 };
     }
   }
+
+  // Самооценка во флэшкарте — данные о памяти, но не проверенный ответ: в «верно с первого раза» (опыт)
+  // и «Знаю всё!» такое слово не идёт (правило «не награждать самооценку»)
+  if (step.graded && outcome?.kind === "self" && !progress.done) progress.self = true;
 
   let effect: SrsEffect | undefined;
   const target = { collectionId: pc.collectionId, cardId: pc.card.id };
@@ -225,28 +258,40 @@ export function answer(s: SessionState, outcome: AnswerOutcome | null): { state:
   };
 }
 
-/** Лист ответов: завершённые слова по порядку — верно ли с первого раза (как в тесте и флэшкартах) */
-export function answerSheet(s: SessionState): boolean[] {
+export type SheetMark = "right" | "wrong" | "self";
+
+/**
+ * Лист ответов: завершённые слова по порядку (как в тесте и флэшкартах): верно с первого раза, ошибка
+ * или «помню» по самооценке — своим цветом, потому что это не проверенный ответ
+ */
+export function answerSheet(s: SessionState): SheetMark[] {
   return Object.values(s.progress)
     .filter((p) => p.done)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    .map((p) => p.first === true);
+    .map((p) => (p.first !== true ? "wrong" : p.self ? "self" : "right"));
 }
 
 export interface SessionSummary {
   cards: number;
   reviewed: number;
   learned: number;
-  correctFirst: number;
+  correctFirst: number; // верно с первого раза по проверенному ответу — за них опыт и «Знаю всё!»
+  checked: number; // слов, проверенных ответом (не самооценкой)
+  selfRated: number; // слов, оценённых самим человеком во флэшкарте
+  tough: string[]; // ключи слов с ошибками — «Трудные слова» в итоге
 }
 
 export function summarize(s: SessionState): SessionSummary {
   const list = Object.values(s.cards);
+  const done = list.filter((c) => s.progress[c.key]?.done);
   return {
     cards: list.length,
     reviewed: list.filter((c) => !c.isNew).length,
     learned: list.filter((c) => c.isNew && s.progress[c.key]?.done).length,
-    correctFirst: list.filter((c) => s.progress[c.key]?.first === true).length,
+    correctFirst: done.filter((c) => s.progress[c.key].first === true && !s.progress[c.key].self).length,
+    checked: done.filter((c) => !s.progress[c.key].self).length,
+    selfRated: done.filter((c) => s.progress[c.key].self).length,
+    tough: list.filter((c) => (s.progress[c.key]?.mistakes ?? 0) > 0).map((c) => c.key),
   };
 }
 

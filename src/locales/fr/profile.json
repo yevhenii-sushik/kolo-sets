@@ -15,6 +15,10 @@
     "speed_demon": {
       "name": "Éclair",
       "description": "Réponds aux questions d'un quiz en moins de 5 secondes chacune ou donne 30 réponses en une manche de Blitz, avec au moins 80 % de bonnes réponses"
+    },
+    "all_know": {
+      "name": "Je sais tout !",
+      "description": "Réponds juste du premier coup à tous les mots d'une séance Perigee, chacun vérifié par une réponse et non par ta propre note"
     }
   }
 }

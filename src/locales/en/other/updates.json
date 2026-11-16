@@ -17,7 +17,7 @@
       "features": [
         {
           "title": "Perigee sessions",
-          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, 3–5 minutes. Perigee first shows you new words, then asks you to spot them among options, and checks familiar ones by how well you know them — with options, typing, a flashcard, a gap in the example sentence or by ear. A mistake comes back a few steps later until it sticks. Each of the four ratings has its own timing: “Don't know” shows the word again later in the same session, “Forgot” — tomorrow, “Remember” — in a few days, “Know” — the latest. The timing is shown under each button, and a rated card flies off to the side. Answers in the Quiz and Blitz now count towards your schedule too — those modes carry the Perigee mark. Inside a set, the Learn button starts the same session with just that set's words. There are fewer modes now, each with its own job: Survival, Match pairs and the separate daily review are gone — the Perigee session replaces them."
+          "text": "One button on the home screen starts a short session across all the sets in your course: up to 20 words, 3–5 minutes. Perigee first shows you new words, then asks you to spot them among options, and checks familiar ones by how well you know them — with options, typing, a flashcard, a gap in the example sentence or by ear. A mistake comes back a few steps later until it sticks. Each of the four ratings has its own timing: “Don't know” shows the word again later in the same session, “Forgot” — tomorrow, “Remember” — in a few days, “Know” — the latest. The timing is shown under each button, and a rated card flies off to the side. Answers in the Quiz and Blitz now count towards your schedule too — those modes carry the Perigee mark. Inside a set, the Learn button starts the same session with just that set's words. There are fewer modes now, each with its own job: Survival, Match pairs and the separate daily review are gone — the Perigee session replaces them. Every step now sits on a question card, like in the quiz, with the word's strength and the set it comes from, and the header shows what's in the session: how many words to review and how many are new. Not sure? “I don't know” is there too. Right answers in a row build a streak, and the summary tells you how the session went, which words got stronger and which were tough. A flashcard rating is your own judgement, so it no longer earns the bonus for a right answer or counts towards Know it all, and familiar words are recalled by typing more often."
         },
         {
           "title": "Flashcards",
@@ -90,7 +90,8 @@
         "Search has moved from the header to the Words tab: type a word or translation at the top and you'll see which set it's in. Tap a result and the set opens right on that card. Letters like é or ü can be typed without the marks. On a computer, ⌘K or Ctrl+K takes you there from any tab.",
         "If two words share a translation, the second one no longer shows up among the answer options, where a right answer used to count as a mistake. Type a synonym in the quiz, and Kolo will recognise it and ask for the other word.",
         "Flashcards and the Perigee session show the same answer sheet in the header as the quiz: a cell per word, coloured by your answer. And a long set name no longer pushes the header buttons off the screen.",
-        "“Play again” right after a round no longer shows answer options that don't match the word."
+        "“Play again” right after a round no longer shows answer options that don't match the word.",
+        "A Perigee session no longer shows a “—” answer button when two words share a translation."
       ]
     },
     {

@@ -221,7 +221,7 @@
     },
     "all_know": {
       "name": "Know it all!",
-      "description": "Get every word right on the first try in a Perigee session"
+      "description": "Get every word right on the first try in a Perigee session — each one checked by an answer, not your own rating"
     },
     "comeback": {
       "name": "Comeback",

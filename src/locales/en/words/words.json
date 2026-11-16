@@ -449,6 +449,15 @@
     "listenAgain": "Tap to listen again",
     "dontRemember": "I don't remember",
     "continue": "Continue",
+    "due": {
+      "one": "{n} to review",
+      "other": "{n} to review"
+    },
+    "fresh": {
+      "one": "{n} new",
+      "other": "{n} new"
+    },
+    "coach": "New words come in threes: first you meet them, then Perigee checks each one. A mistake comes back a few steps later. Don't know? Say so: an honest answer helps your schedule more than a lucky guess.",
     "result": {
       "title": "Session complete",
       "reviewed": "Reviewed",
@@ -461,7 +470,12 @@
       "tomorrowNone": "Nothing is due tomorrow",
       "again": "Another session",
       "extra": "More new words",
-      "toSets": "My sets"
+      "toSets": "My sets",
+      "clean": "Clean session!",
+      "good": "Good session",
+      "doneNote": "Mistakes come back sooner — that's how words stick.",
+      "tough": "Tough words",
+      "selfNote": "Words you rated yourself on a flashcard don't count towards “First try”."
     }
   }
 }

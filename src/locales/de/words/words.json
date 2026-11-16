@@ -318,6 +318,15 @@
     "listenAgain": "Tippen, um es noch einmal zu hören",
     "dontRemember": "Ich weiß es nicht mehr",
     "continue": "Weiter",
+    "due": {
+      "one": "{n} zum Wiederholen",
+      "other": "{n} zum Wiederholen"
+    },
+    "fresh": {
+      "one": "{n} neues",
+      "other": "{n} neue"
+    },
+    "coach": "Neue Wörter kommen zu dritt: Erst lernst du sie kennen, dann prüft Perigee jedes einzelne. Ein Fehler kommt ein paar Schritte später zurück. Weißt du es nicht? Sag es: Eine ehrliche Antwort hilft deinem Plan mehr als ein Glückstreffer.",
     "result": {
       "title": "Session abgeschlossen",
       "reviewed": "Wiederholt",
@@ -330,7 +339,12 @@
       "tomorrowNone": "Morgen ist nichts fällig",
       "again": "Noch eine Session",
       "extra": "Mehr neue Wörter",
-      "toSets": "Meine Sets"
+      "toSets": "Meine Sets",
+      "clean": "Fehlerfreie Session!",
+      "good": "Gute Session",
+      "doneNote": "Fehler kommen früher zurück – so bleiben Wörter hängen.",
+      "tough": "Schwierige Wörter",
+      "selfNote": "Wörter, die du auf einer Karteikarte selbst bewertet hast, zählen nicht zu „Beim ersten Versuch“."
     }
   }
 }

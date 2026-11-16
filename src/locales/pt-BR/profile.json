@@ -15,6 +15,10 @@
     "speed_demon": {
       "name": "Relâmpago",
       "description": "Responda às perguntas de um quiz em menos de 5 segundos cada ou dê 30 respostas numa rodada relâmpago, com pelo menos 80% de acertos"
+    },
+    "all_know": {
+      "name": "Sei tudo!",
+      "description": "Acerte de primeira todas as palavras de uma sessão do Perigee, cada uma conferida por uma resposta e não pela sua própria avaliação"
     }
   }
 }

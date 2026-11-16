@@ -101,7 +101,7 @@
           "id": "xp",
           "title": "Slik får du XP",
           "points": [
-            { "title": "Perigee-økt", "text": "1 XP for hvert ord, pluss 1 til hvis du svarte riktig på første forsøk." },
+            { "title": "Perigee-økt", "text": "1 XP for hvert ord, pluss 1 til hvis du svarte riktig på første forsøk. Et ord du vurderer selv på et flashkort, gir bare det første." },
             { "title": "Flashkort", "text": "1 XP for hvert kort." },
             { "title": "Quiz", "text": "1 XP per spørsmål og 1 til per riktig svar, pluss 10 for en quiz med 10+ spørsmål uten feil." },
             { "title": "Lynrunde", "text": "1 XP per riktig svar, opptil 20 per runde. En runde teller fra 10 svar." },

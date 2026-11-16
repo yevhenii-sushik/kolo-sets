@@ -12,19 +12,22 @@ export default function QuestionCard({
   label,
   strength,
   badge,
+  note,
   children,
   className,
 }: {
   label?: ReactNode; // что сделать: «Выбери перевод»
   strength?: Strength;
   badge?: ReactNode; // справа сверху: серия
+  note?: ReactNode; // внизу мелко: набор слова, когда в сессии слова из нескольких наборов
   children: ReactNode;
   className?: string;
 }) {
   return (
     <div
       className={cx(
-        "relative flex min-h-44 flex-1 flex-col items-center justify-center gap-3 overflow-hidden rounded-4xl border border-accent/15 bg-accent-soft px-6 pb-8 pt-14 text-center text-fg sm:min-h-64 sm:flex-none",
+        "relative flex min-h-44 flex-1 flex-col items-center justify-center gap-3 overflow-hidden rounded-4xl border border-accent/15 bg-accent-soft px-6 pt-14 text-center text-fg sm:min-h-64 sm:flex-none",
+        note ? "pb-11" : "pb-8",
         className,
       )}
     >
@@ -38,6 +41,7 @@ export default function QuestionCard({
       </div>
       {label && <p className="relative text-base font-semibold text-accent-ink">{label}</p>}
       {children}
+      {note && <p className="absolute inset-x-6 bottom-4 truncate text-xs text-muted">{note}</p>}
     </div>
   );
 }

@@ -24,8 +24,8 @@ const write = (key: string, value: string | null) => {
 
 // Подсказки на месте: показываются, пока человек не прошёл это действие до конца
 // quiz — строка-подсказка в первом тесте: верный ответ идёт дальше сам, «Не знаю» — честный ответ
-export type Coach = "flashcards" | "quiz";
-const COACHES: Coach[] = ["flashcards", "quiz"];
+export type Coach = "flashcards" | "quiz" | "perigee";
+const COACHES: Coach[] = ["flashcards", "quiz", "perigee"];
 
 export const coachSeen = (c: Coach) => read(COACH_PREFIX + c) === "seen";
 export const markCoachSeen = (c: Coach) => write(COACH_PREFIX + c, "seen");
