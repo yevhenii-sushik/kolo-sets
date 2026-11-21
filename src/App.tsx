@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { I18nProvider, useI18n } from "./contexts/I18nContext";
 import { DataProvider, useData } from "./contexts/DataContext";
@@ -9,6 +9,7 @@ import { isDueCard } from "./utils/storage";
 import { getReminderSettings, scheduleReminder, cancelReminder, registerDueCountGetter, registerReminderText } from "./utils/notifications";
 import { plural } from "./utils/plural";
 import { getLanguageInfo } from "./locales/languages";
+import { applyPendingUpdate } from "./utils/registerServiceWorker";
 
 import AchievementUnlockBanner from "./components/AchievementUnlockBanner";
 import { ProgressMomentsHost } from "./components/progress/ProgressMoments";
@@ -101,9 +102,17 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   return !user ? <>{children}</> : <Navigate to="/" replace />;
 }
 
+// Новая версия, которая уже скачалась, подменяется при переходе между экранами (utils/registerServiceWorker.ts)
+function UpdateOnNavigate() {
+  const { pathname } = useLocation();
+  useEffect(() => applyPendingUpdate(pathname), [pathname]);
+  return null;
+}
+
 function AppContent() {
   return (
     <ErrorBoundary>
+    <UpdateOnNavigate />
     <ReminderScheduler />
     <AchievementUnlockBanner />
     <ProgressMomentsHost />

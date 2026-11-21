@@ -16,10 +16,12 @@ import { useToast } from "../../hooks/useToast";
 import { Plus, Upload, Download, Pencil, ArrowUp, Layers, Play, CloudOff, RotateCw } from "lucide-react";
 import { Button, Card as UiCard, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
+import { courseCodeFromLanguage } from "../../courses/languages";
 import { plural } from "../../utils/plural";
 import AddCardModal from "../../components/AddCardModal";
 import ImportCardsModal from "../../components/ImportCardsModal";
 import CardListItem from "../../components/cards/CardListItem";
+import ShareCardModal from "../../components/cards/ShareCardModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import StudyModeModal from "../../components/cards/StudyModeModal";
 import Toast from "../../components/ui/Toast";
@@ -107,6 +109,7 @@ export default function CollectionEditPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const focusCardId = searchParams.get("card");
   const [highlightId, setHighlightId] = useState<string | null>(null);
+  const [sharing, setSharing] = useState<Card | null>(null);
   useEffect(() => {
     if (!focusCardId || !collection) return;
     const found = collection.cards.some((c) => c.id === focusCardId);
@@ -396,6 +399,7 @@ export default function CollectionEditPage() {
                   highlighted={card.id === highlightId}
                   onSave={(cardData) => handleEditCard(card.id, cardData)}
                   onDelete={() => handleDeleteCard(card.id)}
+                  onShare={() => setSharing(card)}
                 />
               </motion.div>
             ))}
@@ -406,6 +410,13 @@ export default function CollectionEditPage() {
       <AddCardModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSave={handleAddCard} />
       <ImportCardsModal isOpen={isImportModalOpen} onClose={() => setIsImportModalOpen(false)} onImport={handleImportCards} />
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
+      {collection && (
+        <ShareCardModal
+          card={sharing}
+          courseId={collection.courseId ?? courseCodeFromLanguage(collection.language)}
+          onClose={() => setSharing(null)}
+        />
+      )}
       {collection && <StudyModeModal collection={collection} open={showModes} onClose={() => setShowModes(false)} />}
       <Toast
         isOpen={toastState.isOpen}

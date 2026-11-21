@@ -1,0 +1,11 @@
+{
+  "version": "Versão {v}",
+  "updateCheck": {
+    "build": "Build {d}",
+    "check": "Verificar atualizações",
+    "checking": "Verificando…",
+    "updating": "Atualizando…",
+    "latest": "Você tem a versão mais recente",
+    "offline": "Sem conexão. Tente de novo quando estiver online."
+  }
+}

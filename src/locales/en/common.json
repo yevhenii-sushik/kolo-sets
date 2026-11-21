@@ -1,6 +1,11 @@
 {
   "appName": "Kolo Sets",
   "loading": "Loading...",
+  "boot": {
+    "loading": "Loading Kolo…",
+    "slow": "Slow connection. Still loading…",
+    "offline": "No connection. Kolo will open once you're back online."
+  },
   "save": "Save",
   "cancel": "Cancel",
   "confirm": "Confirm",

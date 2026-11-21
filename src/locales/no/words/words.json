@@ -95,6 +95,22 @@
     "accuracy": "{n} % riktig",
     "scrollTop": "Til toppen"
   },
+  "share": {
+    "action": "Del",
+    "title": "Del ordet",
+    "style": "Stil",
+    "styles": {
+      "light": "Lys",
+      "warm": "Varm",
+      "night": "Natt"
+    },
+    "share": "Del",
+    "download": "Last ned",
+    "copy": "Kopier",
+    "copied": "Kopiert",
+    "error": "Klarte ikke å lage bildet. Prøv igjen.",
+    "alt": "Bilde av kortet: {word}"
+  },
   "flashcards": {
     "undo": "Angre siste vurdering",
     "range": "Ord {from}–{to} av {total}",

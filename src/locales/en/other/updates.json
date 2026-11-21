@@ -66,6 +66,10 @@
         {
           "title": "Sounds for practice and rewards",
           "text": "Answers, flashcards and games now have their own sounds: soft notes for right and wrong answers, a rustle when a card flips, a ticking clock in the last seconds of a Blitz round. New levels, closed orbits and capsules each get a fanfare of their own, and every rarity sounds different. You can turn sounds off in More → Settings."
+        },
+        {
+          "title": "Share a word",
+          "text": "Any word in a set can become a picture for social media or a chat: tap the share button next to it. The card shows the word, its translation, explanation and example in a light, warm or night style. Send it straight from the share menu, download it, or copy it on a computer."
         }
       ],
       "fixes": [
@@ -91,7 +95,9 @@
         "If two words share a translation, the second one no longer shows up among the answer options, where a right answer used to count as a mistake. Type a synonym in the quiz, and Kolo will recognise it and ask for the other word.",
         "Flashcards and the Perigee session show the same answer sheet in the header as the quiz: a cell per word, coloured by your answer. And a long set name no longer pushes the header buttons off the screen.",
         "“Play again” right after a round no longer shows answer options that don't match the word.",
-        "A Perigee session no longer shows a “—” answer button when two words share a translation."
+        "A Perigee session no longer shows a “—” answer button when two words share a translation.",
+        "Kolo now updates when you come back to it, not only after a restart, and never in the middle of a session. In More you can see which build you have and check for updates yourself.",
+        "The loading screen no longer looks frozen on a slow connection: the satellite circles the logo, and if loading takes longer than usual, Kolo tells you what's going on: still loading, a slow connection or no internet at all. In the dark theme it no longer flashes white."
       ]
     },
     {

@@ -84,16 +84,94 @@
         }
       })();
     </script>
+    <!-- Стили заставки — здесь, а не в CSS приложения: он приходит вместе с кодом. Ими же пользуется
+         src/components/AppSplash.tsx. Цвета — токены, а до их загрузки — их значения из tokens.css -->
     <style>
-      .boot-splash { position: fixed; inset: 0; display: grid; place-items: center; opacity: 0; animation: boot-in 300ms ease-out 400ms forwards; }
+      /* Фон темы до стилей приложения: медленный запуск в тёмной теме не светит белым экраном */
+      html { background: var(--color-bg, #F5F6FA); }
+      html.dark { background: var(--color-bg, #0B0E19); }
+      .boot-splash {
+        --boot-ring: var(--color-accent, #FF5A1F); --boot-dot: var(--color-fg, #101426); --boot-note: var(--color-muted, #4E5568);
+        position: fixed; inset: 0; display: grid; place-items: center; opacity: 0;
+        animation: boot-in 300ms ease-out 400ms forwards;
+      }
+      .dark .boot-splash { --boot-ring: var(--color-accent, #FF6A33); --boot-dot: var(--color-fg, #ECEEF5); --boot-note: var(--color-muted, #A3A9BD); }
+      /* Знак стоит ровно по центру, подпись появляется под ним и его не сдвигает */
+      .boot-body { position: relative; }
+      /* Спутник облетает кольцо: разгоняется на полпути и притормаживает у вершины, как на вытянутой орбите */
+      .boot-mark { display: flex; animation: boot-orbit 1600ms cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite; }
+      .boot-note {
+        position: absolute; top: 100%; left: 50%; width: max-content; max-width: min(20rem, calc(100vw - 2rem));
+        margin: 1.25rem 0 0; transform: translateX(-50%); text-align: center;
+        font: 400 0.875rem/1.25rem var(--font-sans, system-ui, -apple-system, "Segoe UI", sans-serif); color: var(--boot-note);
+        opacity: 0; animation: boot-in 300ms ease-out 2000ms forwards;
+      }
       @keyframes boot-in { to { opacity: 1; } }
-      @media (prefers-reduced-motion: reduce) { .boot-splash { animation-duration: 1ms; } }
+      @keyframes boot-orbit { to { transform: rotate(360deg); } }
+      @keyframes boot-breathe { to { opacity: 0.45; } }
+      @media (prefers-reduced-motion: reduce) {
+        .boot-splash, .boot-note { animation-duration: 1ms; }
+        /* Без вращения знак мягко «дышит»: видно, что загрузка идёт */
+        .boot-mark { animation: boot-breathe 1200ms ease-in-out infinite alternate; }
+      }
     </style>
   </head>
   <body>
     <!-- Заставка, пока грузится код: появляется только если ждать дольше 400 мс, чтобы быстрый
          запуск не мигал. React заменит её своей копией (src/components/AppSplash.tsx) или страницей -->
-    <div id="root"><div class="boot-splash" aria-hidden="true"><svg width="56" height="56" viewBox="7 7 86 86"><path style="fill: var(--color-accent, #FF5A1F)" d="M87.85 31.81A42 42 0 1 1 68.19 12.15A15 15 0 0 0 59.05 25.62A26 26 0 1 0 74.38 40.95A15 15 0 0 0 87.85 31.81Z"/><circle style="fill: var(--color-fg, #101426)" cx="74.04" cy="25.96" r="10"/></svg></div></div>
+    <div id="root"><div id="boot-splash" class="boot-splash" role="status"><div class="boot-body"><span class="boot-mark"><svg width="56" height="56" viewBox="7 7 86 86" aria-hidden="true"><path style="fill: var(--boot-ring)" d="M87.85 31.81A42 42 0 1 1 68.19 12.15A15 15 0 0 0 59.05 25.62A26 26 0 1 0 74.38 40.95A15 15 0 0 0 87.85 31.81Z"/><circle style="fill: var(--boot-dot)" cx="74.04" cy="25.96" r="10"/></svg></span><p class="boot-note"></p></div></div></div>
+    <script>
+      // Подпись и полёт спутника. Та же логика — в src/components/AppSplash.tsx; тайминги и тексты
+      // (src/config/boot.ts, common.json → boot) вписывает в boot плагин bootSplashConfig из vite.config.ts
+      (function () {
+        var boot = __KOLO_BOOT__;
+        var splash = document.getElementById('boot-splash');
+        var mark = splash.querySelector('.boot-mark');
+        var note = splash.querySelector('.boot-note');
+        // Отсчёт — с открытия страницы, как в AppSplash: на медленной сети и сама страница приходит
+        // не сразу, и кто уже ждал, видит заставку и подпись без лишней паузы
+        var now = performance.now();
+        var wasOffline = false;
+
+        // Язык — как в getCurrentLanguage (src/locales/index.ts): выбранный в приложении, иначе язык браузера
+        function language() {
+          var saved = null;
+          try { saved = localStorage.getItem('appLanguage'); } catch (e) {}
+          if (saved && boot.t[saved]) return saved;
+          var aliases = { pt: 'pt-BR', nb: 'no', nn: 'no' };
+          var tags = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+          for (var i = 0; i < tags.length; i++) {
+            var tag = String(tags[i] || '').toLowerCase();
+            for (var code in boot.t) if (code.toLowerCase() === tag) return code;
+            var base = tag.split('-')[0];
+            if (boot.t[base]) return base;
+            if (aliases[base]) return aliases[base];
+          }
+          return 'en';
+        }
+        var t = boot.t[language()] || boot.t.en;
+
+        function update() {
+          if (!splash.isConnected) return; // React уже подменил заставку
+          var offline = navigator.onLine === false;
+          if (offline) wasOffline = true;
+          note.textContent = t[offline ? 'offline' : performance.now() >= boot.ms.slow ? 'slow' : 'loading'];
+          // Без сети подпись нужна сразу, а не через пару секунд
+          note.style.animationDelay = (offline ? 0 : boot.ms.note - now) + 'ms';
+        }
+
+        splash.style.animationDelay = boot.ms.show - now + 'ms';
+        mark.style.animationDelay = -now + 'ms';
+        update();
+        setTimeout(update, Math.max(0, boot.ms.slow - now));
+        addEventListener('offline', update);
+        addEventListener('online', function () {
+          // Без сети код не скачался, и сам он уже не докачается — открываем страницу заново
+          if (wasOffline && splash.isConnected) return location.reload();
+          update();
+        });
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

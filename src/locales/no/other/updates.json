@@ -66,6 +66,10 @@
         {
           "title": "Lyder for øving og belønninger",
           "text": "Svar, kort og spill har fått sine egne lyder: myke toner for riktige og gale svar, et lite sus når kortet snus, og en tikkende klokke de siste sekundene av en lynrunde. Nye nivåer, lukkede baner og kapsler har hver sin fanfare, og hver sjeldenhetsgrad høres forskjellig ut. Du kan slå av lydene under «Mer → Innstillinger»."
+        },
+        {
+          "title": "Del et ord",
+          "text": "Alle ord i et sett kan bli et bilde til sosiale medier eller en chat: trykk på «Del» ved siden av ordet. Kortet viser ordet, oversettelsen, forklaringen og eksempelet i lys, varm eller natt-stil. Send det rett fra delingsmenyen, last det ned eller kopier det på datamaskinen."
         }
       ],
       "fixes": [
@@ -91,7 +95,9 @@
         "Har to ord samme oversettelse, dukker ikke det andre lenger opp blant svaralternativene – før ble et riktig svar regnet som feil. Skriver du et synonym i quizen, kjenner Kolo det igjen og ber om det andre ordet.",
         "Flashkortene og Perigee-økten viser det samme svararket øverst som quizen: én rute per ord, farget etter svaret ditt. Og et langt settnavn skyver ikke lenger knappene øverst ut av skjermen.",
         "«Spill igjen» rett etter en runde viser ikke lenger svaralternativer som ikke passer til ordet.",
-        "En Perigee-økt viser ikke lenger en «—»-knapp når to ord har samme oversettelse."
+        "En Perigee-økt viser ikke lenger en «—»-knapp når to ord har samme oversettelse.",
+        "Kolo oppdaterer seg når du kommer tilbake til appen, ikke bare etter omstart, og aldri midt i en økt. Under «Mer» ser du hvilket bygg du har, og kan se etter oppdateringer selv.",
+        "Lasteskjermen ser ikke lenger frossen ut på treg forbindelse: satellitten går i bane rundt logoen, og tar det lenger tid enn vanlig, forteller Kolo hva som skjer: den laster fortsatt, forbindelsen er treg, eller du er uten nett. I mørkt tema blinker den ikke lenger hvitt."
       ]
     },
     {

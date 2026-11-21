@@ -16,6 +16,22 @@
       "needMore": "Mindestens 4 Wörter nötig"
     }
   },
+  "share": {
+    "action": "Teilen",
+    "title": "Wort teilen",
+    "style": "Stil",
+    "styles": {
+      "light": "Hell",
+      "warm": "Warm",
+      "night": "Nacht"
+    },
+    "share": "Teilen",
+    "download": "Herunterladen",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "error": "Das Bild konnte nicht erstellt werden. Versuch es noch mal.",
+    "alt": "Bild der Karte: {word}"
+  },
   "flashcards": {
     "undo": "Letzte Bewertung rückgängig machen",
     "range": "Wörter {from}–{to} von {total}",

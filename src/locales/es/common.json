@@ -1,0 +1,7 @@
+{
+  "boot": {
+    "loading": "Cargando Kolo…",
+    "slow": "Conexión lenta. Seguimos cargando…",
+    "offline": "Sin conexión. Kolo se abrirá en cuanto vuelvas a tener internet."
+  }
+}

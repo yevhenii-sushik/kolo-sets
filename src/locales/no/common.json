@@ -1,6 +1,11 @@
 {
   "appName": "Kolo Sets",
   "loading": "Laster...",
+  "boot": {
+    "loading": "Laster inn Kolo…",
+    "slow": "Treg forbindelse. Laster fortsatt…",
+    "offline": "Ingen nettilkobling. Kolo åpnes så snart du er på nett igjen."
+  },
   "save": "Lagre",
   "cancel": "Avbryt",
   "confirm": "Bekreft",

@@ -16,6 +16,22 @@
       "needMore": "Il faut au moins 4 mots"
     }
   },
+  "share": {
+    "action": "Partager",
+    "title": "Partager le mot",
+    "style": "Style",
+    "styles": {
+      "light": "Clair",
+      "warm": "Chaud",
+      "night": "Nuit"
+    },
+    "share": "Partager",
+    "download": "Télécharger",
+    "copy": "Copier",
+    "copied": "Copié",
+    "error": "Impossible de créer l'image. Réessaie.",
+    "alt": "Image de la carte : {word}"
+  },
   "flashcards": {
     "undo": "Annuler la dernière évaluation",
     "range": "Mots {from}–{to} sur {total}",

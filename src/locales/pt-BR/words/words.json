@@ -16,6 +16,22 @@
       "needMore": "Precisa de pelo menos 4 palavras"
     }
   },
+  "share": {
+    "action": "Compartilhar",
+    "title": "Compartilhar palavra",
+    "style": "Estilo",
+    "styles": {
+      "light": "Claro",
+      "warm": "Quente",
+      "night": "Noite"
+    },
+    "share": "Compartilhar",
+    "download": "Baixar",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "error": "Não foi possível criar a imagem. Tente de novo.",
+    "alt": "Imagem do cartão: {word}"
+  },
   "flashcards": {
     "undo": "Desfazer a última avaliação",
     "range": "Palavras {from}–{to} de {total}",

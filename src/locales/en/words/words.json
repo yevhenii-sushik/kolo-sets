@@ -95,6 +95,22 @@
     "accuracy": "{n}% correct",
     "scrollTop": "Back to top"
   },
+  "share": {
+    "action": "Share",
+    "title": "Share word",
+    "style": "Style",
+    "styles": {
+      "light": "Light",
+      "warm": "Warm",
+      "night": "Night"
+    },
+    "share": "Share",
+    "download": "Download",
+    "copy": "Copy",
+    "copied": "Copied",
+    "error": "Couldn't draw the image. Try again.",
+    "alt": "Card image: {word}"
+  },
   "flashcards": {
     "undo": "Undo last rating",
     "range": "Words {from}–{to} of {total}",

@@ -16,6 +16,14 @@
     "courses": "Languages you're learning"
   },
   "version": "Version {v}",
+  "updateCheck": {
+    "build": "Build {d}",
+    "check": "Check for updates",
+    "checking": "Checking…",
+    "updating": "Updating…",
+    "latest": "You have the latest version",
+    "offline": "No connection. Try again when you're online."
+  },
   "supportPage": {
     "title": "Support",
     "subtitle": "Something not working, a question or an idea? Write to us — your message goes straight to the Kolo team.",

@@ -4,8 +4,9 @@ import type { ElementType } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
 import { useIsAdmin } from "../../api/admin";
-import { Card, Heading, Text } from "../../ui";
+import { Card, Heading } from "../../ui";
 import { DakutaLogo } from "../../components/brand/DakutaLogo";
+import { AppVersion } from "../../components/other/AppVersion";
 
 // Ссылка-строка в группе: иконка, название, пояснение, шеврон
 function Row({ to, icon: Icon, label, hint }: { to: string; icon: ElementType; label: string; hint: string }) {
@@ -48,7 +49,6 @@ export default function OtherPage() {
   const learnsNorwegian = courses.some((c) => c.id === "nb");
   const o = t.other;
   const promo = t.explore.promo;
-  const version = t.updates.versions[0]?.number;
 
   return (
     <div className="grid grid-cols-1 gap-6">
@@ -89,11 +89,7 @@ export default function OtherPage() {
       </Link>
       )}
 
-      {version && (
-        <Text size="sm" tone="faint" className="text-center">
-          Kolo Sets · {o.version.replace("{v}", version)}
-        </Text>
-      )}
+      <AppVersion />
     </div>
   );
 }

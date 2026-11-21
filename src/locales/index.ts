@@ -85,8 +85,16 @@ import deError from './de/error.json';
 import frError from './fr/error.json';
 import ptBRError from './pt-BR/error.json';
 import deCommon from './de/common.json';
+// Из общих строк пока только подписи заставки на старте (boot)
+import esCommon from './es/common.json';
+import frCommon from './fr/common.json';
+import ptBRCommon from './pt-BR/common.json';
 import deGame from './de/game.json';
 import deOther from './de/other/other.json';
+// Подвал «Ещё»: версия и «Проверить обновления»
+import esOther from './es/other/other.json';
+import frOther from './fr/other/other.json';
+import ptBROther from './pt-BR/other/other.json';
 import deWords from './de/words/words.json';
 import esWords from './es/words/words.json';
 import frWords from './fr/words/words.json';
@@ -178,10 +186,10 @@ export type Translations = typeof en;
 
 const partial = (parts: DeepPartial<Translations>): Translations => fillFrom(en, parts);
 
-const es = partial({ landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, words: esWords, profile: esProfile });
+const es = partial({ ...esCommon, landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, other: esOther, words: esWords, profile: esProfile });
 const de = partial({ ...deCommon, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError, game: deGame, other: deOther, words: deWords, profile: deProfile });
-const fr = partial({ landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, words: frWords, profile: frProfile });
-const ptBR = partial({ landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, words: ptBRWords, profile: ptBRProfile });
+const fr = partial({ ...frCommon, landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, other: frOther, words: frWords, profile: frProfile });
+const ptBR = partial({ ...ptBRCommon, landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, other: ptBROther, words: ptBRWords, profile: ptBRProfile });
 
 export const translations: Record<Language, Translations> = {
   en,

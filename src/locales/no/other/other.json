@@ -16,6 +16,14 @@
     "courses": "Språkene du lærer"
   },
   "version": "Versjon {v}",
+  "updateCheck": {
+    "build": "Bygg {d}",
+    "check": "Se etter oppdateringer",
+    "checking": "Ser etter…",
+    "updating": "Oppdaterer…",
+    "latest": "Du har den nyeste versjonen",
+    "offline": "Ingen nettilkobling. Prøv igjen når du er på nett."
+  },
   "supportPage": {
     "title": "Støtte",
     "subtitle": "Noe som ikke virker, et spørsmål eller en idé? Skriv til oss – meldingen går rett til Kolo-teamet.",
