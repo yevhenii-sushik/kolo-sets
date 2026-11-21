@@ -1,0 +1,92 @@
+{
+  "greeting": {
+    "morning": [
+      "Guten Morgen",
+      "Frischer Kopf, frische Wörter",
+      "Erst Kaffee, dann Wörter?",
+      "Morgenstund hat Wörter im Mund"
+    ],
+    "afternoon": [
+      "Guten Tag",
+      "Mittagspause? Perfekt für fünf Wörter",
+      "Halbzeit für heute",
+      "Ein guter Moment für eine schnelle Runde"
+    ],
+    "evening": [
+      "Guten Abend",
+      "Der Abend gehört den Wörtern",
+      "Zum Runterkommen: eine kurze Wiederholung",
+      "Noch eine Runde, bevor der Tag vorbei ist?"
+    ],
+    "night": [
+      "Noch wach?",
+      "Nachteulen-Modus",
+      "Eine ruhige Stunde für Wörter",
+      "Mitternachtsclub der Vokabeln"
+    ]
+  },
+  "review": {
+    "dueTitle": {
+      "one": "{n} Wort wartet auf Wiederholung",
+      "other": "{n} Wörter warten auf Wiederholung"
+    },
+    "dueText": "Sie stehen kurz vorm Vergessen. Zwei Minuten jetzt – und sie sind zurück im Orbit.",
+    "dueButton": "Wiederholung starten",
+    "doneTitle": "Alles wiederholt. Respekt.",
+    "doneText": "Dein Gedächtnis ist aufgeräumt. Füg neue Wörter hinzu – oder stell einen Rekord in der Blitzrunde auf.",
+    "doneButton": "Zu meinen Sets",
+    "startTitle": "Jede Sprache beginnt mit einem Wort",
+    "startText": "Leg ein Set mit deinen Wörtern an – Perigee bringt jedes zurück, kurz bevor du es vergisst.",
+    "startButton": "Set erstellen",
+    "emptyTitle": "Dein Set ist noch leer",
+    "emptyText": "Füg ein paar hinzu – und deine erste Session ist startklar.",
+    "emptyButton": "Wörter hinzufügen",
+    "newTitle": {
+      "one": "{n} neues Wort zum Lernen",
+      "other": "{n} neue Wörter zum Lernen"
+    },
+    "newText": "Frische Wörter, bereit zum Start. Perigee stellt sie dir Schritt für Schritt vor.",
+    "newButton": "Lernen",
+    "limitTitle": "Genug neue Wörter für heute",
+    "limitText": "Morgen bringt Perigee die Wörter von heute zurück – so bleiben sie hängen. Willst du trotzdem mehr? Nur zu.",
+    "limitButton": "Mehr neue Wörter"
+  },
+  "goal": {
+    "label": "Tagesziel",
+    "left": {
+      "one": "Noch {n} Karte",
+      "other": "Noch {n} Karten"
+    },
+    "met": "Ziel erreicht"
+  },
+  "nudge": {
+    "away": {
+      "one": "{n} Tag ohne Übung – deine Wörter driften aus dem Orbit.",
+      "other": "{n} Tage ohne Übung – deine Wörter driften aus dem Orbit."
+    },
+    "orbitToday": "Heute entscheidet sich die Woche: Eine Session schließt deinen Orbit.",
+    "orbitAtRisk": "Die Woche hängt am seidenen Faden: bis Sonntag kein freier Tag.",
+    "orbitLastDay": "Noch ein Tag – und der Wochen-Orbit ist geschlossen.",
+    "goalClose": {
+      "one": "Nur noch {n} Karte – und das Tagesziel gehört dir.",
+      "other": "Nur noch {n} Karten – und das Tagesziel gehört dir."
+    },
+    "beatYesterday": {
+      "one": "Gestern: {n} Karte. Schaffst du mehr?",
+      "other": "Gestern: {n} Karten. Schaffst du mehr?"
+    },
+    "goalMet": "Tagesziel geschafft. Dein Kopf ist warm – warum jetzt aufhören?",
+    "lateNight": "Der Tag ist fast vorbei. Fünf Minuten zählen noch.",
+    "pileUp": "Der Stapel wächst, während du wartest. Zwei Minuten heute schlagen zwanzig morgen.",
+    "generic": [
+      "Fünf Minuten. Mehr verlangt keiner.",
+      "Wetten, du weißt mehr, als du denkst?",
+      "Dein Kopf ist bereit. Und du?",
+      "Jedes Wort, das du heute lernst, musst du morgen nicht nachschlagen.",
+      "Keiner schaut zu – perfekte Zeit für Fehler.",
+      "Eine Session, und der Tag zählt. Ganz einfach.",
+      "Dein zukünftiges Ich sagt danke. In zwei Sprachen.",
+      "Kleine Schritte jeden Tag schlagen große Pläne für Montag."
+    ]
+  }
+}

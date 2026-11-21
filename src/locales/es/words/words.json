@@ -221,7 +221,7 @@
     "rate": "¿Qué tal la conoces?",
     "settings": "Ajustes",
     "leave": {
-      "titleNear": "Ya casi está",
+      "titleNear": "¿Tan cerca y te rindes?",
       "title": "¿Terminamos lo empezado?",
       "left": {
         "one": "Queda {n} palabra",
@@ -232,6 +232,13 @@
       "stay": "Seguir",
       "leave": "Salir"
     },
+    "cheer": [
+      "¡En llamas!",
+      "¡Imparable!",
+      "¡Máquina de memoria!",
+      "¡Nivel leyenda!",
+      "¡De otra órbita!"
+    ],
     "loadError": {
       "title": "No se pudieron cargar las palabras",
       "text": "Comprueba tu conexión a internet e inténtalo de nuevo.",
@@ -362,5 +369,10 @@
       "tough": "Palabras difíciles",
       "selfNote": "Las palabras que valoraste tú en una tarjeta no cuentan para «A la primera»."
     }
+  },
+  "empty": {
+    "title": "Órbita vacía. Por ahora.",
+    "description": "Todo idioma empieza con una palabra. Crea un set y lanza tus primeras palabras a la órbita, o pega una lista entera de una vez.",
+    "button": "Crear el primer set"
   }
 }

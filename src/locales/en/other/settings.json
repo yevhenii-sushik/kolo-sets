@@ -52,11 +52,30 @@
       "unsupported": "Unavailable"
     },
     "notify": {
-      "due": {
-        "one": "{n} word is waiting for review. A couple of minutes and you’re done.",
-        "other": "{n} words are waiting for review. A couple of minutes and you’re done."
-      },
-      "idle": "Time for a quick session: a few minutes bring your weekly goal closer."
+      "due": [
+        {
+          "one": "{n} word is waiting for review. A couple of minutes and you’re done.",
+          "other": "{n} words are waiting for review. A couple of minutes and you’re done."
+        },
+        {
+          "one": "{n} word is slipping off orbit. Catch it before it’s gone.",
+          "other": "{n} words are slipping off orbit. Catch them before they’re gone."
+        },
+        {
+          "one": "Your memory called: {n} word wants a quick review.",
+          "other": "Your memory called: {n} words want a quick review."
+        },
+        {
+          "one": "{n} word, two minutes, zero excuses.",
+          "other": "{n} words, two minutes, zero excuses."
+        }
+      ],
+      "idle": [
+        "Time for a quick session: a few minutes bring your weekly goal closer.",
+        "Five minutes for your future self. Deal?",
+        "Your words miss you. Just saying.",
+        "Today still counts — one quick session is enough."
+      ]
     }
   },
   "sound": {

@@ -221,7 +221,7 @@
     "rate": "Tu le connais à quel point ?",
     "settings": "Réglages",
     "leave": {
-      "titleNear": "Presque fini",
+      "titleNear": "Si près du but, et tu abandonnes ?",
       "title": "On finit ce qu'on a commencé ?",
       "left": {
         "one": "Plus que {n} mot",
@@ -232,6 +232,13 @@
       "stay": "Continuer",
       "leave": "Quitter"
     },
+    "cheer": [
+      "En feu !",
+      "Inarrêtable !",
+      "Machine à mémoire !",
+      "Légendaire !",
+      "Hors orbite !"
+    ],
     "loadError": {
       "title": "Impossible de charger les mots",
       "text": "Vérifie ta connexion internet et réessaie.",
@@ -362,5 +369,10 @@
       "tough": "Mots difficiles",
       "selfNote": "Les mots que tu as notés toi-même sur une carte ne comptent pas dans « Du premier coup »."
     }
+  },
+  "empty": {
+    "title": "Orbite vide. Pour l'instant.",
+    "description": "Toute langue commence par un mot. Crée un set et lance tes premiers mots en orbite, ou colle toute une liste d'un coup.",
+    "button": "Créer le premier set"
   }
 }

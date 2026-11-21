@@ -2,23 +2,27 @@
   "greeting": {
     "morning": [
       "Good morning",
-      "Morning warm-up?",
-      "Time for coffee and a chat"
+      "Fresh brain, fresh words",
+      "Coffee first, words second?",
+      "The early bird gets the words"
     ],
     "afternoon": [
-      "Good day",
-      "Have a productive day",
-      "Shall we continue with the lesson?"
+      "Good afternoon",
+      "Lunch break? Perfect for five words",
+      "Halfway through the day",
+      "A good moment for a quick round"
     ],
     "evening": [
       "Good evening",
-      "Have a lovely evening",
-      "Evening revision"
+      "Evenings are for words",
+      "Wind down with a quick review",
+      "One more round before the day ends?"
     ],
     "night": [
-      "Good night",
-      "Can't sleep?",
-      "A quiet time for studying"
+      "Still up?",
+      "Night owl mode",
+      "A quiet hour for words",
+      "Midnight vocabulary club"
     ]
   },
   "guest": "Guest",
@@ -42,22 +46,22 @@
       "one": "{n} word is due for review",
       "other": "{n} words are due for review"
     },
-    "dueText": "Perigee brought them back just in time — it takes a couple of minutes.",
+    "dueText": "They're right on the edge of forgetting. Two minutes now — and they're back on orbit.",
     "dueButton": "Start review",
-    "doneTitle": "You're all caught up",
-    "doneText": "Add new words or practise in any mode.",
+    "doneTitle": "All caught up. Respect.",
+    "doneText": "Your memory is in order. Add new words — or go set a Blitz record.",
     "doneButton": "Go to my sets",
-    "startTitle": "Start with your first set",
-    "startText": "Add the words you want to learn — Perigee will remind you when it's time to review them.",
+    "startTitle": "Every language starts with one word",
+    "startText": "Create a set with the words you want — Perigee will bring each one back right before you forget it.",
     "startButton": "Create a set",
     "emptyTitle": "Your set is still empty",
-    "emptyText": "Add a few words and you can start learning.",
+    "emptyText": "Add a few — and your first session is ready to go.",
     "emptyButton": "Add words",
     "newTitle": {
       "one": "{n} new word to learn",
       "other": "{n} new words to learn"
     },
-    "newText": "Perigee will introduce them step by step and build your review schedule.",
+    "newText": "Fresh words, ready for launch. Perigee will introduce them step by step.",
     "newButton": "Start learning",
     "limitTitle": "That's enough new words for today",
     "limitText": "Perigee will bring today's words back tomorrow — that's how they stick. Want more anyway? Go ahead.",
@@ -70,6 +74,36 @@
       "other": "{n} more cards to go"
     },
     "met": "Goal reached"
+  },
+  "nudge": {
+    "away": {
+      "one": "{n} day without practice — your words are drifting off orbit.",
+      "other": "{n} days without practice — your words are drifting off orbit."
+    },
+    "orbitToday": "Today decides the week: one session closes your orbit.",
+    "orbitAtRisk": "The week hangs by a thread: no days off until Sunday.",
+    "orbitLastDay": "One more day — and this week's orbit is closed.",
+    "goalClose": {
+      "one": "Just {n} more card — and today's goal is yours.",
+      "other": "Just {n} more cards — and today's goal is yours."
+    },
+    "beatYesterday": {
+      "one": "Yesterday: {n} card. Can you beat it?",
+      "other": "Yesterday: {n} cards. Can you beat it?"
+    },
+    "goalMet": "Goal done. Your brain is warmed up — why stop now?",
+    "lateNight": "The day is almost over. Five minutes still count.",
+    "pileUp": "The pile grows while you wait. Two minutes today beat twenty tomorrow.",
+    "generic": [
+      "Five minutes. That's the whole deal.",
+      "Bet you remember more than you think.",
+      "Your brain is ready. Are you?",
+      "Every word you learn today is one less to look up tomorrow.",
+      "Nobody's watching — perfect time to make mistakes.",
+      "One session and today counts. Easy.",
+      "Your future self says thanks. In two languages.",
+      "Small steps every day beat big plans for Monday."
+    ]
   },
   "milestone": {
     "label": "Next milestone",

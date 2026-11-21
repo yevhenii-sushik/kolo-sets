@@ -104,6 +104,15 @@ import deProfile from './de/profile.json';
 import esProfile from './es/profile.json';
 import frProfile from './fr/profile.json';
 import ptBRProfile from './pt-BR/profile.json';
+// Главная («голос», приветствия, главная карточка и цель дня) и тексты напоминаний — «Живой Kolo»
+import deHome from './de/home.json';
+import esHome from './es/home.json';
+import frHome from './fr/home.json';
+import ptBRHome from './pt-BR/home.json';
+import deSettings from './de/other/settings.json';
+import esSettings from './es/other/settings.json';
+import frSettings from './fr/other/settings.json';
+import ptBRSettings from './pt-BR/other/settings.json';
 import { LANGUAGES, Language, detectBrowserLanguage } from './languages';
 import { DeepPartial, fillFrom } from './fillFrom';
 
@@ -186,10 +195,10 @@ export type Translations = typeof en;
 
 const partial = (parts: DeepPartial<Translations>): Translations => fillFrom(en, parts);
 
-const es = partial({ ...esCommon, landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, other: esOther, words: esWords, profile: esProfile });
-const de = partial({ ...deCommon, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError, game: deGame, other: deOther, words: deWords, profile: deProfile });
-const fr = partial({ ...frCommon, landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, other: frOther, words: frWords, profile: frProfile });
-const ptBR = partial({ ...ptBRCommon, landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, other: ptBROther, words: ptBRWords, profile: ptBRProfile });
+const es = partial({ ...esCommon, landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, other: esOther, words: esWords, profile: esProfile, home: esHome, settings: esSettings });
+const de = partial({ ...deCommon, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError, game: deGame, other: deOther, words: deWords, profile: deProfile, home: deHome, settings: deSettings });
+const fr = partial({ ...frCommon, landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, other: frOther, words: frWords, profile: frProfile, home: frHome, settings: frSettings });
+const ptBR = partial({ ...ptBRCommon, landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, other: ptBROther, words: ptBRWords, profile: ptBRProfile, home: ptBRHome, settings: ptBRSettings });
 
 export const translations: Record<Language, Translations> = {
   en,

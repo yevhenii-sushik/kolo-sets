@@ -221,7 +221,7 @@
     "rate": "Quão bem você conhece?",
     "settings": "Ajustes",
     "leave": {
-      "titleNear": "Quase lá",
+      "titleNear": "Tão perto e vai desistir?",
       "title": "Vamos terminar o que começou?",
       "left": {
         "one": "Falta {n} palavra",
@@ -232,6 +232,13 @@
       "stay": "Continuar",
       "leave": "Sair"
     },
+    "cheer": [
+      "Pegando fogo!",
+      "Imparável!",
+      "Máquina de memória!",
+      "Nível lenda!",
+      "De outra órbita!"
+    ],
     "loadError": {
       "title": "Não foi possível carregar as palavras",
       "text": "Verifique sua conexão com a internet e tente de novo.",
@@ -362,5 +369,10 @@
       "tough": "Palavras difíceis",
       "selfNote": "As palavras que você avaliou sozinho num flashcard não contam em “De primeira”."
     }
+  },
+  "empty": {
+    "title": "Órbita vazia. Por enquanto.",
+    "description": "Todo idioma começa com uma palavra. Crie um set e lance suas primeiras palavras em órbita, ou cole uma lista inteira de uma vez.",
+    "button": "Criar o primeiro set"
   }
 }

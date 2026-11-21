@@ -1,0 +1,30 @@
+{
+  "reminder": {
+    "notify": {
+      "due": [
+        {
+          "one": "{n} mot attend sa révision. Quelques minutes et c'est fait.",
+          "other": "{n} mots attendent leur révision. Quelques minutes et c'est fait."
+        },
+        {
+          "one": "{n} mot sort de son orbite. Rattrape-le avant qu'il file.",
+          "other": "{n} mots sortent de leur orbite. Rattrape-les avant qu'ils filent."
+        },
+        {
+          "one": "Ta mémoire a appelé : {n} mot veut une petite révision.",
+          "other": "Ta mémoire a appelé : {n} mots veulent une petite révision."
+        },
+        {
+          "one": "{n} mot, deux minutes, zéro excuse.",
+          "other": "{n} mots, deux minutes, zéro excuse."
+        }
+      ],
+      "idle": [
+        "C'est l'heure d'une séance rapide : quelques minutes te rapprochent de ton objectif de la semaine.",
+        "Cinq minutes pour ton futur toi. Marché conclu ?",
+        "Tes mots s'ennuient de toi. Je dis ça, je dis rien.",
+        "Aujourd'hui compte encore : une petite séance suffit."
+      ]
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "greeting": {
+    "morning": [
+      "Buenos días",
+      "Mente fresca, palabras frescas",
+      "¿Primero café y luego palabras?",
+      "A quien madruga, las palabras le ayudan"
+    ],
+    "afternoon": [
+      "Buenas tardes",
+      "¿Pausa para comer? Perfecta para cinco palabras",
+      "Ya pasó medio día",
+      "Buen momento para una ronda rápida"
+    ],
+    "evening": [
+      "Buenas noches",
+      "Las noches son para las palabras",
+      "Relájate con un repaso rápido",
+      "¿Una ronda más antes de que acabe el día?"
+    ],
+    "night": [
+      "¿Aún sin dormir?",
+      "Modo búho",
+      "Una hora tranquila para las palabras",
+      "Club de vocabulario de medianoche"
+    ]
+  },
+  "review": {
+    "dueTitle": {
+      "one": "{n} palabra espera repaso",
+      "other": "{n} palabras esperan repaso"
+    },
+    "dueText": "Están al borde del olvido. Dos minutos ahora y vuelven a su órbita.",
+    "dueButton": "Empezar repaso",
+    "doneTitle": "Todo repasado. Respeto.",
+    "doneText": "Tu memoria está en orden. Añade palabras nuevas o bate un récord en la Ronda relámpago.",
+    "doneButton": "A mis sets",
+    "startTitle": "Todo idioma empieza con una palabra",
+    "startText": "Crea un set con las palabras que quieras: Perigee te traerá cada una justo antes de que la olvides.",
+    "startButton": "Crear un set",
+    "emptyTitle": "Tu set aún está vacío",
+    "emptyText": "Añade unas cuantas y tu primera sesión estará lista.",
+    "emptyButton": "Añadir palabras",
+    "newTitle": {
+      "one": "{n} palabra nueva por aprender",
+      "other": "{n} palabras nuevas por aprender"
+    },
+    "newText": "Palabras frescas, listas para despegar. Perigee te las presentará paso a paso.",
+    "newButton": "Aprender",
+    "limitTitle": "Suficientes palabras nuevas por hoy",
+    "limitText": "Mañana Perigee te traerá de vuelta las palabras de hoy: así se quedan. ¿Quieres más de todos modos? Adelante.",
+    "limitButton": "Más palabras nuevas"
+  },
+  "goal": {
+    "label": "Meta del día",
+    "left": {
+      "one": "Falta {n} tarjeta",
+      "other": "Faltan {n} tarjetas"
+    },
+    "met": "Meta cumplida"
+  },
+  "nudge": {
+    "away": {
+      "one": "{n} día sin practicar: tus palabras se salen de órbita.",
+      "other": "{n} días sin practicar: tus palabras se salen de órbita."
+    },
+    "orbitToday": "Hoy se decide la semana: una sesión y cierras tu órbita.",
+    "orbitAtRisk": "La semana pende de un hilo: sin días libres hasta el domingo.",
+    "orbitLastDay": "Un día más y la órbita de la semana queda cerrada.",
+    "goalClose": {
+      "one": "Solo {n} tarjeta más y la meta del día es tuya.",
+      "other": "Solo {n} tarjetas más y la meta del día es tuya."
+    },
+    "beatYesterday": {
+      "one": "Ayer: {n} tarjeta. ¿Puedes superarlo?",
+      "other": "Ayer: {n} tarjetas. ¿Puedes superarlo?"
+    },
+    "goalMet": "Meta cumplida. Tu cerebro ya está en calor: ¿por qué parar ahora?",
+    "lateNight": "El día casi termina. Cinco minutos todavía cuentan.",
+    "pileUp": "La pila crece mientras esperas. Dos minutos hoy valen más que veinte mañana.",
+    "generic": [
+      "Cinco minutos. Ese es todo el trato.",
+      "¿Apostamos a que recuerdas más de lo que crees?",
+      "Tu cerebro está listo. ¿Y tú?",
+      "Cada palabra que aprendes hoy es una menos que buscar mañana.",
+      "Nadie está mirando: momento perfecto para equivocarse.",
+      "Una sesión y el día cuenta. Fácil.",
+      "Tu yo del futuro te da las gracias. En dos idiomas.",
+      "Pasos pequeños cada día valen más que grandes planes para el lunes."
+    ]
+  }
+}

@@ -281,8 +281,8 @@
     }
   },
   "empty": {
-    "title": "Ingen sett i dette kurset ennå",
-    "description": "Lag et sett og legg til ordene du vil lære – eller lim inn en hel liste på en gang.",
+    "title": "Tom bane. Foreløpig.",
+    "description": "Alle språk begynner med ett ord. Lag et sett og send de første ordene i bane – eller lim inn en hel liste på en gang.",
     "button": "Lag første sett"
   },
   "toast": {
@@ -351,7 +351,7 @@
     "rate": "Hvor godt kan du ordet?",
     "settings": "Innstillinger",
     "leave": {
-      "titleNear": "Nesten i mål",
+      "titleNear": "Så nærme – og gi opp nå?",
       "title": "Fullføre det du har startet?",
       "left": {
         "one": "{n} ord igjen",
@@ -362,6 +362,13 @@
       "stay": "Fortsett",
       "leave": "Avslutt"
     },
+    "cheer": [
+      "I fyr og flamme!",
+      "Ustoppelig!",
+      "Hukommelsesmaskin!",
+      "Legendarisk!",
+      "Ute av denne verden!"
+    ],
     "loadError": {
       "title": "Kunne ikke laste inn ordene",
       "text": "Sjekk internettforbindelsen og prøv igjen.",

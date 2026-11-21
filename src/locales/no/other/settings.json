@@ -52,11 +52,30 @@
       "unsupported": "Ikke tilgjengelig"
     },
     "notify": {
-      "due": {
-        "one": "{n} ord venter på repetisjon. Et par minutter, så er du ferdig.",
-        "other": "{n} ord venter på repetisjon. Et par minutter, så er du ferdig."
-      },
-      "idle": "Tid for en kort økt: noen minutter bringer deg nærmere ukesmålet."
+      "due": [
+        {
+          "one": "{n} ord venter på repetisjon. Et par minutter, så er du ferdig.",
+          "other": "{n} ord venter på repetisjon. Et par minutter, så er du ferdig."
+        },
+        {
+          "one": "{n} ord er på vei ut av bane. Fang det før det forsvinner.",
+          "other": "{n} ord er på vei ut av bane. Fang dem før de forsvinner."
+        },
+        {
+          "one": "Hukommelsen ringte: {n} ord vil ha en rask repetisjon.",
+          "other": "Hukommelsen ringte: {n} ord vil ha en rask repetisjon."
+        },
+        {
+          "one": "{n} ord, to minutter, null unnskyldninger.",
+          "other": "{n} ord, to minutter, null unnskyldninger."
+        }
+      ],
+      "idle": [
+        "Tid for en kort økt: noen minutter bringer deg nærmere ukesmålet.",
+        "Fem minutter for framtids-deg. Avtale?",
+        "Ordene dine savner deg. Bare så du vet det.",
+        "Dagen teller fortsatt – én kort økt er nok."
+      ]
     }
   },
   "sound": {

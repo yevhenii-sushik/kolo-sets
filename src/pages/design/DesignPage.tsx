@@ -24,8 +24,18 @@ import {
   Textarea,
 } from "../../ui";
 import type { BadgeTone, ButtonVariant } from "../../ui";
+import { OrbitScene, type SceneKind } from "../../components/scenes/OrbitScene";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 // Витрина дизайн-системы (только dev, маршрут /design): все токены и компоненты в одном месте
+
+const SCENES: { kind: SceneKind; note: string }[] = [
+  { kind: "drift", note: "пора повторить" },
+  { kind: "launch", note: "новые слова" },
+  { kind: "calm", note: "всё повторено" },
+  { kind: "empty", note: "начни здесь" },
+  { kind: "rest", note: "на сегодня хватит" },
+];
 
 const COLOR_GROUPS: { title: string; tokens: string[] }[] = [
   { title: "Поверхности", tokens: ["bg", "band", "surface", "inset", "subtle", "track", "line", "scrim"] },
@@ -70,6 +80,7 @@ function Swatch({ token, dark }: { token: string; dark: boolean }) {
 
 export default function DesignPage() {
   const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
+  const wide = useMediaQuery("(min-width: 640px)");
   const [modal, setModal] = useState(false);
   const [checked, setChecked] = useState(true);
   const [on, setOn] = useState(true);
@@ -314,6 +325,56 @@ export default function DesignPage() {
               <span className="font-display font-extrabold text-xl text-fg">50</span>
             </Ring>
           </div>
+        </Section>
+
+        <Section
+          title="Сцены"
+          note="OrbitScene — живые картинки к состояниям: слова-спутники и орбита памяти. tone=inverse — на bg-fg (главная), surface — на фоне и inset. Это не знак Kolo: в центре планета, а не кольцо со спутником."
+        >
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+            {SCENES.map(({ kind, note }) => (
+              <Card key={kind} tone="inset" padding="sm" className="grid justify-items-center gap-1 text-center">
+                <OrbitScene kind={kind} className="h-28 w-28" />
+                <p className="text-sm font-semibold text-fg">{kind}</p>
+                <p className="text-xs text-muted">{note}</p>
+              </Card>
+            ))}
+          </div>
+          <Card tone="inverse" padding="lg" className="relative mt-4 grid gap-8 overflow-hidden sm:grid-cols-[1fr_auto] sm:items-center">
+            {!wide && <OrbitScene kind="drift" tone="inverse" className="absolute -right-16 -top-16 h-52 w-52" />}
+            <div className="relative grid justify-items-start gap-3">
+              <p className="flex max-w-md items-start gap-2 pr-12 text-sm font-semibold leading-snug text-on-inverse/85 sm:pr-0">
+                <span aria-hidden className="relative mt-1.5 flex h-2 w-2 shrink-0">
+                  <span className="absolute inset-0 rounded-full bg-accent motion-safe:animate-ping" />
+                  <span className="relative h-2 w-2 rounded-full bg-accent" />
+                </span>
+                3 дня без практики — слова уплывают с орбиты.
+              </p>
+              <Heading size={1} as="h3" tone="inverse">
+                12 слов ждут повторения
+              </Heading>
+              <Text tone="inverse">Они на самом краю забывания. Две минуты сейчас — и они снова на орбите.</Text>
+              <Button size="lg" iconRight={<ArrowRight size={18} />} className="mt-2">
+                Начать повторение
+              </Button>
+            </div>
+            <div className="relative flex items-center gap-4 sm:grid sm:justify-items-center sm:gap-3 sm:text-center">
+              <div className="relative grid shrink-0 place-items-center">
+                {wide && <OrbitScene kind="drift" tone="inverse" halo className="absolute left-1/2 top-1/2 h-68 w-68 -translate-x-1/2 -translate-y-1/2" />}
+                <span className="relative">
+                  <Ring value={0.4} size={112} stroke={10} track="inverse" label="Цель дня: 8 / 20">
+                    <span className="font-display text-2xl font-extrabold text-on-inverse">
+                      8<span className="text-base text-on-inverse/50">/20</span>
+                    </span>
+                  </Ring>
+                </span>
+              </div>
+              <div className="relative">
+                <p className="text-sm font-semibold text-on-inverse">Цель дня</p>
+                <p className="text-sm text-on-inverse/75">Ещё 12 карточек</p>
+              </div>
+            </div>
+          </Card>
         </Section>
 
         <Section title="Загрузка" note="Loading показывает индикатор через 200 мс — быстрый ответ из кэша не мигает. Скелетон повторяет форму содержимого.">

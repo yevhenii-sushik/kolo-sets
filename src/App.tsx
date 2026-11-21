@@ -8,6 +8,8 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { isDueCard } from "./utils/storage";
 import { getReminderSettings, scheduleReminder, cancelReminder, registerDueCountGetter, registerReminderText } from "./utils/notifications";
 import { plural } from "./utils/plural";
+import { localDateKey } from "./utils/progress";
+import { genericIndex } from "./motivation/nudge";
 import { getLanguageInfo } from "./locales/languages";
 import { applyPendingUpdate } from "./utils/registerServiceWorker";
 
@@ -71,8 +73,16 @@ function ReminderScheduler() {
   const { t, language } = useI18n();
   const notify = t.settings.reminder.notify;
   const locale = getLanguageInfo(language).htmlLang;
-  const textRef = useRef((due: number) => (due > 0 ? plural(locale, due, notify.due) : notify.idle));
-  textRef.current = (due: number) => (due > 0 ? plural(locale, due, notify.due) : notify.idle);
+  // Вариантов текста несколько, каждый день — следующий: одно и то же напоминание быстро перестают читать
+  // (docs/roadmap.md, «Живой Kolo»)
+  const reminderLine = (due: number) => {
+    const today = localDateKey(new Date());
+    return due > 0
+      ? plural(locale, due, notify.due[genericIndex(today, notify.due.length)])
+      : notify.idle[genericIndex(today, notify.idle.length)];
+  };
+  const textRef = useRef(reminderLine);
+  textRef.current = reminderLine;
 
   useEffect(() => {
     registerDueCountGetter(() =>

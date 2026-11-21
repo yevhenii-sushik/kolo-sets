@@ -221,7 +221,7 @@
     "rate": "Wie gut kennst du es?",
     "settings": "Einstellungen",
     "leave": {
-      "titleNear": "Fast geschafft",
+      "titleNear": "So nah dran – und jetzt aufgeben?",
       "title": "Zu Ende bringen?",
       "left": {
         "one": "Noch {n} Wort",
@@ -232,6 +232,13 @@
       "stay": "Weitermachen",
       "leave": "Beenden"
     },
+    "cheer": [
+      "Läuft heiß!",
+      "Nicht zu stoppen!",
+      "Gedächtnismaschine!",
+      "Legendär!",
+      "Nicht von dieser Welt!"
+    ],
     "loadError": {
       "title": "Die Wörter konnten nicht geladen werden",
       "text": "Prüf deine Internetverbindung und versuch es noch einmal.",
@@ -362,5 +369,10 @@
       "tough": "Schwierige Wörter",
       "selfNote": "Wörter, die du auf einer Karteikarte selbst bewertet hast, zählen nicht zu „Beim ersten Versuch“."
     }
+  },
+  "empty": {
+    "title": "Leerer Orbit. Noch.",
+    "description": "Jede Sprache beginnt mit einem Wort. Erstell ein Set und schick die ersten Wörter in den Orbit – oder füg gleich eine ganze Liste ein.",
+    "button": "Erstes Set erstellen"
   }
 }

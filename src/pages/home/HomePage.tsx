@@ -17,15 +17,19 @@ import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural, type PluralForms } from "../../utils/plural";
 import { ButtonLink, Card, Heading, IconButton, Loading, Ring, Skeleton, Text, cx } from "../../ui";
+import { OrbitScene, type SceneKind } from "../../components/scenes/OrbitScene";
+import { pickNudge } from "../../motivation/nudge";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 const MILESTONES = [10, 25, 50, 100, 200, 500];
 
 // Главная: приветствие → что делать сейчас (у новичка — «Первые шаги», дальше — повторение, новые слова
-// или наборы) с целью дня → цифры → игра дня и совет
+// или наборы) с целью дня → цифры → игра дня и совет. В главной карточке — «голос» Kolo (фраза по настоящим
+// данным: перерыв, орбита недели, цель дня) и живая сцена под состояние слов (docs/roadmap.md, «Живой Kolo»)
 export default function HomePage() {
   const { t, language } = useI18n();
   const h = t.home;
-  const { profile, collections, totalCards, profileLoading, contentReady } = useData();
+  const { profile, collections, totalCards, profileLoading, contentReady, progression } = useData();
   const { user } = useAuth();
   const locale = getLanguageInfo(language).htmlLang;
   const count = (n: number, forms: PluralForms) => plural(locale, n, forms);
@@ -41,6 +45,7 @@ export default function HomePage() {
   const refreshTip = () => setTipKey(tipKeys[Math.floor(Math.random() * tipKeys.length)]);
 
   const firstSteps = useFirstSteps();
+  const wide = useMediaQuery("(min-width: 640px)"); // sm: где стоит сцена главной карточки
   // Без наборов главная соврала бы: «Начни с первого набора», «0 слов», а через полсекунды
   // перескочила бы на «12 слов к повторению». Обычно наборы уже есть в кэше устройства и
   // скелетона не видно; он нужен при первом входе с устройства и пока наборов ещё нет
@@ -53,18 +58,20 @@ export default function HomePage() {
   // Главная кнопка — сессия Perigee (docs/specs/perigee.md); исчерпан дневной лимит новых — предлагаем ещё, но не навязываем
   const dailyNew = readDailyNew();
   const newAllowed = useMemo(() => newLeftToday(collections, new Date(), dailyNew), [collections, dailyNew]);
-  const now =
+  // Сцена рассказывает то же, что заголовок: слова уплывают (повторить), заходят на орбиту (новые),
+  // орбита пуста (начать), луна (на сегодня хватит), всё спокойно (повторено)
+  const now: { title: string; text: string; button: string; to: string; scene: SceneKind } =
     dueCount > 0
-      ? { title: count(dueCount, h.review.dueTitle), text: h.review.dueText, button: h.review.dueButton, to: "/learn" }
+      ? { title: count(dueCount, h.review.dueTitle), text: h.review.dueText, button: h.review.dueButton, to: "/learn", scene: "drift" }
       : collections.length === 0
-        ? { title: h.review.startTitle, text: h.review.startText, button: h.review.startButton, to: "/words?new=1" }
+        ? { title: h.review.startTitle, text: h.review.startText, button: h.review.startButton, to: "/words?new=1", scene: "empty" }
         : totalCards === 0
-          ? { title: h.review.emptyTitle, text: h.review.emptyText, button: h.review.emptyButton, to: `/collection/${collections[0].id}/edit` }
+          ? { title: h.review.emptyTitle, text: h.review.emptyText, button: h.review.emptyButton, to: `/collection/${collections[0].id}/edit`, scene: "empty" }
           : newCount > 0 && newAllowed > 0
-            ? { title: count(newCount, h.review.newTitle), text: h.review.newText, button: h.review.newButton, to: "/learn" }
+            ? { title: count(newCount, h.review.newTitle), text: h.review.newText, button: h.review.newButton, to: "/learn", scene: "launch" }
             : newCount > 0
-            ? { title: h.review.limitTitle, text: h.review.limitText, button: h.review.limitButton, to: "/learn?extra=1" }
-            : { title: h.review.doneTitle, text: h.review.doneText, button: h.review.doneButton, to: "/words" };
+            ? { title: h.review.limitTitle, text: h.review.limitText, button: h.review.limitButton, to: "/learn?extra=1", scene: "rest" }
+            : { title: h.review.doneTitle, text: h.review.doneText, button: h.review.doneButton, to: "/words", scene: "calm" };
   const dailyGoal = getDailyGoal();
   const todayStudied = useMemo(() => {
     // Ключ дня — по местному времени: так сервер записывает историю (docs/specs/00-server.md)
@@ -72,6 +79,26 @@ export default function HomePage() {
     return profile?.studyHistory?.find((d: any) => d.date === today)?.cardsStudied ?? 0;
   }, [profile?.studyHistory]);
   const goalMet = todayStudied >= dailyGoal;
+
+  // «Голос» главной: что сказать именно сейчас (src/motivation/nudge.ts). Пока наборов нет, говорить
+  // о перерывах и целях рано — там и так «Начни с первого набора»
+  const nudge = useMemo(() => {
+    if (collections.length === 0 || totalCards === 0) return null;
+    const date = new Date();
+    const n = pickNudge({
+      today: localDateKey(date),
+      hour: date.getHours(),
+      todayStudied,
+      dailyGoal,
+      dueCount,
+      history: profile?.studyHistory ?? [],
+      orbit: progression?.orbit,
+      genericCount: h.nudge.generic.length,
+    });
+    if (n.key === "generic") return h.nudge.generic[n.index];
+    const line = h.nudge[n.key];
+    return typeof line === "string" ? line : count(n.n ?? 0, line);
+  }, [collections.length, totalCards, todayStudied, dailyGoal, dueCount, profile?.studyHistory, progression?.orbit, h, locale]);
 
   // ── Веха: следующее круглое число слов ──
   const nextMilestone = MILESTONES.find((m) => totalCards < m) ?? null;
@@ -123,8 +150,20 @@ export default function HomePage() {
       {firstSteps.mode !== "hidden" ? (
         <FirstSteps model={firstSteps} />
       ) : (
-      <Card tone="inverse" padding="lg" className="grid gap-8 sm:grid-cols-[1fr_auto] sm:items-center">
-        <div className="grid justify-items-start gap-3">
+      <Card tone="inverse" padding="lg" className="relative grid gap-8 overflow-hidden sm:grid-cols-[1fr_auto] sm:items-center">
+        {/* Сцена: на телефоне выглядывает из правого верхнего угла (цель дня — внизу карточки), на широком
+            экране обходит кольцо цели дня — слова-спутники кружат вокруг сегодняшнего прогресса */}
+        {!wide && <OrbitScene kind={now.scene} tone="inverse" className="absolute -right-16 -top-16 h-52 w-52" />}
+        <div className="relative grid justify-items-start gap-3">
+          {nudge && (
+            <p className="flex max-w-md items-start gap-2 pr-12 text-sm font-semibold leading-snug text-on-inverse/85 sm:pr-0">
+              <span aria-hidden className="relative mt-1.5 flex h-2 w-2 shrink-0">
+                <span className="absolute inset-0 rounded-full bg-accent motion-safe:animate-ping" />
+                <span className="relative h-2 w-2 rounded-full bg-accent" />
+              </span>
+              {nudge}
+            </p>
+          )}
           <Heading size={1} as="h2" tone="inverse">
             {now.title}
           </Heading>
@@ -133,21 +172,29 @@ export default function HomePage() {
             {now.button}
           </ButtonLink>
         </div>
-        <div className="flex items-center gap-4 sm:grid sm:justify-items-center sm:gap-3 sm:text-center">
-          <Ring
-            value={todayStudied / dailyGoal}
-            size={112}
-            stroke={10}
-            tone={goalMet ? "success" : "accent"}
-            track="inverse"
-            label={`${h.goal.label}: ${todayStudied} / ${dailyGoal}`}
-          >
-            <span className="font-display text-2xl font-extrabold text-on-inverse">
-              {todayStudied}
-              <span className="text-base text-on-inverse/50">/{dailyGoal}</span>
+        <div className="relative flex items-center gap-4 sm:grid sm:justify-items-center sm:gap-3 sm:text-center">
+          {/* relative у кольца и подписи — чтобы они лежали поверх сцены */}
+          <div className="relative grid shrink-0 place-items-center">
+            {wide && (
+              <OrbitScene kind={now.scene} tone="inverse" halo className="absolute left-1/2 top-1/2 h-68 w-68 -translate-x-1/2 -translate-y-1/2" />
+            )}
+            <span className="relative">
+              <Ring
+                value={todayStudied / dailyGoal}
+                size={112}
+                stroke={10}
+                tone={goalMet ? "success" : "accent"}
+                track="inverse"
+                label={`${h.goal.label}: ${todayStudied} / ${dailyGoal}`}
+              >
+                <span className="font-display text-2xl font-extrabold text-on-inverse">
+                  {todayStudied}
+                  <span className="text-base text-on-inverse/50">/{dailyGoal}</span>
+                </span>
+              </Ring>
             </span>
-          </Ring>
-          <div>
+          </div>
+          <div className="relative">
             <p className="text-sm font-semibold text-on-inverse">{h.goal.label}</p>
             <p className="text-sm text-on-inverse/75">{goalMet ? h.goal.met : count(dailyGoal - todayStudied, h.goal.left)}</p>
           </div>

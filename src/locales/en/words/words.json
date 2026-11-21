@@ -281,8 +281,8 @@
     }
   },
   "empty": {
-    "title": "No sets in this course yet",
-    "description": "Create a set and add the words you want to learn — or paste a whole list at once.",
+    "title": "Empty orbit. For now.",
+    "description": "Every language starts with one word. Create a set and launch your first ones — or paste a whole list at once.",
     "button": "Create first set"
   },
   "toast": {
@@ -351,7 +351,7 @@
     "rate": "How well do you know it?",
     "settings": "Settings",
     "leave": {
-      "titleNear": "Almost there",
+      "titleNear": "So close — and quit now?",
       "title": "Finish what you started?",
       "left": {
         "one": "{n} word left",
@@ -362,6 +362,13 @@
       "stay": "Keep going",
       "leave": "Leave"
     },
+    "cheer": [
+      "On fire!",
+      "Unstoppable!",
+      "Memory machine!",
+      "Legendary!",
+      "Out of this orbit!"
+    ],
     "loadError": {
       "title": "Couldn't load the words",
       "text": "Check your internet connection and try again.",

@@ -70,6 +70,10 @@
         {
           "title": "Del et ord",
           "text": "Alle ord i et sett kan bli et bilde til sosiale medier eller en chat: trykk på «Del» ved siden av ordet. Kortet viser ordet, oversettelsen, forklaringen og eksempelet i lys, varm eller natt-stil. Send det rett fra delingsmenyen, last det ned eller kopier det på datamaskinen."
+        },
+        {
+          "title": "Et mer levende Kolo",
+          "text": "Startsiden snakker nå med deg. Over hovedknappen står en kort setning om det som betyr noe akkurat nå: hvor mange dager det har gått uten øving, at én økt i dag lukker ukens bane, hvor mange kort som gjenstår til dagens mål, eller hvor mange du tok i går – klarer du å slå det? Hver tilstand har sitt eget levende bilde: ordene driver ut av bane når det er tid for repetisjon, nye ord flyr inn i banen, og når det er nok nye ord for i dag, kommer månen fram. På en bred skjerm kretser ordene rundt dagens mål. Hvert femte riktige svar på rad får et heiarop i Quiz, Lynrunde og Perigee-økter, og den daglige påminnelsen sier ikke lenger det samme hver dag."
         }
       ],
       "fixes": [

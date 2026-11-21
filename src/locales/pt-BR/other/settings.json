@@ -1,0 +1,30 @@
+{
+  "reminder": {
+    "notify": {
+      "due": [
+        {
+          "one": "{n} palavra espera revisão. Uns minutinhos e pronto.",
+          "other": "{n} palavras esperam revisão. Uns minutinhos e pronto."
+        },
+        {
+          "one": "{n} palavra está saindo de órbita. Pegue antes que ela suma.",
+          "other": "{n} palavras estão saindo de órbita. Pegue antes que elas sumam."
+        },
+        {
+          "one": "Sua memória ligou: {n} palavra quer uma revisão rápida.",
+          "other": "Sua memória ligou: {n} palavras querem uma revisão rápida."
+        },
+        {
+          "one": "{n} palavra, dois minutos, zero desculpas.",
+          "other": "{n} palavras, dois minutos, zero desculpas."
+        }
+      ],
+      "idle": [
+        "Hora de uma sessão rápida: alguns minutos deixam sua meta da semana mais perto.",
+        "Cinco minutos para o seu eu do futuro. Combinado?",
+        "Suas palavras estão com saudade. Só avisando.",
+        "Hoje ainda conta: uma sessão curta já basta."
+      ]
+    }
+  }
+}

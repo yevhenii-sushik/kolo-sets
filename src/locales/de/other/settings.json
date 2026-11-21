@@ -1,0 +1,30 @@
+{
+  "reminder": {
+    "notify": {
+      "due": [
+        {
+          "one": "{n} Wort wartet auf Wiederholung. Ein paar Minuten, und du bist fertig.",
+          "other": "{n} Wörter warten auf Wiederholung. Ein paar Minuten, und du bist fertig."
+        },
+        {
+          "one": "{n} Wort driftet aus dem Orbit. Fang es ein, bevor es weg ist.",
+          "other": "{n} Wörter driften aus dem Orbit. Fang sie ein, bevor sie weg sind."
+        },
+        {
+          "one": "Dein Gedächtnis hat angerufen: {n} Wort will wiederholt werden.",
+          "other": "Dein Gedächtnis hat angerufen: {n} Wörter wollen wiederholt werden."
+        },
+        {
+          "one": "{n} Wort, zwei Minuten, keine Ausreden.",
+          "other": "{n} Wörter, zwei Minuten, keine Ausreden."
+        }
+      ],
+      "idle": [
+        "Zeit für eine kurze Session: Ein paar Minuten bringen dich deinem Wochenziel näher.",
+        "Fünf Minuten für dein zukünftiges Ich. Deal?",
+        "Deine Wörter vermissen dich. Nur so nebenbei.",
+        "Heute zählt noch – eine kurze Session reicht."
+      ]
+    }
+  }
+}

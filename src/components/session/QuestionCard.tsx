@@ -4,6 +4,8 @@ import { Volume2, Zap } from "lucide-react";
 import { Strength } from "../../utils/srs";
 import { StrengthChip } from "../cards/Flashcard";
 import { cx } from "../../ui";
+import { useI18n } from "../../contexts/I18nContext";
+import { cheerIndex } from "../../motivation/nudge";
 
 // Карточка вопроса — общая для теста и Блица, чтобы режимы выглядели одной семьёй (docs/specs/perigee.md,
 // «Тест: честный ответ и карточка вопроса»). Тёплые тона лица флэшкарты: сверху сила слова и значок серии,
@@ -46,19 +48,42 @@ export default function QuestionCard({
   );
 }
 
-/** Значок серии на карточке: каждое новое верное — короткий «щелчок» */
+/** Значок серии на карточке: каждое новое верное — короткий «щелчок». На круглых числах (5, 10, 15…)
+ *  значок вспыхивает оранжевым, а под ним на пару секунд появляется возглас: «Огонь!», «Не остановить!».
+ *  Серия есть только у проверенных ответов (тест, Блиц, Perigee), самооценку ею не награждаем */
 export function StreakChip({ value, children }: { value: number; children: ReactNode }) {
+  const { t } = useI18n();
+  const cheers = t.words.session.cheer;
+  const i = cheerIndex(value, cheers.length);
+  const cheer = i >= 0 ? cheers[i] : null;
   return (
-    <motion.span
-      key={value}
-      initial={{ scale: 1.25 }}
-      animate={{ scale: 1 }}
-      transition={{ type: "spring", stiffness: 500, damping: 18 }}
-      className="inline-flex items-center gap-1 rounded-full bg-surface/70 px-3 py-1 text-xs font-semibold text-accent-ink"
-    >
-      <Zap size={12} />
-      {children}
-    </motion.span>
+    <span className="relative inline-flex">
+      <motion.span
+        key={value}
+        initial={{ scale: cheer ? 1.5 : 1.25 }}
+        animate={{ scale: 1 }}
+        transition={{ type: "spring", stiffness: cheer ? 380 : 500, damping: cheer ? 11 : 18 }}
+        className={cx(
+          "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold transition-colors",
+          cheer ? "bg-accent text-on-accent" : "bg-surface/70 text-accent-ink",
+        )}
+      >
+        <Zap size={12} />
+        {children}
+      </motion.span>
+      {cheer && (
+        <motion.span
+          key={`cheer-${value}`}
+          role="status"
+          initial={{ opacity: 0, y: -4, scale: 0.8 }}
+          animate={{ opacity: [0, 1, 1, 0], y: [-4, 0, 0, 2], scale: [0.8, 1.05, 1, 1] }}
+          transition={{ duration: 2.2, times: [0, 0.15, 0.8, 1], ease: "easeOut" }}
+          className="pointer-events-none absolute right-0 top-full mt-1.5 whitespace-nowrap rounded-full bg-fg px-2.5 py-0.5 text-xs font-bold text-on-inverse shadow-md"
+        >
+          {cheer}
+        </motion.span>
+      )}
+    </span>
   );
 }
 

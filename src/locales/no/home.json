@@ -2,23 +2,27 @@
   "greeting": {
     "morning": [
       "God morgen",
-      "Morgenoppvarming?",
-      "Tid for kaffe og en prat"
+      "Frisk hjerne, friske ord",
+      "Kaffe først, ord etterpå?",
+      "Morgenstund har ord i munn"
     ],
     "afternoon": [
       "God dag",
-      "Ha en produktiv dag",
-      "Skal vi fortsette med leksjonen?"
+      "Lunsjpause? Perfekt for fem ord",
+      "Halvveis gjennom dagen",
+      "Et godt øyeblikk for en rask runde"
     ],
     "evening": [
       "God kveld",
-      "Ha en fin kveld",
-      "Kveldsgjennomgang"
+      "Kvelden er for ord",
+      "Senk skuldrene med en rask repetisjon",
+      "En runde til før dagen er over?"
     ],
     "night": [
-      "God natt",
-      "Kan ikke sove?",
-      "En stille tid for studier"
+      "Fortsatt våken?",
+      "Nattugle-modus",
+      "En stille time for ord",
+      "Midnattsklubben for ord"
     ]
   },
   "guest": "Gjest",
@@ -42,22 +46,22 @@
       "one": "{n} ord venter på repetisjon",
       "other": "{n} ord venter på repetisjon"
     },
-    "dueText": "Perigee hentet dem fram akkurat i tide – det tar et par minutter.",
+    "dueText": "De står helt på kanten av glemselen. To minutter nå – så er de tilbake i bane.",
     "dueButton": "Start repetisjonen",
-    "doneTitle": "Alt er repetert for i dag",
-    "doneText": "Legg til nye ord eller øv i en hvilken som helst modus.",
+    "doneTitle": "Alt er repetert. Respekt.",
+    "doneText": "Hukommelsen er i orden. Legg til nye ord – eller sett rekord i Lynrunde.",
     "doneButton": "Til settene mine",
-    "startTitle": "Begynn med ditt første sett",
-    "startText": "Legg til ordene du vil lære – Perigee minner deg på når det er tid for å repetere dem.",
+    "startTitle": "Alle språk begynner med ett ord",
+    "startText": "Lag et sett med ordene du vil lære – Perigee henter fram hvert ord rett før du glemmer det.",
     "startButton": "Lag et sett",
     "emptyTitle": "Settet er fortsatt tomt",
-    "emptyText": "Legg til noen ord, så kan du begynne å lære.",
+    "emptyText": "Legg til noen få – så er den første økten klar.",
     "emptyButton": "Legg til ord",
     "newTitle": {
       "one": "{n} nytt ord venter på første økt",
       "other": "{n} nye ord venter på første økt"
     },
-    "newText": "Perigee introduserer dem steg for steg og lager en repetisjonsplan.",
+    "newText": "Ferske ord, klare for oppskyting. Perigee introduserer dem steg for steg.",
     "newButton": "Studer",
     "limitTitle": "Det holder med nye ord for i dag",
     "limitText": "I morgen tar Perigee frem dagens ord igjen – slik sitter de bedre. Vil du ha flere likevel? Bare kjør på.",
@@ -70,6 +74,36 @@
       "other": "{n} kort igjen"
     },
     "met": "Målet er nådd"
+  },
+  "nudge": {
+    "away": {
+      "one": "{n} dag uten øving – ordene dine driver ut av bane.",
+      "other": "{n} dager uten øving – ordene dine driver ut av bane."
+    },
+    "orbitToday": "I dag avgjør uka: én økt, så er banen lukket.",
+    "orbitAtRisk": "Uka henger i en tynn tråd: ingen fridager før søndag.",
+    "orbitLastDay": "Én dag til – så er ukens bane lukket.",
+    "goalClose": {
+      "one": "Bare {n} kort til – så er dagens mål ditt.",
+      "other": "Bare {n} kort til – så er dagens mål ditt."
+    },
+    "beatYesterday": {
+      "one": "I går: {n} kort. Klarer du å slå det?",
+      "other": "I går: {n} kort. Klarer du å slå det?"
+    },
+    "goalMet": "Målet er nådd. Hjernen er varm – hvorfor stoppe nå?",
+    "lateNight": "Dagen er nesten over. Fem minutter teller fortsatt.",
+    "pileUp": "Haugen vokser mens du venter. To minutter i dag slår tjue i morgen.",
+    "generic": [
+      "Fem minutter. Det er hele avtalen.",
+      "Vedder på at du husker mer enn du tror.",
+      "Hjernen er klar. Er du?",
+      "Hvert ord du lærer i dag, er ett mindre å slå opp i morgen.",
+      "Ingen ser på – perfekt tid for å gjøre feil.",
+      "Én økt, så teller dagen. Enkelt.",
+      "Framtids-deg sier takk. På to språk.",
+      "Små steg hver dag slår store planer for mandag."
+    ]
   },
   "milestone": {
     "label": "Neste milepæl",

@@ -12,7 +12,6 @@ import {
   GripVertical,
   Check,
   ChevronRight,
-  Layers,
   Pencil,
   Trash2,
   Search,
@@ -41,6 +40,7 @@ import CreateCollectionModal from "../../components/CreateCollectionModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
 import WordSearchResults from "../../components/cards/WordSearchResults";
+import { OrbitScene } from "../../components/scenes/OrbitScene";
 import { FIND_WORD_EVENT, searchCards } from "../../utils/wordSearch";
 import {
   CollisionDetection,
@@ -799,10 +799,9 @@ export default function WordsPage() {
         ) : activeTab === "my" ? (
           <>
             {collections.length === 0 && folders.length === 0 ? (
-              <Card tone="inset" padding="lg" className="grid justify-items-center gap-4 py-14 text-center">
-                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-surface text-accent-ink">
-                  <Layers size={26} />
-                </span>
+              <Card tone="inset" padding="lg" className="grid justify-items-center gap-4 py-10 text-center">
+                {/* Пустая орбита со спутником-«плюсом»: курс ждёт первых слов (docs/roadmap.md, «Живой Kolo») */}
+                <OrbitScene kind="empty" className="-my-2 h-36 w-36" />
                 <div className="grid max-w-sm gap-2">
                   <Heading size={3} as="h2">
                     {t.words.empty.title}
@@ -827,7 +826,8 @@ export default function WordsPage() {
                   onDelete={() => handleDeleteFolder(openFolder)}
                 />
                 {folderCollections.length === 0 ? (
-                  <Card tone="inset" className="py-12 text-center">
+                  <Card tone="inset" className="grid justify-items-center gap-2 py-8 text-center">
+                    <OrbitScene kind="empty" className="h-24 w-24" />
                     <Text size="sm" tone="muted" className="mx-auto max-w-sm">
                       {lib.emptyFolder}
                     </Text>
