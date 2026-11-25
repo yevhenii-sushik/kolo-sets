@@ -7,7 +7,6 @@ import { useI18n } from "../../contexts/I18nContext";
 import { APP_LANGUAGES, LANGUAGES, getLanguageInfo } from "../../locales/languages";
 import { FEATURES } from "../../config/features";
 import { LEGAL } from "../legal/legalInfo";
-import SiteLanguagePicker from "../../components/landing/SiteLanguagePicker";
 import LandingFooter from "../../components/landing/LandingFooter";
 import { DakutaLogo } from "../../components/brand/DakutaLogo";
 import { usePageMeta } from "../../utils/pageMeta";
@@ -237,8 +236,13 @@ export default function LandingPage() {
           )}
         >
           <Container className="h-16 flex items-center justify-between gap-3">
-            <Link to="/welcome" className="group shrink-0">
-              <Logo />
+            {/* На экранах меньше 360 px (iPhone SE первого поколения) «Войти» и «Начать» на французском
+                и испанском не помещаются рядом с полным логотипом — там остаётся только знак */}
+            <Link to="/welcome" aria-label="Kolo" className="group shrink-0">
+              <span className="hidden min-[360px]:contents">
+                <Logo />
+              </span>
+              <LogoMark size={30} className="min-[360px]:hidden" />
             </Link>
             <nav aria-label={l.nav.sections} className="hidden lg:flex items-center gap-1">
               {nav.map((item) => (
@@ -251,14 +255,13 @@ export default function LandingPage() {
                 </a>
               ))}
             </nav>
+            {/* Переключателя языка в шапке нет: сайт сам открывается на языке страны (locales/languages.ts → pickLanguage),
+                сменить язык можно в подвале. «Войти» видно и на телефоне — это единственный вход на первом экране */}
             <div className="flex items-center gap-1 sm:gap-2">
-              <SiteLanguagePicker />
-              <span className="hidden sm:contents">
-                <ButtonLink to="/login" variant="ghost" size="sm">
-                  {l.nav.login}
-                </ButtonLink>
-              </span>
-              <ButtonLink to="/register" size="sm">
+              <ButtonLink to="/login" variant="ghost" size="sm" className="px-3 sm:px-4">
+                {l.nav.login}
+              </ButtonLink>
+              <ButtonLink to="/register" size="sm" className="px-3 sm:px-4">
                 {l.nav.start}
               </ButtonLink>
             </div>
@@ -279,12 +282,10 @@ export default function LandingPage() {
                 <Text size="lg" tone="muted" className="max-w-xl">
                   {l.hero.subtitle}
                 </Text>
+                {/* Кто уже учится, заходит через «Войти» в шапке, здесь — только начало */}
                 <div className="flex flex-wrap justify-center gap-3 pt-2 lg:justify-start">
                   <ButtonLink to="/register" size="lg" iconRight={<ArrowRight size={18} />}>
                     {l.hero.start}
-                  </ButtonLink>
-                  <ButtonLink to="/login" size="lg" variant="secondary">
-                    {l.hero.login}
                   </ButtonLink>
                 </div>
                 <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted lg:justify-start">

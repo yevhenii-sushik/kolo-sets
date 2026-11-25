@@ -10,6 +10,25 @@
   },
   "versions": [
     {
+      "number": "0.4.1",
+      "date": "November 2026",
+      "title": "Kolo på ditt språk",
+      "intro": "Kolo lærer seg også nye språk: appen oversettes til tysk, spansk, fransk og portugisisk, og første gang du åpner nettstedet, møter det deg på språket i landet ditt.",
+      "features": [
+        {
+          "title": "Ditt språk fra første besøk",
+          "text": "Første gang du åpner Kolo, vises nettstedet på språket i landet du er i, ut fra tidssonen på enheten din: ingenting sendes noe sted, og du trenger ikke å dele posisjonen din. Er nettleseren satt til et av språkene våre, går det foran. Når du har logget inn, ligger språket fast, også når du er på reise, og du kan bytte det når som helst i innstillingene eller nederst på startsiden."
+        },
+        {
+          "title": "Del banen din",
+          "text": "Ukens bane kan nå bli et bilde til sosiale medier eller en chat: ringen med rekken din, dagene denne uka, rekorden og nivået ditt, i lys, varm eller nattstil. Du finner Del i profilen, i ukekortet øverst på skjermen og akkurat når en bane lukkes."
+        }
+      ],
+      "fixes": [
+        "«Logg inn»-knappen finnes nå i toppen av nettstedet også på mobil."
+      ]
+    },
+    {
       "number": "0.4.0",
       "date": "November 2026",
       "title": "Baner, kapsler og et kurs for hvert språk",

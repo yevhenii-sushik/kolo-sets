@@ -113,7 +113,10 @@ import deSettings from './de/other/settings.json';
 import esSettings from './es/other/settings.json';
 import frSettings from './fr/other/settings.json';
 import ptBRSettings from './pt-BR/other/settings.json';
-import { LANGUAGES, Language, detectBrowserLanguage } from './languages';
+import { Language, deviceLanguageTags, startLanguage } from './languages';
+import { deviceTimeZone } from './regionLanguages';
+import { hadSignInOnDevice } from '../utils/profileCache';
+import { onboardingDone } from '../utils/firstRun';
 import { DeepPartial, fillFrom } from './fillFrom';
 
 export type { Language } from './languages';
@@ -211,12 +214,31 @@ export const translations: Record<Language, Translations> = {
   no,
 };
 
+const LANGUAGE_KEY = 'appLanguage';
+
+export const savedLanguage = (): string | null => {
+  try {
+    return localStorage.getItem(LANGUAGE_KEY);
+  } catch {
+    return null;
+  }
+};
+
 export const getCurrentLanguage = (): Language => {
-  const saved = localStorage.getItem('appLanguage');
-  const known = LANGUAGES.find((l) => l.code === saved);
-  return known ? known.code : detectBrowserLanguage();
+  const saved = savedLanguage();
+  // Следы прежних запусков: копия профиля (вход) или пройденное знакомство. Новичок к следующему
+  // запуску уже с сохранённым языком (закрепляется при входе), так что сюда попадают только те,
+  // кто пользовался Kolo до 0.4.1 и язык сам не выбирал
+  const returning = !saved && (hadSignInOnDevice() || onboardingDone());
+  const lang = startLanguage({ saved, returning, browserTags: deviceLanguageTags(), timeZone: deviceTimeZone() });
+  if (returning) setLanguage(lang);
+  return lang;
 };
 
 export const setLanguage = (lang: Language): void => {
-  localStorage.setItem('appLanguage', lang);
+  try {
+    localStorage.setItem(LANGUAGE_KEY, lang);
+  } catch {
+    // Хранилище закрыто (приватный режим) — язык просто не запомнится
+  }
 };

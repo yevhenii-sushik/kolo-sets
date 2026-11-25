@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { Language, Translations, translations, getCurrentLanguage, setLanguage as saveLanguage } from '../locales';
+import { onAuthStateChanged } from 'firebase/auth';
+import { Language, Translations, translations, getCurrentLanguage, savedLanguage, setLanguage as saveLanguage } from '../locales';
 import { getLanguageInfo } from '../locales/languages';
 import { auth } from '../firebase/config';
 
@@ -21,6 +22,17 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = getLanguageInfo(language).htmlLang;
     auth.languageCode = language;
   }, [language]);
+
+  // Язык, угаданный по стране, закрепляем, как только человек вошёл. Иначе он менялся бы в поездке
+  // (пояс Испании → испанский), а со следующего запуска человек считался бы «вернувшимся» и получил бы
+  // язык браузера (locales/index.ts → getCurrentLanguage)
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        if (user && !savedLanguage()) saveLanguage(language);
+      }),
+    [language],
+  );
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
