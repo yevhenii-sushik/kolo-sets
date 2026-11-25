@@ -133,6 +133,13 @@
         "other": "Last week fell through. Complete {n} sessions by the end of Wednesday and your streak comes back."
       },
       "tap": "Tap to close"
+    },
+    "share": {
+      "action": "Share",
+      "title": "Share your orbit",
+      "alt": "Your weekly orbit as an image",
+      "closed": "This week's orbit is closed",
+      "progress": "{done} of {goal} days this week"
     }
   },
   "onboarding": {

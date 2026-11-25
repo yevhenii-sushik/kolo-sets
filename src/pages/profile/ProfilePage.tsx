@@ -18,6 +18,7 @@ import AchievementCard from "../../components/AchievementCard";
 import { OrbitRing } from "../../components/progress/OrbitRing";
 import { RepairLine, Shields, WeekDays, WeekStatus } from "../../components/progress/WeekOrbit";
 import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
+import { openOrbitShare } from "../../components/progress/ShareOrbitModal";
 import { AvatarFrame } from "../../components/rewards/AvatarFrame";
 import { BackgroundArt, TitleBadge } from "../../components/rewards/ItemArt";
 import { TeamBadges } from "../../components/profile/TeamBadges";
@@ -41,6 +42,7 @@ import {
   Medal,
   Pencil,
   RefreshCw,
+  Share2,
   Target,
   User,
 } from "lucide-react";
@@ -486,18 +488,24 @@ export default function ProfilePage() {
           <RepairLine orbit={orbit} />
           <WeekStatus orbit={orbit} />
 
-          <dl className="grid grid-cols-2 gap-4 border-t border-line pt-5 sm:grid-cols-3">
-            <div>
-              <dt className="text-sm text-muted">{p.orbit.record}</dt>
-              <dd className="font-display text-2xl font-extrabold tabular-nums text-fg">{orbit.longest}</dd>
-            </div>
-            <div title={t.orbit.shieldsHint}>
-              <dt className="text-sm text-muted">{p.orbit.shields}</dt>
-              <dd className="mt-1.5">
-                <Shields count={orbit.shields} label={p.orbit.shields} />
-              </dd>
-            </div>
-          </dl>
+          <div className="flex flex-wrap items-end justify-between gap-4 border-t border-line pt-5">
+            <dl className="grid grid-cols-2 gap-x-10 gap-y-4">
+              <div>
+                <dt className="text-sm text-muted">{p.orbit.record}</dt>
+                <dd className="font-display text-2xl font-extrabold tabular-nums text-fg">{orbit.longest}</dd>
+              </div>
+              <div title={t.orbit.shieldsHint}>
+                <dt className="text-sm text-muted">{p.orbit.shields}</dt>
+                <dd className="mt-1.5">
+                  <Shields count={orbit.shields} label={p.orbit.shields} />
+                </dd>
+              </div>
+            </dl>
+            {/* Орбита картинкой для соцсетей (ShareOrbitModal) */}
+            <Button variant="soft" size="sm" iconLeft={<Share2 size={15} />} onClick={openOrbitShare}>
+              {t.orbit.share.action}
+            </Button>
+          </div>
           {orbit.nextGoal !== undefined && (
             <p className="text-sm text-faint">
               {p.orbit.next.replace("{value}", plural(locale, orbit.nextGoal, t.orbit.goal.perWeek))}

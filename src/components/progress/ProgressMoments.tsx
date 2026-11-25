@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FlaskConical, Orbit, Shield, Sparkles, Wrench } from "lucide-react";
+import { FlaskConical, Orbit, Share2, Shield, Sparkles, Wrench } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
@@ -13,6 +13,7 @@ import { REPAIR_SESSIONS } from "../../../server/core/orbit";
 import { SATELLITE_LEVELS } from "../../../server/core/loot";
 import { OrbitRing } from "./OrbitRing";
 import { CapsuleArt } from "../rewards/CapsuleArt";
+import { openOrbitShare } from "./ShareOrbitModal";
 
 // Празднования этапа 2 (docs/specs/02-progression.md): орбита замкнута, новый уровень, починка удалась,
 // а после подведения итогов недели — щит сработал или серию можно починить. Не каждый день, а то, что важно.
@@ -132,6 +133,19 @@ function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }
               {m.shieldEarned}
             </span>
           )}
+          {/* Замкнутая орбита — лучший момент, чтобы ей поделиться (ShareOrbitModal) */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+              openOrbitShare();
+            }}
+            className="mx-auto mt-3 flex items-center gap-1.5 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-hover"
+          >
+            <Share2 size={15} />
+            {t.orbit.share.action}
+          </button>
         </>
       );
       break;

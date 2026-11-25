@@ -3,5 +3,23 @@
     "loading": "Cargando Kolo…",
     "slow": "Conexión lenta. Seguimos cargando…",
     "offline": "Sin conexión. Kolo se abrirá en cuanto vuelvas a tener internet."
+  },
+  "orbit": {
+    "label": "Órbita semanal",
+    "inRow": {
+      "one": "{n} órbita seguida",
+      "other": "{n} órbitas seguidas"
+    },
+    "best": "Récord",
+    "moments": {
+      "level": "Nivel {n}"
+    },
+    "share": {
+      "action": "Compartir",
+      "title": "Comparte tu órbita",
+      "alt": "Tu órbita semanal como imagen",
+      "closed": "La órbita de esta semana está cerrada",
+      "progress": "{done} de {goal} días esta semana"
+    }
   }
 }

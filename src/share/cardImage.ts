@@ -1,63 +1,8 @@
 // Картинка карточки для соцсетей и мессенджеров: слово, часть речи, перевод, объяснение и пример
-// в оформлении «Орбиты», внизу знак Kolo и адрес. Рисуем сами на canvas: без лишних библиотек,
-// с нашими шрифтами, и один и тот же результат на любом устройстве.
-//
-// Цвета ниже — рисунок, а не цвета интерфейса (как предметы в src/progression/looks.ts): картинка
-// не должна зависеть от темы приложения. Значения взяты из src/design/tokens.css.
+// в оформлении «Орбиты», внизу знак Kolo и адрес. Формат, оформления и подвал — общие (canvas.ts)
 
-import { MARK_DOT, MARK_RING } from "../ui/Logo";
+import { CONTENT_WIDTH, Ctx, DISPLAY, IMAGE_WIDTH, Palette, RTL, SANS, ShareStyle, drawFooter, drawPill, loadFonts, roundRect, startCanvas, toPng } from "./canvas";
 import { clampLines, wrapText } from "./wrapText";
-
-export type ShareStyle = "light" | "warm" | "night";
-
-export const SHARE_STYLES: ShareStyle[] = ["light", "warm", "night"];
-
-interface Palette {
-  bg: string;
-  fg: string;
-  muted: string;
-  translation: string;
-  accent: string;
-  pill: string;
-  decor: string; // кольцо орбиты на фоне
-  dot: string; // спутник знака Kolo
-}
-
-export const PALETTES: Record<ShareStyle, Palette> = {
-  // Фон страницы приложения
-  light: {
-    bg: "#F5F6FA",
-    fg: "#101426",
-    muted: "#4E5568",
-    translation: "#C2410C",
-    accent: "#FF5A1F",
-    pill: "#FFFFFF",
-    decor: "rgba(255, 90, 31, 0.2)",
-    dot: "#101426",
-  },
-  // Лицо флэшкарты (accent-soft)
-  warm: {
-    bg: "#FFEEE6",
-    fg: "#101426",
-    muted: "#4E5568",
-    translation: "#C2410C",
-    accent: "#FF5A1F",
-    pill: "rgba(255, 255, 255, 0.75)",
-    decor: "rgba(255, 90, 31, 0.28)",
-    dot: "#101426",
-  },
-  // Ночной синий бренда — как иконка приложения
-  night: {
-    bg: "#101426",
-    fg: "#FFFFFF",
-    muted: "#A3A9BD",
-    translation: "#FF8A5C",
-    accent: "#FF5A1F",
-    pill: "rgba(255, 255, 255, 0.09)",
-    decor: "rgba(255, 90, 31, 0.32)",
-    dot: "#FFFFFF",
-  },
-};
 
 export interface CardImageContent {
   word: string;
@@ -67,21 +12,6 @@ export interface CardImageContent {
   example?: string;
   language: string; // «Норвежский» — плашка сверху
 }
-
-// 4 : 5 — формат поста: целиком помещается в ленте Instagram, Telegram и WhatsApp
-export const IMAGE_WIDTH = 1080;
-export const IMAGE_HEIGHT = 1350;
-const PAD = 96;
-const CONTENT_WIDTH = IMAGE_WIDTH - PAD * 2;
-const SITE = "kolo.dakuta.dev";
-
-const DISPLAY = '"Nunito Variable", "Nunito", system-ui, sans-serif';
-const SANS = '"Onest Variable", "Onest", system-ui, sans-serif';
-
-// Арабский, иврит, персидский: canvas должен знать направление, иначе знаки препинания уедут
-const RTL = /[֐-ࣿיִ-﷿ﹰ-﻿]/;
-
-type Ctx = CanvasRenderingContext2D;
 
 interface Block {
   lines: string[];
@@ -93,19 +23,15 @@ interface Block {
 }
 
 export async function renderCardImage(content: CardImageContent, style: ShareStyle): Promise<Blob> {
-  await loadFonts(content);
-  const canvas = document.createElement("canvas");
-  canvas.width = IMAGE_WIDTH;
-  canvas.height = IMAGE_HEIGHT;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("canvas-unavailable");
-  const p = PALETTES[style];
-
-  ctx.fillStyle = p.bg;
-  ctx.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+  const c = content;
+  await loadFonts(
+    [c.word, c.translation, c.partOfSpeech, c.explanation, c.example, c.language],
+    [`800 100px ${DISPLAY}`, `700 100px ${DISPLAY}`, `400 40px ${SANS}`, `italic 400 40px ${SANS}`, `500 40px ${SANS}`, `600 40px ${SANS}`],
+  );
+  const { canvas, ctx, p } = startCanvas(style);
   drawOrbit(ctx, p);
 
-  const pillBottom = drawLanguagePill(ctx, p, content.language);
+  const pillBottom = drawPill(ctx, p, content.language);
   const footerTop = drawFooter(ctx, p);
 
   // Слова между плашкой и подвалом, по центру. Не влезает — уменьшаем всё вместе
@@ -137,9 +63,7 @@ export async function renderCardImage(content: CardImageContent, style: ShareSty
   }
   ctx.direction = "ltr";
 
-  return new Promise((resolve, reject) =>
-    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("canvas-export"))), "image/png"),
-  );
+  return toPng(canvas);
 }
 
 // k — общий множитель размеров, когда текста много
@@ -219,82 +143,4 @@ function drawOrbit(ctx: Ctx, p: Palette) {
   ctx.beginPath();
   ctx.arc(cx + r * Math.cos(a), cy + r * Math.sin(a), 16, 0, Math.PI * 2);
   ctx.fill();
-}
-
-// Плашка языка слева сверху: оранжевая точка-спутник и название. Возвращает нижний край
-function drawLanguagePill(ctx: Ctx, p: Palette, language: string): number {
-  const size = 36;
-  const h = 76;
-  ctx.font = `600 ${size}px ${SANS}`;
-  const label = clampLines(wrapText(language, CONTENT_WIDTH - 90, (s) => ctx.measureText(s).width), 1, CONTENT_WIDTH - 90, (s) => ctx.measureText(s).width)[0] ?? "";
-  const w = ctx.measureText(label).width + 30 + 16 + 22 + 30;
-  ctx.fillStyle = p.pill;
-  roundRect(ctx, PAD, PAD, w, h, h / 2);
-  ctx.fill();
-  ctx.fillStyle = p.accent;
-  ctx.beginPath();
-  ctx.arc(PAD + 30 + 8, PAD + h / 2, 8, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = p.fg;
-  ctx.textAlign = "left";
-  ctx.textBaseline = "middle";
-  ctx.direction = "ltr";
-  ctx.fillText(label, PAD + 30 + 16 + 22, PAD + h / 2 + 1);
-  return PAD + h;
-}
-
-// Подвал: знак и «kolo» слева, адрес справа. Возвращает верхний край
-function drawFooter(ctx: Ctx, p: Palette): number {
-  const mark = 64;
-  const top = IMAGE_HEIGHT - PAD - mark;
-  const mid = top + mark / 2;
-
-  // Знак Kolo: геометрия из src/ui/Logo.tsx, viewBox 7 7 86 86
-  ctx.save();
-  ctx.translate(PAD, top);
-  ctx.scale(mark / 86, mark / 86);
-  ctx.translate(-7, -7);
-  ctx.fillStyle = p.accent;
-  ctx.fill(new Path2D(MARK_RING));
-  ctx.fillStyle = p.dot;
-  ctx.beginPath();
-  ctx.arc(MARK_DOT.cx, MARK_DOT.cy, MARK_DOT.r, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-
-  ctx.textBaseline = "middle";
-  ctx.direction = "ltr";
-  ctx.fillStyle = p.fg;
-  ctx.textAlign = "left";
-  ctx.font = `800 58px ${DISPLAY}`;
-  ctx.fillText("kolo", PAD + mark + 18, mid);
-
-  ctx.fillStyle = p.muted;
-  ctx.textAlign = "right";
-  ctx.font = `500 32px ${SANS}`;
-  ctx.fillText(SITE, IMAGE_WIDTH - PAD, mid + 2);
-  return top;
-}
-
-function roundRect(ctx: Ctx, x: number, y: number, w: number, h: number, r: number) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.arcTo(x + w, y, x + w, y + h, r);
-  ctx.arcTo(x + w, y + h, x, y + h, r);
-  ctx.arcTo(x, y + h, x, y, r);
-  ctx.arcTo(x, y, x + w, y, r);
-  ctx.closePath();
-}
-
-// Шрифты бренда грузятся по unicode-range: просим нужные начертания именно для этого текста
-// (кириллица, латиница с диакритикой), иначе canvas нарисует его системным шрифтом
-async function loadFonts(c: CardImageContent) {
-  if (!document.fonts?.load) return;
-  const sample = [c.word, c.translation, c.partOfSpeech, c.explanation, c.example, c.language, "kolo", SITE].filter(Boolean).join(" ");
-  await Promise.all(
-    [`800 100px ${DISPLAY}`, `700 100px ${DISPLAY}`, `400 40px ${SANS}`, `italic 400 40px ${SANS}`, `500 40px ${SANS}`, `600 40px ${SANS}`].map((f) =>
-      document.fonts.load(f, sample),
-    ),
-  ).catch(() => {});
-  await document.fonts.ready;
 }

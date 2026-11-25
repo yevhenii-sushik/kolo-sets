@@ -3,5 +3,23 @@
     "loading": "Chargement de Kolo…",
     "slow": "Connexion lente. Chargement en cours…",
     "offline": "Pas de connexion. Kolo s'ouvrira dès que tu seras de nouveau en ligne."
+  },
+  "orbit": {
+    "label": "Orbite de la semaine",
+    "inRow": {
+      "one": "{n} orbite d'affilée",
+      "other": "{n} orbites d'affilée"
+    },
+    "best": "Record",
+    "moments": {
+      "level": "Niveau {n}"
+    },
+    "share": {
+      "action": "Partager",
+      "title": "Partage ton orbite",
+      "alt": "Ton orbite de la semaine en image",
+      "closed": "L'orbite de cette semaine est refermée",
+      "progress": "{done} jours sur {goal} cette semaine"
+    }
   }
 }

@@ -133,6 +133,13 @@
         "other": "Forrige uke glapp. Fullfør {n} økter innen onsdag kveld, så er rekken tilbake."
       },
       "tap": "Trykk for å lukke"
+    },
+    "share": {
+      "action": "Del",
+      "title": "Del banen din",
+      "alt": "Ukens bane som bilde",
+      "closed": "Ukens bane er lukket",
+      "progress": "{done} av {goal} dager denne uka"
     }
   },
   "onboarding": {

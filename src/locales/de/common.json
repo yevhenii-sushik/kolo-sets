@@ -133,6 +133,13 @@
         "other": "Letzte Woche hat es nicht geklappt. Schaffe {n} Einheiten bis Mittwochabend, und deine Serie ist zurück."
       },
       "tap": "Tippen zum Schließen"
+    },
+    "share": {
+      "action": "Teilen",
+      "title": "Teile deinen Orbit",
+      "alt": "Dein Wochen-Orbit als Bild",
+      "closed": "Der Orbit dieser Woche ist geschlossen",
+      "progress": "{done} von {goal} Tagen diese Woche"
     }
   },
   "onboarding": {

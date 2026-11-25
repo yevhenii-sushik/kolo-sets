@@ -3,7 +3,7 @@ import { IconButton, Logo, cx } from "../../ui";
 import { APP_LANGUAGES } from "../../locales/languages";
 import BottomNav from "../../components/ui/BottomNav";
 import { Outlet, Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { Menu, Languages, ChevronRight } from "lucide-react";
+import { Menu, Languages, ChevronRight, Share2 } from "lucide-react";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
@@ -19,6 +19,7 @@ import { FIND_WORD_EVENT } from "../../utils/wordSearch";
 import CourseSwitcher from "../../components/courses/CourseSwitcher";
 import { OrbitRing } from "../../components/progress/OrbitRing";
 import { WeekCard } from "../../components/progress/WeekOrbit";
+import { openOrbitShare } from "../../components/progress/ShareOrbitModal";
 import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
 import PageLoading from "../../components/ui/PageLoading";
 import { prefetchAppPages } from "../lazyPages";
@@ -176,14 +177,27 @@ export default function MainLayout() {
                       className="absolute right-0 z-50 mt-3 grid w-80 max-w-[calc(100vw-2rem)] gap-4 rounded-3xl border border-line bg-surface p-5 shadow-xl"
                     >
                       <WeekCard progression={progression} />
-                      <Link
-                        to="/profile"
-                        onClick={() => setShowWeekCard(false)}
-                        className="flex items-center justify-between rounded-2xl bg-inset px-3.5 py-3 text-sm font-medium text-fg transition-colors hover:bg-track"
-                      >
-                        {t.orbit.more}
-                        <ChevronRight size={16} />
-                      </Link>
+                      <div className="grid gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowWeekCard(false);
+                            openOrbitShare();
+                          }}
+                          className="flex items-center justify-between rounded-2xl bg-inset px-3.5 py-3 text-left text-sm font-medium text-fg transition-colors hover:bg-track"
+                        >
+                          {t.orbit.share.title}
+                          <Share2 size={16} />
+                        </button>
+                        <Link
+                          to="/profile"
+                          onClick={() => setShowWeekCard(false)}
+                          className="flex items-center justify-between rounded-2xl bg-inset px-3.5 py-3 text-sm font-medium text-fg transition-colors hover:bg-track"
+                        >
+                          {t.orbit.more}
+                          <ChevronRight size={16} />
+                        </Link>
+                      </div>
                     </motion.div>
                   </>
                 )}
