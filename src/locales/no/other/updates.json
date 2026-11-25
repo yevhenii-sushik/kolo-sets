@@ -13,11 +13,23 @@
       "number": "0.4.1",
       "date": "November 2026",
       "title": "Kolo på ditt språk",
-      "intro": "Kolo lærer seg også nye språk: appen oversettes til tysk, spansk, fransk og portugisisk, og første gang du åpner nettstedet, møter det deg på språket i landet ditt.",
+      "intro": "Kolo lærer seg også nye språk: appen oversettes til tysk, spansk, fransk og portugisisk, og første gang du åpner nettstedet, møter det deg på språket i landet ditt. Og begynner du på norsk, finnes det nå ferdige ordsett: et helt tema med ett trykk.",
       "features": [
         {
           "title": "Ditt språk fra første besøk",
           "text": "Første gang du åpner Kolo, vises nettstedet på språket i landet du er i, ut fra tidssonen på enheten din: ingenting sendes noe sted, og du trenger ikke å dele posisjonen din. Er nettleseren satt til et av språkene våre, går det foran. Når du har logget inn, ligger språket fast, også når du er på reise, og du kan bytte det når som helst i innstillingene eller nederst på startsiden."
+        },
+        {
+          "title": "Ferdige ordsett",
+          "text": "Lærer du norsk, har «Ord» nå to faner: «Mine sett» og «Kolo-sett». Den andre har 16 temasett for nivå A1, fra hilsener og tall til mat, jobb og vær: 346 ord, hvert med et eksempel og oversettelser til sju språk. Åpne et tema for å se ordene og legg det til, eller ta hele nivået med «Legg til alle». Settene havner i en egen mappe og er dine å redigere som alle andre, og nye ord kommer i ditt eget tempo, så ingenting hoper seg opp. I «Første steg» på Hjem foreslår Kolo nå et ferdig sett først, og ditt eget sett er fortsatt bare ett trykk unna. Medaljer for ord og sett teller nå bare ord du har begynt på, så et nivå som legges til med ett trykk, gir dem ikke av seg selv."
+        },
+        {
+          "title": "Fant du en feil?",
+          "text": "Kolo-settene er helt nye og ikke korrekturlest linje for linje ennå, så et ord, en oversettelse eller et eksempel kan være feil. Trykk «Meld fra om feil» under ordlisten når du ser på et sett, eller på flagget ved et kort i et sett du har tatt fra Kolo, og skriv hva som er galt: meldingen går rett til teamet, og vi retter det i neste versjon av settet."
+        },
+        {
+          "title": "Ryddigere «Ord»",
+          "text": "Mappene ligger nå på én rad med kompakte brikker over settene dine, hver med farge, navn og antall sett. På mobil blar du sidelengs i raden, så noen få mapper skyver ikke lenger settene nedover skjermen, og du kan fortsatt slippe et sett på en mappe. Toppen får også plass på én linje på mobil, med runde knapper for ny mappe og nytt sett til høyre."
         },
         {
           "title": "Del banen din",

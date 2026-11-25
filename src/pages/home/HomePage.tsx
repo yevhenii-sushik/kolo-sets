@@ -24,7 +24,7 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 const MILESTONES = [10, 25, 50, 100, 200, 500];
 
 // Главная: приветствие → что делать сейчас (у новичка — «Первые шаги», дальше — повторение, новые слова
-// или наборы) с целью дня → цифры → игра дня и совет. В главной карточке — «голос» Kolo (фраза по настоящим
+// или наборы) с целью дня → цифры → игра дня и совет (оба пока выключены). В главной карточке — «голос» Kolo (фраза по настоящим
 // данным: перерыв, орбита недели, цель дня) и живая сцена под состояние слов (docs/roadmap.md, «Живой Kolo»)
 export default function HomePage() {
   const { t, language } = useI18n();
@@ -33,16 +33,6 @@ export default function HomePage() {
   const { user } = useAuth();
   const locale = getLanguageInfo(language).htmlLang;
   const count = (n: number, forms: PluralForms) => plural(locale, n, forms);
-
-  // ── Совет дня ──
-  const tipKeys = useMemo(() => Object.keys(h.tips), [h.tips]);
-  const [tipKey, setTipKey] = useState(() => tipKeys[Math.floor(Math.random() * tipKeys.length)]);
-  const tip = useMemo(() => {
-    const tips = h.tips as Record<string, { category: string; text: string }>;
-    const data = tips[tipKey] ?? tips[tipKeys[0]];
-    return { icon: TIPS_ICONS[tipKey] ?? "💡", ...data };
-  }, [tipKey, h.tips, tipKeys]);
-  const refreshTip = () => setTipKey(tipKeys[Math.floor(Math.random() * tipKeys.length)]);
 
   const firstSteps = useFirstSteps();
   const wide = useMediaQuery("(min-width: 640px)"); // sm: где стоит сцена главной карточки
@@ -232,42 +222,62 @@ export default function HomePage() {
       </>
       )}
 
-      {/* ── Игра дня и совет ── */}
-      <div className={cx("grid gap-4", FEATURES.dailyGame && "md:grid-cols-2")}>
-        {FEATURES.dailyGame && <DailyGameWidget />}
-        <Card className="grid content-start gap-4">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Lightbulb size={18} className="text-accent-ink" />
-              <Heading size={4} as="h2">
-                {h.tip.title}
-              </Heading>
-            </div>
-            <IconButton size="sm" label={h.tipRefresh} onClick={refreshTip}>
-              <RotateCw size={16} />
-            </IconButton>
-          </div>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={tip.text}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-start gap-4"
-            >
-              <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-inset text-2xl">
-                {tip.icon}
-              </span>
-              <div className="grid gap-1">
-                <p className="text-xs font-semibold text-accent-ink">{tip.category}</p>
-                <p className="text-sm leading-snug text-fg">{tip.text}</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </Card>
-      </div>
+      {/* ── Игра дня и совет — оба пока выключены (config/features.ts) ── */}
+      {(FEATURES.dailyGame || FEATURES.tipOfDay) && (
+        <div className={cx("grid gap-4", FEATURES.dailyGame && FEATURES.tipOfDay && "md:grid-cols-2")}>
+          {FEATURES.dailyGame && <DailyGameWidget />}
+          {FEATURES.tipOfDay && <TipOfDay />}
+        </div>
+      )}
     </div>
+  );
+}
+
+// Совет дня: случайный из home.tips, обновляется по кнопке. Выключен флагом FEATURES.tipOfDay
+function TipOfDay() {
+  const { t } = useI18n();
+  const h = t.home;
+  const tipKeys = useMemo(() => Object.keys(h.tips), [h.tips]);
+  const [tipKey, setTipKey] = useState(() => tipKeys[Math.floor(Math.random() * tipKeys.length)]);
+  const tip = useMemo(() => {
+    const tips = h.tips as Record<string, { category: string; text: string }>;
+    const data = tips[tipKey] ?? tips[tipKeys[0]];
+    return { icon: TIPS_ICONS[tipKey] ?? "💡", ...data };
+  }, [tipKey, h.tips, tipKeys]);
+  const refreshTip = () => setTipKey(tipKeys[Math.floor(Math.random() * tipKeys.length)]);
+
+  return (
+    <Card className="grid content-start gap-4">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Lightbulb size={18} className="text-accent-ink" />
+          <Heading size={4} as="h2">
+            {h.tip.title}
+          </Heading>
+        </div>
+        <IconButton size="sm" label={h.tipRefresh} onClick={refreshTip}>
+          <RotateCw size={16} />
+        </IconButton>
+      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={tip.text}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.2 }}
+          className="flex items-start gap-4"
+        >
+          <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-inset text-2xl">
+            {tip.icon}
+          </span>
+          <div className="grid gap-1">
+            <p className="text-xs font-semibold text-accent-ink">{tip.category}</p>
+            <p className="text-sm leading-snug text-fg">{tip.text}</p>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </Card>
   );
 }
 

@@ -25,6 +25,22 @@
       "Mitternachtsclub der Vokabeln"
     ]
   },
+  "guest": "Gast",
+  "tip": {
+    "title": "Tipp"
+  },
+  "stats": {
+    "words": {
+      "one": "Wort",
+      "other": "Wörter"
+    },
+    "sets": {
+      "one": "Set",
+      "other": "Sets"
+    }
+  },
+  "achievements": "Erfolge",
+  "tipRefresh": "Noch ein Tipp",
   "review": {
     "dueTitle": {
       "one": "{n} Wort wartet auf Wiederholung",
@@ -88,5 +104,119 @@
       "Dein zukünftiges Ich sagt danke. In zwei Sprachen.",
       "Kleine Schritte jeden Tag schlagen große Pläne für Montag."
     ]
+  },
+  "milestone": {
+    "label": "Nächstes Etappenziel",
+    "left": {
+      "one": "Noch {n} Wort",
+      "other": "Noch {n} Wörter"
+    },
+    "target": "{m} Wörter",
+    "done": "Alle Etappenziele erreicht",
+    "add": "Wörter hinzufügen"
+  },
+  "firstSteps": {
+    "title": "Erste Schritte",
+    "subtitle": "Fünf kleine Schritte, und du weißt alles, was du brauchst. Jeder dauert keine Minute.",
+    "hide": "Erste Schritte ausblenden",
+    "progress": "{n} von {total}",
+    "doneLabel": "erledigt",
+    "doneTitle": "Alles startklar!",
+    "doneText": "Ab jetzt ist es einfach: Öffne Kolo, wenn es dich erinnert, und wiederhole deine Wörter. Ein paar Minuten am Tag reichen – um den Rest kümmert sich Perigee.",
+    "doneButton": "Alles klar",
+    "steps": {
+      "language": {
+        "title": "Sprache wählen",
+        "titleDone": "Sprache: {lang}",
+        "text": "Für jede Sprache, die du lernst, hat Kolo einen eigenen Bereich mit Sets."
+      },
+      "set": {
+        "title": "Set erstellen",
+        "text": "Ein Set ist eine Liste von Wörtern zu einem Thema – zum Beispiel „Essen“ oder „Arbeit“. Gib ihm einfach einen Namen."
+      },
+      "words": {
+        "title": "5 Wörter hinzufügen",
+        "text": "Ein Wort und seine Übersetzung reichen. Eine Erklärung und ein Beispiel helfen dir, es dir besser zu merken."
+      },
+      "train": {
+        "title": "Erste Session machen",
+        "text": "Geh deine Wörter auf Karteikarten durch: erinnern, umdrehen, ehrlich bewerten. Das dauert ein paar Minuten."
+      },
+      "goal": {
+        "title": "Wochenziel festlegen",
+        "text": "An wie vielen Tagen pro Woche willst du üben? 3 sind ein super Start."
+      }
+    },
+    "guides": {
+      "later": "Später",
+      "set": {
+        "title": "Dein erstes Set",
+        "intro": "Ein Set ist eine Liste von Wörtern zu einem Thema – zum Beispiel „Essen“ oder „Reisen“. Wie nennst du deins?",
+        "nameLabel": "Name des Sets",
+        "suggestTitle": "Oder wähl einen",
+        "suggestions": [
+          "Erste Wörter",
+          "Essen",
+          "Reisen",
+          "Zuhause",
+          "Arbeit"
+        ],
+        "create": "Set erstellen",
+        "error": "Das Set konnte nicht erstellt werden. Prüf deine Verbindung und versuch es noch mal.",
+        "doneTitle": "„{name}“ ist fertig",
+        "doneText": "Jetzt fügen wir die ersten Wörter hinzu – fünf reichen.",
+        "next": "Wörter hinzufügen",
+        "readyIntro": "Ein Set ist eine Liste von Wörtern zu einem Thema. Fang mit einem fertigen Kolo-Set an: Übersetzungen und Beispiele sind schon dabei.",
+        "take": "Dieses Set nehmen",
+        "own": "Eigenes Set erstellen",
+        "allSets": "Alle Kolo-Sets",
+        "readyDoneText": "{words} mit Übersetzungen und Beispielen sind schon drin, also ist auch der Schritt mit den Wörtern erledigt. Zeit für deine erste Session!",
+        "nextTrain": "Zur ersten Session"
+      },
+      "words": {
+        "title": "Erste Wörter",
+        "introStarter": "Hier sind fünf Wörter für einen guten Start. Behalte die, die du willst – oder füg eigene hinzu.",
+        "introOwn": "Füg fünf Wörter hinzu: das Wort in der Sprache, die du lernst, und seine Übersetzung. Eine Erklärung und ein Beispiel kannst du später im Set ergänzen.",
+        "starter": [
+          "hallo",
+          "danke",
+          "ja",
+          "nein",
+          "Wasser"
+        ],
+        "addStarter": "Ausgewählte hinzufügen ({n})",
+        "own": "Ich füge eigene Wörter hinzu",
+        "wordLabel": "Wort",
+        "translationLabel": "Übersetzung",
+        "add": "Wort hinzufügen",
+        "progress": "{n} von {goal} Wörtern",
+        "error": "Die Wörter konnten nicht gespeichert werden. Prüf deine Verbindung und versuch es noch mal.",
+        "doneTitle": "Deine Wörter sind drin!",
+        "doneText": "Fünf Wörter – genau richtig für die erste Session. So funktioniert sie.",
+        "next": "So wird geübt",
+        "finish": "Fürs Erste fertig"
+      },
+      "train": {
+        "title": "Deine erste Session",
+        "intro": "In einer Session gehst du die Wörter des Sets Karte für Karte durch. Auf jeder Karte drei Dinge:",
+        "steps": [
+          {
+            "title": "Erinnern",
+            "text": "Du siehst ein Wort – ruf dir im Kopf seine Übersetzung ins Gedächtnis."
+          },
+          {
+            "title": "Umdrehen",
+            "text": "Tippe auf die Karte oder auf „Antwort zeigen“."
+          },
+          {
+            "title": "Ehrlich bewerten",
+            "text": "Deine Bewertung entscheidet, wann das Wort wiederkommt:"
+          }
+        ],
+        "soon": "kommt bald wieder",
+        "later": "in ein paar Tagen",
+        "start": "Session starten"
+      }
+    }
   }
 }

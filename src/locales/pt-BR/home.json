@@ -25,6 +25,22 @@
       "Clube do vocabulário da meia-noite"
     ]
   },
+  "guest": "Visitante",
+  "tip": {
+    "title": "Dica"
+  },
+  "stats": {
+    "words": {
+      "one": "palavra",
+      "other": "palavras"
+    },
+    "sets": {
+      "one": "set",
+      "other": "sets"
+    }
+  },
+  "achievements": "Conquistas",
+  "tipRefresh": "Outra dica",
   "review": {
     "dueTitle": {
       "one": "{n} palavra espera revisão",
@@ -88,5 +104,119 @@
       "Seu eu do futuro agradece. Em dois idiomas.",
       "Passos pequenos todo dia valem mais que grandes planos para segunda."
     ]
+  },
+  "milestone": {
+    "label": "Próximo marco",
+    "left": {
+      "one": "Falta {n} palavra",
+      "other": "Faltam {n} palavras"
+    },
+    "target": "{m} palavras",
+    "done": "Todos os marcos alcançados",
+    "add": "Adicionar palavras"
+  },
+  "firstSteps": {
+    "title": "Primeiros passos",
+    "subtitle": "Cinco passinhos e você vai saber tudo o que precisa. Cada um leva menos de um minuto.",
+    "hide": "Ocultar primeiros passos",
+    "progress": "{n} de {total}",
+    "doneLabel": "feito",
+    "doneTitle": "Tudo pronto!",
+    "doneText": "Daqui pra frente é simples: abra o Kolo quando ele lembrar você e revise suas palavras. Alguns minutos por dia bastam — o Perigee cuida do resto.",
+    "doneButton": "Entendi",
+    "steps": {
+      "language": {
+        "title": "Escolha um idioma",
+        "titleDone": "Idioma: {lang}",
+        "text": "O Kolo guarda um espaço separado com sets para cada idioma que você aprende."
+      },
+      "set": {
+        "title": "Crie um set",
+        "text": "Um set é uma lista de palavras sobre um tema, por exemplo “Comida” ou “Trabalho”. É só dar um nome."
+      },
+      "words": {
+        "title": "Adicione 5 palavras",
+        "text": "Uma palavra e a tradução já bastam. Uma explicação e um exemplo ajudam a lembrar melhor."
+      },
+      "train": {
+        "title": "Faça sua primeira sessão",
+        "text": "Passe pelas suas palavras em cards: lembre, vire, avalie com sinceridade. Leva só uns minutinhos."
+      },
+      "goal": {
+        "title": "Defina uma meta semanal",
+        "text": "Quantos dias por semana você vai praticar? 3 é um ótimo começo."
+      }
+    },
+    "guides": {
+      "later": "Mais tarde",
+      "set": {
+        "title": "Seu primeiro set",
+        "intro": "Um set é uma lista de palavras sobre um tema, por exemplo “Comida” ou “Viagens”. Que nome você vai dar ao seu?",
+        "nameLabel": "Nome do set",
+        "suggestTitle": "Ou escolha um",
+        "suggestions": [
+          "Primeiras palavras",
+          "Comida",
+          "Viagens",
+          "Casa",
+          "Trabalho"
+        ],
+        "create": "Criar set",
+        "error": "Não deu para criar o set. Verifique sua conexão e tente de novo.",
+        "doneTitle": "“{name}” está pronto",
+        "doneText": "Agora vamos adicionar as primeiras palavras: cinco bastam.",
+        "next": "Adicionar palavras",
+        "readyIntro": "Um set é uma lista de palavras sobre um tema. Comece com um set pronto do Kolo: as palavras já vêm com traduções e exemplos.",
+        "take": "Pegar este set",
+        "own": "Criar meu próprio set",
+        "allSets": "Todos os sets do Kolo",
+        "readyDoneText": "Já vem com {words} com traduções e exemplos, então a etapa das palavras também está feita. Hora da sua primeira sessão!",
+        "nextTrain": "Para a primeira sessão"
+      },
+      "words": {
+        "title": "Primeiras palavras",
+        "introStarter": "Aqui estão cinco palavras para começar bem. Fique com as que quiser — ou adicione as suas.",
+        "introOwn": "Adicione cinco palavras: a palavra no idioma que você está aprendendo e a tradução. A explicação e o exemplo dá para adicionar depois, no set.",
+        "starter": [
+          "olá",
+          "obrigado",
+          "sim",
+          "não",
+          "água"
+        ],
+        "addStarter": "Adicionar selecionadas ({n})",
+        "own": "Vou adicionar minhas palavras",
+        "wordLabel": "Palavra",
+        "translationLabel": "Tradução",
+        "add": "Adicionar palavra",
+        "progress": "{n} de {goal} palavras",
+        "error": "Não deu para salvar as palavras. Verifique sua conexão e tente de novo.",
+        "doneTitle": "Suas palavras estão aí!",
+        "doneText": "Cinco palavras — o ideal para uma primeira sessão. Veja como funciona.",
+        "next": "Como praticar",
+        "finish": "Por enquanto é isso"
+      },
+      "train": {
+        "title": "Sua primeira sessão",
+        "intro": "Numa sessão, você passa pelas palavras do set um card de cada vez. Em cada card, três coisas:",
+        "steps": [
+          {
+            "title": "Lembre",
+            "text": "Você vê uma palavra — lembre a tradução de cabeça."
+          },
+          {
+            "title": "Vire",
+            "text": "Toque no card ou em “Mostrar resposta”."
+          },
+          {
+            "title": "Avalie com sinceridade",
+            "text": "Sua avaliação decide quando a palavra volta:"
+          }
+        ],
+        "soon": "volta logo",
+        "later": "em alguns dias",
+        "start": "Começar sessão"
+      }
+    }
   }
 }

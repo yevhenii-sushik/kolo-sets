@@ -1,0 +1,45 @@
+{
+  "title": "Novidades",
+  "subtitle": "Todas as versões do Kolo, da primeira até hoje.",
+  "sidebarTitle": "Versões",
+  "latest": "Mais recente",
+  "footer": {
+    "title": "Tem uma ideia para o Kolo?",
+    "subtitle": "Conte o que está faltando — lemos todas as mensagens.",
+    "button": "Sugerir uma ideia"
+  },
+  "versions": [
+    {
+      "number": "0.4.1",
+      "date": "Novembro de 2026",
+      "title": "O Kolo no seu idioma",
+      "intro": "O Kolo também está aprendendo idiomas novos: o app está sendo traduzido para alemão, espanhol, francês e português, e na primeira visita o site já fala o idioma do seu país. E se você está começando no norueguês, agora tem sets de palavras prontos: um tema inteiro com um toque.",
+      "features": [
+        {
+          "title": "Seu idioma desde a primeira visita",
+          "text": "Na primeira vez que você abre o Kolo, o site aparece no idioma do país onde você está, descoberto pelo fuso horário do seu dispositivo: nada é enviado para lugar nenhum e não é preciso dar acesso à sua localização. Se o seu navegador estiver configurado em um dos nossos idiomas, ele tem prioridade. Depois que você entra, o idioma fica fixo, mesmo em viagens, e dá para trocá-lo quando quiser nas configurações ou no rodapé da página de boas-vindas."
+        },
+        {
+          "title": "Sets de palavras prontos",
+          "text": "Se você está aprendendo norueguês, “Palavras” agora tem duas abas: “Meus sets” e “Sets do Kolo”. Na segunda há 16 sets temáticos de nível A1, de cumprimentos e números até comida, trabalho e o tempo: 346 palavras, cada uma com um exemplo e traduções para sete idiomas. Abra um tema para ver as palavras e adicione, ou pegue o nível inteiro com “Adicionar todos”. Os sets vão para uma pasta própria e são seus: dá para editar como qualquer outro, e as palavras novas chegam no seu ritmo, sem acumular. Em “Primeiros passos”, na tela inicial, o Kolo agora sugere primeiro um set pronto, e criar o seu continua a um toque. As medalhas de palavras e sets agora contam só as palavras que você já começou: um nível adicionado com um toque não ganha medalhas sozinho."
+        },
+        {
+          "title": "Viu um erro?",
+          "text": "Os sets do Kolo são novinhos e ainda não foram revisados linha por linha, então uma palavra, uma tradução ou um exemplo pode estar errado. Toque em “Informar um erro” embaixo da lista de palavras na prévia de um set, ou na bandeira de um card num set que você pegou do Kolo, e conte o que está errado: a mensagem vai direto para a equipe, e a gente corrige na próxima versão do set."
+        },
+        {
+          "title": "“Palavras” mais organizada",
+          "text": "As pastas agora ficam numa única fileira de chips compactos acima dos seus sets, cada um com cor, nome e número de sets. No celular a fileira rola para o lado, então algumas pastas não empurram mais seus sets para baixo, e você continua podendo soltar um set numa pasta. O cabeçalho no celular também cabe numa linha, com botões redondos à direita para uma pasta nova e um set novo."
+        },
+        {
+          "title": "Compartilhe sua órbita",
+          "text": "Sua órbita da semana agora pode virar uma imagem para redes sociais ou um chat: o anel com sua sequência, os dias desta semana, seu recorde e seu nível, no estilo claro, quente ou noturno. Procure “Compartilhar” no perfil, no card da semana no topo da tela e bem na hora em que uma órbita se fecha."
+        }
+      ],
+      "fixes": [
+        "O botão “Entrar” agora também aparece no cabeçalho do site no celular."
+      ]
+    }
+  ],
+  "fixesTitle": "Pequenas correções que fazem diferença"
+}

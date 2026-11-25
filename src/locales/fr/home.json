@@ -25,6 +25,22 @@
       "Le club de vocabulaire de minuit"
     ]
   },
+  "guest": "Invité",
+  "tip": {
+    "title": "Astuce"
+  },
+  "stats": {
+    "words": {
+      "one": "mot",
+      "other": "mots"
+    },
+    "sets": {
+      "one": "set",
+      "other": "sets"
+    }
+  },
+  "achievements": "Succès",
+  "tipRefresh": "Une autre astuce",
   "review": {
     "dueTitle": {
       "one": "{n} mot attend sa révision",
@@ -88,5 +104,119 @@
       "Ton futur toi te dit merci. En deux langues.",
       "De petits pas chaque jour valent mieux que de grands projets pour lundi."
     ]
+  },
+  "milestone": {
+    "label": "Prochain palier",
+    "left": {
+      "one": "Encore {n} mot",
+      "other": "Encore {n} mots"
+    },
+    "target": "{m} mots",
+    "done": "Tous les paliers atteints",
+    "add": "Ajouter des mots"
+  },
+  "firstSteps": {
+    "title": "Premiers pas",
+    "subtitle": "Cinq petites étapes, et tu sauras tout ce qu'il faut. Chacune prend moins d'une minute.",
+    "hide": "Masquer les premiers pas",
+    "progress": "{n} sur {total}",
+    "doneLabel": "fait",
+    "doneTitle": "Tout est prêt !",
+    "doneText": "La suite est simple : ouvre Kolo quand il te le rappelle et révise tes mots. Quelques minutes par jour suffisent, Perigee s'occupe du reste.",
+    "doneButton": "C'est noté",
+    "steps": {
+      "language": {
+        "title": "Choisis une langue",
+        "titleDone": "Langue : {lang}",
+        "text": "Pour chaque langue que tu apprends, Kolo garde un espace à part avec ses sets."
+      },
+      "set": {
+        "title": "Crée un set",
+        "text": "Un set, c'est une liste de mots sur un thème, par exemple « Nourriture » ou « Travail ». Donne-lui simplement un nom."
+      },
+      "words": {
+        "title": "Ajoute 5 mots",
+        "text": "Un mot et sa traduction suffisent. Une explication et un exemple t'aident à mieux le retenir."
+      },
+      "train": {
+        "title": "Fais ta première séance",
+        "text": "Passe tes mots en revue sur des cartes : souviens-toi, retourne la carte, note-toi honnêtement. Ça prend deux minutes."
+      },
+      "goal": {
+        "title": "Fixe un objectif hebdomadaire",
+        "text": "Combien de jours par semaine vas-tu t'entraîner ? 3, c'est un super début."
+      }
+    },
+    "guides": {
+      "later": "Plus tard",
+      "set": {
+        "title": "Ton premier set",
+        "intro": "Un set, c’est une liste de mots sur un thème, par exemple « Nourriture » ou « Voyages ». Comment vas-tu appeler le tien ?",
+        "nameLabel": "Nom du set",
+        "suggestTitle": "Ou choisis-en un",
+        "suggestions": [
+          "Premiers mots",
+          "Nourriture",
+          "Voyages",
+          "Maison",
+          "Travail"
+        ],
+        "create": "Créer le set",
+        "error": "Impossible de créer le set. Vérifie ta connexion et réessaie.",
+        "doneTitle": "« {name} » est prêt",
+        "doneText": "Ajoutons maintenant les premiers mots : cinq suffisent.",
+        "next": "Ajouter des mots",
+        "readyIntro": "Un set, c’est une liste de mots sur un thème. Commence par un set Kolo tout prêt : les mots ont déjà leurs traductions et leurs exemples.",
+        "take": "Prendre ce set",
+        "own": "Créer mon propre set",
+        "allSets": "Tous les sets Kolo",
+        "readyDoneText": "{words} avec traductions et exemples sont déjà dedans : l’étape des mots est faite aussi. Place à ta première séance !",
+        "nextTrain": "Vers ma première séance"
+      },
+      "words": {
+        "title": "Premiers mots",
+        "introStarter": "Voici cinq mots pour bien démarrer. Garde ceux que tu veux, ou ajoute les tiens.",
+        "introOwn": "Ajoute cinq mots : le mot dans la langue que tu apprends et sa traduction. Tu pourras ajouter une explication et un exemple plus tard dans le set.",
+        "starter": [
+          "bonjour",
+          "merci",
+          "oui",
+          "non",
+          "eau"
+        ],
+        "addStarter": "Ajouter la sélection ({n})",
+        "own": "J'ajoute mes propres mots",
+        "wordLabel": "Mot",
+        "translationLabel": "Traduction",
+        "add": "Ajouter le mot",
+        "progress": "{n} mots sur {goal}",
+        "error": "Impossible d'enregistrer les mots. Vérifie ta connexion et réessaie.",
+        "doneTitle": "Tes mots sont là !",
+        "doneText": "Cinq mots, juste ce qu'il faut pour une première séance. Voici comment ça marche.",
+        "next": "Comment s'entraîner",
+        "finish": "Fini pour l'instant"
+      },
+      "train": {
+        "title": "Ta première séance",
+        "intro": "Pendant une séance, tu passes les mots du set une carte après l'autre. Sur chaque carte, trois choses :",
+        "steps": [
+          {
+            "title": "Souviens-toi",
+            "text": "Tu vois un mot : rappelle-toi sa traduction dans ta tête."
+          },
+          {
+            "title": "Retourne",
+            "text": "Touche la carte ou « Afficher la réponse »."
+          },
+          {
+            "title": "Note-toi honnêtement",
+            "text": "Ta note décide quand le mot reviendra :"
+          }
+        ],
+        "soon": "revient bientôt",
+        "later": "dans quelques jours",
+        "start": "Commencer la séance"
+      }
+    }
   }
 }

@@ -1,0 +1,45 @@
+{
+  "title": "Nouveautés",
+  "subtitle": "Toutes les versions de Kolo, de la première à aujourd'hui.",
+  "sidebarTitle": "Versions",
+  "latest": "Dernière",
+  "footer": {
+    "title": "Une idée pour Kolo ?",
+    "subtitle": "Dis-nous ce qui te manque : nous lisons chaque message.",
+    "button": "Proposer une idée"
+  },
+  "versions": [
+    {
+      "number": "0.4.1",
+      "date": "Novembre 2026",
+      "title": "Kolo dans ta langue",
+      "intro": "Kolo apprend aussi de nouvelles langues : l'app est en cours de traduction en allemand, en espagnol, en français et en portugais, et lors de ta première visite, le site t'accueille dans la langue de ton pays. Et si tu commences le norvégien, il y a désormais des sets de mots tout prêts : un thème entier d'une seule pression.",
+      "features": [
+        {
+          "title": "Ta langue dès la première visite",
+          "text": "La première fois que tu ouvres Kolo, le site s'affiche dans la langue du pays où tu te trouves, déduite du fuseau horaire de ton appareil : rien n'est envoyé nulle part et aucun accès à ta position n'est nécessaire. Si ton navigateur est réglé sur l'une de nos langues, c'est elle qui l'emporte. Dès que tu te connectes, la langue ne bouge plus, même en voyage, et tu peux la changer à tout moment dans les réglages ou en bas de la page de bienvenue."
+        },
+        {
+          "title": "Des sets de mots tout prêts",
+          "text": "Si tu apprends le norvégien, « Mots » a maintenant deux onglets : « Mes sets » et « Sets Kolo ». Le second propose 16 sets thématiques de niveau A1, des salutations et des nombres jusqu'à la nourriture, le travail et la météo : 346 mots, chacun avec un exemple et des traductions en sept langues. Ouvre un thème pour parcourir ses mots, puis ajoute-le, ou prends tout le niveau avec « Tout ajouter ». Les sets arrivent dans leur propre dossier et t'appartiennent : tu peux les modifier comme les autres, et les nouveaux mots arrivent à ton rythme, sans s'accumuler. Dans « Premiers pas », sur l'écran d'accueil, Kolo te propose désormais d'abord un set tout prêt, et créer le tien reste à une pression. Les médailles de mots et de sets ne comptent plus que les mots que tu as commencés : un niveau ajouté d'une seule pression ne les rapporte pas à lui seul."
+        },
+        {
+          "title": "Une erreur ?",
+          "text": "Les sets Kolo sont tout neufs et n'ont pas encore été relus ligne par ligne : un mot, une traduction ou un exemple peut donc être inexact. Appuie sur « Signaler une erreur » sous la liste de mots dans l'aperçu d'un set, ou sur le drapeau d'une carte dans un set pris chez Kolo, et dis-nous ce qui ne va pas : le message part directement à l'équipe, et nous le corrigerons dans la prochaine version du set."
+        },
+        {
+          "title": "« Mots » mieux rangé",
+          "text": "Les dossiers forment maintenant une seule rangée de pastilles compactes au-dessus de tes sets, chacune avec sa couleur, son nom et son nombre de sets. Sur téléphone, la rangée défile sur le côté : quelques dossiers ne repoussent plus tes sets vers le bas, et tu peux toujours déposer un set sur un dossier. L'en-tête tient aussi sur une ligne sur téléphone, avec à droite des boutons ronds pour un nouveau dossier et un nouveau set."
+        },
+        {
+          "title": "Partage ton orbite",
+          "text": "Ton orbite de la semaine peut maintenant devenir une image pour les réseaux sociaux ou une discussion : l'anneau avec ta série, les jours de cette semaine, ton record et ton niveau, en style clair, chaleureux ou nuit. Cherche « Partager » dans ton profil, dans la carte de la semaine en haut de l'écran et au moment même où une orbite se referme."
+        }
+      ],
+      "fixes": [
+        "Le bouton « Se connecter » est désormais aussi dans l'en-tête du site sur téléphone."
+      ]
+    }
+  ],
+  "fixesTitle": "Petites corrections, grands effets"
+}

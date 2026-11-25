@@ -13,11 +13,23 @@
       "number": "0.4.1",
       "date": "November 2026",
       "title": "Kolo in your language",
-      "intro": "Kolo is learning new languages too: the app is being translated into German, Spanish, French and Portuguese, and on your first visit the site greets you in the language of your country.",
+      "intro": "Kolo is learning new languages too: the app is being translated into German, Spanish, French and Portuguese, and on your first visit the site greets you in the language of your country. And if you're starting Norwegian, there are now ready-made word sets: a whole topic in one tap.",
       "features": [
         {
           "title": "Your language from the first visit",
           "text": "The first time you open Kolo, the site appears in the language of the country you're in, worked out from your device's time zone: nothing is sent anywhere and no location access is needed. If your browser is set to one of our languages, that one wins. Once you log in, the language stays put, even when you travel, and you can change it any time in Settings or at the bottom of the welcome page."
+        },
+        {
+          "title": "Ready-made word sets",
+          "text": "If you're learning Norwegian, Words now has two tabs: “My sets” and “Kolo sets”. The second holds 16 themed sets for level A1, from greetings and numbers to food, work and the weather: 346 words, each with an example and translations into seven languages. Open a topic to look through its words and add it, or take the whole level with “Add all”. The sets go into their own folder and are yours to edit like any other, and new words come in at your own pace, so nothing piles up. In “First steps” on Home, Kolo now suggests a ready-made set first, and creating your own is still one tap away. Medals for words and sets now count only the words you've started, so a level added in one tap doesn't earn them on its own."
+        },
+        {
+          "title": "Spotted a mistake?",
+          "text": "Kolo sets are brand new and haven't been proofread line by line yet, so a word, a translation or an example may be off. Tap “Report a mistake” under the word list in a set's preview, or the flag on a card in a set you took from Kolo, and tell us what's wrong: the message goes straight to the team, and we'll fix it in the next version of the set."
+        },
+        {
+          "title": "A tidier Words screen",
+          "text": "Folders are now a single row of compact chips above your sets, each with its colour, name and number of sets. On a phone the row scrolls sideways, so a few folders no longer push your sets down the screen, and you can still drop a set onto a folder. The phone header fits on one line too, with round buttons for a new folder and a new set on the right."
         },
         {
           "title": "Share your orbit",
