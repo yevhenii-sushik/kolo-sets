@@ -386,10 +386,13 @@
       "other": "{n} Sets"
     }
   },
+  "tabs": {
+    "label": "Sets",
+    "my": "Meine Sets",
+    "kolo": "Kolo-Sets"
+  },
   "ready": {
-    "title": "Fertige Sets",
     "subtitle": "Wortsets nach Themen von Kolo. Füge eins hinzu und lern sofort los: Neue Wörter kommen in deinem Tempo.",
-    "promo": "Themen-Sets für Anfänger: hinzufügen und sofort loslernen.",
     "translations": "Übersetzungssprache",
     "addLevel": "Alle hinzufügen",
     "addLevelHint": "Die Sets landen im Ordner „{folder}“. Neue Wörter kommen nach und nach, ein paar am Tag – so wird es nie zu viel.",
@@ -425,6 +428,18 @@
       "verbs": "Häufige Verben",
       "adjectives": "Häufige Adjektive",
       "small-words": "Kleine Wörter"
+    },
+    "report": {
+      "action": "Fehler melden",
+      "title": "Fehler in einem Kolo-Set",
+      "intro": "Die Kolo-Sets sind ganz neu, deshalb kann ein Wort, eine Übersetzung oder ein Beispiel falsch sein. Schreib uns, was nicht stimmt – wir korrigieren es für alle.",
+      "word": "Wort",
+      "wordPick": "Wähl ein Wort",
+      "message": "Was stimmt nicht?",
+      "placeholder": "Zum Beispiel: Die Übersetzung sollte „Brot“ sein, nicht „Brötchen“",
+      "send": "Senden",
+      "sent": "Danke! Wir korrigieren es in der nächsten Version des Sets.",
+      "error": "Senden hat nicht geklappt. Prüf deine Verbindung und versuch es noch mal."
     }
   }
 }

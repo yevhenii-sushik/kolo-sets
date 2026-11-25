@@ -24,6 +24,7 @@ import CardListItem from "../../components/cards/CardListItem";
 import ShareCardModal from "../../components/cards/ShareCardModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import StudyModeModal from "../../components/cards/StudyModeModal";
+import ReportMistakeModal, { type ReportTarget } from "../../components/presets/ReportMistakeModal";
 import Toast from "../../components/ui/Toast";
 
 const fadeUp = (delay = 0) => ({
@@ -110,6 +111,16 @@ export default function CollectionEditPage() {
   const focusCardId = searchParams.get("card");
   const [highlightId, setHighlightId] = useState<string | null>(null);
   const [sharing, setSharing] = useState<Card | null>(null);
+  // Ошибка в карточке из готового набора Kolo (docs/specs/05-ready-sets.md, «Ошибки в наборах»)
+  const [reporting, setReporting] = useState<ReportTarget | null>(null);
+  const reportCard = (card: Card) => {
+    if (!collection?.preset || !card.presetCardId) return;
+    setReporting({
+      preset: collection.preset,
+      voice: collection.language,
+      cards: [{ id: card.presetCardId, word: card.word, translation: card.translation }],
+    });
+  };
   useEffect(() => {
     if (!focusCardId || !collection) return;
     const found = collection.cards.some((c) => c.id === focusCardId);
@@ -400,6 +411,7 @@ export default function CollectionEditPage() {
                   onSave={(cardData) => handleEditCard(card.id, cardData)}
                   onDelete={() => handleDeleteCard(card.id)}
                   onShare={() => setSharing(card)}
+                  onReport={collection.preset && card.presetCardId ? () => reportCard(card) : undefined}
                 />
               </motion.div>
             ))}
@@ -418,6 +430,14 @@ export default function CollectionEditPage() {
         />
       )}
       {collection && <StudyModeModal collection={collection} open={showModes} onClose={() => setShowModes(false)} />}
+      <ReportMistakeModal
+        target={reporting}
+        onClose={() => setReporting(null)}
+        onSent={() => {
+          setReporting(null);
+          success(t.words.ready.report.sent);
+        }}
+      />
       <Toast
         isOpen={toastState.isOpen}
         message={toastState.message}

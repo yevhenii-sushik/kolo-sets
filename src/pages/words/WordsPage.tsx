@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import { flushSync } from "react-dom";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   Plus,
@@ -10,13 +11,12 @@ import {
   ArrowLeft,
   GripVertical,
   Check,
-  ChevronRight,
   Pencil,
   Trash2,
   Search,
   X,
 } from "lucide-react";
-import { Badge, Button, ButtonLink, Card, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text, cx } from "../../ui";
+import { Badge, Button, Card, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text, cx } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { courseName } from "../../courses/languages";
@@ -40,6 +40,8 @@ import ConfirmDialog from "../../components/ConfirmDialog";
 import Toast from "../../components/ui/Toast";
 import WordSearchResults from "../../components/cards/WordSearchResults";
 import { OrbitScene } from "../../components/scenes/OrbitScene";
+import { Segmented } from "../../components/other/SettingsList";
+import ReadySets from "../../components/presets/ReadySets";
 import { FIND_WORD_EVENT, searchCards } from "../../utils/wordSearch";
 import {
   CollisionDetection,
@@ -63,6 +65,8 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { hasPresets } from "../../presets";
+
+type WordsTab = "my" | "kolo";
 
 // Подсказка к полю поиска на компьютере: на Mac — ⌘K, иначе Ctrl K
 const FIND_SHORTCUT = /Mac|iPhone|iPad/.test(navigator.userAgent) ? "⌘K" : "Ctrl K";
@@ -228,7 +232,9 @@ function SortableCollectionCard({
 
 // ── Плитка папки, как в Finder: открывает папку по своему адресу (работают «Назад» и возврат после
 // тренировки), на неё можно перетащить набор. Изменить и удалить — внутри папки, чтобы не задеть случайно ──
-function FolderTile({ folder, count }: { folder: FolderType; count: string }) {
+// Папка в ленте над наборами: цвет, название и число наборов. Лента — одна строка при любом числе
+// папок (на телефоне листается вбок), чтобы папки не отодвигали сами наборы. На папку можно бросить набор
+function FolderChip({ folder, count, countLabel }: { folder: FolderType; count: number; countLabel: string }) {
   const { setNodeRef, isOver } = useDroppable({ id: `folder-${folder.id}` });
 
   return (
@@ -236,25 +242,24 @@ function FolderTile({ folder, count }: { folder: FolderType; count: string }) {
       ref={setNodeRef}
       to={{ search: `?folder=${folder.id}` }}
       state={{ fromRoot: true }}
+      aria-label={`${folder.name}, ${countLabel}`}
       className={cx(
-        "flex items-center gap-3 rounded-2xl border p-3 transition-colors focus-visible:outline-2 focus-visible:outline-accent",
+        "flex h-11 max-w-60 shrink-0 items-center gap-2 rounded-full border pl-1.5 pr-4 transition-colors focus-visible:outline-2 focus-visible:outline-accent",
         isOver ? "border-accent bg-accent-soft" : "border-line bg-surface hover:border-accent/30",
       )}
     >
       {/* Цвет — из данных папки */}
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl" style={{ backgroundColor: folder.color + "1F", color: folder.color }}>
-        {isOver ? <FolderOpen size={20} /> : <Folder size={20} />}
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full" style={{ backgroundColor: folder.color + "1F", color: folder.color }}>
+        {isOver ? <FolderOpen size={16} /> : <Folder size={16} />}
       </span>
-      <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-semibold text-fg">{folder.name}</span>
-        <span className="block text-xs text-muted">{count}</span>
+      <span className="truncate text-sm font-semibold text-fg">{folder.name}</span>
+      <span aria-hidden className="text-sm tabular-nums text-muted">
+        {count}
       </span>
-      <ChevronRight aria-hidden size={16} className="shrink-0 text-faint" />
     </Link>
   );
 }
 
-// ── Шапка открытой папки. Пока тянут набор, она же — цель «убрать из папки», как путь в окне Finder ──
 function FolderHeader({
   folder,
   count,
@@ -392,15 +397,24 @@ export default function WordsPage() {
     );
   }, [query, searchParams, setSearchParams]);
   const searchRef = useRef<HTMLInputElement>(null);
+  // На телефоне рядом с вкладками поиск свёрнут в значок (docs/specs/05-ready-sets.md, «Где в интерфейсе»).
+  // Поле в разметке всегда, на телефоне оно скрыто, пока поиск не открыт
+  const [searchOpen, setSearchOpen] = useState(false);
   const focusSearch = useCallback(() => {
+    setSearchOpen(true);
     searchRef.current?.focus();
     searchRef.current?.select();
   }, []);
-  // ⌘K, когда «Слова» уже открыты, — событие из шапки; с другой вкладки — переход сюда с findWord
-  useEffect(() => {
-    window.addEventListener(FIND_WORD_EVENT, focusSearch);
-    return () => window.removeEventListener(FIND_WORD_EVENT, focusSearch);
-  }, [focusSearch]);
+  // Нажатие на значок: поле должно появиться до focus() в том же нажатии — иначе iOS не покажет клавиатуру
+  const openSearch = useCallback(() => {
+    flushSync(() => setSearchOpen(true));
+    searchRef.current?.focus();
+  }, []);
+  const closeSearch = useCallback(() => {
+    setQuery("");
+    setSearchOpen(false);
+  }, []);
+  const searchShown = searchOpen || query.length > 0;
   const [orderedCollections, setOrderedCollections] = useState<Collection[]>(
     [],
   );
@@ -622,34 +636,49 @@ export default function WordsPage() {
     ? (orderedCollections.find((c) => c.id === draggedId) ?? null)
     : null;
 
-  // Готовые наборы курса (docs/specs/05-ready-sets.md). Пока из них ничего не взято, вход — над наборами,
-  // потом — под ними: кто уже учится, тому он не мешает
+  // Вкладки «Мои наборы | Наборы Kolo» (docs/specs/05-ready-sets.md) — только у курсов с готовыми наборами.
+  // Вкладка — в адресе (/words?tab=kolo): «Назад» из тренировки и из набора возвращает в неё же
   const presetsAvailable = activeCourse ? hasPresets(activeCourse.id) : false;
-  const anyPresetAdded = collections.some((c) => c.preset);
-  const readyLink = (
-    <Link
-      to="/words/ready"
-      className="flex items-center gap-4 rounded-3xl border border-line bg-surface p-4 transition-colors hover:bg-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-    >
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-special-soft text-special">
-        <Sparkles size={20} aria-hidden />
-      </span>
-      <span className="grid min-w-0 flex-1 gap-0.5">
-        <span className="font-semibold text-fg">{t.words.ready.title}</span>
-        <span className="text-sm text-muted">{t.words.ready.promo}</span>
-      </span>
-      <ChevronRight size={18} aria-hidden className="shrink-0 text-faint" />
-    </Link>
+  const tab: WordsTab = presetsAvailable && searchParams.get("tab") === "kolo" ? "kolo" : "my";
+  const showTabs = presetsAvailable && !openFolder;
+  const showTab = useCallback(
+    (next: WordsTab) =>
+      setSearchParams(
+        (prev) => {
+          const params = new URLSearchParams(prev);
+          if (next === "kolo") params.set("tab", "kolo");
+          else params.delete("tab");
+          return params;
+        },
+        { replace: true },
+      ),
+    [setSearchParams],
   );
 
-  // Искать есть в чём — только когда в курсе есть слова
-  const canSearch = contentReady && collections.some((c) => c.cards.length > 0);
+  // Искать есть в чём — только когда в курсе есть слова; среди наборов Kolo поиска нет
+  const canSearch = tab === "my" && contentReady && collections.some((c) => c.cards.length > 0);
   const searching = canSearch && query.trim().length > 0;
   const search = useMemo(() => (searching ? searchCards(collections, query) : null), [searching, collections, query]);
   const wantsFind = Boolean((location.state as { findWord?: boolean } | null)?.findWord);
   useEffect(() => {
     if (wantsFind && canSearch) focusSearch();
   }, [wantsFind, canSearch, focusSearch]);
+  // ⌘K, когда «Слова» уже открыты, — событие из шапки; с другой вкладки — переход сюда с findWord.
+  // Во вкладке Kolo поля нет: сначала «Мои наборы», фокус — когда поле появится
+  const [findPending, setFindPending] = useState(false);
+  useEffect(() => {
+    const onFind = () => {
+      showTab("my");
+      setFindPending(true);
+    };
+    window.addEventListener(FIND_WORD_EVENT, onFind);
+    return () => window.removeEventListener(FIND_WORD_EVENT, onFind);
+  }, [showTab]);
+  useEffect(() => {
+    if (!findPending || !canSearch) return;
+    focusSearch();
+    setFindPending(false);
+  }, [findPending, canSearch, focusSearch]);
 
   const folderCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -688,12 +717,17 @@ export default function WordsPage() {
 
   return (
     <div>
-      {/* ── Шапка: заголовок и действия ── */}
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-4 sm:mb-8">
+      {/* ── Шапка: заголовок и действия. На телефоне — одна строка: курс слева, кнопки-значки справа ── */}
+      <div className="mb-4 flex items-center justify-between gap-3 sm:mb-6 sm:gap-4">
         {/* Заголовок — курс: на этой странице только его наборы и папки */}
         <div className="flex min-w-0 items-center gap-3">
-          {activeCourse && <CourseFlag code={activeCourse.id} voice={activeCourse.voice} size="lg" />}
-          <div className="grid min-w-0 gap-1">
+          {activeCourse && (
+            <>
+              <CourseFlag code={activeCourse.id} voice={activeCourse.voice} size="md" className="sm:hidden" />
+              <CourseFlag code={activeCourse.id} voice={activeCourse.voice} size="lg" className="max-sm:hidden" />
+            </>
+          )}
+          <div className="grid min-w-0 gap-0.5 sm:gap-1">
             <Heading size={1} className="break-words">
               {activeCourse ? courseName(activeCourse.id, getLanguageInfo(language).htmlLang) : t.words.title}
             </Heading>
@@ -705,59 +739,108 @@ export default function WordsPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          {!openFolder && (
-            <Button variant="secondary" iconLeft={<FolderPlus size={18} />} onClick={() => setFolderModal({ open: true, folder: null })}>
-              {lib.newFolder}
+        {/* Папки и свои наборы — дело вкладки «Мои наборы»; во вкладке Kolo кнопки только отвлекали бы.
+            На телефоне подписи прячутся, кнопки становятся круглыми; имя для скринридера — aria-label */}
+        {tab === "my" && (
+          <div className="flex shrink-0 items-center gap-2">
+            {!openFolder && (
+              <Button
+                variant="secondary"
+                aria-label={lib.newFolder}
+                iconLeft={<FolderPlus size={18} />}
+                onClick={() => setFolderModal({ open: true, folder: null })}
+                className="max-sm:w-11 max-sm:px-0"
+              >
+                <span className="max-sm:hidden">{lib.newFolder}</span>
+              </Button>
+            )}
+            <Button
+              aria-label={t.words.addDeck}
+              iconLeft={<Plus size={18} />}
+              onClick={() => setIsCreateModalOpen(true)}
+              className="max-sm:w-11 max-sm:px-0"
+            >
+              <span className="max-sm:hidden">{t.words.addDeck}</span>
             </Button>
-          )}
-          <Button iconLeft={<Plus size={18} />} onClick={() => setIsCreateModalOpen(true)}>
-            {t.words.addDeck}
-          </Button>
-        </div>
+          </div>
+        )}
       </div>
 
-      {/* ── Найти слово: во всех наборах курса, в том числе в папках ── */}
-      {canSearch && (
-        <Input
-          ref={searchRef}
-          role="searchbox"
-          value={query}
-          onChange={(ev) => setQuery(ev.target.value)}
-          onKeyDown={(ev) => {
-            if (ev.key === "Escape") {
-              if (query) setQuery("");
-              else ev.currentTarget.blur();
-            }
-            // Enter прячет клавиатуру на телефоне — результаты уже на экране
-            if (ev.key === "Enter") ev.currentTarget.blur();
-          }}
-          placeholder={t.wordSearch.placeholder}
-          aria-label={t.wordSearch.placeholder}
-          enterKeyHint="search"
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="none"
-          spellCheck={false}
-          iconLeft={<Search size={18} />}
-          trailing={
-            query ? (
-              <IconButton size="sm" label={t.wordSearch.clear} onClick={() => setQuery("")}>
-                <X size={16} />
-              </IconButton>
-            ) : (
-              <kbd className="mr-2.5 hidden rounded-md border border-line bg-surface px-1.5 py-0.5 text-2xs font-semibold text-faint md:inline">
-                {FIND_SHORTCUT}
-              </kbd>
-            )
-          }
-          className="mb-6 sm:mb-8"
-        />
+      {/* ── Вкладки и поиск — одной строкой. На телефоне поиск свёрнут в значок рядом с вкладками и
+           раскрывается на всю строку; пока он открыт, вкладок не видно. В открытой папке вкладок нет —
+           там своя шапка с «Назад» ── */}
+      {(showTabs || canSearch) && (
+        <div className="mb-6 flex items-center gap-2 sm:mb-8 sm:gap-3">
+          {showTabs && (
+            <div className={cx("min-w-0 flex-1 sm:w-80 sm:flex-none", searchShown && "max-sm:hidden")}>
+              <Segmented<WordsTab>
+                label={t.words.tabs.label}
+                value={tab}
+                onChange={showTab}
+                options={[
+                  { value: "my", label: t.words.tabs.my },
+                  { value: "kolo", label: t.words.tabs.kolo, icon: <Sparkles size={16} aria-hidden /> },
+                ]}
+              />
+            </div>
+          )}
+          {canSearch && showTabs && !searchShown && (
+            <IconButton variant="surface" label={t.wordSearch.placeholder} onClick={openSearch} className="sm:hidden">
+              <Search size={18} />
+            </IconButton>
+          )}
+          {/* Найти слово: во всех наборах курса, в том числе в папках */}
+          {canSearch && (
+            <Input
+              ref={searchRef}
+              role="searchbox"
+              value={query}
+              onChange={(ev) => setQuery(ev.target.value)}
+              onKeyDown={(ev) => {
+                if (ev.key === "Escape") {
+                  if (query) setQuery("");
+                  else ev.currentTarget.blur();
+                }
+                // Enter прячет клавиатуру на телефоне — результаты уже на экране
+                if (ev.key === "Enter") ev.currentTarget.blur();
+              }}
+              // Пустое поле сворачивается обратно в значок, когда из него ушли
+              onBlur={() => {
+                if (!query.trim()) setSearchOpen(false);
+              }}
+              placeholder={t.wordSearch.placeholder}
+              aria-label={t.wordSearch.placeholder}
+              enterKeyHint="search"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck={false}
+              iconLeft={<Search size={18} />}
+              trailing={
+                <>
+                  {(query || searchShown) && (
+                    <IconButton size="sm" label={t.wordSearch.clear} onClick={closeSearch} className={query ? undefined : "sm:hidden"}>
+                      <X size={16} />
+                    </IconButton>
+                  )}
+                  {!query && (
+                    <kbd className="mr-2.5 hidden rounded-md border border-line bg-surface px-1.5 py-0.5 text-2xs font-semibold text-faint md:inline">
+                      {FIND_SHORTCUT}
+                    </kbd>
+                  )}
+                </>
+              }
+              className={cx("min-w-0 flex-1", showTabs && !searchShown && "max-sm:hidden")}
+            />
+          )}
+        </div>
       )}
 
       {/* ── Content ── */}
       <div className="min-h-100">
-        {!contentReady ? (
+        {tab === "kolo" ? (
+          <ReadySets onCreate={() => setIsCreateModalOpen(true)} />
+        ) : !contentReady ? (
           <CollectionSkeleton label={t.loading} />
         ) : search ? (
           <WordSearchResults query={query} results={search.results} total={search.total} />
@@ -777,9 +860,9 @@ export default function WordsPage() {
                 </div>
                 <div className="flex flex-wrap justify-center gap-2">
                   {presetsAvailable && (
-                    <ButtonLink to="/words/ready" iconLeft={<Sparkles size={18} />}>
+                    <Button iconLeft={<Sparkles size={18} />} onClick={() => showTab("kolo")}>
                       {t.words.empty.ready}
-                    </ButtonLink>
+                    </Button>
                   )}
                   <Button
                     variant={presetsAvailable ? "secondary" : "primary"}
@@ -819,16 +902,17 @@ export default function WordsPage() {
               /* ── Корень: папки, избранное и наборы без папки в одном DndContext —
                    карточку можно перетащить на плитку папки ── */
               <DndContext sensors={sensors} collisionDetection={collisionDetection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-                {presetsAvailable && !anyPresetAdded && <div className="mb-8">{readyLink}</div>}
+                {/* Папки — лентой: на телефоне листается вбок до края экрана, на компьютере переносится */}
                 {folders.length > 0 && (
-                  <div className="mb-8">
-                    <SectionLabel count={folders.length}>{lib.folders}</SectionLabel>
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                      {folders.map((folder) => (
-                        <FolderTile key={folder.id} folder={folder} count={setsCount(folderCounts.get(folder.id) ?? 0)} />
-                      ))}
-                    </div>
-                  </div>
+                  <nav
+                    aria-label={lib.folders}
+                    className="no-scrollbar -mx-5 mb-8 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+                  >
+                    {folders.map((folder) => {
+                      const count = folderCounts.get(folder.id) ?? 0;
+                      return <FolderChip key={folder.id} folder={folder} count={count} countLabel={setsCount(count)} />;
+                    })}
+                  </nav>
                 )}
 
                 {favoriteCollections.length > 0 && (
@@ -852,7 +936,6 @@ export default function WordsPage() {
                     </SortableContext>
                   </div>
                 )}
-                {presetsAvailable && anyPresetAdded && <div className="mt-8">{readyLink}</div>}
                 {dragOverlay}
               </DndContext>
             )}

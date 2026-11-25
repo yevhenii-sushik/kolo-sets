@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, Share2, Trash2 } from "lucide-react";
+import { Flag, Pencil, Share2, Trash2 } from "lucide-react";
 import { Card } from "../../types";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
@@ -13,12 +13,13 @@ interface CardListItemProps {
   onSave: (cardData: Omit<Card, "id" | "srsData" | "createdAt">) => void;
   onDelete: () => void;
   onShare: () => void; // карточка картинкой для соцсетей (ShareCardModal)
+  onReport?: () => void; // карточка из готового набора Kolo: ошибку можно отправить команде (ReportMistakeModal)
   highlighted?: boolean; // пришли к этой карточке из поиска на вкладке «Слова»
 }
 
 // Слово в списке набора: компактно — слово, часть речи, перевод, объяснение, пример, освоение.
 // По клику (или карандашу) превращается в форму правки.
-export default function CardListItem({ card, onSave, onDelete, onShare, highlighted = false }: CardListItemProps) {
+export default function CardListItem({ card, onSave, onDelete, onShare, onReport, highlighted = false }: CardListItemProps) {
   const { t, language } = useI18n();
   const e = t.words.editCollection;
   const [draft, setDraft] = useState<WordDraft | null>(null);
@@ -81,6 +82,11 @@ export default function CardListItem({ card, onSave, onDelete, onShare, highligh
           <p dir="auto" className="mt-0.5 text-base font-medium text-accent-ink">{card.translation}</p>
         </div>
         <div className="flex shrink-0 gap-0.5" onClick={(ev) => ev.stopPropagation()}>
+          {onReport && (
+            <IconButton size="sm" label={t.words.ready.report.action} onClick={onReport}>
+              <Flag size={16} />
+            </IconButton>
+          )}
           <IconButton size="sm" label={t.words.share.action} onClick={onShare}>
             <Share2 size={16} />
           </IconButton>

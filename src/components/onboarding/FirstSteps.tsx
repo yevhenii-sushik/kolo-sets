@@ -206,7 +206,7 @@ export function FirstStepsGuides({ model }: { model: FirstStepsModel }) {
   const close = () => setGuide(null);
   return (
     <>
-      <SetGuide open={guide === "set"} onClose={close} onNext={() => setGuide("words")} />
+      <SetGuide open={guide === "set"} onClose={close} onNext={setGuide} />
       <WordsGuide open={guide === "words"} onClose={close} onNext={() => setGuide("train")} collectionId={mainId} />
       <TrainGuide open={guide === "train"} onClose={close} collectionId={mainId} />
       <OrbitGoalModal open={guide === "goal"} onClose={close} />

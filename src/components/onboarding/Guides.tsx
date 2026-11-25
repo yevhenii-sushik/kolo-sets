@@ -1,11 +1,16 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Brain, Check, PartyPopper, RotateCw, Scale } from "lucide-react";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { createCard, createCollection, updateCollection } from "../../utils/storage";
+import { addCollection, createCard, createCollection, updateCollection } from "../../utils/storage";
 import { starterWords } from "../../data/starterWords";
-import { Alert, Button, Field, Input, Modal, Text, cx } from "../../ui";
+import { Alert, Button, Field, Input, Modal, Skeleton, Text, cx } from "../../ui";
+import { getLanguageInfo } from "../../locales/languages";
+import { plural } from "../../utils/plural";
+import { defaultTranslationLanguage, firstMissingPreset, hasPresets, loadPreset, type PresetSet } from "../../presets";
+import { buildPresetCollection } from "../../presets/build";
+import { topicIcon } from "../presets/topicIcons";
 
 // Сценарии «Первых шагов» (главная): каждый пункт списка открывает свой — с подсказками и настоящим
 // действием прямо в окне. В конце сценария — переход к следующему шагу или «Позже»
@@ -40,22 +45,64 @@ function NextOrLater({ next, onNext, onLater }: { next: string; onNext: () => vo
   );
 }
 
-// ── Первый набор: что такое набор, название (с готовыми вариантами) и создание прямо здесь ──
-export function SetGuide({ open, onClose, onNext }: { open: boolean; onClose: () => void; onNext: () => void }) {
-  const { t } = useI18n();
+// ── Первый набор. У курса с готовыми наборами (docs/specs/05-ready-sets.md) сначала — первая тема Kolo, которой
+// ещё нет у человека: одно нажатие, и слова с переводом и примерами уже внутри, шаг «5 слов» тоже готов.
+// Второй путь — свой набор: что такое набор, название (с готовыми вариантами) и создание прямо здесь ──
+export function SetGuide({
+  open,
+  onClose,
+  onNext,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onNext: (next: "words" | "train") => void;
+}) {
+  const { t, language } = useI18n();
   const g = t.home.firstSteps.guides.set;
-  const { activeCourse, setCollections, checkAchievements } = useData();
+  const r = t.words.ready;
+  const navigate = useNavigate();
+  const { activeCourse, collections, setCollections, checkAchievements } = useData();
+  const locale = getLanguageInfo(language).htmlLang;
+  const course = activeCourse?.id;
+  const [mode, setMode] = useState<"ready" | "own">("own");
   const [name, setName] = useState("");
-  const [created, setCreated] = useState<string | null>(null);
+  const [created, setCreated] = useState<{ name: string; words: number } | null>(null);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
 
+  // Предлагаемая тема — первая по порядку, которой у человека ещё нет. Грузится только она
+  const offer = useMemo(() => {
+    if (!course || !hasPresets(course)) return null;
+    return firstMissingPreset(course, new Set(collections.flatMap((c) => (c.preset ? [c.preset.id] : []))));
+  }, [course, collections]);
+  const [preset, setPreset] = useState<PresetSet | null>(null);
+  const [presetFailed, setPresetFailed] = useState(false);
+
   useEffect(() => {
     if (!open) return;
+    setMode(offer ? "ready" : "own");
     setName(g.suggestions[0]);
     setCreated(null);
     setFailed(false);
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // После добавления предложение сдвигается на следующую тему — её грузить уже незачем
+  const offerId = created ? undefined : offer?.id;
+  useEffect(() => {
+    if (!open || !offerId) return;
+    let alive = true;
+    setPresetFailed(false);
+    loadPreset(offerId)
+      .then((set) => alive && (set ? setPreset(set) : setPresetFailed(true)))
+      .catch(() => alive && setPresetFailed(true));
+    return () => {
+      alive = false;
+    };
+  }, [open, offerId]);
+  const ready = preset && preset.id === offerId ? preset : null;
+  // Набор не загрузился (нет сети) — без него остаётся только свой
+  const readyMode = mode === "ready" && !!offer && !presetFailed;
+  const topicTitle = (topic: string) => (r.topics as Record<string, string>)[topic] ?? topic;
 
   const create = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +112,7 @@ export function SetGuide({ open, onClose, onNext }: { open: boolean; onClose: ()
     try {
       const collection = await createCollection(name.trim(), activeCourse.voice, activeCourse.id);
       setCollections((prev) => [collection, ...prev]);
-      setCreated(collection.name);
+      setCreated({ name: collection.name, words: 0 });
       checkAchievements().catch(() => {});
     } catch {
       setFailed(true);
@@ -73,6 +120,34 @@ export function SetGuide({ open, onClose, onNext }: { open: boolean; onClose: ()
       setBusy(false);
     }
   };
+
+  // Готовый набор — как «Добавить набор» на вкладке «Наборы Kolo»: перевод на язык интерфейса
+  const take = async () => {
+    if (!activeCourse || !ready) return;
+    setBusy(true);
+    setFailed(false);
+    try {
+      const collection = buildPresetCollection(ready, {
+        lang: defaultTranslationLanguage(activeCourse.id, language),
+        name: topicTitle(ready.topic),
+        voice: activeCourse.voice,
+        courseId: activeCourse.id,
+        now: new Date(),
+      });
+      await addCollection(collection);
+      setCollections((prev) => [collection, ...prev]);
+      setCreated({ name: collection.name, words: collection.cards.length });
+      checkAchievements().catch(() => {});
+    } catch {
+      setFailed(true);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  // Слов уже хватает на шаг «5 слов» — сразу к тренировке
+  const enoughWords = (created?.words ?? 0) >= WORDS_GOAL;
+  const TopicIcon = ready ? topicIcon(ready.topic) : null;
 
   return (
     <Modal
@@ -82,16 +157,68 @@ export function SetGuide({ open, onClose, onNext }: { open: boolean; onClose: ()
       size="sm"
       footer={
         created ? (
-          <NextOrLater next={g.next} onNext={onNext} onLater={onClose} />
+          <NextOrLater next={enoughWords ? g.nextTrain : g.next} onNext={() => onNext(enoughWords ? "train" : "words")} onLater={onClose} />
+        ) : readyMode ? (
+          <div className="grid w-full gap-2">
+            <Button fullWidth loading={busy} disabled={!ready} onClick={take}>
+              {g.take}
+            </Button>
+            <Button variant="ghost" fullWidth onClick={() => setMode("own")}>
+              {g.own}
+            </Button>
+          </div>
         ) : (
-          <Button type="submit" form="guide-set" fullWidth loading={busy} disabled={!name.trim()}>
-            {g.create}
-          </Button>
+          <>
+            {offer && !presetFailed && (
+              <Button variant="ghost" onClick={() => setMode("ready")}>
+                {t.back}
+              </Button>
+            )}
+            <Button type="submit" form="guide-set" fullWidth={!offer || presetFailed} loading={busy} disabled={!name.trim()}>
+              {g.create}
+            </Button>
+          </>
         )
       }
     >
       {created ? (
-        <Done title={g.doneTitle.replace("{name}", created)} text={g.doneText} />
+        <Done
+          title={g.doneTitle.replace("{name}", created.name)}
+          text={enoughWords ? g.readyDoneText.replace("{words}", plural(locale, created.words, t.words.collectionCard.words)) : g.doneText}
+        />
+      ) : readyMode ? (
+        <div className="grid gap-5">
+          <Text size="sm" tone="muted">
+            {g.readyIntro}
+          </Text>
+          {ready && TopicIcon ? (
+            <div className="flex items-center gap-4 rounded-3xl border border-line p-4">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-special-soft text-special">
+                <TopicIcon size={22} aria-hidden />
+              </span>
+              <span className="grid min-w-0 flex-1 gap-0.5">
+                <span className="font-semibold text-fg">{topicTitle(ready.topic)}</span>
+                <span className="text-sm text-muted">
+                  {ready.level} · {plural(locale, ready.cards.length, t.words.collectionCard.words)}
+                </span>
+              </span>
+            </div>
+          ) : (
+            <Skeleton className="h-20 rounded-3xl" />
+          )}
+          {/* Ещё темы — на вкладке «Наборы Kolo»: там и все уровни, и язык перевода */}
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              navigate("/words?tab=kolo");
+            }}
+            className="justify-self-start text-sm font-semibold text-accent-ink underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            {g.allSets}
+          </button>
+          {failed && <Alert>{r.error}</Alert>}
+        </div>
       ) : (
         <form id="guide-set" onSubmit={create} className="grid gap-5">
           <Text size="sm" tone="muted">

@@ -13,7 +13,6 @@ export const pages = {
   notFound: () => import("./error/NotFoundPage"),
   words: () => import("./words/WordsPage"),
   collectionEdit: () => import("./words/CollectionEditPage"),
-  readySets: () => import("./words/ReadySetsPage"),
   flashcards: () => import("./words/FlashcardsPage"),
   perigee: () => import("./learn/PerigeeSessionPage"),
   quiz: () => import("./words/QuizPage"),

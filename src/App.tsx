@@ -41,7 +41,6 @@ const DesignPage = import.meta.env.DEV ? lazy(() => import("./pages/design/Desig
 const NotFoundPage = lazy(pages.notFound);
 const WordsPage = lazy(pages.words);
 const CollectionEditPage = lazy(pages.collectionEdit);
-const ReadySetsPage = lazy(pages.readySets);
 const FlashcardsPage = lazy(pages.flashcards);
 const PerigeeSessionPage = lazy(pages.perigee);
 const QuizPage = lazy(pages.quiz);
@@ -222,7 +221,6 @@ function AppContent() {
         }
       >
         <Route path="/collection/:id/edit" element={<CollectionEditPage />} />
-        <Route path="/words/ready" element={<ReadySetsPage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/courses/new" element={<AddCoursePage />} />
 

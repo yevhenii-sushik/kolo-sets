@@ -495,10 +495,13 @@
       "selfNote": "Words you rated yourself on a flashcard don't count towards “First try”."
     }
   },
+  "tabs": {
+    "label": "Sets",
+    "my": "My sets",
+    "kolo": "Kolo sets"
+  },
   "ready": {
-    "title": "Ready-made sets",
     "subtitle": "Themed word sets from Kolo. Add one and start learning right away: new words come in at your own pace.",
-    "promo": "Themed sets for beginners: add one and start learning right away.",
     "translations": "Translations in",
     "addLevel": "Add all",
     "addLevelHint": "The sets go into the “{folder}” folder. New words come in a few a day, so nothing piles up.",
@@ -534,6 +537,18 @@
       "verbs": "Everyday verbs",
       "adjectives": "Everyday adjectives",
       "small-words": "Small words"
+    },
+    "report": {
+      "action": "Report a mistake",
+      "title": "A mistake in a Kolo set",
+      "intro": "Kolo sets are brand new, so a word, translation or example may be off. Tell us what's wrong and we'll fix it for everyone.",
+      "word": "Word",
+      "wordPick": "Choose a word",
+      "message": "What's wrong?",
+      "placeholder": "For example: the translation should be “bread”, not “bun”",
+      "send": "Send",
+      "sent": "Thanks! We'll fix it in the next version of the set.",
+      "error": "Couldn't send. Check your connection and try again."
     }
   }
 }

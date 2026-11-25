@@ -1,36 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Bike,
-  Briefcase,
-  Bus,
-  CalendarDays,
-  Check,
-  ChevronRight,
-  CloudSun,
-  Hand,
-  Hash,
-  HeartPulse,
-  House,
-  MessageCircleQuestion,
-  Palette,
-  Plus,
-  Shirt,
-  ShoppingCart,
-  Users,
-  UtensilsCrossed,
-  Zap,
-  type LucideIcon,
-} from "lucide-react";
-import { Alert, Badge, Button, ButtonLink, Card, Field, Heading, Loading, Modal, Select, Skeleton, Text } from "../../ui";
-import { PageHeader } from "../../components/other/PageSection";
-import CourseFlag from "../../components/courses/CourseFlag";
-import Toast from "../../components/ui/Toast";
+import { Check, ChevronRight, Flag, Plus, type LucideIcon } from "lucide-react";
+import { Alert, Badge, Button, Card, Field, Heading, Loading, Modal, Select, Skeleton, Text } from "../../ui";
+import Toast from "../ui/Toast";
+import ReportMistakeModal, { type ReportTarget } from "./ReportMistakeModal";
+import { topicIcon } from "./topicIcons";
 import { useAuth } from "../../contexts/AuthContext";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { useToast } from "../../hooks/useToast";
-import { courseName } from "../../courses/languages";
 import { getLanguageInfo, type Language } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { addCollection, getCollectionOrder, saveCollectionOrder } from "../../utils/storage";
@@ -45,32 +23,12 @@ import {
 import { buildPresetCollection } from "../../presets/build";
 import type { Collection } from "../../types";
 
-// Значки тем — общие для всех курсов (темы — presets/levels.ts)
-const TOPIC_ICONS: Record<string, LucideIcon> = {
-  greetings: Hand,
-  numbers: Hash,
-  time: CalendarDays,
-  people: Users,
-  food: UtensilsCrossed,
-  home: House,
-  city: Bus,
-  shopping: ShoppingCart,
-  health: HeartPulse,
-  clothes: Shirt,
-  weather: CloudSun,
-  work: Briefcase,
-  leisure: Bike,
-  verbs: Zap,
-  adjectives: Palette,
-  "small-words": MessageCircleQuestion,
-};
-
 // Папка уровня — оранжевая, как Kolo (первый цвет палитры папок, FOLDER_COLORS в WordsPage)
 const LEVEL_FOLDER_COLOR = "#FF5A1F";
 
-// «Готовые наборы»: темы уровней A1/A2 для активного курса. Набор копируется в наборы человека
-// и дальше живёт как свой (docs/specs/05-ready-sets.md)
-export default function ReadySetsPage() {
+// Вкладка «Наборы Kolo» на «Словах»: темы уровней A1/A2 для активного курса. Набор копируется в наборы
+// человека и дальше живёт как свой (docs/specs/05-ready-sets.md). Курс уже в шапке «Слов» — здесь его нет
+export default function ReadySets({ onCreate }: { onCreate: () => void }) {
   const navigate = useNavigate();
   const { t, language } = useI18n();
   const r = t.words.ready;
@@ -121,6 +79,15 @@ export default function ReadySetsPage() {
   const [busy, setBusy] = useState<string | null>(null);
   const [preview, setPreview] = useState<PresetSet | null>(null);
   const previewAdded = preview ? added.get(preview.id) : undefined;
+  // Окно ошибки открывается вместо просмотра (два окна разом закрывались бы по Esc вместе),
+  // после него человек возвращается к списку слов
+  const [report, setReport] = useState<ReportTarget | null>(null);
+  const openReport = (set: PresetSet) =>
+    setReport({
+      preset: { id: set.id, version: set.version, lang },
+      voice: activeCourse!.voice,
+      cards: set.cards.map((c) => ({ id: c.id, word: c.word, translation: c.translation[lang] ?? c.translation.en ?? "" })),
+    });
 
   const build = (set: PresetSet, now: Date, extra: { offset?: number; folderId?: string } = {}) =>
     buildPresetCollection(set, {
@@ -198,15 +165,13 @@ export default function ReadySetsPage() {
   const loading = !failed && (!sets || !contentReady);
 
   return (
-    <div className="mx-auto grid max-w-3xl gap-8">
-      <div className="grid gap-5">
-        <div className="flex items-center gap-2 text-sm font-semibold text-muted">
-          <CourseFlag code={activeCourse.id} voice={activeCourse.voice} size="sm" />
-          {courseName(activeCourse.id, locale)}
-        </div>
-        <PageHeader title={r.title} subtitle={r.subtitle} />
+    <div className="grid gap-8">
+      <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+        <Text tone="muted" className="max-w-xl">
+          {r.subtitle}
+        </Text>
         {sets && sets.length > 0 && (
-          <Field label={r.translations} htmlFor="preset-lang" className="sm:max-w-xs">
+          <Field label={r.translations} htmlFor="preset-lang" className="w-full sm:w-64">
             <Select id="preset-lang" value={lang} onChange={(e) => setChosenLang(e.target.value as Language)}>
               {langs.map((code) => (
                 <option key={code} value={code}>
@@ -231,8 +196,8 @@ export default function ReadySetsPage() {
         <Loading label={t.loading}>
           <div className="grid gap-4">
             <Skeleton className="h-8 w-48 rounded-xl" />
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {Array.from({ length: 4 }, (_, i) => (
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+              {Array.from({ length: 6 }, (_, i) => (
                 <Skeleton key={i} className="h-20 rounded-3xl" />
               ))}
             </div>
@@ -246,9 +211,9 @@ export default function ReadySetsPage() {
           <Text size="sm" tone="muted" className="max-w-sm">
             {r.noneText}
           </Text>
-          <ButtonLink to="/words?new=1" iconLeft={<Plus size={18} />}>
+          <Button iconLeft={<Plus size={18} />} onClick={onCreate}>
             {t.words.addDeck}
-          </ButtonLink>
+          </Button>
         </Card>
       ) : (
         levels.map(({ level, sets: levelSets }) => {
@@ -287,11 +252,12 @@ export default function ReadySetsPage() {
                   {r.addLevelHint.replace("{folder}", folderName(level))}
                 </Text>
               )}
-              <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {/* Та же сетка, что у наборов во вкладке «Мои наборы» */}
+              <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {levelSets.map((set) => (
                   <li key={set.id}>
                     <SetTile
-                      icon={TOPIC_ICONS[set.topic] ?? Hash}
+                      icon={topicIcon(set.topic)}
                       title={topicTitle(set.topic)}
                       count={wordsCount(set.cards.length)}
                       added={added.has(set.id) ? r.added : null}
@@ -306,7 +272,7 @@ export default function ReadySetsPage() {
       )}
 
       <Modal
-        open={preview !== null}
+        open={preview !== null && report === null}
         onClose={() => setPreview(null)}
         title={preview ? topicTitle(preview.topic) : undefined}
         footer={
@@ -353,9 +319,23 @@ export default function ReadySetsPage() {
                 </li>
               ))}
             </ul>
+            {/* Наборы без вычитки: ошибку можно отправить команде прямо отсюда (сообщение — через сервер, нужен вход) */}
+            {user && (
+              <Button variant="ghost" size="sm" iconLeft={<Flag size={14} />} onClick={() => openReport(preview)} className="mt-2">
+                {r.report.action}
+              </Button>
+            )}
           </>
         )}
       </Modal>
+      <ReportMistakeModal
+        target={report}
+        onClose={() => setReport(null)}
+        onSent={() => {
+          setReport(null);
+          success(r.report.sent);
+        }}
+      />
       <Toast {...toastState} onClose={hideToast} />
     </div>
   );

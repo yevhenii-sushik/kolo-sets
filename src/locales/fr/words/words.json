@@ -388,10 +388,13 @@
       "other": "{n} sets"
     }
   },
+  "tabs": {
+    "label": "Sets",
+    "my": "Mes sets",
+    "kolo": "Sets Kolo"
+  },
   "ready": {
-    "title": "Sets prêts à l’emploi",
     "subtitle": "Des sets de mots par thème, signés Kolo. Ajoute-en un et commence tout de suite : les nouveaux mots arrivent à ton rythme.",
-    "promo": "Des sets par thème pour débuter : ajoute-en un et commence tout de suite.",
     "translations": "Langue de traduction",
     "addLevel": "Tout ajouter",
     "addLevelHint": "Les sets iront dans le dossier « {folder} ». Les nouveaux mots arrivent quelques-uns par jour : rien ne s’accumule.",
@@ -427,6 +430,18 @@
       "verbs": "Verbes courants",
       "adjectives": "Adjectifs courants",
       "small-words": "Petits mots"
+    },
+    "report": {
+      "action": "Signaler une erreur",
+      "title": "Une erreur dans un set Kolo",
+      "intro": "Les sets Kolo sont tout neufs : un mot, une traduction ou un exemple peut contenir une erreur. Dis-nous ce qui ne va pas, et nous le corrigerons pour tout le monde.",
+      "word": "Mot",
+      "wordPick": "Choisis un mot",
+      "message": "Qu’est-ce qui ne va pas ?",
+      "placeholder": "Par exemple : la traduction devrait être « pain », pas « petit pain »",
+      "send": "Envoyer",
+      "sent": "Merci ! Nous le corrigerons dans la prochaine version du set.",
+      "error": "Impossible d’envoyer. Vérifie ta connexion et réessaie."
     }
   }
 }

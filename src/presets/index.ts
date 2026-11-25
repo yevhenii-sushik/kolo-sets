@@ -37,3 +37,17 @@ export async function loadCoursePresets(course: string): Promise<PresetSet[]> {
   const files = await Promise.all(refs.map((r) => r.load()));
   return refs.map(({ id, level, topic }, i) => ({ id, course, level, topic, version: files[i].version, cards: files[i].cards }));
 }
+
+// Первая тема курса, которой ещё нет у человека (по порядку уровней и тем) — без загрузки наборов.
+// Её предлагает сценарий «Первый набор» в «Первых шагах»
+export const firstMissingPreset = (course: string, added: ReadonlySet<string>) => {
+  const ref = REFS.find((r) => r.course === course && !added.has(r.id));
+  return ref ? { id: ref.id, level: ref.level, topic: ref.topic } : null;
+};
+
+export async function loadPreset(id: string): Promise<PresetSet | null> {
+  const ref = REFS.find((r) => r.id === id);
+  if (!ref) return null;
+  const file = await ref.load();
+  return { id: ref.id, course: ref.course, level: ref.level, topic: ref.topic, version: file.version, cards: file.cards };
+}

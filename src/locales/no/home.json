@@ -1039,7 +1039,13 @@
         "error": "Kunne ikke lage settet. Sjekk nettet og prøv igjen.",
         "doneTitle": "«{name}» er klart",
         "doneText": "Nå legger vi til de første ordene – fem holder.",
-        "next": "Legg til ord"
+        "next": "Legg til ord",
+        "readyIntro": "Et sett er en liste med ord om ett tema. Begynn med et ferdig Kolo-sett: ordene har allerede oversettelser og eksempler.",
+        "take": "Ta dette settet",
+        "own": "Lag mitt eget sett",
+        "allSets": "Alle Kolo-sett",
+        "readyDoneText": "{words} med oversettelser og eksempler ligger allerede i settet, så ordsteget er også gjort. Tid for din første økt!",
+        "nextTrain": "Til første økt"
       },
       "words": {
         "title": "Første ord",

@@ -1039,7 +1039,13 @@
         "error": "Couldn't create the set. Check your connection and try again.",
         "doneTitle": "“{name}” is ready",
         "doneText": "Now let's add the first words — five is enough.",
-        "next": "Add words"
+        "next": "Add words",
+        "readyIntro": "A set is a list of words on one topic. Start with a ready-made one from Kolo: the words already come with translations and examples.",
+        "take": "Take this set",
+        "own": "Create my own set",
+        "allSets": "All Kolo sets",
+        "readyDoneText": "{words} with translations and examples are already inside, so the words step is done too. Time for your first session!",
+        "nextTrain": "To my first session"
       },
       "words": {
         "title": "First words",

@@ -495,10 +495,13 @@
       "selfNote": "Ord du vurderte selv på et flashkort, teller ikke med i «På første forsøk»."
     }
   },
+  "tabs": {
+    "label": "Sett",
+    "my": "Mine sett",
+    "kolo": "Kolo-sett"
+  },
   "ready": {
-    "title": "Ferdige sett",
     "subtitle": "Tematiske ordsett fra Kolo. Legg til et sett og begynn å lære med en gang: nye ord kommer i ditt eget tempo.",
-    "promo": "Tematiske sett for nybegynnere: legg til et og begynn å lære med en gang.",
     "translations": "Oversettelsesspråk",
     "addLevel": "Legg til alle",
     "addLevelHint": "Settene havner i mappen «{folder}». Nye ord kommer noen få om dagen, så det hoper seg ikke opp.",
@@ -534,6 +537,18 @@
       "verbs": "Vanlige verb",
       "adjectives": "Vanlige adjektiv",
       "small-words": "Små ord"
+    },
+    "report": {
+      "action": "Meld fra om feil",
+      "title": "Feil i et Kolo-sett",
+      "intro": "Kolo-settene er helt nye, så et ord, en oversettelse eller et eksempel kan være feil. Skriv hva som er galt, så retter vi det for alle.",
+      "word": "Ord",
+      "wordPick": "Velg et ord",
+      "message": "Hva er feil?",
+      "placeholder": "For eksempel: oversettelsen skal være «brød», ikke «rundstykke»",
+      "send": "Send",
+      "sent": "Takk! Vi retter det i neste versjon av settet.",
+      "error": "Kunne ikke sende. Sjekk nettet og prøv igjen."
     }
   }
 }
