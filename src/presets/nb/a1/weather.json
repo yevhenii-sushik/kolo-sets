@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "hvordan-er-vaeret",
+      "word": "Hvordan er været?",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi spør om det er sol, regn eller kaldt.",
+      "example": "Jeg skal gå ut. Hvordan er været?",
+      "translation": { "en": "What's the weather like?", "ru": "Какая погода?", "uk": "Яка погода?", "de": "Wie ist das Wetter?", "es": "¿Qué tiempo hace?", "fr": "Quel temps fait-il ?", "pt-BR": "Como está o tempo?" }
+    },
+    {
+      "id": "sol",
+      "word": "sol",
+      "partOfSpeech": "noun",
+      "explanation": "Den gir lys og varme på dagen.",
+      "example": "I dag skinner solen.",
+      "translation": { "en": "sun", "ru": "солнце", "uk": "сонце", "de": "die Sonne", "es": "el sol", "fr": "le soleil", "pt-BR": "o sol" }
+    },
+    {
+      "id": "regn",
+      "word": "regn",
+      "partOfSpeech": "noun",
+      "explanation": "Vann som faller fra himmelen.",
+      "example": "Det kommer regn i morgen.",
+      "translation": { "en": "rain", "ru": "дождь", "uk": "дощ", "de": "der Regen", "es": "la lluvia", "fr": "la pluie", "pt-BR": "a chuva" }
+    },
+    {
+      "id": "sno",
+      "word": "snø",
+      "partOfSpeech": "noun",
+      "explanation": "Hvit og kald. Den faller om vinteren.",
+      "example": "Barna leker i snøen.",
+      "translation": { "en": "snow", "ru": "снег", "uk": "сніг", "de": "der Schnee", "es": "la nieve", "fr": "la neige", "pt-BR": "a neve" }
+    },
+    {
+      "id": "kald",
+      "word": "kald",
+      "partOfSpeech": "adjective",
+      "explanation": "Motsatt av varm.",
+      "example": "Vannet er kaldt.",
+      "translation": { "en": "cold", "ru": "холодный", "uk": "холодний", "de": "kalt", "es": "frío", "fr": "froid", "pt-BR": "frio" }
+    },
+    {
+      "id": "varm",
+      "word": "varm",
+      "partOfSpeech": "adjective",
+      "explanation": "Motsatt av kald.",
+      "example": "Det er varmt i dag.",
+      "translation": { "en": "warm, hot", "ru": "тёплый, жаркий", "uk": "теплий, жаркий", "de": "warm", "es": "cálido, caliente", "fr": "chaud", "pt-BR": "quente" }
+    },
+    {
+      "id": "vinter",
+      "word": "en vinter",
+      "partOfSpeech": "noun",
+      "explanation": "Den kalde tiden av året, med snø.",
+      "example": "Om vinteren går vi på ski.",
+      "translation": { "en": "winter", "ru": "зима", "uk": "зима", "de": "der Winter", "es": "el invierno", "fr": "l'hiver", "pt-BR": "o inverno" }
+    },
+    {
+      "id": "var",
+      "word": "en vår",
+      "partOfSpeech": "noun",
+      "explanation": "Tiden etter vinteren, når alt blir grønt.",
+      "example": "Om våren blir dagene lengre.",
+      "translation": { "en": "spring", "ru": "весна", "uk": "весна", "de": "der Frühling", "es": "la primavera", "fr": "le printemps", "pt-BR": "a primavera" }
+    },
+    {
+      "id": "sommer",
+      "word": "en sommer",
+      "partOfSpeech": "noun",
+      "explanation": "Den varmeste tiden av året.",
+      "example": "Om sommeren er det lyst hele natten.",
+      "translation": { "en": "summer", "ru": "лето", "uk": "літо", "de": "der Sommer", "es": "el verano", "fr": "l'été", "pt-BR": "o verão" }
+    },
+    {
+      "id": "host",
+      "word": "en høst",
+      "partOfSpeech": "noun",
+      "explanation": "Tiden etter sommeren, når bladene blir gule og røde.",
+      "example": "Om høsten faller bladene.",
+      "translation": { "en": "autumn", "ru": "осень", "uk": "осінь", "de": "der Herbst", "es": "el otoño", "fr": "l'automne", "pt-BR": "o outono" }
+    },
+    {
+      "id": "januar",
+      "word": "januar",
+      "partOfSpeech": "noun",
+      "explanation": "Den første måneden i året.",
+      "example": "I januar er det mye snø.",
+      "translation": { "en": "January", "ru": "январь", "uk": "січень", "de": "der Januar", "es": "enero", "fr": "janvier", "pt-BR": "janeiro" }
+    },
+    {
+      "id": "februar",
+      "word": "februar",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter januar.",
+      "example": "Februar har bare 28 dager.",
+      "translation": { "en": "February", "ru": "февраль", "uk": "лютий", "de": "der Februar", "es": "febrero", "fr": "février", "pt-BR": "fevereiro" }
+    },
+    {
+      "id": "mars",
+      "word": "mars",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter februar.",
+      "example": "I mars kommer våren.",
+      "translation": { "en": "March", "ru": "март", "uk": "березень", "de": "der März", "es": "marzo", "fr": "mars", "pt-BR": "março" }
+    },
+    {
+      "id": "april",
+      "word": "april",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter mars.",
+      "example": "Bursdagen min er i april.",
+      "translation": { "en": "April", "ru": "апрель", "uk": "квітень", "de": "der April", "es": "abril", "fr": "avril", "pt-BR": "abril" }
+    },
+    {
+      "id": "mai",
+      "word": "mai",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter april.",
+      "example": "Den 17. mai er Norges nasjonaldag.",
+      "translation": { "en": "May", "ru": "май", "uk": "травень", "de": "der Mai", "es": "mayo", "fr": "mai", "pt-BR": "maio" }
+    },
+    {
+      "id": "juni",
+      "word": "juni",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter mai.",
+      "example": "Skolen slutter i juni.",
+      "translation": { "en": "June", "ru": "июнь", "uk": "червень", "de": "der Juni", "es": "junio", "fr": "juin", "pt-BR": "junho" }
+    },
+    {
+      "id": "juli",
+      "word": "juli",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter juni.",
+      "example": "Mange har ferie i juli.",
+      "translation": { "en": "July", "ru": "июль", "uk": "липень", "de": "der Juli", "es": "julio", "fr": "juillet", "pt-BR": "julho" }
+    },
+    {
+      "id": "august",
+      "word": "august",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter juli.",
+      "example": "I august begynner skolen igjen.",
+      "translation": { "en": "August", "ru": "август", "uk": "серпень", "de": "der August", "es": "agosto", "fr": "août", "pt-BR": "agosto" }
+    },
+    {
+      "id": "september",
+      "word": "september",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter august.",
+      "example": "I september blir det kaldere.",
+      "translation": { "en": "September", "ru": "сентябрь", "uk": "вересень", "de": "der September", "es": "septiembre", "fr": "septembre", "pt-BR": "setembro" }
+    },
+    {
+      "id": "oktober",
+      "word": "oktober",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter september.",
+      "example": "Det regner mye i oktober.",
+      "translation": { "en": "October", "ru": "октябрь", "uk": "жовтень", "de": "der Oktober", "es": "octubre", "fr": "octobre", "pt-BR": "outubro" }
+    },
+    {
+      "id": "november",
+      "word": "november",
+      "partOfSpeech": "noun",
+      "explanation": "Måneden etter oktober.",
+      "example": "November er mørk og grå.",
+      "translation": { "en": "November", "ru": "ноябрь", "uk": "листопад", "de": "der November", "es": "noviembre", "fr": "novembre", "pt-BR": "novembro" }
+    },
+    {
+      "id": "desember",
+      "word": "desember",
+      "partOfSpeech": "noun",
+      "explanation": "Den siste måneden i året.",
+      "example": "Julen er i desember.",
+      "translation": { "en": "December", "ru": "декабрь", "uk": "грудень", "de": "der Dezember", "es": "diciembre", "fr": "décembre", "pt-BR": "dezembro" }
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "klaer",
+      "word": "klær",
+      "partOfSpeech": "noun",
+      "explanation": "Det vi har på kroppen.",
+      "example": "Jeg må kjøpe nye klær.",
+      "translation": { "en": "clothes", "ru": "одежда", "uk": "одяг", "de": "die Kleidung", "es": "la ropa", "fr": "les vêtements", "pt-BR": "a roupa" }
+    },
+    {
+      "id": "jakke",
+      "word": "en jakke",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har den over genseren når vi går ut.",
+      "example": "Ta på deg jakken, det er kaldt.",
+      "translation": { "en": "jacket", "ru": "куртка", "uk": "куртка", "de": "die Jacke", "es": "la chaqueta", "fr": "la veste", "pt-BR": "a jaqueta, o casaco" }
+    },
+    {
+      "id": "genser",
+      "word": "en genser",
+      "partOfSpeech": "noun",
+      "explanation": "Den er varm og har lange armer.",
+      "example": "Denne genseren er varm.",
+      "translation": { "en": "jumper, sweater", "ru": "свитер", "uk": "светр", "de": "der Pullover", "es": "el jersey, el suéter", "fr": "le pull", "pt-BR": "o suéter" }
+    },
+    {
+      "id": "bukse",
+      "word": "en bukse",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har den på beina.",
+      "example": "Buksen er for lang.",
+      "translation": { "en": "trousers", "ru": "брюки, штаны", "uk": "штани", "de": "die Hose", "es": "el pantalón", "fr": "le pantalon", "pt-BR": "a calça" }
+    },
+    {
+      "id": "skjort",
+      "word": "et skjørt",
+      "partOfSpeech": "noun",
+      "explanation": "Som en kjole, men bare fra magen og ned.",
+      "example": "Hun har på seg et blått skjørt.",
+      "translation": { "en": "skirt", "ru": "юбка", "uk": "спідниця", "de": "der Rock", "es": "la falda", "fr": "la jupe", "pt-BR": "a saia" }
+    },
+    {
+      "id": "kjole",
+      "word": "en kjole",
+      "partOfSpeech": "noun",
+      "explanation": "Et langt plagg for kvinner og jenter.",
+      "example": "Kjolen er veldig fin.",
+      "translation": { "en": "dress", "ru": "платье", "uk": "сукня", "de": "das Kleid", "es": "el vestido", "fr": "la robe", "pt-BR": "o vestido" }
+    },
+    {
+      "id": "skjorte",
+      "word": "en skjorte",
+      "partOfSpeech": "noun",
+      "explanation": "Den har knapper og krage.",
+      "example": "Han har en hvit skjorte på jobben.",
+      "translation": { "en": "shirt", "ru": "рубашка", "uk": "сорочка", "de": "das Hemd", "es": "la camisa", "fr": "la chemise", "pt-BR": "a camisa" }
+    },
+    {
+      "id": "t-skjorte",
+      "word": "en T-skjorte",
+      "partOfSpeech": "noun",
+      "explanation": "En lett trøye med korte armer.",
+      "example": "Om sommeren går jeg i T-skjorte.",
+      "translation": { "en": "T-shirt", "ru": "футболка", "uk": "футболка", "de": "das T-Shirt", "es": "la camiseta", "fr": "le t-shirt", "pt-BR": "a camiseta" }
+    },
+    {
+      "id": "sko",
+      "word": "en sko",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har dem på føttene.",
+      "example": "Ta av deg skoene inne.",
+      "translation": { "en": "shoe", "ru": "ботинок, туфля", "uk": "черевик, туфля", "de": "der Schuh", "es": "el zapato", "fr": "la chaussure", "pt-BR": "o sapato" }
+    },
+    {
+      "id": "sokk",
+      "word": "en sokk",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har den på foten inni skoen.",
+      "example": "Jeg finner bare én sokk.",
+      "translation": { "en": "sock", "ru": "носок", "uk": "шкарпетка", "de": "die Socke", "es": "el calcetín", "fr": "la chaussette", "pt-BR": "a meia" }
+    },
+    {
+      "id": "lue",
+      "word": "en lue",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har den på hodet når det er kaldt.",
+      "example": "Det er kaldt, ta på deg lue!",
+      "translation": { "en": "hat, beanie", "ru": "шапка", "uk": "шапка", "de": "die Mütze", "es": "el gorro", "fr": "le bonnet", "pt-BR": "o gorro" }
+    },
+    {
+      "id": "skjerf",
+      "word": "et skjerf",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har det rundt halsen.",
+      "example": "Hun har et rødt skjerf.",
+      "translation": { "en": "scarf", "ru": "шарф", "uk": "шарф", "de": "der Schal", "es": "la bufanda", "fr": "l'écharpe", "pt-BR": "o cachecol" }
+    },
+    {
+      "id": "storrelse",
+      "word": "en størrelse",
+      "partOfSpeech": "noun",
+      "explanation": "Hvor stor noe er: S, M eller L.",
+      "example": "Hvilken størrelse bruker du?",
+      "translation": { "en": "size", "ru": "размер", "uk": "розмір", "de": "die Größe", "es": "la talla", "fr": "la taille", "pt-BR": "o tamanho" }
+    },
+    {
+      "id": "ha-pa-seg",
+      "word": "å ha på seg",
+      "partOfSpeech": "verb",
+      "explanation": "Ha klær på kroppen. Nå: har på seg.",
+      "example": "Om vinteren må du ha på seg lue.",
+      "translation": { "en": "to wear", "ru": "носить, быть одетым в", "uk": "носити, бути вдягненим у", "de": "anhaben, tragen", "es": "llevar (puesto)", "fr": "porter", "pt-BR": "usar, vestir" }
+    },
+    {
+      "id": "farge",
+      "word": "en farge",
+      "partOfSpeech": "noun",
+      "explanation": "Rød, blå og gul er farger.",
+      "example": "Hvilken farge liker du best?",
+      "translation": { "en": "colour", "ru": "цвет", "uk": "колір", "de": "die Farbe", "es": "el color", "fr": "la couleur", "pt-BR": "a cor" }
+    },
+    {
+      "id": "rod",
+      "word": "rød",
+      "partOfSpeech": "adjective",
+      "explanation": "Fargen på blod og jordbær.",
+      "example": "Huset vårt er rødt.",
+      "translation": { "en": "red", "ru": "красный", "uk": "червоний", "de": "rot", "es": "rojo", "fr": "rouge", "pt-BR": "vermelho" }
+    },
+    {
+      "id": "bla",
+      "word": "blå",
+      "partOfSpeech": "adjective",
+      "explanation": "Fargen på himmelen.",
+      "example": "Himmelen er blå i dag.",
+      "translation": { "en": "blue", "ru": "синий, голубой", "uk": "синій, блакитний", "de": "blau", "es": "azul", "fr": "bleu", "pt-BR": "azul" }
+    },
+    {
+      "id": "gronn",
+      "word": "grønn",
+      "partOfSpeech": "adjective",
+      "explanation": "Fargen på gress.",
+      "example": "Gresset er grønt.",
+      "translation": { "en": "green", "ru": "зелёный", "uk": "зелений", "de": "grün", "es": "verde", "fr": "vert", "pt-BR": "verde" }
+    },
+    {
+      "id": "gul",
+      "word": "gul",
+      "partOfSpeech": "adjective",
+      "explanation": "Fargen på solen og bananer.",
+      "example": "Solen er gul.",
+      "translation": { "en": "yellow", "ru": "жёлтый", "uk": "жовтий", "de": "gelb", "es": "amarillo", "fr": "jaune", "pt-BR": "amarelo" }
+    },
+    {
+      "id": "hvit",
+      "word": "hvit",
+      "partOfSpeech": "adjective",
+      "explanation": "Fargen på snø.",
+      "example": "Snøen er hvit.",
+      "translation": { "en": "white", "ru": "белый", "uk": "білий", "de": "weiß", "es": "blanco", "fr": "blanc", "pt-BR": "branco" }
+    },
+    {
+      "id": "svart",
+      "word": "svart",
+      "partOfSpeech": "adjective",
+      "explanation": "Fargen på natten.",
+      "example": "Katten vår er helt svart.",
+      "translation": { "en": "black", "ru": "чёрный", "uk": "чорний", "de": "schwarz", "es": "negro", "fr": "noir", "pt-BR": "preto" }
+    },
+    {
+      "id": "gra",
+      "word": "grå",
+      "partOfSpeech": "adjective",
+      "explanation": "Mellom hvit og svart.",
+      "example": "Han har grått hår.",
+      "translation": { "en": "grey", "ru": "серый", "uk": "сірий", "de": "grau", "es": "gris", "fr": "gris", "pt-BR": "cinza" }
+    },
+    {
+      "id": "brun",
+      "word": "brun",
+      "partOfSpeech": "adjective",
+      "explanation": "Fargen på sjokolade.",
+      "example": "Hun har brune øyne.",
+      "translation": { "en": "brown", "ru": "коричневый", "uk": "коричневий", "de": "braun", "es": "marrón", "fr": "marron", "pt-BR": "marrom" }
+    },
+    {
+      "id": "rosa",
+      "word": "rosa",
+      "partOfSpeech": "adjective",
+      "explanation": "Lys rød.",
+      "example": "Lillesøsteren min elsker rosa.",
+      "translation": { "en": "pink", "ru": "розовый", "uk": "рожевий", "de": "rosa", "es": "rosa", "fr": "rose", "pt-BR": "rosa" }
+    }
+  ]
+}

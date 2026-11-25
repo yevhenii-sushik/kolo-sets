@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "by",
+      "word": "en by",
+      "partOfSpeech": "noun",
+      "explanation": "Et sted med mange hus, gater og mennesker.",
+      "example": "Bergen er en fin by.",
+      "translation": { "en": "city, town", "ru": "город", "uk": "місто", "de": "die Stadt", "es": "la ciudad", "fr": "la ville", "pt-BR": "a cidade" }
+    },
+    {
+      "id": "sentrum",
+      "word": "et sentrum",
+      "partOfSpeech": "noun",
+      "explanation": "Midten av byen.",
+      "example": "Hotellet ligger i sentrum.",
+      "translation": { "en": "city centre", "ru": "центр (города)", "uk": "центр (міста)", "de": "die Innenstadt, das Zentrum", "es": "el centro", "fr": "le centre-ville", "pt-BR": "o centro" }
+    },
+    {
+      "id": "gate",
+      "word": "en gate",
+      "partOfSpeech": "noun",
+      "explanation": "En vei i byen.",
+      "example": "Butikken ligger i denne gaten.",
+      "translation": { "en": "street", "ru": "улица", "uk": "вулиця", "de": "die Straße", "es": "la calle", "fr": "la rue", "pt-BR": "a rua" }
+    },
+    {
+      "id": "buss",
+      "word": "en buss",
+      "partOfSpeech": "noun",
+      "explanation": "En stor bil som tar mange folk.",
+      "example": "Jeg tar bussen til jobben.",
+      "translation": { "en": "bus", "ru": "автобус", "uk": "автобус", "de": "der Bus", "es": "el autobús", "fr": "le bus", "pt-BR": "o ônibus" }
+    },
+    {
+      "id": "tog",
+      "word": "et tog",
+      "partOfSpeech": "noun",
+      "explanation": "Det kjører på skinner.",
+      "example": "Toget til Bergen går klokka åtte.",
+      "translation": { "en": "train", "ru": "поезд", "uk": "поїзд, потяг", "de": "der Zug", "es": "el tren", "fr": "le train", "pt-BR": "o trem" }
+    },
+    {
+      "id": "t-bane",
+      "word": "en T-bane",
+      "partOfSpeech": "noun",
+      "explanation": "Et tog i byen, ofte under bakken.",
+      "example": "Vi tar T-banen hjem.",
+      "translation": { "en": "underground, metro", "ru": "метро", "uk": "метро", "de": "die U-Bahn", "es": "el metro", "fr": "le métro", "pt-BR": "o metrô" }
+    },
+    {
+      "id": "bil",
+      "word": "en bil",
+      "partOfSpeech": "noun",
+      "explanation": "Den har fire hjul, og vi kjører den.",
+      "example": "Vi har ikke bil.",
+      "translation": { "en": "car", "ru": "машина, автомобиль", "uk": "машина, автомобіль", "de": "das Auto", "es": "el coche", "fr": "la voiture", "pt-BR": "o carro" }
+    },
+    {
+      "id": "sykkel",
+      "word": "en sykkel",
+      "partOfSpeech": "noun",
+      "explanation": "Den har to hjul. Vi sykler på den.",
+      "example": "Jeg kommer på sykkel.",
+      "translation": { "en": "bicycle, bike", "ru": "велосипед", "uk": "велосипед", "de": "das Fahrrad", "es": "la bicicleta", "fr": "le vélo", "pt-BR": "a bicicleta" }
+    },
+    {
+      "id": "stasjon",
+      "word": "en stasjon",
+      "partOfSpeech": "noun",
+      "explanation": "Der toget eller bussen stopper.",
+      "example": "Stasjonen ligger midt i byen.",
+      "translation": { "en": "station", "ru": "станция, вокзал", "uk": "станція, вокзал", "de": "der Bahnhof, die Station", "es": "la estación", "fr": "la gare, la station", "pt-BR": "a estação" }
+    },
+    {
+      "id": "fly",
+      "word": "et fly",
+      "partOfSpeech": "noun",
+      "explanation": "Det flyr høyt over skyene.",
+      "example": "Flyet til London går klokka seks.",
+      "translation": { "en": "plane", "ru": "самолёт", "uk": "літак", "de": "das Flugzeug", "es": "el avión", "fr": "l'avion", "pt-BR": "o avião" }
+    },
+    {
+      "id": "flyplass",
+      "word": "en flyplass",
+      "partOfSpeech": "noun",
+      "explanation": "Der flyene kommer og går.",
+      "example": "Hvordan kommer jeg til flyplassen?",
+      "translation": { "en": "airport", "ru": "аэропорт", "uk": "аеропорт", "de": "der Flughafen", "es": "el aeropuerto", "fr": "l'aéroport", "pt-BR": "o aeroporto" }
+    },
+    {
+      "id": "billett",
+      "word": "en billett",
+      "partOfSpeech": "noun",
+      "explanation": "Vi kjøper den for å reise med buss, tog eller fly.",
+      "example": "Har du billett?",
+      "translation": { "en": "ticket", "ru": "билет", "uk": "квиток", "de": "die Fahrkarte, das Ticket", "es": "el billete, el boleto", "fr": "le billet", "pt-BR": "a passagem, o bilhete" }
+    },
+    {
+      "id": "kart",
+      "word": "et kart",
+      "partOfSpeech": "noun",
+      "explanation": "Det viser veien.",
+      "example": "Har du et kart over byen?",
+      "translation": { "en": "map", "ru": "карта (местности)", "uk": "мапа", "de": "der Stadtplan, die Landkarte", "es": "el mapa", "fr": "le plan, la carte (géographique)", "pt-BR": "o mapa" }
+    },
+    {
+      "id": "kirke",
+      "word": "en kirke",
+      "partOfSpeech": "noun",
+      "explanation": "Et hus der folk ber til Gud.",
+      "example": "Kirken er veldig gammel.",
+      "translation": { "en": "church", "ru": "церковь", "uk": "церква", "de": "die Kirche", "es": "la iglesia", "fr": "l'église", "pt-BR": "a igreja" }
+    },
+    {
+      "id": "park",
+      "word": "en park",
+      "partOfSpeech": "noun",
+      "explanation": "Et grønt sted i byen med trær og gress.",
+      "example": "Vi går en tur i parken.",
+      "translation": { "en": "park", "ru": "парк", "uk": "парк", "de": "der Park", "es": "el parque", "fr": "le parc", "pt-BR": "o parque" }
+    },
+    {
+      "id": "restaurant",
+      "word": "en restaurant",
+      "partOfSpeech": "noun",
+      "explanation": "Der vi kjøper og spiser mat.",
+      "example": "Vi spiser på restaurant i kveld.",
+      "translation": { "en": "restaurant", "ru": "ресторан", "uk": "ресторан", "de": "das Restaurant", "es": "el restaurante", "fr": "le restaurant", "pt-BR": "o restaurante" }
+    },
+    {
+      "id": "bibliotek",
+      "word": "et bibliotek",
+      "partOfSpeech": "noun",
+      "explanation": "Der vi låner bøker.",
+      "example": "Jeg låner bøker på biblioteket.",
+      "translation": { "en": "library", "ru": "библиотека", "uk": "бібліотека", "de": "die Bibliothek", "es": "la biblioteca", "fr": "la bibliothèque", "pt-BR": "a biblioteca" }
+    },
+    {
+      "id": "kjore",
+      "word": "å kjøre",
+      "partOfSpeech": "verb",
+      "explanation": "Å styre en bil, eller å reise med bil eller buss. Nå: kjører.",
+      "example": "Pappa kjører meg til skolen.",
+      "translation": { "en": "to drive", "ru": "ехать (на машине), водить", "uk": "їхати (машиною), керувати", "de": "fahren", "es": "conducir, ir en coche", "fr": "conduire, aller en voiture", "pt-BR": "dirigir" }
+    },
+    {
+      "id": "hvor-er",
+      "word": "Hvor er …?",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi spør om veien.",
+      "example": "Unnskyld, hvor er toalettet?",
+      "translation": { "en": "Where is …?", "ru": "Где …?", "uk": "Де …?", "de": "Wo ist …?", "es": "¿Dónde está …?", "fr": "Où est … ?", "pt-BR": "Onde fica …?" }
+    },
+    {
+      "id": "til-venstre",
+      "word": "til venstre",
+      "partOfSpeech": "adverb",
+      "explanation": "Motsatt av «til høyre».",
+      "example": "Gå til venstre ved kirken.",
+      "translation": { "en": "to the left", "ru": "налево", "uk": "ліворуч", "de": "links", "es": "a la izquierda", "fr": "à gauche", "pt-BR": "à esquerda" }
+    },
+    {
+      "id": "til-hoyre",
+      "word": "til høyre",
+      "partOfSpeech": "adverb",
+      "explanation": "Motsatt av «til venstre».",
+      "example": "Butikken er til høyre.",
+      "translation": { "en": "to the right", "ru": "направо", "uk": "праворуч", "de": "rechts", "es": "a la derecha", "fr": "à droite", "pt-BR": "à direita" }
+    },
+    {
+      "id": "rett-fram",
+      "word": "rett fram",
+      "partOfSpeech": "adverb",
+      "explanation": "Ikke til venstre og ikke til høyre. Også: rett frem.",
+      "example": "Gå rett fram, så ser du stasjonen.",
+      "translation": { "en": "straight ahead", "ru": "прямо", "uk": "прямо", "de": "geradeaus", "es": "todo recto", "fr": "tout droit", "pt-BR": "em frente, reto" }
+    }
+  ]
+}

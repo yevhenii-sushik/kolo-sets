@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "mat",
+      "word": "mat",
+      "partOfSpeech": "noun",
+      "explanation": "Det vi spiser.",
+      "example": "Maten er klar!",
+      "translation": { "en": "food", "ru": "еда", "uk": "їжа", "de": "das Essen", "es": "la comida", "fr": "la nourriture", "pt-BR": "a comida" }
+    },
+    {
+      "id": "vann",
+      "word": "vann",
+      "partOfSpeech": "noun",
+      "explanation": "Vi drikker det når vi er tørste.",
+      "example": "Kan jeg få et glass vann?",
+      "translation": { "en": "water", "ru": "вода", "uk": "вода", "de": "das Wasser", "es": "el agua", "fr": "l'eau", "pt-BR": "a água" }
+    },
+    {
+      "id": "kaffe",
+      "word": "kaffe",
+      "partOfSpeech": "noun",
+      "explanation": "En varm, svart drikk. Mange drikker den om morgenen.",
+      "example": "Vil du ha kaffe?",
+      "translation": { "en": "coffee", "ru": "кофе", "uk": "кава", "de": "der Kaffee", "es": "el café", "fr": "le café", "pt-BR": "o café" }
+    },
+    {
+      "id": "te",
+      "word": "te",
+      "partOfSpeech": "noun",
+      "explanation": "En varm drikk. Vi lager den med varmt vann og blader.",
+      "example": "Jeg drikker te med melk.",
+      "translation": { "en": "tea", "ru": "чай", "uk": "чай", "de": "der Tee", "es": "el té", "fr": "le thé", "pt-BR": "o chá" }
+    },
+    {
+      "id": "melk",
+      "word": "melk",
+      "partOfSpeech": "noun",
+      "explanation": "En hvit drikk fra kua.",
+      "example": "Barna drikker melk til frokost.",
+      "translation": { "en": "milk", "ru": "молоко", "uk": "молоко", "de": "die Milch", "es": "la leche", "fr": "le lait", "pt-BR": "o leite" }
+    },
+    {
+      "id": "brod",
+      "word": "et brød",
+      "partOfSpeech": "noun",
+      "explanation": "Mat av mel. Vi spiser det til frokost.",
+      "example": "Jeg kjøper et brød i butikken.",
+      "translation": { "en": "bread", "ru": "хлеб", "uk": "хліб", "de": "das Brot", "es": "el pan", "fr": "le pain", "pt-BR": "o pão" }
+    },
+    {
+      "id": "smor",
+      "word": "smør",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har det på brødet.",
+      "example": "Jeg vil ha smør på brødet.",
+      "translation": { "en": "butter", "ru": "масло (сливочное)", "uk": "масло (вершкове)", "de": "die Butter", "es": "la mantequilla", "fr": "le beurre", "pt-BR": "a manteiga" }
+    },
+    {
+      "id": "ost",
+      "word": "ost",
+      "partOfSpeech": "noun",
+      "explanation": "Mat som lages av melk.",
+      "example": "Vi spiser brød med ost.",
+      "translation": { "en": "cheese", "ru": "сыр", "uk": "сир", "de": "der Käse", "es": "el queso", "fr": "le fromage", "pt-BR": "o queijo" }
+    },
+    {
+      "id": "egg",
+      "word": "et egg",
+      "partOfSpeech": "noun",
+      "explanation": "Det kommer fra høna. Vi koker eller steker det.",
+      "example": "Jeg spiser to egg til frokost.",
+      "translation": { "en": "egg", "ru": "яйцо", "uk": "яйце", "de": "das Ei", "es": "el huevo", "fr": "l'œuf", "pt-BR": "o ovo" }
+    },
+    {
+      "id": "eple",
+      "word": "et eple",
+      "partOfSpeech": "noun",
+      "explanation": "En rund frukt. Den kan være rød, gul eller grønn.",
+      "example": "Hun spiser et eple hver dag.",
+      "translation": { "en": "apple", "ru": "яблоко", "uk": "яблуко", "de": "der Apfel", "es": "la manzana", "fr": "la pomme", "pt-BR": "a maçã" }
+    },
+    {
+      "id": "banan",
+      "word": "en banan",
+      "partOfSpeech": "noun",
+      "explanation": "En lang, gul frukt.",
+      "example": "Jeg spiser en banan til lunsj.",
+      "translation": { "en": "banana", "ru": "банан", "uk": "банан", "de": "die Banane", "es": "el plátano, la banana", "fr": "la banane", "pt-BR": "a banana" }
+    },
+    {
+      "id": "fisk",
+      "word": "fisk",
+      "partOfSpeech": "noun",
+      "explanation": "Et dyr som lever i vannet. Vi spiser det også.",
+      "example": "Vi spiser fisk på fredag.",
+      "translation": { "en": "fish", "ru": "рыба", "uk": "риба", "de": "der Fisch", "es": "el pescado", "fr": "le poisson", "pt-BR": "o peixe" }
+    },
+    {
+      "id": "kjott",
+      "word": "kjøtt",
+      "partOfSpeech": "noun",
+      "explanation": "Mat fra dyr, for eksempel ku eller gris.",
+      "example": "Jeg spiser ikke kjøtt.",
+      "translation": { "en": "meat", "ru": "мясо", "uk": "м'ясо", "de": "das Fleisch", "es": "la carne", "fr": "la viande", "pt-BR": "a carne" }
+    },
+    {
+      "id": "potet",
+      "word": "en potet",
+      "partOfSpeech": "noun",
+      "explanation": "Vi koker den og spiser den til middag.",
+      "example": "Vi har poteter til middag.",
+      "translation": { "en": "potato", "ru": "картофель, картошка", "uk": "картопля", "de": "die Kartoffel", "es": "la patata, la papa", "fr": "la pomme de terre", "pt-BR": "a batata" }
+    },
+    {
+      "id": "gronnsak",
+      "word": "en grønnsak",
+      "partOfSpeech": "noun",
+      "explanation": "For eksempel gulrot, løk eller kål.",
+      "example": "Barna må spise grønnsaker.",
+      "translation": { "en": "vegetable", "ru": "овощ", "uk": "овоч", "de": "das Gemüse", "es": "la verdura", "fr": "le légume", "pt-BR": "o legume, a verdura" }
+    },
+    {
+      "id": "frokost",
+      "word": "frokost",
+      "partOfSpeech": "noun",
+      "explanation": "Det første måltidet om morgenen.",
+      "example": "Hva spiser du til frokost?",
+      "translation": { "en": "breakfast", "ru": "завтрак", "uk": "сніданок", "de": "das Frühstück", "es": "el desayuno", "fr": "le petit-déjeuner", "pt-BR": "o café da manhã" }
+    },
+    {
+      "id": "lunsj",
+      "word": "lunsj",
+      "partOfSpeech": "noun",
+      "explanation": "Måltidet midt på dagen.",
+      "example": "Jeg har med meg mat til lunsj.",
+      "translation": { "en": "lunch", "ru": "обед (днём), ланч", "uk": "обід (вдень), ланч", "de": "das Mittagessen", "es": "el almuerzo", "fr": "le déjeuner", "pt-BR": "o almoço" }
+    },
+    {
+      "id": "middag",
+      "word": "middag",
+      "partOfSpeech": "noun",
+      "explanation": "Det store, varme måltidet om ettermiddagen.",
+      "example": "Middagen er klar klokka fem.",
+      "translation": { "en": "dinner", "ru": "ужин (главная еда дня)", "uk": "вечеря (головна їжа дня)", "de": "das Abendessen", "es": "la cena", "fr": "le dîner", "pt-BR": "o jantar" }
+    },
+    {
+      "id": "spise",
+      "word": "å spise",
+      "partOfSpeech": "verb",
+      "explanation": "Det vi gjør med mat. Nå: spiser.",
+      "example": "Vi spiser middag sammen.",
+      "translation": { "en": "to eat", "ru": "есть, кушать", "uk": "їсти", "de": "essen", "es": "comer", "fr": "manger", "pt-BR": "comer" }
+    },
+    {
+      "id": "drikke",
+      "word": "å drikke",
+      "partOfSpeech": "verb",
+      "explanation": "Det vi gjør med vann, kaffe og melk. Nå: drikker.",
+      "example": "Barn skal drikke mye vann.",
+      "translation": { "en": "to drink", "ru": "пить", "uk": "пити", "de": "trinken", "es": "beber, tomar", "fr": "boire", "pt-BR": "beber, tomar" }
+    },
+    {
+      "id": "jeg-er-sulten",
+      "word": "Jeg er sulten.",
+      "partOfSpeech": "phrase",
+      "explanation": "Jeg vil spise.",
+      "example": "Kan vi spise? Jeg er sulten.",
+      "translation": { "en": "I'm hungry.", "ru": "Я хочу есть.", "uk": "Я хочу їсти.", "de": "Ich habe Hunger.", "es": "Tengo hambre.", "fr": "J'ai faim.", "pt-BR": "Estou com fome." }
+    },
+    {
+      "id": "jeg-er-torst",
+      "word": "Jeg er tørst.",
+      "partOfSpeech": "phrase",
+      "explanation": "Jeg vil drikke.",
+      "example": "Kan jeg få litt vann? Jeg er tørst.",
+      "translation": { "en": "I'm thirsty.", "ru": "Я хочу пить.", "uk": "Я хочу пити.", "de": "Ich habe Durst.", "es": "Tengo sed.", "fr": "J'ai soif.", "pt-BR": "Estou com sede." }
+    },
+    {
+      "id": "takk-for-maten",
+      "word": "Takk for maten!",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi sier det etter måltidet.",
+      "example": "Det var godt. Takk for maten!",
+      "translation": { "en": "Thanks for the meal!", "ru": "Спасибо за еду!", "uk": "Дякую за їжу!", "de": "Danke für das Essen!", "es": "¡Gracias por la comida!", "fr": "Merci pour le repas !", "pt-BR": "Obrigado pela comida!" }
+    }
+  ]
+}

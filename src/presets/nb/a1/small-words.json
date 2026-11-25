@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "hva",
+      "word": "hva",
+      "partOfSpeech": "pronoun",
+      "explanation": "Vi spør om en ting.",
+      "example": "Hva er det?",
+      "translation": { "en": "what", "ru": "что", "uk": "що", "de": "was", "es": "qué", "fr": "quoi, que", "pt-BR": "o que" }
+    },
+    {
+      "id": "hvem",
+      "word": "hvem",
+      "partOfSpeech": "pronoun",
+      "explanation": "Vi spør om en person.",
+      "example": "Hvem er det?",
+      "translation": { "en": "who", "ru": "кто", "uk": "хто", "de": "wer", "es": "quién", "fr": "qui", "pt-BR": "quem" }
+    },
+    {
+      "id": "hvor",
+      "word": "hvor",
+      "partOfSpeech": "adverb",
+      "explanation": "Vi spør om et sted.",
+      "example": "Hvor bor du?",
+      "translation": { "en": "where", "ru": "где, куда", "uk": "де, куди", "de": "wo", "es": "dónde", "fr": "où", "pt-BR": "onde" }
+    },
+    {
+      "id": "nar",
+      "word": "når",
+      "partOfSpeech": "adverb",
+      "explanation": "Vi spør om tid.",
+      "example": "Når kommer bussen?",
+      "translation": { "en": "when", "ru": "когда", "uk": "коли", "de": "wann", "es": "cuándo", "fr": "quand", "pt-BR": "quando" }
+    },
+    {
+      "id": "hvorfor",
+      "word": "hvorfor",
+      "partOfSpeech": "adverb",
+      "explanation": "Vi spør om grunnen.",
+      "example": "Hvorfor er du sen?",
+      "translation": { "en": "why", "ru": "почему", "uk": "чому", "de": "warum", "es": "por qué", "fr": "pourquoi", "pt-BR": "por que" }
+    },
+    {
+      "id": "hvordan",
+      "word": "hvordan",
+      "partOfSpeech": "adverb",
+      "explanation": "Vi spør om måten.",
+      "example": "Hvordan sier man «takk» på engelsk?",
+      "translation": { "en": "how", "ru": "как", "uk": "як", "de": "wie", "es": "cómo", "fr": "comment", "pt-BR": "como" }
+    },
+    {
+      "id": "hvilken",
+      "word": "hvilken",
+      "partOfSpeech": "pronoun",
+      "explanation": "Vi spør om én av flere. Også: hvilket, hvilke.",
+      "example": "Hvilken buss går til sentrum?",
+      "translation": { "en": "which", "ru": "какой, который", "uk": "який, котрий", "de": "welcher", "es": "cuál", "fr": "quel", "pt-BR": "qual" }
+    },
+    {
+      "id": "i",
+      "word": "i",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "Jeg bor i Norge.",
+      "translation": { "en": "in", "ru": "в", "uk": "в, у", "de": "in", "es": "en", "fr": "dans, en", "pt-BR": "em, dentro de" }
+    },
+    {
+      "id": "pa",
+      "word": "på",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "Boken ligger på bordet.",
+      "translation": { "en": "on, at", "ru": "на", "uk": "на", "de": "auf, an", "es": "sobre, encima de", "fr": "sur", "pt-BR": "sobre, em cima de" }
+    },
+    {
+      "id": "med",
+      "word": "med",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "Jeg drikker kaffe med melk.",
+      "translation": { "en": "with", "ru": "с", "uk": "з, разом з", "de": "mit", "es": "con", "fr": "avec", "pt-BR": "com" }
+    },
+    {
+      "id": "til",
+      "word": "til",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "Vi skal til Bergen.",
+      "translation": { "en": "to", "ru": "к, в (куда)", "uk": "до", "de": "zu, nach", "es": "a", "fr": "à", "pt-BR": "para" }
+    },
+    {
+      "id": "fra",
+      "word": "fra",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "Jeg er fra Syria.",
+      "translation": { "en": "from", "ru": "из, от", "uk": "від, із", "de": "von, aus", "es": "de, desde", "fr": "de", "pt-BR": "de" }
+    },
+    {
+      "id": "og",
+      "word": "og",
+      "partOfSpeech": "conjunction",
+      "explanation": "",
+      "example": "Jeg liker te og kaffe.",
+      "translation": { "en": "and", "ru": "и", "uk": "і, та", "de": "und", "es": "y", "fr": "et", "pt-BR": "e" }
+    },
+    {
+      "id": "men",
+      "word": "men",
+      "partOfSpeech": "conjunction",
+      "explanation": "",
+      "example": "Jeg er trøtt, men glad.",
+      "translation": { "en": "but", "ru": "но", "uk": "але", "de": "aber", "es": "pero", "fr": "mais", "pt-BR": "mas" }
+    },
+    {
+      "id": "eller",
+      "word": "eller",
+      "partOfSpeech": "conjunction",
+      "explanation": "",
+      "example": "Vil du ha te eller kaffe?",
+      "translation": { "en": "or", "ru": "или", "uk": "або", "de": "oder", "es": "o", "fr": "ou", "pt-BR": "ou" }
+    },
+    {
+      "id": "fordi",
+      "word": "fordi",
+      "partOfSpeech": "conjunction",
+      "explanation": "Vi forklarer hvorfor.",
+      "example": "Jeg blir hjemme fordi jeg er syk.",
+      "translation": { "en": "because", "ru": "потому что", "uk": "тому що, бо", "de": "weil", "es": "porque", "fr": "parce que", "pt-BR": "porque" }
+    },
+    {
+      "id": "ikke",
+      "word": "ikke",
+      "partOfSpeech": "adverb",
+      "explanation": "Står ofte etter verbet: Jeg snakker ikke …",
+      "example": "Jeg snakker ikke tysk.",
+      "translation": { "en": "not", "ru": "не", "uk": "не", "de": "nicht", "es": "no (+ verbo)", "fr": "ne … pas", "pt-BR": "não (+ verbo)" }
+    },
+    {
+      "id": "ogsa",
+      "word": "også",
+      "partOfSpeech": "adverb",
+      "explanation": "",
+      "example": "Jeg kommer også!",
+      "translation": { "en": "also, too", "ru": "тоже, также", "uk": "теж, також", "de": "auch", "es": "también", "fr": "aussi", "pt-BR": "também" }
+    },
+    {
+      "id": "veldig",
+      "word": "veldig",
+      "partOfSpeech": "adverb",
+      "explanation": "",
+      "example": "Det er veldig kaldt ute.",
+      "translation": { "en": "very", "ru": "очень", "uk": "дуже", "de": "sehr", "es": "muy", "fr": "très", "pt-BR": "muito (+ adjetivo)" }
+    },
+    {
+      "id": "mye",
+      "word": "mye",
+      "partOfSpeech": "adverb",
+      "explanation": "Motsatt av litt.",
+      "example": "Takk så mye!",
+      "translation": { "en": "much, a lot", "ru": "много", "uk": "багато", "de": "viel", "es": "mucho", "fr": "beaucoup", "pt-BR": "muito (quantidade)" }
+    },
+    {
+      "id": "litt",
+      "word": "litt",
+      "partOfSpeech": "adverb",
+      "explanation": "Motsatt av mye.",
+      "example": "Vent litt!",
+      "translation": { "en": "a little, a bit", "ru": "немного", "uk": "трохи", "de": "ein bisschen", "es": "un poco", "fr": "un peu", "pt-BR": "um pouco" }
+    },
+    {
+      "id": "her",
+      "word": "her",
+      "partOfSpeech": "adverb",
+      "explanation": "Motsatt av der.",
+      "example": "Jeg bor her.",
+      "translation": { "en": "here", "ru": "здесь, тут", "uk": "тут", "de": "hier", "es": "aquí", "fr": "ici", "pt-BR": "aqui" }
+    }
+  ]
+}

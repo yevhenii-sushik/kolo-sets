@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "hus",
+      "word": "et hus",
+      "partOfSpeech": "noun",
+      "explanation": "Et bygg der folk bor.",
+      "example": "Vi bor i et rødt hus.",
+      "translation": { "en": "house", "ru": "дом", "uk": "будинок", "de": "das Haus", "es": "la casa", "fr": "la maison", "pt-BR": "a casa" }
+    },
+    {
+      "id": "leilighet",
+      "word": "en leilighet",
+      "partOfSpeech": "noun",
+      "explanation": "Et hjem i et hus der mange familier bor.",
+      "example": "Leiligheten har tre rom.",
+      "translation": { "en": "flat, apartment", "ru": "квартира", "uk": "квартира", "de": "die Wohnung", "es": "el apartamento", "fr": "l'appartement", "pt-BR": "o apartamento" }
+    },
+    {
+      "id": "rom",
+      "word": "et rom",
+      "partOfSpeech": "noun",
+      "explanation": "En del av et hus eller en leilighet.",
+      "example": "Rommet mitt er lite.",
+      "translation": { "en": "room", "ru": "комната", "uk": "кімната", "de": "das Zimmer", "es": "la habitación", "fr": "la pièce", "pt-BR": "o cômodo" }
+    },
+    {
+      "id": "kjokken",
+      "word": "et kjøkken",
+      "partOfSpeech": "noun",
+      "explanation": "Rommet der vi lager mat.",
+      "example": "Vi spiser frokost på kjøkkenet.",
+      "translation": { "en": "kitchen", "ru": "кухня", "uk": "кухня", "de": "die Küche", "es": "la cocina", "fr": "la cuisine", "pt-BR": "a cozinha" }
+    },
+    {
+      "id": "bad",
+      "word": "et bad",
+      "partOfSpeech": "noun",
+      "explanation": "Rommet der vi dusjer og vasker oss.",
+      "example": "Badet er ved siden av soverommet.",
+      "translation": { "en": "bathroom", "ru": "ванная", "uk": "ванна кімната", "de": "das Badezimmer, das Bad", "es": "el baño", "fr": "la salle de bains", "pt-BR": "o banheiro" }
+    },
+    {
+      "id": "stue",
+      "word": "en stue",
+      "partOfSpeech": "noun",
+      "explanation": "Rommet der vi sitter og ser på TV.",
+      "example": "Vi ser på TV i stuen.",
+      "translation": { "en": "living room", "ru": "гостиная", "uk": "вітальня", "de": "das Wohnzimmer", "es": "el salón, la sala de estar", "fr": "le salon", "pt-BR": "a sala de estar" }
+    },
+    {
+      "id": "soverom",
+      "word": "et soverom",
+      "partOfSpeech": "noun",
+      "explanation": "Rommet der vi sover.",
+      "example": "Soverommet er stort.",
+      "translation": { "en": "bedroom", "ru": "спальня", "uk": "спальня", "de": "das Schlafzimmer", "es": "el dormitorio", "fr": "la chambre", "pt-BR": "o quarto" }
+    },
+    {
+      "id": "dor",
+      "word": "en dør",
+      "partOfSpeech": "noun",
+      "explanation": "Vi går inn og ut gjennom den.",
+      "example": "Kan du lukke døren?",
+      "translation": { "en": "door", "ru": "дверь", "uk": "двері", "de": "die Tür", "es": "la puerta", "fr": "la porte", "pt-BR": "a porta" }
+    },
+    {
+      "id": "vindu",
+      "word": "et vindu",
+      "partOfSpeech": "noun",
+      "explanation": "Vi ser ut gjennom det.",
+      "example": "Åpne vinduet, det er varmt her.",
+      "translation": { "en": "window", "ru": "окно", "uk": "вікно", "de": "das Fenster", "es": "la ventana", "fr": "la fenêtre", "pt-BR": "a janela" }
+    },
+    {
+      "id": "bord",
+      "word": "et bord",
+      "partOfSpeech": "noun",
+      "explanation": "Vi spiser og jobber ved det.",
+      "example": "Maten står på bordet.",
+      "translation": { "en": "table", "ru": "стол", "uk": "стіл", "de": "der Tisch", "es": "la mesa", "fr": "la table", "pt-BR": "a mesa" }
+    },
+    {
+      "id": "stol",
+      "word": "en stol",
+      "partOfSpeech": "noun",
+      "explanation": "Vi sitter på den.",
+      "example": "Sett deg på stolen.",
+      "translation": { "en": "chair", "ru": "стул", "uk": "стілець", "de": "der Stuhl", "es": "la silla", "fr": "la chaise", "pt-BR": "a cadeira" }
+    },
+    {
+      "id": "seng",
+      "word": "en seng",
+      "partOfSpeech": "noun",
+      "explanation": "Vi sover i den.",
+      "example": "Sengen min er stor.",
+      "translation": { "en": "bed", "ru": "кровать", "uk": "ліжко", "de": "das Bett", "es": "la cama", "fr": "le lit", "pt-BR": "a cama" }
+    },
+    {
+      "id": "sofa",
+      "word": "en sofa",
+      "partOfSpeech": "noun",
+      "explanation": "En stor, myk stol for to eller flere.",
+      "example": "Katten sover på sofaen.",
+      "translation": { "en": "sofa", "ru": "диван", "uk": "диван", "de": "das Sofa", "es": "el sofá", "fr": "le canapé", "pt-BR": "o sofá" }
+    },
+    {
+      "id": "kjoleskap",
+      "word": "et kjøleskap",
+      "partOfSpeech": "noun",
+      "explanation": "Et kaldt skap for mat.",
+      "example": "Melken står i kjøleskapet.",
+      "translation": { "en": "fridge", "ru": "холодильник", "uk": "холодильник", "de": "der Kühlschrank", "es": "la nevera", "fr": "le frigo", "pt-BR": "a geladeira" }
+    },
+    {
+      "id": "lampe",
+      "word": "en lampe",
+      "partOfSpeech": "noun",
+      "explanation": "Den gir lys.",
+      "example": "Lampen på bordet er ny.",
+      "translation": { "en": "lamp", "ru": "лампа", "uk": "лампа", "de": "die Lampe", "es": "la lámpara", "fr": "la lampe", "pt-BR": "a luminária" }
+    },
+    {
+      "id": "nokkel",
+      "word": "en nøkkel",
+      "partOfSpeech": "noun",
+      "explanation": "Vi låser døren med den.",
+      "example": "Jeg finner ikke nøkkelen min!",
+      "translation": { "en": "key", "ru": "ключ", "uk": "ключ", "de": "der Schlüssel", "es": "la llave", "fr": "la clé", "pt-BR": "a chave" }
+    },
+    {
+      "id": "dusj",
+      "word": "en dusj",
+      "partOfSpeech": "noun",
+      "explanation": "Vi vasker oss under den.",
+      "example": "Jeg tar en dusj hver morgen.",
+      "translation": { "en": "shower", "ru": "душ", "uk": "душ", "de": "die Dusche", "es": "la ducha", "fr": "la douche", "pt-BR": "o chuveiro" }
+    },
+    {
+      "id": "hage",
+      "word": "en hage",
+      "partOfSpeech": "noun",
+      "explanation": "Gress og blomster rundt huset.",
+      "example": "Barna leker i hagen.",
+      "translation": { "en": "garden", "ru": "сад", "uk": "сад", "de": "der Garten", "es": "el jardín", "fr": "le jardin", "pt-BR": "o jardim" }
+    },
+    {
+      "id": "etasje",
+      "word": "en etasje",
+      "partOfSpeech": "noun",
+      "explanation": "Et nivå i et hus.",
+      "example": "Huset har to etasjer.",
+      "translation": { "en": "floor, storey", "ru": "этаж", "uk": "поверх", "de": "der Stock, die Etage", "es": "la planta", "fr": "l'étage", "pt-BR": "o andar" }
+    },
+    {
+      "id": "bo",
+      "word": "å bo",
+      "partOfSpeech": "verb",
+      "explanation": "Ha hjemmet sitt et sted. Nå: bor.",
+      "example": "Jeg bor i Oslo.",
+      "translation": { "en": "to live", "ru": "жить", "uk": "жити", "de": "wohnen", "es": "vivir", "fr": "habiter", "pt-BR": "morar" }
+    },
+    {
+      "id": "hjemme",
+      "word": "hjemme",
+      "partOfSpeech": "adverb",
+      "explanation": "I huset eller leiligheten din.",
+      "example": "Er du hjemme i kveld?",
+      "translation": { "en": "at home", "ru": "дома", "uk": "вдома", "de": "zu Hause", "es": "en casa", "fr": "chez moi, à la maison", "pt-BR": "em casa" }
+    }
+  ]
+}

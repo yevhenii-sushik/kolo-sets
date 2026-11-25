@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "familie",
+      "word": "en familie",
+      "partOfSpeech": "noun",
+      "explanation": "Mor, far og barna deres.",
+      "example": "Familien min bor i Bergen.",
+      "translation": { "en": "family", "ru": "семья", "uk": "сім'я, родина", "de": "die Familie", "es": "la familia", "fr": "la famille", "pt-BR": "a família" }
+    },
+    {
+      "id": "mor",
+      "word": "en mor",
+      "partOfSpeech": "noun",
+      "explanation": "En kvinne som har barn.",
+      "example": "Moren min heter Anna.",
+      "translation": { "en": "mother", "ru": "мать, мама", "uk": "мати, мама", "de": "die Mutter", "es": "la madre", "fr": "la mère", "pt-BR": "a mãe" }
+    },
+    {
+      "id": "far",
+      "word": "en far",
+      "partOfSpeech": "noun",
+      "explanation": "En mann som har barn.",
+      "example": "Faren min jobber på et sykehus.",
+      "translation": { "en": "father", "ru": "отец, папа", "uk": "батько, тато", "de": "der Vater", "es": "el padre", "fr": "le père", "pt-BR": "o pai" }
+    },
+    {
+      "id": "foreldre",
+      "word": "foreldre",
+      "partOfSpeech": "noun",
+      "explanation": "Mor og far.",
+      "example": "Foreldrene mine bor i Polen.",
+      "translation": { "en": "parents", "ru": "родители", "uk": "батьки", "de": "die Eltern", "es": "los padres", "fr": "les parents", "pt-BR": "os pais" }
+    },
+    {
+      "id": "barn",
+      "word": "et barn",
+      "partOfSpeech": "noun",
+      "explanation": "En liten gutt eller jente.",
+      "example": "Vi har to barn.",
+      "translation": { "en": "child", "ru": "ребёнок", "uk": "дитина", "de": "das Kind", "es": "el niño, la niña", "fr": "l'enfant", "pt-BR": "a criança" }
+    },
+    {
+      "id": "sonn",
+      "word": "en sønn",
+      "partOfSpeech": "noun",
+      "explanation": "Gutten til mor og far.",
+      "example": "Sønnen vår er fem år.",
+      "translation": { "en": "son", "ru": "сын", "uk": "син", "de": "der Sohn", "es": "el hijo", "fr": "le fils", "pt-BR": "o filho" }
+    },
+    {
+      "id": "datter",
+      "word": "en datter",
+      "partOfSpeech": "noun",
+      "explanation": "Jenten til mor og far.",
+      "example": "Datteren min går på skolen.",
+      "translation": { "en": "daughter", "ru": "дочь", "uk": "донька, дочка", "de": "die Tochter", "es": "la hija", "fr": "la fille (de ses parents)", "pt-BR": "a filha" }
+    },
+    {
+      "id": "bror",
+      "word": "en bror",
+      "partOfSpeech": "noun",
+      "explanation": "Han har samme mor og far som deg.",
+      "example": "Broren min heter Jonas.",
+      "translation": { "en": "brother", "ru": "брат", "uk": "брат", "de": "der Bruder", "es": "el hermano", "fr": "le frère", "pt-BR": "o irmão" }
+    },
+    {
+      "id": "soster",
+      "word": "en søster",
+      "partOfSpeech": "noun",
+      "explanation": "Hun har samme mor og far som deg.",
+      "example": "Søsteren min bor i Oslo.",
+      "translation": { "en": "sister", "ru": "сестра", "uk": "сестра", "de": "die Schwester", "es": "la hermana", "fr": "la sœur", "pt-BR": "a irmã" }
+    },
+    {
+      "id": "bestemor",
+      "word": "en bestemor",
+      "partOfSpeech": "noun",
+      "explanation": "Moren til mor eller far.",
+      "example": "Bestemor baker gode kaker.",
+      "translation": { "en": "grandmother", "ru": "бабушка", "uk": "бабуся", "de": "die Großmutter, die Oma", "es": "la abuela", "fr": "la grand-mère", "pt-BR": "a avó" }
+    },
+    {
+      "id": "bestefar",
+      "word": "en bestefar",
+      "partOfSpeech": "noun",
+      "explanation": "Faren til mor eller far.",
+      "example": "Bestefar leser avisen hver morgen.",
+      "translation": { "en": "grandfather", "ru": "дедушка", "uk": "дідусь", "de": "der Großvater, der Opa", "es": "el abuelo", "fr": "le grand-père", "pt-BR": "o avô" }
+    },
+    {
+      "id": "mann",
+      "word": "en mann",
+      "partOfSpeech": "noun",
+      "explanation": "En voksen gutt. «Mannen min» er den jeg er gift med.",
+      "example": "Mannen min heter Erik.",
+      "translation": { "en": "man, husband", "ru": "мужчина, муж", "uk": "чоловік", "de": "der Mann", "es": "el hombre, el marido", "fr": "l'homme, le mari", "pt-BR": "o homem, o marido" }
+    },
+    {
+      "id": "kvinne",
+      "word": "en kvinne",
+      "partOfSpeech": "noun",
+      "explanation": "En voksen jente.",
+      "example": "Kvinnen på bussen snakker fransk.",
+      "translation": { "en": "woman", "ru": "женщина", "uk": "жінка", "de": "die Frau", "es": "la mujer", "fr": "la femme", "pt-BR": "a mulher" }
+    },
+    {
+      "id": "kone",
+      "word": "en kone",
+      "partOfSpeech": "noun",
+      "explanation": "Kvinnen som er gift med en mann.",
+      "example": "Konen min heter Sara.",
+      "translation": { "en": "wife", "ru": "жена", "uk": "дружина", "de": "die Ehefrau", "es": "la esposa", "fr": "l'épouse", "pt-BR": "a esposa" }
+    },
+    {
+      "id": "gutt",
+      "word": "en gutt",
+      "partOfSpeech": "noun",
+      "explanation": "Et barn eller en ung mann.",
+      "example": "Gutten løper fort.",
+      "translation": { "en": "boy", "ru": "мальчик", "uk": "хлопчик", "de": "der Junge", "es": "el chico", "fr": "le garçon", "pt-BR": "o menino" }
+    },
+    {
+      "id": "jente",
+      "word": "en jente",
+      "partOfSpeech": "noun",
+      "explanation": "Et barn eller en ung kvinne.",
+      "example": "Jenten heter Emma.",
+      "translation": { "en": "girl", "ru": "девочка, девушка", "uk": "дівчинка, дівчина", "de": "das Mädchen", "es": "la chica", "fr": "la fille (jeune)", "pt-BR": "a menina" }
+    },
+    {
+      "id": "venn",
+      "word": "en venn",
+      "partOfSpeech": "noun",
+      "explanation": "En person du liker og ofte er sammen med.",
+      "example": "Han er en god venn.",
+      "translation": { "en": "friend", "ru": "друг", "uk": "друг", "de": "der Freund", "es": "el amigo", "fr": "l'ami", "pt-BR": "o amigo" }
+    },
+    {
+      "id": "nabo",
+      "word": "en nabo",
+      "partOfSpeech": "noun",
+      "explanation": "En person som bor ved siden av deg.",
+      "example": "Naboen min har en stor hund.",
+      "translation": { "en": "neighbour", "ru": "сосед", "uk": "сусід", "de": "der Nachbar", "es": "el vecino", "fr": "le voisin", "pt-BR": "o vizinho" }
+    },
+    {
+      "id": "navn",
+      "word": "et navn",
+      "partOfSpeech": "noun",
+      "explanation": "Det du heter.",
+      "example": "Hva er navnet ditt?",
+      "translation": { "en": "name", "ru": "имя", "uk": "ім'я", "de": "der Name", "es": "el nombre", "fr": "le nom", "pt-BR": "o nome" }
+    },
+    {
+      "id": "gift",
+      "word": "gift",
+      "partOfSpeech": "adjective",
+      "explanation": "Har en mann eller en kone.",
+      "example": "Er du gift?",
+      "translation": { "en": "married", "ru": "женат, замужем", "uk": "одружений, заміжня", "de": "verheiratet", "es": "casado, casada", "fr": "marié, mariée", "pt-BR": "casado, casada" }
+    },
+    {
+      "id": "hvor-gammel-er-du",
+      "word": "Hvor gammel er du?",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi spør hvor mange år noen er.",
+      "example": "Hvor gammel er du? – Jeg er tjue år.",
+      "translation": { "en": "How old are you?", "ru": "Сколько тебе лет?", "uk": "Скільки тобі років?", "de": "Wie alt bist du?", "es": "¿Cuántos años tienes?", "fr": "Quel âge as-tu ?", "pt-BR": "Quantos anos você tem?" }
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "jobb",
+      "word": "en jobb",
+      "partOfSpeech": "noun",
+      "explanation": "Det du gjør for å tjene penger.",
+      "example": "Jeg går på jobb klokka åtte.",
+      "translation": { "en": "job, work", "ru": "работа", "uk": "робота", "de": "die Arbeit, der Job", "es": "el trabajo", "fr": "le travail", "pt-BR": "o trabalho, o emprego" }
+    },
+    {
+      "id": "jobbe",
+      "word": "å jobbe",
+      "partOfSpeech": "verb",
+      "explanation": "Ha en jobb og gjøre den. Også: å arbeide. Nå: jobber.",
+      "example": "Hun jobber på et sykehus.",
+      "translation": { "en": "to work", "ru": "работать", "uk": "працювати", "de": "arbeiten", "es": "trabajar", "fr": "travailler", "pt-BR": "trabalhar" }
+    },
+    {
+      "id": "yrke",
+      "word": "et yrke",
+      "partOfSpeech": "noun",
+      "explanation": "Lege, lærer og kokk er yrker.",
+      "example": "Hvilket yrke har du?",
+      "translation": { "en": "profession, occupation", "ru": "профессия", "uk": "професія", "de": "der Beruf", "es": "la profesión", "fr": "le métier", "pt-BR": "a profissão" }
+    },
+    {
+      "id": "hva-jobber-du-med",
+      "word": "Hva jobber du med?",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi spør om jobben til noen.",
+      "example": "– Hva jobber du med? – Jeg er lærer.",
+      "translation": { "en": "What do you do for a living?", "ru": "Кем ты работаешь?", "uk": "Ким ти працюєш?", "de": "Was machst du beruflich?", "es": "¿En qué trabajas?", "fr": "Tu fais quoi dans la vie ?", "pt-BR": "Você trabalha com quê?" }
+    },
+    {
+      "id": "kontor",
+      "word": "et kontor",
+      "partOfSpeech": "noun",
+      "explanation": "Et rom der folk jobber ved et bord med PC.",
+      "example": "Kontoret ligger i sentrum.",
+      "translation": { "en": "office", "ru": "офис", "uk": "офіс", "de": "das Büro", "es": "la oficina", "fr": "le bureau", "pt-BR": "o escritório" }
+    },
+    {
+      "id": "kollega",
+      "word": "en kollega",
+      "partOfSpeech": "noun",
+      "explanation": "En person som jobber på samme sted som deg.",
+      "example": "Kollegaen min heter Lars.",
+      "translation": { "en": "colleague", "ru": "коллега", "uk": "колега", "de": "der Kollege, die Kollegin", "es": "el compañero de trabajo", "fr": "le collègue", "pt-BR": "o colega de trabalho" }
+    },
+    {
+      "id": "sjef",
+      "word": "en sjef",
+      "partOfSpeech": "noun",
+      "explanation": "Den som bestemmer på jobben.",
+      "example": "Sjefen er på ferie.",
+      "translation": { "en": "boss", "ru": "начальник", "uk": "начальник", "de": "der Chef", "es": "el jefe", "fr": "le chef, le patron", "pt-BR": "o chefe" }
+    },
+    {
+      "id": "mote",
+      "word": "et møte",
+      "partOfSpeech": "noun",
+      "explanation": "Når folk samles for å snakke om noe.",
+      "example": "Vi har møte klokka ti.",
+      "translation": { "en": "meeting", "ru": "встреча, совещание", "uk": "зустріч, нарада", "de": "das Treffen, die Besprechung", "es": "la reunión", "fr": "la réunion", "pt-BR": "a reunião" }
+    },
+    {
+      "id": "pause",
+      "word": "en pause",
+      "partOfSpeech": "noun",
+      "explanation": "En kort tid uten jobb.",
+      "example": "Nå tar vi en pause.",
+      "translation": { "en": "break", "ru": "перерыв", "uk": "перерва", "de": "die Pause", "es": "el descanso", "fr": "la pause", "pt-BR": "o intervalo, a pausa" }
+    },
+    {
+      "id": "lonn",
+      "word": "en lønn",
+      "partOfSpeech": "noun",
+      "explanation": "Pengene du får for jobben.",
+      "example": "Han får lønn hver måned.",
+      "translation": { "en": "salary, pay", "ru": "зарплата", "uk": "зарплата", "de": "das Gehalt, der Lohn", "es": "el sueldo, el salario", "fr": "le salaire", "pt-BR": "o salário" }
+    },
+    {
+      "id": "datamaskin",
+      "word": "en datamaskin",
+      "partOfSpeech": "noun",
+      "explanation": "Vi sier ofte «PC».",
+      "example": "Datamaskinen min er gammel.",
+      "translation": { "en": "computer", "ru": "компьютер", "uk": "комп'ютер", "de": "der Computer", "es": "el ordenador, la computadora", "fr": "l'ordinateur", "pt-BR": "o computador" }
+    },
+    {
+      "id": "skole",
+      "word": "en skole",
+      "partOfSpeech": "noun",
+      "explanation": "Der barn lærer.",
+      "example": "Barna går på skolen.",
+      "translation": { "en": "school", "ru": "школа", "uk": "школа", "de": "die Schule", "es": "la escuela", "fr": "l'école", "pt-BR": "a escola" }
+    },
+    {
+      "id": "laerer",
+      "word": "en lærer",
+      "partOfSpeech": "noun",
+      "explanation": "Den som underviser på skolen.",
+      "example": "Læreren hjelper elevene.",
+      "translation": { "en": "teacher", "ru": "учитель", "uk": "учитель", "de": "der Lehrer", "es": "el profesor, el maestro", "fr": "le professeur", "pt-BR": "o professor" }
+    },
+    {
+      "id": "elev",
+      "word": "en elev",
+      "partOfSpeech": "noun",
+      "explanation": "Et barn som går på skolen.",
+      "example": "Hun er en flink elev.",
+      "translation": { "en": "pupil", "ru": "ученик", "uk": "учень", "de": "der Schüler", "es": "el alumno", "fr": "l'élève", "pt-BR": "o aluno" }
+    },
+    {
+      "id": "student",
+      "word": "en student",
+      "partOfSpeech": "noun",
+      "explanation": "En som studerer på universitetet.",
+      "example": "Broren min er student.",
+      "translation": { "en": "student", "ru": "студент", "uk": "студент", "de": "der Student", "es": "el estudiante", "fr": "l'étudiant", "pt-BR": "o estudante" }
+    },
+    {
+      "id": "kurs",
+      "word": "et kurs",
+      "partOfSpeech": "noun",
+      "explanation": "Timer der vi lærer noe, for eksempel norsk.",
+      "example": "Jeg går på kurs i norsk.",
+      "translation": { "en": "course, class", "ru": "курс, курсы", "uk": "курс, курси", "de": "der Kurs", "es": "el curso", "fr": "le cours", "pt-BR": "o curso" }
+    },
+    {
+      "id": "laere",
+      "word": "å lære",
+      "partOfSpeech": "verb",
+      "explanation": "Å bli flink til noe nytt. Nå: lærer.",
+      "example": "Jeg lærer norsk.",
+      "translation": { "en": "to learn", "ru": "учить, учиться", "uk": "вчити, вчитися", "de": "lernen", "es": "aprender", "fr": "apprendre", "pt-BR": "aprender" }
+    },
+    {
+      "id": "studere",
+      "word": "å studere",
+      "partOfSpeech": "verb",
+      "explanation": "Å lære på universitetet. Nå: studerer.",
+      "example": "Hun studerer i Trondheim.",
+      "translation": { "en": "to study", "ru": "учиться в вузе, изучать", "uk": "навчатися в університеті, вивчати", "de": "studieren", "es": "estudiar", "fr": "étudier", "pt-BR": "estudar" }
+    },
+    {
+      "id": "lekse",
+      "word": "en lekse",
+      "partOfSpeech": "noun",
+      "explanation": "Oppgaver fra skolen som vi gjør hjemme.",
+      "example": "Har du gjort leksene?",
+      "translation": { "en": "homework", "ru": "домашнее задание", "uk": "домашнє завдання", "de": "die Hausaufgabe", "es": "los deberes, la tarea", "fr": "les devoirs", "pt-BR": "a lição de casa" }
+    },
+    {
+      "id": "bok",
+      "word": "en bok",
+      "partOfSpeech": "noun",
+      "explanation": "Vi leser den. Den har mange sider.",
+      "example": "Jeg leser en bok om Norge.",
+      "translation": { "en": "book", "ru": "книга", "uk": "книга, книжка", "de": "das Buch", "es": "el libro", "fr": "le livre", "pt-BR": "o livro" }
+    },
+    {
+      "id": "penn",
+      "word": "en penn",
+      "partOfSpeech": "noun",
+      "explanation": "Vi skriver med den.",
+      "example": "Kan jeg låne en penn?",
+      "translation": { "en": "pen", "ru": "ручка", "uk": "ручка", "de": "der Kugelschreiber, der Stift", "es": "el bolígrafo", "fr": "le stylo", "pt-BR": "a caneta" }
+    }
+  ]
+}

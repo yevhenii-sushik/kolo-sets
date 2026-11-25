@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "vaere",
+      "word": "å være",
+      "partOfSpeech": "verb",
+      "explanation": "Nå: er. Jeg er, du er, hun er.",
+      "example": "Det er fint å være her.",
+      "translation": { "en": "to be", "ru": "быть", "uk": "бути", "de": "sein", "es": "ser, estar", "fr": "être", "pt-BR": "ser, estar" }
+    },
+    {
+      "id": "ha",
+      "word": "å ha",
+      "partOfSpeech": "verb",
+      "explanation": "Eie noe. Nå: har.",
+      "example": "Jeg har en katt.",
+      "translation": { "en": "to have", "ru": "иметь", "uk": "мати", "de": "haben", "es": "tener", "fr": "avoir", "pt-BR": "ter" }
+    },
+    {
+      "id": "ga",
+      "word": "å gå",
+      "partOfSpeech": "verb",
+      "explanation": "Å bevege seg på beina. Nå: går.",
+      "example": "Jeg går til jobben hver dag.",
+      "translation": { "en": "to go, to walk", "ru": "идти, ходить", "uk": "іти, ходити", "de": "gehen", "es": "ir, caminar", "fr": "aller, marcher", "pt-BR": "ir, andar" }
+    },
+    {
+      "id": "komme",
+      "word": "å komme",
+      "partOfSpeech": "verb",
+      "explanation": "Å være på vei hit. Nå: kommer.",
+      "example": "Når kommer du hjem?",
+      "translation": { "en": "to come", "ru": "приходить, прийти", "uk": "приходити, прийти", "de": "kommen", "es": "venir", "fr": "venir", "pt-BR": "vir" }
+    },
+    {
+      "id": "gjore",
+      "word": "å gjøre",
+      "partOfSpeech": "verb",
+      "explanation": "Nå: gjør. Hva gjør du?",
+      "example": "Hva gjør du nå?",
+      "translation": { "en": "to do", "ru": "делать", "uk": "робити", "de": "machen, tun", "es": "hacer", "fr": "faire", "pt-BR": "fazer" }
+    },
+    {
+      "id": "lage",
+      "word": "å lage",
+      "partOfSpeech": "verb",
+      "explanation": "Å gjøre noe nytt, for eksempel mat. Nå: lager.",
+      "example": "Pappa lager middag.",
+      "translation": { "en": "to make", "ru": "готовить, создавать", "uk": "готувати, створювати", "de": "machen (herstellen), kochen", "es": "preparar, hacer (algo nuevo)", "fr": "préparer, fabriquer", "pt-BR": "preparar, fazer (algo novo)" }
+    },
+    {
+      "id": "si",
+      "word": "å si",
+      "partOfSpeech": "verb",
+      "explanation": "Å bruke ord. Nå: sier.",
+      "example": "Hun sier at hun er syk.",
+      "translation": { "en": "to say", "ru": "сказать, говорить", "uk": "сказати, казати", "de": "sagen", "es": "decir", "fr": "dire", "pt-BR": "dizer" }
+    },
+    {
+      "id": "snakke",
+      "word": "å snakke",
+      "partOfSpeech": "verb",
+      "explanation": "Å si noe med ord til noen. Nå: snakker.",
+      "example": "Snakker du norsk?",
+      "translation": { "en": "to speak, to talk", "ru": "разговаривать, говорить (на языке)", "uk": "розмовляти, говорити", "de": "sprechen", "es": "hablar", "fr": "parler", "pt-BR": "falar" }
+    },
+    {
+      "id": "se",
+      "word": "å se",
+      "partOfSpeech": "verb",
+      "explanation": "Vi ser med øynene. Nå: ser.",
+      "example": "Jeg ser deg i morgen!",
+      "translation": { "en": "to see, to look", "ru": "видеть, смотреть", "uk": "бачити, дивитися", "de": "sehen", "es": "ver, mirar", "fr": "voir, regarder", "pt-BR": "ver, olhar" }
+    },
+    {
+      "id": "hore",
+      "word": "å høre",
+      "partOfSpeech": "verb",
+      "explanation": "Vi hører med ørene. Nå: hører.",
+      "example": "Hører du meg?",
+      "translation": { "en": "to hear, to listen", "ru": "слышать, слушать", "uk": "чути, слухати", "de": "hören", "es": "oír, escuchar", "fr": "entendre, écouter", "pt-BR": "ouvir, escutar" }
+    },
+    {
+      "id": "skrive",
+      "word": "å skrive",
+      "partOfSpeech": "verb",
+      "explanation": "Å lage ord med penn eller på PC. Nå: skriver.",
+      "example": "Hun skriver en e-post.",
+      "translation": { "en": "to write", "ru": "писать", "uk": "писати", "de": "schreiben", "es": "escribir", "fr": "écrire", "pt-BR": "escrever" }
+    },
+    {
+      "id": "sove",
+      "word": "å sove",
+      "partOfSpeech": "verb",
+      "explanation": "Vi gjør det i sengen om natten. Nå: sover.",
+      "example": "Babyen sover.",
+      "translation": { "en": "to sleep", "ru": "спать", "uk": "спати", "de": "schlafen", "es": "dormir", "fr": "dormir", "pt-BR": "dormir" }
+    },
+    {
+      "id": "like",
+      "word": "å like",
+      "partOfSpeech": "verb",
+      "explanation": "Synes at noe er bra. Nå: liker.",
+      "example": "Jeg liker kaffe.",
+      "translation": { "en": "to like", "ru": "нравиться, любить", "uk": "подобатися, любити", "de": "mögen", "es": "gustar", "fr": "aimer", "pt-BR": "gostar (de)" }
+    },
+    {
+      "id": "kunne",
+      "word": "å kunne",
+      "partOfSpeech": "verb",
+      "explanation": "Nå: kan. Jeg kan svømme.",
+      "example": "Jeg kan snakke engelsk.",
+      "translation": { "en": "can, to be able to", "ru": "мочь, уметь", "uk": "могти, вміти", "de": "können", "es": "poder", "fr": "pouvoir", "pt-BR": "poder" }
+    },
+    {
+      "id": "ville",
+      "word": "å ville",
+      "partOfSpeech": "verb",
+      "explanation": "Ønske noe. Nå: vil.",
+      "example": "Jeg vil hjem!",
+      "translation": { "en": "to want", "ru": "хотеть", "uk": "хотіти", "de": "wollen", "es": "querer", "fr": "vouloir", "pt-BR": "querer" }
+    },
+    {
+      "id": "matte",
+      "word": "å måtte",
+      "partOfSpeech": "verb",
+      "explanation": "Nå: må. Jeg må jobbe i dag.",
+      "example": "Vi må stå opp tidlig.",
+      "translation": { "en": "must, to have to", "ru": "быть должным, нужно", "uk": "мусити, треба", "de": "müssen", "es": "tener que, deber", "fr": "devoir", "pt-BR": "ter que, dever" }
+    },
+    {
+      "id": "vite",
+      "word": "å vite",
+      "partOfSpeech": "verb",
+      "explanation": "Ha svaret i hodet. Nå: vet.",
+      "example": "Jeg vet ikke.",
+      "translation": { "en": "to know", "ru": "знать", "uk": "знати", "de": "wissen", "es": "saber", "fr": "savoir", "pt-BR": "saber" }
+    },
+    {
+      "id": "ta",
+      "word": "å ta",
+      "partOfSpeech": "verb",
+      "explanation": "Nå: tar.",
+      "example": "Hun tar med seg paraplyen.",
+      "translation": { "en": "to take", "ru": "брать, взять", "uk": "брати, взяти", "de": "nehmen", "es": "tomar, coger", "fr": "prendre", "pt-BR": "pegar, levar" }
+    },
+    {
+      "id": "gi",
+      "word": "å gi",
+      "partOfSpeech": "verb",
+      "explanation": "Motsatt av å ta. Nå: gir.",
+      "example": "Hun gir meg en blomst.",
+      "translation": { "en": "to give", "ru": "давать, дать", "uk": "давати, дати", "de": "geben", "es": "dar", "fr": "donner", "pt-BR": "dar" }
+    },
+    {
+      "id": "hjelpe",
+      "word": "å hjelpe",
+      "partOfSpeech": "verb",
+      "explanation": "Å gjøre noe for andre. Nå: hjelper.",
+      "example": "Kan du hjelpe meg?",
+      "translation": { "en": "to help", "ru": "помогать", "uk": "допомагати", "de": "helfen", "es": "ayudar", "fr": "aider", "pt-BR": "ajudar" }
+    },
+    {
+      "id": "vente",
+      "word": "å vente",
+      "partOfSpeech": "verb",
+      "explanation": "Å være på et sted til noe skjer. Nå: venter.",
+      "example": "Vi venter på bussen.",
+      "translation": { "en": "to wait", "ru": "ждать", "uk": "чекати", "de": "warten", "es": "esperar", "fr": "attendre", "pt-BR": "esperar" }
+    },
+    {
+      "id": "finne",
+      "word": "å finne",
+      "partOfSpeech": "verb",
+      "explanation": "Å se det du leter etter. Nå: finner.",
+      "example": "Hvor kan jeg finne et apotek?",
+      "translation": { "en": "to find", "ru": "находить, найти", "uk": "знаходити, знайти", "de": "finden", "es": "encontrar", "fr": "trouver", "pt-BR": "encontrar, achar" }
+    }
+  ]
+}

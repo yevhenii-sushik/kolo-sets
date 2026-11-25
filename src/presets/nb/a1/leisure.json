@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "fritid",
+      "word": "fritid",
+      "partOfSpeech": "noun",
+      "explanation": "Tiden når du ikke jobber eller er på skolen.",
+      "example": "Hva gjør du i fritiden?",
+      "translation": { "en": "free time", "ru": "свободное время", "uk": "вільний час", "de": "die Freizeit", "es": "el tiempo libre", "fr": "le temps libre", "pt-BR": "o tempo livre" }
+    },
+    {
+      "id": "hobby",
+      "word": "en hobby",
+      "partOfSpeech": "noun",
+      "explanation": "Noe du liker å gjøre i fritiden.",
+      "example": "Hobbyen min er å lage mat.",
+      "translation": { "en": "hobby", "ru": "хобби", "uk": "хобі", "de": "das Hobby", "es": "la afición, el hobby", "fr": "le passe-temps", "pt-BR": "o hobby, o passatempo" }
+    },
+    {
+      "id": "film",
+      "word": "en film",
+      "partOfSpeech": "noun",
+      "explanation": "Vi ser den på kino eller TV.",
+      "example": "Vi skal se en film i kveld.",
+      "translation": { "en": "film, movie", "ru": "фильм", "uk": "фільм", "de": "der Film", "es": "la película", "fr": "le film", "pt-BR": "o filme" }
+    },
+    {
+      "id": "kino",
+      "word": "en kino",
+      "partOfSpeech": "noun",
+      "explanation": "Der vi ser film på en stor skjerm.",
+      "example": "Skal vi gå på kino?",
+      "translation": { "en": "cinema", "ru": "кинотеатр, кино", "uk": "кінотеатр, кіно", "de": "das Kino", "es": "el cine", "fr": "le cinéma", "pt-BR": "o cinema" }
+    },
+    {
+      "id": "musikk",
+      "word": "musikk",
+      "partOfSpeech": "noun",
+      "explanation": "Vi hører på den. Den kan være rolig eller rask.",
+      "example": "Jeg hører på musikk på bussen.",
+      "translation": { "en": "music", "ru": "музыка", "uk": "музика", "de": "die Musik", "es": "la música", "fr": "la musique", "pt-BR": "a música" }
+    },
+    {
+      "id": "sang",
+      "word": "en sang",
+      "partOfSpeech": "noun",
+      "explanation": "Musikk med ord.",
+      "example": "Dette er en fin sang.",
+      "translation": { "en": "song", "ru": "песня", "uk": "пісня", "de": "das Lied", "es": "la canción", "fr": "la chanson", "pt-BR": "a canção" }
+    },
+    {
+      "id": "konsert",
+      "word": "en konsert",
+      "partOfSpeech": "noun",
+      "explanation": "Når vi hører et band eller et kor spille og synge.",
+      "example": "Vi skal på konsert på lørdag.",
+      "translation": { "en": "concert", "ru": "концерт", "uk": "концерт", "de": "das Konzert", "es": "el concierto", "fr": "le concert", "pt-BR": "o show, o concerto" }
+    },
+    {
+      "id": "synge",
+      "word": "å synge",
+      "partOfSpeech": "verb",
+      "explanation": "Å lage musikk med stemmen. Nå: synger.",
+      "example": "Hun synger i et kor.",
+      "translation": { "en": "to sing", "ru": "петь", "uk": "співати", "de": "singen", "es": "cantar", "fr": "chanter", "pt-BR": "cantar" }
+    },
+    {
+      "id": "danse",
+      "word": "å danse",
+      "partOfSpeech": "verb",
+      "explanation": "Å bevege kroppen til musikk. Nå: danser.",
+      "example": "Vi danser hele natten.",
+      "translation": { "en": "to dance", "ru": "танцевать", "uk": "танцювати", "de": "tanzen", "es": "bailar", "fr": "danser", "pt-BR": "dançar" }
+    },
+    {
+      "id": "spille",
+      "word": "å spille",
+      "partOfSpeech": "verb",
+      "explanation": "Å være med i et spill, eller å lage musikk på gitar eller piano. Nå: spiller.",
+      "example": "Spiller du gitar?",
+      "translation": { "en": "to play", "ru": "играть", "uk": "грати", "de": "spielen", "es": "jugar, tocar", "fr": "jouer", "pt-BR": "jogar, tocar" }
+    },
+    {
+      "id": "spill",
+      "word": "et spill",
+      "partOfSpeech": "noun",
+      "explanation": "Noe vi spiller, for eksempel kort eller sjakk.",
+      "example": "Barna spiller et spill.",
+      "translation": { "en": "game", "ru": "игра", "uk": "гра", "de": "das Spiel", "es": "el juego", "fr": "le jeu", "pt-BR": "o jogo" }
+    },
+    {
+      "id": "fotball",
+      "word": "fotball",
+      "partOfSpeech": "noun",
+      "explanation": "Et spill med en ball og to mål.",
+      "example": "Vi ser fotball på TV.",
+      "translation": { "en": "football", "ru": "футбол", "uk": "футбол", "de": "der Fußball", "es": "el fútbol", "fr": "le football", "pt-BR": "o futebol" }
+    },
+    {
+      "id": "trene",
+      "word": "å trene",
+      "partOfSpeech": "verb",
+      "explanation": "Å gjøre sport for å bli sterk. Nå: trener.",
+      "example": "Jeg trener tre ganger i uken.",
+      "translation": { "en": "to work out, to train", "ru": "тренироваться", "uk": "тренуватися", "de": "trainieren", "es": "entrenar", "fr": "s'entraîner", "pt-BR": "treinar, malhar" }
+    },
+    {
+      "id": "tur",
+      "word": "en tur",
+      "partOfSpeech": "noun",
+      "explanation": "Når vi går ut i naturen eller reiser et sted.",
+      "example": "Vi går en tur i skogen.",
+      "translation": { "en": "walk, trip", "ru": "прогулка, поход", "uk": "прогулянка, похід", "de": "der Spaziergang, der Ausflug", "es": "el paseo, la excursión", "fr": "la promenade, la balade", "pt-BR": "o passeio" }
+    },
+    {
+      "id": "ga-pa-ski",
+      "word": "å gå på ski",
+      "partOfSpeech": "verb",
+      "explanation": "Nordmenn gjør det mye om vinteren.",
+      "example": "Om vinteren liker jeg å gå på ski.",
+      "translation": { "en": "to ski", "ru": "кататься на лыжах", "uk": "кататися на лижах", "de": "Ski fahren", "es": "esquiar", "fr": "faire du ski", "pt-BR": "esquiar" }
+    },
+    {
+      "id": "bade",
+      "word": "å bade",
+      "partOfSpeech": "verb",
+      "explanation": "Å være i vannet, for eksempel i sjøen. Nå: bader.",
+      "example": "Om sommeren bader vi i sjøen.",
+      "translation": { "en": "to swim, to bathe", "ru": "купаться", "uk": "купатися", "de": "baden", "es": "bañarse", "fr": "se baigner", "pt-BR": "nadar, tomar banho de mar" }
+    },
+    {
+      "id": "lese",
+      "word": "å lese",
+      "partOfSpeech": "verb",
+      "explanation": "Det vi gjør med bøker og aviser. Nå: leser.",
+      "example": "Jeg liker å lese bøker.",
+      "translation": { "en": "to read", "ru": "читать", "uk": "читати", "de": "lesen", "es": "leer", "fr": "lire", "pt-BR": "ler" }
+    },
+    {
+      "id": "ferie",
+      "word": "en ferie",
+      "partOfSpeech": "noun",
+      "explanation": "Fri fra jobb eller skole i noen dager eller uker.",
+      "example": "Jeg gleder meg til ferien!",
+      "translation": { "en": "holiday, vacation", "ru": "отпуск, каникулы", "uk": "відпустка, канікули", "de": "der Urlaub, die Ferien", "es": "las vacaciones", "fr": "les vacances", "pt-BR": "as férias" }
+    },
+    {
+      "id": "reise",
+      "word": "å reise",
+      "partOfSpeech": "verb",
+      "explanation": "Å dra til et annet sted eller land. Nå: reiser.",
+      "example": "Vi skal reise til Spania.",
+      "translation": { "en": "to travel", "ru": "путешествовать, ездить", "uk": "подорожувати, їздити", "de": "reisen", "es": "viajar", "fr": "voyager", "pt-BR": "viajar" }
+    },
+    {
+      "id": "kafe",
+      "word": "en kafé",
+      "partOfSpeech": "noun",
+      "explanation": "Der vi drikker kaffe og spiser kake.",
+      "example": "Vi møtes på en kafé.",
+      "translation": { "en": "café", "ru": "кафе", "uk": "кафе", "de": "das Café", "es": "la cafetería", "fr": "le café (endroit)", "pt-BR": "a cafeteria" }
+    },
+    {
+      "id": "slappe-av",
+      "word": "å slappe av",
+      "partOfSpeech": "verb",
+      "explanation": "Å hvile og ikke gjøre noe. Nå: slapper av.",
+      "example": "I helgen vil jeg bare slappe av.",
+      "translation": { "en": "to relax", "ru": "отдыхать, расслабляться", "uk": "відпочивати, розслаблятися", "de": "sich entspannen", "es": "relajarse", "fr": "se détendre", "pt-BR": "relaxar" }
+    }
+  ]
+}

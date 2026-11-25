@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "butikk",
+      "word": "en butikk",
+      "partOfSpeech": "noun",
+      "explanation": "Et sted der vi kjøper ting.",
+      "example": "Butikken åpner klokka ni.",
+      "translation": { "en": "shop", "ru": "магазин", "uk": "магазин", "de": "das Geschäft, der Laden", "es": "la tienda", "fr": "le magasin", "pt-BR": "a loja" }
+    },
+    {
+      "id": "matbutikk",
+      "word": "en matbutikk",
+      "partOfSpeech": "noun",
+      "explanation": "En butikk der vi kjøper mat.",
+      "example": "Jeg går på matbutikken etter jobb.",
+      "translation": { "en": "grocery shop, supermarket", "ru": "продуктовый магазин", "uk": "продуктовий магазин", "de": "der Supermarkt", "es": "el supermercado", "fr": "le supermarché", "pt-BR": "o supermercado, o mercado" }
+    },
+    {
+      "id": "penger",
+      "word": "penger",
+      "partOfSpeech": "noun",
+      "explanation": "Det vi betaler med.",
+      "example": "Jeg har ikke mye penger.",
+      "translation": { "en": "money", "ru": "деньги", "uk": "гроші", "de": "das Geld", "es": "el dinero", "fr": "l'argent", "pt-BR": "o dinheiro" }
+    },
+    {
+      "id": "krone",
+      "word": "en krone",
+      "partOfSpeech": "noun",
+      "explanation": "Pengene i Norge heter kroner.",
+      "example": "Brødet koster tjue kroner.",
+      "translation": { "en": "krone", "ru": "крона", "uk": "крона", "de": "die Krone", "es": "la corona", "fr": "la couronne", "pt-BR": "a coroa" }
+    },
+    {
+      "id": "pris",
+      "word": "en pris",
+      "partOfSpeech": "noun",
+      "explanation": "Hvor mye noe koster.",
+      "example": "Prisen er for høy.",
+      "translation": { "en": "price", "ru": "цена", "uk": "ціна", "de": "der Preis", "es": "el precio", "fr": "le prix", "pt-BR": "o preço" }
+    },
+    {
+      "id": "tilbud",
+      "word": "et tilbud",
+      "partOfSpeech": "noun",
+      "explanation": "Lavere pris enn vanlig.",
+      "example": "Kaffen er på tilbud denne uken.",
+      "translation": { "en": "special offer", "ru": "скидка, акция", "uk": "знижка, акція", "de": "das Angebot", "es": "la oferta", "fr": "la promotion", "pt-BR": "a promoção, a oferta" }
+    },
+    {
+      "id": "dyr",
+      "word": "dyr",
+      "partOfSpeech": "adjective",
+      "explanation": "Koster mye penger.",
+      "example": "Denne jakken er veldig dyr.",
+      "translation": { "en": "expensive", "ru": "дорогой", "uk": "дорогий", "de": "teuer", "es": "caro", "fr": "cher", "pt-BR": "caro" }
+    },
+    {
+      "id": "billig",
+      "word": "billig",
+      "partOfSpeech": "adjective",
+      "explanation": "Koster lite penger.",
+      "example": "Frukt er billig om sommeren.",
+      "translation": { "en": "cheap", "ru": "дешёвый", "uk": "дешевий", "de": "billig", "es": "barato", "fr": "bon marché, pas cher", "pt-BR": "barato" }
+    },
+    {
+      "id": "kjope",
+      "word": "å kjøpe",
+      "partOfSpeech": "verb",
+      "explanation": "Å få noe for penger. Nå: kjøper.",
+      "example": "Jeg kjøper melk og brød.",
+      "translation": { "en": "to buy", "ru": "покупать, купить", "uk": "купувати, купити", "de": "kaufen", "es": "comprar", "fr": "acheter", "pt-BR": "comprar" }
+    },
+    {
+      "id": "betale",
+      "word": "å betale",
+      "partOfSpeech": "verb",
+      "explanation": "Å gi penger for noe. Nå: betaler.",
+      "example": "Kan jeg betale med kort?",
+      "translation": { "en": "to pay", "ru": "платить", "uk": "платити", "de": "bezahlen", "es": "pagar", "fr": "payer", "pt-BR": "pagar" }
+    },
+    {
+      "id": "koste",
+      "word": "å koste",
+      "partOfSpeech": "verb",
+      "explanation": "Ha en pris. Nå: koster.",
+      "example": "Billetten koster tjue kroner.",
+      "translation": { "en": "to cost", "ru": "стоить", "uk": "коштувати", "de": "kosten", "es": "costar", "fr": "coûter", "pt-BR": "custar" }
+    },
+    {
+      "id": "hvor-mye-koster-det",
+      "word": "Hvor mye koster det?",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi spør om prisen.",
+      "example": "Unnskyld, hvor mye koster det?",
+      "translation": { "en": "How much is it?", "ru": "Сколько это стоит?", "uk": "Скільки це коштує?", "de": "Wie viel kostet das?", "es": "¿Cuánto cuesta?", "fr": "Combien ça coûte ?", "pt-BR": "Quanto custa?" }
+    },
+    {
+      "id": "kort",
+      "word": "et kort",
+      "partOfSpeech": "noun",
+      "explanation": "Et bankkort. Vi betaler med det.",
+      "example": "Jeg har glemt kortet mitt.",
+      "translation": { "en": "card (bank card)", "ru": "карточка, банковская карта", "uk": "картка", "de": "die Karte (Bankkarte)", "es": "la tarjeta", "fr": "la carte (bancaire)", "pt-BR": "o cartão" }
+    },
+    {
+      "id": "kasse",
+      "word": "en kasse",
+      "partOfSpeech": "noun",
+      "explanation": "Der vi betaler i butikken.",
+      "example": "Du betaler i kassen.",
+      "translation": { "en": "checkout, till", "ru": "касса", "uk": "каса", "de": "die Kasse", "es": "la caja", "fr": "la caisse", "pt-BR": "o caixa" }
+    },
+    {
+      "id": "pose",
+      "word": "en pose",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har varene i den når vi går hjem.",
+      "example": "Trenger du en pose?",
+      "translation": { "en": "bag", "ru": "пакет", "uk": "пакет", "de": "die Tüte", "es": "la bolsa", "fr": "le sac", "pt-BR": "a sacola" }
+    },
+    {
+      "id": "kvittering",
+      "word": "en kvittering",
+      "partOfSpeech": "noun",
+      "explanation": "Et papir som viser hva du har betalt.",
+      "example": "Vil du ha kvitteringen?",
+      "translation": { "en": "receipt", "ru": "чек", "uk": "чек", "de": "der Kassenbon, die Quittung", "es": "el recibo, el tique", "fr": "le ticket de caisse, le reçu", "pt-BR": "o recibo, a nota" }
+    },
+    {
+      "id": "apen",
+      "word": "åpen",
+      "partOfSpeech": "adjective",
+      "explanation": "Vi kan gå inn.",
+      "example": "Er butikken åpen på søndag?",
+      "translation": { "en": "open", "ru": "открытый", "uk": "відкритий", "de": "geöffnet, offen", "es": "abierto", "fr": "ouvert", "pt-BR": "aberto" }
+    },
+    {
+      "id": "stengt",
+      "word": "stengt",
+      "partOfSpeech": "adjective",
+      "explanation": "Vi kan ikke gå inn.",
+      "example": "Banken er stengt i dag.",
+      "translation": { "en": "closed", "ru": "закрытый", "uk": "зачинений", "de": "geschlossen", "es": "cerrado", "fr": "fermé", "pt-BR": "fechado" }
+    },
+    {
+      "id": "kan-jeg-fa",
+      "word": "Kan jeg få …?",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi ber om noe, høflig.",
+      "example": "Kan jeg få en kaffe, takk?",
+      "translation": { "en": "Can I have …?", "ru": "Можно мне …?", "uk": "Можна мені …?", "de": "Kann ich … haben?", "es": "¿Me puede dar …?", "fr": "Je peux avoir … ?", "pt-BR": "Pode me dar …?" }
+    },
+    {
+      "id": "jeg-bare-ser",
+      "word": "Jeg bare ser.",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi sier det i butikken når vi ikke trenger hjelp.",
+      "example": "Nei takk, jeg bare ser.",
+      "translation": { "en": "I'm just looking.", "ru": "Я просто смотрю.", "uk": "Я просто дивлюся.", "de": "Ich schaue nur.", "es": "Solo estoy mirando.", "fr": "Je regarde seulement.", "pt-BR": "Só estou olhando." }
+    }
+  ]
+}

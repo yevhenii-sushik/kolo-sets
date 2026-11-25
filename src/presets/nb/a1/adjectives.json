@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "stor",
+      "word": "stor",
+      "partOfSpeech": "adjective",
+      "explanation": "Motsatt av liten.",
+      "example": "Vi bor i et stort hus.",
+      "translation": { "en": "big, large", "ru": "большой", "uk": "великий", "de": "groß", "es": "grande", "fr": "grand", "pt-BR": "grande" }
+    },
+    {
+      "id": "liten",
+      "word": "liten",
+      "partOfSpeech": "adjective",
+      "explanation": "Motsatt av stor.",
+      "example": "Katten er liten og søt.",
+      "translation": { "en": "small, little", "ru": "маленький", "uk": "маленький", "de": "klein", "es": "pequeño", "fr": "petit", "pt-BR": "pequeno" }
+    },
+    {
+      "id": "god",
+      "word": "god",
+      "partOfSpeech": "adjective",
+      "explanation": "Bra. Motsatt av dårlig.",
+      "example": "Maten er veldig god.",
+      "translation": { "en": "good", "ru": "хороший", "uk": "хороший", "de": "gut", "es": "bueno", "fr": "bon", "pt-BR": "bom" }
+    },
+    {
+      "id": "darlig",
+      "word": "dårlig",
+      "partOfSpeech": "adjective",
+      "explanation": "Ikke bra.",
+      "example": "Været er dårlig i dag.",
+      "translation": { "en": "bad", "ru": "плохой", "uk": "поганий", "de": "schlecht", "es": "malo", "fr": "mauvais", "pt-BR": "ruim" }
+    },
+    {
+      "id": "ny",
+      "word": "ny",
+      "partOfSpeech": "adjective",
+      "explanation": "Motsatt av gammel. Vi har nettopp fått den.",
+      "example": "Jeg har en ny telefon.",
+      "translation": { "en": "new", "ru": "новый", "uk": "новий", "de": "neu", "es": "nuevo", "fr": "nouveau, neuf", "pt-BR": "novo" }
+    },
+    {
+      "id": "gammel",
+      "word": "gammel",
+      "partOfSpeech": "adjective",
+      "explanation": "Har levd eller vært her lenge.",
+      "example": "Huset er gammelt.",
+      "translation": { "en": "old", "ru": "старый", "uk": "старий", "de": "alt", "es": "viejo", "fr": "vieux", "pt-BR": "velho" }
+    },
+    {
+      "id": "ung",
+      "word": "ung",
+      "partOfSpeech": "adjective",
+      "explanation": "Har ikke levd lenge.",
+      "example": "Hun er ung og sterk.",
+      "translation": { "en": "young", "ru": "молодой", "uk": "молодий", "de": "jung", "es": "joven", "fr": "jeune", "pt-BR": "jovem" }
+    },
+    {
+      "id": "lang",
+      "word": "lang",
+      "partOfSpeech": "adjective",
+      "explanation": "Motsatt av kort.",
+      "example": "Det var en lang dag.",
+      "translation": { "en": "long", "ru": "длинный, долгий", "uk": "довгий", "de": "lang", "es": "largo", "fr": "long", "pt-BR": "longo, comprido" }
+    },
+    {
+      "id": "hoy",
+      "word": "høy",
+      "partOfSpeech": "adjective",
+      "explanation": "Motsatt av lav. Også om lyd: høy musikk.",
+      "example": "Han er veldig høy.",
+      "translation": { "en": "tall, high, loud", "ru": "высокий, громкий", "uk": "високий, гучний", "de": "hoch, groß, laut", "es": "alto", "fr": "haut, grand", "pt-BR": "alto" }
+    },
+    {
+      "id": "tung",
+      "word": "tung",
+      "partOfSpeech": "adjective",
+      "explanation": "Veier mye.",
+      "example": "Kofferten er tung.",
+      "translation": { "en": "heavy", "ru": "тяжёлый", "uk": "важкий", "de": "schwer", "es": "pesado", "fr": "lourd", "pt-BR": "pesado" }
+    },
+    {
+      "id": "lett",
+      "word": "lett",
+      "partOfSpeech": "adjective",
+      "explanation": "Ikke vanskelig, eller ikke tung.",
+      "example": "Norsk er ikke så lett.",
+      "translation": { "en": "easy, light", "ru": "лёгкий", "uk": "легкий", "de": "leicht", "es": "fácil, ligero", "fr": "facile, léger", "pt-BR": "fácil, leve" }
+    },
+    {
+      "id": "vanskelig",
+      "word": "vanskelig",
+      "partOfSpeech": "adjective",
+      "explanation": "Ikke lett å gjøre eller forstå.",
+      "example": "Denne oppgaven er vanskelig.",
+      "translation": { "en": "difficult, hard", "ru": "трудный, сложный", "uk": "складний", "de": "schwierig", "es": "difícil", "fr": "difficile", "pt-BR": "difícil" }
+    },
+    {
+      "id": "rask",
+      "word": "rask",
+      "partOfSpeech": "adjective",
+      "explanation": "Gjør noe på kort tid.",
+      "example": "Hun er veldig rask.",
+      "translation": { "en": "fast, quick", "ru": "быстрый", "uk": "швидкий", "de": "schnell", "es": "rápido", "fr": "rapide", "pt-BR": "rápido" }
+    },
+    {
+      "id": "fin",
+      "word": "fin",
+      "partOfSpeech": "adjective",
+      "explanation": "Pen eller hyggelig.",
+      "example": "Du har en fin jakke.",
+      "translation": { "en": "nice, fine", "ru": "красивый, приятный", "uk": "гарний, приємний", "de": "schön, fein", "es": "bonito, agradable", "fr": "beau, agréable", "pt-BR": "bonito, legal" }
+    },
+    {
+      "id": "pen",
+      "word": "pen",
+      "partOfSpeech": "adjective",
+      "explanation": "Fin å se på.",
+      "example": "Hun er veldig pen.",
+      "translation": { "en": "pretty, good-looking", "ru": "симпатичный, хорошенький", "uk": "вродливий, гарненький", "de": "hübsch", "es": "guapo, lindo", "fr": "joli", "pt-BR": "lindo" }
+    },
+    {
+      "id": "snill",
+      "word": "snill",
+      "partOfSpeech": "adjective",
+      "explanation": "God mot andre.",
+      "example": "Hunden er snill.",
+      "translation": { "en": "kind", "ru": "добрый", "uk": "добрий", "de": "nett, lieb", "es": "amable", "fr": "gentil", "pt-BR": "gentil, bonzinho" }
+    },
+    {
+      "id": "glad",
+      "word": "glad",
+      "partOfSpeech": "adjective",
+      "explanation": "Når du smiler og har det bra.",
+      "example": "Jeg er glad for at du kom.",
+      "translation": { "en": "happy, glad", "ru": "радостный, довольный", "uk": "радий, щасливий", "de": "froh, fröhlich", "es": "contento, alegre", "fr": "content, heureux", "pt-BR": "feliz, contente" }
+    },
+    {
+      "id": "trist",
+      "word": "trist",
+      "partOfSpeech": "adjective",
+      "explanation": "Motsatt av glad.",
+      "example": "Hvorfor er du trist?",
+      "translation": { "en": "sad", "ru": "грустный", "uk": "сумний", "de": "traurig", "es": "triste", "fr": "triste", "pt-BR": "triste" }
+    },
+    {
+      "id": "trott",
+      "word": "trøtt",
+      "partOfSpeech": "adjective",
+      "explanation": "Når du vil sove. Også: trett.",
+      "example": "Jeg er så trøtt i dag.",
+      "translation": { "en": "tired", "ru": "уставший", "uk": "втомлений", "de": "müde", "es": "cansado", "fr": "fatigué", "pt-BR": "cansado" }
+    },
+    {
+      "id": "morsom",
+      "word": "morsom",
+      "partOfSpeech": "adjective",
+      "explanation": "Får oss til å le.",
+      "example": "Filmen var veldig morsom.",
+      "translation": { "en": "fun, funny", "ru": "весёлый, смешной", "uk": "веселий, смішний", "de": "lustig, witzig", "es": "divertido, gracioso", "fr": "drôle, amusant", "pt-BR": "divertido, engraçado" }
+    },
+    {
+      "id": "kjedelig",
+      "word": "kjedelig",
+      "partOfSpeech": "adjective",
+      "explanation": "Ikke morsom eller spennende.",
+      "example": "Møtet var kjedelig.",
+      "translation": { "en": "boring", "ru": "скучный", "uk": "нудний", "de": "langweilig", "es": "aburrido", "fr": "ennuyeux", "pt-BR": "chato" }
+    },
+    {
+      "id": "viktig",
+      "word": "viktig",
+      "partOfSpeech": "adjective",
+      "explanation": "Betyr mye.",
+      "example": "Det er viktig å sove godt.",
+      "translation": { "en": "important", "ru": "важный", "uk": "важливий", "de": "wichtig", "es": "importante", "fr": "important", "pt-BR": "importante" }
+    }
+  ]
+}

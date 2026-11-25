@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "kropp",
+      "word": "en kropp",
+      "partOfSpeech": "noun",
+      "explanation": "Alt fra hodet til føttene.",
+      "example": "Det er bra for kroppen å gå tur.",
+      "translation": { "en": "body", "ru": "тело", "uk": "тіло", "de": "der Körper", "es": "el cuerpo", "fr": "le corps", "pt-BR": "o corpo" }
+    },
+    {
+      "id": "hode",
+      "word": "et hode",
+      "partOfSpeech": "noun",
+      "explanation": "Den øverste delen av kroppen.",
+      "example": "Jeg har vondt i hodet.",
+      "translation": { "en": "head", "ru": "голова", "uk": "голова", "de": "der Kopf", "es": "la cabeza", "fr": "la tête", "pt-BR": "a cabeça" }
+    },
+    {
+      "id": "oye",
+      "word": "et øye",
+      "partOfSpeech": "noun",
+      "explanation": "Vi ser med øynene.",
+      "example": "Jeg har fått noe i øyet.",
+      "translation": { "en": "eye", "ru": "глаз", "uk": "око", "de": "das Auge", "es": "el ojo", "fr": "l'œil", "pt-BR": "o olho" }
+    },
+    {
+      "id": "ore",
+      "word": "et øre",
+      "partOfSpeech": "noun",
+      "explanation": "Vi hører med ørene.",
+      "example": "Han har vondt i øret.",
+      "translation": { "en": "ear", "ru": "ухо", "uk": "вухо", "de": "das Ohr", "es": "la oreja", "fr": "l'oreille", "pt-BR": "a orelha" }
+    },
+    {
+      "id": "nese",
+      "word": "en nese",
+      "partOfSpeech": "noun",
+      "explanation": "Vi lukter med den.",
+      "example": "Barnet har en liten nese.",
+      "translation": { "en": "nose", "ru": "нос", "uk": "ніс", "de": "die Nase", "es": "la nariz", "fr": "le nez", "pt-BR": "o nariz" }
+    },
+    {
+      "id": "munn",
+      "word": "en munn",
+      "partOfSpeech": "noun",
+      "explanation": "Vi spiser og snakker med den.",
+      "example": "Åpne munnen, takk.",
+      "translation": { "en": "mouth", "ru": "рот", "uk": "рот", "de": "der Mund", "es": "la boca", "fr": "la bouche", "pt-BR": "a boca" }
+    },
+    {
+      "id": "tann",
+      "word": "en tann",
+      "partOfSpeech": "noun",
+      "explanation": "Vi tygger maten med tennene.",
+      "example": "Gutten har mistet en tann.",
+      "translation": { "en": "tooth", "ru": "зуб", "uk": "зуб", "de": "der Zahn", "es": "el diente", "fr": "la dent", "pt-BR": "o dente" }
+    },
+    {
+      "id": "hand",
+      "word": "en hånd",
+      "partOfSpeech": "noun",
+      "explanation": "Den har fem fingre.",
+      "example": "Hun holder meg i hånden.",
+      "translation": { "en": "hand", "ru": "рука", "uk": "рука", "de": "die Hand", "es": "la mano", "fr": "la main", "pt-BR": "a mão" }
+    },
+    {
+      "id": "fot",
+      "word": "en fot",
+      "partOfSpeech": "noun",
+      "explanation": "Den nederste delen av beinet. Vi står på føttene.",
+      "example": "Skoen er for liten for foten min.",
+      "translation": { "en": "foot", "ru": "ступня", "uk": "ступня", "de": "der Fuß", "es": "el pie", "fr": "le pied", "pt-BR": "o pé" }
+    },
+    {
+      "id": "bein",
+      "word": "et bein",
+      "partOfSpeech": "noun",
+      "explanation": "Vi har to. Vi går på dem.",
+      "example": "Jeg har vondt i beinet etter turen.",
+      "translation": { "en": "leg", "ru": "нога", "uk": "нога", "de": "das Bein", "es": "la pierna", "fr": "la jambe", "pt-BR": "a perna" }
+    },
+    {
+      "id": "mage",
+      "word": "en mage",
+      "partOfSpeech": "noun",
+      "explanation": "Maten går ned i magen.",
+      "example": "Jeg har vondt i magen.",
+      "translation": { "en": "stomach, tummy", "ru": "живот", "uk": "живіт", "de": "der Bauch, der Magen", "es": "el estómago, la barriga", "fr": "le ventre", "pt-BR": "a barriga, o estômago" }
+    },
+    {
+      "id": "rygg",
+      "word": "en rygg",
+      "partOfSpeech": "noun",
+      "explanation": "Baksiden av kroppen.",
+      "example": "Han ligger på ryggen.",
+      "translation": { "en": "back", "ru": "спина", "uk": "спина", "de": "der Rücken", "es": "la espalda", "fr": "le dos", "pt-BR": "as costas" }
+    },
+    {
+      "id": "syk",
+      "word": "syk",
+      "partOfSpeech": "adjective",
+      "explanation": "Ikke frisk.",
+      "example": "Jeg er syk i dag og blir hjemme.",
+      "translation": { "en": "ill, sick", "ru": "больной", "uk": "хворий", "de": "krank", "es": "enfermo", "fr": "malade", "pt-BR": "doente" }
+    },
+    {
+      "id": "frisk",
+      "word": "frisk",
+      "partOfSpeech": "adjective",
+      "explanation": "Ikke syk.",
+      "example": "Er du frisk igjen?",
+      "translation": { "en": "healthy, well", "ru": "здоровый", "uk": "здоровий", "de": "gesund", "es": "sano", "fr": "en bonne santé", "pt-BR": "saudável" }
+    },
+    {
+      "id": "lege",
+      "word": "en lege",
+      "partOfSpeech": "noun",
+      "explanation": "Hjelper folk som er syke.",
+      "example": "Du må gå til legen.",
+      "translation": { "en": "doctor", "ru": "врач", "uk": "лікар", "de": "der Arzt, die Ärztin", "es": "el médico", "fr": "le médecin", "pt-BR": "o médico" }
+    },
+    {
+      "id": "sykehus",
+      "word": "et sykehus",
+      "partOfSpeech": "noun",
+      "explanation": "Der syke folk får hjelp av leger.",
+      "example": "Han ligger på sykehuset.",
+      "translation": { "en": "hospital", "ru": "больница", "uk": "лікарня", "de": "das Krankenhaus", "es": "el hospital", "fr": "l'hôpital", "pt-BR": "o hospital" }
+    },
+    {
+      "id": "apotek",
+      "word": "et apotek",
+      "partOfSpeech": "noun",
+      "explanation": "En butikk som selger medisiner.",
+      "example": "Apoteket er åpent til klokka ti.",
+      "translation": { "en": "pharmacy, chemist's", "ru": "аптека", "uk": "аптека", "de": "die Apotheke", "es": "la farmacia", "fr": "la pharmacie", "pt-BR": "a farmácia" }
+    },
+    {
+      "id": "medisin",
+      "word": "en medisin",
+      "partOfSpeech": "noun",
+      "explanation": "Vi tar den når vi er syke.",
+      "example": "Husk å ta medisinen!",
+      "translation": { "en": "medicine", "ru": "лекарство", "uk": "ліки", "de": "das Medikament", "es": "el medicamento", "fr": "le médicament", "pt-BR": "o remédio" }
+    },
+    {
+      "id": "jeg-har-vondt-i",
+      "word": "Jeg har vondt i …",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi sier hvor det gjør vondt.",
+      "example": "Jeg har vondt i halsen.",
+      "translation": { "en": "My … hurts.", "ru": "У меня болит …", "uk": "У мене болить …", "de": "Mir tut … weh.", "es": "Me duele …", "fr": "J'ai mal à …", "pt-BR": "Estou com dor de …" }
+    },
+    {
+      "id": "det-gjor-vondt",
+      "word": "Det gjør vondt.",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi sier det når noe er vondt.",
+      "example": "Au! Det gjør vondt.",
+      "translation": { "en": "It hurts.", "ru": "Больно.", "uk": "Боляче.", "de": "Es tut weh.", "es": "Duele.", "fr": "Ça fait mal.", "pt-BR": "Dói." }
+    },
+    {
+      "id": "hjelp",
+      "word": "Hjelp!",
+      "partOfSpeech": "interjection",
+      "explanation": "Vi roper det når vi trenger hjelp nå.",
+      "example": "Hjelp! Ring 113!",
+      "translation": { "en": "Help!", "ru": "Помогите!", "uk": "Допоможіть!", "de": "Hilfe!", "es": "¡Socorro!, ¡Ayuda!", "fr": "Au secours !", "pt-BR": "Socorro!" }
+    }
+  ]
+}
