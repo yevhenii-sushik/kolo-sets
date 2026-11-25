@@ -14,6 +14,11 @@
       "speed": "Rodada relâmpago",
       "speedDesc": "Um minuto de reconhecimento rápido, palavras fracas primeiro",
       "needMore": "Precisa de pelo menos 4 palavras"
+    },
+    "words": {
+      "one": "{n} palavra",
+      "many": "{n} palavras",
+      "other": "{n} palavras"
     }
   },
   "share": {
@@ -373,6 +378,55 @@
   "empty": {
     "title": "Órbita vazia. Por enquanto.",
     "description": "Todo idioma começa com uma palavra. Crie um set e lance suas primeiras palavras em órbita, ou cole uma lista inteira de uma vez.",
-    "button": "Criar o primeiro set"
+    "button": "Criar o primeiro set",
+    "ready": "Escolher um set pronto"
+  },
+  "library": {
+    "setsCount": {
+      "one": "{n} set",
+      "many": "{n} sets",
+      "other": "{n} sets"
+    }
+  },
+  "ready": {
+    "title": "Sets prontos",
+    "subtitle": "Sets de palavras por tema, feitos pelo Kolo. Adicione um e comece a aprender agora: as palavras novas chegam no seu ritmo.",
+    "promo": "Sets por tema para iniciantes: adicione um e comece a aprender agora.",
+    "translations": "Idioma da tradução",
+    "addLevel": "Adicionar todos",
+    "addLevelHint": "Os sets vão para a pasta “{folder}”. As palavras novas chegam algumas por dia, então nada se acumula.",
+    "levelDone": "Todos adicionados",
+    "added": "Adicionado",
+    "add": "Adicionar set",
+    "learn": "Aprender agora",
+    "openSet": "Abrir set",
+    "addedToast": "Set adicionado",
+    "levelToast": "Adicionados: {sets}, na pasta “{folder}”",
+    "error": "Não deu para adicionar. Verifique sua conexão e tente de novo.",
+    "folder": "{level} · Kolo",
+    "none": "Ainda não há sets prontos para este idioma",
+    "noneText": "Estamos adicionando curso por curso. Enquanto isso, crie seu próprio set: leva um minuto.",
+    "levels": {
+      "A1": "Iniciante",
+      "A2": "Básico"
+    },
+    "topics": {
+      "greetings": "Cumprimentos e apresentações",
+      "numbers": "Números de 0 a 20",
+      "time": "Dias e horas",
+      "people": "Família e pessoas",
+      "food": "Comida e bebida",
+      "home": "Casa",
+      "city": "Cidade e transporte",
+      "shopping": "Compras e dinheiro",
+      "health": "Corpo e saúde",
+      "clothes": "Roupas e cores",
+      "weather": "Tempo, estações e meses",
+      "work": "Trabalho e estudos",
+      "leisure": "Tempo livre",
+      "verbs": "Verbos comuns",
+      "adjectives": "Adjetivos comuns",
+      "small-words": "Palavras pequenas"
+    }
   }
 }

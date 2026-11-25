@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate, useSearchParams } from "react-router-do
 import {
   Plus,
   Sparkles,
-  BookOpen,
   Folder,
   FolderOpen,
   FolderPlus,
@@ -17,7 +16,7 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { Badge, Button, Card, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text, cx } from "../../ui";
+import { Badge, Button, ButtonLink, Card, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text, cx } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { courseName } from "../../courses/languages";
@@ -63,15 +62,7 @@ import {
   arrayMove,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { KOLO_SETS_BY_LEVEL, CEFR_ORDER } from "../../data/kolo-sets";
-
-type Tab = "my" | "kolo";
-
-// Kolo Sets (готовые наборы) отложены на неопределённый срок — прячем
-// переключатель вкладок целиком, пока фича не готова. Один флаг вместо
-// закомментированного JSX: легко включить обратно (true), и ничего не
-// ломается из-за "неиспользуемых" импортов/стейта, как было в прошлый раз.
-const KOLO_SETS_ENABLED = false;
+import { hasPresets } from "../../presets";
 
 // Подсказка к полю поиска на компьютере: на Mac — ⌘K, иначе Ctrl K
 const FIND_SHORTCUT = /Mac|iPhone|iPad/.test(navigator.userAgent) ? "⌘K" : "Ctrl K";
@@ -99,35 +90,6 @@ const collisionDetection: CollisionDetection = (args) => {
   const targets = pointerWithin(args).filter((c) => String(c.id).startsWith("folder-") || c.id === ROOT_DROP);
   return targets.length > 0 ? targets : closestCenter(args);
 };
-
-// flex-1 на мобилке — оба таба ровно делят ширину строки (один слева,
-// другой справа), sm:flex-initial возвращает компактный wrap-to-content
-// на десктопе, где переключатель не обязан быть на всю ширину.
-function TabButton({
-  active,
-  onClick,
-  icon,
-  label,
-}: {
-  active: boolean;
-  onClick: () => void;
-  icon: React.ReactNode;
-  label: string;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-        active
-          ? "bg-accent text-on-accent shadow-md shadow-accent/20"
-          : "text-muted hover:bg-inset "
-      }`}
-    >
-      {icon}
-      {label}
-    </button>
-  );
-}
 
 // Форма списка наборов на время загрузки — те же карточки, что у CollectionCard
 const CollectionSkeleton = ({ label }: { label: string }) => (
@@ -380,7 +342,6 @@ export default function WordsPage() {
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
-  const [activeTab, setActiveTab] = useState<Tab>("my");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   // /words?new=1 — сразу создать набор: из вступления и «Первых шагов» на главной
   const [searchParams, setSearchParams] = useSearchParams();
@@ -440,7 +401,6 @@ export default function WordsPage() {
     window.addEventListener(FIND_WORD_EVENT, focusSearch);
     return () => window.removeEventListener(FIND_WORD_EVENT, focusSearch);
   }, [focusSearch]);
-  const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [orderedCollections, setOrderedCollections] = useState<Collection[]>(
     [],
   );
@@ -662,14 +622,28 @@ export default function WordsPage() {
     ? (orderedCollections.find((c) => c.id === draggedId) ?? null)
     : null;
 
-  const availableLevels = useMemo(
-    () => CEFR_ORDER.filter((lvl) => KOLO_SETS_BY_LEVEL[lvl]?.length > 0),
-    [],
+  // Готовые наборы курса (docs/specs/05-ready-sets.md). Пока из них ничего не взято, вход — над наборами,
+  // потом — под ними: кто уже учится, тому он не мешает
+  const presetsAvailable = activeCourse ? hasPresets(activeCourse.id) : false;
+  const anyPresetAdded = collections.some((c) => c.preset);
+  const readyLink = (
+    <Link
+      to="/words/ready"
+      className="flex items-center gap-4 rounded-3xl border border-line bg-surface p-4 transition-colors hover:bg-inset focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+    >
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-special-soft text-special">
+        <Sparkles size={20} aria-hidden />
+      </span>
+      <span className="grid min-w-0 flex-1 gap-0.5">
+        <span className="font-semibold text-fg">{t.words.ready.title}</span>
+        <span className="text-sm text-muted">{t.words.ready.promo}</span>
+      </span>
+      <ChevronRight size={18} aria-hidden className="shrink-0 text-faint" />
+    </Link>
   );
-  const activeLevel = selectedLevel ?? availableLevels[0] ?? null;
 
   // Искать есть в чём — только когда в курсе есть слова
-  const canSearch = contentReady && activeTab === "my" && collections.some((c) => c.cards.length > 0);
+  const canSearch = contentReady && collections.some((c) => c.cards.length > 0);
   const searching = canSearch && query.trim().length > 0;
   const search = useMemo(() => (searching ? searchCards(collections, query) : null), [searching, collections, query]);
   const wantsFind = Boolean((location.state as { findWord?: boolean } | null)?.findWord);
@@ -714,7 +688,7 @@ export default function WordsPage() {
 
   return (
     <div>
-      {/* ── Шапка: заголовок и действия. Вкладка Kolo Sets спрятана флагом KOLO_SETS_ENABLED ── */}
+      {/* ── Шапка: заголовок и действия ── */}
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4 sm:mb-8">
         {/* Заголовок — курс: на этой странице только его наборы и папки */}
         <div className="flex min-w-0 items-center gap-3">
@@ -731,25 +705,16 @@ export default function WordsPage() {
           </div>
         </div>
 
-        {KOLO_SETS_ENABLED && (
-          <div className="flex w-full items-stretch gap-1 rounded-2xl border border-line bg-surface p-1 sm:w-fit sm:items-center">
-            <TabButton active={activeTab === "my"} onClick={() => setActiveTab("my")} icon={<BookOpen size={16} />} label={t.words.tabs.my} />
-            <TabButton active={activeTab === "kolo"} onClick={() => setActiveTab("kolo")} icon={<Sparkles size={16} />} label={t.words.tabs.kolo} />
-          </div>
-        )}
-
-        {activeTab === "my" && (
-          <div className="flex items-center gap-2">
-            {!openFolder && (
-              <Button variant="secondary" iconLeft={<FolderPlus size={18} />} onClick={() => setFolderModal({ open: true, folder: null })}>
-                {lib.newFolder}
-              </Button>
-            )}
-            <Button iconLeft={<Plus size={18} />} onClick={() => setIsCreateModalOpen(true)}>
-              {t.words.addDeck}
+        <div className="flex items-center gap-2">
+          {!openFolder && (
+            <Button variant="secondary" iconLeft={<FolderPlus size={18} />} onClick={() => setFolderModal({ open: true, folder: null })}>
+              {lib.newFolder}
             </Button>
-          </div>
-        )}
+          )}
+          <Button iconLeft={<Plus size={18} />} onClick={() => setIsCreateModalOpen(true)}>
+            {t.words.addDeck}
+          </Button>
+        </div>
       </div>
 
       {/* ── Найти слово: во всех наборах курса, в том числе в папках ── */}
@@ -796,7 +761,7 @@ export default function WordsPage() {
           <CollectionSkeleton label={t.loading} />
         ) : search ? (
           <WordSearchResults query={query} results={search.results} total={search.total} />
-        ) : activeTab === "my" ? (
+        ) : (
           <>
             {collections.length === 0 && folders.length === 0 ? (
               <Card tone="inset" padding="lg" className="grid justify-items-center gap-4 py-10 text-center">
@@ -810,9 +775,20 @@ export default function WordsPage() {
                     {t.words.empty.description}
                   </Text>
                 </div>
-                <Button iconLeft={<Plus size={18} />} onClick={() => setIsCreateModalOpen(true)}>
-                  {t.words.empty.button}
-                </Button>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {presetsAvailable && (
+                    <ButtonLink to="/words/ready" iconLeft={<Sparkles size={18} />}>
+                      {t.words.empty.ready}
+                    </ButtonLink>
+                  )}
+                  <Button
+                    variant={presetsAvailable ? "secondary" : "primary"}
+                    iconLeft={<Plus size={18} />}
+                    onClick={() => setIsCreateModalOpen(true)}
+                  >
+                    {t.words.empty.button}
+                  </Button>
+                </div>
               </Card>
             ) : openFolder ? (
               /* ── Открытая папка (как в Finder). Шапка — цель «убрать из папки» при перетаскивании ── */
@@ -843,6 +819,7 @@ export default function WordsPage() {
               /* ── Корень: папки, избранное и наборы без папки в одном DndContext —
                    карточку можно перетащить на плитку папки ── */
               <DndContext sensors={sensors} collisionDetection={collisionDetection} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+                {presetsAvailable && !anyPresetAdded && <div className="mb-8">{readyLink}</div>}
                 {folders.length > 0 && (
                   <div className="mb-8">
                     <SectionLabel count={folders.length}>{lib.folders}</SectionLabel>
@@ -875,39 +852,11 @@ export default function WordsPage() {
                     </SortableContext>
                   </div>
                 )}
+                {presetsAvailable && anyPresetAdded && <div className="mt-8">{readyLink}</div>}
                 {dragOverlay}
               </DndContext>
             )}
           </>
-        ) : (
-          /* ── Вкладка Kolo Sets (спрятана флагом KOLO_SETS_ENABLED): уровни и заглушка «Скоро» ── */
-          <div className="grid gap-4">
-            <div className="flex flex-wrap gap-2">
-              {availableLevels.map((lvl) => (
-                <button
-                  key={lvl}
-                  type="button"
-                  aria-pressed={lvl === activeLevel}
-                  onClick={() => setSelectedLevel(lvl === activeLevel ? null : lvl)}
-                  className={cx(
-                    "h-9 rounded-full px-4 text-sm font-semibold transition-colors",
-                    lvl === activeLevel ? "bg-accent text-on-accent" : "bg-inset text-muted hover:text-fg",
-                  )}
-                >
-                  {lvl}
-                </button>
-              ))}
-            </div>
-            <Card padding="lg" className="grid justify-items-center gap-3 py-12 text-center">
-              <span className="mb-2 grid h-16 w-16 place-items-center rounded-full bg-accent-soft text-accent-ink">
-                <Sparkles size={28} />
-              </span>
-              <Heading size={2}>{t.words.soonTitle}</Heading>
-              <Text tone="muted" className="max-w-sm">
-                {t.words.soon}
-              </Text>
-            </Card>
-          </div>
         )}
       </div>
 

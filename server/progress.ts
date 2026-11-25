@@ -2,6 +2,7 @@
 import { randomInt } from "node:crypto";
 import { Timestamp } from "firebase-admin/firestore";
 import { applyCollectionUnlocks, applySession, checkPlausibility, type ProgressState, type SessionInput } from "./core/session";
+import { countCards } from "./core/cards";
 import { applyGoal, buyShield, syncProgress } from "./core/progression";
 import { craftItem, equipItem, grantBeta, openCapsule, satellitesOf, setSatellites, setShowcase, type Equipped, type LootState, type Slot } from "./core/loot";
 import type { OrbitState } from "./core/orbit";
@@ -94,8 +95,6 @@ const todayFor = (requested: unknown, data: FirebaseFirestore.DocumentData | und
   return { tz, today: dayKey(now, tz) };
 };
 
-const cardCount = (data: FirebaseFirestore.DocumentData | undefined) => (Array.isArray(data?.cards) ? data.cards.length : 0);
-
 // POST /api/session
 export async function recordSession(uid: string, s: SessionInput, now = new Date()): Promise<Reply> {
   const store = db();
@@ -120,9 +119,15 @@ export async function recordSession(uid: string, s: SessionInput, now = new Date
     // Наборы читаем сами: сколько в них карточек, решает сервер, а не клиент
     const sets = await tx.getAll(...s.collectionIds.map((id) => userRef.collection("collections").doc(id)));
     if (sets.some((d) => !d.exists)) return { status: 422, body: { error: "unknown-collection" } };
-    const cardsInSession = sets.reduce((n, d) => n + cardCount(d.data()), 0);
-    // Для достижений за слова — нижняя граница (наборы этой тренировки), полный подсчёт — в /api/achievements
-    const info = { cardsInSession, totalCards: cardsInSession, collectionsCount: sets.length };
+    // Правдоподобие — по всем карточкам, медали — по начатым словам (core/cards.ts). Для медалей это нижняя
+    // граница (наборы этой тренировки), полный подсчёт — в /api/achievements
+    const counts = countCards(sets.map((d) => d.data()));
+    const info = {
+      cardsInSession: counts.allCards,
+      totalCards: counts.startedCards,
+      collectionsCount: counts.startedSets,
+      hasCollection: sets.length > 0,
+    };
 
     const problem = checkPlausibility(s, info);
     if (problem) {
@@ -153,11 +158,8 @@ export async function recheckCollectionAchievements(uid: string, timezone?: unkn
   const store = db();
   const userRef = store.doc(`users/${uid}`);
   const sets = await userRef.collection("collections").get();
-  const info = {
-    cardsInSession: 0,
-    totalCards: sets.docs.reduce((n, d) => n + cardCount(d.data()), 0),
-    collectionsCount: sets.size,
-  };
+  const counts = countCards(sets.docs.map((d) => d.data()));
+  const info = { cardsInSession: 0, totalCards: counts.startedCards, collectionsCount: counts.startedSets, hasCollection: sets.size > 0 };
   return store.runTransaction(async (tx) => {
     const profile = await tx.get(userRef);
     if (!profile.exists) return { status: 409, body: { error: "no-profile" } };

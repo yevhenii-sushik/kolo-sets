@@ -1,11 +1,6 @@
 {
   "title": "My Library",
-  "koloSets": "Kolo Sets",
   "addDeck": "Create Set",
-  "tabs": {
-    "my": "My",
-    "kolo": "Kolo"
-  },
   "createModal": {
     "title": "New Collection",
     "nameLabel": "Collection Name",
@@ -283,7 +278,8 @@
   "empty": {
     "title": "Empty orbit. For now.",
     "description": "Every language starts with one word. Create a set and launch your first ones — or paste a whole list at once.",
-    "button": "Create first set"
+    "button": "Create first set",
+    "ready": "Pick a ready-made set"
   },
   "toast": {
     "createSuccess": "Deck created",
@@ -291,7 +287,6 @@
     "deleteError": "Delete failed",
     "createError": "Error creating collection"
   },
-  "soon": "We're already working on this section. It'll be up here very soon.",
   "library": {
     "newFolder": "New folder",
     "folders": "Folders",
@@ -445,7 +440,6 @@
     "dailyNew": "New words a day",
     "dailyNewHint": "How many new words Perigee starts each day across your course. Up to 6 in one session; reviews of earlier words come on top."
   },
-  "soonTitle": "Coming soon",
   "pos": {
     "noun": "noun",
     "verb": "verb",
@@ -499,6 +493,47 @@
       "doneNote": "Mistakes come back sooner — that's how words stick.",
       "tough": "Tough words",
       "selfNote": "Words you rated yourself on a flashcard don't count towards “First try”."
+    }
+  },
+  "ready": {
+    "title": "Ready-made sets",
+    "subtitle": "Themed word sets from Kolo. Add one and start learning right away: new words come in at your own pace.",
+    "promo": "Themed sets for beginners: add one and start learning right away.",
+    "translations": "Translations in",
+    "addLevel": "Add all",
+    "addLevelHint": "The sets go into the “{folder}” folder. New words come in a few a day, so nothing piles up.",
+    "levelDone": "All added",
+    "added": "Added",
+    "add": "Add set",
+    "learn": "Learn now",
+    "openSet": "Open set",
+    "addedToast": "Set added",
+    "levelToast": "{sets} added to the “{folder}” folder",
+    "error": "Couldn't add. Check your connection and try again.",
+    "folder": "{level} · Kolo",
+    "none": "No ready-made sets for this language yet",
+    "noneText": "We're adding them course by course. For now, create your own set: it takes a minute.",
+    "levels": {
+      "A1": "Beginner",
+      "A2": "Elementary"
+    },
+    "topics": {
+      "greetings": "Greetings and introductions",
+      "numbers": "Numbers 0–20",
+      "time": "Days and time",
+      "people": "Family and people",
+      "food": "Food and drink",
+      "home": "Home",
+      "city": "Town and transport",
+      "shopping": "Shopping and money",
+      "health": "Body and health",
+      "clothes": "Clothes and colours",
+      "weather": "Weather, seasons and months",
+      "work": "Work and study",
+      "leisure": "Free time",
+      "verbs": "Everyday verbs",
+      "adjectives": "Everyday adjectives",
+      "small-words": "Small words"
     }
   }
 }

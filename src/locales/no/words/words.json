@@ -1,11 +1,6 @@
 {
   "title": "Mitt bibliotek",
-  "koloSets": "Kolo Sets",
   "addDeck": "Opprett sett",
-  "tabs": {
-    "my": "Mine",
-    "kolo": "Kolo"
-  },
   "createModal": {
     "title": "Ny samling",
     "nameLabel": "Samlingsnavn",
@@ -283,7 +278,8 @@
   "empty": {
     "title": "Tom bane. Foreløpig.",
     "description": "Alle språk begynner med ett ord. Lag et sett og send de første ordene i bane – eller lim inn en hel liste på en gang.",
-    "button": "Lag første sett"
+    "button": "Lag første sett",
+    "ready": "Velg et ferdig sett"
   },
   "toast": {
     "createSuccess": "Sett opprettet",
@@ -291,7 +287,6 @@
     "deleteError": "Sletting mislyktes",
     "createError": "Feil ved oppretting av samling"
   },
-  "soon": "Vi jobber allerede med denne seksjonen. Den vil dukke opp her veldig snart.",
   "library": {
     "newFolder": "Ny mappe",
     "folders": "Mapper",
@@ -445,7 +440,6 @@
     "dailyNew": "Nye ord om dagen",
     "dailyNewHint": "Hvor mange nye ord Perigee begynner på hver dag i hele kurset. Opptil 6 i én økt; repetisjon av tidligere ord kommer i tillegg."
   },
-  "soonTitle": "Kommer snart",
   "pos": {
     "noun": "substantiv",
     "verb": "verb",
@@ -499,6 +493,47 @@
       "doneNote": "Feil kommer tilbake tidligere – det er slik ordene fester seg.",
       "tough": "Vanskelige ord",
       "selfNote": "Ord du vurderte selv på et flashkort, teller ikke med i «På første forsøk»."
+    }
+  },
+  "ready": {
+    "title": "Ferdige sett",
+    "subtitle": "Tematiske ordsett fra Kolo. Legg til et sett og begynn å lære med en gang: nye ord kommer i ditt eget tempo.",
+    "promo": "Tematiske sett for nybegynnere: legg til et og begynn å lære med en gang.",
+    "translations": "Oversettelsesspråk",
+    "addLevel": "Legg til alle",
+    "addLevelHint": "Settene havner i mappen «{folder}». Nye ord kommer noen få om dagen, så det hoper seg ikke opp.",
+    "levelDone": "Alle er lagt til",
+    "added": "Lagt til",
+    "add": "Legg til sett",
+    "learn": "Lær nå",
+    "openSet": "Åpne settet",
+    "addedToast": "Settet er lagt til",
+    "levelToast": "Lagt til: {sets} – i mappen «{folder}»",
+    "error": "Kunne ikke legge til. Sjekk nettet og prøv igjen.",
+    "folder": "{level} · Kolo",
+    "none": "Ingen ferdige sett for dette språket ennå",
+    "noneText": "Vi legger dem til kurs for kurs. Inntil videre kan du lage ditt eget sett – det tar et minutt.",
+    "levels": {
+      "A1": "Nybegynner",
+      "A2": "Grunnleggende"
+    },
+    "topics": {
+      "greetings": "Hilsener og presentasjon",
+      "numbers": "Tall 0–20",
+      "time": "Dager og tid",
+      "people": "Familie og folk",
+      "food": "Mat og drikke",
+      "home": "Hjemme",
+      "city": "Byen og transport",
+      "shopping": "Handel og penger",
+      "health": "Kropp og helse",
+      "clothes": "Klær og farger",
+      "weather": "Vær, årstider og måneder",
+      "work": "Jobb og skole",
+      "leisure": "Fritid",
+      "verbs": "Vanlige verb",
+      "adjectives": "Vanlige adjektiv",
+      "small-words": "Små ord"
     }
   }
 }

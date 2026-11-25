@@ -54,7 +54,9 @@ export const BLITZ_DEMON_ANSWERS = 30;
 export const checkAndUnlockAchievements = (
   profile: any,
   totalCards: number,
-  options: { collectionsCount?: number; session?: SessionExtras } = {}
+  // collectionsCount и totalCards сервер считает по начатым словам; hasCollection — есть хоть один набор
+  // (server/core/cards.ts, docs/specs/05-ready-sets.md)
+  options: { collectionsCount?: number; hasCollection?: boolean; session?: SessionExtras } = {}
 ): AchievementType[] => {
   const newAchievements: AchievementType[] = [];
   const unlockedSet = new Set<string>(profile.achievements ?? []);
@@ -73,7 +75,8 @@ export const checkAndUnlockAchievements = (
   const perfectQuizzes = stats.perfectQuizzes ?? 0;
 
   // First steps
-  check(AchievementType.FIRST_COLLECTION, collectionsCount >= 1 || totalCards > 0);
+  // Первый набор — разовая медаль первого шага: за любой набор, свой или готовый
+  check(AchievementType.FIRST_COLLECTION, options.hasCollection === true || collectionsCount >= 1 || totalCards > 0);
   check(AchievementType.FIRST_STUDY, flashcardSessions > 0 || quizzesTaken > 0);
 
   // Streaks

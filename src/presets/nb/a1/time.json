@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "mandag",
+      "word": "mandag",
+      "partOfSpeech": "noun",
+      "explanation": "Den første dagen i uken.",
+      "example": "På mandag begynner jeg på norskkurs.",
+      "translation": { "en": "Monday", "ru": "понедельник", "uk": "понеділок", "de": "der Montag", "es": "el lunes", "fr": "le lundi", "pt-BR": "a segunda-feira" }
+    },
+    {
+      "id": "tirsdag",
+      "word": "tirsdag",
+      "partOfSpeech": "noun",
+      "explanation": "Dagen etter mandag.",
+      "example": "Jeg trener hver tirsdag.",
+      "translation": { "en": "Tuesday", "ru": "вторник", "uk": "вівторок", "de": "der Dienstag", "es": "el martes", "fr": "le mardi", "pt-BR": "a terça-feira" }
+    },
+    {
+      "id": "onsdag",
+      "word": "onsdag",
+      "partOfSpeech": "noun",
+      "explanation": "Dagen midt i uken.",
+      "example": "Vi har møte på onsdag.",
+      "translation": { "en": "Wednesday", "ru": "среда", "uk": "середа", "de": "der Mittwoch", "es": "el miércoles", "fr": "le mercredi", "pt-BR": "a quarta-feira" }
+    },
+    {
+      "id": "torsdag",
+      "word": "torsdag",
+      "partOfSpeech": "noun",
+      "explanation": "Dagen før fredag.",
+      "example": "På torsdag er butikken åpen til klokka ni.",
+      "translation": { "en": "Thursday", "ru": "четверг", "uk": "четвер", "de": "der Donnerstag", "es": "el jueves", "fr": "le jeudi", "pt-BR": "a quinta-feira" }
+    },
+    {
+      "id": "fredag",
+      "word": "fredag",
+      "partOfSpeech": "noun",
+      "explanation": "Den siste arbeidsdagen i uken.",
+      "example": "Endelig fredag!",
+      "translation": { "en": "Friday", "ru": "пятница", "uk": "п'ятниця", "de": "der Freitag", "es": "el viernes", "fr": "le vendredi", "pt-BR": "a sexta-feira" }
+    },
+    {
+      "id": "lordag",
+      "word": "lørdag",
+      "partOfSpeech": "noun",
+      "explanation": "Den første dagen i helgen.",
+      "example": "På lørdag går vi på tur.",
+      "translation": { "en": "Saturday", "ru": "суббота", "uk": "субота", "de": "der Samstag", "es": "el sábado", "fr": "le samedi", "pt-BR": "o sábado" }
+    },
+    {
+      "id": "sondag",
+      "word": "søndag",
+      "partOfSpeech": "noun",
+      "explanation": "Den siste dagen i uken.",
+      "example": "Butikkene er stengt på søndag.",
+      "translation": { "en": "Sunday", "ru": "воскресенье", "uk": "неділя", "de": "der Sonntag", "es": "el domingo", "fr": "le dimanche", "pt-BR": "o domingo" }
+    },
+    {
+      "id": "dag",
+      "word": "en dag",
+      "partOfSpeech": "noun",
+      "explanation": "24 timer.",
+      "example": "Det er en fin dag i dag.",
+      "translation": { "en": "day", "ru": "день", "uk": "день", "de": "der Tag", "es": "el día", "fr": "le jour", "pt-BR": "o dia" }
+    },
+    {
+      "id": "uke",
+      "word": "en uke",
+      "partOfSpeech": "noun",
+      "explanation": "Sju dager, fra mandag til søndag.",
+      "example": "Jeg er i Oslo en uke.",
+      "translation": { "en": "week", "ru": "неделя", "uk": "тиждень", "de": "die Woche", "es": "la semana", "fr": "la semaine", "pt-BR": "a semana" }
+    },
+    {
+      "id": "helg",
+      "word": "en helg",
+      "partOfSpeech": "noun",
+      "explanation": "Lørdag og søndag.",
+      "example": "Hva skal du gjøre i helgen?",
+      "translation": { "en": "weekend", "ru": "выходные", "uk": "вихідні", "de": "das Wochenende", "es": "el fin de semana", "fr": "le week-end", "pt-BR": "o fim de semana" }
+    },
+    {
+      "id": "time",
+      "word": "en time",
+      "partOfSpeech": "noun",
+      "explanation": "60 minutter.",
+      "example": "Filmen er to timer lang.",
+      "translation": { "en": "hour", "ru": "час", "uk": "година", "de": "die Stunde", "es": "la hora", "fr": "l'heure", "pt-BR": "a hora" }
+    },
+    {
+      "id": "minutt",
+      "word": "et minutt",
+      "partOfSpeech": "noun",
+      "explanation": "60 sekunder.",
+      "example": "Vent et minutt!",
+      "translation": { "en": "minute", "ru": "минута", "uk": "хвилина", "de": "die Minute", "es": "el minuto", "fr": "la minute", "pt-BR": "o minuto" }
+    },
+    {
+      "id": "i-dag",
+      "word": "i dag",
+      "partOfSpeech": "adverb",
+      "explanation": "Denne dagen.",
+      "example": "I dag er det mandag.",
+      "translation": { "en": "today", "ru": "сегодня", "uk": "сьогодні", "de": "heute", "es": "hoy", "fr": "aujourd'hui", "pt-BR": "hoje" }
+    },
+    {
+      "id": "i-morgen",
+      "word": "i morgen",
+      "partOfSpeech": "adverb",
+      "explanation": "Dagen etter i dag.",
+      "example": "Vi sees i morgen!",
+      "translation": { "en": "tomorrow", "ru": "завтра", "uk": "завтра", "de": "morgen", "es": "mañana", "fr": "demain", "pt-BR": "amanhã" }
+    },
+    {
+      "id": "i-gar",
+      "word": "i går",
+      "partOfSpeech": "adverb",
+      "explanation": "Dagen før i dag.",
+      "example": "I går var jeg på jobb.",
+      "translation": { "en": "yesterday", "ru": "вчера", "uk": "вчора", "de": "gestern", "es": "ayer", "fr": "hier", "pt-BR": "ontem" }
+    },
+    {
+      "id": "na",
+      "word": "nå",
+      "partOfSpeech": "adverb",
+      "explanation": "Akkurat i dette øyeblikket.",
+      "example": "Jeg må gå nå.",
+      "translation": { "en": "now", "ru": "сейчас", "uk": "зараз", "de": "jetzt", "es": "ahora", "fr": "maintenant", "pt-BR": "agora" }
+    },
+    {
+      "id": "morgen",
+      "word": "en morgen",
+      "partOfSpeech": "noun",
+      "explanation": "Den første delen av dagen.",
+      "example": "Jeg drikker kaffe hver morgen.",
+      "translation": { "en": "morning", "ru": "утро", "uk": "ранок", "de": "der Morgen", "es": "la mañana", "fr": "le matin", "pt-BR": "a manhã" }
+    },
+    {
+      "id": "kveld",
+      "word": "en kveld",
+      "partOfSpeech": "noun",
+      "explanation": "Den siste delen av dagen, før natten.",
+      "example": "Hva gjør du i kveld?",
+      "translation": { "en": "evening", "ru": "вечер", "uk": "вечір", "de": "der Abend", "es": "la noche (antes de dormir)", "fr": "le soir", "pt-BR": "a noite (antes de dormir)" }
+    },
+    {
+      "id": "natt",
+      "word": "en natt",
+      "partOfSpeech": "noun",
+      "explanation": "Når det er mørkt og vi sover.",
+      "example": "Jeg sov godt i natt.",
+      "translation": { "en": "night", "ru": "ночь", "uk": "ніч", "de": "die Nacht", "es": "la noche (cuando dormimos)", "fr": "la nuit", "pt-BR": "a noite (quando dormimos)" }
+    },
+    {
+      "id": "hva-er-klokka",
+      "word": "Hva er klokka?",
+      "partOfSpeech": "phrase",
+      "explanation": "Vi spør hvor mye klokka er.",
+      "example": "Unnskyld, hva er klokka? – Den er fem.",
+      "translation": { "en": "What time is it?", "ru": "Который час?", "uk": "Котра година?", "de": "Wie spät ist es?", "es": "¿Qué hora es?", "fr": "Quelle heure est-il ?", "pt-BR": "Que horas são?" }
+    }
+  ]
+}

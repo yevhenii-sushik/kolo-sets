@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "null",
+      "word": "null",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Det er null grader ute.",
+      "translation": { "en": "zero", "ru": "ноль", "uk": "нуль", "de": "null", "es": "cero", "fr": "zéro", "pt-BR": "zero" }
+    },
+    {
+      "id": "en",
+      "word": "en, ett",
+      "partOfSpeech": "numeral",
+      "explanation": "«Ett» bruker vi med et-ord: ett eple, ett hus.",
+      "example": "Jeg vil ha ett eple, takk.",
+      "translation": { "en": "one", "ru": "один", "uk": "один", "de": "eins", "es": "uno", "fr": "un", "pt-BR": "um" }
+    },
+    {
+      "id": "to",
+      "word": "to",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Vi har to katter.",
+      "translation": { "en": "two", "ru": "два", "uk": "два", "de": "zwei", "es": "dos", "fr": "deux", "pt-BR": "dois" }
+    },
+    {
+      "id": "tre",
+      "word": "tre",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Klokka er tre.",
+      "translation": { "en": "three", "ru": "три", "uk": "три", "de": "drei", "es": "tres", "fr": "trois", "pt-BR": "três" }
+    },
+    {
+      "id": "fire",
+      "word": "fire",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Vi er fire i familien.",
+      "translation": { "en": "four", "ru": "четыре", "uk": "чотири", "de": "vier", "es": "cuatro", "fr": "quatre", "pt-BR": "quatro" }
+    },
+    {
+      "id": "fem",
+      "word": "fem",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Butikken åpner om fem minutter.",
+      "translation": { "en": "five", "ru": "пять", "uk": "п'ять", "de": "fünf", "es": "cinco", "fr": "cinq", "pt-BR": "cinco" }
+    },
+    {
+      "id": "seks",
+      "word": "seks",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Jeg står opp klokka seks.",
+      "translation": { "en": "six", "ru": "шесть", "uk": "шість", "de": "sechs", "es": "seis", "fr": "six", "pt-BR": "seis" }
+    },
+    {
+      "id": "sju",
+      "word": "sju, syv",
+      "partOfSpeech": "numeral",
+      "explanation": "Begge formene er riktige.",
+      "example": "Det er sju dager i en uke.",
+      "translation": { "en": "seven", "ru": "семь", "uk": "сім", "de": "sieben", "es": "siete", "fr": "sept", "pt-BR": "sete" }
+    },
+    {
+      "id": "atte",
+      "word": "åtte",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Skolen begynner klokka åtte.",
+      "translation": { "en": "eight", "ru": "восемь", "uk": "вісім", "de": "acht", "es": "ocho", "fr": "huit", "pt-BR": "oito" }
+    },
+    {
+      "id": "ni",
+      "word": "ni",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Hun er ni år gammel.",
+      "translation": { "en": "nine", "ru": "девять", "uk": "дев'ять", "de": "neun", "es": "nueve", "fr": "neuf", "pt-BR": "nove" }
+    },
+    {
+      "id": "ti",
+      "word": "ti",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Det koster ti kroner.",
+      "translation": { "en": "ten", "ru": "десять", "uk": "десять", "de": "zehn", "es": "diez", "fr": "dix", "pt-BR": "dez" }
+    },
+    {
+      "id": "elleve",
+      "word": "elleve",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Vi spiser lunsj klokka elleve.",
+      "translation": { "en": "eleven", "ru": "одиннадцать", "uk": "одинадцять", "de": "elf", "es": "once", "fr": "onze", "pt-BR": "onze" }
+    },
+    {
+      "id": "tolv",
+      "word": "tolv",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Et år har tolv måneder.",
+      "translation": { "en": "twelve", "ru": "двенадцать", "uk": "дванадцять", "de": "zwölf", "es": "doce", "fr": "douze", "pt-BR": "doze" }
+    },
+    {
+      "id": "tretten",
+      "word": "tretten",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Bussen kommer om tretten minutter.",
+      "translation": { "en": "thirteen", "ru": "тринадцать", "uk": "тринадцять", "de": "dreizehn", "es": "trece", "fr": "treize", "pt-BR": "treze" }
+    },
+    {
+      "id": "fjorten",
+      "word": "fjorten",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Ferien varer i fjorten dager.",
+      "translation": { "en": "fourteen", "ru": "четырнадцать", "uk": "чотирнадцять", "de": "vierzehn", "es": "catorce", "fr": "quatorze", "pt-BR": "catorze, quatorze" }
+    },
+    {
+      "id": "femten",
+      "word": "femten",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Jeg bor i nummer femten.",
+      "translation": { "en": "fifteen", "ru": "пятнадцать", "uk": "п'ятнадцять", "de": "fünfzehn", "es": "quince", "fr": "quinze", "pt-BR": "quinze" }
+    },
+    {
+      "id": "seksten",
+      "word": "seksten",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Broren min er seksten år.",
+      "translation": { "en": "sixteen", "ru": "шестнадцать", "uk": "шістнадцять", "de": "sechzehn", "es": "dieciséis", "fr": "seize", "pt-BR": "dezesseis" }
+    },
+    {
+      "id": "sytten",
+      "word": "sytten",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Klassen har sytten elever.",
+      "translation": { "en": "seventeen", "ru": "семнадцать", "uk": "сімнадцять", "de": "siebzehn", "es": "diecisiete", "fr": "dix-sept", "pt-BR": "dezessete" }
+    },
+    {
+      "id": "atten",
+      "word": "atten",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Jeg er atten år.",
+      "translation": { "en": "eighteen", "ru": "восемнадцать", "uk": "вісімнадцять", "de": "achtzehn", "es": "dieciocho", "fr": "dix-huit", "pt-BR": "dezoito" }
+    },
+    {
+      "id": "nitten",
+      "word": "nitten",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Det er nitten grader i dag.",
+      "translation": { "en": "nineteen", "ru": "девятнадцать", "uk": "дев'ятнадцять", "de": "neunzehn", "es": "diecinueve", "fr": "dix-neuf", "pt-BR": "dezenove" }
+    },
+    {
+      "id": "tjue",
+      "word": "tjue",
+      "partOfSpeech": "numeral",
+      "explanation": "Gammel form: tyve.",
+      "example": "Jeg har tjue kroner.",
+      "translation": { "en": "twenty", "ru": "двадцать", "uk": "двадцять", "de": "zwanzig", "es": "veinte", "fr": "vingt", "pt-BR": "vinte" }
+    }
+  ]
+}

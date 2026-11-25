@@ -1,4 +1,4 @@
-import { Collection, Card, SRSData } from '../types';
+import { Collection, Card } from '../types';
 import { auth } from '../firebase/config';
 import {
   getUserCollections,
@@ -10,6 +10,7 @@ import {
 
 // SRS-логика живёт в чистом модуле srs.ts (с тестами); реэкспорт — для существующих импортов
 export { isNewCard, isDueCard, updateSRSData } from './srs';
+import { initialSRS } from './srs';
 
 const STORAGE_KEY = 'language_cards_collections';
 const THEME_KEY = 'language_cards_theme';
@@ -106,6 +107,16 @@ export const createCollection = async (name: string, language: string = 'nb-NO',
   return newCollection;
 };
 
+// Сохранить готовый набор целиком (с карточками) — набор Kolo, собранный в presets/build.ts
+export const addCollection = async (newCollection: Collection): Promise<void> => {
+  const user = auth.currentUser;
+  if (user) {
+    await saveUserCollection(user.uid, newCollection);
+  } else {
+    saveLocalCollections([...getLocalCollections(), newCollection]);
+  }
+};
+
 // Обновить коллекцию
 export const updateCollection = async (updatedCollection: Collection): Promise<void> => {
   const user = auth.currentUser;
@@ -164,13 +175,6 @@ export const createCard = (
   example: string,
   partOfSpeech: string
 ): Card => {
-  const initialSRS: SRSData = {
-    easinessFactor: 2.5,
-    interval: 0,
-    repetitions: 0,
-    nextReview: new Date()
-  };
-  
   return {
     id: crypto.randomUUID(),
     word,
@@ -178,7 +182,7 @@ export const createCard = (
     explanation,
     example,
     partOfSpeech,
-    srsData: initialSRS,
+    srsData: initialSRS(new Date()),
     createdAt: new Date()
   };
 };

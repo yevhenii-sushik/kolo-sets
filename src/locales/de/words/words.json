@@ -14,6 +14,10 @@
       "speed": "Blitzrunde",
       "speedDesc": "Eine Minute blitzschnelles Erkennen, schwache Wörter zuerst",
       "needMore": "Mindestens 4 Wörter nötig"
+    },
+    "words": {
+      "one": "{n} Wort",
+      "other": "{n} Wörter"
     }
   },
   "share": {
@@ -373,6 +377,54 @@
   "empty": {
     "title": "Leerer Orbit. Noch.",
     "description": "Jede Sprache beginnt mit einem Wort. Erstell ein Set und schick die ersten Wörter in den Orbit – oder füg gleich eine ganze Liste ein.",
-    "button": "Erstes Set erstellen"
+    "button": "Erstes Set erstellen",
+    "ready": "Fertiges Set wählen"
+  },
+  "library": {
+    "setsCount": {
+      "one": "{n} Set",
+      "other": "{n} Sets"
+    }
+  },
+  "ready": {
+    "title": "Fertige Sets",
+    "subtitle": "Wortsets nach Themen von Kolo. Füge eins hinzu und lern sofort los: Neue Wörter kommen in deinem Tempo.",
+    "promo": "Themen-Sets für Anfänger: hinzufügen und sofort loslernen.",
+    "translations": "Übersetzungssprache",
+    "addLevel": "Alle hinzufügen",
+    "addLevelHint": "Die Sets landen im Ordner „{folder}“. Neue Wörter kommen nach und nach, ein paar am Tag – so wird es nie zu viel.",
+    "levelDone": "Alle hinzugefügt",
+    "added": "Hinzugefügt",
+    "add": "Set hinzufügen",
+    "learn": "Jetzt lernen",
+    "openSet": "Set öffnen",
+    "addedToast": "Set hinzugefügt",
+    "levelToast": "Hinzugefügt: {sets} – im Ordner „{folder}“",
+    "error": "Hinzufügen hat nicht geklappt. Prüf deine Verbindung und versuch es noch mal.",
+    "folder": "{level} · Kolo",
+    "none": "Für diese Sprache gibt es noch keine fertigen Sets",
+    "noneText": "Wir ergänzen sie Kurs für Kurs. Bis dahin erstell dein eigenes Set – das dauert nur eine Minute.",
+    "levels": {
+      "A1": "Anfänger",
+      "A2": "Grundlagen"
+    },
+    "topics": {
+      "greetings": "Begrüßung und Vorstellung",
+      "numbers": "Zahlen 0–20",
+      "time": "Tage und Uhrzeit",
+      "people": "Familie und Menschen",
+      "food": "Essen und Trinken",
+      "home": "Zu Hause",
+      "city": "Stadt und Verkehr",
+      "shopping": "Einkaufen und Geld",
+      "health": "Körper und Gesundheit",
+      "clothes": "Kleidung und Farben",
+      "weather": "Wetter, Jahreszeiten und Monate",
+      "work": "Arbeit und Lernen",
+      "leisure": "Freizeit",
+      "verbs": "Häufige Verben",
+      "adjectives": "Häufige Adjektive",
+      "small-words": "Kleine Wörter"
+    }
   }
 }

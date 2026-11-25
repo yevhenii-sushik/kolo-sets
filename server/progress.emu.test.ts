@@ -126,6 +126,11 @@ describe("POST /api/session", () => {
 
 describe("POST /api/achievements", () => {
   it("открывает достижения за наборы и слова по данным сервера, один раз", async () => {
+    // Медали считают только начатые слова (core/cards.ts) — у каждого слова здесь по одной оценке
+    const started = (n: number) => cards(n).map((c) => ({ ...c, srsData: { interval: 1, repetitions: 1, totalReviews: 1 } }));
+    const sets = db().doc(`users/${UID}`).collection("collections");
+    await sets.doc("set-a").set({ name: "A", cards: started(6) });
+    await sets.doc("set-b").set({ name: "B", cards: started(6) });
     const first = await (await call(achievementsFn, {})).json();
     expect(first.newAchievements).toEqual(expect.arrayContaining([AchievementType.FIRST_COLLECTION, AchievementType.CARDS_10]));
     expect(first.newAchievements).not.toContain(AchievementType.NIGHT_OWL);
@@ -133,6 +138,11 @@ describe("POST /api/achievements", () => {
     expect((await db().doc(`users/${UID}`).get()).data()!.xp).toBe(first.progression.xp.total);
     const second = await (await call(achievementsFn, {})).json();
     expect(second.newAchievements).toEqual([]);
+  });
+
+  it("ни одного начатого слова (готовые наборы без тренировки) — только медаль за первый набор", async () => {
+    const body = await (await call(achievementsFn, {})).json();
+    expect(body.newAchievements).toEqual([AchievementType.FIRST_COLLECTION]);
   });
 });
 

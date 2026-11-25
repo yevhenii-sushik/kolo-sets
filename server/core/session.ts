@@ -56,10 +56,12 @@ export interface ProgressState extends Omit<ProgressionState, "studyHistory"> {
 }
 
 // Что сервер сам прочитал о наборах пользователя
+// Медали считают только начатое: готовый набор Kolo добавляется одним нажатием (cards.ts, docs/specs/05-ready-sets.md)
 export interface CollectionsInfo {
-  cardsInSession: number; // карточек в наборах этой тренировки
-  totalCards: number; // карточек во всех наборах
-  collectionsCount: number;
+  cardsInSession: number; // все карточки в наборах этой тренировки — для проверки правдоподобия
+  totalCards: number; // начатые слова — медали за слова
+  collectionsCount: number; // наборы с начатыми словами — медали за 3 и 5 наборов
+  hasCollection?: boolean; // есть хоть один набор, даже не начатый, — медаль за первый набор
 }
 
 export interface SessionResult {
@@ -209,6 +211,7 @@ export function applySession(
   const achievements = state.achievements ?? [];
   const newAchievements = checkAndUnlockAchievements({ achievements, stats, currentStreak: current }, info.totalCards, {
     collectionsCount: info.collectionsCount,
+    hasCollection: info.hasCollection,
     session: {
       duration: s.durationSec,
       // «Знаю всё!» — только за сессию Perigee, где каждое слово проверено ответом. Самооценка флэшкарт
@@ -260,7 +263,7 @@ export function collectionAchievements(state: ProgressState, info: CollectionsIn
   return checkAndUnlockAchievements(
     { achievements: state.achievements ?? [], stats: { ...STAT_DEFAULTS, ...state.stats }, currentStreak: state.currentStreak ?? 0 },
     info.totalCards,
-    { collectionsCount: info.collectionsCount },
+    { collectionsCount: info.collectionsCount, hasCollection: info.hasCollection },
   );
 }
 

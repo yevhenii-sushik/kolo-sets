@@ -105,6 +105,14 @@ export interface Card {
   partOfSpeech: string;      // Часть речи
   srsData: SRSData;         // Данные для интервального повторения
   createdAt: Date;
+  presetCardId?: string;     // id карточки в готовом наборе Kolo — по нему исправляем текст, не трогая расписание (docs/specs/05-ready-sets.md)
+}
+
+// Откуда взят готовый набор Kolo: какой, какой версии и с переводом на какой язык
+export interface CollectionPreset {
+  id: string;      // 'nb-a1-food'
+  version: number;
+  lang: string;    // язык перевода — код языка интерфейса: 'ru', 'pt-BR'…
 }
 
 // Папка для группировки коллекций
@@ -135,6 +143,7 @@ export interface Collection {
   order?: number;            // Позиция для ручной сортировки
   folderId?: string;         // ID папки (undefined = без папки)
   courseId?: string;         // ID курса; у старых наборов нет — проставляется при загрузке
+  preset?: CollectionPreset; // набор взят из готовых наборов Kolo
 }
 
 // Статистика сессии флешкарточек

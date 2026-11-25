@@ -26,7 +26,7 @@ const addDays = (d: Date, days: number) => {
   return next;
 };
 
-const initialSRS = (now: Date): SRSData => ({ easinessFactor: 2.5, interval: 0, repetitions: 0, nextReview: now });
+export const initialSRS = (now: Date): SRSData => ({ easinessFactor: 2.5, interval: 0, repetitions: 0, nextReview: now });
 
 // Новая карточка: ещё ни разу не тренировалась (после первой же оценки interval ≥ 1)
 export const isNewCard = (card: Card): boolean => !card.srsData || card.srsData.interval === 0;
