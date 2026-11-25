@@ -1,4 +1,4 @@
-import { ArrowUpRight, Bell } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { Text } from "../../ui";
@@ -78,12 +78,12 @@ export default function ExplorePage() {
         domain="boey.dakuta.dev"
         action={
           <>
-            <Bell size={16} />
-            {e.notifyMe}
+            {e.visit}
+            <ArrowUpRight size={16} />
           </>
         }
       >
-        <span className="rounded-full bg-[#C0553B]/10 px-3 py-1 text-xs font-semibold text-[#C0553B]">{e.comingSoon}</span>
+        <span className="rounded-full bg-[#C0553B]/10 px-3 py-1 text-xs font-semibold text-[#C0553B]">{e.preProduction}</span>
         <p className="font-display text-4xl font-extrabold leading-none sm:text-5xl">
           Bøy<span className="text-[#C0553B]">!</span>
         </p>

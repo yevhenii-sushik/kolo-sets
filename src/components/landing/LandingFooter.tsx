@@ -80,7 +80,7 @@ export default function LandingFooter() {
       links: [
         { label: f.about, href: "https://dakuta.dev", external: true },
         { label: f.woky, href: "https://woky.dakuta.dev", external: true },
-        { label: f.boey, href: "https://boey.dakuta.dev", external: true, badge: f.soon },
+        { label: f.boey, href: "https://boey.dakuta.dev", external: true, badge: f.preProduction },
       ],
     },
     {

@@ -526,7 +526,7 @@ export default function LandingPage() {
                     <span className="font-display text-xl font-extrabold text-fg">
                       Bøy<span className="text-[#C0553B]">!</span>
                     </span>
-                    <Badge tone="warning">{e.comingSoon}</Badge>
+                    <Badge tone="warning">{e.preProduction}</Badge>
                   </span>
                   <span className="text-sm text-muted">{e.boey.tagline}</span>
                 </span>
