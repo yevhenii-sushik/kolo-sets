@@ -65,8 +65,9 @@
   },
   "stats": {
     "totalWords": "Words",
-    "sessions": "Flashcard sessions",
+    "sessions": "Perigee & flashcards",
     "quizzes": "Quizzes",
+    "blitz": "Blitz rounds",
     "inLearning": "Time practising",
     "weekTitle": "Last 7 days",
     "weekSessions": "Sessions",
@@ -153,19 +154,19 @@
     },
     "flashcards_1": {
       "name": "First encounter",
-      "description": "Finish your first flashcard session"
+      "description": "Finish your first Perigee or flashcard session"
     },
     "flashcards_10": {
-      "name": "Flashcard rookie",
-      "description": "Finish 10 flashcard sessions"
+      "name": "Card rookie",
+      "description": "Finish 10 Perigee or flashcard sessions"
     },
     "flashcards_50": {
-      "name": "Flashcard master",
-      "description": "Finish 50 flashcard sessions"
+      "name": "Card master",
+      "description": "Finish 50 Perigee or flashcard sessions"
     },
     "flashcards_100": {
-      "name": "Flashcard ace",
-      "description": "Finish 100 flashcard sessions"
+      "name": "Card ace",
+      "description": "Finish 100 Perigee or flashcard sessions"
     },
     "quiz_1": {
       "name": "First exam",

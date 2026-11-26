@@ -33,6 +33,24 @@ export function SetPlanBar({ plan, thin = false, className }: { plan: SetPlan; t
   );
 }
 
+/** Легенда плана: точка, ступень и число слов — только ступени, где слова есть */
+export function SetPlanLegend({ plan, className }: { plan: SetPlan; className?: string }) {
+  const { t } = useI18n();
+  const p = t.words.setPlan;
+  const labels = { strong: p.strong, growing: p.growing, learning: p.learning, fresh: p.fresh };
+  return (
+    <div className={cx("flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted", className)}>
+      {SEGMENTS.filter((s) => plan[s.key] > 0).map((s) => (
+        <span key={s.key} className="flex items-center gap-1.5">
+          {/* У новых точка темнее дорожки: на подложке панели дорожка сливалась (как пустые точки силы слова) */}
+          <span className={cx("h-2 w-2 rounded-full", s.key === "fresh" ? "bg-faint/45" : s.bar)} />
+          {labels[s.key]} <span className="font-semibold tabular-nums text-fg">{plan[s.key]}</span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
 /** План набора в окне «Учить»: полоса, легенда, срок новых слов и темп */
 export function SetPlanPanel({ collection }: { collection: Collection }) {
   const { t, language } = useI18n();
@@ -48,8 +66,6 @@ export function SetPlanPanel({ collection }: { collection: Collection }) {
   const days = daysToStart(plan.fresh, newLeftToday(course, new Date(), dailyNew), dailyNew);
   const eta =
     plan.fresh === 0 ? p.allStarted : days === 0 ? p.today : plural(locale, days, p.eta).replace("{d}", String(dailyNew));
-  const labels = { strong: p.strong, growing: p.growing, learning: p.learning, fresh: p.fresh };
-
   const change = (n: DailyNew) => {
     setDailyNew(n);
     saveDailyNew(n);
@@ -62,15 +78,7 @@ export function SetPlanPanel({ collection }: { collection: Collection }) {
         <p className="text-xs tabular-nums text-muted">{plural(locale, plan.total, t.words.collectionCard.words)}</p>
       </div>
       <SetPlanBar plan={plan} />
-      <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted">
-        {SEGMENTS.filter((s) => plan[s.key] > 0).map((s) => (
-          <span key={s.key} className="flex items-center gap-1.5">
-            {/* У новых точка темнее дорожки: на подложке панели дорожка сливалась (как пустые точки силы слова) */}
-            <span className={cx("h-2 w-2 rounded-full", s.key === "fresh" ? "bg-faint/45" : s.bar)} />
-            {labels[s.key]} <span className="font-semibold tabular-nums text-fg">{plan[s.key]}</span>
-          </span>
-        ))}
-      </div>
+      <SetPlanLegend plan={plan} />
       <p className="text-sm text-fg">{eta}</p>
       {/* Темп — только когда есть что начинать: от него зависит срок выше */}
       {plan.fresh > 0 && (

@@ -19,6 +19,33 @@
     "all_know": {
       "name": "Alles gewusst!",
       "description": "Beantworte in einer Perigee-Session jedes Wort beim ersten Versuch richtig – jedes per Antwort geprüft, nicht selbst bewertet"
+    },
+    "flashcards_1": {
+      "name": "Erste Begegnung",
+      "description": "Schließe deine erste Perigee- oder Karteikarten-Session ab"
+    },
+    "flashcards_10": {
+      "name": "Karten-Neuling",
+      "description": "Schließe 10 Perigee- oder Karteikarten-Sessions ab"
+    },
+    "flashcards_50": {
+      "name": "Kartenmeister",
+      "description": "Schließe 50 Perigee- oder Karteikarten-Sessions ab"
+    },
+    "flashcards_100": {
+      "name": "Kartenass",
+      "description": "Schließe 100 Perigee- oder Karteikarten-Sessions ab"
     }
+  },
+  "stats": {
+    "totalWords": "Wörter",
+    "sessions": "Perigee & Karteikarten",
+    "quizzes": "Quizze",
+    "blitz": "Blitzrunden",
+    "inLearning": "Übungszeit",
+    "weekTitle": "Letzte 7 Tage",
+    "weekSessions": "Sessions",
+    "cardsStudied": "Karten",
+    "studyTime": "Zeit"
   }
 }

@@ -19,6 +19,33 @@
     "all_know": {
       "name": "Je sais tout !",
       "description": "Réponds juste du premier coup à tous les mots d'une séance Perigee, chacun vérifié par une réponse et non par ta propre note"
+    },
+    "flashcards_1": {
+      "name": "Première rencontre",
+      "description": "Termine ta première séance Perigee ou de cartes mémoire"
+    },
+    "flashcards_10": {
+      "name": "Apprenti des cartes",
+      "description": "Termine 10 séances Perigee ou de cartes mémoire"
+    },
+    "flashcards_50": {
+      "name": "Maître des cartes",
+      "description": "Termine 50 séances Perigee ou de cartes mémoire"
+    },
+    "flashcards_100": {
+      "name": "As des cartes",
+      "description": "Termine 100 séances Perigee ou de cartes mémoire"
     }
+  },
+  "stats": {
+    "totalWords": "Mots",
+    "sessions": "Perigee et cartes mémoire",
+    "quizzes": "Quiz",
+    "blitz": "Manches de Blitz",
+    "inLearning": "Temps de pratique",
+    "weekTitle": "7 derniers jours",
+    "weekSessions": "Séances",
+    "cardsStudied": "Cartes",
+    "studyTime": "Temps"
   }
 }

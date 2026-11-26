@@ -37,7 +37,10 @@
         }
       ],
       "fixes": [
-        "«Logg inn»-knappen finnes nå i toppen av nettstedet også på mobil."
+        "«Logg inn»-knappen finnes nå i toppen av nettstedet også på mobil.",
+        "Fremdriften mot medaljer telles nå på samme måte som medaljene selv, etter ordene og settene du har begynt på, så en stolpe står ikke lenger full ved en låst medalje. Hjem og profilen viser like mange medaljer.",
+        "Statistikken i profilen viser nå lynrunder, og telleren som het «Flashkortøkter», heter det den teller: «Perigee og flashkort». En lynrunde gir nå også medaljen for første økt.",
+        "Siden for et sett viser planen, med ord som sitter, fester seg, læres og er nye, i stedet for «Lært», som talte hvert ord etter ett riktig svar."
       ]
     },
     {

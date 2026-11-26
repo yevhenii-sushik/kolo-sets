@@ -24,6 +24,8 @@ import CardListItem from "../../components/cards/CardListItem";
 import ShareCardModal from "../../components/cards/ShareCardModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import StudyModeModal from "../../components/cards/StudyModeModal";
+import { SetPlanBar, SetPlanLegend } from "../../components/cards/SetPlanView";
+import { setPlan } from "../../perigee/setPlan";
 import ReportMistakeModal, { type ReportTarget } from "../../components/presets/ReportMistakeModal";
 import Toast from "../../components/ui/Toast";
 
@@ -144,11 +146,9 @@ export default function CollectionEditPage() {
     return () => clearTimeout(timer);
   }, [highlightId]);
 
-  const learnedCount = useMemo(() => {
-    return (
-      collection?.cards.filter((c: Card) => c.srsData.interval > 0).length || 0
-    );
-  }, [collection]);
+  // Где набор сейчас — по силе памяти, как в окне «Учить» и на карточке набора. Раньше здесь было «Выучено» —
+  // любое слово с интервалом больше нуля, то есть после одного верного ответа (docs/specs/06-audit-fixes.md, шаг 1)
+  const plan = useMemo(() => (collection ? setPlan(collection.cards) : null), [collection]);
 
   const handleAddCard = async (
     cardData: Omit<Card, "id" | "srsData" | "createdAt">,
@@ -354,9 +354,13 @@ export default function CollectionEditPage() {
             )}
           </div>
           {collection && (
-            <Text tone="muted">
-              {plural(getLanguageInfo(language).htmlLang, cardCount, t.words.collectionCard.words)} · {e.learned}: {learnedCount}
-            </Text>
+            <Text tone="muted">{plural(getLanguageInfo(language).htmlLang, cardCount, t.words.collectionCard.words)}</Text>
+          )}
+          {plan && plan.total > 0 && (
+            <div className="grid max-w-sm gap-2">
+              <SetPlanBar plan={plan} thin />
+              <SetPlanLegend plan={plan} />
+            </div>
           )}
         </motion.div>
         <div className="flex flex-wrap gap-2">{actions(false)}</div>

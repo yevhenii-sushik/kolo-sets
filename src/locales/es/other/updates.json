@@ -37,7 +37,10 @@
         }
       ],
       "fixes": [
-        "El botón «Iniciar sesión» ahora también está en la cabecera del sitio en el móvil."
+        "El botón «Iniciar sesión» ahora también está en la cabecera del sitio en el móvil.",
+        "El progreso hacia las medallas se cuenta igual que las propias medallas, por las palabras y los sets que ya empezaste, así que una barra ya no aparece llena junto a una medalla bloqueada. Inicio y tu perfil muestran el mismo número de medallas.",
+        "Las estadísticas del perfil ahora incluyen las rondas relámpago, y el contador de tarjetas se llama por lo que cuenta: «Perigee y tarjetas». Una ronda relámpago ahora también da la medalla de la primera sesión.",
+        "La página de un set muestra su plan, con palabras firmes, afianzándose, aprendiendo y nuevas, en lugar de «Aprendidas», que contaba cualquier palabra tras una sola respuesta correcta."
       ]
     }
   ],

@@ -37,7 +37,10 @@
         }
       ],
       "fixes": [
-        "Der Knopf „Anmelden“ ist jetzt auch auf dem Handy oben auf der Seite."
+        "Der Knopf „Anmelden“ ist jetzt auch auf dem Handy oben auf der Seite.",
+        "Der Fortschritt zu Medaillen zählt jetzt genauso wie die Medaillen selbst, nach begonnenen Wörtern und Sets: Ein Balken steht nicht mehr voll neben einer gesperrten Medaille. Startseite und Profil zeigen dieselbe Zahl an Medaillen.",
+        "Die Profilstatistik zeigt jetzt Blitzrunden, und der Zähler für Karteikarten heißt, was er zählt: „Perigee & Karteikarten“. Auch eine Blitzrunde bringt jetzt die Medaille für die erste Übung.",
+        "Die Seite eines Sets zeigt seinen Plan mit Wörtern, die sitzen, sich festigen, im Lernen und neu sind, statt „Gelernt“, das jedes Wort nach einer einzigen richtigen Antwort zählte."
       ]
     }
   ],

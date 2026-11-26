@@ -127,7 +127,9 @@ describe("счётчики и достижения", () => {
     expect(patch.stats.gamesPlayed).toBe(1);
     expect(patch.stats.flashcardSessions).toBe(0);
     expect(patch.stats.quizzesTaken).toBe(0);
-    expect(result.newAchievements).not.toContain(AchievementType.FIRST_STUDY);
+    // Раунд Блица — тоже тренировка: медаль за первую есть, медалей за флэшкарты нет (docs/specs/06-audit-fixes.md, шаг 1)
+    expect(result.newAchievements).toContain(AchievementType.FIRST_STUDY);
+    expect(result.newAchievements).not.toContain(AchievementType.FLASHCARDS_1);
   });
 
   it("возвращение после 8 дней, марафон, сова", () => {

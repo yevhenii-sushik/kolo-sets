@@ -73,11 +73,13 @@ export const checkAndUnlockAchievements = (
   const flashcardSessions = stats.flashcardSessions ?? 0;
   const quizzesTaken = stats.quizzesTaken ?? 0;
   const perfectQuizzes = stats.perfectQuizzes ?? 0;
+  const gamesPlayed = stats.gamesPlayed ?? 0;
 
   // First steps
   // Первый набор — разовая медаль первого шага: за любой набор, свой или готовый
   check(AchievementType.FIRST_COLLECTION, options.hasCollection === true || collectionsCount >= 1 || totalCards > 0);
-  check(AchievementType.FIRST_STUDY, flashcardSessions > 0 || quizzesTaken > 0);
+  // Первая тренировка — любая, и раунд Блица тоже: он засчитывается в орбиту наравне с остальными
+  check(AchievementType.FIRST_STUDY, flashcardSessions > 0 || quizzesTaken > 0 || gamesPlayed > 0);
 
   // Streaks
   check(AchievementType.STREAK_3, streak >= 3);
@@ -158,27 +160,33 @@ export const getUnlockedAchievements = (profile: any): Achievement[] =>
     .map((id: AchievementType) => getAchievement(id))
     .filter(Boolean) as Achievement[];
 
+// Прогресс к достижению — по тем же правилам и тем же числам, что checkAndUnlockAchievements на сервере:
+// totalCards и collectionsCount — начатые слова и наборы (countCards из server/core/cards.ts), hasCollection —
+// есть хоть один набор. Раньше профиль передавал все слова, и после готового набора «50 слов» стояло на 50/50
+// закрытым (docs/specs/06-audit-fixes.md, шаг 1)
 export const getAchievementProgress = (
   achievement: Achievement,
   profile: any,
   totalCards: number,
-  collectionsCount = 0
+  options: { collectionsCount?: number; hasCollection?: boolean } = {}
 ): { current: number; target: number; percentage: number } => {
   const stats = profile.stats ?? {};
   const streak = profile.currentStreak ?? 0;
   const flashcardSessions = stats.flashcardSessions ?? 0;
   const quizzesTaken = stats.quizzesTaken ?? 0;
   const perfectQuizzes = stats.perfectQuizzes ?? 0;
+  const gamesPlayed = stats.gamesPlayed ?? 0;
+  const collectionsCount = options.collectionsCount ?? 0;
 
   let current = 0;
   let target = 1;
 
   switch (achievement.id) {
     case AchievementType.FIRST_COLLECTION:
-      current = collectionsCount > 0 || totalCards > 0 ? 1 : 0;
+      current = options.hasCollection === true || collectionsCount > 0 || totalCards > 0 ? 1 : 0;
       break;
     case AchievementType.FIRST_STUDY:
-      current = flashcardSessions + quizzesTaken > 0 ? 1 : 0;
+      current = flashcardSessions + quizzesTaken + gamesPlayed > 0 ? 1 : 0;
       break;
 
     case AchievementType.STREAK_3:   current = Math.min(streak, 3);   target = 3;   break;

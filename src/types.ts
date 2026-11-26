@@ -181,6 +181,7 @@ export interface UserStats {
   flashcardSessions: number;
   totalStudyTime: number; // В секундах
   perfectQuizzes: number;
+  gamesPlayed?: number;     // раунды Блица (и старых игр) — считает сервер
 }
 
 // День изучения (для календаря активности)

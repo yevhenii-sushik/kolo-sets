@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, type FormEvent, type ReactNode } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback, type FormEvent, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
@@ -27,6 +27,8 @@ import { CapsuleOpenModal } from "../../components/rewards/CapsuleOpenModal";
 import { ShowcaseModal, ShowcaseTile } from "../../components/rewards/Showcase";
 import { COLLECTIONS, collectionItems } from "../../../server/core/items";
 import { BETA_MEDAL, SHOWCASE_MAX, satellitesOf } from "../../../server/core/loot";
+import { countCards } from "../../../server/core/cards";
+import { medalCount } from "../../progression/medals";
 import Toast from "../../components/ui/Toast";
 import {
   AtSign,
@@ -44,6 +46,7 @@ import {
   RefreshCw,
   Share2,
   Target,
+  Timer,
   User,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -100,6 +103,7 @@ export default function ProfilePage() {
         flashcardSessions: 0,
         totalStudyTime: 0,
         perfectQuizzes: 0,
+        gamesPlayed: 0,
       },
       currentStreak: rawProfile.currentStreak ?? 0,
       longestStreak: rawProfile.longestStreak ?? 0,
@@ -208,6 +212,14 @@ export default function ProfilePage() {
 
 
   const weekStats = useMemo(() => (profile ? getWeekStats(profile.studyHistory) : null), [profile]);
+  // Медали за слова и наборы сервер считает по начатым словам (server/core/cards.ts) — прогресс считаем так же,
+  // иначе после готового набора полоса «50 слов» полная, а медаль закрыта (docs/specs/06-audit-fixes.md, шаг 1)
+  const started = useMemo(() => countCards(collections), [collections]);
+  const progressOf = useCallback(
+    (a: Achievement) =>
+      getAchievementProgress(a, profile, started.startedCards, { collectionsCount: started.startedSets, hasCollection: collections.length > 0 }),
+    [profile, started, collections.length],
+  );
 
   const [achievementsOpen, setAchievementsOpen] = useState(false);
 
@@ -230,13 +242,13 @@ export default function ProfilePage() {
     const lockedByProgress = ALL_ACHIEVEMENTS.filter((a) => !profile.achievements.includes(a.id))
       .map((a) => ({
         a,
-        pct: getAchievementProgress(a, profile, totalCards, collections.length).percentage,
+        pct: progressOf(a).percentage,
       }))
       .sort((x, y) => y.pct - x.pct)
       .map((x) => x.a);
 
     return [...unlocked, ...lockedByProgress].slice(0, ACHIEVEMENTS_PREVIEW_COUNT);
-  }, [profile, totalCards, collections.length]);
+  }, [profile, progressOf]);
 
   // Всё, что не попало в превью — раскрывается плавно под ним по клику,
   // а не переключается свапом всего грида
@@ -282,7 +294,8 @@ export default function ProfilePage() {
 
   if (!profile) return null;
 
-  const unlockedCount = ALL_ACHIEVEMENTS.filter((a) => profile.achievements.includes(a.id)).length;
+  // Тот же счёт, что у кубка на главной
+  const medals = medalCount({ achievements: profile.achievements, medals: loot.medals, legacyFlames });
   const days = (n: number) => plural(locale, n, t.shell.streak.days);
   const memberSince = new Date(profile.createdAt).toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" });
 
@@ -603,18 +616,20 @@ export default function ProfilePage() {
         </div>
         {tab === "medals" && (
           <Badge tone="accent" className="tabular-nums">
-            {unlockedCount + (legacyFlames ? 1 : 0) + loot.medals.length} /{" "}
-            {ALL_ACHIEVEMENTS.length + (legacyFlames ? 1 : 0) + COLLECTIONS.length + (loot.medals.includes(BETA_MEDAL) ? 1 : 0)}
+            {medals.unlocked} / {medals.total}
           </Badge>
         )}
       </div>
 
       {tab === "stats" && (
         <>
-          <Card padding="lg" className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4">
-            <Stat icon={<BookOpen size={18} />} value={totalCards} label={p.stats.totalWords} />
+          {/* «Perigee и флэшкарты» — один счётчик на сервере (stats.flashcardSessions), раунды Блица — свой (gamesPlayed).
+              На телефоне слова — во всю строку, остальные четыре — двумя парами */}
+          <Card padding="lg" className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
+            <Stat icon={<BookOpen size={18} />} value={totalCards} label={p.stats.totalWords} className="max-sm:col-span-2" />
             <Stat icon={<GalleryVerticalEnd size={18} />} value={profile.stats.flashcardSessions} label={p.stats.sessions} />
             <Stat icon={<ListChecks size={18} />} value={profile.stats.quizzesTaken} label={p.stats.quizzes} />
+            <Stat icon={<Timer size={18} />} value={profile.stats.gamesPlayed ?? 0} label={p.stats.blitz} />
             <Stat icon={<Clock size={18} />} value={formatDuration(locale, profile.stats.totalStudyTime)} label={p.stats.inLearning} />
           </Card>
 
@@ -694,7 +709,7 @@ export default function ProfilePage() {
               key={achievement.id}
               achievement={achievement}
               isUnlocked={profile.achievements.includes(achievement.id)}
-              progress={getAchievementProgress(achievement, profile, totalCards, collections.length)}
+              progress={progressOf(achievement)}
             />
           ))}
         </div>
@@ -715,7 +730,7 @@ export default function ProfilePage() {
                     key={achievement.id}
                     achievement={achievement}
                     isUnlocked={profile.achievements.includes(achievement.id)}
-                    progress={getAchievementProgress(achievement, profile, totalCards, collections.length)}
+                    progress={progressOf(achievement)}
                   />
                 ))}
               </div>
@@ -748,9 +763,9 @@ export default function ProfilePage() {
   );
 }
 
-function Stat({ icon, value, label }: { icon: ReactNode; value: ReactNode; label: string }) {
+function Stat({ icon, value, label, className }: { icon: ReactNode; value: ReactNode; label: string; className?: string }) {
   return (
-    <div className="grid content-start gap-3">
+    <div className={cx("grid content-start gap-3", className)}>
       <span className="grid h-9 w-9 place-items-center rounded-xl bg-inset text-muted">{icon}</span>
       <div>
         <p className="font-display text-2xl font-extrabold leading-tight tabular-nums text-fg sm:text-3xl">{value}</p>

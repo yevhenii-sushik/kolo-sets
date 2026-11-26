@@ -19,6 +19,33 @@
     "all_know": {
       "name": "Sei tudo!",
       "description": "Acerte de primeira todas as palavras de uma sessão do Perigee, cada uma conferida por uma resposta e não pela sua própria avaliação"
+    },
+    "flashcards_1": {
+      "name": "Primeiro encontro",
+      "description": "Conclua sua primeira sessão de Perigee ou de flashcards"
+    },
+    "flashcards_10": {
+      "name": "Novato dos flashcards",
+      "description": "Conclua 10 sessões de Perigee ou de flashcards"
+    },
+    "flashcards_50": {
+      "name": "Mestre dos flashcards",
+      "description": "Conclua 50 sessões de Perigee ou de flashcards"
+    },
+    "flashcards_100": {
+      "name": "Ás dos flashcards",
+      "description": "Conclua 100 sessões de Perigee ou de flashcards"
     }
+  },
+  "stats": {
+    "totalWords": "Palavras",
+    "sessions": "Perigee e flashcards",
+    "quizzes": "Quizzes",
+    "blitz": "Rodadas relâmpago",
+    "inLearning": "Tempo de prática",
+    "weekTitle": "Últimos 7 dias",
+    "weekSessions": "Sessões",
+    "cardsStudied": "Cartões",
+    "studyTime": "Tempo"
   }
 }

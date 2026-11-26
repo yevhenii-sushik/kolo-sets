@@ -37,7 +37,10 @@
         }
       ],
       "fixes": [
-        "O botão “Entrar” agora também aparece no cabeçalho do site no celular."
+        "O botão “Entrar” agora também aparece no cabeçalho do site no celular.",
+        "O progresso das medalhas agora é contado do mesmo jeito que as próprias medalhas, pelas palavras e sets que você já começou, então uma barra não fica mais cheia ao lado de uma medalha bloqueada. O início e o perfil mostram o mesmo número de medalhas.",
+        "As estatísticas do perfil agora mostram as rodadas relâmpago, e o contador de flashcards tem o nome do que conta: “Perigee e flashcards”. Uma rodada relâmpago agora também dá a medalha da primeira sessão.",
+        "A página de um set mostra o plano dele, com palavras firmes, firmando, aprendendo e novas, em vez de “Aprendidas”, que contava qualquer palavra depois de uma única resposta certa."
       ]
     }
   ],

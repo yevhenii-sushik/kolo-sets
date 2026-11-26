@@ -65,8 +65,9 @@
   },
   "stats": {
     "totalWords": "Ord",
-    "sessions": "Flashkortøkter",
+    "sessions": "Perigee og flashkort",
     "quizzes": "Quizer",
+    "blitz": "Lynrunder",
     "inLearning": "Øvingstid",
     "weekTitle": "Siste 7 dager",
     "weekSessions": "Økter",
@@ -153,19 +154,19 @@
     },
     "flashcards_1": {
       "name": "Første møte",
-      "description": "Fullfør din første økt med flashkort"
+      "description": "Fullfør din første økt med Perigee eller flashkort"
     },
     "flashcards_10": {
-      "name": "Flashkort-nybegynner",
-      "description": "Fullfør 10 økter med flashkort"
+      "name": "Kort-nybegynner",
+      "description": "Fullfør 10 økter med Perigee eller flashkort"
     },
     "flashcards_50": {
-      "name": "Flashkort-mester",
-      "description": "Fullfør 50 økter med flashkort"
+      "name": "Kortmester",
+      "description": "Fullfør 50 økter med Perigee eller flashkort"
     },
     "flashcards_100": {
-      "name": "Flashkort-ess",
-      "description": "Fullfør 100 økter med flashkort"
+      "name": "Kort-ess",
+      "description": "Fullfør 100 økter med Perigee eller flashkort"
     },
     "quiz_1": {
       "name": "Første eksamen",

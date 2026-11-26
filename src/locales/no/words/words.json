@@ -47,7 +47,6 @@
     "import": "Importer",
     "export": "Eksporter",
     "rename": "Gi nytt navn",
-    "learned": "Lært",
     "wordList": "Ordliste",
     "noCards": "Ingen ord i dette settet ennå",
     "noCardsDesc": "Et ord og oversettelsen er nok til å begynne. Har du en ferdig liste? Lim inn hele med «Importer».",

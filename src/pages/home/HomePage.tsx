@@ -13,7 +13,7 @@ import { getDailyGoal, isDueCard, isNewCard } from "../../utils/storage";
 import { newLeftToday } from "../../perigee/plan";
 import { readDailyNew } from "../../perigee/prefs";
 import { localDateKey } from "../../utils/progress";
-import { ALL_ACHIEVEMENTS } from "../../utils/achievements";
+import { medalCount } from "../../progression/medals";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural, type PluralForms } from "../../utils/plural";
 import { ButtonLink, Card, Heading, IconButton, Loading, Ring, Skeleton, Text, cx } from "../../ui";
@@ -29,7 +29,7 @@ const MILESTONES = [10, 25, 50, 100, 200, 500];
 export default function HomePage() {
   const { t, language } = useI18n();
   const h = t.home;
-  const { profile, collections, totalCards, profileLoading, contentReady, progression } = useData();
+  const { profile, collections, totalCards, profileLoading, contentReady, progression, loot } = useData();
   const { user } = useAuth();
   const locale = getLanguageInfo(language).htmlLang;
   const count = (n: number, forms: PluralForms) => plural(locale, n, forms);
@@ -103,7 +103,12 @@ export default function HomePage() {
 
   // Имя из профиля, а если его там нет (старые аккаунты) — из аккаунта, как в профиле
   const name = (profile?.displayName || user?.displayName)?.split(" ")[0] || (profileLoading ? "…" : h.guest);
-  const unlocked = profile?.achievements?.length ?? 0;
+  // Тот же счёт медалей, что в профиле (src/progression/medals.ts)
+  const medals = medalCount({
+    achievements: profile?.achievements ?? [],
+    medals: loot.medals,
+    legacyFlames: typeof profile?.legacyFlames === "number" ? profile.legacyFlames : null,
+  });
 
   return (
     <div className="grid gap-4 sm:gap-5">
@@ -127,7 +132,7 @@ export default function HomePage() {
           </div>
         </div>
         <ButtonLink to="/profile" variant="secondary" size="sm" iconLeft={<Trophy size={16} />} aria-label={h.achievements} title={h.achievements}>
-          {unlocked}/{ALL_ACHIEVEMENTS.length}
+          {medals.unlocked}/{medals.total}
         </ButtonLink>
       </header>
 
