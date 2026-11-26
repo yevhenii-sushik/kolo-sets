@@ -43,8 +43,8 @@ export function splitLine(line: string): string[] | null {
 
 // Дубль — то же слово с тем же переводом без учёта регистра и лишних пробелов. Только слово сравнивать нельзя:
 // «bank» — берег и «bank» — банк — разные карточки. Диакритику не убираем: в норвежском for и før — разные слова
-const norm = (s: string) => s.trim().replace(/\s+/g, " ").toLocaleLowerCase();
-const keyOf = (word: string, translation: string) => `${norm(word)}\u0000${norm(translation)}`;
+export const normalizeWord = (s: string) => s.trim().replace(/\s+/g, " ").toLocaleLowerCase();
+const keyOf = (word: string, translation: string) => `${normalizeWord(word)}\u0000${normalizeWord(translation)}`;
 
 export function parseImportText(text: string, existing: readonly { word: string; translation: string }[] = []): ParsedImport {
   const seen = new Set(existing.map((c) => keyOf(c.word, c.translation)));

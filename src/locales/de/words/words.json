@@ -443,7 +443,7 @@
     }
   },
   "editCollection": {
-    "importAdded": {
+    "wordsAdded": {
       "one": "{n} Wort hinzugefügt",
       "other": "{n} Wörter hinzugefügt"
     },
@@ -451,7 +451,10 @@
     "modals": {
       "editWord": "Wort bearbeiten",
       "newWord": "Neues Wort",
-      "createWord": "Wort anlegen",
+      "addWord": "Hinzufügen",
+      "done": "Fertig",
+      "duplicateHere": "Schon in diesem Set: {word} – {translation}",
+      "duplicateIn": "Schon im Set „{set}“: {word} – {translation}",
       "renameTitle": "Neuer Name des Sets",
       "deleteConfirm": "Dieses Wort löschen?",
       "importTitle": "Wörter importieren",
@@ -484,6 +487,18 @@
       },
       "importButtonIdle": "Wörter hinzufügen",
       "aiPrompt": "Erstelle eine Wortliste zum Lernen im CSV-Format (Trennzeichen Semikolon \";\").\nWICHTIG: Wort und Übersetzung wie gewohnt, aber ERKLÄRUNG, BEISPIEL und WORTART müssen streng in der Lernsprache sein ({lang}).\n\nZeilenformat: Wort; Übersetzung; Erklärung (in der Lernsprache); Beispiel (in der Lernsprache); Wortart (in der Lernsprache).\n\nHier ist die Wortliste: [FÜGE HIER DEINE WÖRTER EIN]"
+    },
+    "fields": {
+      "word": "Wort",
+      "wordPlaceholder": "z. B. {word}",
+      "translation": "Übersetzung",
+      "translationPlaceholder": "z. B. {translation}",
+      "partOfSpeech": "Wortart",
+      "partOfSpeechNone": "Nicht gewählt",
+      "explanation": "Erklärung (auf {lang})",
+      "explanationPlaceholder": "Kurz, in eigenen Worten",
+      "example": "Beispielsatz",
+      "examplePlaceholder": "Ein Satz mit diesem Wort"
     }
   }
 }

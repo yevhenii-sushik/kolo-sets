@@ -15,11 +15,12 @@ interface CardListItemProps {
   onShare: () => void; // карточка картинкой для соцсетей (ShareCardModal)
   onReport?: () => void; // карточка из готового набора Kolo: ошибку можно отправить команде (ReportMistakeModal)
   highlighted?: boolean; // пришли к этой карточке из поиска на вкладке «Слова»
+  courseCode: string; // язык курса — для подписей полей при правке
 }
 
 // Слово в списке набора: компактно — слово, часть речи, перевод, объяснение, пример, освоение.
 // По клику (или карандашу) превращается в форму правки.
-export default function CardListItem({ card, onSave, onDelete, onShare, onReport, highlighted = false }: CardListItemProps) {
+export default function CardListItem({ card, onSave, onDelete, onShare, onReport, highlighted = false, courseCode }: CardListItemProps) {
   const { t, language } = useI18n();
   const e = t.words.editCollection;
   const [draft, setDraft] = useState<WordDraft | null>(null);
@@ -46,7 +47,7 @@ export default function CardListItem({ card, onSave, onDelete, onShare, onReport
         onKeyDown={(ev) => ev.key === "Escape" && setDraft(null)}
         className="grid gap-5 rounded-3xl border border-accent bg-surface p-5"
       >
-        <WordFields value={draft} onChange={setDraft} idPrefix={`edit-${card.id}`} autoFocus />
+        <WordFields value={draft} onChange={setDraft} idPrefix={`edit-${card.id}`} courseCode={courseCode} autoFocus />
         <div className="flex justify-end gap-2">
           <Button variant="secondary" onClick={() => setDraft(null)}>
             {t.cancel}

@@ -52,7 +52,7 @@
     "noCardsDesc": "Et ord og oversettelsen er nok til å begynne. Har du en ferdig liste? Lim inn hele med «Importer».",
     "exportSuccess": "Samling eksportert",
     "exportError": "Eksport mislyktes",
-    "importAdded": {
+    "wordsAdded": {
       "one": "{n} ord lagt til",
       "other": "{n} ord lagt til"
     },
@@ -60,7 +60,10 @@
     "modals": {
       "editWord": "Rediger ord",
       "newWord": "Nytt ord",
-      "createWord": "Opprett ord",
+      "addWord": "Legg til",
+      "done": "Ferdig",
+      "duplicateHere": "Finnes allerede i dette settet: {word} – {translation}",
+      "duplicateIn": "Finnes allerede i «{set}»: {word} – {translation}",
       "renameTitle": "Nytt samlingsnavn",
       "deleteConfirm": "Slett dette ordet?",
       "importTitle": "Importer ord",
@@ -96,15 +99,15 @@
     },
     "fields": {
       "word": "Ord",
-      "wordPlaceholder": "f.eks. skrive",
+      "wordPlaceholder": "f.eks. {word}",
       "translation": "Oversettelse",
-      "translationPlaceholder": "f.eks. to write",
+      "translationPlaceholder": "f.eks. {translation}",
       "partOfSpeech": "Ordklasse",
       "partOfSpeechNone": "Ikke valgt",
-      "explanation": "Forklaring (på norsk)",
-      "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
+      "explanation": "Forklaring (på {lang})",
+      "explanationPlaceholder": "Kort, med egne ord",
       "example": "Eksempelsetning",
-      "examplePlaceholder": "Jeg skriver en bok"
+      "examplePlaceholder": "En setning med dette ordet"
     },
     "reviews": {
       "one": "{n} repetisjon",

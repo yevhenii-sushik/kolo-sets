@@ -54,7 +54,7 @@
     "noCardsDesc": "Щоб почати, вистачить слова й перекладу. Маєш готовий список? Встав його цілком через «Імпорт».",
     "exportSuccess": "Набір експортовано",
     "exportError": "Помилка експорту",
-    "importAdded": {
+    "wordsAdded": {
       "one": "Додано {n} слово",
       "few": "Додано {n} слова",
       "many": "Додано {n} слів",
@@ -64,7 +64,10 @@
     "modals": {
       "editWord": "Редагувати слово",
       "newWord": "Нове слово",
-      "createWord": "Створити слово",
+      "addWord": "Додати",
+      "done": "Готово",
+      "duplicateHere": "Уже є в цьому наборі: {word} — {translation}",
+      "duplicateIn": "Уже є в наборі «{set}»: {word} — {translation}",
       "renameTitle": "Нова назва набору",
       "deleteConfirm": "Видалити це слово?",
       "importTitle": "Імпорт слів",
@@ -108,15 +111,15 @@
     },
     "fields": {
       "word": "Слово",
-      "wordPlaceholder": "наприклад, skrive",
+      "wordPlaceholder": "наприклад, {word}",
       "translation": "Переклад",
-      "translationPlaceholder": "наприклад, писати",
+      "translationPlaceholder": "наприклад, {translation}",
       "partOfSpeech": "Частина мови",
       "partOfSpeechNone": "Не обрано",
-      "explanation": "Пояснення (норвезькою)",
-      "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
+      "explanation": "Пояснення мовою, яку вивчаєш",
+      "explanationPlaceholder": "Коротко, своїми словами",
       "example": "Приклад речення",
-      "examplePlaceholder": "Jeg skriver en bok"
+      "examplePlaceholder": "Речення з цим словом"
     },
     "reviews": {
       "one": "{n} повторення",

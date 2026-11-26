@@ -445,7 +445,7 @@
     }
   },
   "editCollection": {
-    "importAdded": {
+    "wordsAdded": {
       "one": "{n} palavra adicionada",
       "many": "{n} palavras adicionadas",
       "other": "{n} palavras adicionadas"
@@ -454,7 +454,10 @@
     "modals": {
       "editWord": "Editar palavra",
       "newWord": "Nova palavra",
-      "createWord": "Criar palavra",
+      "addWord": "Adicionar",
+      "done": "Pronto",
+      "duplicateHere": "Já está neste set: {word} — {translation}",
+      "duplicateIn": "Já está no set “{set}”: {word} — {translation}",
       "renameTitle": "Novo nome do set",
       "deleteConfirm": "Excluir esta palavra?",
       "importTitle": "Importar palavras",
@@ -491,6 +494,18 @@
       },
       "importButtonIdle": "Adicionar palavras",
       "aiPrompt": "Crie uma lista de palavras para estudar em formato CSV (separador ponto e vírgula \";\").\nIMPORTANTE: a palavra e a tradução como de costume, mas a EXPLICAÇÃO, o EXEMPLO e a CLASSE GRAMATICAL devem estar estritamente no idioma que está sendo aprendido ({lang}).\n\nFormato da linha: palavra; tradução; explicação (no idioma aprendido); exemplo (no idioma aprendido); classe gramatical (no idioma aprendido).\n\nAqui está a lista de palavras: [COLE SUAS PALAVRAS AQUI]"
+    },
+    "fields": {
+      "word": "Palavra",
+      "wordPlaceholder": "ex.: {word}",
+      "translation": "Tradução",
+      "translationPlaceholder": "ex.: {translation}",
+      "partOfSpeech": "Classe gramatical",
+      "partOfSpeechNone": "Não escolhida",
+      "explanation": "Explicação (em {lang})",
+      "explanationPlaceholder": "Curta, com suas palavras",
+      "example": "Frase de exemplo",
+      "examplePlaceholder": "Uma frase com esta palavra"
     }
   }
 }

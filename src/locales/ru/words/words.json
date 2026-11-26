@@ -54,7 +54,7 @@
     "noCardsDesc": "Чтобы начать, хватит слова и перевода. Есть готовый список? Вставь его целиком через «Импорт».",
     "exportSuccess": "Набор экспортирован",
     "exportError": "Ошибка экспорта",
-    "importAdded": {
+    "wordsAdded": {
       "one": "Добавлено {n} слово",
       "few": "Добавлено {n} слова",
       "many": "Добавлено {n} слов",
@@ -64,7 +64,10 @@
     "modals": {
       "editWord": "Редактировать слово",
       "newWord": "Новое слово",
-      "createWord": "Создать слово",
+      "addWord": "Добавить",
+      "done": "Готово",
+      "duplicateHere": "Уже есть в этом наборе: {word} — {translation}",
+      "duplicateIn": "Уже есть в наборе «{set}»: {word} — {translation}",
       "renameTitle": "Новое название набора",
       "deleteConfirm": "Удалить это слово?",
       "importTitle": "Импорт слов",
@@ -108,15 +111,15 @@
     },
     "fields": {
       "word": "Слово",
-      "wordPlaceholder": "например, skrive",
+      "wordPlaceholder": "например, {word}",
       "translation": "Перевод",
-      "translationPlaceholder": "например, писать",
+      "translationPlaceholder": "например, {translation}",
       "partOfSpeech": "Часть речи",
       "partOfSpeechNone": "Не выбрано",
-      "explanation": "Объяснение (на норвежском)",
-      "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
+      "explanation": "Объяснение на изучаемом языке",
+      "explanationPlaceholder": "Коротко, своими словами",
       "example": "Пример предложения",
-      "examplePlaceholder": "Jeg skriver en bok"
+      "examplePlaceholder": "Предложение с этим словом"
     },
     "reviews": {
       "one": "{n} повторение",

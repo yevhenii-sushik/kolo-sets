@@ -41,7 +41,8 @@
         "Medal progress now counts the same way as the medals themselves, by the words and sets you've started, so a bar no longer sits full next to a locked medal. Home and your profile show the same number of medals.",
         "Profile stats now include Blitz rounds, and the counter that said “Flashcard sessions” is named for what it counts: Perigee and flashcard sessions. A Blitz round now earns the first-session medal too.",
         "A set's page shows its plan, with strong, growing, learning and new words, instead of “Learned”, which counted any word after a single right answer.",
-        "Importing a list understands tabs, so words paste straight from Excel, Google Sheets, Quizlet or Anki, as well as semicolons, dashes and “=”. While you paste, Kolo shows how many words it recognised, how it read the first lines and which lines it couldn't read, and words already in the set aren't added twice."
+        "Importing a list understands tabs, so words paste straight from Excel, Google Sheets, Quizlet or Anki, as well as semicolons, dashes and “=”. While you paste, Kolo shows how many words it recognised, how it read the first lines and which lines it couldn't read, and words already in the set aren't added twice.",
+        "In the New word window you can add words one after another: the window stays open, the fields clear and the cursor goes back to the word, and Kolo tells you if the word is already in your course. Field labels and examples now match the language you're learning instead of always mentioning Norwegian."
       ]
     },
     {

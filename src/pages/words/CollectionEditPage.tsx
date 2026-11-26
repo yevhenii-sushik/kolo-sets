@@ -18,7 +18,7 @@ import { Button, Card as UiCard, Field, Heading, IconButton, Input, Loading, Mod
 import { getLanguageInfo } from "../../locales/languages";
 import { courseCodeFromLanguage, courseNameInline } from "../../courses/languages";
 import { plural } from "../../utils/plural";
-import AddCardModal from "../../components/AddCardModal";
+import AddCardModal, { type CourseWord } from "../../components/AddCardModal";
 import ImportCardsModal from "../../components/ImportCardsModal";
 import CardListItem from "../../components/cards/CardListItem";
 import ShareCardModal from "../../components/cards/ShareCardModal";
@@ -162,9 +162,14 @@ export default function CollectionEditPage() {
       cardData.partOfSpeech,
     );
     const updated = { ...collection, cards: [...collection.cards, newCard] };
+    // Окно «Новое слово» остаётся открытым для следующего слова (шаг 3 плана); запись — в фоне, без ожидания сети
     setCollection(updated);
-    await updateCollection(updated);
-    setIsAddModalOpen(false);
+    try {
+      await updateCollection(updated);
+    } catch (err) {
+      console.error("Не удалось сохранить слово", err);
+      error(e.saveError);
+    }
   };
 
   // Слова уже разобраны и очищены от дублей в окне импорта (src/utils/importText.ts). Окно закрывается и тост
@@ -175,7 +180,7 @@ export default function CollectionEditPage() {
     const updated = { ...collection, cards: [...collection.cards, ...newCards] };
     setCollection(updated);
     setIsImportModalOpen(false);
-    success(plural(getLanguageInfo(language).htmlLang, newCards.length, e.importAdded));
+    success(plural(getLanguageInfo(language).htmlLang, newCards.length, e.wordsAdded));
     try {
       await updateCollection(updated);
     } catch (err) {
@@ -247,6 +252,16 @@ export default function CollectionEditPage() {
       setIsExporting(false);
     }
   };
+
+  // Курс набора: подписи полей слова и проверка повторов — по его языку и его наборам
+  const courseCode = collection ? (collection.courseId ?? courseCodeFromLanguage(collection.language)) : "";
+  const courseWords = useMemo<CourseWord[]>(() => {
+    if (!collection) return [];
+    const sets = allCollections.map((c) => (c.id === collection.id ? collection : c));
+    return sets
+      .filter((c) => (c.courseId ?? courseCodeFromLanguage(c.language)) === courseCode)
+      .flatMap((c) => c.cards.map((card) => ({ word: card.word, translation: card.translation, set: c.name, here: c.id === collection.id })));
+  }, [allCollections, collection, courseCode]);
 
   const cardCount = collection?.cards.length ?? 0;
   // Слова есть — главное действие «Учить», чтобы из редактора не приходилось искать, где начать тренировку.
@@ -411,6 +426,7 @@ export default function CollectionEditPage() {
                   onDelete={() => handleDeleteCard(card.id)}
                   onShare={() => setSharing(card)}
                   onReport={collection.preset && card.presetCardId ? () => reportCard(card) : undefined}
+                  courseCode={courseCode}
                 />
               </motion.div>
             ))}
@@ -418,19 +434,25 @@ export default function CollectionEditPage() {
         )}
       </motion.section>
 
-      <AddCardModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSave={handleAddCard} />
+      <AddCardModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={handleAddCard}
+        courseCode={courseCode}
+        courseWords={courseWords}
+      />
       <ImportCardsModal
         isOpen={isImportModalOpen}
         onClose={() => setIsImportModalOpen(false)}
         onImport={handleImportCards}
         existing={collection?.cards ?? []}
-        lang={courseNameInline(collection?.courseId ?? courseCodeFromLanguage(collection?.language), getLanguageInfo(language).htmlLang)}
+        lang={courseNameInline(courseCode, getLanguageInfo(language).htmlLang)}
       />
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
       {collection && (
         <ShareCardModal
           card={sharing}
-          courseId={collection.courseId ?? courseCodeFromLanguage(collection.language)}
+          courseId={courseCode}
           onClose={() => setSharing(null)}
         />
       )}

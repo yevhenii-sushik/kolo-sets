@@ -52,7 +52,7 @@
     "noCardsDesc": "A word and its translation are enough to start. Got a ready-made list? Paste it all at once with Import.",
     "exportSuccess": "Collection exported",
     "exportError": "Export failed",
-    "importAdded": {
+    "wordsAdded": {
       "one": "{n} word added",
       "other": "{n} words added"
     },
@@ -60,7 +60,10 @@
     "modals": {
       "editWord": "Edit word",
       "newWord": "New word",
-      "createWord": "Create word",
+      "addWord": "Add",
+      "done": "Done",
+      "duplicateHere": "Already in this set: {word} — {translation}",
+      "duplicateIn": "Already in “{set}”: {word} — {translation}",
       "renameTitle": "New collection name",
       "deleteConfirm": "Delete this word?",
       "importTitle": "Import words",
@@ -96,15 +99,15 @@
     },
     "fields": {
       "word": "Word",
-      "wordPlaceholder": "e.g. skrive",
+      "wordPlaceholder": "e.g. {word}",
       "translation": "Translation",
-      "translationPlaceholder": "e.g. to write",
+      "translationPlaceholder": "e.g. {translation}",
       "partOfSpeech": "Part of speech",
       "partOfSpeechNone": "Not selected",
-      "explanation": "Explanation (in Norwegian)",
-      "explanationPlaceholder": "å uttrykke seg med skriftlige tegn…",
+      "explanation": "Explanation (in {lang})",
+      "explanationPlaceholder": "Short, in your own words",
       "example": "Example sentence",
-      "examplePlaceholder": "Jeg skriver en bok"
+      "examplePlaceholder": "A sentence with this word"
     },
     "reviews": {
       "one": "{n} review",
