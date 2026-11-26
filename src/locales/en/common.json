@@ -16,6 +16,11 @@
   "next": "Next",
   "finish": "Finish",
   "close": "Close",
+  "saveFailed": {
+    "text": "Couldn't save your changes.",
+    "undone": "Couldn't save — everything is back as it was.",
+    "retry": "Try again"
+  },
   "nav": {
     "home": "Home",
     "words": "Words",

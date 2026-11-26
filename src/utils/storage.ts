@@ -80,32 +80,19 @@ export const getCollection = async (id: string): Promise<Collection | undefined>
   return getLocalCollections().find(col => col.id === id);
 };
 
-// Создать новую коллекцию
-// courseId — курс, в котором создаётся набор; language — голос озвучки курса
-export const createCollection = async (name: string, language: string = 'nb-NO', courseId?: string): Promise<Collection> => {
-  const newCollection: Collection = {
-    id: crypto.randomUUID(),
-    name,
-    language,
-    ...(courseId ? { courseId } : {}),
-    cards: [],
-    createdAt: new Date()
-  };
-  
-  const user = auth.currentUser;
-  
-  if (user) {
-    // Сохраняем в Firestore
-    await saveUserCollection(user.uid, newCollection);
-  } else {
-    // Сохраняем локально
-    const collections = getLocalCollections();
-    collections.push(newCollection);
-    saveLocalCollections(collections);
-  }
-  
-  return newCollection;
-};
+// Новый пустой набор — только объект, без записи: экран показывает его сразу, а запись идёт в фоне
+// (saveCollection в DataContext, docs/specs/06-audit-fixes.md, шаг 4). Раньше создание ждало ответа
+// сервера, и без сети окно «Новый набор» не закрывалось.
+// courseId — курс, в котором создаётся набор; language — голос озвучки курса; folderId — открытая папка
+export const buildCollection = (name: string, language: string, courseId?: string, folderId?: string): Collection => ({
+  id: crypto.randomUUID(),
+  name,
+  language,
+  ...(courseId ? { courseId } : {}),
+  ...(folderId ? { folderId } : {}),
+  cards: [],
+  createdAt: new Date(),
+});
 
 // Сохранить готовый набор целиком (с карточками) — набор Kolo, собранный в presets/build.ts
 export const addCollection = async (newCollection: Collection): Promise<void> => {
@@ -117,22 +104,18 @@ export const addCollection = async (newCollection: Collection): Promise<void> =>
   }
 };
 
-// Обновить коллекцию
+// Сохранить коллекцию целиком: новую или изменённую (setDoc в Firestore тоже создаёт или заменяет)
 export const updateCollection = async (updatedCollection: Collection): Promise<void> => {
   const user = auth.currentUser;
   
   if (user) {
-    // Обновляем в Firestore
     await saveUserCollection(user.uid, updatedCollection);
   } else {
-    // Обновляем локально
     const collections = getLocalCollections();
     const index = collections.findIndex(col => col.id === updatedCollection.id);
-    
-    if (index !== -1) {
-      collections[index] = updatedCollection;
-      saveLocalCollections(collections);
-    }
+    if (index !== -1) collections[index] = updatedCollection;
+    else collections.push(updatedCollection);
+    saveLocalCollections(collections);
   }
 };
 

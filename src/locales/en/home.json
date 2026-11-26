@@ -1036,7 +1036,6 @@
           "Work"
         ],
         "create": "Create set",
-        "error": "Couldn't create the set. Check your connection and try again.",
         "doneTitle": "“{name}” is ready",
         "doneText": "Now let's add the first words — five is enough.",
         "next": "Add words",
@@ -1064,7 +1063,6 @@
         "translationLabel": "Translation",
         "add": "Add word",
         "progress": "{n} of {goal} words",
-        "error": "Couldn't save the words. Check your connection and try again.",
         "doneTitle": "Your words are in!",
         "doneText": "Five words — just right for a first session. Here's how it works.",
         "next": "How to practise",

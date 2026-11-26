@@ -21,5 +21,10 @@
       "closed": "A órbita desta semana está fechada",
       "progress": "{done} de {goal} dias nesta semana"
     }
+  },
+  "saveFailed": {
+    "text": "Não foi possível salvar suas alterações.",
+    "undone": "Não foi possível salvar — tudo voltou como estava.",
+    "retry": "Tentar de novo"
   }
 }

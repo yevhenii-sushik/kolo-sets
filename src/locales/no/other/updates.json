@@ -42,7 +42,8 @@
         "Statistikken i profilen viser nå lynrunder, og telleren som het «Flashkortøkter», heter det den teller: «Perigee og flashkort». En lynrunde gir nå også medaljen for første økt.",
         "Siden for et sett viser planen, med ord som sitter, fester seg, læres og er nye, i stedet for «Lært», som talte hvert ord etter ett riktig svar.",
         "Import av lister forstår tabulator, så ord kan limes rett inn fra Excel, Google Regneark, Quizlet og Anki, i tillegg til semikolon, tankestrek og «=». Mens du limer inn, viser Kolo hvor mange ord den kjente igjen, hvordan de første linjene ble lest og hvilke linjer den ikke forsto, og ord som allerede finnes i settet, legges ikke til to ganger.",
-        "I vinduet «Nytt ord» kan du legge til ord etter hverandre: vinduet blir stående åpent, feltene tømmes og markøren går tilbake til ordet, og Kolo sier fra hvis ordet allerede finnes i kurset. Feltetiketter og eksempler handler nå om språket du lærer, ikke alltid om norsk."
+        "I vinduet «Nytt ord» kan du legge til ord etter hverandre: vinduet blir stående åpent, feltene tømmes og markøren går tilbake til ordet, og Kolo sier fra hvis ordet allerede finnes i kurset. Feltetiketter og eksempler handler nå om språket du lærer, ikke alltid om norsk.",
+        "Sett, ord og mapper lagres med en gang, også uten nett: vinduene henger ikke lenger og venter på forbindelse, og endringene sendes så snart du er på nett igjen. Hvis Kolo ikke får lagret noe, sier den ifra og lar deg prøve igjen i stedet for å tie."
       ]
     },
     {

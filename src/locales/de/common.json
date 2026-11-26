@@ -16,6 +16,11 @@
   "next": "Weiter",
   "finish": "Fertig",
   "close": "Schließen",
+  "saveFailed": {
+    "text": "Deine Änderungen konnten nicht gespeichert werden.",
+    "undone": "Speichern fehlgeschlagen – alles ist wieder wie vorher.",
+    "retry": "Erneut versuchen"
+  },
   "nav": {
     "home": "Start",
     "words": "Wörter",

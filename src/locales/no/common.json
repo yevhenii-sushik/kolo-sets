@@ -16,6 +16,11 @@
   "next": "Neste",
   "finish": "Fullfør",
   "close": "Lukk",
+  "saveFailed": {
+    "text": "Kunne ikke lagre endringene.",
+    "undone": "Kunne ikke lagre – alt er som før.",
+    "retry": "Prøv igjen"
+  },
   "nav": {
     "home": "Hjem",
     "words": "Ord",

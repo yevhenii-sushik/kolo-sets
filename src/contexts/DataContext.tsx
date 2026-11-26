@@ -17,7 +17,8 @@ import {
   parseFolders,
   saveCoursesState,
 } from '../firebase/firestore';
-import { getCollections, deleteCollection, updateCollectionMeta } from '../utils/storage';
+import { getCollections, deleteCollection, updateCollection, updateCollectionMeta } from '../utils/storage';
+import { saveInBackground } from '../utils/backgroundSave';
 import { getDisplayStreak } from '../utils/streak';
 import { Achievement, AchievementType, Collection, Course, Folder } from '../types';
 import { COURSES_VERSION, planCourses } from '../courses/plan';
@@ -65,7 +66,10 @@ interface DataContextType {
   /** Удаляет курс вместе с его наборами и папками */
   removeCourse: (id: string) => Promise<void>;
   moveCollectionToCourse: (collectionId: string, courseId: string) => Promise<void>;
-  /** Создаёт папку в активном курсе; возвращает её id — чтобы сразу положить туда набор */
+  /** Набор изменён (новые слова, правка, переименование) или создан: сразу на экране, запись — в фоне,
+   *  без ожидания сети. Промис не отклоняется: true — сервер принял (можно, например, проверить медали) */
+  saveCollection: (collection: Collection) => Promise<boolean>;
+  /** Создаёт папку в активном курсе; возвращает её id — чтобы сразу положить туда набор. Сеть не ждёт */
   createFolder: (name: string, color: string) => Promise<string | undefined>;
   updateFolder: (folderId: string, fields: Pick<Folder, 'name' | 'color'>) => Promise<void>;
   /** Удаляет папку; её наборы остаются в курсе без папки */
@@ -140,6 +144,27 @@ export function DataProvider({ children }: { children: ReactNode }) {
     collectionsRef.current = next;
     setCollectionsState(next);
   }, []);
+
+  // Запись набора в фоне (docs/specs/06-audit-fixes.md, шаг 4). Пишем версию из памяти на момент записи, а не
+  // переданную: повтор после отказа не должен затереть то, что добавили позже. Набора в памяти уже нет
+  // (удалили, пока висел повтор) — не воскрешаем его
+  const saveCollection = useCallback(
+    (collection: Collection) => {
+      setCollections(prev =>
+        prev.some(c => c.id === collection.id)
+          ? prev.map(c => (c.id === collection.id ? collection : c))
+          : [collection, ...prev],
+      );
+      return saveInBackground(
+        () => {
+          const latest = collectionsRef.current.find(c => c.id === collection.id);
+          return latest ? updateCollection(latest) : Promise.resolve();
+        },
+        { key: `set:${collection.id}` },
+      );
+    },
+    [setCollections],
+  );
 
   const setProfile = useCallback((p: any, uid: string) => {
     if (!p) return;
@@ -467,33 +492,55 @@ export function DataProvider({ children }: { children: ReactNode }) {
     [allCollections, plan.courses, setCollections],
   );
 
+  // Папки — список в профиле. Пишем его целиком и в фоне: на экране папка сразу, без сети запись дождётся
+  // её сама (шаг 4 плана). Основа для правки и повтор — последний список из памяти, а не из замыкания
+  // рендера: две правки подряд не затрут друг друга, а повтор — то, что сохранилось после отказа
+  const foldersRef = useRef<Folder[]>([]);
+  useEffect(() => {
+    foldersRef.current = plan.folders;
+  }, [plan.folders]);
+
+  const saveFolders = useCallback(
+    (next: Folder[]) => {
+      if (!user) return;
+      const uid = user.uid;
+      foldersRef.current = next;
+      patchProfile({ folders: next, coursesVersion: COURSES_VERSION });
+      void saveInBackground(
+        () => saveCoursesState(uid, { folders: foldersRef.current, coursesVersion: COURSES_VERSION }),
+        { key: 'folders' },
+      );
+    },
+    [user, patchProfile],
+  );
+
   const createFolder = useCallback(
     async (name: string, color: string) => {
       if (!activeId) return;
       const folder: Folder = { id: crypto.randomUUID(), name, color, createdAt: new Date(), courseId: activeId };
-      await saveCourses({ folders: [...plan.folders, folder] });
+      saveFolders([...foldersRef.current, folder]);
       return folder.id;
     },
-    [activeId, plan.folders, saveCourses],
+    [activeId, saveFolders],
   );
 
   const updateFolder = useCallback(
     async (folderId: string, fields: Pick<Folder, 'name' | 'color'>) => {
-      await saveCourses({ folders: plan.folders.map(f => (f.id === folderId ? { ...f, ...fields } : f)) });
+      saveFolders(foldersRef.current.map(f => (f.id === folderId ? { ...f, ...fields } : f)));
     },
-    [plan.folders, saveCourses],
+    [saveFolders],
   );
 
   const deleteFolder = useCallback(
     async (folderId: string) => {
-      const affected = allCollections.filter(c => c.folderId === folderId);
+      const affected = collectionsRef.current.filter(c => c.folderId === folderId);
       setCollections(prev => prev.map(c => (c.folderId === folderId ? { ...c, folderId: undefined } : c)));
-      await Promise.all([
-        saveCourses({ folders: plan.folders.filter(f => f.id !== folderId) }),
-        ...affected.map(c => updateCollectionMeta(c, { folderId: undefined })),
-      ]);
+      saveFolders(foldersRef.current.filter(f => f.id !== folderId));
+      for (const c of affected) {
+        void saveInBackground(() => updateCollectionMeta(c, { folderId: undefined }), { key: `folder:${c.id}` });
+      }
     },
-    [allCollections, plan.folders, setCollections, saveCourses],
+    [setCollections, saveFolders],
   );
 
   const voiceForCollection = useCallback(
@@ -523,6 +570,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         updateCourseVoice,
         removeCourse,
         moveCollectionToCourse,
+        saveCollection,
         createFolder,
         updateFolder,
         deleteFolder,

@@ -56,7 +56,6 @@
       "one": "{n} word added",
       "other": "{n} words added"
     },
-    "saveError": "Couldn't save the words. Check your connection and try again.",
     "modals": {
       "editWord": "Edit word",
       "newWord": "New word",
@@ -308,10 +307,7 @@
     "ready": "Pick a ready-made set"
   },
   "toast": {
-    "createSuccess": "Deck created",
-    "deleteSuccess": "Deck deleted",
-    "deleteError": "Delete failed",
-    "createError": "Error creating collection"
+    "deleted": "Set “{name}” deleted"
   },
   "library": {
     "newFolder": "New folder",

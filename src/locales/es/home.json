@@ -162,7 +162,6 @@
           "Trabajo"
         ],
         "create": "Crear set",
-        "error": "No se pudo crear el set. Revisa tu conexión e inténtalo de nuevo.",
         "doneTitle": "«{name}» está listo",
         "doneText": "Ahora añadamos las primeras palabras: con cinco basta.",
         "next": "Añadir palabras",
@@ -190,7 +189,6 @@
         "translationLabel": "Traducción",
         "add": "Añadir palabra",
         "progress": "{n} de {goal} palabras",
-        "error": "No se pudieron guardar las palabras. Revisa tu conexión e inténtalo de nuevo.",
         "doneTitle": "¡Tus palabras ya están!",
         "doneText": "Cinco palabras: justo lo que hace falta para una primera sesión. Así funciona.",
         "next": "Cómo se practica",

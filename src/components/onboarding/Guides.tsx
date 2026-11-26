@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { ArrowRight, Brain, Check, PartyPopper, RotateCw, Scale } from "lucide-react";
 import { useData } from "../../contexts/DataContext";
 import { useI18n } from "../../contexts/I18nContext";
-import { addCollection, createCard, createCollection, updateCollection } from "../../utils/storage";
+import { buildCollection, createCard } from "../../utils/storage";
+import type { Collection } from "../../types";
 import { starterWords } from "../../data/starterWords";
-import { Alert, Button, Field, Input, Modal, Skeleton, Text, cx } from "../../ui";
+import { Button, Field, Input, Modal, Skeleton, Text, cx } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
 import { defaultTranslationLanguage, firstMissingPreset, hasPresets, loadPreset, type PresetSet } from "../../presets";
@@ -61,14 +62,12 @@ export function SetGuide({
   const g = t.home.firstSteps.guides.set;
   const r = t.words.ready;
   const navigate = useNavigate();
-  const { activeCourse, collections, setCollections, checkAchievements } = useData();
+  const { activeCourse, collections, saveCollection, checkAchievements } = useData();
   const locale = getLanguageInfo(language).htmlLang;
   const course = activeCourse?.id;
   const [mode, setMode] = useState<"ready" | "own">("own");
   const [name, setName] = useState("");
   const [created, setCreated] = useState<{ name: string; words: number } | null>(null);
-  const [busy, setBusy] = useState(false);
-  const [failed, setFailed] = useState(false);
 
   // Предлагаемая тема — первая по порядку, которой у человека ещё нет. Грузится только она
   const offer = useMemo(() => {
@@ -83,7 +82,6 @@ export function SetGuide({
     setMode(offer ? "ready" : "own");
     setName(g.suggestions[0]);
     setCreated(null);
-    setFailed(false);
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // После добавления предложение сдвигается на следующую тему — её грузить уже незачем
@@ -104,45 +102,32 @@ export function SetGuide({
   const readyMode = mode === "ready" && !!offer && !presetFailed;
   const topicTitle = (topic: string) => (r.topics as Record<string, string>)[topic] ?? topic;
 
-  const create = async (e: React.FormEvent) => {
+  // Набор появляется сразу, запись — в фоне: без сети окно не висит (docs/specs/06-audit-fixes.md, шаг 4).
+  // Медаль за первый набор сервер считает по базе — проверяем, когда запись дошла
+  const keep = (collection: Collection) => {
+    void saveCollection(collection).then((ok) => {
+      if (ok) checkAchievements().catch(() => {});
+    });
+    setCreated({ name: collection.name, words: collection.cards.length });
+  };
+
+  const create = (e: React.FormEvent) => {
     e.preventDefault();
     if (!activeCourse || !name.trim()) return;
-    setBusy(true);
-    setFailed(false);
-    try {
-      const collection = await createCollection(name.trim(), activeCourse.voice, activeCourse.id);
-      setCollections((prev) => [collection, ...prev]);
-      setCreated({ name: collection.name, words: 0 });
-      checkAchievements().catch(() => {});
-    } catch {
-      setFailed(true);
-    } finally {
-      setBusy(false);
-    }
+    keep(buildCollection(name.trim(), activeCourse.voice, activeCourse.id));
   };
 
   // Готовый набор — как «Добавить набор» на вкладке «Наборы Kolo»: перевод на язык интерфейса
-  const take = async () => {
+  const take = () => {
     if (!activeCourse || !ready) return;
-    setBusy(true);
-    setFailed(false);
-    try {
-      const collection = buildPresetCollection(ready, {
-        lang: defaultTranslationLanguage(activeCourse.id, language),
-        name: topicTitle(ready.topic),
-        voice: activeCourse.voice,
-        courseId: activeCourse.id,
-        now: new Date(),
-      });
-      await addCollection(collection);
-      setCollections((prev) => [collection, ...prev]);
-      setCreated({ name: collection.name, words: collection.cards.length });
-      checkAchievements().catch(() => {});
-    } catch {
-      setFailed(true);
-    } finally {
-      setBusy(false);
-    }
+    const collection = buildPresetCollection(ready, {
+      lang: defaultTranslationLanguage(activeCourse.id, language),
+      name: topicTitle(ready.topic),
+      voice: activeCourse.voice,
+      courseId: activeCourse.id,
+      now: new Date(),
+    });
+    keep(collection);
   };
 
   // Слов уже хватает на шаг «5 слов» — сразу к тренировке
@@ -160,7 +145,7 @@ export function SetGuide({
           <NextOrLater next={enoughWords ? g.nextTrain : g.next} onNext={() => onNext(enoughWords ? "train" : "words")} onLater={onClose} />
         ) : readyMode ? (
           <div className="grid w-full gap-2">
-            <Button fullWidth loading={busy} disabled={!ready} onClick={take}>
+            <Button fullWidth disabled={!ready} onClick={take}>
               {g.take}
             </Button>
             <Button variant="ghost" fullWidth onClick={() => setMode("own")}>
@@ -174,7 +159,7 @@ export function SetGuide({
                 {t.back}
               </Button>
             )}
-            <Button type="submit" form="guide-set" fullWidth={!offer || presetFailed} loading={busy} disabled={!name.trim()}>
+            <Button type="submit" form="guide-set" fullWidth={!offer || presetFailed} disabled={!name.trim()}>
               {g.create}
             </Button>
           </>
@@ -217,7 +202,6 @@ export function SetGuide({
           >
             {g.allSets}
           </button>
-          {failed && <Alert>{r.error}</Alert>}
         </div>
       ) : (
         <form id="guide-set" onSubmit={create} className="grid gap-5">
@@ -247,7 +231,6 @@ export function SetGuide({
               ))}
             </div>
           </div>
-          {failed && <Alert>{g.error}</Alert>}
         </form>
       )}
     </Modal>
@@ -268,7 +251,7 @@ export function WordsGuide({
 }) {
   const { t } = useI18n();
   const g = t.home.firstSteps.guides.words;
-  const { collections, setCollections, activeCourse, checkAchievements } = useData();
+  const { collections, saveCollection, activeCourse, checkAchievements } = useData();
   const collection = collections.find((c) => c.id === collectionId);
   const have = collection?.cards.length ?? 0;
   const inSet = new Set(collection?.cards.map((c) => c.word.trim().toLowerCase()) ?? []);
@@ -278,8 +261,6 @@ export function WordsGuide({
   const [picked, setPicked] = useState<string[]>([]);
   const [word, setWord] = useState("");
   const [translation, setTranslation] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [failed, setFailed] = useState(false);
   const wordRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -288,31 +269,23 @@ export function WordsGuide({
     setPicked(starter.map((s) => s.word));
     setWord("");
     setTranslation("");
-    setFailed(false);
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const save = async (items: { word: string; translation: string }[]) => {
+  // Слова — сразу в наборе и в счётчике, запись — в фоне (шаг 4 плана)
+  const save = (items: { word: string; translation: string }[]) => {
     if (!collection || items.length === 0) return;
-    setBusy(true);
-    setFailed(false);
-    try {
-      const updated = { ...collection, cards: [...collection.cards, ...items.map((i) => createCard(i.word, i.translation, "", "", ""))] };
-      await updateCollection(updated);
-      setCollections((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
-      checkAchievements().catch(() => {});
-      if (updated.cards.length >= WORDS_GOAL) setMode("done");
-      else if (mode === "starter") setMode("own");
-    } catch {
-      setFailed(true);
-    } finally {
-      setBusy(false);
-    }
+    const updated = { ...collection, cards: [...collection.cards, ...items.map((i) => createCard(i.word, i.translation, "", "", ""))] };
+    void saveCollection(updated).then((ok) => {
+      if (ok) checkAchievements().catch(() => {});
+    });
+    if (updated.cards.length >= WORDS_GOAL) setMode("done");
+    else if (mode === "starter") setMode("own");
   };
 
-  const addOwn = async (e: React.FormEvent) => {
+  const addOwn = (e: React.FormEvent) => {
     e.preventDefault();
     if (!word.trim() || !translation.trim()) return;
-    await save([{ word: word.trim(), translation: translation.trim() }]);
+    save([{ word: word.trim(), translation: translation.trim() }]);
     setWord("");
     setTranslation("");
     wordRef.current?.focus();
@@ -337,7 +310,6 @@ export function WordsGuide({
       <div className="grid w-full gap-2">
         <Button
           fullWidth
-          loading={busy}
           disabled={picked.length === 0}
           onClick={() => save(starter.filter((s) => picked.includes(s.word)))}
         >
@@ -349,7 +321,7 @@ export function WordsGuide({
       </div>
     ) : (
       <div className="grid w-full gap-2">
-        <Button type="submit" form="guide-words" fullWidth loading={busy} disabled={!word.trim() || !translation.trim()}>
+        <Button type="submit" form="guide-words" fullWidth disabled={!word.trim() || !translation.trim()}>
           {g.add}
         </Button>
         <Button variant="ghost" fullWidth onClick={onClose}>
@@ -411,7 +383,6 @@ export function WordsGuide({
               </Field>
             </form>
           )}
-          {failed && <Alert>{g.error}</Alert>}
         </div>
       )}
     </Modal>

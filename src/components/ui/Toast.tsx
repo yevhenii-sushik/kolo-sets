@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
-import { IconButton } from '../../ui';
+import { Button, IconButton } from '../../ui';
 import { useI18n } from '../../contexts/I18nContext';
 
 interface ToastProps {
   isOpen: boolean;
   message: string;
   type?: 'success' | 'error' | 'info' | 'warning';
-  duration?: number;
+  duration?: number; // 0 — пока не закроют
+  action?: { label: string; onClick: () => void }; // например, «Повторить» у несохранённой записи
   onClose: () => void;
 }
 
@@ -20,7 +21,7 @@ const ICONS = {
 };
 
 // Короткое уведомление: сверху справа на компьютере, над нижней навигацией на телефоне
-export default function Toast({ isOpen, message, type = 'info', duration = 3000, onClose }: ToastProps) {
+export default function Toast({ isOpen, message, type = 'info', duration = 3000, action, onClose }: ToastProps) {
   const { t } = useI18n();
 
   useEffect(() => {
@@ -43,6 +44,11 @@ export default function Toast({ isOpen, message, type = 'info', duration = 3000,
         >
           {ICONS[type]}
           <p className="flex-1 text-sm font-medium text-fg">{message}</p>
+          {action && (
+            <Button variant="soft" size="sm" onClick={action.onClick}>
+              {action.label}
+            </Button>
+          )}
           <IconButton size="sm" label={t.close} onClick={onClose}>
             <X size={16} />
           </IconButton>

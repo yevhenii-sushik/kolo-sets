@@ -22,7 +22,7 @@ import { plural } from "../../utils/plural";
 import { courseName } from "../../courses/languages";
 import CourseFlag from "../../components/courses/CourseFlag";
 import {
-  createCollection,
+  buildCollection,
   deleteCollection,
   updateCollectionMeta,
   applyCollectionOrder,
@@ -43,6 +43,7 @@ import { OrbitScene } from "../../components/scenes/OrbitScene";
 import { Segmented } from "../../components/other/SettingsList";
 import ReadySets from "../../components/presets/ReadySets";
 import { FIND_WORD_EVENT, searchCards } from "../../utils/wordSearch";
+import { saveInBackground } from "../../utils/backgroundSave";
 import {
   CollisionDetection,
   DndContext,
@@ -335,6 +336,7 @@ export default function WordsPage() {
     coursesReady,
     contentReady,
     setCollections,
+    saveCollection,
     checkAchievements,
     activeCourse,
     folders,
@@ -434,25 +436,20 @@ export default function WordsPage() {
 
   // ── Handlers ────────────────────────────────────────────────────────────────
 
-  const handleCreateCollection = async (name: string) => {
+  // Всё ниже — без ожидания сети (docs/specs/06-audit-fixes.md, шаг 4): экран меняется сразу, запись идёт
+  // в фоне. Отказ сервера — общее уведомление (components/SaveErrorToast.tsx); там, где есть откат, экран
+  // возвращается как было, а свой тост об успехе прячем — иначе два уведомления друг на друге
+
+  const handleCreateCollection = (name: string) => {
     if (!activeCourse) return;
-    try {
-      const newCollection = await createCollection(name, activeCourse.voice, activeCourse.id);
-      // Создаём "внутри" открытой папки — как в Finder, новый файл
-      // появляется в текущей директории, а не в корне
-      if (openFolder) {
-        await updateCollectionMeta(newCollection, { folderId: openFolder.id });
-        newCollection.folderId = openFolder.id;
-      }
-      // Функциональный апдейт по полному списку: в контексте лежат наборы всех курсов
-      setCollections((prev) => [newCollection, ...prev]);
-      setIsCreateModalOpen(false);
-      success(`${t.words.toast.createSuccess}: "${name}"`);
-      checkAchievements();
-      navigate(`/collection/${newCollection.id}/edit`);
-    } catch {
-      error(t.words.toast.createError);
-    }
+    // Создаём «внутри» открытой папки — как в Finder, новый файл появляется в текущей директории, а не в корне
+    const newCollection = buildCollection(name, activeCourse.voice, activeCourse.id, openFolder?.id);
+    // Медаль за первый набор сервер считает по базе — проверяем, когда запись дошла
+    void saveCollection(newCollection).then((ok) => {
+      if (ok) checkAchievements().catch(() => {});
+    });
+    setIsCreateModalOpen(false);
+    navigate(`/collection/${newCollection.id}/edit`);
   };
 
   const handleDeleteCollection = async (id: string) => {
@@ -467,37 +464,30 @@ export default function WordsPage() {
     });
     if (!confirmed) return;
     setCollections((prev) => prev.filter((c) => c.id !== id));
-    try {
-      await deleteCollection(id);
-      success(`"${target.name}" ${t.words.toast.deleteSuccess}`);
-    } catch {
-      setCollections((prev) => [target, ...prev]);
-      error(t.words.toast.deleteError);
-    }
+    success(t.words.toast.deleted.replace("{name}", target.name));
+    void saveInBackground(() => deleteCollection(id), {
+      key: `set:${id}`,
+      onFail: () => {
+        setCollections((prev) => [target, ...prev]);
+        hideToast();
+      },
+    });
   };
 
   const handleToggleFavorite = useCallback(
-    async (id: string) => {
+    (id: string) => {
       const col = collections.find((c) => c.id === id);
       if (!col) return;
       const next = !col.isFavorite;
       // Функциональные апдейты: и оптимистичное обновление, и откат трогают
       // только эту коллекцию — параллельные изменения других не затираются
-      setCollections((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, isFavorite: next } : c)),
-      );
-      try {
-        await updateCollectionMeta(col, { isFavorite: next });
-      } catch {
-        setCollections((prev) =>
-          prev.map((c) =>
-            c.id === id ? { ...c, isFavorite: col.isFavorite } : c,
-          ),
-        );
-        error(t.words.toast.deleteError);
-      }
+      setCollections((prev) => prev.map((c) => (c.id === id ? { ...c, isFavorite: next } : c)));
+      void saveInBackground(() => updateCollectionMeta(col, { isFavorite: next }), {
+        key: `favorite:${id}`,
+        onFail: () => setCollections((prev) => prev.map((c) => (c.id === id ? { ...c, isFavorite: col.isFavorite } : c))),
+      });
     },
-    [collections, setCollections, error, t],
+    [collections, setCollections],
   );
 
   const handleDragStart = ({ active }: DragStartEvent) => {
@@ -547,16 +537,13 @@ export default function WordsPage() {
   const handleSaveFolder = async (name: string, color: string) => {
     const target = folderModal;
     setFolderModal((m) => ({ ...m, open: false }));
-    try {
-      if (target.folder) {
-        await updateFolder(target.folder.id, { name, color });
-        return;
-      }
-      const id = await createFolder(name, color);
-      if (id && target.moveId) await handleMoveToFolder(target.moveId, id, name);
-    } catch {
-      error(t.words.toast.createError);
+    if (target.folder) {
+      updateFolder(target.folder.id, { name, color });
+      return;
     }
+    // createFolder сеть не ждёт — id новой папки приходит сразу, и набор из его меню кладём в неё
+    const id = await createFolder(name, color);
+    if (id && target.moveId) handleMoveToFolder(target.moveId, id, name);
   };
 
   // Наборы из удалённой папки не пропадают — возвращаются в общий список; об этом и спрашиваем
@@ -570,45 +557,33 @@ export default function WordsPage() {
     });
     if (!confirmed) return;
     closeFolder();
-    try {
-      await deleteFolder(folder.id);
-    } catch {
-      error(t.words.toast.deleteError);
-    }
+    deleteFolder(folder.id);
   };
 
   // folderName — для только что созданной папки: её ещё нет в folders этого рендера
-  const handleMoveToFolder = async (
+  const handleMoveToFolder = (
     collectionId: string,
     folderId: string | undefined,
     folderName = folders.find((f) => f.id === folderId)?.name,
   ) => {
     const col = collections.find((c) => c.id === collectionId);
     if (!col || col.folderId === folderId) return;
-    setCollections((prev) =>
-      prev.map((c) => (c.id === collectionId ? { ...c, folderId } : c)),
-    );
-    try {
-      await updateCollectionMeta(col, { folderId });
-      // Карточка исчезает с экрана — скажем, куда она делась
-      success(folderName ? lib.movedTo.replace("{name}", folderName) : lib.movedOut);
-    } catch {
-      setCollections((prev) =>
-        prev.map((c) =>
-          c.id === collectionId ? { ...c, folderId: col.folderId } : c,
-        ),
-      );
-      error(t.words.toast.createError);
-    }
+    setCollections((prev) => prev.map((c) => (c.id === collectionId ? { ...c, folderId } : c)));
+    // Карточка исчезает с экрана — скажем, куда она делась
+    success(folderName ? lib.movedTo.replace("{name}", folderName) : lib.movedOut);
+    void saveInBackground(() => updateCollectionMeta(col, { folderId }), {
+      key: `folder:${collectionId}`,
+      onFail: () => {
+        setCollections((prev) => prev.map((c) => (c.id === collectionId ? { ...c, folderId: col.folderId } : c)));
+        hideToast();
+      },
+    });
   };
 
-  const handleMoveToCourse = async (collectionId: string, courseId: string) => {
-    try {
-      await moveCollectionToCourse(collectionId, courseId);
-      success(t.courses.moved.replace("{name}", courseName(courseId, getLanguageInfo(language).htmlLang)));
-    } catch {
-      error(t.courses.moveError);
-    }
+  // Перенос в другой курс откатывает сам moveCollectionToCourse; здесь — только не ждать сети перед тостом
+  const handleMoveToCourse = (collectionId: string, courseId: string) => {
+    success(t.courses.moved.replace("{name}", courseName(courseId, getLanguageInfo(language).htmlLang)));
+    moveCollectionToCourse(collectionId, courseId).catch(() => error(t.courses.moveError));
   };
 
   // ── Derived state ────────────────────────────────────────────────────────────

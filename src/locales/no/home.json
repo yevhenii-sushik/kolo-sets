@@ -1036,7 +1036,6 @@
           "Jobb"
         ],
         "create": "Lag sett",
-        "error": "Kunne ikke lage settet. Sjekk nettet og prøv igjen.",
         "doneTitle": "«{name}» er klart",
         "doneText": "Nå legger vi til de første ordene – fem holder.",
         "next": "Legg til ord",
@@ -1064,7 +1063,6 @@
         "translationLabel": "Oversettelse",
         "add": "Legg til ord",
         "progress": "{n} av {goal} ord",
-        "error": "Kunne ikke lagre ordene. Sjekk nettet og prøv igjen.",
         "doneTitle": "Ordene er på plass!",
         "doneText": "Fem ord – akkurat passe for første økt. Vi viser hvordan den fungerer.",
         "next": "Slik øver du",

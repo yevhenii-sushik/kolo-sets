@@ -2,11 +2,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { Card, Collection } from "../../types";
-import {
-  getCollection,
-  updateCollection,
-  createCard,
-} from "../../utils/storage";
+import { getCollection, createCard } from "../../utils/storage";
 import type { ImportedWord } from "../../utils/importText";
 import { exportCollectionToJSON, downloadJSON } from "../../utils/exportImport";
 import { useI18n } from "../../contexts/I18nContext";
@@ -43,7 +39,7 @@ export default function CollectionEditPage() {
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
 
-  const { allCollections, setCollections } = useData();
+  const { allCollections, setCollections, saveCollection } = useData();
 
   // Набор уже есть в памяти (его загрузил DataContext) — показываем сразу, без скелетона,
   // а свежую версию из базы подтягиваем в фоне: вдруг слова меняли на другом устройстве
@@ -54,12 +50,13 @@ export default function CollectionEditPage() {
   // Пользователь уже поменял набор — фоновая загрузка не должна вернуть старую версию поверх
   const editedRef = useRef(false);
 
-  // Каждую правку отдаём и в общий список: без этого главная, «Слова» и «Первые шаги»
-  // показывали старое число слов до перезагрузки приложения
+  // Каждая правка — сразу на экране и в общем списке (иначе главная, «Слова» и «Первые шаги» показывали старое
+  // число слов), а запись — в фоне, без ожидания сети (docs/specs/06-audit-fixes.md, шаг 4). Раньше окно
+  // переименования без сети не закрывалось; если сервер запись не принял — общее уведомление с «Повторить»
   const setCollection = (updated: Collection) => {
     editedRef.current = true;
     setCollectionState(updated);
-    setCollections((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
+    void saveCollection(updated);
   };
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
@@ -150,9 +147,7 @@ export default function CollectionEditPage() {
   // любое слово с интервалом больше нуля, то есть после одного верного ответа (docs/specs/06-audit-fixes.md, шаг 1)
   const plan = useMemo(() => (collection ? setPlan(collection.cards) : null), [collection]);
 
-  const handleAddCard = async (
-    cardData: Omit<Card, "id" | "srsData" | "createdAt">,
-  ) => {
+  const handleAddCard = (cardData: Omit<Card, "id" | "srsData" | "createdAt">) => {
     if (!collection) return;
     const newCard = createCard(
       cardData.word,
@@ -161,45 +156,22 @@ export default function CollectionEditPage() {
       cardData.example,
       cardData.partOfSpeech,
     );
-    const updated = { ...collection, cards: [...collection.cards, newCard] };
-    // Окно «Новое слово» остаётся открытым для следующего слова (шаг 3 плана); запись — в фоне, без ожидания сети
-    setCollection(updated);
-    try {
-      await updateCollection(updated);
-    } catch (err) {
-      console.error("Не удалось сохранить слово", err);
-      error(e.saveError);
-    }
+    // Окно «Новое слово» остаётся открытым для следующего слова (шаг 3 плана)
+    setCollection({ ...collection, cards: [...collection.cards, newCard] });
   };
 
-  // Слова уже разобраны и очищены от дублей в окне импорта (src/utils/importText.ts). Окно закрывается и тост
-  // показывается сразу: без сети запись Firestore не завершится, и окно висело бы (шаг 4 плана — для остального)
-  const handleImportCards = async (words: ImportedWord[]) => {
+  // Слова уже разобраны и очищены от дублей в окне импорта (src/utils/importText.ts)
+  const handleImportCards = (words: ImportedWord[]) => {
     if (!collection || words.length === 0) return;
     const newCards = words.map((w) => createCard(w.word, w.translation, w.explanation, w.example, w.partOfSpeech));
-    const updated = { ...collection, cards: [...collection.cards, ...newCards] };
-    setCollection(updated);
+    setCollection({ ...collection, cards: [...collection.cards, ...newCards] });
     setIsImportModalOpen(false);
     success(plural(getLanguageInfo(language).htmlLang, newCards.length, e.wordsAdded));
-    try {
-      await updateCollection(updated);
-    } catch (err) {
-      console.error("Не удалось сохранить импорт", err);
-      error(e.saveError);
-    }
   };
 
-  const handleEditCard = async (
-    cardId: string,
-    cardData: Omit<Card, "id" | "srsData" | "createdAt">,
-  ) => {
+  const handleEditCard = (cardId: string, cardData: Omit<Card, "id" | "srsData" | "createdAt">) => {
     if (!collection) return;
-    const updatedCards = collection.cards.map((card: Card) =>
-      card.id === cardId ? { ...card, ...cardData } : card,
-    );
-    const updated = { ...collection, cards: updatedCards };
-    setCollection(updated);
-    await updateCollection(updated);
+    setCollection({ ...collection, cards: collection.cards.map((card) => (card.id === cardId ? { ...card, ...cardData } : card)) });
   };
 
   const handleDeleteCard = async (cardId: string) => {
@@ -209,14 +181,7 @@ export default function CollectionEditPage() {
       message: t.words.editCollection.modals.deleteConfirm,
       type: "danger",
     });
-    if (isConfirmed) {
-      const updatedCards = collection.cards.filter(
-        (card: Card) => card.id !== cardId,
-      );
-      const updated = { ...collection, cards: updatedCards };
-      setCollection(updated);
-      await updateCollection(updated);
-    }
+    if (isConfirmed) setCollection({ ...collection, cards: collection.cards.filter((card) => card.id !== cardId) });
   };
 
   const handleRenameCollection = () => {
@@ -225,11 +190,9 @@ export default function CollectionEditPage() {
     setShowRenameModal(true);
   };
 
-  const handleRenameSubmit = async () => {
+  const handleRenameSubmit = () => {
     if (!collection || !renameValue.trim()) return;
-    const updated = { ...collection, name: renameValue.trim() };
-    setCollection(updated);
-    await updateCollection(updated);
+    setCollection({ ...collection, name: renameValue.trim() });
     setShowRenameModal(false);
   };
 

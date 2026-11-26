@@ -450,7 +450,6 @@
       "many": "{n} mots ajoutés",
       "other": "{n} mots ajoutés"
     },
-    "saveError": "Impossible d'enregistrer les mots. Vérifie ta connexion et réessaie.",
     "modals": {
       "editWord": "Modifier le mot",
       "newWord": "Nouveau mot",
@@ -507,5 +506,8 @@
       "example": "Phrase d'exemple",
       "examplePlaceholder": "Une phrase avec ce mot"
     }
+  },
+  "toast": {
+    "deleted": "Set « {name} » supprimé"
   }
 }

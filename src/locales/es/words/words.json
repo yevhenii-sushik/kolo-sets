@@ -450,7 +450,6 @@
       "many": "{n} palabras añadidas",
       "other": "{n} palabras añadidas"
     },
-    "saveError": "No se pudieron guardar las palabras. Revisa tu conexión e inténtalo de nuevo.",
     "modals": {
       "editWord": "Editar palabra",
       "newWord": "Nueva palabra",
@@ -507,5 +506,8 @@
       "example": "Frase de ejemplo",
       "examplePlaceholder": "Una frase con esta palabra"
     }
+  },
+  "toast": {
+    "deleted": "Set «{name}» eliminado"
   }
 }

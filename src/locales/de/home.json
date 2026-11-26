@@ -162,7 +162,6 @@
           "Arbeit"
         ],
         "create": "Set erstellen",
-        "error": "Das Set konnte nicht erstellt werden. Prüf deine Verbindung und versuch es noch mal.",
         "doneTitle": "„{name}“ ist fertig",
         "doneText": "Jetzt fügen wir die ersten Wörter hinzu – fünf reichen.",
         "next": "Wörter hinzufügen",
@@ -190,7 +189,6 @@
         "translationLabel": "Übersetzung",
         "add": "Wort hinzufügen",
         "progress": "{n} von {goal} Wörtern",
-        "error": "Die Wörter konnten nicht gespeichert werden. Prüf deine Verbindung und versuch es noch mal.",
         "doneTitle": "Deine Wörter sind drin!",
         "doneText": "Fünf Wörter – genau richtig für die erste Session. So funktioniert sie.",
         "next": "So wird geübt",

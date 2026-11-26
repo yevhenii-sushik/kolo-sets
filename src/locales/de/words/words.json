@@ -447,7 +447,6 @@
       "one": "{n} Wort hinzugefügt",
       "other": "{n} Wörter hinzugefügt"
     },
-    "saveError": "Die Wörter konnten nicht gespeichert werden. Prüfe deine Verbindung und versuch es noch einmal.",
     "modals": {
       "editWord": "Wort bearbeiten",
       "newWord": "Neues Wort",
@@ -500,5 +499,8 @@
       "example": "Beispielsatz",
       "examplePlaceholder": "Ein Satz mit diesem Wort"
     }
+  },
+  "toast": {
+    "deleted": "Set „{name}“ gelöscht"
   }
 }

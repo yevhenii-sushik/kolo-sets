@@ -56,7 +56,6 @@
       "one": "{n} ord lagt til",
       "other": "{n} ord lagt til"
     },
-    "saveError": "Kunne ikke lagre ordene. Sjekk nettet og prøv igjen.",
     "modals": {
       "editWord": "Rediger ord",
       "newWord": "Nytt ord",
@@ -308,10 +307,7 @@
     "ready": "Velg et ferdig sett"
   },
   "toast": {
-    "createSuccess": "Sett opprettet",
-    "deleteSuccess": "Sett slettet",
-    "deleteError": "Sletting mislyktes",
-    "createError": "Feil ved oppretting av samling"
+    "deleted": "Settet «{name}» er slettet"
   },
   "library": {
     "newFolder": "Ny mappe",

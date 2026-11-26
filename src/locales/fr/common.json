@@ -21,5 +21,10 @@
       "closed": "L'orbite de cette semaine est refermée",
       "progress": "{done} jours sur {goal} cette semaine"
     }
+  },
+  "saveFailed": {
+    "text": "Impossible d'enregistrer tes modifications.",
+    "undone": "Échec de l'enregistrement : tout est revenu comme avant.",
+    "retry": "Réessayer"
   }
 }
