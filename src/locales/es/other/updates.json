@@ -40,7 +40,8 @@
         "El botón «Iniciar sesión» ahora también está en la cabecera del sitio en el móvil.",
         "El progreso hacia las medallas se cuenta igual que las propias medallas, por las palabras y los sets que ya empezaste, así que una barra ya no aparece llena junto a una medalla bloqueada. Inicio y tu perfil muestran el mismo número de medallas.",
         "Las estadísticas del perfil ahora incluyen las rondas relámpago, y el contador de tarjetas se llama por lo que cuenta: «Perigee y tarjetas». Una ronda relámpago ahora también da la medalla de la primera sesión.",
-        "La página de un set muestra su plan, con palabras firmes, afianzándose, aprendiendo y nuevas, en lugar de «Aprendidas», que contaba cualquier palabra tras una sola respuesta correcta."
+        "La página de un set muestra su plan, con palabras firmes, afianzándose, aprendiendo y nuevas, en lugar de «Aprendidas», que contaba cualquier palabra tras una sola respuesta correcta.",
+        "La importación de listas entiende el tabulador, así que las palabras se pegan directamente desde Excel, Google Sheets, Quizlet y Anki, además del punto y coma, el guion y «=». Mientras pegas, Kolo muestra cuántas palabras reconoció, cómo leyó las primeras líneas y qué líneas no entendió, y las palabras que ya están en el set no se añaden dos veces."
       ]
     }
   ],

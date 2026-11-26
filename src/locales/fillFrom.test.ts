@@ -19,10 +19,12 @@ describe("частичный перевод", () => {
     expect(fillFrom(en, { a: 5, nested: "oops" })).toEqual(en);
   });
 
-  it("немецкие флэшкарты и тест — по-немецки, непереведённый редактор набора — по-английски", () => {
+  it("немецкие флэшкарты и тест — по-немецки, непереведённая часть редактора набора — по-английски", () => {
     expect(translations.de.words.flashcards.settings.title).toBe("Karteneinstellungen");
     expect(translations.de.words.quiz.settings.title).toBe("Quiz-Einstellungen");
-    expect(translations.de.words.editCollection).toEqual(translations.en.words.editCollection);
+    // В редакторе набора переведены окна (импорт — docs/specs/06-audit-fixes.md, шаг 2), поля слова — ещё нет
+    expect(translations.de.words.editCollection.modals.importTitle).toBe("Wörter importieren");
+    expect(translations.de.words.editCollection.fields).toEqual(translations.en.words.editCollection.fields);
     // Профиль переведён частично: достижения теста по-немецки, остальное — из английского
     expect(translations.de.profile.achievementsList.speed_demon.name).toBe("Blitzschnell");
     expect(translations.de.profile.achievementsList.streak_3).toEqual(translations.en.profile.achievementsList.streak_3);

@@ -52,7 +52,11 @@
     "noCardsDesc": "A word and its translation are enough to start. Got a ready-made list? Paste it all at once with Import.",
     "exportSuccess": "Collection exported",
     "exportError": "Export failed",
-    "importSuccess": "Words imported",
+    "importAdded": {
+      "one": "{n} word added",
+      "other": "{n} words added"
+    },
+    "saveError": "Couldn't save the words. Check your connection and try again.",
     "modals": {
       "editWord": "Edit word",
       "newWord": "New word",
@@ -62,13 +66,33 @@
       "importTitle": "Import words",
       "importSubtitle": "Paste a bulk list — one word per line",
       "formatPattern": "word; translation; explanation; example; part of speech",
-      "formatHint": "Explanation, example and part of speech should be in the language you're learning (e.g. Norwegian)",
+      "formatHint": "Separate fields with a tab (that's how lists paste from Excel, Google Sheets and Quizlet), a semicolon, a dash or “=”. Explanation, example and part of speech go in {lang}.",
       "copyPrompt": "Copy AI prompt",
       "promptCopied": "Copied",
       "importPlaceholder": "skrive; to write; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
-      "cardsReady": "cards ready",
-      "startImport": "Start import",
-      "aiPrompt": "Create a word list for learning in CSV format (semicolon-separated \";\").\nIMPORTANT: word and translation as usual, but the EXPLANATION, EXAMPLE and PART OF SPEECH must be strictly in the language being learned (e.g. Norwegian).\n\nRow format: word; translation; explanation (in the target language); example (in the target language); part of speech (in the target language).\n\nHere's the word list: [PASTE YOUR WORDS HERE]"
+      "importFound": {
+        "one": "{n} word recognised",
+        "other": "{n} words recognised"
+      },
+      "importSkipped": {
+        "one": "{n} line not recognised",
+        "other": "{n} lines not recognised"
+      },
+      "importDuplicates": {
+        "one": "{n} already in the set",
+        "other": "{n} already in the set"
+      },
+      "importNothing": "No words found yet. Each line needs a word and its translation, separated by a tab, a semicolon, a dash or “=”.",
+      "importAllDuplicates": "Every word in this list is already in the set.",
+      "importPreview": "How the first lines were read",
+      "importSkippedLines": "Not recognised",
+      "importLine": "line {n}",
+      "importButton": {
+        "one": "Add {n} word",
+        "other": "Add {n} words"
+      },
+      "importButtonIdle": "Add words",
+      "aiPrompt": "Create a word list for learning in CSV format (semicolon-separated \";\").\nIMPORTANT: word and translation as usual, but the EXPLANATION, EXAMPLE and PART OF SPEECH must be strictly in the language being learned ({lang}).\n\nRow format: word; translation; explanation (in the target language); example (in the target language); part of speech (in the target language).\n\nHere's the word list: [PASTE YOUR WORDS HERE]"
     },
     "fields": {
       "word": "Word",

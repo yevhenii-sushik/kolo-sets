@@ -52,7 +52,11 @@
     "noCardsDesc": "Et ord og oversettelsen er nok til å begynne. Har du en ferdig liste? Lim inn hele med «Importer».",
     "exportSuccess": "Samling eksportert",
     "exportError": "Eksport mislyktes",
-    "importSuccess": "Ord importert",
+    "importAdded": {
+      "one": "{n} ord lagt til",
+      "other": "{n} ord lagt til"
+    },
+    "saveError": "Kunne ikke lagre ordene. Sjekk nettet og prøv igjen.",
     "modals": {
       "editWord": "Rediger ord",
       "newWord": "Nytt ord",
@@ -62,13 +66,33 @@
       "importTitle": "Importer ord",
       "importSubtitle": "Lim inn en liste — ett ord per linje",
       "formatPattern": "ord; oversettelse; forklaring; eksempel; ordklasse",
-      "formatHint": "Forklaring, eksempel og ordklasse bør være på språket du lærer (f.eks. norsk)",
+      "formatHint": "Skill feltene med tabulator (slik limes lister inn fra Excel, Google Regneark og Quizlet), semikolon, tankestrek eller «=». Forklaring, eksempel og ordklasse skrives på {lang}.",
       "copyPrompt": "Kopier AI-prompt",
       "promptCopied": "Kopiert",
       "importPlaceholder": "skrive; to write; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
-      "cardsReady": "kort klare",
-      "startImport": "Start import",
-      "aiPrompt": "Lag en ordliste for læring i CSV-format (skilletegn semikolon \";\").\nVIKTIG: ord og oversettelse som vanlig, men FORKLARING, EKSEMPEL og ORDKLASSE må være strengt på språket som læres (f.eks. norsk).\n\nRadformat: ord; oversettelse; forklaring (på målspråket); eksempel (på målspråket); ordklasse (på målspråket).\n\nHer er ordlisten: [LIM INN ORDENE DINE HER]"
+      "importFound": {
+        "one": "{n} ord gjenkjent",
+        "other": "{n} ord gjenkjent"
+      },
+      "importSkipped": {
+        "one": "{n} linje ikke gjenkjent",
+        "other": "{n} linjer ikke gjenkjent"
+      },
+      "importDuplicates": {
+        "one": "{n} finnes allerede i settet",
+        "other": "{n} finnes allerede i settet"
+      },
+      "importNothing": "Fant ingen ord ennå. Hver linje trenger et ord og en oversettelse, skilt med tabulator, semikolon, tankestrek eller «=».",
+      "importAllDuplicates": "Alle ordene i denne listen finnes allerede i settet.",
+      "importPreview": "Slik ble de første linjene lest",
+      "importSkippedLines": "Ikke gjenkjent",
+      "importLine": "linje {n}",
+      "importButton": {
+        "one": "Legg til {n} ord",
+        "other": "Legg til {n} ord"
+      },
+      "importButtonIdle": "Legg til ord",
+      "aiPrompt": "Lag en ordliste for læring i CSV-format (skilletegn semikolon \";\").\nVIKTIG: ord og oversettelse som vanlig, men FORKLARING, EKSEMPEL og ORDKLASSE må være strengt på språket som læres ({lang}).\n\nRadformat: ord; oversettelse; forklaring (på målspråket); eksempel (på målspråket); ordklasse (på målspråket).\n\nHer er ordlisten: [LIM INN ORDENE DINE HER]"
     },
     "fields": {
       "word": "Ord",

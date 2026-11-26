@@ -95,6 +95,17 @@ export function courseCodeFromLanguage(language: string | undefined): string {
 const capitalize = (s: string, locale: string) => (s ? s.charAt(0).toLocaleUpperCase(locale) + s.slice(1) : s);
 
 // «Норвежский», «Английский» — на языке интерфейса
+// Название языка внутри фразы — так, как его пишет сам язык интерфейса: «на изучаемом языке (норвежский)»,
+// «auf Norwegisch», «en noruego». courseName — с заглавной буквы, для заголовков и списков
+export function courseNameInline(code: string, uiLocale: string): string {
+  const nameCode = getCourseLanguage(code)?.nameCode ?? code;
+  try {
+    return new Intl.DisplayNames([uiLocale], { type: "language" }).of(nameCode) ?? code;
+  } catch {
+    return code;
+  }
+}
+
 export function courseName(code: string, uiLocale: string): string {
   const nameCode = getCourseLanguage(code)?.nameCode ?? code;
   try {

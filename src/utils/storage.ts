@@ -187,28 +187,6 @@ export const createCard = (
   };
 };
 
-// Парсинг импорта слов
-export const parseImportText = (text: string): Omit<Card, 'id' | 'srsData' | 'createdAt'>[] => {
-  const lines = text.split('\n').filter(line => line.trim());
-  const cards: Omit<Card, 'id' | 'srsData' | 'createdAt'>[] = [];
-  
-  for (const line of lines) {
-    const parts = line.split(';').map(part => part.trim());
-    
-    if (parts.length >= 2) {
-      cards.push({
-        word: parts[0] || '',
-        translation: parts[1] || '',
-        explanation: parts[2] || '',
-        example: parts[3] || '',
-        partOfSpeech: parts[4] || ''
-      });
-    }
-  }
-  
-  return cards;
-};
-
 // ── Порядок коллекций (localStorage, без Firestore-записей на каждый drag) ──
 
 export const getCollectionOrder = (userId: string): string[] => {

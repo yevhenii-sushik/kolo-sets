@@ -443,5 +443,54 @@
       "sent": "¡Gracias! Lo corregiremos en la próxima versión del set.",
       "error": "No se pudo enviar. Revisa tu conexión e inténtalo de nuevo."
     }
+  },
+  "editCollection": {
+    "importAdded": {
+      "one": "{n} palabra añadida",
+      "many": "{n} palabras añadidas",
+      "other": "{n} palabras añadidas"
+    },
+    "saveError": "No se pudieron guardar las palabras. Revisa tu conexión e inténtalo de nuevo.",
+    "modals": {
+      "editWord": "Editar palabra",
+      "newWord": "Nueva palabra",
+      "createWord": "Crear palabra",
+      "renameTitle": "Nuevo nombre del set",
+      "deleteConfirm": "¿Eliminar esta palabra?",
+      "importTitle": "Importar palabras",
+      "importSubtitle": "Pega una lista entera: una palabra por línea",
+      "formatPattern": "palabra; traducción; explicación; ejemplo; categoría gramatical",
+      "formatHint": "Separa los campos con un tabulador (así se pegan las listas de Excel, Google Sheets y Quizlet), punto y coma, guion o «=». La explicación, el ejemplo y la categoría gramatical van en {lang}.",
+      "copyPrompt": "Copiar prompt para IA",
+      "promptCopied": "Copiado",
+      "importPlaceholder": "skrive; escribir; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
+      "importFound": {
+        "one": "{n} palabra reconocida",
+        "many": "{n} palabras reconocidas",
+        "other": "{n} palabras reconocidas"
+      },
+      "importSkipped": {
+        "one": "{n} línea sin reconocer",
+        "many": "{n} líneas sin reconocer",
+        "other": "{n} líneas sin reconocer"
+      },
+      "importDuplicates": {
+        "one": "{n} ya está en el set",
+        "many": "{n} ya están en el set",
+        "other": "{n} ya están en el set"
+      },
+      "importNothing": "Todavía no encontramos ninguna palabra. Cada línea necesita una palabra y su traducción, separadas por tabulador, punto y coma, guion o «=».",
+      "importAllDuplicates": "Todas las palabras de esta lista ya están en el set.",
+      "importPreview": "Así leímos las primeras líneas",
+      "importSkippedLines": "Sin reconocer",
+      "importLine": "línea {n}",
+      "importButton": {
+        "one": "Añadir {n} palabra",
+        "many": "Añadir {n} palabras",
+        "other": "Añadir {n} palabras"
+      },
+      "importButtonIdle": "Añadir palabras",
+      "aiPrompt": "Crea una lista de palabras para estudiar en formato CSV (separador punto y coma \";\").\nIMPORTANTE: la palabra y la traducción, como siempre, pero la EXPLICACIÓN, el EJEMPLO y la CATEGORÍA GRAMATICAL deben estar estrictamente en el idioma que se aprende ({lang}).\n\nFormato de cada línea: palabra; traducción; explicación (en el idioma que se aprende); ejemplo (en el idioma que se aprende); categoría gramatical (en el idioma que se aprende).\n\nEsta es la lista de palabras: [PEGA AQUÍ TUS PALABRAS]"
+    }
   }
 }

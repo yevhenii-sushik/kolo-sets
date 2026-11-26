@@ -6,8 +6,8 @@ import {
   getCollection,
   updateCollection,
   createCard,
-  parseImportText,
 } from "../../utils/storage";
+import type { ImportedWord } from "../../utils/importText";
 import { exportCollectionToJSON, downloadJSON } from "../../utils/exportImport";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
@@ -16,7 +16,7 @@ import { useToast } from "../../hooks/useToast";
 import { Plus, Upload, Download, Pencil, ArrowUp, Layers, Play, CloudOff, RotateCw } from "lucide-react";
 import { Button, Card as UiCard, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
-import { courseCodeFromLanguage } from "../../courses/languages";
+import { courseCodeFromLanguage, courseNameInline } from "../../courses/languages";
 import { plural } from "../../utils/plural";
 import AddCardModal from "../../components/AddCardModal";
 import ImportCardsModal from "../../components/ImportCardsModal";
@@ -167,26 +167,21 @@ export default function CollectionEditPage() {
     setIsAddModalOpen(false);
   };
 
-  const handleImportCards = async (text: string) => {
-    if (!collection) return;
-    const parsedCards = parseImportText(text);
-    const newCards = parsedCards.map((cardData) =>
-      createCard(
-        cardData.word,
-        cardData.translation,
-        cardData.explanation,
-        cardData.example,
-        cardData.partOfSpeech,
-      ),
-    );
-    const updated = {
-      ...collection,
-      cards: [...collection.cards, ...newCards],
-    };
+  // Слова уже разобраны и очищены от дублей в окне импорта (src/utils/importText.ts). Окно закрывается и тост
+  // показывается сразу: без сети запись Firestore не завершится, и окно висело бы (шаг 4 плана — для остального)
+  const handleImportCards = async (words: ImportedWord[]) => {
+    if (!collection || words.length === 0) return;
+    const newCards = words.map((w) => createCard(w.word, w.translation, w.explanation, w.example, w.partOfSpeech));
+    const updated = { ...collection, cards: [...collection.cards, ...newCards] };
     setCollection(updated);
-    await updateCollection(updated);
     setIsImportModalOpen(false);
-    success(`${t.words.editCollection.importSuccess}: ${newCards.length}`);
+    success(plural(getLanguageInfo(language).htmlLang, newCards.length, e.importAdded));
+    try {
+      await updateCollection(updated);
+    } catch (err) {
+      console.error("Не удалось сохранить импорт", err);
+      error(e.saveError);
+    }
   };
 
   const handleEditCard = async (
@@ -424,7 +419,13 @@ export default function CollectionEditPage() {
       </motion.section>
 
       <AddCardModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSave={handleAddCard} />
-      <ImportCardsModal isOpen={isImportModalOpen} onClose={() => setIsImportModalOpen(false)} onImport={handleImportCards} />
+      <ImportCardsModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImport={handleImportCards}
+        existing={collection?.cards ?? []}
+        lang={courseNameInline(collection?.courseId ?? courseCodeFromLanguage(collection?.language), getLanguageInfo(language).htmlLang)}
+      />
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
       {collection && (
         <ShareCardModal

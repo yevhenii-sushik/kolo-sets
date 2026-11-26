@@ -443,5 +443,54 @@
       "sent": "Merci ! Nous le corrigerons dans la prochaine version du set.",
       "error": "Impossible d’envoyer. Vérifie ta connexion et réessaie."
     }
+  },
+  "editCollection": {
+    "importAdded": {
+      "one": "{n} mot ajouté",
+      "many": "{n} mots ajoutés",
+      "other": "{n} mots ajoutés"
+    },
+    "saveError": "Impossible d'enregistrer les mots. Vérifie ta connexion et réessaie.",
+    "modals": {
+      "editWord": "Modifier le mot",
+      "newWord": "Nouveau mot",
+      "createWord": "Créer le mot",
+      "renameTitle": "Nouveau nom du set",
+      "deleteConfirm": "Supprimer ce mot ?",
+      "importTitle": "Importer des mots",
+      "importSubtitle": "Colle une liste entière : un mot par ligne",
+      "formatPattern": "mot; traduction; explication; exemple; nature du mot",
+      "formatHint": "Sépare les champs par une tabulation (c'est ainsi que se collent les listes d'Excel, Google Sheets et Quizlet), un point-virgule, un tiret ou « = ». L'explication, l'exemple et la nature du mot s'écrivent en {lang}.",
+      "copyPrompt": "Copier le prompt IA",
+      "promptCopied": "Copié",
+      "importPlaceholder": "skrive; écrire; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
+      "importFound": {
+        "one": "{n} mot reconnu",
+        "many": "{n} mots reconnus",
+        "other": "{n} mots reconnus"
+      },
+      "importSkipped": {
+        "one": "{n} ligne non reconnue",
+        "many": "{n} lignes non reconnues",
+        "other": "{n} lignes non reconnues"
+      },
+      "importDuplicates": {
+        "one": "{n} déjà dans le set",
+        "many": "{n} déjà dans le set",
+        "other": "{n} déjà dans le set"
+      },
+      "importNothing": "Aucun mot trouvé pour l'instant. Chaque ligne doit contenir un mot et sa traduction, séparés par une tabulation, un point-virgule, un tiret ou « = ».",
+      "importAllDuplicates": "Tous les mots de cette liste sont déjà dans le set.",
+      "importPreview": "Voici comment les premières lignes ont été lues",
+      "importSkippedLines": "Non reconnues",
+      "importLine": "ligne {n}",
+      "importButton": {
+        "one": "Ajouter {n} mot",
+        "many": "Ajouter {n} mots",
+        "other": "Ajouter {n} mots"
+      },
+      "importButtonIdle": "Ajouter des mots",
+      "aiPrompt": "Crée une liste de mots à apprendre au format CSV (séparateur point-virgule \";\").\nIMPORTANT : le mot et la traduction comme d'habitude, mais l'EXPLICATION, l'EXEMPLE et la NATURE DU MOT doivent être strictement dans la langue apprise ({lang}).\n\nFormat de ligne : mot; traduction; explication (dans la langue apprise); exemple (dans la langue apprise); nature du mot (dans la langue apprise).\n\nVoici la liste de mots : [COLLE TES MOTS ICI]"
+    }
   }
 }

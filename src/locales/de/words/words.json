@@ -441,5 +441,49 @@
       "sent": "Danke! Wir korrigieren es in der nächsten Version des Sets.",
       "error": "Senden hat nicht geklappt. Prüf deine Verbindung und versuch es noch mal."
     }
+  },
+  "editCollection": {
+    "importAdded": {
+      "one": "{n} Wort hinzugefügt",
+      "other": "{n} Wörter hinzugefügt"
+    },
+    "saveError": "Die Wörter konnten nicht gespeichert werden. Prüfe deine Verbindung und versuch es noch einmal.",
+    "modals": {
+      "editWord": "Wort bearbeiten",
+      "newWord": "Neues Wort",
+      "createWord": "Wort anlegen",
+      "renameTitle": "Neuer Name des Sets",
+      "deleteConfirm": "Dieses Wort löschen?",
+      "importTitle": "Wörter importieren",
+      "importSubtitle": "Füge eine ganze Liste ein – ein Wort pro Zeile",
+      "formatPattern": "Wort; Übersetzung; Erklärung; Beispiel; Wortart",
+      "formatHint": "Trenne die Felder mit Tab (so kommen Listen aus Excel, Google Tabellen und Quizlet), Semikolon, Gedankenstrich oder „=“. Erklärung, Beispiel und Wortart schreibst du auf {lang}.",
+      "copyPrompt": "KI-Prompt kopieren",
+      "promptCopied": "Kopiert",
+      "importPlaceholder": "skrive; schreiben; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
+      "importFound": {
+        "one": "{n} Wort erkannt",
+        "other": "{n} Wörter erkannt"
+      },
+      "importSkipped": {
+        "one": "{n} Zeile nicht erkannt",
+        "other": "{n} Zeilen nicht erkannt"
+      },
+      "importDuplicates": {
+        "one": "{n} schon im Set",
+        "other": "{n} schon im Set"
+      },
+      "importNothing": "Noch kein Wort gefunden. Jede Zeile braucht ein Wort und seine Übersetzung, getrennt durch Tab, Semikolon, Gedankenstrich oder „=“.",
+      "importAllDuplicates": "Alle Wörter dieser Liste sind schon im Set.",
+      "importPreview": "So wurden die ersten Zeilen gelesen",
+      "importSkippedLines": "Nicht erkannt",
+      "importLine": "Zeile {n}",
+      "importButton": {
+        "one": "{n} Wort hinzufügen",
+        "other": "{n} Wörter hinzufügen"
+      },
+      "importButtonIdle": "Wörter hinzufügen",
+      "aiPrompt": "Erstelle eine Wortliste zum Lernen im CSV-Format (Trennzeichen Semikolon \";\").\nWICHTIG: Wort und Übersetzung wie gewohnt, aber ERKLÄRUNG, BEISPIEL und WORTART müssen streng in der Lernsprache sein ({lang}).\n\nZeilenformat: Wort; Übersetzung; Erklärung (in der Lernsprache); Beispiel (in der Lernsprache); Wortart (in der Lernsprache).\n\nHier ist die Wortliste: [FÜGE HIER DEINE WÖRTER EIN]"
+    }
   }
 }
