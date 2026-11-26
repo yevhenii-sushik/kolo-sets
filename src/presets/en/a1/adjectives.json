@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "big",
+      "word": "big",
+      "partOfSpeech": "adjective",
+      "explanation": "Not small.",
+      "example": "They have a big house.",
+      "translation": { "ru": "большой", "uk": "великий", "no": "stor", "de": "groß", "es": "grande", "fr": "grand", "pt-BR": "grande" }
+    },
+    {
+      "id": "small",
+      "word": "small",
+      "partOfSpeech": "adjective",
+      "explanation": "Not big. Also: little.",
+      "example": "I live in a small town.",
+      "translation": { "ru": "маленький", "uk": "маленький", "no": "liten", "de": "klein", "es": "pequeño", "fr": "petit", "pt-BR": "pequeno" }
+    },
+    {
+      "id": "good",
+      "word": "good",
+      "partOfSpeech": "adjective",
+      "explanation": "Nice, not bad.",
+      "example": "This is a good book.",
+      "translation": { "ru": "хороший", "uk": "хороший", "no": "god, bra", "de": "gut", "es": "bueno", "fr": "bon", "pt-BR": "bom" }
+    },
+    {
+      "id": "bad",
+      "word": "bad",
+      "partOfSpeech": "adjective",
+      "explanation": "Not good.",
+      "example": "The weather is bad today.",
+      "translation": { "ru": "плохой", "uk": "поганий", "no": "dårlig", "de": "schlecht", "es": "malo", "fr": "mauvais", "pt-BR": "ruim" }
+    },
+    {
+      "id": "new",
+      "word": "new",
+      "partOfSpeech": "adjective",
+      "explanation": "Not old. Just made or bought.",
+      "example": "I have a new phone.",
+      "translation": { "ru": "новый", "uk": "новий", "no": "ny", "de": "neu", "es": "nuevo", "fr": "nouveau, neuf", "pt-BR": "novo" }
+    },
+    {
+      "id": "old",
+      "word": "old",
+      "partOfSpeech": "adjective",
+      "explanation": "1. Not new. 2. Not young.",
+      "example": "My car is very old.",
+      "translation": { "ru": "старый", "uk": "старий", "no": "gammel", "de": "alt", "es": "viejo", "fr": "vieux", "pt-BR": "velho" }
+    },
+    {
+      "id": "young",
+      "word": "young",
+      "partOfSpeech": "adjective",
+      "explanation": "Not old.",
+      "example": "My parents are still young.",
+      "translation": { "ru": "молодой", "uk": "молодий", "no": "ung", "de": "jung", "es": "joven", "fr": "jeune", "pt-BR": "jovem" }
+    },
+    {
+      "id": "long",
+      "word": "long",
+      "partOfSpeech": "adjective",
+      "explanation": "Not short.",
+      "example": "She has long hair.",
+      "translation": { "ru": "длинный, долгий", "uk": "довгий", "no": "lang", "de": "lang", "es": "largo", "fr": "long", "pt-BR": "longo, comprido" }
+    },
+    {
+      "id": "short",
+      "word": "short",
+      "partOfSpeech": "adjective",
+      "explanation": "1. Not long. 2. Not tall.",
+      "example": "It's a short film.",
+      "translation": { "ru": "короткий, невысокий", "uk": "короткий, невисокий", "no": "kort, lav", "de": "kurz", "es": "corto, bajo", "fr": "court", "pt-BR": "curto, baixo" }
+    },
+    {
+      "id": "tall",
+      "word": "tall",
+      "partOfSpeech": "adjective",
+      "explanation": "High. We say it about people, trees and buildings.",
+      "example": "My brother is very tall.",
+      "translation": { "ru": "высокий", "uk": "високий", "no": "høy", "de": "groß (Mensch), hoch", "es": "alto", "fr": "grand (personne)", "pt-BR": "alto" }
+    },
+    {
+      "id": "easy",
+      "word": "easy",
+      "partOfSpeech": "adjective",
+      "explanation": "Not difficult.",
+      "example": "This test is easy.",
+      "translation": { "ru": "лёгкий, простой", "uk": "легкий, простий", "no": "lett, enkel", "de": "leicht, einfach", "es": "fácil", "fr": "facile", "pt-BR": "fácil" }
+    },
+    {
+      "id": "difficult",
+      "word": "difficult",
+      "partOfSpeech": "adjective",
+      "explanation": "Not easy.",
+      "example": "English grammar can be difficult.",
+      "translation": { "ru": "трудный, сложный", "uk": "складний, важкий", "no": "vanskelig", "de": "schwierig, schwer", "es": "difícil", "fr": "difficile", "pt-BR": "difícil" }
+    },
+    {
+      "id": "fast",
+      "word": "fast",
+      "partOfSpeech": "adjective",
+      "explanation": "Not slow.",
+      "example": "This train is very fast.",
+      "translation": { "ru": "быстрый", "uk": "швидкий", "no": "rask, fort", "de": "schnell", "es": "rápido", "fr": "rapide", "pt-BR": "rápido" }
+    },
+    {
+      "id": "slow",
+      "word": "slow",
+      "partOfSpeech": "adjective",
+      "explanation": "Not fast.",
+      "example": "The internet is slow today.",
+      "translation": { "ru": "медленный", "uk": "повільний", "no": "langsom, treg", "de": "langsam", "es": "lento", "fr": "lent", "pt-BR": "lento" }
+    },
+    {
+      "id": "nice",
+      "word": "nice",
+      "partOfSpeech": "adjective",
+      "explanation": "Good, pleasant.",
+      "example": "Have a nice day!",
+      "translation": { "ru": "приятный, милый", "uk": "приємний, милий", "no": "fin, hyggelig", "de": "nett, angenehm", "es": "agradable, simpático", "fr": "sympa, agréable", "pt-BR": "legal, agradável" }
+    },
+    {
+      "id": "beautiful",
+      "word": "beautiful",
+      "partOfSpeech": "adjective",
+      "explanation": "Very nice to look at.",
+      "example": "What a beautiful city!",
+      "translation": { "ru": "красивый", "uk": "гарний, красивий", "no": "vakker, pen", "de": "schön", "es": "bonito, hermoso", "fr": "beau, belle", "pt-BR": "bonito, lindo" }
+    },
+    {
+      "id": "happy",
+      "word": "happy",
+      "partOfSpeech": "adjective",
+      "explanation": "You feel good.",
+      "example": "I'm happy to see you!",
+      "translation": { "ru": "счастливый, радостный", "uk": "щасливий, радий", "no": "glad, lykkelig", "de": "glücklich, froh", "es": "feliz, contento", "fr": "heureux, content", "pt-BR": "feliz" }
+    },
+    {
+      "id": "sad",
+      "word": "sad",
+      "partOfSpeech": "adjective",
+      "explanation": "Not happy.",
+      "example": "Why are you sad?",
+      "translation": { "ru": "грустный", "uk": "сумний", "no": "trist, lei seg", "de": "traurig", "es": "triste", "fr": "triste", "pt-BR": "triste" }
+    },
+    {
+      "id": "tired",
+      "word": "tired",
+      "partOfSpeech": "adjective",
+      "explanation": "You need to rest or sleep.",
+      "example": "I'm tired after work.",
+      "translation": { "ru": "уставший", "uk": "втомлений", "no": "trøtt, sliten", "de": "müde", "es": "cansado", "fr": "fatigué", "pt-BR": "cansado" }
+    },
+    {
+      "id": "funny",
+      "word": "funny",
+      "partOfSpeech": "adjective",
+      "explanation": "It makes you laugh.",
+      "example": "He tells funny stories.",
+      "translation": { "ru": "смешной", "uk": "смішний", "no": "morsom", "de": "lustig, witzig", "es": "gracioso, divertido", "fr": "drôle", "pt-BR": "engraçado" }
+    },
+    {
+      "id": "boring",
+      "word": "boring",
+      "partOfSpeech": "adjective",
+      "explanation": "Not interesting.",
+      "example": "This film is boring.",
+      "translation": { "ru": "скучный", "uk": "нудний", "no": "kjedelig", "de": "langweilig", "es": "aburrido", "fr": "ennuyeux", "pt-BR": "chato" }
+    },
+    {
+      "id": "important",
+      "word": "important",
+      "partOfSpeech": "adjective",
+      "explanation": "It matters a lot.",
+      "example": "Sleep is important for your health.",
+      "translation": { "ru": "важный", "uk": "важливий", "no": "viktig", "de": "wichtig", "es": "importante", "fr": "important", "pt-BR": "importante" }
+    }
+  ]
+}

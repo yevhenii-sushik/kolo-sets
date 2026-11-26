@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "be",
+      "word": "to be",
+      "partOfSpeech": "verb",
+      "explanation": "I am, you are, she is. Past: was, were.",
+      "example": "It's nice to be here.",
+      "translation": { "ru": "быть", "uk": "бути", "no": "å være", "de": "sein", "es": "ser, estar", "fr": "être", "pt-BR": "ser, estar" }
+    },
+    {
+      "id": "have",
+      "word": "to have",
+      "partOfSpeech": "verb",
+      "explanation": "She has. Past: had.",
+      "example": "I have a cat.",
+      "translation": { "ru": "иметь", "uk": "мати", "no": "å ha", "de": "haben", "es": "tener", "fr": "avoir", "pt-BR": "ter" }
+    },
+    {
+      "id": "go",
+      "word": "to go",
+      "partOfSpeech": "verb",
+      "explanation": "She goes. Past: went.",
+      "example": "I go to work by bus.",
+      "translation": { "ru": "идти, ехать", "uk": "іти, їхати", "no": "å gå, å dra", "de": "gehen, fahren", "es": "ir", "fr": "aller", "pt-BR": "ir" }
+    },
+    {
+      "id": "come",
+      "word": "to come",
+      "partOfSpeech": "verb",
+      "explanation": "Past: came.",
+      "example": "When are you coming home?",
+      "translation": { "ru": "приходить, приезжать", "uk": "приходити, приїжджати", "no": "å komme", "de": "kommen", "es": "venir", "fr": "venir", "pt-BR": "vir" }
+    },
+    {
+      "id": "do",
+      "word": "to do",
+      "partOfSpeech": "verb",
+      "explanation": "She does. Past: did.",
+      "example": "What are you doing now?",
+      "translation": { "ru": "делать", "uk": "робити", "no": "å gjøre", "de": "tun, machen", "es": "hacer", "fr": "faire", "pt-BR": "fazer" }
+    },
+    {
+      "id": "make",
+      "word": "to make",
+      "partOfSpeech": "verb",
+      "explanation": "To create something, for example food. Past: made.",
+      "example": "Dad is making dinner.",
+      "translation": { "ru": "делать (создавать), готовить", "uk": "робити (створювати), готувати", "no": "å lage", "de": "machen (herstellen), kochen", "es": "hacer (crear), preparar", "fr": "faire (créer), fabriquer", "pt-BR": "fazer (criar), preparar" }
+    },
+    {
+      "id": "say",
+      "word": "to say",
+      "partOfSpeech": "verb",
+      "explanation": "She says. Past: said.",
+      "example": "She says she is ill.",
+      "translation": { "ru": "сказать, говорить", "uk": "сказати, казати", "no": "å si", "de": "sagen", "es": "decir", "fr": "dire", "pt-BR": "dizer" }
+    },
+    {
+      "id": "speak",
+      "word": "to speak",
+      "partOfSpeech": "verb",
+      "explanation": "To use a language. Past: spoke.",
+      "example": "My grandmother speaks three languages.",
+      "translation": { "ru": "говорить (на языке), разговаривать", "uk": "говорити (мовою), розмовляти", "no": "å snakke", "de": "sprechen", "es": "hablar", "fr": "parler", "pt-BR": "falar" }
+    },
+    {
+      "id": "see",
+      "word": "to see",
+      "partOfSpeech": "verb",
+      "explanation": "We see with our eyes. Past: saw.",
+      "example": "I can see the sea from my window.",
+      "translation": { "ru": "видеть", "uk": "бачити", "no": "å se", "de": "sehen", "es": "ver", "fr": "voir", "pt-BR": "ver" }
+    },
+    {
+      "id": "hear",
+      "word": "to hear",
+      "partOfSpeech": "verb",
+      "explanation": "We hear with our ears. Past: heard.",
+      "example": "Can you hear me?",
+      "translation": { "ru": "слышать", "uk": "чути", "no": "å høre", "de": "hören", "es": "oír", "fr": "entendre", "pt-BR": "ouvir" }
+    },
+    {
+      "id": "listen",
+      "word": "to listen",
+      "partOfSpeech": "verb",
+      "explanation": "To hear something because you want to. Listen to …",
+      "example": "I listen to the radio in the car.",
+      "translation": { "ru": "слушать", "uk": "слухати", "no": "å høre på, å lytte", "de": "zuhören", "es": "escuchar", "fr": "écouter", "pt-BR": "escutar" }
+    },
+    {
+      "id": "write",
+      "word": "to write",
+      "partOfSpeech": "verb",
+      "explanation": "Past: wrote.",
+      "example": "Please write your name here.",
+      "translation": { "ru": "писать", "uk": "писати", "no": "å skrive", "de": "schreiben", "es": "escribir", "fr": "écrire", "pt-BR": "escrever" }
+    },
+    {
+      "id": "sleep",
+      "word": "to sleep",
+      "partOfSpeech": "verb",
+      "explanation": "Past: slept.",
+      "example": "The baby is sleeping.",
+      "translation": { "ru": "спать", "uk": "спати", "no": "å sove", "de": "schlafen", "es": "dormir", "fr": "dormir", "pt-BR": "dormir" }
+    },
+    {
+      "id": "like",
+      "word": "to like",
+      "partOfSpeech": "verb",
+      "explanation": "She likes. Past: liked.",
+      "example": "I like music.",
+      "translation": { "ru": "нравиться, любить", "uk": "подобатися, любити", "no": "å like", "de": "mögen", "es": "gustar", "fr": "aimer", "pt-BR": "gostar (de)" }
+    },
+    {
+      "id": "can",
+      "word": "can",
+      "partOfSpeech": "verb",
+      "explanation": "I can, she can. Not: can't.",
+      "example": "Can you help me?",
+      "translation": { "ru": "мочь, уметь", "uk": "могти, вміти", "no": "å kunne, kan", "de": "können", "es": "poder", "fr": "pouvoir", "pt-BR": "poder" }
+    },
+    {
+      "id": "want",
+      "word": "to want",
+      "partOfSpeech": "verb",
+      "explanation": "She wants. Past: wanted.",
+      "example": "I want a glass of water.",
+      "translation": { "ru": "хотеть", "uk": "хотіти", "no": "å ville", "de": "wollen", "es": "querer", "fr": "vouloir", "pt-BR": "querer" }
+    },
+    {
+      "id": "have-to",
+      "word": "to have to",
+      "partOfSpeech": "verb",
+      "explanation": "It is necessary. She has to.",
+      "example": "I have to go now.",
+      "translation": { "ru": "быть должным, нужно", "uk": "мусити, треба", "no": "å måtte", "de": "müssen", "es": "tener que", "fr": "devoir", "pt-BR": "ter que" }
+    },
+    {
+      "id": "know",
+      "word": "to know",
+      "partOfSpeech": "verb",
+      "explanation": "Past: knew.",
+      "example": "I don't know the answer.",
+      "translation": { "ru": "знать", "uk": "знати", "no": "å vite, å kjenne", "de": "wissen, kennen", "es": "saber, conocer", "fr": "savoir, connaître", "pt-BR": "saber, conhecer" }
+    },
+    {
+      "id": "take",
+      "word": "to take",
+      "partOfSpeech": "verb",
+      "explanation": "Past: took.",
+      "example": "I take the bus to work.",
+      "translation": { "ru": "брать, взять", "uk": "брати, взяти", "no": "å ta", "de": "nehmen", "es": "tomar, coger", "fr": "prendre", "pt-BR": "pegar, levar" }
+    },
+    {
+      "id": "give",
+      "word": "to give",
+      "partOfSpeech": "verb",
+      "explanation": "Past: gave.",
+      "example": "Give me the book, please.",
+      "translation": { "ru": "давать, дать", "uk": "давати, дати", "no": "å gi", "de": "geben", "es": "dar", "fr": "donner", "pt-BR": "dar" }
+    },
+    {
+      "id": "help-verb",
+      "word": "to help",
+      "partOfSpeech": "verb",
+      "explanation": "Past: helped.",
+      "example": "Can I help you?",
+      "translation": { "ru": "помогать", "uk": "допомагати", "no": "å hjelpe", "de": "helfen", "es": "ayudar", "fr": "aider", "pt-BR": "ajudar" }
+    },
+    {
+      "id": "wait",
+      "word": "to wait",
+      "partOfSpeech": "verb",
+      "explanation": "Past: waited. Wait for …",
+      "example": "Wait for me!",
+      "translation": { "ru": "ждать", "uk": "чекати", "no": "å vente", "de": "warten", "es": "esperar", "fr": "attendre", "pt-BR": "esperar" }
+    },
+    {
+      "id": "find",
+      "word": "to find",
+      "partOfSpeech": "verb",
+      "explanation": "Past: found.",
+      "example": "I can't find my phone.",
+      "translation": { "ru": "находить, найти", "uk": "знаходити, знайти", "no": "å finne", "de": "finden", "es": "encontrar", "fr": "trouver", "pt-BR": "encontrar, achar" }
+    },
+    {
+      "id": "think",
+      "word": "to think",
+      "partOfSpeech": "verb",
+      "explanation": "Past: thought.",
+      "example": "I think it's going to rain.",
+      "translation": { "ru": "думать", "uk": "думати", "no": "å tenke, å tro", "de": "denken", "es": "pensar", "fr": "penser", "pt-BR": "pensar" }
+    }
+  ]
+}

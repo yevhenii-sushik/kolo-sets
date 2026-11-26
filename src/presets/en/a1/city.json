@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "city",
+      "word": "city",
+      "partOfSpeech": "noun",
+      "explanation": "A big town with many people.",
+      "example": "London is a very big city.",
+      "translation": { "ru": "город", "uk": "місто", "no": "by", "de": "die Stadt", "es": "la ciudad", "fr": "la ville", "pt-BR": "a cidade" }
+    },
+    {
+      "id": "city-centre",
+      "word": "city centre",
+      "partOfSpeech": "noun",
+      "explanation": "The middle of a city, with shops and cafés. US: downtown.",
+      "example": "Does this bus go to the city centre?",
+      "translation": { "ru": "центр (города)", "uk": "центр (міста)", "no": "sentrum", "de": "die Innenstadt, das Zentrum", "es": "el centro", "fr": "le centre-ville", "pt-BR": "o centro" }
+    },
+    {
+      "id": "street",
+      "word": "street",
+      "partOfSpeech": "noun",
+      "explanation": "A road in a town, with houses or shops.",
+      "example": "I live on a quiet street.",
+      "translation": { "ru": "улица", "uk": "вулиця", "no": "gate", "de": "die Straße", "es": "la calle", "fr": "la rue", "pt-BR": "a rua" }
+    },
+    {
+      "id": "bus",
+      "word": "bus",
+      "partOfSpeech": "noun",
+      "explanation": "A big car for many people.",
+      "example": "I go to school by bus.",
+      "translation": { "ru": "автобус", "uk": "автобус", "no": "buss", "de": "der Bus", "es": "el autobús", "fr": "le bus", "pt-BR": "o ônibus" }
+    },
+    {
+      "id": "train",
+      "word": "train",
+      "partOfSpeech": "noun",
+      "explanation": "It goes on rails from station to station.",
+      "example": "The train to Oxford leaves at ten.",
+      "translation": { "ru": "поезд", "uk": "поїзд, потяг", "no": "tog", "de": "der Zug", "es": "el tren", "fr": "le train", "pt-BR": "o trem" }
+    },
+    {
+      "id": "underground",
+      "word": "underground, subway",
+      "partOfSpeech": "noun",
+      "explanation": "A train under the ground in a city. In London: the Tube.",
+      "example": "Let's take the underground.",
+      "translation": { "ru": "метро", "uk": "метро", "no": "T-bane", "de": "die U-Bahn", "es": "el metro", "fr": "le métro", "pt-BR": "o metrô" }
+    },
+    {
+      "id": "car",
+      "word": "car",
+      "partOfSpeech": "noun",
+      "explanation": "It has four wheels. We drive it.",
+      "example": "My car is old but good.",
+      "translation": { "ru": "машина, автомобиль", "uk": "машина, автомобіль", "no": "bil", "de": "das Auto", "es": "el coche", "fr": "la voiture", "pt-BR": "o carro" }
+    },
+    {
+      "id": "bicycle",
+      "word": "bicycle, bike",
+      "partOfSpeech": "noun",
+      "explanation": "It has two wheels. We ride it.",
+      "example": "I go to work by bike.",
+      "translation": { "ru": "велосипед", "uk": "велосипед", "no": "sykkel", "de": "das Fahrrad", "es": "la bicicleta", "fr": "le vélo", "pt-BR": "a bicicleta" }
+    },
+    {
+      "id": "station",
+      "word": "station",
+      "partOfSpeech": "noun",
+      "explanation": "A place where trains or buses stop.",
+      "example": "The station is near my house.",
+      "translation": { "ru": "станция, вокзал", "uk": "станція, вокзал", "no": "stasjon", "de": "der Bahnhof, die Station", "es": "la estación", "fr": "la gare, la station", "pt-BR": "a estação" }
+    },
+    {
+      "id": "plane",
+      "word": "plane",
+      "partOfSpeech": "noun",
+      "explanation": "It flies in the sky and takes people far away.",
+      "example": "The plane lands at six.",
+      "translation": { "ru": "самолёт", "uk": "літак", "no": "fly", "de": "das Flugzeug", "es": "el avión", "fr": "l'avion", "pt-BR": "o avião" }
+    },
+    {
+      "id": "airport",
+      "word": "airport",
+      "partOfSpeech": "noun",
+      "explanation": "Planes arrive and leave here.",
+      "example": "We take a taxi to the airport.",
+      "translation": { "ru": "аэропорт", "uk": "аеропорт", "no": "flyplass", "de": "der Flughafen", "es": "el aeropuerto", "fr": "l'aéroport", "pt-BR": "o aeroporto" }
+    },
+    {
+      "id": "ticket",
+      "word": "ticket",
+      "partOfSpeech": "noun",
+      "explanation": "A small paper or card. We need it for the bus, the train or the cinema.",
+      "example": "A ticket to Manchester, please.",
+      "translation": { "ru": "билет", "uk": "квиток", "no": "billett", "de": "die Fahrkarte, das Ticket", "es": "el billete, el boleto", "fr": "le billet", "pt-BR": "a passagem, o bilhete" }
+    },
+    {
+      "id": "map",
+      "word": "map",
+      "partOfSpeech": "noun",
+      "explanation": "A picture of a city or a country. It shows the streets and roads.",
+      "example": "Can you show me on the map?",
+      "translation": { "ru": "карта (местности)", "uk": "мапа", "no": "kart", "de": "der Stadtplan, die Landkarte", "es": "el mapa", "fr": "le plan, la carte (géographique)", "pt-BR": "o mapa" }
+    },
+    {
+      "id": "hotel",
+      "word": "hotel",
+      "partOfSpeech": "noun",
+      "explanation": "A building where we pay to sleep when we travel.",
+      "example": "Our hotel is near the sea.",
+      "translation": { "ru": "гостиница, отель", "uk": "готель", "no": "hotell", "de": "das Hotel", "es": "el hotel", "fr": "l'hôtel", "pt-BR": "o hotel" }
+    },
+    {
+      "id": "park",
+      "word": "park",
+      "partOfSpeech": "noun",
+      "explanation": "A green place in a city, with trees and grass.",
+      "example": "We walk in the park on Sundays.",
+      "translation": { "ru": "парк", "uk": "парк", "no": "park", "de": "der Park", "es": "el parque", "fr": "le parc", "pt-BR": "o parque" }
+    },
+    {
+      "id": "restaurant",
+      "word": "restaurant",
+      "partOfSpeech": "noun",
+      "explanation": "A place where we pay to eat.",
+      "example": "Let's eat at a restaurant tonight.",
+      "translation": { "ru": "ресторан", "uk": "ресторан", "no": "restaurant", "de": "das Restaurant", "es": "el restaurante", "fr": "le restaurant", "pt-BR": "o restaurante" }
+    },
+    {
+      "id": "bus-stop",
+      "word": "bus stop",
+      "partOfSpeech": "noun",
+      "explanation": "A place where the bus stops for people.",
+      "example": "The bus stop is across the street.",
+      "translation": { "ru": "автобусная остановка", "uk": "автобусна зупинка", "no": "bussholdeplass", "de": "die Bushaltestelle", "es": "la parada de autobús", "fr": "l'arrêt de bus", "pt-BR": "o ponto de ônibus" }
+    },
+    {
+      "id": "drive",
+      "word": "to drive",
+      "partOfSpeech": "verb",
+      "explanation": "She drives. Past: drove.",
+      "example": "Can you drive?",
+      "translation": { "ru": "водить (машину), ехать на машине", "uk": "керувати (машиною), їхати машиною", "no": "å kjøre", "de": "fahren", "es": "conducir, ir en coche", "fr": "conduire, aller en voiture", "pt-BR": "dirigir" }
+    },
+    {
+      "id": "where-is",
+      "word": "Where is …?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it when we look for a place.",
+      "example": "Where is the bus stop?",
+      "translation": { "ru": "Где …?", "uk": "Де …?", "no": "Hvor er …?", "de": "Wo ist …?", "es": "¿Dónde está …?", "fr": "Où est … ?", "pt-BR": "Onde fica …?" }
+    },
+    {
+      "id": "turn-left",
+      "word": "turn left",
+      "partOfSpeech": "phrase",
+      "explanation": "Go to the left.",
+      "example": "Turn left at the park.",
+      "translation": { "ru": "поверни налево", "uk": "поверни ліворуч", "no": "ta til venstre", "de": "links abbiegen", "es": "gira a la izquierda", "fr": "tourne à gauche", "pt-BR": "vire à esquerda" }
+    },
+    {
+      "id": "turn-right",
+      "word": "turn right",
+      "partOfSpeech": "phrase",
+      "explanation": "Go to the right.",
+      "example": "Then turn right, and the hotel is there.",
+      "translation": { "ru": "поверни направо", "uk": "поверни праворуч", "no": "ta til høyre", "de": "rechts abbiegen", "es": "gira a la derecha", "fr": "tourne à droite", "pt-BR": "vire à direita" }
+    },
+    {
+      "id": "straight-on",
+      "word": "straight on, straight ahead",
+      "partOfSpeech": "phrase",
+      "explanation": "Don't turn, go on the same way.",
+      "example": "Go straight on for two minutes.",
+      "translation": { "ru": "прямо", "uk": "прямо", "no": "rett fram", "de": "geradeaus", "es": "todo recto", "fr": "tout droit", "pt-BR": "em frente, reto" }
+    }
+  ]
+}

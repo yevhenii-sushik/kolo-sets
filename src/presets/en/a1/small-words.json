@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "what",
+      "word": "what",
+      "partOfSpeech": "pronoun",
+      "explanation": "We ask about a thing.",
+      "example": "What is that?",
+      "translation": { "ru": "что", "uk": "що", "no": "hva", "de": "was", "es": "qué", "fr": "quoi, que", "pt-BR": "o que" }
+    },
+    {
+      "id": "who",
+      "word": "who",
+      "partOfSpeech": "pronoun",
+      "explanation": "We ask about a person.",
+      "example": "Who is your teacher?",
+      "translation": { "ru": "кто", "uk": "хто", "no": "hvem", "de": "wer", "es": "quién", "fr": "qui", "pt-BR": "quem" }
+    },
+    {
+      "id": "where",
+      "word": "where",
+      "partOfSpeech": "adverb",
+      "explanation": "We ask about a place.",
+      "example": "Where do you live?",
+      "translation": { "ru": "где, куда", "uk": "де, куди", "no": "hvor", "de": "wo", "es": "dónde", "fr": "où", "pt-BR": "onde" }
+    },
+    {
+      "id": "when",
+      "word": "when",
+      "partOfSpeech": "adverb",
+      "explanation": "We ask about time.",
+      "example": "When does the bus come?",
+      "translation": { "ru": "когда", "uk": "коли", "no": "når", "de": "wann, wenn", "es": "cuándo", "fr": "quand", "pt-BR": "quando" }
+    },
+    {
+      "id": "why",
+      "word": "why",
+      "partOfSpeech": "adverb",
+      "explanation": "We ask about the reason.",
+      "example": "Why are you late?",
+      "translation": { "ru": "почему", "uk": "чому", "no": "hvorfor", "de": "warum", "es": "por qué", "fr": "pourquoi", "pt-BR": "por que" }
+    },
+    {
+      "id": "how",
+      "word": "how",
+      "partOfSpeech": "adverb",
+      "explanation": "We ask about the way.",
+      "example": "How do you spell your name?",
+      "translation": { "ru": "как", "uk": "як", "no": "hvordan", "de": "wie", "es": "cómo", "fr": "comment", "pt-BR": "como" }
+    },
+    {
+      "id": "which",
+      "word": "which",
+      "partOfSpeech": "pronoun",
+      "explanation": "We ask about one of some things.",
+      "example": "Which bus goes to the city centre?",
+      "translation": { "ru": "какой, который", "uk": "який, котрий", "no": "hvilken", "de": "welcher", "es": "cuál", "fr": "quel", "pt-BR": "qual" }
+    },
+    {
+      "id": "in",
+      "word": "in",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "I live in London.",
+      "translation": { "ru": "в", "uk": "в, у", "no": "i", "de": "in", "es": "en", "fr": "dans, en", "pt-BR": "em, dentro de" }
+    },
+    {
+      "id": "on",
+      "word": "on",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "The book is on the table.",
+      "translation": { "ru": "на", "uk": "на", "no": "på (oppå)", "de": "auf", "es": "sobre, encima de", "fr": "sur", "pt-BR": "sobre, em cima de" }
+    },
+    {
+      "id": "at",
+      "word": "at",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "See you at eight!",
+      "translation": { "ru": "у, в (о месте и времени)", "uk": "біля, о (місце, час)", "no": "ved, klokka (tid)", "de": "an, bei, um (Uhrzeit)", "es": "en (lugar), a (hora)", "fr": "à (lieu, heure)", "pt-BR": "em, às (hora)" }
+    },
+    {
+      "id": "with",
+      "word": "with",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "I live with my parents.",
+      "translation": { "ru": "с", "uk": "з, разом з", "no": "med", "de": "mit", "es": "con", "fr": "avec", "pt-BR": "com" }
+    },
+    {
+      "id": "to",
+      "word": "to",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "Let's go to the park!",
+      "translation": { "ru": "к, в (куда)", "uk": "до", "no": "til", "de": "zu, nach", "es": "a", "fr": "à, vers (direction)", "pt-BR": "para" }
+    },
+    {
+      "id": "from",
+      "word": "from",
+      "partOfSpeech": "preposition",
+      "explanation": "",
+      "example": "This letter is from my grandmother.",
+      "translation": { "ru": "из, от", "uk": "від, із", "no": "fra", "de": "von, aus", "es": "de, desde", "fr": "de", "pt-BR": "de" }
+    },
+    {
+      "id": "and",
+      "word": "and",
+      "partOfSpeech": "conjunction",
+      "explanation": "",
+      "example": "I have a brother and a sister.",
+      "translation": { "ru": "и", "uk": "і, та", "no": "og", "de": "und", "es": "y", "fr": "et", "pt-BR": "e" }
+    },
+    {
+      "id": "but",
+      "word": "but",
+      "partOfSpeech": "conjunction",
+      "explanation": "",
+      "example": "The flat is small, but nice.",
+      "translation": { "ru": "но", "uk": "але", "no": "men", "de": "aber", "es": "pero", "fr": "mais", "pt-BR": "mas" }
+    },
+    {
+      "id": "or",
+      "word": "or",
+      "partOfSpeech": "conjunction",
+      "explanation": "",
+      "example": "Tea or coffee?",
+      "translation": { "ru": "или", "uk": "або", "no": "eller", "de": "oder", "es": "o", "fr": "ou", "pt-BR": "ou" }
+    },
+    {
+      "id": "because",
+      "word": "because",
+      "partOfSpeech": "conjunction",
+      "explanation": "We say why.",
+      "example": "I'm at home because I'm ill.",
+      "translation": { "ru": "потому что", "uk": "тому що, бо", "no": "fordi", "de": "weil", "es": "porque", "fr": "parce que", "pt-BR": "porque" }
+    },
+    {
+      "id": "not",
+      "word": "not",
+      "partOfSpeech": "adverb",
+      "explanation": "",
+      "example": "I'm not hungry.",
+      "translation": { "ru": "не", "uk": "не", "no": "ikke", "de": "nicht", "es": "no (+ verbo)", "fr": "ne … pas", "pt-BR": "não (+ verbo)" }
+    },
+    {
+      "id": "also",
+      "word": "also",
+      "partOfSpeech": "adverb",
+      "explanation": "Too, as well.",
+      "example": "I speak English and also a little Spanish.",
+      "translation": { "ru": "тоже, также", "uk": "теж, також", "no": "også", "de": "auch", "es": "también", "fr": "aussi", "pt-BR": "também" }
+    },
+    {
+      "id": "very",
+      "word": "very",
+      "partOfSpeech": "adverb",
+      "explanation": "",
+      "example": "It's very cold today.",
+      "translation": { "ru": "очень", "uk": "дуже", "no": "veldig", "de": "sehr", "es": "muy", "fr": "très", "pt-BR": "muito (+ adjetivo)" }
+    },
+    {
+      "id": "a-lot",
+      "word": "a lot",
+      "partOfSpeech": "adverb",
+      "explanation": "Much, many.",
+      "example": "I read a lot.",
+      "translation": { "ru": "много", "uk": "багато", "no": "mye, mange", "de": "viel", "es": "mucho", "fr": "beaucoup", "pt-BR": "muito (quantidade)" }
+    },
+    {
+      "id": "a-little",
+      "word": "a little",
+      "partOfSpeech": "adverb",
+      "explanation": "Not much.",
+      "example": "I speak a little English.",
+      "translation": { "ru": "немного", "uk": "трохи", "no": "litt", "de": "ein bisschen", "es": "un poco", "fr": "un peu", "pt-BR": "um pouco" }
+    },
+    {
+      "id": "here",
+      "word": "here",
+      "partOfSpeech": "adverb",
+      "explanation": "In this place.",
+      "example": "Come here, please!",
+      "translation": { "ru": "здесь, тут", "uk": "тут", "no": "her", "de": "hier", "es": "aquí", "fr": "ici", "pt-BR": "aqui" }
+    },
+    {
+      "id": "there",
+      "word": "there",
+      "partOfSpeech": "adverb",
+      "explanation": "In that place.",
+      "example": "Who is there?",
+      "translation": { "ru": "там", "uk": "там", "no": "der", "de": "dort, da", "es": "allí, ahí", "fr": "là, là-bas", "pt-BR": "lá, ali" }
+    }
+  ]
+}

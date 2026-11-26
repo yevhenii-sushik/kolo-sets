@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "whats-the-weather-like",
+      "word": "What's the weather like?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it when we want to know if it is sunny, rainy or cold.",
+      "example": "What's the weather like in London today?",
+      "translation": { "ru": "Какая погода?", "uk": "Яка погода?", "no": "Hvordan er været?", "de": "Wie ist das Wetter?", "es": "¿Qué tiempo hace?", "fr": "Quel temps fait-il ?", "pt-BR": "Como está o tempo?" }
+    },
+    {
+      "id": "sun",
+      "word": "sun",
+      "partOfSpeech": "noun",
+      "explanation": "It gives us light and heat from the sky.",
+      "example": "The sun is shining.",
+      "translation": { "ru": "солнце", "uk": "сонце", "no": "sol", "de": "die Sonne", "es": "el sol", "fr": "le soleil", "pt-BR": "o sol" }
+    },
+    {
+      "id": "rain",
+      "word": "rain",
+      "partOfSpeech": "noun",
+      "explanation": "Water that falls from the sky.",
+      "example": "I like the sound of rain.",
+      "translation": { "ru": "дождь", "uk": "дощ", "no": "regn", "de": "der Regen", "es": "la lluvia", "fr": "la pluie", "pt-BR": "a chuva" }
+    },
+    {
+      "id": "snow",
+      "word": "snow",
+      "partOfSpeech": "noun",
+      "explanation": "White, cold rain in winter.",
+      "example": "The children play in the snow.",
+      "translation": { "ru": "снег", "uk": "сніг", "no": "snø", "de": "der Schnee", "es": "la nieve", "fr": "la neige", "pt-BR": "a neve" }
+    },
+    {
+      "id": "cold",
+      "word": "cold",
+      "partOfSpeech": "adjective",
+      "explanation": "Not warm.",
+      "example": "It's cold outside.",
+      "translation": { "ru": "холодный, холодно", "uk": "холодний, холодно", "no": "kald", "de": "kalt", "es": "frío", "fr": "froid", "pt-BR": "frio" }
+    },
+    {
+      "id": "warm",
+      "word": "warm",
+      "partOfSpeech": "adjective",
+      "explanation": "Nice, not cold and not hot.",
+      "example": "It's a warm day.",
+      "translation": { "ru": "тёплый, тепло", "uk": "теплий, тепло", "no": "varm, lun", "de": "warm", "es": "templado, cálido", "fr": "doux, tiède", "pt-BR": "ameno, morno" }
+    },
+    {
+      "id": "hot",
+      "word": "hot",
+      "partOfSpeech": "adjective",
+      "explanation": "Very warm.",
+      "example": "It's too hot today!",
+      "translation": { "ru": "жаркий, горячий", "uk": "жаркий, гарячий", "no": "het, veldig varm", "de": "heiß", "es": "caluroso, caliente", "fr": "chaud", "pt-BR": "quente" }
+    },
+    {
+      "id": "winter",
+      "word": "winter",
+      "partOfSpeech": "noun",
+      "explanation": "The cold season, between autumn and spring.",
+      "example": "We go skiing in winter.",
+      "translation": { "ru": "зима", "uk": "зима", "no": "vinter", "de": "der Winter", "es": "el invierno", "fr": "l'hiver", "pt-BR": "o inverno" }
+    },
+    {
+      "id": "spring",
+      "word": "spring",
+      "partOfSpeech": "noun",
+      "explanation": "The season after winter. The flowers come out.",
+      "example": "In spring the days get longer.",
+      "translation": { "ru": "весна", "uk": "весна", "no": "vår", "de": "der Frühling", "es": "la primavera", "fr": "le printemps", "pt-BR": "a primavera" }
+    },
+    {
+      "id": "summer",
+      "word": "summer",
+      "partOfSpeech": "noun",
+      "explanation": "The warmest season.",
+      "example": "We go to the beach in summer.",
+      "translation": { "ru": "лето", "uk": "літо", "no": "sommer", "de": "der Sommer", "es": "el verano", "fr": "l'été", "pt-BR": "o verão" }
+    },
+    {
+      "id": "autumn",
+      "word": "autumn, fall",
+      "partOfSpeech": "noun",
+      "explanation": "The season after summer. US: fall.",
+      "example": "In autumn the leaves turn yellow.",
+      "translation": { "ru": "осень", "uk": "осінь", "no": "høst", "de": "der Herbst", "es": "el otoño", "fr": "l'automne", "pt-BR": "o outono" }
+    },
+    {
+      "id": "january",
+      "word": "January",
+      "partOfSpeech": "noun",
+      "explanation": "The first month of the year.",
+      "example": "It's very cold in January.",
+      "translation": { "ru": "январь", "uk": "січень", "no": "januar", "de": "der Januar", "es": "enero", "fr": "janvier", "pt-BR": "janeiro" }
+    },
+    {
+      "id": "february",
+      "word": "February",
+      "partOfSpeech": "noun",
+      "explanation": "The second month of the year. It is the shortest month.",
+      "example": "My birthday is in February.",
+      "translation": { "ru": "февраль", "uk": "лютий", "no": "februar", "de": "der Februar", "es": "febrero", "fr": "février", "pt-BR": "fevereiro" }
+    },
+    {
+      "id": "march",
+      "word": "March",
+      "partOfSpeech": "noun",
+      "explanation": "The third month of the year.",
+      "example": "Spring starts in March.",
+      "translation": { "ru": "март", "uk": "березень", "no": "mars", "de": "der März", "es": "marzo", "fr": "mars", "pt-BR": "março" }
+    },
+    {
+      "id": "april",
+      "word": "April",
+      "partOfSpeech": "noun",
+      "explanation": "The fourth month of the year.",
+      "example": "It often rains in April.",
+      "translation": { "ru": "апрель", "uk": "квітень", "no": "april", "de": "der April", "es": "abril", "fr": "avril", "pt-BR": "abril" }
+    },
+    {
+      "id": "may",
+      "word": "May",
+      "partOfSpeech": "noun",
+      "explanation": "The fifth month of the year.",
+      "example": "The trees are green in May.",
+      "translation": { "ru": "май", "uk": "травень", "no": "mai", "de": "der Mai", "es": "mayo", "fr": "mai", "pt-BR": "maio" }
+    },
+    {
+      "id": "june",
+      "word": "June",
+      "partOfSpeech": "noun",
+      "explanation": "The sixth month of the year.",
+      "example": "School ends in June.",
+      "translation": { "ru": "июнь", "uk": "червень", "no": "juni", "de": "der Juni", "es": "junio", "fr": "juin", "pt-BR": "junho" }
+    },
+    {
+      "id": "july",
+      "word": "July",
+      "partOfSpeech": "noun",
+      "explanation": "The seventh month of the year.",
+      "example": "We go on holiday in July.",
+      "translation": { "ru": "июль", "uk": "липень", "no": "juli", "de": "der Juli", "es": "julio", "fr": "juillet", "pt-BR": "julho" }
+    },
+    {
+      "id": "august",
+      "word": "August",
+      "partOfSpeech": "noun",
+      "explanation": "The eighth month of the year.",
+      "example": "August is very hot in Spain.",
+      "translation": { "ru": "август", "uk": "серпень", "no": "august", "de": "der August", "es": "agosto", "fr": "août", "pt-BR": "agosto" }
+    },
+    {
+      "id": "september",
+      "word": "September",
+      "partOfSpeech": "noun",
+      "explanation": "The ninth month of the year.",
+      "example": "School starts in September.",
+      "translation": { "ru": "сентябрь", "uk": "вересень", "no": "september", "de": "der September", "es": "septiembre", "fr": "septembre", "pt-BR": "setembro" }
+    },
+    {
+      "id": "october",
+      "word": "October",
+      "partOfSpeech": "noun",
+      "explanation": "The tenth month of the year.",
+      "example": "The leaves are red and yellow in October.",
+      "translation": { "ru": "октябрь", "uk": "жовтень", "no": "oktober", "de": "der Oktober", "es": "octubre", "fr": "octobre", "pt-BR": "outubro" }
+    },
+    {
+      "id": "november",
+      "word": "November",
+      "partOfSpeech": "noun",
+      "explanation": "The eleventh month of the year.",
+      "example": "November is dark and wet.",
+      "translation": { "ru": "ноябрь", "uk": "листопад", "no": "november", "de": "der November", "es": "noviembre", "fr": "novembre", "pt-BR": "novembro" }
+    },
+    {
+      "id": "december",
+      "word": "December",
+      "partOfSpeech": "noun",
+      "explanation": "The last month of the year.",
+      "example": "Christmas is in December.",
+      "translation": { "ru": "декабрь", "uk": "грудень", "no": "desember", "de": "der Dezember", "es": "diciembre", "fr": "décembre", "pt-BR": "dezembro" }
+    }
+  ]
+}

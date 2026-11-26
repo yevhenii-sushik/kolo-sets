@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "food",
+      "word": "food",
+      "partOfSpeech": "noun",
+      "explanation": "What we eat.",
+      "example": "The food is ready!",
+      "translation": { "ru": "еда", "uk": "їжа", "no": "mat", "de": "das Essen", "es": "la comida", "fr": "la nourriture", "pt-BR": "a comida" }
+    },
+    {
+      "id": "water",
+      "word": "water",
+      "partOfSpeech": "noun",
+      "explanation": "We drink it when we are thirsty.",
+      "example": "Can I have a glass of water, please?",
+      "translation": { "ru": "вода", "uk": "вода", "no": "vann", "de": "das Wasser", "es": "el agua", "fr": "l'eau", "pt-BR": "a água" }
+    },
+    {
+      "id": "coffee",
+      "word": "coffee",
+      "partOfSpeech": "noun",
+      "explanation": "A hot black drink. Many people drink it in the morning.",
+      "example": "Would you like some coffee?",
+      "translation": { "ru": "кофе", "uk": "кава", "no": "kaffe", "de": "der Kaffee", "es": "el café", "fr": "le café", "pt-BR": "o café" }
+    },
+    {
+      "id": "tea",
+      "word": "tea",
+      "partOfSpeech": "noun",
+      "explanation": "A hot drink. We make it with hot water and leaves.",
+      "example": "I drink tea with milk.",
+      "translation": { "ru": "чай", "uk": "чай", "no": "te", "de": "der Tee", "es": "el té", "fr": "le thé", "pt-BR": "o chá" }
+    },
+    {
+      "id": "milk",
+      "word": "milk",
+      "partOfSpeech": "noun",
+      "explanation": "A white drink from cows.",
+      "example": "The children drink milk for breakfast.",
+      "translation": { "ru": "молоко", "uk": "молоко", "no": "melk", "de": "die Milch", "es": "la leche", "fr": "le lait", "pt-BR": "o leite" }
+    },
+    {
+      "id": "bread",
+      "word": "bread",
+      "partOfSpeech": "noun",
+      "explanation": "Food made from flour. We often eat it for breakfast.",
+      "example": "I buy bread at the shop.",
+      "translation": { "ru": "хлеб", "uk": "хліб", "no": "brød", "de": "das Brot", "es": "el pan", "fr": "le pain", "pt-BR": "o pão" }
+    },
+    {
+      "id": "butter",
+      "word": "butter",
+      "partOfSpeech": "noun",
+      "explanation": "We put it on bread.",
+      "example": "I want butter on my bread.",
+      "translation": { "ru": "масло (сливочное)", "uk": "масло (вершкове)", "no": "smør", "de": "die Butter", "es": "la mantequilla", "fr": "le beurre", "pt-BR": "a manteiga" }
+    },
+    {
+      "id": "cheese",
+      "word": "cheese",
+      "partOfSpeech": "noun",
+      "explanation": "Food made from milk.",
+      "example": "We eat bread with cheese.",
+      "translation": { "ru": "сыр", "uk": "сир", "no": "ost", "de": "der Käse", "es": "el queso", "fr": "le fromage", "pt-BR": "o queijo" }
+    },
+    {
+      "id": "egg",
+      "word": "egg",
+      "partOfSpeech": "noun",
+      "explanation": "It comes from a hen. We boil or fry it.",
+      "example": "I eat two eggs for breakfast.",
+      "translation": { "ru": "яйцо", "uk": "яйце", "no": "egg", "de": "das Ei", "es": "el huevo", "fr": "l'œuf", "pt-BR": "o ovo" }
+    },
+    {
+      "id": "apple",
+      "word": "apple",
+      "partOfSpeech": "noun",
+      "explanation": "A round fruit. It can be red, green or yellow.",
+      "example": "I have an apple in my bag.",
+      "translation": { "ru": "яблоко", "uk": "яблуко", "no": "eple", "de": "der Apfel", "es": "la manzana", "fr": "la pomme", "pt-BR": "a maçã" }
+    },
+    {
+      "id": "banana",
+      "word": "banana",
+      "partOfSpeech": "noun",
+      "explanation": "A long yellow fruit.",
+      "example": "My son eats a banana every day.",
+      "translation": { "ru": "банан", "uk": "банан", "no": "banan", "de": "die Banane", "es": "el plátano, la banana", "fr": "la banane", "pt-BR": "a banana" }
+    },
+    {
+      "id": "fish",
+      "word": "fish",
+      "partOfSpeech": "noun",
+      "explanation": "An animal that lives in water. We eat it too.",
+      "example": "We have fish for dinner.",
+      "translation": { "ru": "рыба", "uk": "риба", "no": "fisk", "de": "der Fisch", "es": "el pescado", "fr": "le poisson", "pt-BR": "o peixe" }
+    },
+    {
+      "id": "meat",
+      "word": "meat",
+      "partOfSpeech": "noun",
+      "explanation": "Food from animals, for example chicken or beef.",
+      "example": "I don't eat meat.",
+      "translation": { "ru": "мясо", "uk": "м'ясо", "no": "kjøtt", "de": "das Fleisch", "es": "la carne", "fr": "la viande", "pt-BR": "a carne" }
+    },
+    {
+      "id": "potato",
+      "word": "potato",
+      "partOfSpeech": "noun",
+      "explanation": "A vegetable from the ground. Plural: potatoes.",
+      "example": "We have potatoes with the fish.",
+      "translation": { "ru": "картофель, картошка", "uk": "картопля", "no": "potet", "de": "die Kartoffel", "es": "la patata, la papa", "fr": "la pomme de terre", "pt-BR": "a batata" }
+    },
+    {
+      "id": "vegetable",
+      "word": "vegetable",
+      "partOfSpeech": "noun",
+      "explanation": "A plant we eat, for example a carrot.",
+      "example": "Eat your vegetables!",
+      "translation": { "ru": "овощ", "uk": "овоч", "no": "grønnsak", "de": "das Gemüse", "es": "la verdura", "fr": "le légume", "pt-BR": "o legume, a verdura" }
+    },
+    {
+      "id": "fruit",
+      "word": "fruit",
+      "partOfSpeech": "noun",
+      "explanation": "Sweet food from a plant, for example an apple.",
+      "example": "I eat a lot of fruit in summer.",
+      "translation": { "ru": "фрукт, фрукты", "uk": "фрукт, фрукти", "no": "frukt", "de": "das Obst, die Frucht", "es": "la fruta", "fr": "le fruit", "pt-BR": "a fruta" }
+    },
+    {
+      "id": "breakfast",
+      "word": "breakfast",
+      "partOfSpeech": "noun",
+      "explanation": "The first meal of the day.",
+      "example": "What do you have for breakfast?",
+      "translation": { "ru": "завтрак", "uk": "сніданок", "no": "frokost", "de": "das Frühstück", "es": "el desayuno", "fr": "le petit-déjeuner", "pt-BR": "o café da manhã" }
+    },
+    {
+      "id": "lunch",
+      "word": "lunch",
+      "partOfSpeech": "noun",
+      "explanation": "The meal in the middle of the day.",
+      "example": "We have lunch at twelve.",
+      "translation": { "ru": "обед (днём), ланч", "uk": "обід (вдень), ланч", "no": "lunsj", "de": "das Mittagessen", "es": "el almuerzo", "fr": "le déjeuner", "pt-BR": "o almoço" }
+    },
+    {
+      "id": "dinner",
+      "word": "dinner",
+      "partOfSpeech": "noun",
+      "explanation": "The main meal of the day, in the evening.",
+      "example": "Dinner is ready!",
+      "translation": { "ru": "ужин (главная еда дня)", "uk": "вечеря (головна їжа дня)", "no": "middag", "de": "das Abendessen", "es": "la cena", "fr": "le dîner", "pt-BR": "o jantar" }
+    },
+    {
+      "id": "eat",
+      "word": "to eat",
+      "partOfSpeech": "verb",
+      "explanation": "She eats. Past: ate.",
+      "example": "We eat at seven.",
+      "translation": { "ru": "есть, кушать", "uk": "їсти", "no": "å spise", "de": "essen", "es": "comer", "fr": "manger", "pt-BR": "comer" }
+    },
+    {
+      "id": "drink",
+      "word": "to drink",
+      "partOfSpeech": "verb",
+      "explanation": "She drinks. Past: drank.",
+      "example": "I drink a lot of water.",
+      "translation": { "ru": "пить", "uk": "пити", "no": "å drikke", "de": "trinken", "es": "beber, tomar", "fr": "boire", "pt-BR": "beber, tomar" }
+    },
+    {
+      "id": "im-hungry",
+      "word": "I'm hungry.",
+      "partOfSpeech": "phrase",
+      "explanation": "I want to eat.",
+      "example": "I'm hungry. What's for dinner?",
+      "translation": { "ru": "Я хочу есть.", "uk": "Я хочу їсти.", "no": "Jeg er sulten.", "de": "Ich habe Hunger.", "es": "Tengo hambre.", "fr": "J'ai faim.", "pt-BR": "Estou com fome." }
+    },
+    {
+      "id": "im-thirsty",
+      "word": "I'm thirsty.",
+      "partOfSpeech": "phrase",
+      "explanation": "I want to drink.",
+      "example": "I'm thirsty. Can I have some water?",
+      "translation": { "ru": "Я хочу пить.", "uk": "Я хочу пити.", "no": "Jeg er tørst.", "de": "Ich habe Durst.", "es": "Tengo sed.", "fr": "J'ai soif.", "pt-BR": "Estou com sede." }
+    },
+    {
+      "id": "enjoy-your-meal",
+      "word": "Enjoy your meal!",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it when someone starts to eat.",
+      "example": "Here's your pizza. Enjoy your meal!",
+      "translation": { "ru": "Приятного аппетита!", "uk": "Смачного!", "no": "God appetitt!", "de": "Guten Appetit!", "es": "¡Buen provecho!", "fr": "Bon appétit !", "pt-BR": "Bom apetite!" }
+    }
+  ]
+}

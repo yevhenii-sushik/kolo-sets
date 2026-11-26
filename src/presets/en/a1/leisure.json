@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "free-time",
+      "word": "free time",
+      "partOfSpeech": "noun",
+      "explanation": "Time when you don't work or study.",
+      "example": "What do you do in your free time?",
+      "translation": { "ru": "свободное время", "uk": "вільний час", "no": "fritid", "de": "die Freizeit", "es": "el tiempo libre", "fr": "le temps libre", "pt-BR": "o tempo livre" }
+    },
+    {
+      "id": "hobby",
+      "word": "hobby",
+      "partOfSpeech": "noun",
+      "explanation": "Something you like to do in your free time.",
+      "example": "Cooking is my hobby.",
+      "translation": { "ru": "хобби", "uk": "хобі", "no": "hobby", "de": "das Hobby", "es": "la afición, el hobby", "fr": "le passe-temps", "pt-BR": "o hobby, o passatempo" }
+    },
+    {
+      "id": "film",
+      "word": "film, movie",
+      "partOfSpeech": "noun",
+      "explanation": "A story we watch at the cinema or on TV. US: movie.",
+      "example": "Let's watch a film tonight.",
+      "translation": { "ru": "фильм", "uk": "фільм", "no": "film", "de": "der Film", "es": "la película", "fr": "le film", "pt-BR": "o filme" }
+    },
+    {
+      "id": "cinema",
+      "word": "cinema",
+      "partOfSpeech": "noun",
+      "explanation": "A place where we watch films. US: movie theater.",
+      "example": "We go to the cinema on Fridays.",
+      "translation": { "ru": "кинотеатр, кино", "uk": "кінотеатр, кіно", "no": "kino", "de": "das Kino", "es": "el cine", "fr": "le cinéma", "pt-BR": "o cinema" }
+    },
+    {
+      "id": "music",
+      "word": "music",
+      "partOfSpeech": "noun",
+      "explanation": "We listen to it. It has sounds and songs.",
+      "example": "I listen to music on the bus.",
+      "translation": { "ru": "музыка", "uk": "музика", "no": "musikk", "de": "die Musik", "es": "la música", "fr": "la musique", "pt-BR": "a música" }
+    },
+    {
+      "id": "song",
+      "word": "song",
+      "partOfSpeech": "noun",
+      "explanation": "Music with words.",
+      "example": "This is my favourite song.",
+      "translation": { "ru": "песня", "uk": "пісня", "no": "sang", "de": "das Lied", "es": "la canción", "fr": "la chanson", "pt-BR": "a canção" }
+    },
+    {
+      "id": "concert",
+      "word": "concert",
+      "partOfSpeech": "noun",
+      "explanation": "Musicians play music for many people.",
+      "example": "We have tickets for a concert.",
+      "translation": { "ru": "концерт", "uk": "концерт", "no": "konsert", "de": "das Konzert", "es": "el concierto", "fr": "le concert", "pt-BR": "o show, o concerto" }
+    },
+    {
+      "id": "sing",
+      "word": "to sing",
+      "partOfSpeech": "verb",
+      "explanation": "Past: sang.",
+      "example": "My daughter loves to sing.",
+      "translation": { "ru": "петь", "uk": "співати", "no": "å synge", "de": "singen", "es": "cantar", "fr": "chanter", "pt-BR": "cantar" }
+    },
+    {
+      "id": "dance",
+      "word": "to dance",
+      "partOfSpeech": "verb",
+      "explanation": "To move to music.",
+      "example": "Do you want to dance?",
+      "translation": { "ru": "танцевать", "uk": "танцювати", "no": "å danse", "de": "tanzen", "es": "bailar", "fr": "danser", "pt-BR": "dançar" }
+    },
+    {
+      "id": "play",
+      "word": "to play",
+      "partOfSpeech": "verb",
+      "explanation": "To do a game or a sport, or to make music. She plays.",
+      "example": "The children play in the park.",
+      "translation": { "ru": "играть", "uk": "грати", "no": "å spille, å leke", "de": "spielen", "es": "jugar, tocar", "fr": "jouer", "pt-BR": "jogar, tocar, brincar" }
+    },
+    {
+      "id": "game",
+      "word": "game",
+      "partOfSpeech": "noun",
+      "explanation": "Something we play for fun, with rules.",
+      "example": "Let's play a game!",
+      "translation": { "ru": "игра", "uk": "гра", "no": "spill", "de": "das Spiel", "es": "el juego", "fr": "le jeu", "pt-BR": "o jogo" }
+    },
+    {
+      "id": "football",
+      "word": "football",
+      "partOfSpeech": "noun",
+      "explanation": "A game with a ball and two teams. US: soccer.",
+      "example": "He plays football every Saturday.",
+      "translation": { "ru": "футбол", "uk": "футбол", "no": "fotball", "de": "der Fußball", "es": "el fútbol", "fr": "le football", "pt-BR": "o futebol" }
+    },
+    {
+      "id": "sport",
+      "word": "sport",
+      "partOfSpeech": "noun",
+      "explanation": "Football, tennis and swimming are sports.",
+      "example": "What sport do you like?",
+      "translation": { "ru": "спорт", "uk": "спорт", "no": "sport, idrett", "de": "der Sport", "es": "el deporte", "fr": "le sport", "pt-BR": "o esporte" }
+    },
+    {
+      "id": "swim",
+      "word": "to swim",
+      "partOfSpeech": "verb",
+      "explanation": "To move in water. Past: swam.",
+      "example": "I swim in the sea in summer.",
+      "translation": { "ru": "плавать", "uk": "плавати", "no": "å svømme", "de": "schwimmen", "es": "nadar", "fr": "nager", "pt-BR": "nadar" }
+    },
+    {
+      "id": "read",
+      "word": "to read",
+      "partOfSpeech": "verb",
+      "explanation": "Past: read.",
+      "example": "I read the news every morning.",
+      "translation": { "ru": "читать", "uk": "читати", "no": "å lese", "de": "lesen", "es": "leer", "fr": "lire", "pt-BR": "ler" }
+    },
+    {
+      "id": "holiday",
+      "word": "holiday, vacation",
+      "partOfSpeech": "noun",
+      "explanation": "Days when you don't work or go to school. US: vacation.",
+      "example": "Have a nice holiday!",
+      "translation": { "ru": "отпуск, каникулы", "uk": "відпустка, канікули", "no": "ferie", "de": "der Urlaub, die Ferien", "es": "las vacaciones", "fr": "les vacances", "pt-BR": "as férias" }
+    },
+    {
+      "id": "travel",
+      "word": "to travel",
+      "partOfSpeech": "verb",
+      "explanation": "To go to other places or countries.",
+      "example": "I love to travel.",
+      "translation": { "ru": "путешествовать", "uk": "подорожувати", "no": "å reise", "de": "reisen", "es": "viajar", "fr": "voyager", "pt-BR": "viajar" }
+    },
+    {
+      "id": "cafe",
+      "word": "café",
+      "partOfSpeech": "noun",
+      "explanation": "A small place where we drink coffee and eat cake.",
+      "example": "Let's meet at the café.",
+      "translation": { "ru": "кафе", "uk": "кафе", "no": "kafé", "de": "das Café", "es": "la cafetería", "fr": "le café (endroit)", "pt-BR": "a cafeteria" }
+    },
+    {
+      "id": "relax",
+      "word": "to relax",
+      "partOfSpeech": "verb",
+      "explanation": "To rest and not work.",
+      "example": "At the weekend I relax at home.",
+      "translation": { "ru": "отдыхать, расслабляться", "uk": "відпочивати, розслаблятися", "no": "å slappe av", "de": "sich entspannen", "es": "relajarse", "fr": "se détendre", "pt-BR": "relaxar" }
+    },
+    {
+      "id": "go-for-a-walk",
+      "word": "to go for a walk",
+      "partOfSpeech": "phrase",
+      "explanation": "To walk outside for fun.",
+      "example": "We go for a walk after dinner.",
+      "translation": { "ru": "гулять, пойти на прогулку", "uk": "гуляти, піти на прогулянку", "no": "å gå en tur", "de": "spazieren gehen", "es": "dar un paseo", "fr": "se promener", "pt-BR": "dar uma volta, passear" }
+    },
+    {
+      "id": "watch",
+      "word": "to watch",
+      "partOfSpeech": "verb",
+      "explanation": "To look at something for some time.",
+      "example": "I watch TV in the evening.",
+      "translation": { "ru": "смотреть (фильм, телевизор)", "uk": "дивитися (фільм, телевізор)", "no": "å se på", "de": "anschauen, ansehen", "es": "ver (la tele, una película)", "fr": "regarder", "pt-BR": "assistir, ver" }
+    }
+  ]
+}

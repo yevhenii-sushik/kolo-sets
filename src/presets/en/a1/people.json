@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "family",
+      "word": "family",
+      "partOfSpeech": "noun",
+      "explanation": "Parents and their children.",
+      "example": "I have a big family.",
+      "translation": { "ru": "семья", "uk": "сім'я, родина", "no": "familie", "de": "die Familie", "es": "la familia", "fr": "la famille", "pt-BR": "a família" }
+    },
+    {
+      "id": "mother",
+      "word": "mother",
+      "partOfSpeech": "noun",
+      "explanation": "Also: mum (US: mom).",
+      "example": "My mother is a teacher.",
+      "translation": { "ru": "мать, мама", "uk": "мати, мама", "no": "mor", "de": "die Mutter", "es": "la madre", "fr": "la mère", "pt-BR": "a mãe" }
+    },
+    {
+      "id": "father",
+      "word": "father",
+      "partOfSpeech": "noun",
+      "explanation": "Also: dad.",
+      "example": "My father works in a bank.",
+      "translation": { "ru": "отец, папа", "uk": "батько, тато", "no": "far", "de": "der Vater", "es": "el padre", "fr": "le père", "pt-BR": "o pai" }
+    },
+    {
+      "id": "parents",
+      "word": "parents",
+      "partOfSpeech": "noun",
+      "explanation": "Mother and father.",
+      "example": "My parents live in Oslo.",
+      "translation": { "ru": "родители", "uk": "батьки", "no": "foreldre", "de": "die Eltern", "es": "los padres", "fr": "les parents", "pt-BR": "os pais" }
+    },
+    {
+      "id": "child",
+      "word": "child",
+      "partOfSpeech": "noun",
+      "explanation": "A young person. Plural: children.",
+      "example": "Their child is three years old.",
+      "translation": { "ru": "ребёнок", "uk": "дитина", "no": "barn", "de": "das Kind", "es": "el niño, la niña", "fr": "l'enfant", "pt-BR": "a criança" }
+    },
+    {
+      "id": "son",
+      "word": "son",
+      "partOfSpeech": "noun",
+      "explanation": "A boy or a man: the child of his parents.",
+      "example": "Our son is ten.",
+      "translation": { "ru": "сын", "uk": "син", "no": "sønn", "de": "der Sohn", "es": "el hijo", "fr": "le fils", "pt-BR": "o filho" }
+    },
+    {
+      "id": "daughter",
+      "word": "daughter",
+      "partOfSpeech": "noun",
+      "explanation": "A girl or a woman: the child of her parents.",
+      "example": "Their daughter is a doctor.",
+      "translation": { "ru": "дочь", "uk": "донька, дочка", "no": "datter", "de": "die Tochter", "es": "la hija", "fr": "la fille (de ses parents)", "pt-BR": "a filha" }
+    },
+    {
+      "id": "brother",
+      "word": "brother",
+      "partOfSpeech": "noun",
+      "explanation": "A boy or a man with the same parents as you.",
+      "example": "I have one brother.",
+      "translation": { "ru": "брат", "uk": "брат", "no": "bror", "de": "der Bruder", "es": "el hermano", "fr": "le frère", "pt-BR": "o irmão" }
+    },
+    {
+      "id": "sister",
+      "word": "sister",
+      "partOfSpeech": "noun",
+      "explanation": "A girl or a woman with the same parents as you.",
+      "example": "My sister lives in Bergen.",
+      "translation": { "ru": "сестра", "uk": "сестра", "no": "søster", "de": "die Schwester", "es": "la hermana", "fr": "la sœur", "pt-BR": "a irmã" }
+    },
+    {
+      "id": "grandmother",
+      "word": "grandmother",
+      "partOfSpeech": "noun",
+      "explanation": "The mother of your mother or father. Also: grandma.",
+      "example": "My grandmother is eighty.",
+      "translation": { "ru": "бабушка", "uk": "бабуся", "no": "bestemor", "de": "die Großmutter, die Oma", "es": "la abuela", "fr": "la grand-mère", "pt-BR": "a avó" }
+    },
+    {
+      "id": "grandfather",
+      "word": "grandfather",
+      "partOfSpeech": "noun",
+      "explanation": "The father of your mother or father. Also: grandpa.",
+      "example": "My grandfather makes very good coffee.",
+      "translation": { "ru": "дедушка", "uk": "дідусь", "no": "bestefar", "de": "der Großvater, der Opa", "es": "el abuelo", "fr": "le grand-père", "pt-BR": "o avô" }
+    },
+    {
+      "id": "man",
+      "word": "man",
+      "partOfSpeech": "noun",
+      "explanation": "A grown-up boy. Plural: men.",
+      "example": "That man is my neighbour.",
+      "translation": { "ru": "мужчина", "uk": "чоловік", "no": "mann", "de": "der Mann", "es": "el hombre", "fr": "l'homme", "pt-BR": "o homem" }
+    },
+    {
+      "id": "woman",
+      "word": "woman",
+      "partOfSpeech": "noun",
+      "explanation": "A grown-up girl. Plural: women.",
+      "example": "That woman is my teacher.",
+      "translation": { "ru": "женщина", "uk": "жінка", "no": "kvinne", "de": "die Frau", "es": "la mujer", "fr": "la femme", "pt-BR": "a mulher" }
+    },
+    {
+      "id": "husband",
+      "word": "husband",
+      "partOfSpeech": "noun",
+      "explanation": "The man you are married to.",
+      "example": "This is my husband, Paul.",
+      "translation": { "ru": "муж", "uk": "чоловік (у шлюбі)", "no": "ektemann", "de": "der Ehemann", "es": "el marido, el esposo", "fr": "le mari", "pt-BR": "o marido" }
+    },
+    {
+      "id": "wife",
+      "word": "wife",
+      "partOfSpeech": "noun",
+      "explanation": "The woman you are married to.",
+      "example": "His wife is from Brazil.",
+      "translation": { "ru": "жена", "uk": "дружина", "no": "kone", "de": "die Ehefrau", "es": "la esposa", "fr": "l'épouse", "pt-BR": "a esposa" }
+    },
+    {
+      "id": "boy",
+      "word": "boy",
+      "partOfSpeech": "noun",
+      "explanation": "A male child.",
+      "example": "The boy is playing football.",
+      "translation": { "ru": "мальчик", "uk": "хлопчик", "no": "gutt", "de": "der Junge", "es": "el chico", "fr": "le garçon", "pt-BR": "o menino" }
+    },
+    {
+      "id": "girl",
+      "word": "girl",
+      "partOfSpeech": "noun",
+      "explanation": "A female child.",
+      "example": "The girl has a red bike.",
+      "translation": { "ru": "девочка, девушка", "uk": "дівчинка, дівчина", "no": "jente", "de": "das Mädchen", "es": "la chica", "fr": "la fille (jeune)", "pt-BR": "a menina" }
+    },
+    {
+      "id": "friend",
+      "word": "friend",
+      "partOfSpeech": "noun",
+      "explanation": "A person you like and know well.",
+      "example": "Anna is my best friend.",
+      "translation": { "ru": "друг", "uk": "друг", "no": "venn", "de": "der Freund", "es": "el amigo", "fr": "l'ami", "pt-BR": "o amigo" }
+    },
+    {
+      "id": "neighbour",
+      "word": "neighbour, neighbor",
+      "partOfSpeech": "noun",
+      "explanation": "A person who lives next to you.",
+      "example": "Our neighbour has a big dog.",
+      "translation": { "ru": "сосед", "uk": "сусід", "no": "nabo", "de": "der Nachbar", "es": "el vecino", "fr": "le voisin", "pt-BR": "o vizinho" }
+    },
+    {
+      "id": "name",
+      "word": "name",
+      "partOfSpeech": "noun",
+      "explanation": "What we call a person or a thing.",
+      "example": "What's the name of your son?",
+      "translation": { "ru": "имя", "uk": "ім'я", "no": "navn", "de": "der Name", "es": "el nombre", "fr": "le nom", "pt-BR": "o nome" }
+    },
+    {
+      "id": "married",
+      "word": "married",
+      "partOfSpeech": "adjective",
+      "explanation": "With a husband or a wife.",
+      "example": "Are you married?",
+      "translation": { "ru": "женат, замужем", "uk": "одружений, заміжня", "no": "gift", "de": "verheiratet", "es": "casado, casada", "fr": "marié, mariée", "pt-BR": "casado, casada" }
+    },
+    {
+      "id": "how-old-are-you",
+      "word": "How old are you?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it when we want to know a person's age.",
+      "example": "“How old are you?” “I'm twenty-five.”",
+      "translation": { "ru": "Сколько тебе лет?", "uk": "Скільки тобі років?", "no": "Hvor gammel er du?", "de": "Wie alt bist du?", "es": "¿Cuántos años tienes?", "fr": "Quel âge as-tu ?", "pt-BR": "Quantos anos você tem?" }
+    }
+  ]
+}

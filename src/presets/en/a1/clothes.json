@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "clothes",
+      "word": "clothes",
+      "partOfSpeech": "noun",
+      "explanation": "Things we wear: shirts, dresses, jackets…",
+      "example": "I need new clothes.",
+      "translation": { "ru": "одежда", "uk": "одяг", "no": "klær", "de": "die Kleidung", "es": "la ropa", "fr": "les vêtements", "pt-BR": "a roupa" }
+    },
+    {
+      "id": "jacket",
+      "word": "jacket",
+      "partOfSpeech": "noun",
+      "explanation": "We wear it outside, over our other clothes.",
+      "example": "Take a jacket, it's cold.",
+      "translation": { "ru": "куртка", "uk": "куртка", "no": "jakke", "de": "die Jacke", "es": "la chaqueta", "fr": "la veste", "pt-BR": "a jaqueta, o casaco" }
+    },
+    {
+      "id": "jumper",
+      "word": "jumper, sweater",
+      "partOfSpeech": "noun",
+      "explanation": "A warm top with long sleeves.",
+      "example": "My grandmother made this jumper.",
+      "translation": { "ru": "свитер", "uk": "светр", "no": "genser", "de": "der Pullover", "es": "el jersey, el suéter", "fr": "le pull", "pt-BR": "o suéter" }
+    },
+    {
+      "id": "trousers",
+      "word": "trousers",
+      "partOfSpeech": "noun",
+      "explanation": "We wear them on our legs. US: pants.",
+      "example": "These trousers are too long.",
+      "translation": { "ru": "брюки, штаны", "uk": "штани", "no": "bukse", "de": "die Hose", "es": "el pantalón", "fr": "le pantalon", "pt-BR": "a calça" }
+    },
+    {
+      "id": "skirt",
+      "word": "skirt",
+      "partOfSpeech": "noun",
+      "explanation": "Women and girls wear it. It hangs from the waist.",
+      "example": "She wears a black skirt to work.",
+      "translation": { "ru": "юбка", "uk": "спідниця", "no": "skjørt", "de": "der Rock", "es": "la falda", "fr": "la jupe", "pt-BR": "a saia" }
+    },
+    {
+      "id": "dress",
+      "word": "dress",
+      "partOfSpeech": "noun",
+      "explanation": "A top and a skirt in one.",
+      "example": "What a beautiful dress!",
+      "translation": { "ru": "платье", "uk": "сукня", "no": "kjole", "de": "das Kleid", "es": "el vestido", "fr": "la robe", "pt-BR": "o vestido" }
+    },
+    {
+      "id": "shirt",
+      "word": "shirt",
+      "partOfSpeech": "noun",
+      "explanation": "A top with buttons and a collar.",
+      "example": "He wears a white shirt.",
+      "translation": { "ru": "рубашка", "uk": "сорочка", "no": "skjorte", "de": "das Hemd", "es": "la camisa", "fr": "la chemise", "pt-BR": "a camisa" }
+    },
+    {
+      "id": "t-shirt",
+      "word": "T-shirt",
+      "partOfSpeech": "noun",
+      "explanation": "A simple top with short sleeves.",
+      "example": "In summer I wear a T-shirt.",
+      "translation": { "ru": "футболка", "uk": "футболка", "no": "T-skjorte", "de": "das T-Shirt", "es": "la camiseta", "fr": "le t-shirt", "pt-BR": "a camiseta" }
+    },
+    {
+      "id": "shoe",
+      "word": "shoe",
+      "partOfSpeech": "noun",
+      "explanation": "We wear shoes on our feet.",
+      "example": "Where are my shoes?",
+      "translation": { "ru": "ботинок, туфля", "uk": "черевик, туфля", "no": "sko", "de": "der Schuh", "es": "el zapato", "fr": "la chaussure", "pt-BR": "o sapato" }
+    },
+    {
+      "id": "sock",
+      "word": "sock",
+      "partOfSpeech": "noun",
+      "explanation": "We wear it on the foot, under the shoe.",
+      "example": "I can't find my other sock.",
+      "translation": { "ru": "носок", "uk": "шкарпетка", "no": "sokk", "de": "die Socke", "es": "el calcetín", "fr": "la chaussette", "pt-BR": "a meia" }
+    },
+    {
+      "id": "hat",
+      "word": "hat",
+      "partOfSpeech": "noun",
+      "explanation": "We wear it on the head.",
+      "example": "Put on your hat, it's snowing.",
+      "translation": { "ru": "шапка, шляпа", "uk": "шапка, капелюх", "no": "lue, hatt", "de": "die Mütze, der Hut", "es": "el gorro, el sombrero", "fr": "le bonnet, le chapeau", "pt-BR": "o gorro, o chapéu" }
+    },
+    {
+      "id": "scarf",
+      "word": "scarf",
+      "partOfSpeech": "noun",
+      "explanation": "We wear it around the neck when it's cold.",
+      "example": "This scarf is very warm.",
+      "translation": { "ru": "шарф", "uk": "шарф", "no": "skjerf", "de": "der Schal", "es": "la bufanda", "fr": "l'écharpe", "pt-BR": "o cachecol" }
+    },
+    {
+      "id": "size",
+      "word": "size",
+      "partOfSpeech": "noun",
+      "explanation": "How big clothes or shoes are.",
+      "example": "Do you have this in size 40?",
+      "translation": { "ru": "размер", "uk": "розмір", "no": "størrelse", "de": "die Größe", "es": "la talla", "fr": "la taille", "pt-BR": "o tamanho" }
+    },
+    {
+      "id": "wear",
+      "word": "to wear",
+      "partOfSpeech": "verb",
+      "explanation": "To have clothes on your body. Past: wore.",
+      "example": "I wear glasses.",
+      "translation": { "ru": "носить, быть одетым в", "uk": "носити, бути вдягненим у", "no": "å ha på seg, å gå med", "de": "tragen, anhaben", "es": "llevar (puesto)", "fr": "porter", "pt-BR": "usar, vestir" }
+    },
+    {
+      "id": "colour",
+      "word": "colour, color",
+      "partOfSpeech": "noun",
+      "explanation": "Red, blue and green are colours.",
+      "example": "What's your favourite colour?",
+      "translation": { "ru": "цвет", "uk": "колір", "no": "farge", "de": "die Farbe", "es": "el color", "fr": "la couleur", "pt-BR": "a cor" }
+    },
+    {
+      "id": "red",
+      "word": "red",
+      "partOfSpeech": "adjective",
+      "explanation": "The colour of blood and tomatoes.",
+      "example": "I have a red car.",
+      "translation": { "ru": "красный", "uk": "червоний", "no": "rød", "de": "rot", "es": "rojo", "fr": "rouge", "pt-BR": "vermelho" }
+    },
+    {
+      "id": "blue",
+      "word": "blue",
+      "partOfSpeech": "adjective",
+      "explanation": "The colour of the sky.",
+      "example": "He has blue eyes.",
+      "translation": { "ru": "синий, голубой", "uk": "синій, блакитний", "no": "blå", "de": "blau", "es": "azul", "fr": "bleu", "pt-BR": "azul" }
+    },
+    {
+      "id": "green",
+      "word": "green",
+      "partOfSpeech": "adjective",
+      "explanation": "The colour of grass.",
+      "example": "The trees are green in summer.",
+      "translation": { "ru": "зелёный", "uk": "зелений", "no": "grønn", "de": "grün", "es": "verde", "fr": "vert", "pt-BR": "verde" }
+    },
+    {
+      "id": "yellow",
+      "word": "yellow",
+      "partOfSpeech": "adjective",
+      "explanation": "The colour of the sun and bananas.",
+      "example": "She has a yellow bag.",
+      "translation": { "ru": "жёлтый", "uk": "жовтий", "no": "gul", "de": "gelb", "es": "amarillo", "fr": "jaune", "pt-BR": "amarelo" }
+    },
+    {
+      "id": "white",
+      "word": "white",
+      "partOfSpeech": "adjective",
+      "explanation": "The colour of snow and milk.",
+      "example": "The walls are white.",
+      "translation": { "ru": "белый", "uk": "білий", "no": "hvit", "de": "weiß", "es": "blanco", "fr": "blanc", "pt-BR": "branco" }
+    },
+    {
+      "id": "black",
+      "word": "black",
+      "partOfSpeech": "adjective",
+      "explanation": "The colour of the night.",
+      "example": "I drink black coffee.",
+      "translation": { "ru": "чёрный", "uk": "чорний", "no": "svart", "de": "schwarz", "es": "negro", "fr": "noir", "pt-BR": "preto" }
+    },
+    {
+      "id": "grey",
+      "word": "grey, gray",
+      "partOfSpeech": "adjective",
+      "explanation": "The colour between black and white.",
+      "example": "The sky is grey today.",
+      "translation": { "ru": "серый", "uk": "сірий", "no": "grå", "de": "grau", "es": "gris", "fr": "gris", "pt-BR": "cinza" }
+    },
+    {
+      "id": "brown",
+      "word": "brown",
+      "partOfSpeech": "adjective",
+      "explanation": "The colour of chocolate.",
+      "example": "My dog is brown.",
+      "translation": { "ru": "коричневый", "uk": "коричневий", "no": "brun", "de": "braun", "es": "marrón", "fr": "marron", "pt-BR": "marrom" }
+    },
+    {
+      "id": "pink",
+      "word": "pink",
+      "partOfSpeech": "adjective",
+      "explanation": "Light red.",
+      "example": "The girl has a pink dress.",
+      "translation": { "ru": "розовый", "uk": "рожевий", "no": "rosa", "de": "rosa", "es": "rosa", "fr": "rose", "pt-BR": "rosa" }
+    }
+  ]
+}

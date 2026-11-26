@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "hello",
+      "word": "hello, hi",
+      "partOfSpeech": "interjection",
+      "explanation": "We say it when we meet someone.",
+      "example": "Hello! My name is Anna.",
+      "translation": { "ru": "привет, здравствуйте", "uk": "привіт, вітаю", "no": "hei", "de": "hallo", "es": "hola", "fr": "salut, bonjour", "pt-BR": "oi, olá" }
+    },
+    {
+      "id": "good-morning",
+      "word": "good morning",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it in the morning.",
+      "example": "Good morning! Did you sleep well?",
+      "translation": { "ru": "доброе утро", "uk": "доброго ранку", "no": "god morgen", "de": "guten Morgen", "es": "buenos días", "fr": "bonjour (le matin)", "pt-BR": "bom dia" }
+    },
+    {
+      "id": "good-afternoon",
+      "word": "good afternoon",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it after twelve o'clock, before the evening.",
+      "example": "Good afternoon, can I help you?",
+      "translation": { "ru": "добрый день", "uk": "добрий день", "no": "god ettermiddag", "de": "guten Tag", "es": "buenas tardes", "fr": "bonjour (l'après-midi)", "pt-BR": "boa tarde" }
+    },
+    {
+      "id": "good-evening",
+      "word": "good evening",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it in the evening when we meet someone.",
+      "example": "Good evening, and welcome!",
+      "translation": { "ru": "добрый вечер", "uk": "добрий вечір", "no": "god kveld", "de": "guten Abend", "es": "buenas noches (al saludar)", "fr": "bonsoir", "pt-BR": "boa noite (ao chegar)" }
+    },
+    {
+      "id": "good-night",
+      "word": "good night",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it before we go to bed.",
+      "example": "Good night! Sleep well.",
+      "translation": { "ru": "спокойной ночи", "uk": "на добраніч", "no": "god natt", "de": "gute Nacht", "es": "buenas noches (antes de dormir)", "fr": "bonne nuit", "pt-BR": "boa noite (antes de dormir)" }
+    },
+    {
+      "id": "goodbye",
+      "word": "goodbye, bye",
+      "partOfSpeech": "interjection",
+      "explanation": "We say it when we leave.",
+      "example": "Bye! See you tomorrow.",
+      "translation": { "ru": "до свидания, пока", "uk": "до побачення, бувай", "no": "ha det (bra)", "de": "auf Wiedersehen, tschüss", "es": "adiós, chao", "fr": "au revoir, à plus", "pt-BR": "tchau, até logo" }
+    },
+    {
+      "id": "see-you",
+      "word": "see you",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it when we are going to meet again.",
+      "example": "Bye, see you on Monday!",
+      "translation": { "ru": "увидимся", "uk": "побачимося", "no": "vi sees", "de": "bis bald, wir sehen uns", "es": "nos vemos", "fr": "à bientôt", "pt-BR": "até mais, a gente se vê" }
+    },
+    {
+      "id": "thank-you",
+      "word": "thank you, thanks",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it when someone helps us or gives us something.",
+      "example": "Thank you for the coffee!",
+      "translation": { "ru": "спасибо", "uk": "дякую", "no": "takk", "de": "danke", "es": "gracias", "fr": "merci", "pt-BR": "obrigado, obrigada" }
+    },
+    {
+      "id": "please",
+      "word": "please",
+      "partOfSpeech": "interjection",
+      "explanation": "We say it when we ask for something.",
+      "example": "A cup of tea, please.",
+      "translation": { "ru": "пожалуйста (просьба)", "uk": "будь ласка (прохання)", "no": "vær så snill", "de": "bitte", "es": "por favor", "fr": "s'il te plaît, s'il vous plaît", "pt-BR": "por favor" }
+    },
+    {
+      "id": "youre-welcome",
+      "word": "you're welcome",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it when someone says “thank you”.",
+      "example": "“Thanks for your help.” “You're welcome!”",
+      "translation": { "ru": "пожалуйста (в ответ на спасибо)", "uk": "будь ласка (у відповідь на дякую)", "no": "bare hyggelig, ingen årsak", "de": "gern geschehen", "es": "de nada", "fr": "de rien", "pt-BR": "de nada" }
+    },
+    {
+      "id": "excuse-me",
+      "word": "excuse me",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it before we ask a stranger something, or when we want to get past.",
+      "example": "Excuse me, where is the station?",
+      "translation": { "ru": "извините (чтобы обратиться)", "uk": "перепрошую", "no": "unnskyld (meg)", "de": "Entschuldigung", "es": "perdone, disculpe", "fr": "excusez-moi", "pt-BR": "com licença" }
+    },
+    {
+      "id": "sorry",
+      "word": "sorry",
+      "partOfSpeech": "interjection",
+      "explanation": "We say it when we do something wrong.",
+      "example": "Sorry, I'm late!",
+      "translation": { "ru": "прости, извини", "uk": "вибач, пробач", "no": "beklager", "de": "es tut mir leid", "es": "lo siento, perdón", "fr": "pardon, désolé", "pt-BR": "desculpa, sinto muito" }
+    },
+    {
+      "id": "yes",
+      "word": "yes",
+      "partOfSpeech": "interjection",
+      "explanation": "",
+      "example": "“Are you hungry?” “Yes, very.”",
+      "translation": { "ru": "да", "uk": "так", "no": "ja", "de": "ja", "es": "sí", "fr": "oui", "pt-BR": "sim" }
+    },
+    {
+      "id": "no",
+      "word": "no",
+      "partOfSpeech": "interjection",
+      "explanation": "",
+      "example": "No, thank you.",
+      "translation": { "ru": "нет", "uk": "ні", "no": "nei", "de": "nein", "es": "no", "fr": "non", "pt-BR": "não" }
+    },
+    {
+      "id": "whats-your-name",
+      "word": "What's your name?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it when we meet a new person.",
+      "example": "Hi! What's your name?",
+      "translation": { "ru": "Как тебя зовут?", "uk": "Як тебе звати?", "no": "Hva heter du?", "de": "Wie heißt du?", "es": "¿Cómo te llamas?", "fr": "Comment tu t'appelles ?", "pt-BR": "Como você se chama?" }
+    },
+    {
+      "id": "my-name-is",
+      "word": "My name is …",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it to tell people our name. Also: I'm …",
+      "example": "My name is Tom. And you?",
+      "translation": { "ru": "Меня зовут …", "uk": "Мене звати …", "no": "Jeg heter …", "de": "Ich heiße …", "es": "Me llamo …", "fr": "Je m'appelle …", "pt-BR": "Meu nome é …" }
+    },
+    {
+      "id": "where-are-you-from",
+      "word": "Where are you from?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it to know a person's country or city.",
+      "example": "Where are you from? Are you from Italy?",
+      "translation": { "ru": "Откуда ты?", "uk": "Звідки ти?", "no": "Hvor kommer du fra?", "de": "Woher kommst du?", "es": "¿De dónde eres?", "fr": "Tu viens d'où ?", "pt-BR": "De onde você é?" }
+    },
+    {
+      "id": "im-from",
+      "word": "I'm from …",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it to tell people our country or city.",
+      "example": "I'm from Norway. And you?",
+      "translation": { "ru": "Я из …", "uk": "Я з …", "no": "Jeg kommer fra …", "de": "Ich komme aus …", "es": "Soy de …", "fr": "Je viens de …", "pt-BR": "Eu sou de …" }
+    },
+    {
+      "id": "how-are-you",
+      "word": "How are you?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it to know if a person is well.",
+      "example": "Hi, Sam! How are you?",
+      "translation": { "ru": "Как дела?", "uk": "Як справи?", "no": "Hvordan går det?", "de": "Wie geht's?", "es": "¿Qué tal?, ¿Cómo estás?", "fr": "Ça va ?, Comment ça va ?", "pt-BR": "Como vai?, Tudo bem?" }
+    },
+    {
+      "id": "im-fine-thanks",
+      "word": "I'm fine, thanks.",
+      "partOfSpeech": "phrase",
+      "explanation": "A short answer to “How are you?”",
+      "example": "I'm fine, thanks. And you?",
+      "translation": { "ru": "Хорошо, спасибо.", "uk": "Добре, дякую.", "no": "Bare bra, takk.", "de": "Gut, danke.", "es": "Bien, gracias.", "fr": "Bien, merci.", "pt-BR": "Estou bem, obrigado." }
+    },
+    {
+      "id": "nice-to-meet-you",
+      "word": "Nice to meet you!",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it when we meet a new person.",
+      "example": "I'm Lisa. Nice to meet you!",
+      "translation": { "ru": "Приятно познакомиться!", "uk": "Приємно познайомитися!", "no": "Hyggelig å treffe deg!", "de": "Freut mich!", "es": "¡Mucho gusto!", "fr": "Enchanté !", "pt-BR": "Muito prazer!" }
+    },
+    {
+      "id": "welcome",
+      "word": "welcome",
+      "partOfSpeech": "interjection",
+      "explanation": "We say it to a guest who comes to us.",
+      "example": "Welcome to our home!",
+      "translation": { "ru": "добро пожаловать", "uk": "ласкаво просимо", "no": "velkommen", "de": "willkommen", "es": "bienvenido, bienvenida", "fr": "bienvenue", "pt-BR": "bem-vindo, bem-vinda" }
+    },
+    {
+      "id": "do-you-speak-english",
+      "word": "Do you speak English?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it when we don't know which language a person speaks.",
+      "example": "Excuse me, do you speak English?",
+      "translation": { "ru": "Ты говоришь по-английски?", "uk": "Ти говориш англійською?", "no": "Snakker du engelsk?", "de": "Sprichst du Englisch?", "es": "¿Hablas inglés?", "fr": "Tu parles anglais ?", "pt-BR": "Você fala inglês?" }
+    },
+    {
+      "id": "i-dont-understand",
+      "word": "I don't understand.",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it when we don't know what a person means.",
+      "example": "Sorry, I don't understand. Can you say it again?",
+      "translation": { "ru": "Я не понимаю.", "uk": "Я не розумію.", "no": "Jeg forstår ikke.", "de": "Ich verstehe nicht.", "es": "No entiendo.", "fr": "Je ne comprends pas.", "pt-BR": "Eu não entendo." }
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "zero",
+      "word": "zero",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "It's zero degrees outside.",
+      "translation": { "ru": "ноль", "uk": "нуль", "no": "null", "de": "null", "es": "cero", "fr": "zéro", "pt-BR": "zero" }
+    },
+    {
+      "id": "one",
+      "word": "one",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "I have one sister.",
+      "translation": { "ru": "один", "uk": "один", "no": "en, ett", "de": "eins", "es": "uno", "fr": "un", "pt-BR": "um" }
+    },
+    {
+      "id": "two",
+      "word": "two",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "We have two cats.",
+      "translation": { "ru": "два", "uk": "два", "no": "to", "de": "zwei", "es": "dos", "fr": "deux", "pt-BR": "dois" }
+    },
+    {
+      "id": "three",
+      "word": "three",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "I drink three cups of coffee a day.",
+      "translation": { "ru": "три", "uk": "три", "no": "tre", "de": "drei", "es": "tres", "fr": "trois", "pt-BR": "três" }
+    },
+    {
+      "id": "four",
+      "word": "four",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "There are four people in my family.",
+      "translation": { "ru": "четыре", "uk": "чотири", "no": "fire", "de": "vier", "es": "cuatro", "fr": "quatre", "pt-BR": "quatro" }
+    },
+    {
+      "id": "five",
+      "word": "five",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "The bus comes in five minutes.",
+      "translation": { "ru": "пять", "uk": "п'ять", "no": "fem", "de": "fünf", "es": "cinco", "fr": "cinq", "pt-BR": "cinco" }
+    },
+    {
+      "id": "six",
+      "word": "six",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "I get up at six.",
+      "translation": { "ru": "шесть", "uk": "шість", "no": "seks", "de": "sechs", "es": "seis", "fr": "six", "pt-BR": "seis" }
+    },
+    {
+      "id": "seven",
+      "word": "seven",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "There are seven days in a week.",
+      "translation": { "ru": "семь", "uk": "сім", "no": "sju, syv", "de": "sieben", "es": "siete", "fr": "sept", "pt-BR": "sete" }
+    },
+    {
+      "id": "eight",
+      "word": "eight",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "School starts at eight.",
+      "translation": { "ru": "восемь", "uk": "вісім", "no": "åtte", "de": "acht", "es": "ocho", "fr": "huit", "pt-BR": "oito" }
+    },
+    {
+      "id": "nine",
+      "word": "nine",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "My son is nine.",
+      "translation": { "ru": "девять", "uk": "дев'ять", "no": "ni", "de": "neun", "es": "nueve", "fr": "neuf", "pt-BR": "nove" }
+    },
+    {
+      "id": "ten",
+      "word": "ten",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "The ticket costs ten euros.",
+      "translation": { "ru": "десять", "uk": "десять", "no": "ti", "de": "zehn", "es": "diez", "fr": "dix", "pt-BR": "dez" }
+    },
+    {
+      "id": "eleven",
+      "word": "eleven",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "The shop opens at eleven.",
+      "translation": { "ru": "одиннадцать", "uk": "одинадцять", "no": "elleve", "de": "elf", "es": "once", "fr": "onze", "pt-BR": "onze" }
+    },
+    {
+      "id": "twelve",
+      "word": "twelve",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "There are twelve months in a year.",
+      "translation": { "ru": "двенадцать", "uk": "дванадцять", "no": "tolv", "de": "zwölf", "es": "doce", "fr": "douze", "pt-BR": "doze" }
+    },
+    {
+      "id": "thirteen",
+      "word": "thirteen",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "My daughter is thirteen years old.",
+      "translation": { "ru": "тринадцать", "uk": "тринадцять", "no": "tretten", "de": "dreizehn", "es": "trece", "fr": "treize", "pt-BR": "treze" }
+    },
+    {
+      "id": "fourteen",
+      "word": "fourteen",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "I live at number fourteen.",
+      "translation": { "ru": "четырнадцать", "uk": "чотирнадцять", "no": "fjorten", "de": "vierzehn", "es": "catorce", "fr": "quatorze", "pt-BR": "catorze, quatorze" }
+    },
+    {
+      "id": "fifteen",
+      "word": "fifteen",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "The film starts in fifteen minutes.",
+      "translation": { "ru": "пятнадцать", "uk": "п'ятнадцять", "no": "femten", "de": "fünfzehn", "es": "quince", "fr": "quinze", "pt-BR": "quinze" }
+    },
+    {
+      "id": "sixteen",
+      "word": "sixteen",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "There are sixteen students in the class.",
+      "translation": { "ru": "шестнадцать", "uk": "шістнадцять", "no": "seksten", "de": "sechzehn", "es": "dieciséis", "fr": "seize", "pt-BR": "dezesseis" }
+    },
+    {
+      "id": "seventeen",
+      "word": "seventeen",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Our room is number seventeen.",
+      "translation": { "ru": "семнадцать", "uk": "сімнадцять", "no": "sytten", "de": "siebzehn", "es": "diecisiete", "fr": "dix-sept", "pt-BR": "dezessete" }
+    },
+    {
+      "id": "eighteen",
+      "word": "eighteen",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "In Norway you can drive at eighteen.",
+      "translation": { "ru": "восемнадцать", "uk": "вісімнадцять", "no": "atten", "de": "achtzehn", "es": "dieciocho", "fr": "dix-huit", "pt-BR": "dezoito" }
+    },
+    {
+      "id": "nineteen",
+      "word": "nineteen",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "Bus nineteen goes to the city centre.",
+      "translation": { "ru": "девятнадцать", "uk": "дев'ятнадцять", "no": "nitten", "de": "neunzehn", "es": "diecinueve", "fr": "dix-neuf", "pt-BR": "dezenove" }
+    },
+    {
+      "id": "twenty",
+      "word": "twenty",
+      "partOfSpeech": "numeral",
+      "explanation": "",
+      "example": "She is twenty years old.",
+      "translation": { "ru": "двадцать", "uk": "двадцять", "no": "tjue", "de": "zwanzig", "es": "veinte", "fr": "vingt", "pt-BR": "vinte" }
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "house",
+      "word": "house",
+      "partOfSpeech": "noun",
+      "explanation": "A building where people live.",
+      "example": "They live in a big house.",
+      "translation": { "ru": "дом", "uk": "будинок", "no": "hus", "de": "das Haus", "es": "la casa", "fr": "la maison", "pt-BR": "a casa" }
+    },
+    {
+      "id": "flat",
+      "word": "flat, apartment",
+      "partOfSpeech": "noun",
+      "explanation": "Rooms to live in, in a bigger building. US: apartment.",
+      "example": "My flat is on the third floor.",
+      "translation": { "ru": "квартира", "uk": "квартира", "no": "leilighet", "de": "die Wohnung", "es": "el apartamento, el piso", "fr": "l'appartement", "pt-BR": "o apartamento" }
+    },
+    {
+      "id": "room",
+      "word": "room",
+      "partOfSpeech": "noun",
+      "explanation": "A part of a house with walls and a door.",
+      "example": "The house has five rooms.",
+      "translation": { "ru": "комната", "uk": "кімната", "no": "rom", "de": "das Zimmer", "es": "la habitación", "fr": "la pièce", "pt-BR": "o cômodo" }
+    },
+    {
+      "id": "kitchen",
+      "word": "kitchen",
+      "partOfSpeech": "noun",
+      "explanation": "The room where we cook.",
+      "example": "Mum is in the kitchen.",
+      "translation": { "ru": "кухня", "uk": "кухня", "no": "kjøkken", "de": "die Küche", "es": "la cocina", "fr": "la cuisine", "pt-BR": "a cozinha" }
+    },
+    {
+      "id": "bathroom",
+      "word": "bathroom",
+      "partOfSpeech": "noun",
+      "explanation": "The room with a shower or a bath and a toilet.",
+      "example": "Where is the bathroom?",
+      "translation": { "ru": "ванная", "uk": "ванна кімната", "no": "bad", "de": "das Badezimmer, das Bad", "es": "el baño", "fr": "la salle de bains", "pt-BR": "o banheiro" }
+    },
+    {
+      "id": "living-room",
+      "word": "living room",
+      "partOfSpeech": "noun",
+      "explanation": "The room where we sit, talk and watch TV.",
+      "example": "We watch TV in the living room.",
+      "translation": { "ru": "гостиная", "uk": "вітальня", "no": "stue", "de": "das Wohnzimmer", "es": "el salón, la sala de estar", "fr": "le salon", "pt-BR": "a sala de estar" }
+    },
+    {
+      "id": "bedroom",
+      "word": "bedroom",
+      "partOfSpeech": "noun",
+      "explanation": "The room where we sleep.",
+      "example": "My bedroom is small but nice.",
+      "translation": { "ru": "спальня", "uk": "спальня", "no": "soverom", "de": "das Schlafzimmer", "es": "el dormitorio", "fr": "la chambre", "pt-BR": "o quarto" }
+    },
+    {
+      "id": "door",
+      "word": "door",
+      "partOfSpeech": "noun",
+      "explanation": "We open it to go into a room or a house.",
+      "example": "Please close the door.",
+      "translation": { "ru": "дверь", "uk": "двері", "no": "dør", "de": "die Tür", "es": "la puerta", "fr": "la porte", "pt-BR": "a porta" }
+    },
+    {
+      "id": "window",
+      "word": "window",
+      "partOfSpeech": "noun",
+      "explanation": "We look out through it. It is made of glass.",
+      "example": "Can you open the window?",
+      "translation": { "ru": "окно", "uk": "вікно", "no": "vindu", "de": "das Fenster", "es": "la ventana", "fr": "la fenêtre", "pt-BR": "a janela" }
+    },
+    {
+      "id": "table",
+      "word": "table",
+      "partOfSpeech": "noun",
+      "explanation": "We eat and work at it.",
+      "example": "The keys are on the table.",
+      "translation": { "ru": "стол", "uk": "стіл", "no": "bord", "de": "der Tisch", "es": "la mesa", "fr": "la table", "pt-BR": "a mesa" }
+    },
+    {
+      "id": "chair",
+      "word": "chair",
+      "partOfSpeech": "noun",
+      "explanation": "We sit on it.",
+      "example": "There are four chairs in the kitchen.",
+      "translation": { "ru": "стул", "uk": "стілець", "no": "stol", "de": "der Stuhl", "es": "la silla", "fr": "la chaise", "pt-BR": "a cadeira" }
+    },
+    {
+      "id": "bed",
+      "word": "bed",
+      "partOfSpeech": "noun",
+      "explanation": "We sleep in it.",
+      "example": "I go to bed at eleven.",
+      "translation": { "ru": "кровать", "uk": "ліжко", "no": "seng", "de": "das Bett", "es": "la cama", "fr": "le lit", "pt-BR": "a cama" }
+    },
+    {
+      "id": "sofa",
+      "word": "sofa",
+      "partOfSpeech": "noun",
+      "explanation": "A soft seat for two or three people.",
+      "example": "The cat sleeps on the sofa.",
+      "translation": { "ru": "диван", "uk": "диван", "no": "sofa", "de": "das Sofa", "es": "el sofá", "fr": "le canapé", "pt-BR": "o sofá" }
+    },
+    {
+      "id": "fridge",
+      "word": "fridge",
+      "partOfSpeech": "noun",
+      "explanation": "It keeps food cold. Also: refrigerator.",
+      "example": "The milk is in the fridge.",
+      "translation": { "ru": "холодильник", "uk": "холодильник", "no": "kjøleskap", "de": "der Kühlschrank", "es": "la nevera", "fr": "le frigo", "pt-BR": "a geladeira" }
+    },
+    {
+      "id": "lamp",
+      "word": "lamp",
+      "partOfSpeech": "noun",
+      "explanation": "It gives light.",
+      "example": "Turn on the lamp, please.",
+      "translation": { "ru": "лампа", "uk": "лампа", "no": "lampe", "de": "die Lampe", "es": "la lámpara", "fr": "la lampe", "pt-BR": "a luminária" }
+    },
+    {
+      "id": "key",
+      "word": "key",
+      "partOfSpeech": "noun",
+      "explanation": "We open a door with it.",
+      "example": "Where is the key to the car?",
+      "translation": { "ru": "ключ", "uk": "ключ", "no": "nøkkel", "de": "der Schlüssel", "es": "la llave", "fr": "la clé", "pt-BR": "a chave" }
+    },
+    {
+      "id": "shower",
+      "word": "shower",
+      "partOfSpeech": "noun",
+      "explanation": "We stand under it and wash.",
+      "example": "I have a shower every morning.",
+      "translation": { "ru": "душ", "uk": "душ", "no": "dusj", "de": "die Dusche", "es": "la ducha", "fr": "la douche", "pt-BR": "o chuveiro" }
+    },
+    {
+      "id": "garden",
+      "word": "garden",
+      "partOfSpeech": "noun",
+      "explanation": "Land next to a house, with grass and flowers.",
+      "example": "The children play in the garden.",
+      "translation": { "ru": "сад", "uk": "сад", "no": "hage", "de": "der Garten", "es": "el jardín", "fr": "le jardin", "pt-BR": "o jardim" }
+    },
+    {
+      "id": "floor",
+      "word": "floor",
+      "partOfSpeech": "noun",
+      "explanation": "1. A level in a building. 2. The part of a room we walk on.",
+      "example": "I live on the second floor.",
+      "translation": { "ru": "этаж, пол", "uk": "поверх, підлога", "no": "etasje, gulv", "de": "die Etage, der Boden", "es": "la planta, el suelo", "fr": "l'étage, le sol", "pt-BR": "o andar, o chão" }
+    },
+    {
+      "id": "live",
+      "word": "to live",
+      "partOfSpeech": "verb",
+      "explanation": "To have your home in a place. She lives.",
+      "example": "I live in London.",
+      "translation": { "ru": "жить", "uk": "жити", "no": "å bo", "de": "wohnen", "es": "vivir", "fr": "habiter", "pt-BR": "morar" }
+    },
+    {
+      "id": "at-home",
+      "word": "at home",
+      "partOfSpeech": "phrase",
+      "explanation": "In your house or flat.",
+      "example": "I'm at home tonight.",
+      "translation": { "ru": "дома", "uk": "вдома", "no": "hjemme", "de": "zu Hause", "es": "en casa", "fr": "chez moi, à la maison", "pt-BR": "em casa" }
+    }
+  ]
+}

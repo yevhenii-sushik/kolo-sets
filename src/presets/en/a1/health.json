@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "body",
+      "word": "body",
+      "partOfSpeech": "noun",
+      "explanation": "All of a person, from head to foot.",
+      "example": "Sport is good for the body.",
+      "translation": { "ru": "тело", "uk": "тіло", "no": "kropp", "de": "der Körper", "es": "el cuerpo", "fr": "le corps", "pt-BR": "o corpo" }
+    },
+    {
+      "id": "head",
+      "word": "head",
+      "partOfSpeech": "noun",
+      "explanation": "The top part of the body, with the eyes and the mouth.",
+      "example": "Put a hat on your head, it's cold!",
+      "translation": { "ru": "голова", "uk": "голова", "no": "hode", "de": "der Kopf", "es": "la cabeza", "fr": "la tête", "pt-BR": "a cabeça" }
+    },
+    {
+      "id": "eye",
+      "word": "eye",
+      "partOfSpeech": "noun",
+      "explanation": "We see with our eyes.",
+      "example": "She has blue eyes.",
+      "translation": { "ru": "глаз", "uk": "око", "no": "øye", "de": "das Auge", "es": "el ojo", "fr": "l'œil", "pt-BR": "o olho" }
+    },
+    {
+      "id": "ear",
+      "word": "ear",
+      "partOfSpeech": "noun",
+      "explanation": "We hear with our ears.",
+      "example": "The dog has big ears.",
+      "translation": { "ru": "ухо", "uk": "вухо", "no": "øre", "de": "das Ohr", "es": "la oreja", "fr": "l'oreille", "pt-BR": "a orelha" }
+    },
+    {
+      "id": "nose",
+      "word": "nose",
+      "partOfSpeech": "noun",
+      "explanation": "We smell with it.",
+      "example": "My nose is red from the cold.",
+      "translation": { "ru": "нос", "uk": "ніс", "no": "nese", "de": "die Nase", "es": "la nariz", "fr": "le nez", "pt-BR": "o nariz" }
+    },
+    {
+      "id": "mouth",
+      "word": "mouth",
+      "partOfSpeech": "noun",
+      "explanation": "We eat and speak with it.",
+      "example": "Open your mouth, please.",
+      "translation": { "ru": "рот", "uk": "рот", "no": "munn", "de": "der Mund", "es": "la boca", "fr": "la bouche", "pt-BR": "a boca" }
+    },
+    {
+      "id": "tooth",
+      "word": "tooth",
+      "partOfSpeech": "noun",
+      "explanation": "It is white and in your mouth. Plural: teeth.",
+      "example": "I brush my teeth every morning.",
+      "translation": { "ru": "зуб", "uk": "зуб", "no": "tann", "de": "der Zahn", "es": "el diente", "fr": "la dent", "pt-BR": "o dente" }
+    },
+    {
+      "id": "hand",
+      "word": "hand",
+      "partOfSpeech": "noun",
+      "explanation": "It is at the end of the arm and has five fingers.",
+      "example": "Wash your hands before dinner.",
+      "translation": { "ru": "рука (кисть)", "uk": "рука (кисть)", "no": "hånd", "de": "die Hand", "es": "la mano", "fr": "la main", "pt-BR": "a mão" }
+    },
+    {
+      "id": "arm",
+      "word": "arm",
+      "partOfSpeech": "noun",
+      "explanation": "The part of the body from the shoulder to the hand.",
+      "example": "He has a book under his arm.",
+      "translation": { "ru": "рука (от плеча до кисти)", "uk": "рука (від плеча до кисті)", "no": "arm", "de": "der Arm", "es": "el brazo", "fr": "le bras", "pt-BR": "o braço" }
+    },
+    {
+      "id": "foot",
+      "word": "foot",
+      "partOfSpeech": "noun",
+      "explanation": "We stand on our feet. Plural: feet.",
+      "example": "My feet are cold.",
+      "translation": { "ru": "ступня", "uk": "ступня", "no": "fot", "de": "der Fuß", "es": "el pie", "fr": "le pied", "pt-BR": "o pé" }
+    },
+    {
+      "id": "leg",
+      "word": "leg",
+      "partOfSpeech": "noun",
+      "explanation": "We walk with our legs.",
+      "example": "She has long legs.",
+      "translation": { "ru": "нога", "uk": "нога", "no": "bein", "de": "das Bein", "es": "la pierna", "fr": "la jambe", "pt-BR": "a perna" }
+    },
+    {
+      "id": "stomach",
+      "word": "stomach",
+      "partOfSpeech": "noun",
+      "explanation": "The middle of the body. The food goes there.",
+      "example": "I have a pain in my stomach.",
+      "translation": { "ru": "живот", "uk": "живіт", "no": "mage", "de": "der Bauch, der Magen", "es": "el estómago, la barriga", "fr": "le ventre, l'estomac", "pt-BR": "a barriga, o estômago" }
+    },
+    {
+      "id": "back",
+      "word": "back",
+      "partOfSpeech": "noun",
+      "explanation": "The part of the body behind you.",
+      "example": "My back hurts after work.",
+      "translation": { "ru": "спина", "uk": "спина", "no": "rygg", "de": "der Rücken", "es": "la espalda", "fr": "le dos", "pt-BR": "as costas" }
+    },
+    {
+      "id": "ill",
+      "word": "ill, sick",
+      "partOfSpeech": "adjective",
+      "explanation": "Not well.",
+      "example": "I'm ill today, so I'm at home.",
+      "translation": { "ru": "больной", "uk": "хворий", "no": "syk", "de": "krank", "es": "enfermo", "fr": "malade", "pt-BR": "doente" }
+    },
+    {
+      "id": "healthy",
+      "word": "healthy",
+      "partOfSpeech": "adjective",
+      "explanation": "1. Well, not ill. 2. Good for you.",
+      "example": "Fruit is healthy.",
+      "translation": { "ru": "здоровый, полезный", "uk": "здоровий, корисний", "no": "frisk, sunn", "de": "gesund", "es": "sano", "fr": "en bonne santé, sain", "pt-BR": "saudável" }
+    },
+    {
+      "id": "doctor",
+      "word": "doctor",
+      "partOfSpeech": "noun",
+      "explanation": "A person who helps ill people.",
+      "example": "You need to see a doctor.",
+      "translation": { "ru": "врач", "uk": "лікар", "no": "lege", "de": "der Arzt, die Ärztin", "es": "el médico", "fr": "le médecin", "pt-BR": "o médico" }
+    },
+    {
+      "id": "hospital",
+      "word": "hospital",
+      "partOfSpeech": "noun",
+      "explanation": "A big building where doctors help ill people.",
+      "example": "My grandfather is in hospital.",
+      "translation": { "ru": "больница", "uk": "лікарня", "no": "sykehus", "de": "das Krankenhaus", "es": "el hospital", "fr": "l'hôpital", "pt-BR": "o hospital" }
+    },
+    {
+      "id": "pharmacy",
+      "word": "pharmacy",
+      "partOfSpeech": "noun",
+      "explanation": "A shop where we buy medicine. UK also: chemist's.",
+      "example": "Is there a pharmacy near here?",
+      "translation": { "ru": "аптека", "uk": "аптека", "no": "apotek", "de": "die Apotheke", "es": "la farmacia", "fr": "la pharmacie", "pt-BR": "a farmácia" }
+    },
+    {
+      "id": "medicine",
+      "word": "medicine",
+      "partOfSpeech": "noun",
+      "explanation": "We take it when we are ill.",
+      "example": "Take this medicine twice a day.",
+      "translation": { "ru": "лекарство", "uk": "ліки", "no": "medisin", "de": "das Medikament", "es": "el medicamento", "fr": "le médicament", "pt-BR": "o remédio" }
+    },
+    {
+      "id": "my-hurts",
+      "word": "My … hurts.",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it to tell where we have pain.",
+      "example": "My tooth hurts.",
+      "translation": { "ru": "У меня болит …", "uk": "У мене болить …", "no": "Jeg har vondt i …", "de": "Mir tut … weh.", "es": "Me duele …", "fr": "J'ai mal à …", "pt-BR": "Estou com dor de …" }
+    },
+    {
+      "id": "it-hurts",
+      "word": "It hurts.",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it when we have pain.",
+      "example": "Don't touch my arm, it hurts!",
+      "translation": { "ru": "Больно.", "uk": "Боляче.", "no": "Det gjør vondt.", "de": "Es tut weh.", "es": "Duele.", "fr": "Ça fait mal.", "pt-BR": "Dói." }
+    },
+    {
+      "id": "help",
+      "word": "Help!",
+      "partOfSpeech": "interjection",
+      "explanation": "We shout it when we are in danger.",
+      "example": "Help! Call a doctor!",
+      "translation": { "ru": "Помогите!", "uk": "Допоможіть!", "no": "Hjelp!", "de": "Hilfe!", "es": "¡Socorro!, ¡Ayuda!", "fr": "Au secours !", "pt-BR": "Socorro!" }
+    }
+  ]
+}

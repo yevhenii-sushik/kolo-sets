@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "monday",
+      "word": "Monday",
+      "partOfSpeech": "noun",
+      "explanation": "The first day of the week.",
+      "example": "On Monday I start my English course.",
+      "translation": { "ru": "понедельник", "uk": "понеділок", "no": "mandag", "de": "der Montag", "es": "el lunes", "fr": "le lundi", "pt-BR": "a segunda-feira" }
+    },
+    {
+      "id": "tuesday",
+      "word": "Tuesday",
+      "partOfSpeech": "noun",
+      "explanation": "The day after Monday.",
+      "example": "I go to the gym every Tuesday.",
+      "translation": { "ru": "вторник", "uk": "вівторок", "no": "tirsdag", "de": "der Dienstag", "es": "el martes", "fr": "le mardi", "pt-BR": "a terça-feira" }
+    },
+    {
+      "id": "wednesday",
+      "word": "Wednesday",
+      "partOfSpeech": "noun",
+      "explanation": "The day in the middle of the week.",
+      "example": "We have a meeting on Wednesday.",
+      "translation": { "ru": "среда", "uk": "середа", "no": "onsdag", "de": "der Mittwoch", "es": "el miércoles", "fr": "le mercredi", "pt-BR": "a quarta-feira" }
+    },
+    {
+      "id": "thursday",
+      "word": "Thursday",
+      "partOfSpeech": "noun",
+      "explanation": "The day before Friday.",
+      "example": "On Thursday the shop is open until nine.",
+      "translation": { "ru": "четверг", "uk": "четвер", "no": "torsdag", "de": "der Donnerstag", "es": "el jueves", "fr": "le jeudi", "pt-BR": "a quinta-feira" }
+    },
+    {
+      "id": "friday",
+      "word": "Friday",
+      "partOfSpeech": "noun",
+      "explanation": "The last work day of the week.",
+      "example": "It's Friday at last!",
+      "translation": { "ru": "пятница", "uk": "п'ятниця", "no": "fredag", "de": "der Freitag", "es": "el viernes", "fr": "le vendredi", "pt-BR": "a sexta-feira" }
+    },
+    {
+      "id": "saturday",
+      "word": "Saturday",
+      "partOfSpeech": "noun",
+      "explanation": "The first day of the weekend.",
+      "example": "On Saturday we go for a long walk.",
+      "translation": { "ru": "суббота", "uk": "субота", "no": "lørdag", "de": "der Samstag", "es": "el sábado", "fr": "le samedi", "pt-BR": "o sábado" }
+    },
+    {
+      "id": "sunday",
+      "word": "Sunday",
+      "partOfSpeech": "noun",
+      "explanation": "The last day of the week.",
+      "example": "Many shops are closed on Sunday.",
+      "translation": { "ru": "воскресенье", "uk": "неділя", "no": "søndag", "de": "der Sonntag", "es": "el domingo", "fr": "le dimanche", "pt-BR": "o domingo" }
+    },
+    {
+      "id": "day",
+      "word": "day",
+      "partOfSpeech": "noun",
+      "explanation": "24 hours.",
+      "example": "It was a nice day.",
+      "translation": { "ru": "день", "uk": "день", "no": "dag", "de": "der Tag", "es": "el día", "fr": "le jour", "pt-BR": "o dia" }
+    },
+    {
+      "id": "week",
+      "word": "week",
+      "partOfSpeech": "noun",
+      "explanation": "Seven days, from Monday to Sunday.",
+      "example": "I'm in London for a week.",
+      "translation": { "ru": "неделя", "uk": "тиждень", "no": "uke", "de": "die Woche", "es": "la semana", "fr": "la semaine", "pt-BR": "a semana" }
+    },
+    {
+      "id": "weekend",
+      "word": "weekend",
+      "partOfSpeech": "noun",
+      "explanation": "Saturday and Sunday.",
+      "example": "What are you doing at the weekend?",
+      "translation": { "ru": "выходные", "uk": "вихідні", "no": "helg", "de": "das Wochenende", "es": "el fin de semana", "fr": "le week-end", "pt-BR": "o fim de semana" }
+    },
+    {
+      "id": "hour",
+      "word": "hour",
+      "partOfSpeech": "noun",
+      "explanation": "60 minutes.",
+      "example": "The trip takes one hour.",
+      "translation": { "ru": "час", "uk": "година", "no": "time", "de": "die Stunde", "es": "la hora", "fr": "l'heure", "pt-BR": "a hora" }
+    },
+    {
+      "id": "minute",
+      "word": "minute",
+      "partOfSpeech": "noun",
+      "explanation": "60 seconds.",
+      "example": "Wait a minute, please.",
+      "translation": { "ru": "минута", "uk": "хвилина", "no": "minutt", "de": "die Minute", "es": "el minuto", "fr": "la minute", "pt-BR": "o minuto" }
+    },
+    {
+      "id": "today",
+      "word": "today",
+      "partOfSpeech": "adverb",
+      "explanation": "This day.",
+      "example": "Today is Monday.",
+      "translation": { "ru": "сегодня", "uk": "сьогодні", "no": "i dag", "de": "heute", "es": "hoy", "fr": "aujourd'hui", "pt-BR": "hoje" }
+    },
+    {
+      "id": "tomorrow",
+      "word": "tomorrow",
+      "partOfSpeech": "adverb",
+      "explanation": "The day after today.",
+      "example": "See you tomorrow!",
+      "translation": { "ru": "завтра", "uk": "завтра", "no": "i morgen", "de": "morgen", "es": "mañana", "fr": "demain", "pt-BR": "amanhã" }
+    },
+    {
+      "id": "yesterday",
+      "word": "yesterday",
+      "partOfSpeech": "adverb",
+      "explanation": "The day before today.",
+      "example": "Yesterday it was very cold.",
+      "translation": { "ru": "вчера", "uk": "вчора", "no": "i går", "de": "gestern", "es": "ayer", "fr": "hier", "pt-BR": "ontem" }
+    },
+    {
+      "id": "now",
+      "word": "now",
+      "partOfSpeech": "adverb",
+      "explanation": "At this moment.",
+      "example": "I'm busy now.",
+      "translation": { "ru": "сейчас", "uk": "зараз", "no": "nå", "de": "jetzt", "es": "ahora", "fr": "maintenant", "pt-BR": "agora" }
+    },
+    {
+      "id": "morning",
+      "word": "morning",
+      "partOfSpeech": "noun",
+      "explanation": "The first part of the day.",
+      "example": "I drink coffee in the morning.",
+      "translation": { "ru": "утро", "uk": "ранок", "no": "morgen", "de": "der Morgen", "es": "la mañana", "fr": "le matin", "pt-BR": "a manhã" }
+    },
+    {
+      "id": "evening",
+      "word": "evening",
+      "partOfSpeech": "noun",
+      "explanation": "The part of the day after work, before night.",
+      "example": "I'm usually at home in the evening.",
+      "translation": { "ru": "вечер", "uk": "вечір", "no": "kveld", "de": "der Abend", "es": "la noche (antes de dormir)", "fr": "le soir", "pt-BR": "a noite (antes de dormir)" }
+    },
+    {
+      "id": "night",
+      "word": "night",
+      "partOfSpeech": "noun",
+      "explanation": "The time when it is dark and we sleep.",
+      "example": "I sleep eight hours every night.",
+      "translation": { "ru": "ночь", "uk": "ніч", "no": "natt", "de": "die Nacht", "es": "la noche (cuando dormimos)", "fr": "la nuit", "pt-BR": "a noite (quando dormimos)" }
+    },
+    {
+      "id": "what-time-is-it",
+      "word": "What time is it?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it when we want to know the time.",
+      "example": "Excuse me, what time is it?",
+      "translation": { "ru": "Который час?", "uk": "Котра година?", "no": "Hva er klokka?", "de": "Wie spät ist es?", "es": "¿Qué hora es?", "fr": "Quelle heure est-il ?", "pt-BR": "Que horas são?" }
+    }
+  ]
+}

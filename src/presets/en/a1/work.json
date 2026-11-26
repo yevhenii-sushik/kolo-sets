@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "job",
+      "word": "job",
+      "partOfSpeech": "noun",
+      "explanation": "The work you do for money.",
+      "example": "I have a new job.",
+      "translation": { "ru": "работа", "uk": "робота", "no": "jobb", "de": "die Arbeit, der Job", "es": "el trabajo", "fr": "le travail, l'emploi", "pt-BR": "o trabalho, o emprego" }
+    },
+    {
+      "id": "work",
+      "word": "to work",
+      "partOfSpeech": "verb",
+      "explanation": "She works. Past: worked.",
+      "example": "I work in an office.",
+      "translation": { "ru": "работать", "uk": "працювати", "no": "å jobbe, å arbeide", "de": "arbeiten", "es": "trabajar", "fr": "travailler", "pt-BR": "trabalhar" }
+    },
+    {
+      "id": "what-do-you-do",
+      "word": "What do you do?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it when we want to know a person's job.",
+      "example": "“What do you do?” “I'm a teacher.”",
+      "translation": { "ru": "Кем ты работаешь?", "uk": "Ким ти працюєш?", "no": "Hva jobber du med?", "de": "Was machst du beruflich?", "es": "¿En qué trabajas?", "fr": "Tu fais quoi dans la vie ?", "pt-BR": "Você trabalha com quê?" }
+    },
+    {
+      "id": "office",
+      "word": "office",
+      "partOfSpeech": "noun",
+      "explanation": "A room or a building where people work at desks.",
+      "example": "Our office is in the city centre.",
+      "translation": { "ru": "офис", "uk": "офіс", "no": "kontor", "de": "das Büro", "es": "la oficina", "fr": "le bureau", "pt-BR": "o escritório" }
+    },
+    {
+      "id": "colleague",
+      "word": "colleague",
+      "partOfSpeech": "noun",
+      "explanation": "A person you work with.",
+      "example": "My colleagues are very nice.",
+      "translation": { "ru": "коллега", "uk": "колега", "no": "kollega", "de": "der Kollege, die Kollegin", "es": "el compañero de trabajo", "fr": "le collègue", "pt-BR": "o colega de trabalho" }
+    },
+    {
+      "id": "boss",
+      "word": "boss",
+      "partOfSpeech": "noun",
+      "explanation": "The person who tells you what to do at work.",
+      "example": "My boss is on holiday.",
+      "translation": { "ru": "начальник", "uk": "начальник", "no": "sjef", "de": "der Chef", "es": "el jefe", "fr": "le chef, le patron", "pt-BR": "o chefe" }
+    },
+    {
+      "id": "meeting",
+      "word": "meeting",
+      "partOfSpeech": "noun",
+      "explanation": "People come together to talk about work.",
+      "example": "I have a meeting at ten.",
+      "translation": { "ru": "встреча, совещание", "uk": "зустріч, нарада", "no": "møte", "de": "das Treffen, die Besprechung", "es": "la reunión", "fr": "la réunion", "pt-BR": "a reunião" }
+    },
+    {
+      "id": "break",
+      "word": "break",
+      "partOfSpeech": "noun",
+      "explanation": "A short time to rest.",
+      "example": "Let's have a coffee break.",
+      "translation": { "ru": "перерыв", "uk": "перерва", "no": "pause", "de": "die Pause", "es": "el descanso", "fr": "la pause", "pt-BR": "o intervalo, a pausa" }
+    },
+    {
+      "id": "salary",
+      "word": "salary",
+      "partOfSpeech": "noun",
+      "explanation": "The money you get every month for your work.",
+      "example": "She has a good salary.",
+      "translation": { "ru": "зарплата", "uk": "зарплата", "no": "lønn", "de": "das Gehalt", "es": "el sueldo, el salario", "fr": "le salaire", "pt-BR": "o salário" }
+    },
+    {
+      "id": "computer",
+      "word": "computer",
+      "partOfSpeech": "noun",
+      "explanation": "We write, read and play games on it.",
+      "example": "I work on a computer all day.",
+      "translation": { "ru": "компьютер", "uk": "комп'ютер", "no": "datamaskin, PC", "de": "der Computer", "es": "el ordenador, la computadora", "fr": "l'ordinateur", "pt-BR": "o computador" }
+    },
+    {
+      "id": "phone",
+      "word": "phone",
+      "partOfSpeech": "noun",
+      "explanation": "We call people and send messages with it.",
+      "example": "Can I use your phone?",
+      "translation": { "ru": "телефон", "uk": "телефон", "no": "telefon", "de": "das Telefon, das Handy", "es": "el teléfono, el móvil", "fr": "le téléphone", "pt-BR": "o telefone, o celular" }
+    },
+    {
+      "id": "school",
+      "word": "school",
+      "partOfSpeech": "noun",
+      "explanation": "Children go there to learn.",
+      "example": "My son walks to school.",
+      "translation": { "ru": "школа", "uk": "школа", "no": "skole", "de": "die Schule", "es": "la escuela", "fr": "l'école", "pt-BR": "a escola" }
+    },
+    {
+      "id": "university",
+      "word": "university",
+      "partOfSpeech": "noun",
+      "explanation": "A place where students study after school.",
+      "example": "My sister is at university.",
+      "translation": { "ru": "университет", "uk": "університет", "no": "universitet", "de": "die Universität", "es": "la universidad", "fr": "l'université", "pt-BR": "a universidade" }
+    },
+    {
+      "id": "teacher",
+      "word": "teacher",
+      "partOfSpeech": "noun",
+      "explanation": "A person who teaches at a school.",
+      "example": "Our teacher is from Scotland.",
+      "translation": { "ru": "учитель, преподаватель", "uk": "учитель, викладач", "no": "lærer", "de": "der Lehrer, die Lehrerin", "es": "el profesor, el maestro", "fr": "le professeur", "pt-BR": "o professor" }
+    },
+    {
+      "id": "student",
+      "word": "student",
+      "partOfSpeech": "noun",
+      "explanation": "A person who studies at a school or a university.",
+      "example": "There are twenty students in my class.",
+      "translation": { "ru": "студент, ученик", "uk": "студент, учень", "no": "student, elev", "de": "der Student, der Schüler", "es": "el estudiante, el alumno", "fr": "l'étudiant, l'élève", "pt-BR": "o estudante, o aluno" }
+    },
+    {
+      "id": "lesson",
+      "word": "lesson",
+      "partOfSpeech": "noun",
+      "explanation": "A time when a teacher teaches something.",
+      "example": "The English lesson starts at nine.",
+      "translation": { "ru": "урок", "uk": "урок", "no": "time, leksjon", "de": "die Unterrichtsstunde, die Lektion", "es": "la clase, la lección", "fr": "le cours, la leçon", "pt-BR": "a aula" }
+    },
+    {
+      "id": "learn",
+      "word": "to learn",
+      "partOfSpeech": "verb",
+      "explanation": "To get to know something new. Past: learned, learnt.",
+      "example": "I want to learn English.",
+      "translation": { "ru": "учить, учиться", "uk": "вчити, вчитися", "no": "å lære", "de": "lernen", "es": "aprender", "fr": "apprendre", "pt-BR": "aprender" }
+    },
+    {
+      "id": "study",
+      "word": "to study",
+      "partOfSpeech": "verb",
+      "explanation": "To learn at school or at university. She studies.",
+      "example": "He studies medicine in Oslo.",
+      "translation": { "ru": "учиться, изучать", "uk": "навчатися, вивчати", "no": "å studere", "de": "studieren", "es": "estudiar", "fr": "étudier", "pt-BR": "estudar" }
+    },
+    {
+      "id": "homework",
+      "word": "homework",
+      "partOfSpeech": "noun",
+      "explanation": "Work from school that you do at home.",
+      "example": "Did you do your homework?",
+      "translation": { "ru": "домашнее задание", "uk": "домашнє завдання", "no": "lekser", "de": "die Hausaufgaben", "es": "los deberes, la tarea", "fr": "les devoirs", "pt-BR": "a lição de casa" }
+    },
+    {
+      "id": "book",
+      "word": "book",
+      "partOfSpeech": "noun",
+      "explanation": "We read it. It has many pages.",
+      "example": "I'm reading a good book.",
+      "translation": { "ru": "книга", "uk": "книга, книжка", "no": "bok", "de": "das Buch", "es": "el libro", "fr": "le livre", "pt-BR": "o livro" }
+    },
+    {
+      "id": "pen",
+      "word": "pen",
+      "partOfSpeech": "noun",
+      "explanation": "We write with it.",
+      "example": "Can I borrow your pen?",
+      "translation": { "ru": "ручка", "uk": "ручка", "no": "penn", "de": "der Kugelschreiber, der Stift", "es": "el bolígrafo", "fr": "le stylo", "pt-BR": "a caneta" }
+    }
+  ]
+}

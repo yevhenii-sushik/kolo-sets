@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "shop",
+      "word": "shop, store",
+      "partOfSpeech": "noun",
+      "explanation": "A place where we buy things. US: store.",
+      "example": "The shop opens at nine.",
+      "translation": { "ru": "магазин", "uk": "магазин", "no": "butikk", "de": "das Geschäft, der Laden", "es": "la tienda", "fr": "le magasin", "pt-BR": "a loja" }
+    },
+    {
+      "id": "supermarket",
+      "word": "supermarket",
+      "partOfSpeech": "noun",
+      "explanation": "A big shop for food and things for the home.",
+      "example": "I buy food at the supermarket.",
+      "translation": { "ru": "супермаркет", "uk": "супермаркет", "no": "matbutikk, supermarked", "de": "der Supermarkt", "es": "el supermercado", "fr": "le supermarché", "pt-BR": "o supermercado" }
+    },
+    {
+      "id": "money",
+      "word": "money",
+      "partOfSpeech": "noun",
+      "explanation": "We pay with it.",
+      "example": "I don't have much money.",
+      "translation": { "ru": "деньги", "uk": "гроші", "no": "penger", "de": "das Geld", "es": "el dinero", "fr": "l'argent", "pt-BR": "o dinheiro" }
+    },
+    {
+      "id": "cash",
+      "word": "cash",
+      "partOfSpeech": "noun",
+      "explanation": "Money in coins and notes, not on a card.",
+      "example": "Can I pay in cash?",
+      "translation": { "ru": "наличные", "uk": "готівка", "no": "kontanter", "de": "das Bargeld", "es": "el efectivo", "fr": "les espèces, le liquide", "pt-BR": "o dinheiro vivo" }
+    },
+    {
+      "id": "price",
+      "word": "price",
+      "partOfSpeech": "noun",
+      "explanation": "How much money something costs.",
+      "example": "The price is too high.",
+      "translation": { "ru": "цена", "uk": "ціна", "no": "pris", "de": "der Preis", "es": "el precio", "fr": "le prix", "pt-BR": "o preço" }
+    },
+    {
+      "id": "special-offer",
+      "word": "special offer",
+      "partOfSpeech": "noun",
+      "explanation": "A lower price for a short time.",
+      "example": "Apples are on special offer this week.",
+      "translation": { "ru": "скидка, акция", "uk": "знижка, акція", "no": "tilbud", "de": "das Angebot", "es": "la oferta", "fr": "la promotion", "pt-BR": "a promoção, a oferta" }
+    },
+    {
+      "id": "expensive",
+      "word": "expensive",
+      "partOfSpeech": "adjective",
+      "explanation": "It costs a lot of money.",
+      "example": "This jacket is very expensive.",
+      "translation": { "ru": "дорогой", "uk": "дорогий", "no": "dyr", "de": "teuer", "es": "caro", "fr": "cher", "pt-BR": "caro" }
+    },
+    {
+      "id": "cheap",
+      "word": "cheap",
+      "partOfSpeech": "adjective",
+      "explanation": "It doesn't cost much.",
+      "example": "The bus is cheap here.",
+      "translation": { "ru": "дешёвый", "uk": "дешевий", "no": "billig", "de": "billig", "es": "barato", "fr": "bon marché, pas cher", "pt-BR": "barato" }
+    },
+    {
+      "id": "buy",
+      "word": "to buy",
+      "partOfSpeech": "verb",
+      "explanation": "She buys. Past: bought.",
+      "example": "I want to buy a new phone.",
+      "translation": { "ru": "покупать, купить", "uk": "купувати, купити", "no": "å kjøpe", "de": "kaufen", "es": "comprar", "fr": "acheter", "pt-BR": "comprar" }
+    },
+    {
+      "id": "pay",
+      "word": "to pay",
+      "partOfSpeech": "verb",
+      "explanation": "She pays. Past: paid.",
+      "example": "Can I pay by card?",
+      "translation": { "ru": "платить", "uk": "платити", "no": "å betale", "de": "bezahlen", "es": "pagar", "fr": "payer", "pt-BR": "pagar" }
+    },
+    {
+      "id": "cost",
+      "word": "to cost",
+      "partOfSpeech": "verb",
+      "explanation": "It costs. Past: cost.",
+      "example": "The ticket costs ten pounds.",
+      "translation": { "ru": "стоить", "uk": "коштувати", "no": "å koste", "de": "kosten", "es": "costar", "fr": "coûter", "pt-BR": "custar" }
+    },
+    {
+      "id": "how-much-is-it",
+      "word": "How much is it?",
+      "partOfSpeech": "phrase",
+      "explanation": "We ask it when we want to know the price.",
+      "example": "I like this bag. How much is it?",
+      "translation": { "ru": "Сколько это стоит?", "uk": "Скільки це коштує?", "no": "Hvor mye koster det?", "de": "Wie viel kostet das?", "es": "¿Cuánto cuesta?", "fr": "Combien ça coûte ?", "pt-BR": "Quanto custa?" }
+    },
+    {
+      "id": "card",
+      "word": "card",
+      "partOfSpeech": "noun",
+      "explanation": "A bank card. We pay with it.",
+      "example": "I always pay with my card.",
+      "translation": { "ru": "карточка, банковская карта", "uk": "картка", "no": "kort, bankkort", "de": "die Karte (Bankkarte)", "es": "la tarjeta", "fr": "la carte (bancaire)", "pt-BR": "o cartão" }
+    },
+    {
+      "id": "checkout",
+      "word": "checkout",
+      "partOfSpeech": "noun",
+      "explanation": "The place in a shop where we pay. Also: till.",
+      "example": "Please pay at the checkout.",
+      "translation": { "ru": "касса", "uk": "каса", "no": "kasse", "de": "die Kasse", "es": "la caja", "fr": "la caisse", "pt-BR": "o caixa" }
+    },
+    {
+      "id": "bag",
+      "word": "bag",
+      "partOfSpeech": "noun",
+      "explanation": "We carry things in it.",
+      "example": "Do you need a bag?",
+      "translation": { "ru": "пакет, сумка", "uk": "пакет, сумка", "no": "pose", "de": "die Tüte", "es": "la bolsa", "fr": "le sac", "pt-BR": "a sacola" }
+    },
+    {
+      "id": "receipt",
+      "word": "receipt",
+      "partOfSpeech": "noun",
+      "explanation": "A small paper that shows what you paid.",
+      "example": "Here's your receipt.",
+      "translation": { "ru": "чек", "uk": "чек", "no": "kvittering", "de": "der Kassenbon, die Quittung", "es": "el recibo, el tique", "fr": "le ticket de caisse, le reçu", "pt-BR": "o recibo, a nota" }
+    },
+    {
+      "id": "open",
+      "word": "open",
+      "partOfSpeech": "adjective",
+      "explanation": "Not closed. You can go in.",
+      "example": "The shop is open until eight.",
+      "translation": { "ru": "открытый, открыто", "uk": "відчинений, відчинено", "no": "åpen", "de": "geöffnet, offen", "es": "abierto", "fr": "ouvert", "pt-BR": "aberto" }
+    },
+    {
+      "id": "closed",
+      "word": "closed",
+      "partOfSpeech": "adjective",
+      "explanation": "Not open. You can't go in.",
+      "example": "The bank is closed on Sunday.",
+      "translation": { "ru": "закрытый, закрыто", "uk": "зачинений, зачинено", "no": "stengt", "de": "geschlossen", "es": "cerrado", "fr": "fermé", "pt-BR": "fechado" }
+    },
+    {
+      "id": "can-i-have",
+      "word": "Can I have …?",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it when we ask for something.",
+      "example": "Can I have a coffee, please?",
+      "translation": { "ru": "Можно мне …?", "uk": "Можна мені …?", "no": "Kan jeg få …?", "de": "Kann ich … haben?", "es": "¿Me puede dar …?", "fr": "Je peux avoir … ?", "pt-BR": "Pode me dar …?" }
+    },
+    {
+      "id": "im-just-looking",
+      "word": "I'm just looking.",
+      "partOfSpeech": "phrase",
+      "explanation": "We say it in a shop when we don't need help.",
+      "example": "Thanks, I'm just looking.",
+      "translation": { "ru": "Я просто смотрю.", "uk": "Я просто дивлюся.", "no": "Jeg bare ser.", "de": "Ich schaue nur.", "es": "Solo estoy mirando.", "fr": "Je regarde seulement.", "pt-BR": "Só estou olhando." }
+    }
+  ]
+}
