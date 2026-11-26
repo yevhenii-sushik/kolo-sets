@@ -101,7 +101,7 @@ Read `src/design/README.md` before UI work. Core rules (checked by `scripts/chec
 
 - Code comments are written in **Russian** and explain *why*, often pointing to a spec (`docs/specs/…`). Match that.
 - Commit messages are in English and describe the user-visible outcome (for example «Settings as a grouped list: rows, values and pickers instead of a stack of cards»), with a bullet body when needed.
-- Product decisions, stage order and parked work are in `docs/roadmap.md`. Specs per stage are in `docs/specs/` (00 server, 01 courses, 02 progression, 05 ready-made sets, perigee: learning modes). Write a spec in `docs/specs/` before starting a new stage.
+- Product decisions, stage order and parked work are in `docs/roadmap.md`. Specs per stage are in `docs/specs/` (00 server, 01 courses, 02 progression, 05 ready-made sets, 06 audit fixes: findings and the step-by-step fix plan, perigee: learning modes). Write a spec in `docs/specs/` before starting a new stage.
 - Rewards come only from practice; nothing random is ever sold. Social and competitive features are parked (branch `feature/social`).
 
 ## Deploy
