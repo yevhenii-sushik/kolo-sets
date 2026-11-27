@@ -1,5 +1,56 @@
 {
+  "title": "Ajustes",
+  "subtitle": "Conta, aparência, aprendizado e dados",
+  "groups": {
+    "account": "Conta",
+    "appearance": "Aparência",
+    "learning": "Aprendizado",
+    "notifications": "Notificações",
+    "data": "Dados",
+    "help": "Ajuda"
+  },
+  "appearance": {
+    "title": "Aparência",
+    "light": "Claro",
+    "system": "Sistema",
+    "dark": "Escuro",
+    "theme": "Tema",
+    "auto": "Automático"
+  },
+  "language": {
+    "title": "Idioma do app",
+    "hint": "Muda só o idioma do app — seus sets de palavras continuam como estão."
+  },
+  "goal": {
+    "title": "Meta do dia",
+    "hint": "Quantos cards você quer revisar por dia. O anel da meta na tela inicial vai enchendo até esse número.",
+    "custom": "Seu número",
+    "unit": {
+      "one": "card por dia",
+      "other": "cards por dia"
+    },
+    "value": {
+      "one": "{n} card",
+      "other": "{n} cards"
+    },
+    "done": "Pronto"
+  },
   "reminder": {
+    "title": "Lembrete diário",
+    "unsupported": "Seu navegador não suporta notificações.",
+    "blockedTitle": "As notificações estão bloqueadas",
+    "blockedText": "Permita as notificações do Kolo nos ajustes do navegador ou do sistema para receber lembretes.",
+    "intro": "Um lembrete rápido por dia para revisar suas palavras.",
+    "enable": "Ativar notificações",
+    "toggle": "Me lembrar todo dia",
+    "time": "Horário",
+    "hour": "Hora",
+    "minute": "Minutos",
+    "status": {
+      "blocked": "Bloqueadas",
+      "enable": "Ativar",
+      "unsupported": "Indisponível"
+    },
     "notify": {
       "due": [
         {
@@ -26,5 +77,59 @@
         "Hoje ainda conta: uma sessão curta já basta."
       ]
     }
+  },
+  "sound": {
+    "title": "Som",
+    "effects": "Efeitos sonoros",
+    "effectsDesc": "Sons para respostas, flashcards, jogos e recompensas"
+  },
+  "data": {
+    "backup": "Backup",
+    "export": "Baixar um backup",
+    "exportDesc": "Todos os seus sets e palavras em um arquivo .json",
+    "exportButton": "Baixar",
+    "import": "Restaurar de um arquivo",
+    "importDesc": "Sets novos são adicionados; os que você já tem são substituídos pela versão do arquivo",
+    "importButton": "Escolher arquivo",
+    "importNote": "Só arquivos de backup do Kolo (.json) são aceitos.",
+    "exportSuccess": "Backup baixado",
+    "exportError": "Não foi possível criar o backup",
+    "importSuccess": {
+      "one": "{n} set restaurado",
+      "other": "{n} sets restaurados"
+    },
+    "importError": "Este arquivo não é um backup do Kolo",
+    "noCollections": "Você ainda não tem sets para fazer backup",
+    "signInToImport": "Entre para restaurar sets"
+  },
+  "account": {
+    "title": "Conta",
+    "delete": "Excluir conta",
+    "deleteDesc": "Sua conta, seus sets, seu progresso e suas medalhas serão excluídos para sempre. Isso não pode ser desfeito.",
+    "confirmTitle": "Excluir sua conta?",
+    "confirmMessage": "Sua conta, todos os sets e o progresso serão excluídos para sempre.",
+    "deleteError": "Não foi possível excluir a conta. Saia, entre de novo e tente outra vez.",
+    "deleting": "Excluindo…",
+    "email": "E-mail",
+    "method": "Login",
+    "methods": {
+      "password": "E-mail e senha"
+    },
+    "changePassword": "Mudar senha",
+    "changePasswordDesc": "Vamos enviar um link por e-mail para você criar uma senha nova.",
+    "send": "Enviar link",
+    "passwordSent": "E-mail enviado para {email}",
+    "passwordError": "Não foi possível enviar o e-mail. Tente de novo daqui a pouco.",
+    "logout": "Sair",
+    "logoutDesc": "Seus sets e seu progresso ficam guardados — entre de novo quando quiser.",
+    "dangerTitle": "Excluir conta"
+  },
+  "tour": {
+    "title": "Tour pelo app",
+    "hint": "Um tour rápido pelo básico: sets, prática e órbitas semanais. Ele abre na tela inicial.",
+    "button": "Ver de novo"
+  },
+  "courses": {
+    "title": "Cursos e vozes"
   }
 }

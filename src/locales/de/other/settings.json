@@ -1,5 +1,56 @@
 {
+  "title": "Einstellungen",
+  "subtitle": "Konto, Aussehen, Lernen und Daten",
+  "groups": {
+    "account": "Konto",
+    "appearance": "Aussehen",
+    "learning": "Lernen",
+    "notifications": "Benachrichtigungen",
+    "data": "Daten",
+    "help": "Hilfe"
+  },
+  "appearance": {
+    "title": "Aussehen",
+    "light": "Hell",
+    "system": "System",
+    "dark": "Dunkel",
+    "theme": "Design",
+    "auto": "Automatisch"
+  },
+  "language": {
+    "title": "Sprache der App",
+    "hint": "Ändert nur die Sprache der App – deine Sets bleiben, wie sie sind."
+  },
+  "goal": {
+    "title": "Tagesziel",
+    "hint": "Wie viele Karten du jeden Tag wiederholen willst. Der Zielring auf der Startseite füllt sich bis zu dieser Zahl.",
+    "custom": "Eigene Zahl",
+    "unit": {
+      "one": "Karte pro Tag",
+      "other": "Karten pro Tag"
+    },
+    "value": {
+      "one": "{n} Karte",
+      "other": "{n} Karten"
+    },
+    "done": "Fertig"
+  },
   "reminder": {
+    "title": "Tägliche Erinnerung",
+    "unsupported": "Dein Browser unterstützt keine Benachrichtigungen.",
+    "blockedTitle": "Benachrichtigungen sind blockiert",
+    "blockedText": "Erlaube Benachrichtigungen für Kolo in den Browser- oder Systemeinstellungen, um Erinnerungen zu bekommen.",
+    "intro": "Ein kurzer täglicher Anstoß, deine Wörter zu wiederholen.",
+    "enable": "Benachrichtigungen einschalten",
+    "toggle": "Jeden Tag erinnern",
+    "time": "Uhrzeit",
+    "hour": "Stunde",
+    "minute": "Minuten",
+    "status": {
+      "blocked": "Blockiert",
+      "enable": "Einschalten",
+      "unsupported": "Nicht verfügbar"
+    },
     "notify": {
       "due": [
         {
@@ -26,5 +77,59 @@
         "Heute zählt noch – eine kurze Session reicht."
       ]
     }
+  },
+  "sound": {
+    "title": "Ton",
+    "effects": "Soundeffekte",
+    "effectsDesc": "Töne für Antworten, Karteikarten, Spiele und Belohnungen"
+  },
+  "data": {
+    "backup": "Sicherung",
+    "export": "Sicherung herunterladen",
+    "exportDesc": "Alle deine Sets und Wörter in einer .json-Datei",
+    "exportButton": "Herunterladen",
+    "import": "Aus Datei wiederherstellen",
+    "importDesc": "Neue Sets werden hinzugefügt, vorhandene durch die Version aus der Datei ersetzt",
+    "importButton": "Datei wählen",
+    "importNote": "Nur Kolo-Sicherungsdateien (.json) werden unterstützt.",
+    "exportSuccess": "Sicherung heruntergeladen",
+    "exportError": "Sicherung konnte nicht erstellt werden",
+    "importSuccess": {
+      "one": "{n} Set wiederhergestellt",
+      "other": "{n} Sets wiederhergestellt"
+    },
+    "importError": "Diese Datei ist keine Kolo-Sicherung",
+    "noCollections": "Du hast noch keine Sets zum Sichern",
+    "signInToImport": "Melde dich an, um Sets wiederherzustellen"
+  },
+  "account": {
+    "title": "Konto",
+    "delete": "Konto löschen",
+    "deleteDesc": "Dein Konto, deine Sets, dein Fortschritt und deine Medaillen werden endgültig gelöscht. Das lässt sich nicht rückgängig machen.",
+    "confirmTitle": "Konto löschen?",
+    "confirmMessage": "Dein Konto, alle Sets und dein Fortschritt werden endgültig gelöscht.",
+    "deleteError": "Das Konto konnte nicht gelöscht werden. Melde dich ab, wieder an und versuche es noch einmal.",
+    "deleting": "Wird gelöscht…",
+    "email": "E-Mail",
+    "method": "Anmeldung",
+    "methods": {
+      "password": "E-Mail und Passwort"
+    },
+    "changePassword": "Passwort ändern",
+    "changePasswordDesc": "Wir schicken dir per E-Mail einen Link, mit dem du ein neues Passwort festlegst.",
+    "send": "Link senden",
+    "passwordSent": "E-Mail an {email} gesendet",
+    "passwordError": "Die E-Mail konnte nicht gesendet werden. Versuche es etwas später noch einmal.",
+    "logout": "Abmelden",
+    "logoutDesc": "Deine Sets und dein Fortschritt bleiben – melde dich einfach wieder an, wann du willst.",
+    "dangerTitle": "Konto löschen"
+  },
+  "tour": {
+    "title": "Einführung",
+    "hint": "Eine kurze Tour durch das Wichtigste: Sets, Üben und Wochen-Orbits. Sie öffnet sich auf der Startseite.",
+    "button": "Noch einmal zeigen"
+  },
+  "courses": {
+    "title": "Kurse und Stimmen"
   }
 }

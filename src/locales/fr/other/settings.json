@@ -1,5 +1,56 @@
 {
+  "title": "Réglages",
+  "subtitle": "Compte, apparence, apprentissage et données",
+  "groups": {
+    "account": "Compte",
+    "appearance": "Apparence",
+    "learning": "Apprentissage",
+    "notifications": "Notifications",
+    "data": "Données",
+    "help": "Aide"
+  },
+  "appearance": {
+    "title": "Apparence",
+    "light": "Clair",
+    "system": "Système",
+    "dark": "Sombre",
+    "theme": "Thème",
+    "auto": "Auto"
+  },
+  "language": {
+    "title": "Langue de l'appli",
+    "hint": "Change seulement la langue de l'appli : tes sets de mots restent tels quels."
+  },
+  "goal": {
+    "title": "Objectif du jour",
+    "hint": "Combien de cartes tu veux réviser chaque jour. L'anneau de l'objectif sur l'écran d'accueil se remplit jusqu'à ce nombre.",
+    "custom": "Ton nombre",
+    "unit": {
+      "one": "carte par jour",
+      "other": "cartes par jour"
+    },
+    "value": {
+      "one": "{n} carte",
+      "other": "{n} cartes"
+    },
+    "done": "OK"
+  },
   "reminder": {
+    "title": "Rappel quotidien",
+    "unsupported": "Ton navigateur ne prend pas en charge les notifications.",
+    "blockedTitle": "Les notifications sont bloquées",
+    "blockedText": "Autorise les notifications de Kolo dans les réglages du navigateur ou du système pour recevoir des rappels.",
+    "intro": "Un petit coup de pouce chaque jour pour réviser tes mots.",
+    "enable": "Activer les notifications",
+    "toggle": "Me le rappeler chaque jour",
+    "time": "Heure",
+    "hour": "Heure",
+    "minute": "Minutes",
+    "status": {
+      "blocked": "Bloquées",
+      "enable": "Activer",
+      "unsupported": "Indisponible"
+    },
     "notify": {
       "due": [
         {
@@ -26,5 +77,59 @@
         "Aujourd'hui compte encore : une petite séance suffit."
       ]
     }
+  },
+  "sound": {
+    "title": "Son",
+    "effects": "Effets sonores",
+    "effectsDesc": "Sons pour les réponses, les cartes, les jeux et les récompenses"
+  },
+  "data": {
+    "backup": "Sauvegarde",
+    "export": "Télécharger une sauvegarde",
+    "exportDesc": "Tous tes sets et tes mots dans un fichier .json",
+    "exportButton": "Télécharger",
+    "import": "Restaurer depuis un fichier",
+    "importDesc": "Les nouveaux sets sont ajoutés ; ceux que tu as déjà sont remplacés par la version du fichier",
+    "importButton": "Choisir un fichier",
+    "importNote": "Seuls les fichiers de sauvegarde Kolo (.json) sont pris en charge.",
+    "exportSuccess": "Sauvegarde téléchargée",
+    "exportError": "Impossible de créer la sauvegarde",
+    "importSuccess": {
+      "one": "{n} set restauré",
+      "other": "{n} sets restaurés"
+    },
+    "importError": "Ce fichier n'est pas une sauvegarde Kolo",
+    "noCollections": "Tu n'as pas encore de sets à sauvegarder",
+    "signInToImport": "Connecte-toi pour restaurer des sets"
+  },
+  "account": {
+    "title": "Compte",
+    "delete": "Supprimer le compte",
+    "deleteDesc": "Ton compte, tes sets, ta progression et tes médailles seront supprimés définitivement. Impossible d'annuler.",
+    "confirmTitle": "Supprimer ton compte ?",
+    "confirmMessage": "Ton compte, tous tes sets et ta progression seront supprimés définitivement.",
+    "deleteError": "Impossible de supprimer le compte. Déconnecte-toi, reconnecte-toi et réessaie.",
+    "deleting": "Suppression…",
+    "email": "E-mail",
+    "method": "Connexion",
+    "methods": {
+      "password": "E-mail et mot de passe"
+    },
+    "changePassword": "Changer le mot de passe",
+    "changePasswordDesc": "Nous t'enverrons par e-mail un lien pour choisir un nouveau mot de passe.",
+    "send": "Envoyer le lien",
+    "passwordSent": "E-mail envoyé à {email}",
+    "passwordError": "Impossible d'envoyer l'e-mail. Réessaie un peu plus tard.",
+    "logout": "Se déconnecter",
+    "logoutDesc": "Tes sets et ta progression restent : reconnecte-toi quand tu veux.",
+    "dangerTitle": "Supprimer le compte"
+  },
+  "tour": {
+    "title": "Visite de l'appli",
+    "hint": "Une visite rapide de l'essentiel : sets, entraînement et orbites de la semaine. Elle s'ouvre sur l'écran d'accueil.",
+    "button": "Revoir"
+  },
+  "courses": {
+    "title": "Cours et voix"
   }
 }

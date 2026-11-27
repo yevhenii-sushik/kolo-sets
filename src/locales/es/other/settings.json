@@ -1,5 +1,56 @@
 {
+  "title": "Ajustes",
+  "subtitle": "Cuenta, apariencia, aprendizaje y datos",
+  "groups": {
+    "account": "Cuenta",
+    "appearance": "Apariencia",
+    "learning": "Aprendizaje",
+    "notifications": "Notificaciones",
+    "data": "Datos",
+    "help": "Ayuda"
+  },
+  "appearance": {
+    "title": "Apariencia",
+    "light": "Claro",
+    "system": "Sistema",
+    "dark": "Oscuro",
+    "theme": "Tema",
+    "auto": "Automático"
+  },
+  "language": {
+    "title": "Idioma de la app",
+    "hint": "Solo cambia el idioma de la app: tus sets de palabras se quedan como están."
+  },
+  "goal": {
+    "title": "Meta del día",
+    "hint": "Cuántas tarjetas quieres repasar cada día. El anillo de la meta en la pantalla de inicio se llena hasta este número.",
+    "custom": "Tu número",
+    "unit": {
+      "one": "tarjeta al día",
+      "other": "tarjetas al día"
+    },
+    "value": {
+      "one": "{n} tarjeta",
+      "other": "{n} tarjetas"
+    },
+    "done": "Listo"
+  },
   "reminder": {
+    "title": "Recordatorio diario",
+    "unsupported": "Tu navegador no admite notificaciones.",
+    "blockedTitle": "Las notificaciones están bloqueadas",
+    "blockedText": "Permite las notificaciones de Kolo en los ajustes del navegador o del sistema para recibir recordatorios.",
+    "intro": "Un pequeño aviso diario para repasar tus palabras.",
+    "enable": "Activar notificaciones",
+    "toggle": "Recordármelo cada día",
+    "time": "Hora",
+    "hour": "Hora",
+    "minute": "Minutos",
+    "status": {
+      "blocked": "Bloqueadas",
+      "enable": "Activar",
+      "unsupported": "No disponible"
+    },
     "notify": {
       "due": [
         {
@@ -26,5 +77,59 @@
         "Hoy todavía cuenta: basta con una sesión corta."
       ]
     }
+  },
+  "sound": {
+    "title": "Sonido",
+    "effects": "Efectos de sonido",
+    "effectsDesc": "Sonidos para respuestas, tarjetas, juegos y recompensas"
+  },
+  "data": {
+    "backup": "Copia de seguridad",
+    "export": "Descargar una copia de seguridad",
+    "exportDesc": "Todos tus sets y palabras en un archivo .json",
+    "exportButton": "Descargar",
+    "import": "Restaurar desde un archivo",
+    "importDesc": "Los sets nuevos se añaden; los que ya tienes se sustituyen por la versión del archivo",
+    "importButton": "Elegir archivo",
+    "importNote": "Solo se admiten copias de seguridad de Kolo (.json).",
+    "exportSuccess": "Copia de seguridad descargada",
+    "exportError": "No se pudo crear la copia de seguridad",
+    "importSuccess": {
+      "one": "{n} set restaurado",
+      "other": "{n} sets restaurados"
+    },
+    "importError": "Este archivo no es una copia de seguridad de Kolo",
+    "noCollections": "Aún no tienes sets que guardar",
+    "signInToImport": "Inicia sesión para restaurar sets"
+  },
+  "account": {
+    "title": "Cuenta",
+    "delete": "Eliminar cuenta",
+    "deleteDesc": "Tu cuenta, tus sets, tu progreso y tus medallas se eliminarán para siempre. No se puede deshacer.",
+    "confirmTitle": "¿Eliminar tu cuenta?",
+    "confirmMessage": "Tu cuenta, todos tus sets y tu progreso se eliminarán para siempre.",
+    "deleteError": "No se pudo eliminar la cuenta. Cierra sesión, vuelve a entrar e inténtalo de nuevo.",
+    "deleting": "Eliminando…",
+    "email": "Correo",
+    "method": "Inicio de sesión",
+    "methods": {
+      "password": "Correo y contraseña"
+    },
+    "changePassword": "Cambiar contraseña",
+    "changePasswordDesc": "Te enviaremos por correo un enlace para crear una contraseña nueva.",
+    "send": "Enviar enlace",
+    "passwordSent": "Correo enviado a {email}",
+    "passwordError": "No se pudo enviar el correo. Inténtalo de nuevo un poco más tarde.",
+    "logout": "Cerrar sesión",
+    "logoutDesc": "Tus sets y tu progreso se quedan: vuelve a entrar cuando quieras.",
+    "dangerTitle": "Eliminar cuenta"
+  },
+  "tour": {
+    "title": "Recorrido por la app",
+    "hint": "Un recorrido rápido por lo básico: sets, práctica y órbitas semanales. Se abre en la pantalla de inicio.",
+    "button": "Ver de nuevo"
+  },
+  "courses": {
+    "title": "Cursos y voces"
   }
 }

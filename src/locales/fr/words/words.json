@@ -1,5 +1,20 @@
 {
+  "title": "Ma bibliothèque",
+  "addDeck": "Créer un set",
+  "createModal": {
+    "title": "Nouveau set",
+    "nameLabel": "Nom du set",
+    "namePlaceholder": "p. ex. Phrases de voyage",
+    "languageLabel": "Langue apprise",
+    "create": "Créer"
+  },
   "collectionCard": {
+    "cards": "cartes",
+    "lastStudied": "Dernier entraînement",
+    "edit": "Modifier",
+    "study": "S'entraîner",
+    "masteryLevel": "Niveau de maîtrise",
+    "dueToday": "à revoir aujourd'hui",
     "confirmDelete": "Le set et tous ses mots seront supprimés définitivement. Impossible d'annuler.",
     "modal": {
       "chooseMode": "Choisis un mode",
@@ -17,9 +32,92 @@
     },
     "words": {
       "one": "{n} mot",
-      "many": "{n} mots",
-      "other": "{n} mots"
-    }
+      "other": "{n} mots",
+      "many": "{n} mots"
+    },
+    "favoriteAdd": "Ajouter aux favoris",
+    "favoriteRemove": "Retirer des favoris",
+    "actions": "Actions du set",
+    "moveTo": "Déplacer dans un dossier",
+    "noFolder": "Sans dossier"
+  },
+  "editCollection": {
+    "addCard": "Ajouter un mot",
+    "study": "S'entraîner",
+    "import": "Importer",
+    "export": "Exporter",
+    "rename": "Renommer",
+    "wordList": "Liste des mots",
+    "noCards": "Pas encore de mots dans ce set",
+    "noCardsDesc": "Un mot et sa traduction suffisent pour commencer. Tu as déjà une liste ? Colle-la d'un coup avec « Importer ».",
+    "exportSuccess": "Set exporté",
+    "exportError": "Échec de l'export",
+    "wordsAdded": {
+      "one": "{n} mot ajouté",
+      "other": "{n} mots ajoutés",
+      "many": "{n} mots ajoutés"
+    },
+    "modals": {
+      "editWord": "Modifier le mot",
+      "newWord": "Nouveau mot",
+      "addWord": "Ajouter",
+      "done": "Terminé",
+      "duplicateHere": "Déjà dans ce set : {word} — {translation}",
+      "duplicateIn": "Déjà dans le set « {set} » : {word} — {translation}",
+      "renameTitle": "Nouveau nom du set",
+      "deleteConfirm": "Supprimer ce mot ?",
+      "importTitle": "Importer des mots",
+      "importSubtitle": "Colle une liste entière : un mot par ligne",
+      "formatPattern": "mot; traduction; explication; exemple; nature du mot",
+      "formatHint": "Sépare les champs par une tabulation (c'est ainsi que se collent les listes d'Excel, Google Sheets et Quizlet), un point-virgule, un tiret ou « = ». L'explication, l'exemple et la nature du mot s'écrivent en {lang}.",
+      "copyPrompt": "Copier le prompt IA",
+      "promptCopied": "Copié",
+      "importFound": {
+        "one": "{n} mot reconnu",
+        "other": "{n} mots reconnus",
+        "many": "{n} mots reconnus"
+      },
+      "importSkipped": {
+        "one": "{n} ligne non reconnue",
+        "other": "{n} lignes non reconnues",
+        "many": "{n} lignes non reconnues"
+      },
+      "importDuplicates": {
+        "one": "{n} déjà dans le set",
+        "other": "{n} déjà dans le set",
+        "many": "{n} déjà dans le set"
+      },
+      "importNothing": "Aucun mot trouvé pour l'instant. Chaque ligne doit contenir un mot et sa traduction, séparés par une tabulation, un point-virgule, un tiret ou « = ».",
+      "importAllDuplicates": "Tous les mots de cette liste sont déjà dans le set.",
+      "importPreview": "Voici comment les premières lignes ont été lues",
+      "importSkippedLines": "Non reconnues",
+      "importLine": "ligne {n}",
+      "importButton": {
+        "one": "Ajouter {n} mot",
+        "other": "Ajouter {n} mots",
+        "many": "Ajouter {n} mots"
+      },
+      "importButtonIdle": "Ajouter des mots",
+      "aiPrompt": "Crée une liste de mots à apprendre au format CSV (séparateur point-virgule \";\").\nIMPORTANT : le mot et la traduction comme d'habitude, mais l'EXPLICATION, l'EXEMPLE et la NATURE DU MOT doivent être strictement dans la langue apprise ({lang}).\n\nFormat de ligne : mot; traduction; explication (dans la langue apprise); exemple (dans la langue apprise); nature du mot (dans la langue apprise).\n\nVoici la liste de mots : [COLLE TES MOTS ICI]"
+    },
+    "fields": {
+      "word": "Mot",
+      "wordPlaceholder": "p. ex. {word}",
+      "translation": "Traduction",
+      "translationPlaceholder": "p. ex. {translation}",
+      "partOfSpeech": "Nature du mot",
+      "partOfSpeechNone": "Non choisie",
+      "explanation": "Explication (en {lang})",
+      "explanationPlaceholder": "Courte, avec tes propres mots",
+      "example": "Phrase d'exemple",
+      "examplePlaceholder": "Une phrase avec ce mot"
+    },
+    "reviews": {
+      "one": "{n} révision",
+      "other": "{n} révisions"
+    },
+    "accuracy": "{n} % de bonnes réponses",
+    "scrollTop": "Remonter en haut"
   },
   "share": {
     "action": "Partager",
@@ -243,6 +341,55 @@
       "sec": "s"
     }
   },
+  "empty": {
+    "title": "Orbite vide. Pour l'instant.",
+    "description": "Toute langue commence par un mot. Crée un set et lance tes premiers mots en orbite, ou colle toute une liste d'un coup.",
+    "button": "Créer le premier set",
+    "ready": "Choisir un set prêt"
+  },
+  "toast": {
+    "deleted": "Set « {name} » supprimé"
+  },
+  "library": {
+    "newFolder": "Nouveau dossier",
+    "folders": "Dossiers",
+    "favorites": "Favoris",
+    "all": "Autres sets",
+    "back": "Retour à tous les sets",
+    "setsCount": {
+      "one": "{n} set",
+      "other": "{n} sets",
+      "many": "{n} sets"
+    },
+    "emptyFolder": "Ce dossier est vide. Crée un set ici même, ou ouvre le menu d'un set et choisis « Déplacer dans un dossier ».",
+    "drag": "Fais glisser pour réordonner ou pour déplacer dans un dossier",
+    "deleteFolder": "Supprimer le dossier",
+    "editFolder": "Modifier le dossier",
+    "deleteFolderTitle": "Supprimer le dossier « {name} » ?",
+    "deleteFolderText": "Les sets qu'il contient ne seront pas supprimés : ils reviendront dans ta liste principale.",
+    "dropOut": "Dépose ici pour sortir le set du dossier",
+    "movedTo": "Déplacé dans « {name} »",
+    "movedOut": "Sorti du dossier"
+  },
+  "folderModal": {
+    "title": "Nouveau dossier",
+    "name": "Nom",
+    "placeholder": "p. ex. Voyage",
+    "color": "Couleur",
+    "create": "Créer le dossier",
+    "editTitle": "Modifier le dossier",
+    "save": "Enregistrer",
+    "colors": {
+      "orange": "Orange",
+      "blue": "Bleu",
+      "green": "Vert",
+      "purple": "Violet",
+      "amber": "Ambre",
+      "pink": "Rose",
+      "teal": "Bleu canard",
+      "indigo": "Indigo"
+    }
+  },
   "session": {
     "showAnswer": "Afficher la réponse",
     "score": "Score",
@@ -412,21 +559,6 @@
       "selfNote": "Les mots que tu as notés toi-même sur une carte ne comptent pas dans « Du premier coup »."
     }
   },
-  "empty": {
-    "title": "Orbite vide. Pour l'instant.",
-    "description": "Toute langue commence par un mot. Crée un set et lance tes premiers mots en orbite, ou colle toute une liste d'un coup.",
-    "button": "Créer le premier set",
-    "ready": "Choisir un set prêt"
-  },
-  "library": {
-    "favorites": "Favoris",
-    "all": "Autres sets",
-    "setsCount": {
-      "one": "{n} set",
-      "many": "{n} sets",
-      "other": "{n} sets"
-    }
-  },
   "tabs": {
     "label": "Sets",
     "my": "Mes sets",
@@ -482,70 +614,5 @@
       "sent": "Merci ! Nous le corrigerons dans la prochaine version du set.",
       "error": "Impossible d’envoyer. Vérifie ta connexion et réessaie."
     }
-  },
-  "editCollection": {
-    "wordsAdded": {
-      "one": "{n} mot ajouté",
-      "many": "{n} mots ajoutés",
-      "other": "{n} mots ajoutés"
-    },
-    "modals": {
-      "editWord": "Modifier le mot",
-      "newWord": "Nouveau mot",
-      "addWord": "Ajouter",
-      "done": "Terminé",
-      "duplicateHere": "Déjà dans ce set : {word} — {translation}",
-      "duplicateIn": "Déjà dans le set « {set} » : {word} — {translation}",
-      "renameTitle": "Nouveau nom du set",
-      "deleteConfirm": "Supprimer ce mot ?",
-      "importTitle": "Importer des mots",
-      "importSubtitle": "Colle une liste entière : un mot par ligne",
-      "formatPattern": "mot; traduction; explication; exemple; nature du mot",
-      "formatHint": "Sépare les champs par une tabulation (c'est ainsi que se collent les listes d'Excel, Google Sheets et Quizlet), un point-virgule, un tiret ou « = ». L'explication, l'exemple et la nature du mot s'écrivent en {lang}.",
-      "copyPrompt": "Copier le prompt IA",
-      "promptCopied": "Copié",
-      "importFound": {
-        "one": "{n} mot reconnu",
-        "many": "{n} mots reconnus",
-        "other": "{n} mots reconnus"
-      },
-      "importSkipped": {
-        "one": "{n} ligne non reconnue",
-        "many": "{n} lignes non reconnues",
-        "other": "{n} lignes non reconnues"
-      },
-      "importDuplicates": {
-        "one": "{n} déjà dans le set",
-        "many": "{n} déjà dans le set",
-        "other": "{n} déjà dans le set"
-      },
-      "importNothing": "Aucun mot trouvé pour l'instant. Chaque ligne doit contenir un mot et sa traduction, séparés par une tabulation, un point-virgule, un tiret ou « = ».",
-      "importAllDuplicates": "Tous les mots de cette liste sont déjà dans le set.",
-      "importPreview": "Voici comment les premières lignes ont été lues",
-      "importSkippedLines": "Non reconnues",
-      "importLine": "ligne {n}",
-      "importButton": {
-        "one": "Ajouter {n} mot",
-        "many": "Ajouter {n} mots",
-        "other": "Ajouter {n} mots"
-      },
-      "importButtonIdle": "Ajouter des mots",
-      "aiPrompt": "Crée une liste de mots à apprendre au format CSV (séparateur point-virgule \";\").\nIMPORTANT : le mot et la traduction comme d'habitude, mais l'EXPLICATION, l'EXEMPLE et la NATURE DU MOT doivent être strictement dans la langue apprise ({lang}).\n\nFormat de ligne : mot; traduction; explication (dans la langue apprise); exemple (dans la langue apprise); nature du mot (dans la langue apprise).\n\nVoici la liste de mots : [COLLE TES MOTS ICI]"
-    },
-    "fields": {
-      "word": "Mot",
-      "wordPlaceholder": "p. ex. {word}",
-      "translation": "Traduction",
-      "translationPlaceholder": "p. ex. {translation}",
-      "partOfSpeech": "Nature du mot",
-      "partOfSpeechNone": "Non choisie",
-      "explanation": "Explication (en {lang})",
-      "explanationPlaceholder": "Courte, avec tes propres mots",
-      "example": "Phrase d'exemple",
-      "examplePlaceholder": "Une phrase avec ce mot"
-    }
-  },
-  "toast": {
-    "deleted": "Set « {name} » supprimé"
   }
 }

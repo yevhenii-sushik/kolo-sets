@@ -1,5 +1,20 @@
 {
+  "title": "Mi biblioteca",
+  "addDeck": "Crear set",
+  "createModal": {
+    "title": "Nuevo set",
+    "nameLabel": "Nombre del set",
+    "namePlaceholder": "p. ej., Frases de viaje",
+    "languageLabel": "Idioma que aprendes",
+    "create": "Crear"
+  },
   "collectionCard": {
+    "cards": "tarjetas",
+    "lastStudied": "Última práctica",
+    "edit": "Editar",
+    "study": "Practicar",
+    "masteryLevel": "Nivel de dominio",
+    "dueToday": "para hoy",
     "confirmDelete": "El set y todas sus palabras se eliminarán para siempre. No se puede deshacer.",
     "modal": {
       "chooseMode": "Elige un modo",
@@ -17,9 +32,92 @@
     },
     "words": {
       "one": "{n} palabra",
-      "many": "{n} palabras",
-      "other": "{n} palabras"
-    }
+      "other": "{n} palabras",
+      "many": "{n} palabras"
+    },
+    "favoriteAdd": "Añadir a favoritos",
+    "favoriteRemove": "Quitar de favoritos",
+    "actions": "Acciones del set",
+    "moveTo": "Mover a una carpeta",
+    "noFolder": "Sin carpeta"
+  },
+  "editCollection": {
+    "addCard": "Añadir palabra",
+    "study": "Practicar",
+    "import": "Importar",
+    "export": "Exportar",
+    "rename": "Cambiar nombre",
+    "wordList": "Lista de palabras",
+    "noCards": "Este set aún no tiene palabras",
+    "noCardsDesc": "Para empezar basta con una palabra y su traducción. ¿Ya tienes una lista? Pégala entera con «Importar».",
+    "exportSuccess": "Set exportado",
+    "exportError": "No se pudo exportar",
+    "wordsAdded": {
+      "one": "{n} palabra añadida",
+      "other": "{n} palabras añadidas",
+      "many": "{n} palabras añadidas"
+    },
+    "modals": {
+      "editWord": "Editar palabra",
+      "newWord": "Nueva palabra",
+      "addWord": "Añadir",
+      "done": "Listo",
+      "duplicateHere": "Ya está en este set: {word} — {translation}",
+      "duplicateIn": "Ya está en el set «{set}»: {word} — {translation}",
+      "renameTitle": "Nuevo nombre del set",
+      "deleteConfirm": "¿Eliminar esta palabra?",
+      "importTitle": "Importar palabras",
+      "importSubtitle": "Pega una lista entera: una palabra por línea",
+      "formatPattern": "palabra; traducción; explicación; ejemplo; categoría gramatical",
+      "formatHint": "Separa los campos con un tabulador (así se pegan las listas de Excel, Google Sheets y Quizlet), punto y coma, guion o «=». La explicación, el ejemplo y la categoría gramatical van en {lang}.",
+      "copyPrompt": "Copiar prompt para IA",
+      "promptCopied": "Copiado",
+      "importFound": {
+        "one": "{n} palabra reconocida",
+        "other": "{n} palabras reconocidas",
+        "many": "{n} palabras reconocidas"
+      },
+      "importSkipped": {
+        "one": "{n} línea sin reconocer",
+        "other": "{n} líneas sin reconocer",
+        "many": "{n} líneas sin reconocer"
+      },
+      "importDuplicates": {
+        "one": "{n} ya está en el set",
+        "other": "{n} ya están en el set",
+        "many": "{n} ya están en el set"
+      },
+      "importNothing": "Todavía no encontramos ninguna palabra. Cada línea necesita una palabra y su traducción, separadas por tabulador, punto y coma, guion o «=».",
+      "importAllDuplicates": "Todas las palabras de esta lista ya están en el set.",
+      "importPreview": "Así leímos las primeras líneas",
+      "importSkippedLines": "Sin reconocer",
+      "importLine": "línea {n}",
+      "importButton": {
+        "one": "Añadir {n} palabra",
+        "other": "Añadir {n} palabras",
+        "many": "Añadir {n} palabras"
+      },
+      "importButtonIdle": "Añadir palabras",
+      "aiPrompt": "Crea una lista de palabras para estudiar en formato CSV (separador punto y coma \";\").\nIMPORTANTE: la palabra y la traducción, como siempre, pero la EXPLICACIÓN, el EJEMPLO y la CATEGORÍA GRAMATICAL deben estar estrictamente en el idioma que se aprende ({lang}).\n\nFormato de cada línea: palabra; traducción; explicación (en el idioma que se aprende); ejemplo (en el idioma que se aprende); categoría gramatical (en el idioma que se aprende).\n\nEsta es la lista de palabras: [PEGA AQUÍ TUS PALABRAS]"
+    },
+    "fields": {
+      "word": "Palabra",
+      "wordPlaceholder": "p. ej., {word}",
+      "translation": "Traducción",
+      "translationPlaceholder": "p. ej., {translation}",
+      "partOfSpeech": "Categoría gramatical",
+      "partOfSpeechNone": "Sin elegir",
+      "explanation": "Explicación (en {lang})",
+      "explanationPlaceholder": "Breve, con tus propias palabras",
+      "example": "Frase de ejemplo",
+      "examplePlaceholder": "Una frase con esta palabra"
+    },
+    "reviews": {
+      "one": "{n} repaso",
+      "other": "{n} repasos"
+    },
+    "accuracy": "{n} % de aciertos",
+    "scrollTop": "Volver arriba"
   },
   "share": {
     "action": "Compartir",
@@ -243,6 +341,55 @@
       "sec": "s"
     }
   },
+  "empty": {
+    "title": "Órbita vacía. Por ahora.",
+    "description": "Todo idioma empieza con una palabra. Crea un set y lanza tus primeras palabras a la órbita, o pega una lista entera de una vez.",
+    "button": "Crear el primer set",
+    "ready": "Elegir un set listo"
+  },
+  "toast": {
+    "deleted": "Set «{name}» eliminado"
+  },
+  "library": {
+    "newFolder": "Nueva carpeta",
+    "folders": "Carpetas",
+    "favorites": "Favoritos",
+    "all": "Otros sets",
+    "back": "Volver a todos los sets",
+    "setsCount": {
+      "one": "{n} set",
+      "other": "{n} sets",
+      "many": "{n} sets"
+    },
+    "emptyFolder": "Esta carpeta está vacía. Crea un set aquí mismo, o abre el menú de un set y elige «Mover a una carpeta».",
+    "drag": "Arrastra para reordenar o para mover a una carpeta",
+    "deleteFolder": "Eliminar carpeta",
+    "editFolder": "Editar carpeta",
+    "deleteFolderTitle": "¿Eliminar la carpeta «{name}»?",
+    "deleteFolderText": "Los sets que contiene no se eliminarán: volverán a tu lista principal.",
+    "dropOut": "Suelta aquí para sacar el set de la carpeta",
+    "movedTo": "Movido a «{name}»",
+    "movedOut": "Sacado de la carpeta"
+  },
+  "folderModal": {
+    "title": "Nueva carpeta",
+    "name": "Nombre",
+    "placeholder": "p. ej., Viajes",
+    "color": "Color",
+    "create": "Crear carpeta",
+    "editTitle": "Editar carpeta",
+    "save": "Guardar",
+    "colors": {
+      "orange": "Naranja",
+      "blue": "Azul",
+      "green": "Verde",
+      "purple": "Morado",
+      "amber": "Ámbar",
+      "pink": "Rosa",
+      "teal": "Verde azulado",
+      "indigo": "Índigo"
+    }
+  },
   "session": {
     "showAnswer": "Mostrar respuesta",
     "score": "Puntos",
@@ -412,21 +559,6 @@
       "selfNote": "Las palabras que valoraste tú en una tarjeta no cuentan para «A la primera»."
     }
   },
-  "empty": {
-    "title": "Órbita vacía. Por ahora.",
-    "description": "Todo idioma empieza con una palabra. Crea un set y lanza tus primeras palabras a la órbita, o pega una lista entera de una vez.",
-    "button": "Crear el primer set",
-    "ready": "Elegir un set listo"
-  },
-  "library": {
-    "favorites": "Favoritos",
-    "all": "Otros sets",
-    "setsCount": {
-      "one": "{n} set",
-      "many": "{n} sets",
-      "other": "{n} sets"
-    }
-  },
   "tabs": {
     "label": "Sets",
     "my": "Mis sets",
@@ -482,70 +614,5 @@
       "sent": "¡Gracias! Lo corregiremos en la próxima versión del set.",
       "error": "No se pudo enviar. Revisa tu conexión e inténtalo de nuevo."
     }
-  },
-  "editCollection": {
-    "wordsAdded": {
-      "one": "{n} palabra añadida",
-      "many": "{n} palabras añadidas",
-      "other": "{n} palabras añadidas"
-    },
-    "modals": {
-      "editWord": "Editar palabra",
-      "newWord": "Nueva palabra",
-      "addWord": "Añadir",
-      "done": "Listo",
-      "duplicateHere": "Ya está en este set: {word} — {translation}",
-      "duplicateIn": "Ya está en el set «{set}»: {word} — {translation}",
-      "renameTitle": "Nuevo nombre del set",
-      "deleteConfirm": "¿Eliminar esta palabra?",
-      "importTitle": "Importar palabras",
-      "importSubtitle": "Pega una lista entera: una palabra por línea",
-      "formatPattern": "palabra; traducción; explicación; ejemplo; categoría gramatical",
-      "formatHint": "Separa los campos con un tabulador (así se pegan las listas de Excel, Google Sheets y Quizlet), punto y coma, guion o «=». La explicación, el ejemplo y la categoría gramatical van en {lang}.",
-      "copyPrompt": "Copiar prompt para IA",
-      "promptCopied": "Copiado",
-      "importFound": {
-        "one": "{n} palabra reconocida",
-        "many": "{n} palabras reconocidas",
-        "other": "{n} palabras reconocidas"
-      },
-      "importSkipped": {
-        "one": "{n} línea sin reconocer",
-        "many": "{n} líneas sin reconocer",
-        "other": "{n} líneas sin reconocer"
-      },
-      "importDuplicates": {
-        "one": "{n} ya está en el set",
-        "many": "{n} ya están en el set",
-        "other": "{n} ya están en el set"
-      },
-      "importNothing": "Todavía no encontramos ninguna palabra. Cada línea necesita una palabra y su traducción, separadas por tabulador, punto y coma, guion o «=».",
-      "importAllDuplicates": "Todas las palabras de esta lista ya están en el set.",
-      "importPreview": "Así leímos las primeras líneas",
-      "importSkippedLines": "Sin reconocer",
-      "importLine": "línea {n}",
-      "importButton": {
-        "one": "Añadir {n} palabra",
-        "many": "Añadir {n} palabras",
-        "other": "Añadir {n} palabras"
-      },
-      "importButtonIdle": "Añadir palabras",
-      "aiPrompt": "Crea una lista de palabras para estudiar en formato CSV (separador punto y coma \";\").\nIMPORTANTE: la palabra y la traducción, como siempre, pero la EXPLICACIÓN, el EJEMPLO y la CATEGORÍA GRAMATICAL deben estar estrictamente en el idioma que se aprende ({lang}).\n\nFormato de cada línea: palabra; traducción; explicación (en el idioma que se aprende); ejemplo (en el idioma que se aprende); categoría gramatical (en el idioma que se aprende).\n\nEsta es la lista de palabras: [PEGA AQUÍ TUS PALABRAS]"
-    },
-    "fields": {
-      "word": "Palabra",
-      "wordPlaceholder": "p. ej., {word}",
-      "translation": "Traducción",
-      "translationPlaceholder": "p. ej., {translation}",
-      "partOfSpeech": "Categoría gramatical",
-      "partOfSpeechNone": "Sin elegir",
-      "explanation": "Explicación (en {lang})",
-      "explanationPlaceholder": "Breve, con tus propias palabras",
-      "example": "Frase de ejemplo",
-      "examplePlaceholder": "Una frase con esta palabra"
-    }
-  },
-  "toast": {
-    "deleted": "Set «{name}» eliminado"
   }
 }

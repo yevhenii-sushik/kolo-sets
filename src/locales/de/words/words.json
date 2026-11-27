@@ -1,5 +1,20 @@
 {
+  "title": "Meine Bibliothek",
+  "addDeck": "Set erstellen",
+  "createModal": {
+    "title": "Neues Set",
+    "nameLabel": "Name des Sets",
+    "namePlaceholder": "z. B. Reisesätze",
+    "languageLabel": "Lernsprache",
+    "create": "Erstellen"
+  },
   "collectionCard": {
+    "cards": "Karten",
+    "lastStudied": "Zuletzt geübt",
+    "edit": "Bearbeiten",
+    "study": "Üben",
+    "masteryLevel": "Lernstand",
+    "dueToday": "heute fällig",
     "confirmDelete": "Das Set und alle Wörter darin werden endgültig gelöscht. Das lässt sich nicht rückgängig machen.",
     "modal": {
       "chooseMode": "Modus wählen",
@@ -18,7 +33,85 @@
     "words": {
       "one": "{n} Wort",
       "other": "{n} Wörter"
-    }
+    },
+    "favoriteAdd": "Zu Favoriten hinzufügen",
+    "favoriteRemove": "Aus Favoriten entfernen",
+    "actions": "Aktionen für das Set",
+    "moveTo": "In Ordner verschieben",
+    "noFolder": "Kein Ordner"
+  },
+  "editCollection": {
+    "addCard": "Wort hinzufügen",
+    "study": "Üben",
+    "import": "Importieren",
+    "export": "Exportieren",
+    "rename": "Umbenennen",
+    "wordList": "Wortliste",
+    "noCards": "Noch keine Wörter in diesem Set",
+    "noCardsDesc": "Ein Wort und seine Übersetzung reichen für den Anfang. Du hast schon eine Liste? Füge sie mit „Importieren“ komplett ein.",
+    "exportSuccess": "Set exportiert",
+    "exportError": "Export fehlgeschlagen",
+    "wordsAdded": {
+      "one": "{n} Wort hinzugefügt",
+      "other": "{n} Wörter hinzugefügt"
+    },
+    "modals": {
+      "editWord": "Wort bearbeiten",
+      "newWord": "Neues Wort",
+      "addWord": "Hinzufügen",
+      "done": "Fertig",
+      "duplicateHere": "Schon in diesem Set: {word} – {translation}",
+      "duplicateIn": "Schon im Set „{set}“: {word} – {translation}",
+      "renameTitle": "Neuer Name des Sets",
+      "deleteConfirm": "Dieses Wort löschen?",
+      "importTitle": "Wörter importieren",
+      "importSubtitle": "Füge eine ganze Liste ein – ein Wort pro Zeile",
+      "formatPattern": "Wort; Übersetzung; Erklärung; Beispiel; Wortart",
+      "formatHint": "Trenne die Felder mit Tab (so kommen Listen aus Excel, Google Tabellen und Quizlet), Semikolon, Gedankenstrich oder „=“. Erklärung, Beispiel und Wortart schreibst du auf {lang}.",
+      "copyPrompt": "KI-Prompt kopieren",
+      "promptCopied": "Kopiert",
+      "importFound": {
+        "one": "{n} Wort erkannt",
+        "other": "{n} Wörter erkannt"
+      },
+      "importSkipped": {
+        "one": "{n} Zeile nicht erkannt",
+        "other": "{n} Zeilen nicht erkannt"
+      },
+      "importDuplicates": {
+        "one": "{n} schon im Set",
+        "other": "{n} schon im Set"
+      },
+      "importNothing": "Noch kein Wort gefunden. Jede Zeile braucht ein Wort und seine Übersetzung, getrennt durch Tab, Semikolon, Gedankenstrich oder „=“.",
+      "importAllDuplicates": "Alle Wörter dieser Liste sind schon im Set.",
+      "importPreview": "So wurden die ersten Zeilen gelesen",
+      "importSkippedLines": "Nicht erkannt",
+      "importLine": "Zeile {n}",
+      "importButton": {
+        "one": "{n} Wort hinzufügen",
+        "other": "{n} Wörter hinzufügen"
+      },
+      "importButtonIdle": "Wörter hinzufügen",
+      "aiPrompt": "Erstelle eine Wortliste zum Lernen im CSV-Format (Trennzeichen Semikolon \";\").\nWICHTIG: Wort und Übersetzung wie gewohnt, aber ERKLÄRUNG, BEISPIEL und WORTART müssen streng in der Lernsprache sein ({lang}).\n\nZeilenformat: Wort; Übersetzung; Erklärung (in der Lernsprache); Beispiel (in der Lernsprache); Wortart (in der Lernsprache).\n\nHier ist die Wortliste: [FÜGE HIER DEINE WÖRTER EIN]"
+    },
+    "fields": {
+      "word": "Wort",
+      "wordPlaceholder": "z. B. {word}",
+      "translation": "Übersetzung",
+      "translationPlaceholder": "z. B. {translation}",
+      "partOfSpeech": "Wortart",
+      "partOfSpeechNone": "Nicht gewählt",
+      "explanation": "Erklärung (auf {lang})",
+      "explanationPlaceholder": "Kurz, in eigenen Worten",
+      "example": "Beispielsatz",
+      "examplePlaceholder": "Ein Satz mit diesem Wort"
+    },
+    "reviews": {
+      "one": "{n} Wiederholung",
+      "other": "{n} Wiederholungen"
+    },
+    "accuracy": "{n} % richtig",
+    "scrollTop": "Nach oben"
   },
   "share": {
     "action": "Teilen",
@@ -242,6 +335,54 @@
       "sec": "Sek."
     }
   },
+  "empty": {
+    "title": "Leerer Orbit. Noch.",
+    "description": "Jede Sprache beginnt mit einem Wort. Erstell ein Set und schick die ersten Wörter in den Orbit – oder füg gleich eine ganze Liste ein.",
+    "button": "Erstes Set erstellen",
+    "ready": "Fertiges Set wählen"
+  },
+  "toast": {
+    "deleted": "Set „{name}“ gelöscht"
+  },
+  "library": {
+    "newFolder": "Neuer Ordner",
+    "folders": "Ordner",
+    "favorites": "Favoriten",
+    "all": "Weitere Sets",
+    "back": "Zurück zu allen Sets",
+    "setsCount": {
+      "one": "{n} Set",
+      "other": "{n} Sets"
+    },
+    "emptyFolder": "Dieser Ordner ist leer. Erstelle hier ein Set oder öffne das Menü eines Sets und wähle „In Ordner verschieben“.",
+    "drag": "Ziehen, um die Reihenfolge zu ändern oder in einen Ordner zu verschieben",
+    "deleteFolder": "Ordner löschen",
+    "editFolder": "Ordner bearbeiten",
+    "deleteFolderTitle": "Ordner „{name}“ löschen?",
+    "deleteFolderText": "Die Sets darin werden nicht gelöscht – sie kommen zurück in deine Hauptliste.",
+    "dropOut": "Hier ablegen, um das Set aus dem Ordner zu nehmen",
+    "movedTo": "Nach „{name}“ verschoben",
+    "movedOut": "Aus dem Ordner genommen"
+  },
+  "folderModal": {
+    "title": "Neuer Ordner",
+    "name": "Name",
+    "placeholder": "z. B. Reisen",
+    "color": "Farbe",
+    "create": "Ordner erstellen",
+    "editTitle": "Ordner bearbeiten",
+    "save": "Speichern",
+    "colors": {
+      "orange": "Orange",
+      "blue": "Blau",
+      "green": "Grün",
+      "purple": "Lila",
+      "amber": "Bernstein",
+      "pink": "Rosa",
+      "teal": "Petrol",
+      "indigo": "Indigo"
+    }
+  },
   "session": {
     "showAnswer": "Antwort zeigen",
     "score": "Punkte",
@@ -411,20 +552,6 @@
       "selfNote": "Wörter, die du auf einer Karteikarte selbst bewertet hast, zählen nicht zu „Beim ersten Versuch“."
     }
   },
-  "empty": {
-    "title": "Leerer Orbit. Noch.",
-    "description": "Jede Sprache beginnt mit einem Wort. Erstell ein Set und schick die ersten Wörter in den Orbit – oder füg gleich eine ganze Liste ein.",
-    "button": "Erstes Set erstellen",
-    "ready": "Fertiges Set wählen"
-  },
-  "library": {
-    "favorites": "Favoriten",
-    "all": "Weitere Sets",
-    "setsCount": {
-      "one": "{n} Set",
-      "other": "{n} Sets"
-    }
-  },
   "tabs": {
     "label": "Sets",
     "my": "Meine Sets",
@@ -480,65 +607,5 @@
       "sent": "Danke! Wir korrigieren es in der nächsten Version des Sets.",
       "error": "Senden hat nicht geklappt. Prüf deine Verbindung und versuch es noch mal."
     }
-  },
-  "editCollection": {
-    "wordsAdded": {
-      "one": "{n} Wort hinzugefügt",
-      "other": "{n} Wörter hinzugefügt"
-    },
-    "modals": {
-      "editWord": "Wort bearbeiten",
-      "newWord": "Neues Wort",
-      "addWord": "Hinzufügen",
-      "done": "Fertig",
-      "duplicateHere": "Schon in diesem Set: {word} – {translation}",
-      "duplicateIn": "Schon im Set „{set}“: {word} – {translation}",
-      "renameTitle": "Neuer Name des Sets",
-      "deleteConfirm": "Dieses Wort löschen?",
-      "importTitle": "Wörter importieren",
-      "importSubtitle": "Füge eine ganze Liste ein – ein Wort pro Zeile",
-      "formatPattern": "Wort; Übersetzung; Erklärung; Beispiel; Wortart",
-      "formatHint": "Trenne die Felder mit Tab (so kommen Listen aus Excel, Google Tabellen und Quizlet), Semikolon, Gedankenstrich oder „=“. Erklärung, Beispiel und Wortart schreibst du auf {lang}.",
-      "copyPrompt": "KI-Prompt kopieren",
-      "promptCopied": "Kopiert",
-      "importFound": {
-        "one": "{n} Wort erkannt",
-        "other": "{n} Wörter erkannt"
-      },
-      "importSkipped": {
-        "one": "{n} Zeile nicht erkannt",
-        "other": "{n} Zeilen nicht erkannt"
-      },
-      "importDuplicates": {
-        "one": "{n} schon im Set",
-        "other": "{n} schon im Set"
-      },
-      "importNothing": "Noch kein Wort gefunden. Jede Zeile braucht ein Wort und seine Übersetzung, getrennt durch Tab, Semikolon, Gedankenstrich oder „=“.",
-      "importAllDuplicates": "Alle Wörter dieser Liste sind schon im Set.",
-      "importPreview": "So wurden die ersten Zeilen gelesen",
-      "importSkippedLines": "Nicht erkannt",
-      "importLine": "Zeile {n}",
-      "importButton": {
-        "one": "{n} Wort hinzufügen",
-        "other": "{n} Wörter hinzufügen"
-      },
-      "importButtonIdle": "Wörter hinzufügen",
-      "aiPrompt": "Erstelle eine Wortliste zum Lernen im CSV-Format (Trennzeichen Semikolon \";\").\nWICHTIG: Wort und Übersetzung wie gewohnt, aber ERKLÄRUNG, BEISPIEL und WORTART müssen streng in der Lernsprache sein ({lang}).\n\nZeilenformat: Wort; Übersetzung; Erklärung (in der Lernsprache); Beispiel (in der Lernsprache); Wortart (in der Lernsprache).\n\nHier ist die Wortliste: [FÜGE HIER DEINE WÖRTER EIN]"
-    },
-    "fields": {
-      "word": "Wort",
-      "wordPlaceholder": "z. B. {word}",
-      "translation": "Übersetzung",
-      "translationPlaceholder": "z. B. {translation}",
-      "partOfSpeech": "Wortart",
-      "partOfSpeechNone": "Nicht gewählt",
-      "explanation": "Erklärung (auf {lang})",
-      "explanationPlaceholder": "Kurz, in eigenen Worten",
-      "example": "Beispielsatz",
-      "examplePlaceholder": "Ein Satz mit diesem Wort"
-    }
-  },
-  "toast": {
-    "deleted": "Set „{name}“ gelöscht"
   }
 }
