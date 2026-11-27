@@ -19,18 +19,17 @@ describe("частичный перевод", () => {
     expect(fillFrom(en, { a: 5, nested: "oops" })).toEqual(en);
   });
 
-  it("немецкие флэшкарты и тест — по-немецки, непереведённая часть редактора набора — по-английски", () => {
+  it("переведённое — на языке, непереведённое — по-английски", () => {
     expect(translations.de.words.flashcards.settings.title).toBe("Karteneinstellungen");
     expect(translations.de.words.quiz.settings.title).toBe("Quiz-Einstellungen");
-    // В редакторе набора переведены окна и поля слова (docs/specs/06-audit-fixes.md, шаги 2–3), остальное — ещё нет
     expect(translations.de.words.editCollection.modals.importTitle).toBe("Wörter importieren");
-    expect(translations.de.words.editCollection.fields.word).toBe("Wort");
-    expect(translations.de.words.editCollection.reviews).toEqual(translations.en.words.editCollection.reviews);
-    // Профиль переведён частично: достижения теста по-немецки, остальное — из английского
-    expect(translations.de.profile.achievementsList.speed_demon.name).toBe("Blitzschnell");
-    expect(translations.de.profile.achievementsList.streak_3).toEqual(translations.en.profile.achievementsList.streak_3);
     expect(translations.es.words.flashcards.levels.know).toBe("Lo sé");
-    expect(translations.fr.close).toBe(translations.en.close); // common у французского ещё не переведён
     expect(translations.de.close).toBe("Schließen");
+    expect(translations.fr.close).toBe("Fermer");
+    // Совет дня и ежедневную игру не переводим — обе скрыты флагами (docs/roadmap.md, 2026-11-27),
+    // так что они надёжно проверяют подстановку английского
+    expect(translations.fr.home.tips).toEqual(translations.en.home.tips);
+    expect(translations.de.home.tips).toEqual(translations.en.home.tips);
+    expect(translations.es.game).toEqual(translations.en.game);
   });
 });
