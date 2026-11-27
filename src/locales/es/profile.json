@@ -1,40 +1,126 @@
 {
+  "guestStub": {
+    "title": "Perfil no disponible",
+    "description": "Inicia sesión o crea una cuenta para ver tu progreso y tus estadísticas",
+    "retry": "Reintentar",
+    "toLogin": "Iniciar sesión"
+  },
+  "usernamePlaceholder": "usuario",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "edit": "Editar perfil",
+  "logoutTitle": "Cerrar sesión",
+  "logoutConfirm": "¿Cerrar sesión en Kolo en este dispositivo?",
+  "nameLabel": "Nombre",
+  "usernameLabel": "Nombre de usuario",
+  "usernameHint": "3–20 caracteres: letras latinas, números, _",
+  "changePhoto": "Cambiar foto",
+  "memberSince": "Miembro desde {date}",
+  "team": {
+    "staff": "Equipo Dakuta",
+    "staffHint": "Trabaja en Kolo",
+    "adminHint": "Tiene acceso al panel de administración"
+  },
+  "toast": {
+    "success": "Perfil actualizado",
+    "error": "No se pudo guardar tu perfil. Inténtalo de nuevo"
+  },
+  "errors": {
+    "usernameRequired": "Elige un nombre de usuario: es obligatorio",
+    "usernameInvalid": "Nombre de usuario: 3–20 caracteres (letras latinas, números o _)",
+    "usernameTaken": "Este nombre de usuario ya está en uso",
+    "avatarType": "Elige un archivo de imagen",
+    "avatarSize": "El archivo es demasiado grande (máx. 8 MB)",
+    "avatarDecode": "No se pudo procesar la imagen. Prueba con JPEG o PNG.",
+    "avatarUnsupported": "Tu navegador no puede procesar imágenes",
+    "avatarCompress": "No se pudo comprimir la imagen",
+    "avatarGeneric": "No se pudo subir la foto. Inténtalo de nuevo"
+  },
+  "legacyFlames": {
+    "name": "Llamas",
+    "description": "Tu récord de días seguidos antes de las órbitas: {days}."
+  },
+  "tabs": {
+    "medals": "Medallas",
+    "stats": "Estadísticas"
+  },
+  "orbit": {
+    "title": "Órbita semanal",
+    "inRow": {
+      "one": "órbita seguida",
+      "other": "órbitas seguidas"
+    },
+    "record": "Récord",
+    "shields": "Escudos",
+    "goal": "Meta",
+    "change": "Cambiar",
+    "next": "Desde el lunes: {value}"
+  },
+  "level": {
+    "label": "Nivel {n}",
+    "toNext": "{into} de {next} XP para el siguiente nivel",
+    "total": "XP total"
+  },
+  "stats": {
+    "totalWords": "Palabras",
+    "sessions": "Perigee y tarjetas",
+    "quizzes": "Tests",
+    "blitz": "Rondas relámpago",
+    "inLearning": "Tiempo de práctica",
+    "weekTitle": "Últimos 7 días",
+    "weekSessions": "Sesiones",
+    "cardsStudied": "Tarjetas",
+    "studyTime": "Tiempo"
+  },
+  "activity": "Actividad",
+  "calendar": {
+    "less": "Menos",
+    "more": "Más",
+    "sessions": {
+      "one": "{n} sesión",
+      "other": "{n} sesiones"
+    },
+    "cards": {
+      "one": "{n} tarjeta",
+      "other": "{n} tarjetas"
+    }
+  },
+  "achievements": "Logros",
+  "showAll": "Ver todas ({n})",
+  "showLess": "Ver menos",
+  "unlocked": "Desbloqueado",
   "achievementsList": {
-    "perfect_quiz": {
-      "name": "¡Perfecto!",
-      "description": "Completa un test de 10+ preguntas sin un solo error"
+    "first_collection": {
+      "name": "Primer paso",
+      "description": "Crea tu primer set"
     },
-    "perfect_quizzes_3": {
-      "name": "Perfeccionista",
-      "description": "Completa 3 tests de 10+ preguntas sin errores"
+    "first_study": {
+      "name": "Empieza el viaje",
+      "description": "Completa tu primera sesión de práctica"
     },
-    "perfect_quizzes_10": {
-      "name": "Máquina",
-      "description": "Completa 10 tests de 10+ preguntas sin errores"
+    "streak_3": {
+      "name": "Tres seguidos",
+      "description": "Practica 3 días seguidos"
     },
-    "speed_demon": {
-      "name": "Rayo",
-      "description": "Responde las preguntas de un test en menos de 5 segundos cada una o da 30 respuestas en una ronda relámpago, con al menos un 80 % de aciertos"
+    "streak_7": {
+      "name": "Semana de fuerza",
+      "description": "Practica 7 días seguidos"
     },
-    "all_know": {
-      "name": "¡Me las sé todas!",
-      "description": "Acierta todas las palabras de una sesión de Perigee a la primera, cada una comprobada con una respuesta y no con tu propia valoración"
+    "streak_14": {
+      "name": "Dos semanas",
+      "description": "Practica 14 días seguidos"
     },
-    "flashcards_1": {
-      "name": "Primer encuentro",
-      "description": "Completa tu primera sesión de Perigee o de tarjetas"
+    "streak_30": {
+      "name": "Mes de constancia",
+      "description": "Practica 30 días seguidos"
     },
-    "flashcards_10": {
-      "name": "Novato de las tarjetas",
-      "description": "Completa 10 sesiones de Perigee o de tarjetas"
+    "streak_60": {
+      "name": "Dos meses",
+      "description": "Practica 60 días seguidos"
     },
-    "flashcards_50": {
-      "name": "Maestro de las tarjetas",
-      "description": "Completa 50 sesiones de Perigee o de tarjetas"
-    },
-    "flashcards_100": {
-      "name": "As de las tarjetas",
-      "description": "Completa 100 sesiones de Perigee o de tarjetas"
+    "streak_100": {
+      "name": "Cien días",
+      "description": "Practica 100 días seguidos"
     },
     "cards_10": {
       "name": "Primeras palabras",
@@ -64,6 +150,50 @@
       "name": "Diccionario andante",
       "description": "Empieza a aprender 1000 palabras"
     },
+    "flashcards_1": {
+      "name": "Primer encuentro",
+      "description": "Completa tu primera sesión de Perigee o de tarjetas"
+    },
+    "flashcards_10": {
+      "name": "Novato de las tarjetas",
+      "description": "Completa 10 sesiones de Perigee o de tarjetas"
+    },
+    "flashcards_50": {
+      "name": "Maestro de las tarjetas",
+      "description": "Completa 50 sesiones de Perigee o de tarjetas"
+    },
+    "flashcards_100": {
+      "name": "As de las tarjetas",
+      "description": "Completa 100 sesiones de Perigee o de tarjetas"
+    },
+    "quiz_1": {
+      "name": "Primer examen",
+      "description": "Completa tu primer test"
+    },
+    "quiz_10": {
+      "name": "Examinador",
+      "description": "Completa 10 tests"
+    },
+    "quiz_50": {
+      "name": "Maestro de los tests",
+      "description": "Completa 50 tests"
+    },
+    "quiz_100": {
+      "name": "Campeón de los tests",
+      "description": "Completa 100 tests"
+    },
+    "perfect_quiz": {
+      "name": "¡Perfecto!",
+      "description": "Completa un test de 10+ preguntas sin un solo error"
+    },
+    "perfect_quizzes_3": {
+      "name": "Perfeccionista",
+      "description": "Completa 3 tests de 10+ preguntas sin errores"
+    },
+    "perfect_quizzes_10": {
+      "name": "Máquina",
+      "description": "Completa 10 tests de 10+ preguntas sin errores"
+    },
     "collections_3": {
       "name": "Bibliotecario",
       "description": "Empieza a aprender 3 sets"
@@ -71,17 +201,30 @@
     "collections_5": {
       "name": "Archivero",
       "description": "Empieza a aprender 5 sets"
+    },
+    "night_owl": {
+      "name": "Búho nocturno",
+      "description": "Practica después de medianoche"
+    },
+    "early_bird": {
+      "name": "Madrugador",
+      "description": "Practica antes de las 7 de la mañana"
+    },
+    "marathon": {
+      "name": "Maratoniano",
+      "description": "Practica más de 30 minutos en una sesión"
+    },
+    "speed_demon": {
+      "name": "Rayo",
+      "description": "Responde las preguntas de un test en menos de 5 segundos cada una o da 30 respuestas en una ronda relámpago, con al menos un 80 % de aciertos"
+    },
+    "all_know": {
+      "name": "¡Me las sé todas!",
+      "description": "Acierta todas las palabras de una sesión de Perigee a la primera, cada una comprobada con una respuesta y no con tu propia valoración"
+    },
+    "comeback": {
+      "name": "El regreso",
+      "description": "Vuelve a aprender tras una pausa de 7+ días"
     }
-  },
-  "stats": {
-    "totalWords": "Palabras",
-    "sessions": "Perigee y tarjetas",
-    "quizzes": "Tests",
-    "blitz": "Rondas relámpago",
-    "inLearning": "Tiempo de práctica",
-    "weekTitle": "Últimos 7 días",
-    "weekSessions": "Sesiones",
-    "cardsStudied": "Tarjetas",
-    "studyTime": "Tiempo"
   }
 }

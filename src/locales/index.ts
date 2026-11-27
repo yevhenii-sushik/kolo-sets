@@ -81,13 +81,11 @@ import deError from './de/error.json';
 import frError from './fr/error.json';
 import ptBRError from './pt-BR/error.json';
 import deCommon from './de/common.json';
-// Из общих строк пока только подписи заставки на старте (boot)
 import esCommon from './es/common.json';
 import frCommon from './fr/common.json';
 import ptBRCommon from './pt-BR/common.json';
 import deGame from './de/game.json';
 import deOther from './de/other/other.json';
-// Подвал «Ещё»: версия и «Проверить обновления»
 import esOther from './es/other/other.json';
 import frOther from './fr/other/other.json';
 import ptBROther from './pt-BR/other/other.json';
@@ -95,7 +93,6 @@ import deWords from './de/words/words.json';
 import esWords from './es/words/words.json';
 import frWords from './fr/words/words.json';
 import ptBRWords from './pt-BR/words/words.json';
-// Профиль пока переведён частично: описания достижений теста (остальное — из английского)
 import deProfile from './de/profile.json';
 import esProfile from './es/profile.json';
 import frProfile from './fr/profile.json';
@@ -109,6 +106,10 @@ import deSettings from './de/other/settings.json';
 import esSettings from './es/other/settings.json';
 import frSettings from './fr/other/settings.json';
 import ptBRSettings from './pt-BR/other/settings.json';
+import deRewards from './de/rewards.json';
+import esRewards from './es/rewards.json';
+import frRewards from './fr/rewards.json';
+import ptBRRewards from './pt-BR/rewards.json';
 // «Что нового»: подписи страницы и записи с текущей версии; прежние записи — из английского (versionsFrom)
 import deUpdates from './de/other/updates.json';
 import esUpdates from './es/other/updates.json';
@@ -204,10 +205,10 @@ const versionsFrom = (part: Omit<Updates, 'versions'> & { versions: Updates['ver
   versions: enUpdates.versions.map((v) => part.versions.find((p) => p.number === v.number) ?? v),
 });
 
-const es = partial({ ...esCommon, landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, other: esOther, words: esWords, profile: esProfile, home: esHome, settings: esSettings, updates: versionsFrom(esUpdates) });
-const de = partial({ ...deCommon, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError, game: deGame, other: deOther, words: deWords, profile: deProfile, home: deHome, settings: deSettings, updates: versionsFrom(deUpdates) });
-const fr = partial({ ...frCommon, landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, other: frOther, words: frWords, profile: frProfile, home: frHome, settings: frSettings, updates: versionsFrom(frUpdates) });
-const ptBR = partial({ ...ptBRCommon, landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, other: ptBROther, words: ptBRWords, profile: ptBRProfile, home: ptBRHome, settings: ptBRSettings, updates: versionsFrom(ptBRUpdates) });
+const es = partial({ ...esCommon, landing: esLanding, explore: esExplore, legal: esLegal, auth: esAuth, error: esError, other: esOther, words: esWords, profile: esProfile, home: esHome, settings: esSettings, rewards: esRewards, updates: versionsFrom(esUpdates) });
+const de = partial({ ...deCommon, landing: deLanding, explore: deExplore, legal: deLegal, auth: deAuth, error: deError, game: deGame, other: deOther, words: deWords, profile: deProfile, home: deHome, settings: deSettings, rewards: deRewards, updates: versionsFrom(deUpdates) });
+const fr = partial({ ...frCommon, landing: frLanding, explore: frExplore, legal: frLegal, auth: frAuth, error: frError, other: frOther, words: frWords, profile: frProfile, home: frHome, settings: frSettings, rewards: frRewards, updates: versionsFrom(frUpdates) });
+const ptBR = partial({ ...ptBRCommon, landing: ptBRLanding, explore: ptBRExplore, legal: ptBRLegal, auth: ptBRAuth, error: ptBRError, other: ptBROther, words: ptBRWords, profile: ptBRProfile, home: ptBRHome, settings: ptBRSettings, rewards: ptBRRewards, updates: versionsFrom(ptBRUpdates) });
 
 export const translations: Record<Language, Translations> = {
   en,

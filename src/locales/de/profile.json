@@ -1,40 +1,125 @@
 {
+  "guestStub": {
+    "title": "Profil nicht verfügbar",
+    "description": "Melde dich an oder erstelle ein Konto, um deinen Fortschritt und deine Statistik zu sehen",
+    "retry": "Erneut versuchen",
+    "toLogin": "Anmelden"
+  },
+  "usernamePlaceholder": "benutzername",
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+  "edit": "Profil bearbeiten",
+  "logoutTitle": "Abmelden",
+  "logoutConfirm": "Auf diesem Gerät von Kolo abmelden?",
+  "nameLabel": "Name",
+  "usernameLabel": "Benutzername",
+  "usernameHint": "3–20 Zeichen: lateinische Buchstaben, Ziffern, _",
+  "changePhoto": "Foto ändern",
+  "memberSince": "Dabei seit {date}",
+  "team": {
+    "staff": "Dakuta-Team",
+    "staffHint": "Arbeitet an Kolo",
+    "adminHint": "Hat Zugriff auf das Admin-Panel"
+  },
+  "toast": {
+    "success": "Profil aktualisiert",
+    "error": "Profil konnte nicht gespeichert werden – versuche es noch einmal"
+  },
+  "errors": {
+    "usernameRequired": "Wähle einen Benutzernamen – er ist Pflicht",
+    "usernameInvalid": "Benutzername: 3–20 Zeichen – lateinische Buchstaben, Ziffern oder _",
+    "usernameTaken": "Dieser Benutzername ist schon vergeben",
+    "avatarType": "Wähle eine Bilddatei",
+    "avatarSize": "Die Datei ist zu groß (max. 8 MB)",
+    "avatarDecode": "Das Bild konnte nicht verarbeitet werden. Versuche JPEG oder PNG.",
+    "avatarUnsupported": "Dein Browser kann keine Bilder verarbeiten",
+    "avatarCompress": "Das Bild konnte nicht komprimiert werden",
+    "avatarGeneric": "Das Foto konnte nicht hochgeladen werden – versuche es noch einmal"
+  },
+  "legacyFlames": {
+    "name": "Flammen",
+    "description": "Dein Rekord an Tagen in Folge vor den Orbits: {days}."
+  },
+  "tabs": {
+    "medals": "Medaillen",
+    "stats": "Statistik"
+  },
+  "orbit": {
+    "title": "Wochen-Orbit",
+    "inRow": {
+      "one": "Orbit in Folge",
+      "other": "Orbits in Folge"
+    },
+    "record": "Rekord",
+    "shields": "Schilde",
+    "goal": "Ziel",
+    "change": "Ändern",
+    "next": "Ab Montag: {value}"
+  },
+  "level": {
+    "toNext": "{into} von {next} XP bis zum nächsten Level",
+    "total": "XP gesamt"
+  },
+  "stats": {
+    "totalWords": "Wörter",
+    "sessions": "Perigee & Karteikarten",
+    "quizzes": "Quizze",
+    "blitz": "Blitzrunden",
+    "inLearning": "Übungszeit",
+    "weekTitle": "Letzte 7 Tage",
+    "weekSessions": "Sessions",
+    "cardsStudied": "Karten",
+    "studyTime": "Zeit"
+  },
+  "activity": "Aktivität",
+  "calendar": {
+    "less": "Weniger",
+    "more": "Mehr",
+    "sessions": {
+      "one": "{n} Session",
+      "other": "{n} Sessions"
+    },
+    "cards": {
+      "one": "{n} Karte",
+      "other": "{n} Karten"
+    }
+  },
+  "achievements": "Erfolge",
+  "showAll": "Alle anzeigen ({n})",
+  "showLess": "Weniger anzeigen",
+  "unlocked": "Freigeschaltet",
   "achievementsList": {
-    "perfect_quiz": {
-      "name": "Perfekt!",
-      "description": "Schließe ein Quiz mit 10+ Fragen ohne einen einzigen Fehler ab"
+    "first_collection": {
+      "name": "Erster Schritt",
+      "description": "Erstelle dein erstes Set"
     },
-    "perfect_quizzes_3": {
-      "name": "Perfektionist",
-      "description": "Schließe 3 Quizze mit 10+ Fragen fehlerfrei ab"
+    "first_study": {
+      "name": "Die Reise beginnt",
+      "description": "Schließe deine erste Übungssession ab"
     },
-    "perfect_quizzes_10": {
-      "name": "Maschine",
-      "description": "Schließe 10 Quizze mit 10+ Fragen fehlerfrei ab"
+    "streak_3": {
+      "name": "Drei in Folge",
+      "description": "Übe 3 Tage in Folge"
     },
-    "speed_demon": {
-      "name": "Blitzschnell",
-      "description": "Beantworte Quizfragen in unter 5 Sekunden pro Frage oder gib 30 Antworten in einer Blitzrunde – mit mindestens 80 % richtig"
+    "streak_7": {
+      "name": "Starke Woche",
+      "description": "Übe 7 Tage in Folge"
     },
-    "all_know": {
-      "name": "Alles gewusst!",
-      "description": "Beantworte in einer Perigee-Session jedes Wort beim ersten Versuch richtig – jedes per Antwort geprüft, nicht selbst bewertet"
+    "streak_14": {
+      "name": "Zwei Wochen",
+      "description": "Übe 14 Tage in Folge"
     },
-    "flashcards_1": {
-      "name": "Erste Begegnung",
-      "description": "Schließe deine erste Perigee- oder Karteikarten-Session ab"
+    "streak_30": {
+      "name": "Monat der Ausdauer",
+      "description": "Übe 30 Tage in Folge"
     },
-    "flashcards_10": {
-      "name": "Karten-Neuling",
-      "description": "Schließe 10 Perigee- oder Karteikarten-Sessions ab"
+    "streak_60": {
+      "name": "Zwei Monate",
+      "description": "Übe 60 Tage in Folge"
     },
-    "flashcards_50": {
-      "name": "Kartenmeister",
-      "description": "Schließe 50 Perigee- oder Karteikarten-Sessions ab"
-    },
-    "flashcards_100": {
-      "name": "Kartenass",
-      "description": "Schließe 100 Perigee- oder Karteikarten-Sessions ab"
+    "streak_100": {
+      "name": "Hundert Tage",
+      "description": "Übe 100 Tage in Folge"
     },
     "cards_10": {
       "name": "Erste Wörter",
@@ -64,6 +149,50 @@
       "name": "Wandelndes Wörterbuch",
       "description": "Beginne, 1.000 Wörter zu lernen"
     },
+    "flashcards_1": {
+      "name": "Erste Begegnung",
+      "description": "Schließe deine erste Perigee- oder Karteikarten-Session ab"
+    },
+    "flashcards_10": {
+      "name": "Karten-Neuling",
+      "description": "Schließe 10 Perigee- oder Karteikarten-Sessions ab"
+    },
+    "flashcards_50": {
+      "name": "Kartenmeister",
+      "description": "Schließe 50 Perigee- oder Karteikarten-Sessions ab"
+    },
+    "flashcards_100": {
+      "name": "Kartenass",
+      "description": "Schließe 100 Perigee- oder Karteikarten-Sessions ab"
+    },
+    "quiz_1": {
+      "name": "Erste Prüfung",
+      "description": "Schließe dein erstes Quiz ab"
+    },
+    "quiz_10": {
+      "name": "Tester",
+      "description": "Schließe 10 Quizze ab"
+    },
+    "quiz_50": {
+      "name": "Quizmeister",
+      "description": "Schließe 50 Quizze ab"
+    },
+    "quiz_100": {
+      "name": "Quiz-Champion",
+      "description": "Schließe 100 Quizze ab"
+    },
+    "perfect_quiz": {
+      "name": "Perfekt!",
+      "description": "Schließe ein Quiz mit 10+ Fragen ohne einen einzigen Fehler ab"
+    },
+    "perfect_quizzes_3": {
+      "name": "Perfektionist",
+      "description": "Schließe 3 Quizze mit 10+ Fragen fehlerfrei ab"
+    },
+    "perfect_quizzes_10": {
+      "name": "Maschine",
+      "description": "Schließe 10 Quizze mit 10+ Fragen fehlerfrei ab"
+    },
     "collections_3": {
       "name": "Bibliothekar",
       "description": "Beginne, 3 Sets zu lernen"
@@ -71,17 +200,30 @@
     "collections_5": {
       "name": "Archivar",
       "description": "Beginne, 5 Sets zu lernen"
+    },
+    "night_owl": {
+      "name": "Nachteule",
+      "description": "Übe nach Mitternacht"
+    },
+    "early_bird": {
+      "name": "Frühaufsteher",
+      "description": "Übe vor 7 Uhr morgens"
+    },
+    "marathon": {
+      "name": "Marathonläufer",
+      "description": "Übe mehr als 30 Minuten in einer Session"
+    },
+    "speed_demon": {
+      "name": "Blitzschnell",
+      "description": "Beantworte Quizfragen in unter 5 Sekunden pro Frage oder gib 30 Antworten in einer Blitzrunde – mit mindestens 80 % richtig"
+    },
+    "all_know": {
+      "name": "Alles gewusst!",
+      "description": "Beantworte in einer Perigee-Session jedes Wort beim ersten Versuch richtig – jedes per Antwort geprüft, nicht selbst bewertet"
+    },
+    "comeback": {
+      "name": "Comeback",
+      "description": "Kehre nach einer Pause von 7+ Tagen zum Lernen zurück"
     }
-  },
-  "stats": {
-    "totalWords": "Wörter",
-    "sessions": "Perigee & Karteikarten",
-    "quizzes": "Quizze",
-    "blitz": "Blitzrunden",
-    "inLearning": "Übungszeit",
-    "weekTitle": "Letzte 7 Tage",
-    "weekSessions": "Sessions",
-    "cardsStudied": "Karten",
-    "studyTime": "Zeit"
   }
 }

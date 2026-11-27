@@ -1,0 +1,157 @@
+{
+  "title": "Belohnungen",
+  "subtitle": "Kapseln, Sammlungen und Sternenstaub. Nur durch Üben verdient – nie verkauft.",
+  "link": "Belohnungen",
+  "capsules": {
+    "title": "Kapseln",
+    "count": {
+      "one": "{n} Kapsel",
+      "other": "{n} Kapseln"
+    },
+    "none": "Noch keine Kapseln. Du bekommst sie für neue Level, geschlossene Orbits, Serien von 4, 12 und 26 Orbits und große Erfolge.",
+    "open": "Kapsel öffnen",
+    "openMore": "Noch eine öffnen",
+    "opening": "Wird geöffnet…",
+    "pity": {
+      "one": "Episch oder besser innerhalb von {n} Kapsel",
+      "other": "Episch oder besser innerhalb von {n} Kapseln"
+    },
+    "pityNow": "Deine nächste Kapsel ist episch oder besser",
+    "odds": "Chancen",
+    "oddsText": "Jede Kapsel enthält einen Gegenstand; innerhalb einer Seltenheit ist jeder gleich wahrscheinlich. Bringen 9 Kapseln in Folge nichts Episches oder Legendäres, ist die 10. episch. Doppelte werden zu Sternenstaub.",
+    "new": "Neu!",
+    "duplicate": "Hast du schon – +{n} Sternenstaub",
+    "completed": "Die Sammlung „{name}“ ist komplett!",
+    "done": "Fertig",
+    "error": "Die Kapsel konnte nicht geöffnet werden. Prüfe deine Verbindung und versuche es noch einmal."
+  },
+  "rarity": {
+    "common": "Gewöhnlich",
+    "rare": "Selten",
+    "epic": "Episch",
+    "legendary": "Legendär"
+  },
+  "kinds": {
+    "satellite": "Satellit",
+    "ring": "Ring",
+    "title": "Titel",
+    "background": "Profilhintergrund"
+  },
+  "dust": {
+    "title": "Sternenstaub",
+    "hint": "Bleibt von Doppelten übrig. Tausche ihn gegen einen Schild oder einen fehlenden gewöhnlichen oder seltenen Sammlungsgegenstand.",
+    "shield": "Schild für {n}",
+    "shieldHint": "Ein Schild schließt eine Woche für dich, wenn du es nicht schaffst. Du kannst zwei haben.",
+    "shieldFull": "Du hast schon zwei Schilde",
+    "shieldDone": "Schild hinzugefügt",
+    "craft": "Herstellen für {n}",
+    "crafted": "{item} ist jetzt in deiner Sammlung",
+    "notEnough": "Nicht genug Sternenstaub",
+    "error": "Das hat nicht geklappt. Prüfe deine Verbindung und versuche es noch einmal.",
+    "craftConfirm": "{n} Sternenstaub für {item} ausgeben?"
+  },
+  "collections": {
+    "title": "Sammlungen",
+    "progress": "{n} von {total}",
+    "reward": "Vervollständige sie für eine Medaille und den Titel „{title}“",
+    "rewardMedal": "Vervollständige sie für eine Medaille",
+    "complete": "Komplett",
+    "names": {
+      "planets": "Planeten",
+      "orbits": "Orbits",
+      "sky": "Himmel",
+      "voices": "Stimmen"
+    },
+    "missing": "Noch nicht gefunden",
+    "all": "Alle Belohnungen"
+  },
+  "equip": {
+    "on": "Ausrüsten",
+    "off": "Ablegen",
+    "equipped": "Ausgerüstet",
+    "error": "Das hat nicht geklappt. Versuche es noch einmal."
+  },
+  "satellites": {
+    "slots": "Auf deinem Orbit: {n} von {max}",
+    "next": "ein weiterer Platz ab Level {level}",
+    "noRoom": "Kein Platz",
+    "instead": "Statt {item} ausrüsten"
+  },
+  "showcase": {
+    "title": "Vitrine",
+    "hint": "Bis zu drei Belohnungen, die du zeigen möchtest.",
+    "edit": "Bearbeiten",
+    "empty": "Leer",
+    "pick": "Wähle bis zu drei Belohnungen",
+    "save": "Speichern",
+    "items": "Gegenstände",
+    "medals": "Medaillen und Erfolge",
+    "nothing": "Noch nichts zu zeigen: Öffne eine Kapsel oder verdiene dir einen Erfolg."
+  },
+  "medal": {
+    "name": "Sammlung „{name}“",
+    "description": "Vervollständigt",
+    "beta": {
+      "name": "Kolo-Beta-Tester",
+      "description": "Vor Ende 2026 dazugekommen – seit der Beta dabei"
+    }
+  },
+  "moment": {
+    "title": {
+      "one": "Kapsel verdient",
+      "other": "+{n} Kapseln"
+    },
+    "text": "Darin: ein Satellit, ein Ring, ein Hintergrund oder ein Titel. Öffne sie unter „Belohnungen“.",
+    "open": "Öffnen",
+    "medalTitle": "Neue Medaille",
+    "betaText": "Danke, dass du seit der Beta dabei bist! Der Titel „Beta-Tester“ und der Ring „Erster Orbit“ warten unter „Belohnungen“."
+  },
+  "items": {
+    "sat_moon": "Mond",
+    "sat_mars": "Mars",
+    "sat_mercury": "Merkur",
+    "sat_venus": "Venus",
+    "sat_neptune": "Neptun",
+    "sat_uranus": "Uranus",
+    "sat_jupiter": "Jupiter",
+    "sat_saturn": "Saturn",
+    "sat_supernova": "Supernova",
+    "ring_mint": "Minze",
+    "ring_lavender": "Lavendel",
+    "ring_sky": "Azur",
+    "ring_coral": "Koralle",
+    "ring_sunset": "Sonnenuntergang",
+    "ring_ocean": "Ozean",
+    "ring_aurora": "Aurora",
+    "ring_constellation": "Sternbild",
+    "ring_neon": "Neon",
+    "ring_corona": "Korona",
+    "bg_dawn": "Morgenröte",
+    "bg_dusk": "Abenddämmerung",
+    "bg_mist": "Dunst",
+    "bg_starry": "Sternennacht",
+    "bg_northern": "Nordlicht",
+    "bg_milkyway": "Milchstraße",
+    "bg_nebula": "Sternnebel",
+    "bg_meteors": "Sternschnuppen",
+    "title_curious": "Wortsucher",
+    "title_persistent": "Orbit-Lehrling",
+    "title_bookworm": "Bücherwurm",
+    "title_early_bird": "Frühaufsteher",
+    "title_polyglot": "Polyglott",
+    "title_wordsmith": "Wortschmied",
+    "title_review_master": "Meister der Wiederholung",
+    "title_word_keeper": "Hüter der Wörter",
+    "title_kolo_legend": "Kolo-Legende",
+    "title_system_master": "Meister des Systems",
+    "title_orbit_cartographer": "Orbit-Kartograf",
+    "title_stargazer": "Sternegucker",
+    "title_beta_tester": "Beta-Tester",
+    "ring_beta": "Erster Orbit"
+  },
+  "exclusive": "Exklusiv",
+  "special": {
+    "title": "Besondere Belohnungen",
+    "hint": "Für vollständige Sammlungen und für Beta-Tester. Sie kommen nie aus Kapseln."
+  }
+}

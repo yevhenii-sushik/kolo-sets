@@ -1,40 +1,126 @@
 {
+  "guestStub": {
+    "title": "Perfil indisponível",
+    "description": "Entre ou crie uma conta para ver seu progresso e suas estatísticas",
+    "retry": "Tentar de novo",
+    "toLogin": "Entrar"
+  },
+  "usernamePlaceholder": "usuario",
+  "save": "Salvar",
+  "cancel": "Cancelar",
+  "edit": "Editar perfil",
+  "logoutTitle": "Sair",
+  "logoutConfirm": "Sair do Kolo neste dispositivo?",
+  "nameLabel": "Nome",
+  "usernameLabel": "Nome de usuário",
+  "usernameHint": "3–20 caracteres: letras latinas, números, _",
+  "changePhoto": "Mudar foto",
+  "memberSince": "Membro desde {date}",
+  "team": {
+    "staff": "Equipe Dakuta",
+    "staffHint": "Trabalha no Kolo",
+    "adminHint": "Tem acesso ao painel de administração"
+  },
+  "toast": {
+    "success": "Perfil atualizado",
+    "error": "Não foi possível salvar seu perfil — tente de novo"
+  },
+  "errors": {
+    "usernameRequired": "Escolha um nome de usuário — é obrigatório",
+    "usernameInvalid": "Nome de usuário: 3–20 caracteres — letras latinas, números ou _",
+    "usernameTaken": "Este nome de usuário já está em uso",
+    "avatarType": "Escolha um arquivo de imagem",
+    "avatarSize": "O arquivo é grande demais (máx. 8 MB)",
+    "avatarDecode": "Não foi possível processar a imagem. Tente JPEG ou PNG.",
+    "avatarUnsupported": "Seu navegador não consegue processar imagens",
+    "avatarCompress": "Não foi possível comprimir a imagem",
+    "avatarGeneric": "Não foi possível enviar a foto — tente de novo"
+  },
+  "legacyFlames": {
+    "name": "Chamas",
+    "description": "Seu recorde de dias seguidos antes das órbitas: {days}."
+  },
+  "tabs": {
+    "medals": "Medalhas",
+    "stats": "Estatísticas"
+  },
+  "orbit": {
+    "title": "Órbita semanal",
+    "inRow": {
+      "one": "órbita seguida",
+      "other": "órbitas seguidas"
+    },
+    "record": "Recorde",
+    "shields": "Escudos",
+    "goal": "Meta",
+    "change": "Mudar",
+    "next": "A partir de segunda: {value}"
+  },
+  "level": {
+    "label": "Nível {n}",
+    "toNext": "{into} de {next} XP para o próximo nível",
+    "total": "XP total"
+  },
+  "stats": {
+    "totalWords": "Palavras",
+    "sessions": "Perigee e flashcards",
+    "quizzes": "Quizzes",
+    "blitz": "Rodadas relâmpago",
+    "inLearning": "Tempo de prática",
+    "weekTitle": "Últimos 7 dias",
+    "weekSessions": "Sessões",
+    "cardsStudied": "Cards",
+    "studyTime": "Tempo"
+  },
+  "activity": "Atividade",
+  "calendar": {
+    "less": "Menos",
+    "more": "Mais",
+    "sessions": {
+      "one": "{n} sessão",
+      "other": "{n} sessões"
+    },
+    "cards": {
+      "one": "{n} card",
+      "other": "{n} cards"
+    }
+  },
+  "achievements": "Conquistas",
+  "showAll": "Ver todas ({n})",
+  "showLess": "Ver menos",
+  "unlocked": "Desbloqueado",
   "achievementsList": {
-    "perfect_quiz": {
-      "name": "Perfeito!",
-      "description": "Conclua um quiz de 10+ perguntas sem nenhum erro"
+    "first_collection": {
+      "name": "Primeiro passo",
+      "description": "Crie seu primeiro set"
     },
-    "perfect_quizzes_3": {
-      "name": "Perfeccionista",
-      "description": "Conclua 3 quizzes de 10+ perguntas sem erros"
+    "first_study": {
+      "name": "A jornada começa",
+      "description": "Conclua sua primeira sessão de prática"
     },
-    "perfect_quizzes_10": {
-      "name": "Máquina",
-      "description": "Conclua 10 quizzes de 10+ perguntas sem erros"
+    "streak_3": {
+      "name": "Três seguidos",
+      "description": "Pratique 3 dias seguidos"
     },
-    "speed_demon": {
-      "name": "Relâmpago",
-      "description": "Responda às perguntas de um quiz em menos de 5 segundos cada ou dê 30 respostas numa rodada relâmpago, com pelo menos 80% de acertos"
+    "streak_7": {
+      "name": "Semana de força",
+      "description": "Pratique 7 dias seguidos"
     },
-    "all_know": {
-      "name": "Sei tudo!",
-      "description": "Acerte de primeira todas as palavras de uma sessão do Perigee, cada uma conferida por uma resposta e não pela sua própria avaliação"
+    "streak_14": {
+      "name": "Duas semanas",
+      "description": "Pratique 14 dias seguidos"
     },
-    "flashcards_1": {
-      "name": "Primeiro encontro",
-      "description": "Conclua sua primeira sessão de Perigee ou de flashcards"
+    "streak_30": {
+      "name": "Mês de garra",
+      "description": "Pratique 30 dias seguidos"
     },
-    "flashcards_10": {
-      "name": "Novato dos flashcards",
-      "description": "Conclua 10 sessões de Perigee ou de flashcards"
+    "streak_60": {
+      "name": "Dois meses",
+      "description": "Pratique 60 dias seguidos"
     },
-    "flashcards_50": {
-      "name": "Mestre dos flashcards",
-      "description": "Conclua 50 sessões de Perigee ou de flashcards"
-    },
-    "flashcards_100": {
-      "name": "Ás dos flashcards",
-      "description": "Conclua 100 sessões de Perigee ou de flashcards"
+    "streak_100": {
+      "name": "Cem dias",
+      "description": "Pratique 100 dias seguidos"
     },
     "cards_10": {
       "name": "Primeiras palavras",
@@ -64,6 +150,50 @@
       "name": "Dicionário ambulante",
       "description": "Comece a aprender 1.000 palavras"
     },
+    "flashcards_1": {
+      "name": "Primeiro encontro",
+      "description": "Conclua sua primeira sessão de Perigee ou de flashcards"
+    },
+    "flashcards_10": {
+      "name": "Novato dos flashcards",
+      "description": "Conclua 10 sessões de Perigee ou de flashcards"
+    },
+    "flashcards_50": {
+      "name": "Mestre dos flashcards",
+      "description": "Conclua 50 sessões de Perigee ou de flashcards"
+    },
+    "flashcards_100": {
+      "name": "Ás dos flashcards",
+      "description": "Conclua 100 sessões de Perigee ou de flashcards"
+    },
+    "quiz_1": {
+      "name": "Primeira prova",
+      "description": "Conclua seu primeiro quiz"
+    },
+    "quiz_10": {
+      "name": "Testador",
+      "description": "Conclua 10 quizzes"
+    },
+    "quiz_50": {
+      "name": "Mestre dos quizzes",
+      "description": "Conclua 50 quizzes"
+    },
+    "quiz_100": {
+      "name": "Campeão dos quizzes",
+      "description": "Conclua 100 quizzes"
+    },
+    "perfect_quiz": {
+      "name": "Perfeito!",
+      "description": "Conclua um quiz de 10+ perguntas sem nenhum erro"
+    },
+    "perfect_quizzes_3": {
+      "name": "Perfeccionista",
+      "description": "Conclua 3 quizzes de 10+ perguntas sem erros"
+    },
+    "perfect_quizzes_10": {
+      "name": "Máquina",
+      "description": "Conclua 10 quizzes de 10+ perguntas sem erros"
+    },
     "collections_3": {
       "name": "Bibliotecário",
       "description": "Comece a aprender 3 sets"
@@ -71,17 +201,30 @@
     "collections_5": {
       "name": "Arquivista",
       "description": "Comece a aprender 5 sets"
+    },
+    "night_owl": {
+      "name": "Coruja",
+      "description": "Pratique depois da meia-noite"
+    },
+    "early_bird": {
+      "name": "Madrugador",
+      "description": "Pratique antes das 7 da manhã"
+    },
+    "marathon": {
+      "name": "Maratonista",
+      "description": "Pratique mais de 30 minutos em uma sessão"
+    },
+    "speed_demon": {
+      "name": "Relâmpago",
+      "description": "Responda às perguntas de um quiz em menos de 5 segundos cada ou dê 30 respostas numa rodada relâmpago, com pelo menos 80% de acertos"
+    },
+    "all_know": {
+      "name": "Sei tudo!",
+      "description": "Acerte de primeira todas as palavras de uma sessão do Perigee, cada uma conferida por uma resposta e não pela sua própria avaliação"
+    },
+    "comeback": {
+      "name": "A volta",
+      "description": "Volte a estudar depois de uma pausa de 7+ dias"
     }
-  },
-  "stats": {
-    "totalWords": "Palavras",
-    "sessions": "Perigee e flashcards",
-    "quizzes": "Quizzes",
-    "blitz": "Rodadas relâmpago",
-    "inLearning": "Tempo de prática",
-    "weekTitle": "Últimos 7 dias",
-    "weekSessions": "Sessões",
-    "cardsStudied": "Cartões",
-    "studyTime": "Tempo"
   }
 }

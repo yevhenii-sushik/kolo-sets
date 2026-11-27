@@ -1,0 +1,157 @@
+{
+  "title": "Récompenses",
+  "subtitle": "Capsules, collections et poussière d'étoiles. Uniquement gagnées en s'entraînant, jamais vendues.",
+  "link": "Récompenses",
+  "capsules": {
+    "title": "Capsules",
+    "count": {
+      "one": "{n} capsule",
+      "other": "{n} capsules"
+    },
+    "none": "Pas encore de capsules. Tu en gagnes avec les nouveaux niveaux, les orbites bouclées, les séries de 4, 12 et 26 orbites et les grands succès.",
+    "open": "Ouvrir une capsule",
+    "openMore": "En ouvrir une autre",
+    "opening": "Ouverture…",
+    "pity": {
+      "one": "Épique ou mieux d'ici {n} capsule",
+      "other": "Épique ou mieux d'ici {n} capsules"
+    },
+    "pityNow": "Ta prochaine capsule est épique ou mieux",
+    "odds": "Probabilités",
+    "oddsText": "Chaque capsule contient un objet ; dans une même rareté, chaque objet a autant de chances. Si 9 capsules d'affilée n'apportent rien d'épique ni de légendaire, la 10e est épique. Les doublons se transforment en poussière d'étoiles.",
+    "new": "Nouveau !",
+    "duplicate": "Déjà à toi : +{n} de poussière d'étoiles",
+    "completed": "La collection « {name} » est complète !",
+    "done": "OK",
+    "error": "Impossible d'ouvrir la capsule. Vérifie ta connexion et réessaie."
+  },
+  "rarity": {
+    "common": "Commun",
+    "rare": "Rare",
+    "epic": "Épique",
+    "legendary": "Légendaire"
+  },
+  "kinds": {
+    "satellite": "Satellite",
+    "ring": "Anneau",
+    "title": "Titre",
+    "background": "Fond de profil"
+  },
+  "dust": {
+    "title": "Poussière d'étoiles",
+    "hint": "Elle vient des doublons. Échange-la contre un bouclier ou contre un objet commun ou rare qui manque à une collection.",
+    "shield": "Bouclier pour {n}",
+    "shieldHint": "Un bouclier boucle une semaine à ta place si tu n'y arrives pas. Tu peux en avoir deux.",
+    "shieldFull": "Tu as déjà deux boucliers",
+    "shieldDone": "Bouclier ajouté",
+    "craft": "Créer pour {n}",
+    "crafted": "{item} est maintenant dans ta collection",
+    "notEnough": "Pas assez de poussière d'étoiles",
+    "error": "Ça n'a pas marché. Vérifie ta connexion et réessaie.",
+    "craftConfirm": "Dépenser {n} de poussière d'étoiles pour {item} ?"
+  },
+  "collections": {
+    "title": "Collections",
+    "progress": "{n} sur {total}",
+    "reward": "Complète-la pour une médaille et le titre « {title} »",
+    "rewardMedal": "Complète-la pour une médaille",
+    "complete": "Complète",
+    "names": {
+      "planets": "Planètes",
+      "orbits": "Orbites",
+      "sky": "Ciel",
+      "voices": "Voix"
+    },
+    "missing": "Pas encore trouvé",
+    "all": "Toutes les récompenses"
+  },
+  "equip": {
+    "on": "Équiper",
+    "off": "Retirer",
+    "equipped": "Équipé",
+    "error": "Ça n'a pas marché. Réessaie."
+  },
+  "satellites": {
+    "slots": "Sur ton orbite : {n} sur {max}",
+    "next": "une place de plus au niveau {level}",
+    "noRoom": "Plus de place",
+    "instead": "Équiper à la place de {item}"
+  },
+  "showcase": {
+    "title": "Vitrine",
+    "hint": "Jusqu'à trois récompenses que tu veux montrer.",
+    "edit": "Modifier",
+    "empty": "Vide",
+    "pick": "Choisis jusqu'à trois récompenses",
+    "save": "Enregistrer",
+    "items": "Objets",
+    "medals": "Médailles et succès",
+    "nothing": "Rien à montrer pour l'instant : ouvre une capsule ou décroche un succès."
+  },
+  "medal": {
+    "name": "Collection « {name} »",
+    "description": "Complétée",
+    "beta": {
+      "name": "Bêta-testeur de Kolo",
+      "description": "Inscription avant fin 2026 : là depuis la bêta"
+    }
+  },
+  "moment": {
+    "title": {
+      "one": "Capsule gagnée",
+      "other": "+{n} capsules"
+    },
+    "text": "À l'intérieur : un satellite, un anneau, un fond ou un titre. Ouvre-la dans « Récompenses ».",
+    "open": "Ouvrir",
+    "medalTitle": "Nouvelle médaille",
+    "betaText": "Merci d'être là depuis la bêta ! Le titre « Bêta-testeur » et l'anneau « Première orbite » t'attendent dans « Récompenses »."
+  },
+  "items": {
+    "sat_moon": "Lune",
+    "sat_mars": "Mars",
+    "sat_mercury": "Mercure",
+    "sat_venus": "Vénus",
+    "sat_neptune": "Neptune",
+    "sat_uranus": "Uranus",
+    "sat_jupiter": "Jupiter",
+    "sat_saturn": "Saturne",
+    "sat_supernova": "Supernova",
+    "ring_mint": "Menthe",
+    "ring_lavender": "Lavande",
+    "ring_sky": "Azur",
+    "ring_coral": "Corail",
+    "ring_sunset": "Coucher de soleil",
+    "ring_ocean": "Océan",
+    "ring_aurora": "Aurore",
+    "ring_constellation": "Constellation",
+    "ring_neon": "Néon",
+    "ring_corona": "Couronne",
+    "bg_dawn": "Aube",
+    "bg_dusk": "Crépuscule",
+    "bg_mist": "Brume",
+    "bg_starry": "Nuit étoilée",
+    "bg_northern": "Aurore boréale",
+    "bg_milkyway": "Voie lactée",
+    "bg_nebula": "Nébuleuse",
+    "bg_meteors": "Pluie d'étoiles filantes",
+    "title_curious": "Chasseur de mots",
+    "title_persistent": "Apprenti de l'orbite",
+    "title_bookworm": "Rat de bibliothèque",
+    "title_early_bird": "Lève-tôt",
+    "title_polyglot": "Polyglotte",
+    "title_wordsmith": "Orfèvre des mots",
+    "title_review_master": "Maître de la révision",
+    "title_word_keeper": "Gardien des mots",
+    "title_kolo_legend": "Légende de Kolo",
+    "title_system_master": "Maître du système",
+    "title_orbit_cartographer": "Cartographe des orbites",
+    "title_stargazer": "Observateur d'étoiles",
+    "title_beta_tester": "Bêta-testeur",
+    "ring_beta": "Première orbite"
+  },
+  "exclusive": "Exclusif",
+  "special": {
+    "title": "Récompenses spéciales",
+    "hint": "Pour les collections complètes et pour les bêta-testeurs. Elles ne sortent jamais des capsules."
+  }
+}

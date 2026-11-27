@@ -1,0 +1,157 @@
+{
+  "title": "Recompensas",
+  "subtitle": "Cápsulas, coleções e poeira estelar. Só se ganha praticando — nunca é vendido.",
+  "link": "Recompensas",
+  "capsules": {
+    "title": "Cápsulas",
+    "count": {
+      "one": "{n} cápsula",
+      "other": "{n} cápsulas"
+    },
+    "none": "Ainda não há cápsulas. Você ganha por novos níveis, órbitas fechadas, sequências de 4, 12 e 26 órbitas e grandes conquistas.",
+    "open": "Abrir uma cápsula",
+    "openMore": "Abrir outra",
+    "opening": "Abrindo…",
+    "pity": {
+      "one": "Épico ou melhor em até {n} cápsula",
+      "other": "Épico ou melhor em até {n} cápsulas"
+    },
+    "pityNow": "Sua próxima cápsula é épica ou melhor",
+    "odds": "Chances",
+    "oddsText": "Cada cápsula traz um item; dentro de uma raridade, todos os itens têm a mesma chance. Se 9 cápsulas seguidas não trouxerem nada épico ou lendário, a 10ª é épica. Repetidos viram poeira estelar.",
+    "new": "Novo!",
+    "duplicate": "Você já tem — +{n} de poeira estelar",
+    "completed": "A coleção “{name}” está completa!",
+    "done": "Pronto",
+    "error": "Não foi possível abrir a cápsula. Verifique a conexão e tente de novo."
+  },
+  "rarity": {
+    "common": "Comum",
+    "rare": "Raro",
+    "epic": "Épico",
+    "legendary": "Lendário"
+  },
+  "kinds": {
+    "satellite": "Satélite",
+    "ring": "Anel",
+    "title": "Título",
+    "background": "Fundo do perfil"
+  },
+  "dust": {
+    "title": "Poeira estelar",
+    "hint": "Sobra dos repetidos. Troque por um escudo ou por um item comum ou raro que falta numa coleção.",
+    "shield": "Escudo por {n}",
+    "shieldHint": "Um escudo fecha a semana por você se não der para cumprir. Você pode ter dois.",
+    "shieldFull": "Você já tem dois escudos",
+    "shieldDone": "Escudo adicionado",
+    "craft": "Criar por {n}",
+    "crafted": "{item} agora está na sua coleção",
+    "notEnough": "Poeira estelar insuficiente",
+    "error": "Não deu certo. Verifique a conexão e tente de novo.",
+    "craftConfirm": "Gastar {n} de poeira estelar em {item}?"
+  },
+  "collections": {
+    "title": "Coleções",
+    "progress": "{n} de {total}",
+    "reward": "Complete para ganhar uma medalha e o título “{title}”",
+    "rewardMedal": "Complete para ganhar uma medalha",
+    "complete": "Completa",
+    "names": {
+      "planets": "Planetas",
+      "orbits": "Órbitas",
+      "sky": "Céu",
+      "voices": "Vozes"
+    },
+    "missing": "Ainda não encontrado",
+    "all": "Todas as recompensas"
+  },
+  "equip": {
+    "on": "Equipar",
+    "off": "Remover",
+    "equipped": "Equipado",
+    "error": "Não deu certo. Tente de novo."
+  },
+  "satellites": {
+    "slots": "Na sua órbita: {n} de {max}",
+    "next": "mais um lugar no nível {level}",
+    "noRoom": "Sem lugar",
+    "instead": "Equipar no lugar de {item}"
+  },
+  "showcase": {
+    "title": "Vitrine",
+    "hint": "Até três recompensas que você quer exibir.",
+    "edit": "Editar",
+    "empty": "Vazia",
+    "pick": "Escolha até três recompensas",
+    "save": "Salvar",
+    "items": "Itens",
+    "medals": "Medalhas e conquistas",
+    "nothing": "Ainda não há nada para mostrar: abra uma cápsula ou ganhe uma conquista."
+  },
+  "medal": {
+    "name": "Coleção “{name}”",
+    "description": "Completa",
+    "beta": {
+      "name": "Beta tester do Kolo",
+      "description": "Entrou antes do fim de 2026 — aqui desde o beta"
+    }
+  },
+  "moment": {
+    "title": {
+      "one": "Cápsula ganha",
+      "other": "+{n} cápsulas"
+    },
+    "text": "Dentro: um satélite, um anel, um fundo ou um título. Abra em “Recompensas”.",
+    "open": "Abrir",
+    "medalTitle": "Nova medalha",
+    "betaText": "Obrigado por estar aqui desde o beta! O título “Beta tester” e o anel “Primeira órbita” estão esperando em “Recompensas”."
+  },
+  "items": {
+    "sat_moon": "Lua",
+    "sat_mars": "Marte",
+    "sat_mercury": "Mercúrio",
+    "sat_venus": "Vênus",
+    "sat_neptune": "Netuno",
+    "sat_uranus": "Urano",
+    "sat_jupiter": "Júpiter",
+    "sat_saturn": "Saturno",
+    "sat_supernova": "Supernova",
+    "ring_mint": "Menta",
+    "ring_lavender": "Lavanda",
+    "ring_sky": "Azul-celeste",
+    "ring_coral": "Coral",
+    "ring_sunset": "Pôr do sol",
+    "ring_ocean": "Oceano",
+    "ring_aurora": "Aurora",
+    "ring_constellation": "Constelação",
+    "ring_neon": "Neon",
+    "ring_corona": "Coroa",
+    "bg_dawn": "Amanhecer",
+    "bg_dusk": "Anoitecer",
+    "bg_mist": "Névoa",
+    "bg_starry": "Noite estrelada",
+    "bg_northern": "Aurora boreal",
+    "bg_milkyway": "Via Láctea",
+    "bg_nebula": "Nebulosa",
+    "bg_meteors": "Chuva de meteoros",
+    "title_curious": "Caça-palavras",
+    "title_persistent": "Aprendiz de órbita",
+    "title_bookworm": "Rato de biblioteca",
+    "title_early_bird": "Madrugador",
+    "title_polyglot": "Poliglota",
+    "title_wordsmith": "Artesão das palavras",
+    "title_review_master": "Mestre da revisão",
+    "title_word_keeper": "Guardião das palavras",
+    "title_kolo_legend": "Lenda do Kolo",
+    "title_system_master": "Mestre do sistema",
+    "title_orbit_cartographer": "Cartógrafo de órbitas",
+    "title_stargazer": "Observador de estrelas",
+    "title_beta_tester": "Beta tester",
+    "ring_beta": "Primeira órbita"
+  },
+  "exclusive": "Exclusivo",
+  "special": {
+    "title": "Recompensas especiais",
+    "hint": "Por completar coleções e para beta testers. Nunca saem das cápsulas."
+  }
+}

@@ -1,40 +1,126 @@
 {
+  "guestStub": {
+    "title": "Profil indisponible",
+    "description": "Connecte-toi ou crée un compte pour voir ta progression et tes statistiques",
+    "retry": "Réessayer",
+    "toLogin": "Se connecter"
+  },
+  "usernamePlaceholder": "pseudo",
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "edit": "Modifier le profil",
+  "logoutTitle": "Se déconnecter",
+  "logoutConfirm": "Te déconnecter de Kolo sur cet appareil ?",
+  "nameLabel": "Nom",
+  "usernameLabel": "Pseudo",
+  "usernameHint": "3 à 20 caractères : lettres latines, chiffres, _",
+  "changePhoto": "Changer de photo",
+  "memberSince": "Membre depuis {date}",
+  "team": {
+    "staff": "Équipe Dakuta",
+    "staffHint": "Travaille sur Kolo",
+    "adminHint": "A accès au panneau d'administration"
+  },
+  "toast": {
+    "success": "Profil mis à jour",
+    "error": "Impossible d'enregistrer ton profil. Réessaie"
+  },
+  "errors": {
+    "usernameRequired": "Choisis un pseudo : il est obligatoire",
+    "usernameInvalid": "Pseudo : 3 à 20 caractères (lettres latines, chiffres ou _)",
+    "usernameTaken": "Ce pseudo est déjà pris",
+    "avatarType": "Choisis un fichier image",
+    "avatarSize": "Le fichier est trop lourd (8 Mo max.)",
+    "avatarDecode": "Impossible de traiter l'image. Essaie un JPEG ou un PNG.",
+    "avatarUnsupported": "Ton navigateur ne peut pas traiter les images",
+    "avatarCompress": "Impossible de compresser l'image",
+    "avatarGeneric": "Impossible d'envoyer la photo. Réessaie"
+  },
+  "legacyFlames": {
+    "name": "Flammes",
+    "description": "Ton record de jours d'affilée avant les orbites : {days}."
+  },
+  "tabs": {
+    "medals": "Médailles",
+    "stats": "Statistiques"
+  },
+  "orbit": {
+    "title": "Orbite de la semaine",
+    "inRow": {
+      "one": "orbite d'affilée",
+      "other": "orbites d'affilée"
+    },
+    "record": "Record",
+    "shields": "Boucliers",
+    "goal": "Objectif",
+    "change": "Changer",
+    "next": "À partir de lundi : {value}"
+  },
+  "level": {
+    "label": "Niveau {n}",
+    "toNext": "{into} XP sur {next} avant le niveau suivant",
+    "total": "XP au total"
+  },
+  "stats": {
+    "totalWords": "Mots",
+    "sessions": "Perigee et cartes mémoire",
+    "quizzes": "Quiz",
+    "blitz": "Manches de Blitz",
+    "inLearning": "Temps de pratique",
+    "weekTitle": "7 derniers jours",
+    "weekSessions": "Séances",
+    "cardsStudied": "Cartes",
+    "studyTime": "Temps"
+  },
+  "activity": "Activité",
+  "calendar": {
+    "less": "Moins",
+    "more": "Plus",
+    "sessions": {
+      "one": "{n} séance",
+      "other": "{n} séances"
+    },
+    "cards": {
+      "one": "{n} carte",
+      "other": "{n} cartes"
+    }
+  },
+  "achievements": "Succès",
+  "showAll": "Tout afficher ({n})",
+  "showLess": "Afficher moins",
+  "unlocked": "Débloqué",
   "achievementsList": {
-    "perfect_quiz": {
-      "name": "Parfait !",
-      "description": "Termine un quiz de 10+ questions sans aucune faute"
+    "first_collection": {
+      "name": "Premier pas",
+      "description": "Crée ton premier set"
     },
-    "perfect_quizzes_3": {
-      "name": "Perfectionniste",
-      "description": "Termine 3 quiz de 10+ questions sans faute"
+    "first_study": {
+      "name": "Le voyage commence",
+      "description": "Termine ta première séance d'entraînement"
     },
-    "perfect_quizzes_10": {
-      "name": "Machine",
-      "description": "Termine 10 quiz de 10+ questions sans faute"
+    "streak_3": {
+      "name": "Trois d'affilée",
+      "description": "Entraîne-toi 3 jours d'affilée"
     },
-    "speed_demon": {
-      "name": "Éclair",
-      "description": "Réponds aux questions d'un quiz en moins de 5 secondes chacune ou donne 30 réponses en une manche de Blitz, avec au moins 80 % de bonnes réponses"
+    "streak_7": {
+      "name": "Semaine de force",
+      "description": "Entraîne-toi 7 jours d'affilée"
     },
-    "all_know": {
-      "name": "Je sais tout !",
-      "description": "Réponds juste du premier coup à tous les mots d'une séance Perigee, chacun vérifié par une réponse et non par ta propre note"
+    "streak_14": {
+      "name": "Deux semaines",
+      "description": "Entraîne-toi 14 jours d'affilée"
     },
-    "flashcards_1": {
-      "name": "Première rencontre",
-      "description": "Termine ta première séance Perigee ou de cartes mémoire"
+    "streak_30": {
+      "name": "Mois de ténacité",
+      "description": "Entraîne-toi 30 jours d'affilée"
     },
-    "flashcards_10": {
-      "name": "Apprenti des cartes",
-      "description": "Termine 10 séances Perigee ou de cartes mémoire"
+    "streak_60": {
+      "name": "Deux mois",
+      "description": "Entraîne-toi 60 jours d'affilée"
     },
-    "flashcards_50": {
-      "name": "Maître des cartes",
-      "description": "Termine 50 séances Perigee ou de cartes mémoire"
-    },
-    "flashcards_100": {
-      "name": "As des cartes",
-      "description": "Termine 100 séances Perigee ou de cartes mémoire"
+    "streak_100": {
+      "name": "Cent jours",
+      "description": "Entraîne-toi 100 jours d'affilée"
     },
     "cards_10": {
       "name": "Premiers mots",
@@ -64,6 +150,50 @@
       "name": "Dictionnaire ambulant",
       "description": "Commence à apprendre 1 000 mots"
     },
+    "flashcards_1": {
+      "name": "Première rencontre",
+      "description": "Termine ta première séance Perigee ou de cartes mémoire"
+    },
+    "flashcards_10": {
+      "name": "Apprenti des cartes",
+      "description": "Termine 10 séances Perigee ou de cartes mémoire"
+    },
+    "flashcards_50": {
+      "name": "Maître des cartes",
+      "description": "Termine 50 séances Perigee ou de cartes mémoire"
+    },
+    "flashcards_100": {
+      "name": "As des cartes",
+      "description": "Termine 100 séances Perigee ou de cartes mémoire"
+    },
+    "quiz_1": {
+      "name": "Premier examen",
+      "description": "Termine ton premier quiz"
+    },
+    "quiz_10": {
+      "name": "Testeur",
+      "description": "Termine 10 quiz"
+    },
+    "quiz_50": {
+      "name": "Maître du quiz",
+      "description": "Termine 50 quiz"
+    },
+    "quiz_100": {
+      "name": "Champion du quiz",
+      "description": "Termine 100 quiz"
+    },
+    "perfect_quiz": {
+      "name": "Parfait !",
+      "description": "Termine un quiz de 10+ questions sans aucune faute"
+    },
+    "perfect_quizzes_3": {
+      "name": "Perfectionniste",
+      "description": "Termine 3 quiz de 10+ questions sans faute"
+    },
+    "perfect_quizzes_10": {
+      "name": "Machine",
+      "description": "Termine 10 quiz de 10+ questions sans faute"
+    },
     "collections_3": {
       "name": "Bibliothécaire",
       "description": "Commence à apprendre 3 sets"
@@ -71,17 +201,30 @@
     "collections_5": {
       "name": "Archiviste",
       "description": "Commence à apprendre 5 sets"
+    },
+    "night_owl": {
+      "name": "Oiseau de nuit",
+      "description": "Entraîne-toi après minuit"
+    },
+    "early_bird": {
+      "name": "Lève-tôt",
+      "description": "Entraîne-toi avant 7 h du matin"
+    },
+    "marathon": {
+      "name": "Marathonien",
+      "description": "Entraîne-toi plus de 30 minutes en une séance"
+    },
+    "speed_demon": {
+      "name": "Éclair",
+      "description": "Réponds aux questions d'un quiz en moins de 5 secondes chacune ou donne 30 réponses en une manche de Blitz, avec au moins 80 % de bonnes réponses"
+    },
+    "all_know": {
+      "name": "Je sais tout !",
+      "description": "Réponds juste du premier coup à tous les mots d'une séance Perigee, chacun vérifié par une réponse et non par ta propre note"
+    },
+    "comeback": {
+      "name": "Le retour",
+      "description": "Reprends l'apprentissage après une pause de 7+ jours"
     }
-  },
-  "stats": {
-    "totalWords": "Mots",
-    "sessions": "Perigee et cartes mémoire",
-    "quizzes": "Quiz",
-    "blitz": "Manches de Blitz",
-    "inLearning": "Temps de pratique",
-    "weekTitle": "7 derniers jours",
-    "weekSessions": "Séances",
-    "cardsStudied": "Cartes",
-    "studyTime": "Temps"
   }
 }
