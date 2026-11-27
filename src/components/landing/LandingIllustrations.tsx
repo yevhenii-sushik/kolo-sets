@@ -554,7 +554,8 @@ export function SetsPreview() {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-0 right-0 w-52 rotate-2 rounded-2xl bg-fg text-on-inverse p-3.5 shadow-xl">
+      {/* right-2, а не right-0: повёрнутая карточка выходит углом за край, и его срезает overflow-hidden рамки */}
+      <div className="absolute bottom-0 right-2 w-52 rotate-2 rounded-2xl bg-fg text-on-inverse p-3.5 shadow-xl">
         <div className="flex items-center gap-1.5 text-xs font-semibold text-on-inverse/75">
           <ClipboardPaste size={14} />
           {w.import}

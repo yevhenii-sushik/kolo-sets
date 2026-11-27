@@ -247,12 +247,15 @@ export default function RewardsPage() {
                   <li
                     key={item.id}
                     className={cx(
-                      "grid content-start justify-items-center gap-2 rounded-2xl border p-3 text-center",
+                      "grid grid-cols-1 content-start justify-items-center gap-2 rounded-2xl border p-3 text-center",
                       on ? "border-accent bg-accent-soft" : "border-line",
                     )}
                   >
+                    {/* Ячейка не шире своей колонки (grid-cols-1 — это minmax(0, 1fr)) и на телефоне 360px:
+                        длинное название переносится, подпись кнопки встаёт в две строки, а отступ кнопки — px-2!
+                        (с «!», потому что px-4 из buttonStyles идёт в CSS позже и иначе побеждает) */}
                     <ItemArt id={item.id} size={64} className={cx(!has && "opacity-25 grayscale")} />
-                    <p className={cx("text-sm font-semibold leading-tight", has ? "text-fg" : "text-faint")}>{name(item.id)}</p>
+                    <p className={cx("text-sm font-semibold leading-tight break-words hyphens-auto", has ? "text-fg" : "text-faint")}>{name(item.id)}</p>
                     <RarityChip rarity={item.rarity} />
                     {has ? (
                       <Button
@@ -261,9 +264,11 @@ export default function RewardsPage() {
                         loading={busy === item.id}
                         disabled={!!busy || noRoom(item)}
                         onClick={() => toggle(item)}
-                        className="mt-1 w-full"
+                        className="mt-1 w-full px-2!"
                       >
-                        {on ? r.equip.off : noRoom(item) ? r.satellites.noRoom : r.equip.on}
+                        <span className="whitespace-normal leading-tight">
+                          {on ? r.equip.off : noRoom(item) ? r.satellites.noRoom : r.equip.on}
+                        </span>
                       </Button>
                     ) : cost !== undefined ? (
                       <Button
@@ -273,9 +278,9 @@ export default function RewardsPage() {
                         disabled={loot.dust < cost || !!busy}
                         title={loot.dust < cost ? r.dust.notEnough : undefined}
                         onClick={() => craft(item, cost)}
-                        className="mt-1 w-full"
+                        className="mt-1 w-full px-2!"
                       >
-                        {r.dust.craft.replace("{n}", String(cost))}
+                        <span className="whitespace-normal leading-tight">{r.dust.craft.replace("{n}", String(cost))}</span>
                       </Button>
                     ) : (
                       <p className="mt-1 text-xs text-faint">{r.collections.missing}</p>
