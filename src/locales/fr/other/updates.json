@@ -34,6 +34,10 @@
         {
           "title": "Partage ton orbite",
           "text": "Ton orbite de la semaine peut maintenant devenir une image pour les réseaux sociaux ou une discussion : l'anneau avec ta série, les jours de cette semaine, ton record et ton niveau, en style clair, chaleureux ou nuit. Cherche « Partager » dans ton profil, dans la carte de la semaine en haut de l'écran et au moment même où une orbite se referme."
+        },
+        {
+          "title": "Partage un set avec un lien",
+          "text": "Tu peux maintenant partager n’importe lequel de tes sets avec un lien : sur la page du set, touche « Partager », crée le lien et envoie-le à qui tu veux. La personne qui l’ouvre voit les mots, même sans compte, et en ajoute une copie à son Kolo d’un seul geste ; si elle n’apprend pas encore cette langue, le cours est ajouté avec le set. Le lien montre toujours le set tel qu’il est maintenant : les mots que tu ajoutes plus tard seront visibles aussi. Personne ne voit ta progression, et tu peux désactiver le lien à tout moment."
         }
       ],
       "fixes": [

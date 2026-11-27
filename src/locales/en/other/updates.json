@@ -34,6 +34,10 @@
         {
           "title": "Share your orbit",
           "text": "Your weekly orbit can now become a picture for social media or a chat: the ring with your streak, the days of this week, your record and level, in a light, warm or night style. Look for Share in your profile, in the week card at the top of the screen and right when an orbit closes."
+        },
+        {
+          "title": "Share a set by link",
+          "text": "Any of your sets can now be shared with a link: on the set page, tap Share, create the link and send it to whoever you like. Anyone who opens it sees the words, even without an account, and adds a copy to their Kolo in one tap; if they don't learn that language yet, the course is added along with the set. The link always shows the set as it is now, so words you add later show up too. Your progress stays private, and you can turn the link off at any time."
         }
       ],
       "fixes": [

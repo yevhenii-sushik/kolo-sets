@@ -9,7 +9,7 @@ import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
 import { useConfirm } from "../../hooks/useConfirm";
 import { useToast } from "../../hooks/useToast";
-import { Plus, Upload, Download, Pencil, ArrowUp, Layers, Play, CloudOff, RotateCw } from "lucide-react";
+import { Plus, Upload, Download, Pencil, ArrowUp, Layers, Play, CloudOff, RotateCw, Share2 } from "lucide-react";
 import { Button, Card as UiCard, Field, Heading, IconButton, Input, Loading, Modal, Skeleton, Text } from "../../ui";
 import { getLanguageInfo } from "../../locales/languages";
 import { courseCodeFromLanguage, courseNameInline } from "../../courses/languages";
@@ -18,6 +18,7 @@ import AddCardModal, { type CourseWord } from "../../components/AddCardModal";
 import ImportCardsModal from "../../components/ImportCardsModal";
 import CardListItem from "../../components/cards/CardListItem";
 import ShareCardModal from "../../components/cards/ShareCardModal";
+import ShareSetModal from "../../components/cards/ShareSetModal";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import StudyModeModal from "../../components/cards/StudyModeModal";
 import { SetPlanBar, SetPlanLegend } from "../../components/cards/SetPlanView";
@@ -63,6 +64,8 @@ export default function CollectionEditPage() {
   const [isExporting, setIsExporting] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [showModes, setShowModes] = useState(false);
+  // Набор по ссылке (docs/specs/07-shared-sets.md)
+  const [showShareSet, setShowShareSet] = useState(false);
   const [renameValue, setRenameValue] = useState("");
 
   // Большой заголовок тает по прокрутке, и в то же время (одна и та же позиция прокрутки, без
@@ -245,6 +248,9 @@ export default function CollectionEditPage() {
           <IconButton variant="surface" label={e.import} onClick={() => setIsImportModalOpen(true)}>
             <Upload size={18} />
           </IconButton>
+          <IconButton variant="surface" label={t.words.shareSet.action} onClick={() => setShowShareSet(true)} disabled={cardCount === 0}>
+            <Share2 size={18} />
+          </IconButton>
           <IconButton variant="surface" label={e.export} onClick={handleExport} disabled={isExporting || cardCount === 0}>
             <Download size={18} />
           </IconButton>
@@ -261,6 +267,9 @@ export default function CollectionEditPage() {
           </Button>
           <Button variant="secondary" iconLeft={<Upload size={18} />} onClick={() => setIsImportModalOpen(true)}>
             {e.import}
+          </Button>
+          <Button variant="secondary" iconLeft={<Share2 size={18} />} disabled={cardCount === 0} onClick={() => setShowShareSet(true)}>
+            {t.words.shareSet.action}
           </Button>
           <Button variant="secondary" iconLeft={<Download size={18} />} loading={isExporting} disabled={cardCount === 0} onClick={handleExport}>
             {e.export}
@@ -420,6 +429,7 @@ export default function CollectionEditPage() {
         />
       )}
       {collection && <StudyModeModal collection={collection} open={showModes} onClose={() => setShowModes(false)} />}
+      {collection && <ShareSetModal collection={collection} open={showShareSet} onClose={() => setShowShareSet(false)} />}
       <ReportMistakeModal
         target={reporting}
         onClose={() => setReporting(null)}

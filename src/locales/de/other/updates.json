@@ -34,6 +34,10 @@
         {
           "title": "Teile deinen Orbit",
           "text": "Dein Wochen-Orbit kann jetzt zum Bild für soziale Netzwerke oder einen Chat werden: der Ring mit deiner Orbit-Serie, die Tage dieser Woche, dein Rekord und dein Level, im hellen, warmen oder nächtlichen Stil. „Teilen“ findest du im Profil, in der Wochenkarte oben auf dem Bildschirm und genau in dem Moment, in dem sich ein Orbit schließt."
+        },
+        {
+          "title": "Sets per Link teilen",
+          "text": "Jedes deiner Sets lässt sich jetzt per Link teilen: Tippe auf der Seite des Sets auf „Teilen“, erstelle den Link und schick ihn, an wen du willst. Wer ihn öffnet, sieht die Wörter – auch ohne Konto – und übernimmt mit einem Tippen eine Kopie in sein Kolo; lernt die Person diese Sprache noch nicht, kommt der Kurs gleich mit dem Set dazu. Der Link zeigt das Set immer so, wie es gerade ist, also sind später hinzugefügte Wörter auch zu sehen. Deinen Fortschritt sieht niemand, und den Link kannst du jederzeit ausschalten."
         }
       ],
       "fixes": [

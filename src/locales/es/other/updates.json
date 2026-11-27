@@ -34,6 +34,10 @@
         {
           "title": "Comparte tu órbita",
           "text": "Tu órbita de la semana ahora puede convertirse en una imagen para redes sociales o un chat: el anillo con tu racha, los días de esta semana, tu récord y tu nivel, en estilo claro, cálido o nocturno. Busca «Compartir» en tu perfil, en la tarjeta de la semana en la parte de arriba de la pantalla y justo cuando se cierra una órbita."
+        },
+        {
+          "title": "Comparte un set con un enlace",
+          "text": "Ahora puedes compartir cualquiera de tus sets con un enlace: en la página del set, toca «Compartir», crea el enlace y envíalo a quien quieras. Quien lo abra verá las palabras, incluso sin cuenta, y añadirá una copia a su Kolo con un toque; si todavía no estudia ese idioma, el curso se añade junto con el set. El enlace siempre muestra el set tal como está ahora, así que las palabras que añadas después también se verán. Nadie ve tu progreso, y puedes desactivar el enlace cuando quieras."
         }
       ],
       "fixes": [

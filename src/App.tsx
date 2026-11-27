@@ -12,6 +12,7 @@ import { localDateKey } from "./utils/progress";
 import { genericIndex } from "./motivation/nudge";
 import { getLanguageInfo } from "./locales/languages";
 import { applyPendingUpdate } from "./utils/registerServiceWorker";
+import { afterSignInPath } from "./sharedSets/pending";
 
 import AchievementUnlockBanner from "./components/AchievementUnlockBanner";
 import { ProgressMomentsHost } from "./components/progress/ProgressMoments";
@@ -57,6 +58,7 @@ const StartPage = lazy(pages.start);
 const CoursesPage = lazy(pages.courses);
 const AddCoursePage = lazy(pages.addCourse);
 const AdminPage = lazy(pages.admin);
+const SharedSetPage = lazy(pages.sharedSet);
 
 // Ссылка на убранный режим набора → похожий режим того же набора
 function SetRedirect({ to }: { to: "speed" | "learn" }) {
@@ -110,8 +112,8 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 function PublicRoute({ children }: { children: React.ReactNode }) {
   const { user, loading, expectUser } = useAuth();
   if (loading && expectUser) return <AppSplash />;
-  // Если юзер уже залогинен, отправляем его в приложение
-  return !user ? <>{children}</> : <Navigate to="/" replace />;
+  // Если юзер уже залогинен, отправляем его в приложение — или на набор по ссылке, с которого он пришёл входить
+  return !user ? <>{children}</> : <Navigate to={afterSignInPath()} replace />;
 }
 
 // Новая версия, которая уже скачалась, подменяется при переходе между экранами (utils/registerServiceWorker.ts)
@@ -249,6 +251,9 @@ function AppContent() {
         <Route path="/modes" element={<GuidePage page="modes" />} />
         <Route path="/perigee" element={<GuidePage page="perigee" />} />
       </Route>
+
+      {/* 6. Набор по ссылке — и для гостей, и для вошедших (docs/specs/07-shared-sets.md) */}
+      <Route path="/s/:id" element={<SharedSetPage />} />
 
       {DesignPage && <Route path="/design" element={<DesignPage />} />}
 

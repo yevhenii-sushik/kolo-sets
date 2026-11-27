@@ -4,6 +4,7 @@ import { Mail } from 'lucide-react';
 import { Alert, Button, Field, Input } from '../../ui';
 import { useAuth } from '../../contexts/AuthContext';
 import { useI18n } from '../../contexts/I18nContext';
+import { afterSignInPath } from '../../sharedSets/pending';
 import ConsentText from '../../components/legal/ConsentText';
 import AuthLayout, { AuthDivider } from '../../components/auth/AuthLayout';
 import GoogleButton from '../../components/auth/GoogleButton';
@@ -39,7 +40,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password);
-      navigate('/');
+      navigate(afterSignInPath());
     } catch (err: any) {
       setError(a.errors[AUTH_ERRORS[err.code] ?? 'generic']);
     } finally {
@@ -52,7 +53,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await loginGoogle();
-      navigate('/');
+      navigate(afterSignInPath());
     } catch {
       setError(a.errors.google);
     } finally {

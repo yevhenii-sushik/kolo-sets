@@ -51,6 +51,12 @@ export function handler(run: Run<string>) {
   return wrap(async (req) => (await uidFrom(req)) ?? json(401, { error: "unauthorized" }), run);
 }
 
+// Публичные функции (набор по ссылке, docs/specs/07-shared-sets.md): вход не обязателен. uid — если токен
+// есть и действителен, иначе null; недействительный токен не ошибка — человек просто смотрит как гость
+export function publicHandler(run: Run<string | null>) {
+  return wrap(uidFrom, run);
+}
+
 // Админские функции (docs/specs/admin.md): claim admin в токене; снятые права действуют сразу,
 // потому что скрипт выдачи прав отзывает сессии, а здесь проверяется отзыв
 export function adminHandler(run: Run<string>) {

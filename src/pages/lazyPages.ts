@@ -29,6 +29,8 @@ export const pages = {
   addCourse: () => import("./courses/AddCoursePage"),
   // Админ-панель — отдельный чанк, обычные пользователи его не загружают (docs/specs/admin.md)
   admin: () => import("./admin/AdminPage"),
+  // Набор по ссылке — публичная страница, открывается и без входа (docs/specs/07-shared-sets.md)
+  sharedSet: () => import("./shared/SharedSetPage"),
 };
 
 // Что открывают чаще всего: вкладки, сессия Perigee, карточки и редактор набора.

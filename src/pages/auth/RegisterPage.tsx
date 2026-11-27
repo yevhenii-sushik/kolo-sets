@@ -4,6 +4,7 @@ import { Mail, User } from 'lucide-react';
 import { Alert, Button, Checkbox, Field, Input } from '../../ui';
 import { useAuth } from '../../contexts/AuthContext';
 import { useI18n } from '../../contexts/I18nContext';
+import { afterSignInPath } from '../../sharedSets/pending';
 import { auth } from '../../firebase/config';
 import { recordLegalAcceptance } from '../../firebase/firestore';
 import ConsentText from '../../components/legal/ConsentText';
@@ -70,7 +71,7 @@ export default function RegisterPage() {
     try {
       await register(email, password, name);
       await saveAcceptance();
-      navigate('/');
+      navigate(afterSignInPath());
     } catch (err: any) {
       setError(a.errors[AUTH_ERRORS[err.code] ?? 'generic']);
     } finally {
@@ -89,7 +90,7 @@ export default function RegisterPage() {
     try {
       await loginGoogle();
       await saveAcceptance();
-      navigate('/');
+      navigate(afterSignInPath());
     } catch {
       setError(a.errors.google);
     } finally {

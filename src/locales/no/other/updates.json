@@ -34,6 +34,10 @@
         {
           "title": "Del banen din",
           "text": "Ukens bane kan nå bli et bilde til sosiale medier eller en chat: ringen med rekken din, dagene denne uka, rekorden og nivået ditt, i lys, varm eller nattstil. Du finner Del i profilen, i ukekortet øverst på skjermen og akkurat når en bane lukkes."
+        },
+        {
+          "title": "Del et sett med en lenke",
+          "text": "Nå kan du dele hvilket som helst av settene dine med en lenke: trykk Del på siden til settet, lag lenken og send den til hvem du vil. Den som åpner den, ser ordene – også uten konto – og legger til en kopi i sin Kolo med ett trykk; lærer personen ikke det språket ennå, legges kurset til sammen med settet. Lenken viser alltid settet slik det er nå, så ord du legger til senere, blir også synlige. Fremgangen din ser ingen, og du kan slå av lenken når som helst."
         }
       ],
       "fixes": [

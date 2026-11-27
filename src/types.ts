@@ -144,6 +144,7 @@ export interface Collection {
   folderId?: string;         // ID папки (undefined = без папки)
   courseId?: string;         // ID курса; у старых наборов нет — проставляется при загрузке
   preset?: CollectionPreset; // набор взят из готовых наборов Kolo
+  sharedFrom?: string;        // копия набора по ссылке: id ссылки (docs/specs/07-shared-sets.md)
 }
 
 // Статистика сессии флешкарточек
