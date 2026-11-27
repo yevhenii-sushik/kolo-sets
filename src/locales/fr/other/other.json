@@ -1,4 +1,20 @@
 {
+  "settings": "Réglages",
+  "updates": "Nouveautés",
+  "support": "Assistance",
+  "groups": {
+    "app": "Appli",
+    "docs": "Documents"
+  },
+  "hints": {
+    "settings": "Compte, apparence, rappels, sauvegarde",
+    "updates": "Toutes les versions de Kolo",
+    "support": "Signale un problème, pose une question ou partage une idée",
+    "privacy": "Comment nous traitons tes données",
+    "terms": "Les règles d'utilisation de Kolo",
+    "cookies": "Ce que nous enregistrons dans ton navigateur",
+    "courses": "Les langues que tu apprends"
+  },
   "version": "Version {v}",
   "updateCheck": {
     "build": "Build du {d}",
@@ -7,5 +23,38 @@
     "updating": "Mise à jour…",
     "latest": "Tu as la dernière version",
     "offline": "Pas de connexion. Réessaie quand tu seras en ligne."
-  }
+  },
+  "supportPage": {
+    "title": "Assistance",
+    "subtitle": "Quelque chose ne marche pas, une question ou une idée ? Écris-nous : ton message arrive directement à l'équipe Kolo.",
+    "topicTitle": "C'est à quel sujet ?",
+    "topics": {
+      "problem": "Problème",
+      "question": "Question",
+      "idea": "Idée",
+      "feedback": "Avis"
+    },
+    "topicRequired": "Choisis le sujet de ton message.",
+    "message": "Message",
+    "messagePlaceholder": "Plus tu donnes de détails, plus vite nous pourrons t'aider",
+    "placeholders": {
+      "problem": "Qu'est-ce qui n'a pas marché ? Dis-nous ce que tu faisais juste avant",
+      "question": "Pose n'importe quelle question sur Kolo",
+      "idea": "Qu'est-ce que tu ajouterais ou changerais, et pourquoi ?",
+      "feedback": "Qu'est-ce qui te plaît, et qu'est-ce qui te gêne ?"
+    },
+    "reply": "Répondre à mon e-mail",
+    "send": "Envoyer",
+    "sendError": "Impossible d'envoyer le message. Réessaie un peu plus tard.",
+    "sentTitle": "Merci !",
+    "sentText": "Ton message est arrivé à l'équipe Kolo. Nous les lisons tous.",
+    "sentReply": "Nous te répondrons à {email}.",
+    "sentHome": "Retour à l'accueil",
+    "sentAgain": "Écrire un autre message",
+    "otherTitle": "Autres moyens",
+    "mail": "Nous écrire par e-mail",
+    "mailHint": "{email} : pratique pour joindre une capture d'écran",
+    "updatesHint": "C'est peut-être déjà corrigé ou ajouté"
+  },
+  "courses": "Cours"
 }

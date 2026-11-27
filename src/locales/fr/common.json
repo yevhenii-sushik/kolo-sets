@@ -1,8 +1,75 @@
 {
+  "appName": "Kolo Sets",
+  "loading": "Chargement...",
   "boot": {
     "loading": "Chargement de Kolo…",
     "slow": "Connexion lente. Chargement en cours…",
     "offline": "Pas de connexion. Kolo s'ouvrira dès que tu seras de nouveau en ligne."
+  },
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "confirm": "Confirmer",
+  "delete": "Supprimer",
+  "edit": "Modifier",
+  "create": "Créer",
+  "back": "Retour",
+  "next": "Suivant",
+  "finish": "Terminer",
+  "close": "Fermer",
+  "saveFailed": {
+    "text": "Impossible d'enregistrer tes modifications.",
+    "undone": "Échec de l'enregistrement : tout est revenu comme avant.",
+    "retry": "Réessayer"
+  },
+  "nav": {
+    "home": "Accueil",
+    "words": "Mots",
+    "stories": "Histoires",
+    "dictionary": "Dictionnaire",
+    "profile": "Profil",
+    "other": "Plus"
+  },
+  "shell": {
+    "menu": "Afficher ou masquer le menu",
+    "streak": {
+      "days": {
+        "one": "{n} jour",
+        "other": "{n} jours"
+      }
+    },
+    "verify": {
+      "text": "Confirme ton e-mail pour sécuriser ton compte.",
+      "resend": "Renvoyer l'e-mail",
+      "sending": "Envoi…",
+      "sent": "E-mail envoyé : regarde dans ta boîte de réception.",
+      "dismiss": "Masquer"
+    },
+    "achievement": {
+      "unlocked": "Nouvelle médaille"
+    },
+    "install": {
+      "title": "Installe Kolo",
+      "text": "Ouvre-le depuis ton écran d'accueil, sans barre d'adresse",
+      "ios": "Touche {share} puis choisis {add} « Sur l'écran d'accueil »",
+      "install": "Installer"
+    },
+    "legalUpdate": {
+      "text": "Le {date}, nous avons mis à jour les Conditions d'utilisation et la Politique de confidentialité : l'XP, les orbites de la semaine, les capsules et les objets virtuels sont arrivés.",
+      "terms": "Conditions",
+      "privacy": "Confidentialité",
+      "ok": "Compris"
+    }
+  },
+  "wordSearch": {
+    "placeholder": "Cherche un mot ou une traduction",
+    "clear": "Effacer",
+    "found": {
+      "one": "{n} résultat",
+      "other": "{n} résultats"
+    },
+    "noResults": "Aucun résultat",
+    "noResultsText": "Aucun mot, aucune traduction ni explication de ce cours ne contient « {q} »",
+    "limit": "Seuls les 50 premiers s'affichent : tape quelques lettres de plus"
   },
   "orbit": {
     "label": "Orbite de la semaine",
@@ -10,9 +77,67 @@
       "one": "{n} orbite d'affilée",
       "other": "{n} orbites d'affilée"
     },
+    "daysOf": "{done} jours sur {goal}",
     "best": "Record",
+    "shields": "Boucliers",
+    "shieldsHint": "Un bouclier boucle une semaine à ta place si tu n'y arrives pas. Tu en gagnes un toutes les 4 orbites d'affilée.",
+    "status": {
+      "closed": "Orbite bouclée ! La prochaine commence lundi.",
+      "onTrack": {
+        "one": "Encore {n} jour et l'orbite est bouclée.",
+        "other": "Encore {n} jours et l'orbite est bouclée."
+      },
+      "atRisk": "Pour boucler l'orbite, entraîne-toi chaque jour jusqu'à dimanche.",
+      "lostShield": "Cette semaine ne peut plus être bouclée : un bouclier sauvera ta série.",
+      "lostRepair": "Cette semaine ne peut plus être bouclée. En début de semaine prochaine, tu pourras réparer ta série.",
+      "lostNew": "Cette semaine ne peut plus être bouclée : une nouvelle série commence la semaine prochaine."
+    },
+    "repair": "Réparer la série : {done} séances sur {total} d'ici la fin de mercredi",
+    "more": "Plus de détails dans ton profil",
+    "today": "Aujourd'hui",
+    "goal": {
+      "title": "Ton rythme de la semaine",
+      "intro": "Les flammes quotidiennes de Kolo deviennent des orbites de la semaine. Choisis combien de jours par semaine tu veux t'entraîner : atteins ce nombre et l'orbite est bouclée, ta série d'orbites grandit. Rater un jour ne casse rien.",
+      "introNew": "Kolo compte en semaines, pas en jours. Choisis combien de jours par semaine tu vas t'entraîner : atteins ce nombre et l'orbite de la semaine est bouclée, ta série d'orbites grandit. Rater un jour ne casse rien.",
+      "ringCaption": "Chaque point est un jour où tu t'es entraîné. Remplis-en assez et l'orbite est bouclée.",
+      "migrated": {
+        "one": "Nous avons recalculé ton historique : ta série est de {n} orbite.",
+        "other": "Nous avons recalculé ton historique : ta série est de {n} orbites."
+      },
+      "legacy": "Ton record de flammes ({days}) est conservé comme médaille dans ton profil.",
+      "perWeek": {
+        "one": "{n} jour par semaine",
+        "other": "{n} jours par semaine"
+      },
+      "levels": {
+        "3": "Tranquille",
+        "4": "Régulier",
+        "5": "Sérieux",
+        "6": "Presque tous les jours",
+        "7": "Tous les jours"
+      },
+      "hint": "Tu peux le changer dans ton profil : le nouvel objectif commence lundi.",
+      "nextWeek": "Le nouvel objectif commence lundi.",
+      "start": "C'est parti",
+      "save": "Enregistrer",
+      "error": "Impossible d'enregistrer ton objectif. Vérifie ta connexion et réessaie."
+    },
     "moments": {
-      "level": "Niveau {n}"
+      "orbitTitle": "Orbite bouclée !",
+      "xp": "+{n} XP",
+      "shieldEarned": "Et un bouclier en réserve : il boucle une semaine à ta place si tu n'y arrives pas.",
+      "levelTitle": "Niveau supérieur !",
+      "level": "Niveau {n}",
+      "satelliteSlot": "Une nouvelle place s'est ouverte sur ton orbite : tu peux équiper un satellite de plus.",
+      "repairedTitle": "Série réparée",
+      "shieldUsedTitle": "Un bouclier a sauvé ta série",
+      "shieldUsedText": "L'orbite de la semaine dernière n'a pas été bouclée, mais un bouclier l'a couverte : ta série est intacte.",
+      "repairTitle": "Tu peux réparer ta série",
+      "repairText": {
+        "one": "La semaine dernière n'a pas abouti. Termine {n} séance d'ici la fin de mercredi et ta série revient.",
+        "other": "La semaine dernière n'a pas abouti. Termine {n} séances d'ici la fin de mercredi et ta série revient."
+      },
+      "tap": "Touche pour fermer"
     },
     "share": {
       "action": "Partager",
@@ -22,9 +147,64 @@
       "progress": "{done} jours sur {goal} cette semaine"
     }
   },
-  "saveFailed": {
-    "text": "Impossible d'enregistrer tes modifications.",
-    "undone": "Échec de l'enregistrement : tout est revenu comme avant.",
-    "retry": "Réessayer"
+  "onboarding": {
+    "skip": "Passer",
+    "back": "Retour",
+    "next": "Suivant",
+    "start": "C'est parti",
+    "step": "{n} sur {total}",
+    "createFirst": "Créer mon premier set",
+    "later": "Je regarde d'abord",
+    "loop": {
+      "add": "Ajoute des mots",
+      "learn": "Entraîne-toi",
+      "repeat": "Révise",
+      "note": "Perigee choisit le moment"
+    },
+    "steps": [
+      {
+        "title": "Salut ! Voici Kolo",
+        "text": "Tu rassembles les mots que tu veux apprendre, et Kolo t'aide à les garder. Voici comment ça marche : ça prend une demi-minute."
+      },
+      {
+        "title": "Comment ça marche",
+        "text": "Ajoute des mots, entraîne-toi avec des cartes mémoire, et Perigee, notre moteur de révision, te ramène chaque mot juste au moment où tu allais l'oublier. Quelques minutes par jour, et les mots restent pour de bon.",
+        "tip": "Tu as déjà une liste ? Colle-la d'un coup avec « Importer »."
+      },
+      {
+        "title": "Ton rythme de la semaine",
+        "text": "Choisis combien de jours par semaine tu vas t'entraîner. Atteins ton objectif : l'orbite de la semaine est bouclée et ta série grandit. En plus, t'entraîner te rapporte de l'XP, des niveaux et des capsules avec des récompenses."
+      }
+    ]
+  },
+  "courses": {
+    "switcher": "Cours : {name}",
+    "menuTitle": "Tes cours",
+    "add": "Ajouter un cours",
+    "manage": "Gérer les cours",
+    "pickTitle": "Quelle langue veux-tu apprendre ?",
+    "pickSubtitle": "Tu pourras ajouter d'autres langues plus tard. Chacune a ses propres sets et dossiers.",
+    "addTitle": "Nouveau cours",
+    "search": "Chercher une langue",
+    "popular": "Populaires",
+    "all": "Toutes les langues",
+    "noResults": "Aucune langue ne correspond à « {q} »",
+    "added": "Déjà ajouté",
+    "noVoice": "Cet appareil n'a pas de voix pour cette langue : les cartes ne seront pas lues à voix haute.",
+    "pronunciation": "Prononciation",
+    "start": "Commencer à apprendre",
+    "addButton": "Ajouter le cours",
+    "title": "Cours",
+    "subtitle": "Chaque langue a ses propres sets et dossiers. Ton niveau, ton orbite et tes médailles sont communs.",
+    "current": "Actuel",
+    "switchTo": "Passer",
+    "remove": "Supprimer le cours",
+    "removeTitle": "Supprimer le cours « {name} » ?",
+    "removeText": "Tout sera supprimé définitivement : {sets} et tous les mots qu'ils contiennent. Tu peux d'abord télécharger une sauvegarde dans les Réglages.",
+    "removeEmpty": "Le cours est vide : seul le cours sera supprimé.",
+    "removeError": "Impossible de supprimer le cours. Réessaie",
+    "moveTo": "Déplacer vers un cours",
+    "moved": "Déplacé dans le cours « {name} »",
+    "moveError": "Impossible de déplacer le set. Réessaie"
   }
 }

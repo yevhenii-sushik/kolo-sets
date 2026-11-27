@@ -1,4 +1,20 @@
 {
+  "settings": "Ajustes",
+  "updates": "Novidades",
+  "support": "Suporte",
+  "groups": {
+    "app": "App",
+    "docs": "Documentos"
+  },
+  "hints": {
+    "settings": "Conta, aparência, lembretes, backup",
+    "updates": "Todas as versões do Kolo",
+    "support": "Relate um problema, tire uma dúvida ou compartilhe uma ideia",
+    "privacy": "Como tratamos seus dados",
+    "terms": "As regras de uso do Kolo",
+    "cookies": "O que guardamos no seu navegador",
+    "courses": "Os idiomas que você está aprendendo"
+  },
   "version": "Versão {v}",
   "updateCheck": {
     "build": "Build {d}",
@@ -7,5 +23,38 @@
     "updating": "Atualizando…",
     "latest": "Você tem a versão mais recente",
     "offline": "Sem conexão. Tente de novo quando estiver online."
-  }
+  },
+  "supportPage": {
+    "title": "Suporte",
+    "subtitle": "Algo não funciona, tem uma dúvida ou uma ideia? Escreva para a gente — sua mensagem vai direto para a equipe do Kolo.",
+    "topicTitle": "Sobre o que é?",
+    "topics": {
+      "problem": "Problema",
+      "question": "Dúvida",
+      "idea": "Ideia",
+      "feedback": "Opinião"
+    },
+    "topicRequired": "Escolha o assunto da sua mensagem.",
+    "message": "Mensagem",
+    "messagePlaceholder": "Quanto mais detalhes, mais rápido conseguimos ajudar",
+    "placeholders": {
+      "problem": "O que deu errado? Conte o que você fez logo antes",
+      "question": "Pergunte o que quiser sobre o Kolo",
+      "idea": "O que você adicionaria ou mudaria — e por quê?",
+      "feedback": "Do que você gosta e o que atrapalha?"
+    },
+    "reply": "Responder no meu e-mail",
+    "send": "Enviar",
+    "sendError": "Não foi possível enviar a mensagem. Tente de novo daqui a pouco.",
+    "sentTitle": "Obrigado!",
+    "sentText": "Sua mensagem chegou à equipe do Kolo. Lemos todas.",
+    "sentReply": "Vamos responder para {email}.",
+    "sentHome": "Voltar ao início",
+    "sentAgain": "Escrever outra",
+    "otherTitle": "Outras formas",
+    "mail": "Mande um e-mail",
+    "mailHint": "{email} — prático se você quiser anexar uma captura de tela",
+    "updatesHint": "Talvez já tenha sido corrigido ou adicionado"
+  },
+  "courses": "Cursos"
 }

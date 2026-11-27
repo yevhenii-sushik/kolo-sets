@@ -1,8 +1,75 @@
 {
+  "appName": "Kolo Sets",
+  "loading": "Cargando...",
   "boot": {
     "loading": "Cargando Kolo…",
     "slow": "Conexión lenta. Seguimos cargando…",
     "offline": "Sin conexión. Kolo se abrirá en cuanto vuelvas a tener internet."
+  },
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "confirm": "Confirmar",
+  "delete": "Eliminar",
+  "edit": "Editar",
+  "create": "Crear",
+  "back": "Atrás",
+  "next": "Siguiente",
+  "finish": "Terminar",
+  "close": "Cerrar",
+  "saveFailed": {
+    "text": "No se pudieron guardar tus cambios.",
+    "undone": "No se pudo guardar: todo quedó como estaba.",
+    "retry": "Reintentar"
+  },
+  "nav": {
+    "home": "Inicio",
+    "words": "Palabras",
+    "stories": "Historias",
+    "dictionary": "Diccionario",
+    "profile": "Perfil",
+    "other": "Más"
+  },
+  "shell": {
+    "menu": "Mostrar u ocultar el menú",
+    "streak": {
+      "days": {
+        "one": "{n} día",
+        "other": "{n} días"
+      }
+    },
+    "verify": {
+      "text": "Confirma tu correo para proteger tu cuenta.",
+      "resend": "Enviar el correo otra vez",
+      "sending": "Enviando…",
+      "sent": "Correo enviado: revisa tu bandeja de entrada.",
+      "dismiss": "Ocultar"
+    },
+    "achievement": {
+      "unlocked": "Nueva medalla"
+    },
+    "install": {
+      "title": "Instala Kolo",
+      "text": "Ábrelo desde la pantalla de inicio, sin barra de direcciones",
+      "ios": "Toca {share} y elige {add} «Añadir a pantalla de inicio»",
+      "install": "Instalar"
+    },
+    "legalUpdate": {
+      "text": "El {date} actualizamos los Términos de uso y la Política de privacidad: llegaron la XP, las órbitas semanales, las cápsulas y los objetos virtuales.",
+      "terms": "Términos",
+      "privacy": "Privacidad",
+      "ok": "Entendido"
+    }
+  },
+  "wordSearch": {
+    "placeholder": "Busca una palabra o traducción",
+    "clear": "Borrar",
+    "found": {
+      "one": "{n} resultado",
+      "other": "{n} resultados"
+    },
+    "noResults": "No se encontró nada",
+    "noResultsText": "Ninguna palabra, traducción o explicación de este curso contiene «{q}»",
+    "limit": "Se muestran los 50 primeros: escribe unas letras más"
   },
   "orbit": {
     "label": "Órbita semanal",
@@ -10,9 +77,67 @@
       "one": "{n} órbita seguida",
       "other": "{n} órbitas seguidas"
     },
+    "daysOf": "{done} de {goal} días",
     "best": "Récord",
+    "shields": "Escudos",
+    "shieldsHint": "Un escudo cierra la semana por ti si no llegas. Ganas uno por cada 4 órbitas seguidas.",
+    "status": {
+      "closed": "¡Órbita cerrada! La siguiente empieza el lunes.",
+      "onTrack": {
+        "one": "{n} día más y la órbita queda cerrada.",
+        "other": "{n} días más y la órbita queda cerrada."
+      },
+      "atRisk": "Para cerrar la órbita, practica cada día hasta el domingo.",
+      "lostShield": "Esta semana ya no se puede cerrar: un escudo salvará tu racha.",
+      "lostRepair": "Esta semana ya no se puede cerrar. A principios de la próxima podrás reparar tu racha.",
+      "lostNew": "Esta semana ya no se puede cerrar: la próxima empieza una racha nueva."
+    },
+    "repair": "Reparar la racha: {done} de {total} sesiones hasta el final del miércoles",
+    "more": "Más en tu perfil",
+    "today": "Hoy",
+    "goal": {
+      "title": "Tu ritmo semanal",
+      "intro": "Las llamas diarias de Kolo ahora son órbitas semanales. Elige cuántos días a la semana quieres practicar: si lo cumples, la órbita se cierra y tu racha de órbitas crece. Saltarte un día no rompe nada.",
+      "introNew": "Kolo cuenta semanas, no días. Elige cuántos días a la semana vas a practicar: si lo cumples, la órbita de la semana se cierra y tu racha de órbitas crece. Saltarte un día no rompe nada.",
+      "ringCaption": "Cada punto es un día en que practicaste. Llena los suficientes y la órbita se cierra.",
+      "migrated": {
+        "one": "Recalculamos tu historial: tu racha es de {n} órbita.",
+        "other": "Recalculamos tu historial: tu racha es de {n} órbitas."
+      },
+      "legacy": "Tu récord de llamas ({days}) se guarda como medalla en tu perfil.",
+      "perWeek": {
+        "one": "{n} día a la semana",
+        "other": "{n} días a la semana"
+      },
+      "levels": {
+        "3": "Tranquilo",
+        "4": "Constante",
+        "5": "En serio",
+        "6": "Casi a diario",
+        "7": "Cada día"
+      },
+      "hint": "Puedes cambiarlo en tu perfil: la nueva meta empieza el lunes.",
+      "nextWeek": "La nueva meta empieza el lunes.",
+      "start": "Empezar",
+      "save": "Guardar",
+      "error": "No se pudo guardar tu meta. Revisa la conexión e inténtalo de nuevo."
+    },
     "moments": {
-      "level": "Nivel {n}"
+      "orbitTitle": "¡Órbita cerrada!",
+      "xp": "+{n} XP",
+      "shieldEarned": "Y un escudo de reserva: cierra una semana por ti si no llegas.",
+      "levelTitle": "¡Subes de nivel!",
+      "level": "Nivel {n}",
+      "satelliteSlot": "Se abrió un hueco nuevo en tu órbita: puedes equipar un satélite más.",
+      "repairedTitle": "Racha reparada",
+      "shieldUsedTitle": "Un escudo salvó tu racha",
+      "shieldUsedText": "La órbita de la semana pasada no se cerró, pero un escudo la cubrió: tu racha sigue intacta.",
+      "repairTitle": "Puedes reparar tu racha",
+      "repairText": {
+        "one": "La semana pasada se quedó a medias. Completa {n} sesión antes de que acabe el miércoles y tu racha vuelve.",
+        "other": "La semana pasada se quedó a medias. Completa {n} sesiones antes de que acabe el miércoles y tu racha vuelve."
+      },
+      "tap": "Toca para cerrar"
     },
     "share": {
       "action": "Compartir",
@@ -22,9 +147,64 @@
       "progress": "{done} de {goal} días esta semana"
     }
   },
-  "saveFailed": {
-    "text": "No se pudieron guardar tus cambios.",
-    "undone": "No se pudo guardar: todo quedó como estaba.",
-    "retry": "Reintentar"
+  "onboarding": {
+    "skip": "Saltar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "start": "¡Vamos!",
+    "step": "{n} de {total}",
+    "createFirst": "Crear mi primer set",
+    "later": "Primero echo un vistazo",
+    "loop": {
+      "add": "Añade palabras",
+      "learn": "Practica",
+      "repeat": "Repasa",
+      "note": "Perigee elige el momento"
+    },
+    "steps": [
+      {
+        "title": "¡Hola! Esto es Kolo",
+        "text": "Tú reúnes las palabras que quieres aprender y Kolo te ayuda a no olvidarlas. Te contamos cómo funciona: es medio minuto."
+      },
+      {
+        "title": "Cómo funciona",
+        "text": "Añade palabras, practícalas con tarjetas y Perigee, nuestro motor de repaso, te devuelve cada palabra justo cuando estás a punto de olvidarla. Unos minutos al día, y las palabras se quedan para siempre.",
+        "tip": "¿Ya tienes una lista? Pégala entera con «Importar»."
+      },
+      {
+        "title": "Tu ritmo semanal",
+        "text": "Elige cuántos días a la semana vas a practicar. Si cumples tu meta, la órbita de la semana se cierra y tu racha crece, y practicar te da XP, niveles y cápsulas con recompensas."
+      }
+    ]
+  },
+  "courses": {
+    "switcher": "Curso: {name}",
+    "menuTitle": "Tus cursos",
+    "add": "Añadir un curso",
+    "manage": "Gestionar cursos",
+    "pickTitle": "¿Qué idioma quieres aprender?",
+    "pickSubtitle": "Puedes añadir más idiomas después. Cada uno tiene sus propios sets y carpetas.",
+    "addTitle": "Nuevo curso",
+    "search": "Buscar idiomas",
+    "popular": "Populares",
+    "all": "Todos los idiomas",
+    "noResults": "Ningún idioma coincide con «{q}»",
+    "added": "Ya añadido",
+    "noVoice": "Este dispositivo no tiene voz para este idioma, así que las tarjetas no se leerán en voz alta.",
+    "pronunciation": "Pronunciación",
+    "start": "Empezar a aprender",
+    "addButton": "Añadir curso",
+    "title": "Cursos",
+    "subtitle": "Cada idioma tiene sus propios sets y carpetas. Tu nivel, tu órbita y tus medallas son comunes.",
+    "current": "Actual",
+    "switchTo": "Cambiar",
+    "remove": "Eliminar curso",
+    "removeTitle": "¿Eliminar el curso «{name}»?",
+    "removeText": "{sets} y todas sus palabras se eliminarán para siempre. Antes puedes descargar una copia de seguridad en Ajustes.",
+    "removeEmpty": "El curso está vacío: solo se eliminará el curso.",
+    "removeError": "No se pudo eliminar el curso. Inténtalo de nuevo",
+    "moveTo": "Mover a un curso",
+    "moved": "Movido al curso «{name}»",
+    "moveError": "No se pudo mover el set. Inténtalo de nuevo"
   }
 }
