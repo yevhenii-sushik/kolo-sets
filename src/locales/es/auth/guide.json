@@ -1,0 +1,170 @@
+{
+  "nav": "Sobre Kolo",
+  "next": "Siguiente",
+  "cta": {
+    "title": "Pruébalo con tus propias palabras",
+    "text": "Todo el aprendizaje es gratis y sin anuncios. Crear tu primer set lleva un minuto.",
+    "start": "Empezar a aprender",
+    "openApp": "Abrir Kolo"
+  },
+  "pages": {
+    "how": {
+      "tab": "Cómo funciona",
+      "meta": {
+        "title": "Cómo funciona Kolo: aprende palabras con repaso espaciado",
+        "description": "Elige un idioma, crea sets con tus propias palabras y practica unos minutos al día. Kolo te devuelve cada palabra justo antes de que la olvides."
+      },
+      "title": "Cómo funciona Kolo",
+      "lead": "Kolo es un sitio para las palabras que de verdad necesitas. Tú las añades, practicas unos minutos al día y Kolo lleva la cuenta de cuándo debe volver cada palabra.",
+      "sections": [
+        {
+          "id": "language",
+          "title": "Elige un idioma",
+          "text": "Cada idioma que aprendes es un curso aparte, con sus propios sets y carpetas, así que el español y el noruego nunca se mezclan. Kolo admite casi 60 idiomas y cualquier alfabeto o escritura. Puedes cambiar de curso directamente en la cabecera."
+        },
+        {
+          "id": "sets",
+          "title": "Crea sets con tus propias palabras",
+          "text": "Un set es una lista de palabras sobre un tema: comida, viajes, un capítulo de un libro. Cada tarjeta tiene una palabra y su traducción; si quieres, añade una explicación, un ejemplo y la categoría gramatical. Organiza los sets en carpetas y pega una lista entera de una vez: una palabra por línea."
+        },
+        {
+          "id": "practise",
+          "title": "Practica unos minutos",
+          "text": "El corazón de Kolo es la sesión Perigee: unos minutos al día, y Kolo decide qué palabras repasar y en qué formato. Las tarjetas, el test y la ronda relámpago te dan las mismas palabras cuando quieres elegir tú. Con cinco minutos al día basta para avanzar."
+        },
+        {
+          "id": "return",
+          "title": "Kolo te devuelve las palabras",
+          "text": "Después de cada respuesta, Perigee, el motor de repaso de Kolo, planea el siguiente encuentro. Las palabras difíciles vuelven mañana; las conocidas, en una semana o un mes. La pantalla de inicio muestra cuántas palabras tocan hoy, y la sesión Perigee las repasa en unos minutos."
+        },
+        {
+          "id": "goal",
+          "title": "Una meta semanal en lugar de presión diaria",
+          "text": "Elige cuántos días a la semana quieres practicar: de 3 a 7. Cada día con una sesión suma un punto a la órbita de la semana; si llegas a tu meta, la órbita se cierra. Saltarte un día no rompe nada, y un escudo puede cubrir una mala semana."
+        },
+        {
+          "id": "rewards",
+          "title": "Recompensas por practicar",
+          "text": "Cada sesión da XP y sube tu nivel. Los niveles nuevos y las órbitas cerradas traen cápsulas con satélites, colores de anillo, fondos de perfil y títulos. Las recompensas solo salen de practicar: nada está a la venta."
+        },
+        {
+          "id": "facts",
+          "title": "Conviene saber",
+          "points": [
+            { "title": "Gratis", "text": "Todo el aprendizaje es gratis y sin anuncios." },
+            { "title": "En cualquier dispositivo", "text": "Kolo funciona en el navegador del ordenador y del móvil. Añádelo a tu pantalla de inicio y se abrirá como una app." },
+            { "title": "Sincronizado", "text": "Con una cuenta, tus sets y tu progreso se guardan en la nube y se sincronizan entre tus dispositivos." },
+            { "title": "Funciona sin conexión", "text": "¿Te quedaste sin conexión a mitad de una sesión? Se guarda y se cuenta en cuanto vuelvas a tener internet." }
+          ]
+        }
+      ]
+    },
+    "modes": {
+      "tab": "Modos de práctica",
+      "meta": {
+        "title": "Modos de práctica en Kolo: sesión Perigee, tarjetas, test y juego",
+        "description": "Sesión Perigee, tarjetas, test y ronda relámpago: cuatro modos de práctica, para qué sirve mejor cada uno y cómo influyen en tu plan de repaso."
+      },
+      "title": "Cuatro modos de práctica",
+      "lead": "La sesión Perigee es el modo principal: decide qué palabras repasar y en qué formato. Las tarjetas, el test y la ronda relámpago están ahí cuando quieres elegir tú. Los cuatro le enseñan a Perigee lo que sabes.",
+      "sections": [
+        {
+          "id": "session",
+          "title": "Sesión Perigee",
+          "tags": ["Botón principal"],
+          "text": "Un botón en la pantalla de inicio empieza una sesión corta con todos los sets de tu curso: hasta 20 palabras, unos minutos. Primero las palabras pendientes, luego unas cuantas nuevas: 12 al día por defecto (5 o 20 si prefieres, en Ajustes o en el plan de un set), para que los repasos no se acumulen. Perigee primero te enseña una palabra nueva y luego te pide encontrarla entre varias opciones. Las palabras conocidas se comprueban según lo bien que las sabes: con opciones, escribiendo, con una tarjeta, de oído o con un hueco en una frase de ejemplo. Un error vuelve unos pasos después hasta que se queda. Dentro de un set, el botón «Aprender» empieza la misma sesión solo con las palabras de ese set."
+        },
+        {
+          "id": "flashcards",
+          "title": "Tarjetas",
+          "tags": ["Set completo"],
+          "text": "Mira la palabra, recuerda la traducción, da la vuelta a la tarjeta y valórate: «No lo sé» trae la palabra de vuelta más tarde en esta sesión, «Lo olvidé», mañana, «Lo recuerdo», en unos días, y «Lo sé», lo más tarde posible. Cada botón muestra cuándo volverá la palabra; en el móvil puedes deslizar: a la derecha para «Lo recuerdo», a la izquierda para «No lo sé». Un set grande va en rondas de 20 palabras, y Kolo recuerda dónde lo dejaste. Al final de una ronda ves tus palabras difíciles y puedes repasarlas otra vez enseguida. En los ajustes de las tarjetas puedes cambiar la dirección (recordar la palabra a partir de su traducción es más difícil y mejor para hablar) y activar el orden aleatorio y la lectura en voz alta. Ideal para repasar un set entero: uno nuevo o antes de una clase."
+        },
+        {
+          "id": "quiz",
+          "title": "Test",
+          "tags": ["Desde 4 palabras"],
+          "text": "Un examen sobre un set: 10 o 20 preguntas o el set entero, empezando por tus errores de la última vez y las palabras pendientes. Elige la respuesta, escribe la palabra o mezcla ambas cosas: en la mezcla, las palabras débiles salen más como opción y las fuertes, para escribir. A veces respondes de oído. El test acepta una errata y te muestra dónde está, y tus errores pasan justo después a un repaso de errores. Recuerda cuántas palabras del set has acertado, compara tu puntuación con la de la última vez y cuenta tu racha. La meta es superar el set entero. ¿No sabes la respuesta? Toca «No lo sé»: un error honesto es mejor para tu plan que un acierto por suerte."
+        },
+        {
+          "id": "speed",
+          "title": "Ronda relámpago",
+          "tags": ["Desde 4 palabras"],
+          "text": "Un minuto de reconocimiento rápido: primero las palabras pendientes y las débiles, y una palabra que fallas vuelve unas preguntas después. Los aciertos seguidos multiplican tus puntos, y un error cuesta tiempo, así que adivinar no compensa. Cada set guarda su récord. También pueden preguntarte al revés, en los dos sentidos o de oído: reconocer al instante es justo lo que necesitas en una conversación real. Aquí las palabras nuevas son solo para jugar: las presenta Perigee."
+        },
+        {
+          "id": "schedule",
+          "title": "Cómo influyen los modos en tu plan",
+          "text": "Cada modo le dice a Perigee lo bien que sabes una palabra: una respuesta por palabra y sesión, la primera. Las tarjetas usan tu valoración. En la sesión, el test y el juego, escribir la palabra exacta cuenta como «Lo sé», una opción correcta o una respuesta con errata, como «Lo recuerdo», y un error, como «Lo olvidé». Un error en el test con una palabra que aún no has visto no cuenta, y en la ronda relámpago las palabras nuevas no cuentan en absoluto: Perigee las presentará como es debido. Repasar antes de tiempo no manda una palabra muy lejos, y un error la trae de vuelta con honestidad."
+        },
+        {
+          "id": "xp",
+          "title": "Cómo se gana XP",
+          "points": [
+            { "title": "Sesión Perigee", "text": "1 XP por cada palabra, más 1 si la acertaste a la primera. Una palabra que valoras tú mismo en una tarjeta solo da el primero." },
+            { "title": "Tarjetas", "text": "1 XP por cada tarjeta." },
+            { "title": "Test", "text": "1 XP por pregunta y 1 más por cada acierto, más 10 por un test de 10+ preguntas sin errores." },
+            { "title": "Ronda relámpago", "text": "1 XP por acierto, hasta 20 por ronda. Una ronda cuenta a partir de 10 respuestas." },
+            { "title": "Bonificaciones", "text": "+5 por la primera sesión del día y +50 por cerrar la órbita de la semana. La XP de práctica tiene un tope de 400 al día." }
+          ]
+        }
+      ]
+    },
+    "perigee": {
+      "tab": "Motor Perigee",
+      "meta": {
+        "title": "Perigee: el motor de repaso espaciado de Kolo",
+        "description": "Cómo decide Kolo cuándo devolverte una palabra: la curva del olvido, cuatro botones de valoración, intervalos que crecen y el algoritmo SM-2 por dentro."
+      },
+      "title": "Perigee, el motor de repaso de Kolo",
+      "lead": "Perigee decide cuándo debe volver cada palabra: ni demasiado pronto, para que no pierdas tiempo con lo que ya sabes, ni demasiado tarde, para que no la olvides.",
+      "sections": [
+        {
+          "id": "name",
+          "title": "Por qué «Perigee»",
+          "text": "En una órbita, el perigeo (en inglés, perigee) es el punto en que un satélite pasa más cerca de su planeta. En Kolo cada palabra se mueve en su propia órbita, y su perigeo es el momento en que vuelve a ti: justo antes de empezar a desvanecerse."
+        },
+        {
+          "id": "curve",
+          "title": "La curva del olvido",
+          "text": "Sin repaso, la memoria se borra rápido: en pocos días la mayoría de las palabras nuevas desaparecen. Cada repaso en el momento justo aplana la curva, y la palabra se queda contigo más tiempo cada vez. Esto es el repaso espaciado, una de las formas de aprender mejor estudiadas."
+        },
+        {
+          "id": "ratings",
+          "title": "Cuatro botones, cuatro señales",
+          "text": "Después de cada tarjeta le dices a Perigee lo bien que sabías la palabra. Cada botón muestra cuándo volverá.",
+          "points": [
+            { "title": "No lo sé", "text": "No la recordaste. La palabra vuelve más tarde en esta sesión y empieza de nuevo mañana." },
+            { "title": "Lo olvidé", "text": "La sabías, pero se te escapó. Vuelve mañana, pero no desde cero: la siguiente respuesta correcta salta directamente a 6 días." },
+            { "title": "Lo recuerdo", "text": "La recordaste con esfuerzo. Un paso adelante normal." },
+            { "title": "Lo sé", "text": "La recordaste al instante. La palabra va lo más lejos posible." }
+          ]
+        },
+        {
+          "id": "intervals",
+          "title": "Cómo crecen los intervalos",
+          "text": "Tras la primera respuesta correcta, una palabra vuelve en 2 días («Lo recuerdo») o en 3 («Lo sé»); tras la segunda, en 6 u 8, y a partir de ahí el intervalo se multiplica por la facilidad de la palabra, y por 1,3 más con «Lo sé». La facilidad empieza en 2,5: «Lo sé» la sube, «Lo recuerdo» la deja igual, y «Lo olvidé» y «No lo sé» la bajan, pero nunca por debajo de 1,3. Las palabras fáciles vuelan lejos, y las difíciles vuelven más a menudo.",
+          "points": [
+            { "title": "Siempre «Lo sé»", "text": "3 días → 8 días → 29 días → 111 días" },
+            { "title": "Siempre «Lo recuerdo»", "text": "2 días → 6 días → 15 días → 38 días" }
+          ]
+        },
+        {
+          "id": "sm2",
+          "title": "SM-2 por dentro",
+          "text": "Perigee se basa en SM-2, el algoritmo clásico de repaso espaciado de SuperMemo y de muchas apps de tarjetas. Lo simplificamos y lo pulimos: cuatro botones claros en lugar de una escala de seis puntos, cada uno con su propio intervalo, y castigos más suaves por los errores. Todos los modos actualizan el plan con la primera respuesta a cada palabra en una sesión."
+        },
+        {
+          "id": "tips",
+          "title": "Para sacarle el máximo partido",
+          "points": [
+            { "title": "Valórate con honestidad", "text": "Un «Lo sé» generoso aleja una palabra demasiado pronto. Si dudaste, pulsa «Lo recuerdo»." },
+            { "title": "Un poco cada día", "text": "Cinco minutos al día funcionan mejor que una hora una vez por semana." },
+            { "title": "Empieza por la sesión Perigee", "text": "Empieza con las palabras pendientes y añade nuevas cuando terminas con ellas." },
+            { "title": "Palabras nuevas, de pocas en pocas", "text": "La sesión añade 12 palabras nuevas al día por defecto (o 5, o 20, como prefieras), para que los repasos nunca se conviertan en un muro. El plan de un set muestra cuándo estarán en rotación todas sus palabras nuevas." }
+          ]
+        }
+      ]
+    }
+  }
+}

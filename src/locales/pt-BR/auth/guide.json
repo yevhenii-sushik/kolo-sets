@@ -1,0 +1,170 @@
+{
+  "nav": "Sobre o Kolo",
+  "next": "Próximo",
+  "cta": {
+    "title": "Experimente com as suas próprias palavras",
+    "text": "Todo o aprendizado é grátis e sem anúncios. Criar seu primeiro set leva um minuto.",
+    "start": "Começar a aprender",
+    "openApp": "Abrir o Kolo"
+  },
+  "pages": {
+    "how": {
+      "tab": "Como funciona",
+      "meta": {
+        "title": "Como o Kolo funciona — aprenda palavras com repetição espaçada",
+        "description": "Escolha um idioma, monte sets com as suas próprias palavras e pratique alguns minutos por dia. O Kolo traz cada palavra de volta pouco antes de você esquecer."
+      },
+      "title": "Como o Kolo funciona",
+      "lead": "O Kolo é o lugar das palavras de que você realmente precisa. Você adiciona, pratica alguns minutos por dia, e o Kolo acompanha quando cada palavra deve voltar.",
+      "sections": [
+        {
+          "id": "language",
+          "title": "Escolha um idioma",
+          "text": "Cada idioma que você aprende é um curso separado, com seus próprios sets e pastas — assim espanhol e norueguês nunca se misturam. O Kolo suporta quase 60 idiomas e qualquer alfabeto ou escrita. Você troca de curso direto no cabeçalho."
+        },
+        {
+          "id": "sets",
+          "title": "Monte sets com as suas próprias palavras",
+          "text": "Um set é uma lista de palavras sobre um tema: comida, viagem, um capítulo de um livro. Cada card tem uma palavra e a tradução; se quiser, adicione uma explicação, um exemplo e a classe gramatical. Organize os sets em pastas e cole uma lista inteira de uma vez — uma palavra por linha."
+        },
+        {
+          "id": "practise",
+          "title": "Pratique alguns minutos",
+          "text": "O coração do Kolo é a sessão Perigee: alguns minutos por dia, e o Kolo decide quais palavras revisar e em que formato. Os flashcards, o quiz e a rodada relâmpago trazem as mesmas palavras quando você quer escolher. Cinco minutos por dia já bastam para avançar."
+        },
+        {
+          "id": "return",
+          "title": "O Kolo traz as palavras de volta",
+          "text": "Depois de cada resposta, o Perigee, motor de revisão do Kolo, planeja o próximo encontro. Palavras difíceis voltam amanhã; as conhecidas, em uma semana ou um mês. A tela inicial mostra quantas palavras estão para revisar hoje, e a sessão Perigee dá conta delas em poucos minutos."
+        },
+        {
+          "id": "goal",
+          "title": "Uma meta semanal em vez de pressão diária",
+          "text": "Escolha quantos dias por semana você quer praticar — de 3 a 7. Cada dia com uma sessão marca um ponto na órbita da semana; cumpra a meta e a órbita fecha. Um dia perdido não estraga nada, e um escudo pode cobrir uma semana ruim."
+        },
+        {
+          "id": "rewards",
+          "title": "Recompensas por praticar",
+          "text": "Cada sessão rende XP e sobe seu nível. Novos níveis e órbitas fechadas trazem cápsulas com satélites, cores de anel, fundos de perfil e títulos. As recompensas vêm só da prática — nada está à venda."
+        },
+        {
+          "id": "facts",
+          "title": "Bom saber",
+          "points": [
+            { "title": "Grátis", "text": "Todo o aprendizado é grátis e sem anúncios." },
+            { "title": "Em qualquer aparelho", "text": "O Kolo roda no navegador do computador e do celular. Adicione à tela inicial e ele abre como um app." },
+            { "title": "Sincronizado", "text": "Com uma conta, seus sets e seu progresso ficam na nuvem e sincronizam entre os seus aparelhos." },
+            { "title": "Funciona offline", "text": "Perdeu a conexão no meio da sessão? Ela fica salva e é contada assim que você estiver online de novo." }
+          ]
+        }
+      ]
+    },
+    "modes": {
+      "tab": "Modos de treino",
+      "meta": {
+        "title": "Modos de treino no Kolo — sessão Perigee, flashcards, quiz e jogo",
+        "description": "Sessão Perigee, flashcards, quiz e rodada relâmpago: quatro modos de treino, para que cada um serve melhor e como eles moldam seu plano de revisão."
+      },
+      "title": "Quatro modos de treino",
+      "lead": "A sessão Perigee é o modo principal: ela decide quais palavras revisar e em que formato. Os flashcards, o quiz e a rodada relâmpago estão aí quando você quer escolher. Os quatro ensinam ao Perigee o que você sabe.",
+      "sections": [
+        {
+          "id": "session",
+          "title": "Sessão Perigee",
+          "tags": ["Botão principal"],
+          "text": "Um botão na tela inicial começa uma sessão curta com todos os sets do seu curso: até 20 palavras, alguns minutos. Primeiro as palavras para revisar, depois algumas novas — 12 por dia por padrão (5 ou 20, se preferir, nos Ajustes ou no plano de um set), para as revisões não se acumularem. O Perigee primeiro mostra uma palavra nova e depois pede que você a encontre entre opções. Palavras conhecidas são testadas conforme o quanto você as sabe: com opções, digitando, num flashcard, de ouvido ou numa lacuna de uma frase de exemplo. Um erro volta alguns passos depois, até fixar. Dentro de um set, o botão “Aprender” começa a mesma sessão só com as palavras daquele set."
+        },
+        {
+          "id": "flashcards",
+          "title": "Flashcards",
+          "tags": ["Set inteiro"],
+          "text": "Veja a palavra, lembre a tradução, vire o card e avalie-se: “Não sei” traz a palavra de volta mais tarde nesta sessão, “Esqueci”, amanhã, “Lembro”, em alguns dias, e “Sei”, o mais tarde possível. Cada botão mostra quando a palavra vai voltar; no celular, você pode deslizar: para a direita para “Lembro”, para a esquerda para “Não sei”. Um set grande vai em rodadas de 20 palavras, e o Kolo lembra onde você parou. No fim de uma rodada, você vê as palavras difíceis e pode passar por elas de novo na hora. Nos ajustes dos cards, você pode inverter a direção — lembrar a palavra a partir da tradução é mais difícil e melhor para falar — e ativar a ordem aleatória e a leitura em voz alta. Ideal para passar por um set inteiro: um novo, ou antes de uma aula."
+        },
+        {
+          "id": "quiz",
+          "title": "Quiz",
+          "tags": ["A partir de 4 palavras"],
+          "text": "Uma prova sobre um set: 10 ou 20 perguntas ou o set inteiro, começando pelos seus erros da última vez e pelas palavras para revisar. Escolha a resposta, digite a palavra ou misture os dois: na mistura, palavras fracas aparecem mais como opção e as fortes, para digitar. Às vezes você responde de ouvido. O quiz aceita um erro de digitação e mostra onde ele está, e seus erros vão logo depois para a revisão dos erros. Ele lembra quantas palavras do set você acertou, compara sua pontuação com a da última vez e conta sua sequência. O objetivo é passar pelo set inteiro. Não sabe a resposta? Toque em “Não sei”: um erro honesto é melhor para o seu plano do que um chute certeiro."
+        },
+        {
+          "id": "speed",
+          "title": "Rodada relâmpago",
+          "tags": ["A partir de 4 palavras"],
+          "text": "Um minuto de reconhecimento rápido: palavras para revisar e palavras fracas vêm primeiro, e uma palavra que você erra volta algumas perguntas depois. Acertos seguidos multiplicam seus pontos, e um erro custa tempo, então chutar não compensa. Cada set guarda seu recorde. Você também pode ser perguntado ao contrário, nos dois sentidos ou de ouvido — reconhecer na hora é exatamente o que você precisa numa conversa de verdade. Aqui, palavras novas são só para jogar: quem as apresenta é o Perigee."
+        },
+        {
+          "id": "schedule",
+          "title": "Como os modos moldam o seu plano",
+          "text": "Cada modo diz ao Perigee o quanto você sabe uma palavra — uma resposta por palavra por sessão, a primeira. Os flashcards usam a sua avaliação. Na sessão, no quiz e no jogo, digitar a palavra exata conta como “Sei”, uma opção correta ou uma resposta com erro de digitação, como “Lembro”, e um erro, como “Esqueci”. Um erro no quiz numa palavra que você ainda não viu não conta, e na rodada relâmpago palavras novas não contam nada: o Perigee vai apresentá-las direito. Revisar antes da hora não manda uma palavra para longe, e um erro a traz de volta com honestidade."
+        },
+        {
+          "id": "xp",
+          "title": "Como ganhar XP",
+          "points": [
+            { "title": "Sessão Perigee", "text": "1 XP por palavra, mais 1 se você acertou de primeira. Uma palavra que você mesmo avalia num flashcard rende só o primeiro." },
+            { "title": "Flashcards", "text": "1 XP por card." },
+            { "title": "Quiz", "text": "1 XP por pergunta e mais 1 por acerto, mais 10 por um quiz de 10+ perguntas sem erros." },
+            { "title": "Rodada relâmpago", "text": "1 XP por acerto, até 20 por rodada. Uma rodada conta a partir de 10 respostas." },
+            { "title": "Bônus", "text": "+5 pela primeira sessão do dia e +50 por fechar a órbita da semana. O XP de treino tem limite de 400 por dia." }
+          ]
+        }
+      ]
+    },
+    "perigee": {
+      "tab": "Motor Perigee",
+      "meta": {
+        "title": "Perigee — o motor de repetição espaçada do Kolo",
+        "description": "Como o Kolo decide quando trazer uma palavra de volta: a curva do esquecimento, quatro botões de avaliação, intervalos que crescem e o algoritmo SM-2 por baixo."
+      },
+      "title": "Perigee, o motor de revisão do Kolo",
+      "lead": "O Perigee decide quando cada palavra deve voltar: nem cedo demais, para você não perder tempo com o que já sabe, nem tarde demais, para você não esquecer.",
+      "sections": [
+        {
+          "id": "name",
+          "title": "Por que “Perigee”",
+          "text": "Numa órbita, o perigeu (perigee, em inglês) é o ponto em que um satélite passa mais perto do seu planeta. No Kolo, cada palavra se move na própria órbita, e o perigeu dela é o momento em que ela volta para você — pouco antes de começar a apagar."
+        },
+        {
+          "id": "curve",
+          "title": "A curva do esquecimento",
+          "text": "Sem revisão, a memória se apaga rápido: em poucos dias, a maioria das palavras novas some. Cada revisão na hora certa achata a curva, e a palavra fica com você por mais tempo a cada vez. Isso é a repetição espaçada, um dos jeitos de aprender mais bem estudados."
+        },
+        {
+          "id": "ratings",
+          "title": "Quatro botões, quatro sinais",
+          "text": "Depois de cada card, você diz ao Perigee o quanto sabia a palavra. Cada botão mostra quando ela vai voltar.",
+          "points": [
+            { "title": "Não sei", "text": "Não lembrou. A palavra volta mais tarde nesta sessão e recomeça amanhã." },
+            { "title": "Esqueci", "text": "Você já sabia, mas escapou. Ela volta amanhã, mas não do zero: a próxima resposta certa pula direto para 6 dias." },
+            { "title": "Lembro", "text": "Lembrou, com esforço. Um passo à frente normal." },
+            { "title": "Sei", "text": "Lembrou na hora. A palavra vai mais longe." }
+          ]
+        },
+        {
+          "id": "intervals",
+          "title": "Como os intervalos crescem",
+          "text": "Depois da primeira resposta certa, a palavra volta em 2 dias (“Lembro”) ou 3 (“Sei”); depois da segunda, em 6 ou 8; e daí em diante o intervalo é multiplicado pela facilidade da palavra — e por mais 1,3 com “Sei”. A facilidade começa em 2,5: “Sei” aumenta, “Lembro” mantém, “Esqueci” e “Não sei” diminuem, mas nunca abaixo de 1,3. Palavras fáceis vão longe, e as difíceis voltam com mais frequência.",
+          "points": [
+            { "title": "Sempre “Sei”", "text": "3 dias → 8 dias → 29 dias → 111 dias" },
+            { "title": "Sempre “Lembro”", "text": "2 dias → 6 dias → 15 dias → 38 dias" }
+          ]
+        },
+        {
+          "id": "sm2",
+          "title": "SM-2 por baixo",
+          "text": "O Perigee se baseia no SM-2, o algoritmo clássico de repetição espaçada por trás do SuperMemo e de muitos apps de flashcards. Nós o simplificamos e refinamos: quatro botões claros em vez de uma escala de seis pontos, cada um com o próprio intervalo, e penalidades mais leves para os erros. Todos os modos atualizam o plano usando a primeira resposta a cada palavra numa sessão."
+        },
+        {
+          "id": "tips",
+          "title": "Para aproveitar ao máximo",
+          "points": [
+            { "title": "Avalie com honestidade", "text": "Um “Sei” generoso manda a palavra embora cedo demais. Se você hesitou, toque em “Lembro”." },
+            { "title": "Um pouco todo dia", "text": "Cinco minutos por dia funcionam melhor do que uma hora uma vez por semana." },
+            { "title": "Comece pela sessão Perigee", "text": "Ela começa pelas palavras para revisar e adiciona novas quando essas acabam." },
+            { "title": "Palavras novas, poucas de cada vez", "text": "A sessão adiciona 12 palavras novas por dia por padrão — ou 5, ou 20, como você preferir —, para as revisões nunca virarem uma muralha. O plano de um set mostra quando todas as palavras novas dele vão entrar em rotação." }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "nav": "À propos de Kolo",
+  "next": "Suivant",
+  "cta": {
+    "title": "Essaie avec tes propres mots",
+    "text": "Tout l'apprentissage est gratuit, sans publicité. Créer ton premier set prend une minute.",
+    "start": "Commencer à apprendre",
+    "openApp": "Ouvrir Kolo"
+  },
+  "pages": {
+    "how": {
+      "tab": "Comment ça marche",
+      "meta": {
+        "title": "Comment fonctionne Kolo : apprendre des mots par répétition espacée",
+        "description": "Choisis une langue, crée des sets avec tes propres mots et entraîne-toi quelques minutes par jour. Kolo te ramène chaque mot juste avant que tu l'oublies."
+      },
+      "title": "Comment fonctionne Kolo",
+      "lead": "Kolo est l'endroit des mots dont tu as vraiment besoin. Tu les ajoutes, tu t'entraînes quelques minutes par jour, et Kolo garde en tête le moment où chaque mot doit revenir.",
+      "sections": [
+        {
+          "id": "language",
+          "title": "Choisis une langue",
+          "text": "Chaque langue que tu apprends est un cours à part, avec ses propres sets et dossiers : l'espagnol et le norvégien ne se mélangent jamais. Kolo prend en charge près de 60 langues et n'importe quel alphabet ou écriture. Tu passes d'un cours à l'autre directement depuis l'en-tête."
+        },
+        {
+          "id": "sets",
+          "title": "Crée des sets avec tes propres mots",
+          "text": "Un set est une liste de mots sur un thème : la cuisine, les voyages, un chapitre de livre. Chaque carte a un mot et sa traduction ; si tu veux, ajoute une explication, un exemple et la nature du mot. Range tes sets dans des dossiers et colle une liste entière d'un coup : un mot par ligne."
+        },
+        {
+          "id": "practise",
+          "title": "Entraîne-toi quelques minutes",
+          "text": "Le cœur de Kolo, c'est la séance Perigee : quelques minutes par jour, et Kolo décide quels mots réviser et sous quelle forme. Les cartes mémoire, le quiz et le Blitz te proposent les mêmes mots quand tu veux choisir toi-même. Cinq minutes par jour suffisent pour progresser."
+        },
+        {
+          "id": "return",
+          "title": "Kolo ramène les mots",
+          "text": "Après chaque réponse, Perigee, le moteur de révision de Kolo, prévoit la prochaine rencontre. Les mots difficiles reviennent demain, les mots connus dans une semaine ou un mois. L'écran d'accueil indique combien de mots sont à revoir aujourd'hui, et la séance Perigee en vient à bout en quelques minutes."
+        },
+        {
+          "id": "goal",
+          "title": "Un objectif par semaine plutôt qu'une pression quotidienne",
+          "text": "Choisis combien de jours par semaine tu veux t'entraîner : de 3 à 7. Chaque jour avec une séance ajoute un point à l'orbite de la semaine ; atteins ton objectif et l'orbite est bouclée. Un jour manqué ne casse rien, et un bouclier peut couvrir une mauvaise semaine."
+        },
+        {
+          "id": "rewards",
+          "title": "Des récompenses pour l'entraînement",
+          "text": "Chaque séance rapporte de l'XP et fait monter ton niveau. Les nouveaux niveaux et les orbites bouclées apportent des capsules avec des satellites, des couleurs d'anneau, des fonds de profil et des titres. Les récompenses ne viennent que de l'entraînement : rien n'est à vendre."
+        },
+        {
+          "id": "facts",
+          "title": "Bon à savoir",
+          "points": [
+            { "title": "Gratuit", "text": "Tout l'apprentissage est gratuit, sans publicité." },
+            { "title": "Sur tous tes appareils", "text": "Kolo fonctionne dans le navigateur, sur ordinateur et sur téléphone. Ajoute-le à ton écran d'accueil et il s'ouvre comme une appli." },
+            { "title": "Synchronisé", "text": "Avec un compte, tes sets et ta progression sont stockés dans le cloud et synchronisés entre tes appareils." },
+            { "title": "Fonctionne hors ligne", "text": "Connexion perdue en pleine séance ? Ta séance est enregistrée et comptée dès que tu es de nouveau en ligne." }
+          ]
+        }
+      ]
+    },
+    "modes": {
+      "tab": "Modes d'entraînement",
+      "meta": {
+        "title": "Les modes d'entraînement de Kolo : séance Perigee, cartes mémoire, quiz et jeu",
+        "description": "Séance Perigee, cartes mémoire, quiz et Blitz : quatre modes d'entraînement, à quoi chacun sert le mieux et comment ils façonnent ton planning de révision."
+      },
+      "title": "Quatre modes d'entraînement",
+      "lead": "La séance Perigee est le mode principal : elle décide quels mots réviser et sous quelle forme. Les cartes mémoire, le quiz et le Blitz sont là quand tu veux choisir toi-même. Les quatre apprennent à Perigee ce que tu sais.",
+      "sections": [
+        {
+          "id": "session",
+          "title": "Séance Perigee",
+          "tags": ["Bouton principal"],
+          "text": "Un bouton sur l'écran d'accueil lance une courte séance sur tous les sets de ton cours : jusqu'à 20 mots, quelques minutes. D'abord les mots à revoir, puis quelques nouveaux : 12 par jour par défaut (5 ou 20 si tu préfères, dans les Réglages ou dans le plan d'un set), pour que les révisions ne s'accumulent pas. Perigee te montre d'abord un nouveau mot, puis te demande de le retrouver parmi plusieurs choix. Les mots connus sont vérifiés selon ton niveau : avec des choix, en tapant, sur une carte, à l'oreille ou dans une phrase à trous. Une erreur revient quelques étapes plus tard, jusqu'à ce qu'elle soit fixée. Dans un set, le bouton « Apprendre » lance la même séance avec les seuls mots de ce set."
+        },
+        {
+          "id": "flashcards",
+          "title": "Cartes mémoire",
+          "tags": ["Set entier"],
+          "text": "Regarde le mot, rappelle-toi la traduction, retourne la carte et évalue-toi : « Inconnu » fait revenir le mot plus tard dans la séance, « Oublié » demain, « Retenu » dans quelques jours, « Acquis » le plus tard. Chaque bouton indique quand le mot reviendra ; sur téléphone, tu peux balayer : à droite pour « Retenu », à gauche pour « Inconnu ». Un grand set se fait par manches de 20 mots, et Kolo se souvient où tu t'es arrêté. À la fin d'une manche, tu vois tes mots difficiles et tu peux les repasser tout de suite. Dans les réglages des cartes, tu peux inverser le sens (retrouver le mot à partir de sa traduction est plus difficile et meilleur pour parler) et activer l'ordre aléatoire et la lecture à voix haute. Idéal pour parcourir un set entier : un nouveau, ou avant un cours."
+        },
+        {
+          "id": "quiz",
+          "title": "Quiz",
+          "tags": ["Dès 4 mots"],
+          "text": "Un examen sur un set : 10 ou 20 questions ou le set entier, en commençant par tes erreurs de la dernière fois et les mots à revoir. Choisis la réponse, tape le mot ou mélange les deux : en mode mixte, les mots fragiles viennent plus souvent en choix et les mots solides à taper. Parfois, tu réponds à l'oreille. Le quiz accepte une faute de frappe et te montre où elle est, et tes erreurs passent juste après dans « Revoir les erreurs ». Il retient combien de mots du set tu as réussis, compare ton score avec la dernière fois et compte ta série. Le but : réussir le set entier. Tu ne connais pas la réponse ? Touche « Je ne sais pas » : une erreur honnête vaut mieux pour ton planning qu'un coup de chance."
+        },
+        {
+          "id": "speed",
+          "title": "Blitz",
+          "tags": ["Dès 4 mots"],
+          "text": "Une minute de reconnaissance rapide : les mots à revoir et les mots fragiles d'abord, et un mot raté revient quelques questions plus tard. Les bonnes réponses d'affilée multiplient tes points, et une erreur coûte du temps : deviner ne paie pas. Chaque set garde son record. On peut aussi t'interroger dans l'autre sens, dans les deux sens ou à l'oreille : reconnaître un mot instantanément, c'est exactement ce qu'il faut dans une vraie conversation. Ici, les nouveaux mots ne servent qu'à jouer : c'est Perigee qui les présente."
+        },
+        {
+          "id": "schedule",
+          "title": "Comment les modes façonnent ton planning",
+          "text": "Chaque mode dit à Perigee à quel point tu connais un mot : une réponse par mot et par séance, la première. Les cartes mémoire utilisent ta note. Dans la séance, le quiz et le jeu, taper le mot exact compte comme « Acquis », un bon choix ou une réponse avec une faute de frappe comme « Retenu », et une erreur comme « Oublié ». Une erreur au quiz sur un mot que tu n'as pas encore rencontré ne compte pas, et dans le Blitz les nouveaux mots ne comptent pas du tout : Perigee les présentera comme il faut. Réviser en avance n'envoie pas un mot très loin, et une erreur le ramène honnêtement."
+        },
+        {
+          "id": "xp",
+          "title": "Comment gagner de l'XP",
+          "points": [
+            { "title": "Séance Perigee", "text": "1 XP par mot, plus 1 si tu l'as trouvé du premier coup. Un mot que tu notes toi-même sur une carte ne rapporte que le premier." },
+            { "title": "Cartes mémoire", "text": "1 XP par carte." },
+            { "title": "Quiz", "text": "1 XP par question et 1 de plus par bonne réponse, plus 10 pour un quiz de 10+ questions sans faute." },
+            { "title": "Blitz", "text": "1 XP par bonne réponse, jusqu'à 20 par manche. Une manche compte à partir de 10 réponses." },
+            { "title": "Bonus", "text": "+5 pour la première séance du jour et +50 quand l'orbite de la semaine est bouclée. L'XP d'entraînement est plafonnée à 400 par jour." }
+          ]
+        }
+      ]
+    },
+    "perigee": {
+      "tab": "Moteur Perigee",
+      "meta": {
+        "title": "Perigee, le moteur de répétition espacée de Kolo",
+        "description": "Comment Kolo décide quand ramener un mot : la courbe de l'oubli, quatre boutons d'évaluation, des intervalles qui grandissent et l'algorithme SM-2 sous le capot."
+      },
+      "title": "Perigee, le moteur de révision de Kolo",
+      "lead": "Perigee décide quand chaque mot doit revenir : pas trop tôt, pour ne pas perdre de temps sur ce que tu sais, et pas trop tard, pour ne pas l'oublier.",
+      "sections": [
+        {
+          "id": "name",
+          "title": "Pourquoi « Perigee »",
+          "text": "Sur une orbite, le périgée (perigee en anglais) est le point où un satellite passe au plus près de sa planète. Dans Kolo, chaque mot suit sa propre orbite, et son périgée, c'est le moment où il revient vers toi, juste avant de commencer à s'effacer."
+        },
+        {
+          "id": "curve",
+          "title": "La courbe de l'oubli",
+          "text": "Sans révision, la mémoire s'efface vite : en quelques jours, la plupart des nouveaux mots ont disparu. Chaque révision au bon moment aplatit la courbe, et le mot reste avec toi plus longtemps à chaque fois. C'est la répétition espacée, l'une des méthodes d'apprentissage les mieux étudiées."
+        },
+        {
+          "id": "ratings",
+          "title": "Quatre boutons, quatre signaux",
+          "text": "Après chaque carte, tu dis à Perigee si tu connaissais bien le mot. Chaque bouton indique quand le mot reviendra.",
+          "points": [
+            { "title": "Inconnu", "text": "Tu ne t'en es pas souvenu. Le mot revient plus tard dans la séance et repart de zéro demain." },
+            { "title": "Oublié", "text": "Tu le connaissais, mais il t'a échappé. Il revient demain, mais pas de zéro : la bonne réponse suivante saute directement à 6 jours." },
+            { "title": "Retenu", "text": "Retrouvé, avec un effort. Un pas en avant normal." },
+            { "title": "Acquis", "text": "Retrouvé instantanément. Le mot part le plus loin." }
+          ]
+        },
+        {
+          "id": "intervals",
+          "title": "Comment les intervalles grandissent",
+          "text": "Après la première bonne réponse, un mot revient dans 2 jours (« Retenu ») ou 3 (« Acquis »), après la deuxième dans 6 ou 8, puis l'intervalle est multiplié par la facilité du mot, et encore par 1,3 avec « Acquis ». La facilité commence à 2,5 : « Acquis » l'augmente, « Retenu » la laisse telle quelle, « Oublié » et « Inconnu » la baissent, mais jamais sous 1,3. Les mots faciles partent loin, les difficiles reviennent plus souvent.",
+          "points": [
+            { "title": "Toujours « Acquis »", "text": "3 jours → 8 jours → 29 jours → 111 jours" },
+            { "title": "Toujours « Retenu »", "text": "2 jours → 6 jours → 15 jours → 38 jours" }
+          ]
+        },
+        {
+          "id": "sm2",
+          "title": "SM-2 sous le capot",
+          "text": "Perigee repose sur SM-2, l'algorithme classique de répétition espacée derrière SuperMemo et de nombreuses applis de cartes mémoire. Nous l'avons simplifié et affiné : quatre boutons clairs au lieu d'une échelle à six points, chacun avec son propre rythme, et des pénalités plus douces pour les erreurs. Chaque mode met à jour le planning avec la première réponse à chaque mot dans une séance."
+        },
+        {
+          "id": "tips",
+          "title": "Pour en tirer le meilleur",
+          "points": [
+            { "title": "Note-toi honnêtement", "text": "Un « Acquis » trop généreux envoie un mot trop loin, trop tôt. Si tu as hésité, appuie sur « Retenu »." },
+            { "title": "Un peu chaque jour", "text": "Cinq minutes par jour valent mieux qu'une heure une fois par semaine." },
+            { "title": "Commence par la séance Perigee", "text": "Elle commence par les mots à revoir et ajoute des nouveaux une fois ceux-là terminés." },
+            { "title": "Les nouveaux mots, quelques-uns à la fois", "text": "La séance ajoute 12 nouveaux mots par jour par défaut (ou 5, ou 20, comme tu veux), pour que les révisions ne forment jamais un mur. Le plan d'un set montre quand tous ses nouveaux mots seront en rotation." }
+          ]
+        }
+      ]
+    }
+  }
+}

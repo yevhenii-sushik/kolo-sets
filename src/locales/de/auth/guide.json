@@ -1,0 +1,170 @@
+{
+  "nav": "Über Kolo",
+  "next": "Weiter",
+  "cta": {
+    "title": "Probier es mit deinen eigenen Wörtern",
+    "text": "Das Lernen ist komplett kostenlos und ohne Werbung. Dein erstes Set erstellst du in einer Minute.",
+    "start": "Jetzt lernen",
+    "openApp": "Kolo öffnen"
+  },
+  "pages": {
+    "how": {
+      "tab": "So funktioniert's",
+      "meta": {
+        "title": "So funktioniert Kolo – Wörter lernen mit verteilter Wiederholung",
+        "description": "Wähle eine Sprache, stelle Sets aus deinen eigenen Wörtern zusammen und übe ein paar Minuten am Tag. Kolo bringt jedes Wort zurück, kurz bevor du es vergisst."
+      },
+      "title": "So funktioniert Kolo",
+      "lead": "Kolo ist ein Ort für die Wörter, die du wirklich brauchst. Du fügst sie hinzu, übst ein paar Minuten am Tag, und Kolo behält im Blick, wann welches Wort wiederkommen soll.",
+      "sections": [
+        {
+          "id": "language",
+          "title": "Wähle eine Sprache",
+          "text": "Jede Sprache, die du lernst, ist ein eigener Kurs mit eigenen Sets und Ordnern – so kommen Spanisch und Norwegisch nie durcheinander. Kolo unterstützt fast 60 Sprachen und jedes Alphabet und jede Schrift. Zwischen den Kursen wechselst du direkt in der Kopfzeile."
+        },
+        {
+          "id": "sets",
+          "title": "Stelle Sets aus deinen eigenen Wörtern zusammen",
+          "text": "Ein Set ist eine Wortliste zu einem Thema: Essen, Reisen, ein Kapitel aus einem Buch. Jede Karte hat ein Wort und seine Übersetzung; wenn du willst, ergänzt du eine Erklärung, ein Beispiel und die Wortart. Sortiere Sets in Ordner und füge eine ganze Liste auf einmal ein – ein Wort pro Zeile."
+        },
+        {
+          "id": "practise",
+          "title": "Übe ein paar Minuten",
+          "text": "Das Herz von Kolo ist die Perigee-Session: ein paar Minuten am Tag, und Kolo entscheidet, welche Wörter du wiederholst und in welcher Form. Karteikarten, Quiz und Blitzrunde bringen dir dieselben Wörter, wenn du selbst wählen willst. Fünf Minuten am Tag reichen, um voranzukommen."
+        },
+        {
+          "id": "return",
+          "title": "Kolo bringt Wörter zurück",
+          "text": "Nach jeder Antwort plant Perigee, Kolos Wiederholungsalgorithmus, die nächste Begegnung. Schwierige Wörter kommen morgen wieder, bekannte in einer Woche oder einem Monat. Die Startseite zeigt, wie viele Wörter heute fällig sind, und die Perigee-Session arbeitet sie in ein paar Minuten ab."
+        },
+        {
+          "id": "goal",
+          "title": "Ein Wochenziel statt täglichem Druck",
+          "text": "Wähle, an wie vielen Tagen pro Woche du üben willst – von 3 bis 7. Jeder Tag mit einer Session setzt einen Punkt auf den Wochen-Orbit; erreichst du dein Ziel, schließt sich der Orbit. Ein verpasster Tag macht nichts kaputt, und ein Schild fängt eine schlechte Woche ab."
+        },
+        {
+          "id": "rewards",
+          "title": "Belohnungen fürs Üben",
+          "text": "Jede Session bringt XP und hebt dein Level. Neue Level und geschlossene Orbits bringen Kapseln mit Satelliten, Ringfarben, Profilhintergründen und Titeln. Belohnungen gibt es nur fürs Üben – nichts davon ist käuflich."
+        },
+        {
+          "id": "facts",
+          "title": "Gut zu wissen",
+          "points": [
+            { "title": "Kostenlos", "text": "Das Lernen ist komplett kostenlos und ohne Werbung." },
+            { "title": "Auf jedem Gerät", "text": "Kolo läuft im Browser auf Computer und Handy. Leg es auf deinen Startbildschirm, dann öffnet es sich wie eine App." },
+            { "title": "Synchron", "text": "Mit einem Konto liegen deine Sets und dein Fortschritt in der Cloud und werden zwischen deinen Geräten abgeglichen." },
+            { "title": "Funktioniert offline", "text": "Mitten in der Session die Verbindung verloren? Deine Session wird gespeichert und gezählt, sobald du wieder online bist." }
+          ]
+        }
+      ]
+    },
+    "modes": {
+      "tab": "Übungsmodi",
+      "meta": {
+        "title": "Übungsmodi in Kolo – Perigee-Session, Karteikarten, Quiz und Spiel",
+        "description": "Perigee-Session, Karteikarten, Quiz und Blitzrunde: vier Übungsmodi, wofür sich jeder am besten eignet und wie sie deinen Wiederholungsplan prägen."
+      },
+      "title": "Vier Übungsmodi",
+      "lead": "Die Perigee-Session ist der Hauptmodus: Sie entscheidet, welche Wörter du wiederholst und in welcher Form. Karteikarten, Quiz und Blitzrunde sind da, wenn du selbst wählen willst. Alle vier zeigen Perigee, was du kannst.",
+      "sections": [
+        {
+          "id": "session",
+          "title": "Perigee-Session",
+          "tags": ["Hauptknopf"],
+          "text": "Ein Knopf auf der Startseite startet eine kurze Session über alle Sets deines Kurses: bis zu 20 Wörter, ein paar Minuten. Zuerst die fälligen Wörter, dann ein paar neue – standardmäßig 12 am Tag (auf Wunsch 5 oder 20, in den Einstellungen oder im Plan eines Sets), damit sich keine Wiederholungen stapeln. Ein neues Wort zeigt Perigee dir zuerst und lässt es dich dann unter Antwortmöglichkeiten wiederfinden. Bekannte Wörter werden je nachdem geprüft, wie gut du sie kannst: mit Auswahl, durch Eintippen, auf einer Karteikarte, nach Gehör oder als Lücke in einem Beispielsatz. Ein Fehler kommt ein paar Schritte später wieder, bis er sitzt. In einem Set startet der Knopf „Lernen“ dieselbe Session nur mit den Wörtern dieses Sets."
+        },
+        {
+          "id": "flashcards",
+          "title": "Karteikarten",
+          "tags": ["Ganzes Set"],
+          "text": "Sieh das Wort, erinnere dich an die Übersetzung, dreh die Karte um und bewerte dich: „Weiß nicht“ bringt das Wort später in dieser Session zurück, „Vergessen“ morgen, „Erinnert“ in ein paar Tagen, „Gewusst“ am spätesten. Jeder Knopf zeigt, wann das Wort wiederkommt; auf dem Handy kannst du wischen: nach rechts für „Erinnert“, nach links für „Weiß nicht“. Ein großes Set geht in Runden zu 20 Wörtern, und Kolo merkt sich, wo du aufgehört hast. Am Ende einer Runde siehst du deine schwierigen Wörter und kannst sie gleich noch einmal durchgehen. In den Karteneinstellungen kannst du die Richtung umdrehen – das Wort aus der Übersetzung abzurufen ist schwerer und besser fürs Sprechen – und gemischte Reihenfolge und Vorlesen einschalten. Am besten, um ein ganzes Set durchzugehen: ein neues oder vor einer Unterrichtsstunde."
+        },
+        {
+          "id": "quiz",
+          "title": "Quiz",
+          "tags": ["Ab 4 Wörtern"],
+          "text": "Eine Prüfung zu einem Set: 10 oder 20 Fragen oder das ganze Set, beginnend mit deinen Fehlern vom letzten Mal und den fälligen Wörtern. Wähle die Antwort, tippe das Wort oder mische beides: Im Mix kommen schwache Wörter öfter als Auswahl und starke als Eingabe. Manchmal antwortest du nach Gehör. Das Quiz akzeptiert einen Tippfehler und zeigt dir, wo er steckt, und deine Fehler kannst du direkt danach unter „Fehler üben“ wiederholen. Es merkt sich, wie viele Wörter des Sets du richtig hattest, vergleicht dein Ergebnis mit dem letzten Mal und zählt deine Serie. Das Ziel ist, das ganze Set zu schaffen. Du weißt die Antwort nicht? Tippe auf „Weiß ich nicht“: Ein ehrlicher Fehler ist besser für deinen Plan als ein glücklicher Treffer."
+        },
+        {
+          "id": "speed",
+          "title": "Blitzrunde",
+          "tags": ["Ab 4 Wörtern"],
+          "text": "Eine Minute schnelles Erkennen: Fällige und schwache Wörter kommen zuerst, und ein verpasstes Wort kommt ein paar Fragen später wieder. Richtige Antworten in Folge vervielfachen deine Punkte, und ein Fehler kostet Zeit – Raten lohnt sich also nicht. Jedes Set hat seinen eigenen Rekord. Du kannst auch umgekehrt, in beide Richtungen oder nach Gehör gefragt werden – sofortiges Erkennen ist genau das, was du in einem echten Gespräch brauchst. Neue Wörter sind hier nur zum Spielen: Die führt Perigee ein."
+        },
+        {
+          "id": "schedule",
+          "title": "Wie die Modi deinen Plan prägen",
+          "text": "Jeder Modus sagt Perigee, wie gut du ein Wort kannst – eine Antwort pro Wort und Session, die erste. Karteikarten nehmen deine Bewertung. In der Session, im Quiz und im Spiel zählt das exakt getippte Wort als „Gewusst“, eine richtige Auswahl oder eine Antwort mit Tippfehler als „Erinnert“ und ein Fehler als „Vergessen“. Ein Quizfehler bei einem Wort, das du noch nicht kennengelernt hast, zählt nicht, und in der Blitzrunde zählen neue Wörter gar nicht: Perigee führt sie richtig ein. Frühes Wiederholen schickt ein Wort nicht weit nach vorn, und ein Fehler holt es ehrlich zurück."
+        },
+        {
+          "id": "xp",
+          "title": "Wie du XP verdienst",
+          "points": [
+            { "title": "Perigee-Session", "text": "1 XP für jedes Wort, plus 1 weiteres, wenn du es beim ersten Versuch richtig hattest. Ein Wort, das du auf einer Karteikarte selbst bewertest, bringt nur das erste." },
+            { "title": "Karteikarten", "text": "1 XP für jede Karte." },
+            { "title": "Quiz", "text": "1 XP pro Frage und 1 weiteres pro richtiger Antwort, plus 10 für ein Quiz mit 10+ Fragen ohne Fehler." },
+            { "title": "Blitzrunde", "text": "1 XP pro richtiger Antwort, bis zu 20 pro Runde. Eine Runde zählt ab 10 Antworten." },
+            { "title": "Boni", "text": "+5 für die erste Session des Tages und +50, wenn sich der Wochen-Orbit schließt. Übungs-XP sind auf 400 am Tag begrenzt." }
+          ]
+        }
+      ]
+    },
+    "perigee": {
+      "tab": "Perigee-Algorithmus",
+      "meta": {
+        "title": "Perigee – Kolos Algorithmus für verteilte Wiederholung",
+        "description": "Wie Kolo entscheidet, wann ein Wort zurückkommt: die Vergessenskurve, vier Bewertungsknöpfe, wachsende Abstände und der SM-2-Algorithmus unter der Haube."
+      },
+      "title": "Perigee, Kolos Wiederholungsalgorithmus",
+      "lead": "Perigee entscheidet, wann jedes Wort wiederkommen soll: nicht zu früh, damit du keine Zeit mit Bekanntem verschwendest, und nicht zu spät, damit du es nicht vergisst.",
+      "sections": [
+        {
+          "id": "name",
+          "title": "Warum „Perigee“",
+          "text": "Auf einer Umlaufbahn ist das Perigäum (englisch perigee) der Punkt, an dem ein Satellit seinem Planeten am nächsten kommt. In Kolo bewegt sich jedes Wort auf seinem eigenen Orbit, und sein Perigäum ist der Moment, in dem es zu dir zurückkommt – kurz bevor es zu verblassen beginnt."
+        },
+        {
+          "id": "curve",
+          "title": "Die Vergessenskurve",
+          "text": "Ohne Wiederholung verblasst das Gedächtnis schnell: Nach wenigen Tagen sind die meisten neuen Wörter weg. Jede gut getimte Wiederholung macht die Kurve flacher, und das Wort bleibt jedes Mal länger bei dir. Das ist verteilte Wiederholung, eine der am besten erforschten Lernmethoden."
+        },
+        {
+          "id": "ratings",
+          "title": "Vier Knöpfe, vier Signale",
+          "text": "Nach jeder Karte sagst du Perigee, wie gut du das Wort wusstest. Jeder Knopf zeigt, wann das Wort wiederkommt.",
+          "points": [
+            { "title": "Weiß nicht", "text": "Nicht abgerufen. Das Wort kommt später in dieser Session wieder und fängt morgen von vorn an." },
+            { "title": "Vergessen", "text": "Du kanntest es mal, aber es ist dir entfallen. Es kommt morgen wieder, aber nicht bei null: Die nächste richtige Antwort springt direkt auf 6 Tage." },
+            { "title": "Erinnert", "text": "Abgerufen, mit Mühe. Ein normaler Schritt nach vorn." },
+            { "title": "Gewusst", "text": "Sofort abgerufen. Das Wort fliegt am weitesten." }
+          ]
+        },
+        {
+          "id": "intervals",
+          "title": "Wie die Abstände wachsen",
+          "text": "Nach der ersten richtigen Antwort kommt ein Wort in 2 Tagen („Erinnert“) oder 3 („Gewusst“) wieder, nach der zweiten in 6 oder 8, und ab dann wird der Abstand mit der Leichtigkeit des Wortes multipliziert – bei „Gewusst“ zusätzlich mit 1,3. Die Leichtigkeit startet bei 2,5: „Gewusst“ hebt sie, „Erinnert“ lässt sie, wie sie ist, „Vergessen“ und „Weiß nicht“ senken sie, aber nie unter 1,3. Leichte Wörter fliegen weit, schwierige kommen öfter wieder.",
+          "points": [
+            { "title": "Immer „Gewusst“", "text": "3 Tage → 8 Tage → 29 Tage → 111 Tage" },
+            { "title": "Immer „Erinnert“", "text": "2 Tage → 6 Tage → 15 Tage → 38 Tage" }
+          ]
+        },
+        {
+          "id": "sm2",
+          "title": "SM-2 unter der Haube",
+          "text": "Perigee basiert auf SM-2, dem klassischen Algorithmus für verteilte Wiederholung hinter SuperMemo und vielen Karteikarten-Apps. Wir haben ihn vereinfacht und verfeinert: vier klare Knöpfe statt einer Sechs-Punkte-Skala, jeder mit eigenem Timing, und mildere Strafen für Fehler. Jeder Modus aktualisiert den Plan und nimmt dafür die erste Antwort auf jedes Wort in einer Session."
+        },
+        {
+          "id": "tips",
+          "title": "So holst du am meisten heraus",
+          "points": [
+            { "title": "Ehrlich bewerten", "text": "Ein großzügiges „Gewusst“ schickt ein Wort zu früh weg. Wenn du gezögert hast, drück „Erinnert“." },
+            { "title": "Jeden Tag ein bisschen", "text": "Fünf Minuten am Tag wirken besser als eine Stunde einmal pro Woche." },
+            { "title": "Beginne mit der Perigee-Session", "text": "Sie startet mit den fälligen Wörtern und fügt neue hinzu, wenn die erledigt sind." },
+            { "title": "Neue Wörter, ein paar auf einmal", "text": "Die Session fügt standardmäßig 12 neue Wörter am Tag hinzu – oder 5 oder 20, wie du willst –, damit sich Wiederholungen nie zu einer Wand stapeln. Der Plan eines Sets zeigt, wann alle seine neuen Wörter im Umlauf sind." }
+          ]
+        }
+      ]
+    }
+  }
+}
