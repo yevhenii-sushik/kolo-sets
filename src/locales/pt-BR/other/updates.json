@@ -43,7 +43,8 @@
         "A página de um set mostra o plano dele, com palavras firmes, firmando, aprendendo e novas, em vez de “Aprendidas”, que contava qualquer palavra depois de uma única resposta certa.",
         "A importação de listas entende tab, então as palavras podem ser coladas direto do Excel, Google Planilhas, Quizlet e Anki, além de ponto e vírgula, travessão e “=”. Enquanto você cola, o Kolo mostra quantas palavras reconheceu, como leu as primeiras linhas e quais linhas não entendeu, e as palavras que já estão no set não são adicionadas de novo.",
         "Na janela Nova palavra dá para adicionar palavras uma atrás da outra: a janela continua aberta, os campos são limpos, o cursor volta para a palavra e o Kolo avisa se essa palavra já está no seu curso. Os rótulos e exemplos dos campos agora falam do idioma que você está aprendendo, e não sempre do norueguês.",
-        "Sets, palavras e pastas são salvos na hora, mesmo sem conexão: as janelas não ficam mais travadas esperando a rede, e as alterações são enviadas assim que você volta a ficar online. Se o Kolo não conseguir salvar algo, ele avisa e oferece tentar de novo em vez de ficar em silêncio."
+        "Sets, palavras e pastas são salvos na hora, mesmo sem conexão: as janelas não ficam mais travadas esperando a rede, e as alterações são enviadas assim que você volta a ficar online. Se o Kolo não conseguir salvar algo, ele avisa e oferece tentar de novo em vez de ficar em silêncio.",
+        "Um set abre com um toque em qualquer parte do cartão, não só pelo menu. A escolha de modo não mostra mais a marca do Perigee em cada modo, já que todos registram suas respostas no plano, e os sets fora dos favoritos e das pastas agora ficam em “Outros sets”."
       ]
     }
   ],

@@ -10,7 +10,6 @@
       "quiz": "Test",
       "quizDesc": "Ponte a prueba: puntuación y repaso de errores",
       "quizNeedsMore": "Necesitas 4+ tarjetas",
-      "games": "Juegos",
       "speed": "Ronda relámpago",
       "speedDesc": "Un minuto de reconocimiento rápido, primero las palabras débiles",
       "needMore": "Necesitas al menos 4 palabras"
@@ -335,7 +334,7 @@
   "perigee": {
     "title": "Sesión Perigee",
     "tagHint": "Tus respuestas aquí alimentan el plan de repaso de Perigee",
-    "legend": "las respuestas cuentan para tu plan de Perigee",
+    "legend": "Todos los modos guardan tus respuestas en tu plan de Perigee",
     "newWord": "Palabra nueva",
     "gotIt": "Entendido",
     "pickTranslation": "Elige la traducción",
@@ -382,6 +381,8 @@
     "ready": "Elegir un set listo"
   },
   "library": {
+    "favorites": "Favoritos",
+    "all": "Otros sets",
     "setsCount": {
       "one": "{n} set",
       "many": "{n} sets",

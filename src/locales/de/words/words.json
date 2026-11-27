@@ -10,7 +10,6 @@
       "quiz": "Quiz",
       "quizDesc": "Teste dich: Ergebnis und Fehler üben",
       "quizNeedsMore": "Mindestens 4 Karten nötig",
-      "games": "Spiele",
       "speed": "Blitzrunde",
       "speedDesc": "Eine Minute blitzschnelles Erkennen, schwache Wörter zuerst",
       "needMore": "Mindestens 4 Wörter nötig"
@@ -334,7 +333,7 @@
   "perigee": {
     "title": "Perigee-Session",
     "tagHint": "Deine Antworten hier fließen in den Perigee-Wiederholungsplan ein",
-    "legend": "Antworten zählen für deinen Perigee-Plan",
+    "legend": "Alle Modi tragen deine Antworten in den Perigee-Plan ein",
     "newWord": "Neues Wort",
     "gotIt": "Verstanden",
     "pickTranslation": "Wähle die Übersetzung",
@@ -381,6 +380,8 @@
     "ready": "Fertiges Set wählen"
   },
   "library": {
+    "favorites": "Favoriten",
+    "all": "Weitere Sets",
     "setsCount": {
       "one": "{n} Set",
       "other": "{n} Sets"

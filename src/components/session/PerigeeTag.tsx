@@ -2,7 +2,7 @@ import { PerigeeMark, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
 
 // Пометка «к режиму подключён Perigee»: ответы здесь идут в расписание повторений (docs/specs/perigee.md).
-// compact — только знак (в списке режимов), иначе знак и название (в шапке тренировки)
+// compact — только знак (строка под режимами в окне выбора), иначе знак и название (в шапке тренировки)
 export default function PerigeeTag({ compact = false, className }: { compact?: boolean; className?: string }) {
   const { t } = useI18n();
   const hint = t.words.perigee.tagHint;

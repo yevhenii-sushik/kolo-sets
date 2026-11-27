@@ -43,7 +43,8 @@
         "La page d'un set affiche son plan, avec les mots solides, qui se consolident, en cours et nouveaux, au lieu de « Appris », qui comptait n'importe quel mot après une seule bonne réponse.",
         "L'import de listes comprend les tabulations : les mots se collent directement depuis Excel, Google Sheets, Quizlet et Anki, en plus du point-virgule, du tiret et de « = ». Pendant que tu colles, Kolo montre combien de mots il a reconnus, comment il a lu les premières lignes et quelles lignes il n'a pas comprises, et les mots déjà présents dans le set ne sont pas ajoutés deux fois.",
         "Dans la fenêtre Nouveau mot, tu peux ajouter des mots à la suite : la fenêtre reste ouverte, les champs se vident, le curseur revient sur le mot et Kolo te prévient si ce mot est déjà dans ton cours. Les libellés et les exemples des champs correspondent maintenant à la langue que tu apprends, au lieu de toujours parler du norvégien.",
-        "Les sets, les mots et les dossiers s'enregistrent tout de suite, même sans connexion : les fenêtres ne restent plus bloquées à attendre le réseau, et les modifications partent dès que tu es de nouveau en ligne. Si Kolo n'arrive pas à enregistrer quelque chose, il te le dit et te propose de réessayer au lieu de rester silencieux."
+        "Les sets, les mots et les dossiers s'enregistrent tout de suite, même sans connexion : les fenêtres ne restent plus bloquées à attendre le réseau, et les modifications partent dès que tu es de nouveau en ligne. Si Kolo n'arrive pas à enregistrer quelque chose, il te le dit et te propose de réessayer au lieu de rester silencieux.",
+        "Un set s'ouvre d'un appui n'importe où sur sa carte, et plus seulement depuis le menu. Le choix du mode n'affiche plus une marque Perigee à côté de chaque mode, puisque tous enregistrent tes réponses dans le planning, et les sets hors favoris et dossiers sont désormais rangés sous « Autres sets »."
       ]
     }
   ],

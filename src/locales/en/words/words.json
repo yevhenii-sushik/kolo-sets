@@ -26,7 +26,6 @@
       "quiz": "Quiz",
       "quizDesc": "Check yourself: a score and a mistake review",
       "quizNeedsMore": "Need 4+ cards",
-      "games": "Games",
       "speed": "Blitz",
       "speedDesc": "A minute of quick recognition, weak words first",
       "needMore": "Needs at least 4 words"
@@ -313,7 +312,7 @@
     "newFolder": "New folder",
     "folders": "Folders",
     "favorites": "Favourites",
-    "all": "All sets",
+    "all": "Other sets",
     "back": "Back to all sets",
     "setsCount": {
       "one": "{n} set",
@@ -477,7 +476,7 @@
   "perigee": {
     "title": "Perigee session",
     "tagHint": "Your answers here feed the Perigee review schedule",
-    "legend": "answers count towards your Perigee schedule",
+    "legend": "All modes record your answers in the Perigee schedule",
     "newWord": "New word",
     "gotIt": "Got it",
     "pickTranslation": "Pick the translation",

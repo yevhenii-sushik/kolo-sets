@@ -26,7 +26,6 @@
       "quiz": "Quiz",
       "quizDesc": "Test deg selv: poengsum og gjennomgang av feil",
       "quizNeedsMore": "Trenger 4+ kort",
-      "games": "Spill",
       "speed": "Lynrunde",
       "speedDesc": "Ett minutt med lynrask gjenkjenning, svake ord først",
       "needMore": "Trenger minst 4 ord"
@@ -313,7 +312,7 @@
     "newFolder": "Ny mappe",
     "folders": "Mapper",
     "favorites": "Favoritter",
-    "all": "Alle sett",
+    "all": "Andre sett",
     "back": "Tilbake til alle sett",
     "setsCount": {
       "one": "{n} sett",
@@ -477,7 +476,7 @@
   "perigee": {
     "title": "Perigee-økt",
     "tagHint": "Svarene her går inn i Perigee-repetisjonsplanen",
-    "legend": "svarene teller i Perigee-planen",
+    "legend": "Alle modusene fører svarene dine inn i Perigee-planen",
     "newWord": "Nytt ord",
     "gotIt": "Skjønner, videre",
     "pickTranslation": "Velg oversettelsen",

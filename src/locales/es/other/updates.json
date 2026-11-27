@@ -43,7 +43,8 @@
         "La página de un set muestra su plan, con palabras firmes, afianzándose, aprendiendo y nuevas, en lugar de «Aprendidas», que contaba cualquier palabra tras una sola respuesta correcta.",
         "La importación de listas entiende el tabulador, así que las palabras se pegan directamente desde Excel, Google Sheets, Quizlet y Anki, además del punto y coma, el guion y «=». Mientras pegas, Kolo muestra cuántas palabras reconoció, cómo leyó las primeras líneas y qué líneas no entendió, y las palabras que ya están en el set no se añaden dos veces.",
         "En la ventana Nueva palabra puedes añadir palabras una tras otra: la ventana sigue abierta, los campos se vacían, el cursor vuelve a la palabra y Kolo te avisa si esa palabra ya está en tu curso. Las etiquetas y los ejemplos de los campos ahora corresponden al idioma que aprendes, en vez de mencionar siempre el noruego.",
-        "Los sets, las palabras y las carpetas se guardan al instante, incluso sin conexión: las ventanas ya no se quedan esperando a la red y los cambios se envían en cuanto vuelves a estar en línea. Si Kolo no puede guardar algo, te lo dice y te ofrece reintentarlo en lugar de quedarse callado."
+        "Los sets, las palabras y las carpetas se guardan al instante, incluso sin conexión: las ventanas ya no se quedan esperando a la red y los cambios se envían en cuanto vuelves a estar en línea. Si Kolo no puede guardar algo, te lo dice y te ofrece reintentarlo en lugar de quedarse callado.",
+        "Un set se abre tocando cualquier parte de su tarjeta, no solo desde el menú. En la elección de modo ya no hay una marca de Perigee en cada modo, porque todos guardan tus respuestas en el plan, y los sets fuera de favoritos y carpetas ahora aparecen en «Otros sets»."
       ]
     }
   ],

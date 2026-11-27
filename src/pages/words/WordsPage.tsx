@@ -903,6 +903,7 @@ export default function WordsPage() {
 
                 {regularCollections.length > 0 && (
                   <div>
+                    {/* «Остальные», а не «Все»: здесь нет ни избранных, ни наборов из папок */}
                     {(folders.length > 0 || favoriteCollections.length > 0) && (
                       <SectionLabel count={regularCollections.length}>{lib.all}</SectionLabel>
                     )}

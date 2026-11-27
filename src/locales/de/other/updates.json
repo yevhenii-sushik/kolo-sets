@@ -43,7 +43,8 @@
         "Die Seite eines Sets zeigt seinen Plan mit Wörtern, die sitzen, sich festigen, im Lernen und neu sind, statt „Gelernt“, das jedes Wort nach einer einzigen richtigen Antwort zählte.",
         "Der Listenimport versteht Tabs, sodass sich Wörter direkt aus Excel, Google Tabellen, Quizlet und Anki einfügen lassen, dazu Semikolon, Gedankenstrich und „=“. Beim Einfügen zeigt Kolo, wie viele Wörter erkannt wurden, wie die ersten Zeilen gelesen wurden und welche Zeilen nicht, und Wörter, die schon im Set sind, kommen nicht doppelt hinein.",
         "Im Fenster „Neues Wort“ kannst du Wörter nacheinander hinzufügen: Das Fenster bleibt offen, die Felder werden geleert, der Cursor springt zurück ins Wort, und Kolo sagt Bescheid, wenn das Wort schon in deinem Kurs ist. Beschriftungen und Beispiele der Felder passen jetzt zu der Sprache, die du lernst, statt immer Norwegisch zu nennen.",
-        "Sets, Wörter und Ordner werden sofort gespeichert, auch ohne Verbindung: Fenster hängen nicht mehr und warten aufs Netz, und die Änderungen gehen raus, sobald du wieder online bist. Wenn Kolo etwas nicht speichern kann, sagt es dir das und bietet an, es erneut zu versuchen, statt zu schweigen."
+        "Sets, Wörter und Ordner werden sofort gespeichert, auch ohne Verbindung: Fenster hängen nicht mehr und warten aufs Netz, und die Änderungen gehen raus, sobald du wieder online bist. Wenn Kolo etwas nicht speichern kann, sagt es dir das und bietet an, es erneut zu versuchen, statt zu schweigen.",
+        "Ein Set öffnet sich mit einem Tipp irgendwo auf seine Karte, nicht mehr nur über das Menü. In der Modusauswahl trägt nicht mehr jeder Modus ein Perigee-Zeichen, denn alle Modi tragen deine Antworten in den Plan ein, und Sets außerhalb von Favoriten und Ordnern stehen jetzt unter „Weitere Sets“."
       ]
     }
   ],

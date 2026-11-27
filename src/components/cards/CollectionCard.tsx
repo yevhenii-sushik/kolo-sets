@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Check,
   ChevronLeft,
@@ -69,19 +69,29 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
   const total = collection.cards.length;
   const isEmpty = total === 0;
   const dueToday = collection.cards.filter(isDueCard).length;
+  const setPath = `/collection/${collection.id}/edit`;
 
   return (
     <>
-      {/* Пока меню открыто, карточка не обрезает содержимое — выпадашка вверх не режется по краю */}
+      {/* Пока меню открыто, карточка не обрезает содержимое — выпадашка вверх не режется по краю.
+          Карточка открывает набор целиком: ссылка в названии растянута на всю карточку (after:inset-0),
+          а кнопки лежат поверх неё — они позиционированы и идут в разметке позже (docs/specs/06-audit-fixes.md, Л9) */}
       <div
         className={cx(
-          "flex h-full flex-col gap-5 rounded-4xl border border-line bg-surface p-5 transition-colors hover:border-accent/30",
+          "relative flex h-full flex-col gap-5 rounded-4xl border border-line bg-surface p-5 transition-colors hover:border-accent/30",
           isMenuOpen ? "overflow-visible" : "overflow-hidden",
         )}
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="font-display text-xl font-extrabold leading-tight text-fg line-clamp-2">{collection.name}</h3>
+            <h3 className="font-display text-xl font-extrabold leading-tight text-fg line-clamp-2">
+              <Link
+                to={setPath}
+                className="after:absolute after:inset-0 after:rounded-4xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-accent"
+              >
+                {collection.name}
+              </Link>
+            </h3>
             <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
               {plural(getLanguageInfo(language).htmlLang, total, c.words)}
               {dueToday > 0 && (
@@ -102,7 +112,7 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
                 e.stopPropagation();
                 onToggleFavorite(collection.id);
               }}
-              className="-mr-1.5 -mt-1.5"
+              className="relative -mr-1.5 -mt-1.5"
             >
               <Star size={17} className={collection.isFavorite ? "fill-warning text-warning" : ""} />
             </IconButton>
@@ -110,13 +120,16 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
         </div>
 
         {/* Учить + меню (изменить / переместить в папку / удалить) */}
-        <div className="mt-auto flex gap-2">
+        <div className="relative mt-auto flex gap-2">
           {dragHandle}
           <Button variant="inverse" fullWidth disabled={isEmpty} onClick={() => setShowModeModal(true)} iconRight={<ChevronRight size={16} />}>
             {c.study}
           </Button>
 
           <div className="relative shrink-0" ref={menuRef}>
+            {/* Нажатие мимо открытого меню только закрывает его: без подложки оно открыло бы набор
+                (карточка теперь нажимается вся) или соседний. Подложка внутри menuRef — закрывает её click */}
+            {isMenuOpen && <div aria-hidden className="fixed inset-0 z-10" onClick={closeMenu} />}
             <IconButton
               variant="surface"
               label={c.actions}
@@ -143,7 +156,7 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
                       <button
                         type="button"
                         onClick={() => {
-                          navigate(`/collection/${collection.id}/edit`);
+                          navigate(setPath);
                           closeMenu();
                         }}
                         className={cx(MENU_ITEM, "text-fg hover:bg-inset")}
