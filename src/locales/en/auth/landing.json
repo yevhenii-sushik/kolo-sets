@@ -234,7 +234,7 @@
       },
       {
         "q": "Which interface languages are available?",
-        "a": "The app is available in: {appLanguages}. This website is also available in: {siteOnlyLanguages} — translating the app into these languages is in progress."
+        "a": "Kolo is available in: {appLanguages}. You can switch the language any time in Settings or at the bottom of this page."
       }
     ]
   },

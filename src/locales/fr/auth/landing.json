@@ -234,7 +234,7 @@
       },
       {
         "q": "Dans quelles langues Kolo est-il disponible ?",
-        "a": "L'application est disponible en : {appLanguages}. Ce site existe aussi en : {siteOnlyLanguages} — la traduction de l'application dans ces langues est en cours."
+        "a": "Kolo est disponible en : {appLanguages}. Tu peux changer de langue à tout moment dans les Réglages ou en bas de cette page."
       }
     ]
   },

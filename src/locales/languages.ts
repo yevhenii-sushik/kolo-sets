@@ -4,15 +4,15 @@ import { languageForTimeZone } from './regionLanguages';
 // Как принято (Википедия, Google, Apple): каждый язык назван на нём самом и стоит
 // по алфавиту этих названий — сначала латиница, потом кириллица. Новый язык
 // вставляйте на его место по алфавиту, а не в конец.
-// app: true — переведено всё приложение; false — пока только лендинг
+// app: true — переведено всё приложение (язык есть в настройках); false — пока только сайт
 // (остальные разделы берутся из английского, см. locales/index.ts).
 export const LANGUAGES = [
-  { code: 'de', label: 'Deutsch', flag: '🇩🇪', htmlLang: 'de', app: false },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪', htmlLang: 'de', app: true },
   { code: 'en', label: 'English', flag: '🇬🇧', htmlLang: 'en', app: true },
-  { code: 'es', label: 'Español', flag: '🇪🇸', htmlLang: 'es', app: false },
-  { code: 'fr', label: 'Français', flag: '🇫🇷', htmlLang: 'fr', app: false },
+  { code: 'es', label: 'Español', flag: '🇪🇸', htmlLang: 'es', app: true },
+  { code: 'fr', label: 'Français', flag: '🇫🇷', htmlLang: 'fr', app: true },
   { code: 'no', label: 'Norsk', flag: '🇳🇴', htmlLang: 'nb', app: true },
-  { code: 'pt-BR', label: 'Português', flag: '🇧🇷', htmlLang: 'pt-BR', app: false },
+  { code: 'pt-BR', label: 'Português', flag: '🇧🇷', htmlLang: 'pt-BR', app: true },
   { code: 'ru', label: 'Русский', flag: '🇷🇺', htmlLang: 'ru', app: true },
   { code: 'uk', label: 'Українська', flag: '🇺🇦', htmlLang: 'uk', app: true },
 ] as const;

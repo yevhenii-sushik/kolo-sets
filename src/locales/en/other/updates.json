@@ -13,8 +13,12 @@
       "number": "0.4.1",
       "date": "November 2026",
       "title": "Kolo in your language",
-      "intro": "Kolo is learning new languages too: the app is being translated into German, Spanish, French and Portuguese, and on your first visit the site greets you in the language of your country. And if you're starting Norwegian or English, there are now ready-made word sets: a whole topic in one tap.",
+      "intro": "Kolo is learning new languages too: the whole app is now in German, Spanish, French and Portuguese, and on your first visit the site greets you in the language of your country. And if you're starting Norwegian or English, there are now ready-made word sets: a whole topic in one tap.",
       "features": [
+        {
+          "title": "Four new languages",
+          "text": "German, Spanish, French and Portuguese now cover all of Kolo: every screen and training mode, rewards, your profile and settings, the About Kolo pages and the whole history in What's new. Until now these languages had only the website and the learning screens."
+        },
         {
           "title": "Your language from the first visit",
           "text": "The first time you open Kolo, the site appears in the language of the country you're in, worked out from your device's time zone: nothing is sent anywhere and no location access is needed. If your browser is set to one of our languages, that one wins. Once you log in, the language stays put, even when you travel, and you can change it any time in Settings or at the bottom of the welcome page."

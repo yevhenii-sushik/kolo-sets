@@ -13,8 +13,12 @@
       "number": "0.4.1",
       "date": "Novembro de 2026",
       "title": "O Kolo no seu idioma",
-      "intro": "O Kolo também está aprendendo idiomas novos: o app está sendo traduzido para alemão, espanhol, francês e português, e na primeira visita o site já fala o idioma do seu país. E se você está começando no norueguês ou no inglês, agora tem sets de palavras prontos: um tema inteiro com um toque.",
+      "intro": "O Kolo também está aprendendo idiomas novos: o app inteiro agora está em alemão, espanhol, francês e português, e na primeira visita o site já fala o idioma do seu país. E se você está começando no norueguês ou no inglês, agora tem sets de palavras prontos: um tema inteiro com um toque.",
       "features": [
+        {
+          "title": "Quatro idiomas novos",
+          "text": "Alemão, espanhol, francês e português agora cobrem o Kolo inteiro: cada tela e cada modo de treino, as recompensas, seu perfil e os ajustes, as páginas “Sobre o Kolo” e todo o histórico de “Novidades”. Até agora, esses idiomas tinham só o site e as telas de estudo."
+        },
         {
           "title": "Seu idioma desde a primeira visita",
           "text": "Na primeira vez que você abre o Kolo, o site aparece no idioma do país onde você está, descoberto pelo fuso horário do seu dispositivo: nada é enviado para lugar nenhum e não é preciso dar acesso à sua localização. Se o seu navegador estiver configurado em um dos nossos idiomas, ele tem prioridade. Depois que você entra, o idioma fica fixo, mesmo em viagens, e dá para trocá-lo quando quiser nas configurações ou no rodapé da página de boas-vindas."
@@ -50,6 +54,362 @@
         "Sets, palavras e pastas são salvos na hora, mesmo sem conexão: as janelas não ficam mais travadas esperando a rede, e as alterações são enviadas assim que você volta a ficar online. Se o Kolo não conseguir salvar algo, ele avisa e oferece tentar de novo em vez de ficar em silêncio.",
         "Um set abre com um toque em qualquer parte do cartão, não só pelo menu. A escolha de modo não mostra mais a marca do Perigee em cada modo, já que todos registram suas respostas no plano, e os sets fora dos favoritos e das pastas agora ficam em “Outros sets”."
       ]
+    },
+    {
+      "number": "0.4.0",
+      "date": "Novembro de 2026",
+      "title": "Órbitas, cápsulas e um curso para cada idioma",
+      "intro": "A maior atualização do Kolo até agora. As chamas diárias deram lugar às órbitas semanais, praticar agora rende recompensas, e cada idioma ganha seu próprio curso.",
+      "features": [
+        {
+          "title": "Sessões Perigee",
+          "text": "Um botão na tela inicial começa uma sessão curta com todos os sets do seu curso: até 20 palavras, 3–5 minutos. O Perigee primeiro mostra as palavras novas, depois pede que você as encontre entre opções e testa as conhecidas conforme o quanto você as sabe — com opções, digitando, num flashcard, numa lacuna da frase de exemplo ou de ouvido. Um erro volta alguns passos depois, até fixar. Cada uma das quatro avaliações tem o próprio intervalo: “Não sei” mostra a palavra de novo mais tarde na mesma sessão, “Esqueci”, amanhã, “Lembro”, em alguns dias, e “Sei”, o mais tarde possível. O intervalo aparece embaixo de cada botão, e um card avaliado voa para o lado. As respostas no quiz e na rodada relâmpago agora também contam para o seu plano — esses modos levam a marca Perigee. Dentro de um set, o botão “Aprender” começa a mesma sessão só com as palavras daquele set. Agora há menos modos, cada um com sua função: Sobrevivência, Pares e a revisão diária separada saíram — a sessão Perigee fica no lugar deles. Cada passo agora aparece num card de pergunta, como no quiz, com a firmeza da palavra e o set de onde ela vem, e o cabeçalho mostra o que tem na sessão: quantas palavras para revisar e quantas são novas. Na dúvida? “Não sei” também está lá. Acertos seguidos formam uma sequência, e o resumo conta como foi a sessão, quais palavras ficaram mais firmes e quais foram difíceis. Uma avaliação no flashcard é o seu próprio julgamento, por isso não rende mais o bônus de acerto nem conta para “Sei tudo!”, e as palavras conhecidas são pedidas para digitar com mais frequência."
+        },
+        {
+          "title": "Flashcards",
+          "text": "Vire um card e a tradução está ali, grande e clara: nada de procurar atrás de um ícone. Nos ajustes dos cards, você escolhe a direção: lembrar a palavra a partir da tradução é mais difícil, mas melhor para falar, e “Nos dois sentidos” alterna de um card para outro. Lá também estão a ordem aleatória e a leitura em voz alta: a palavra toca quando você mostra a resposta. Cada card mostra o quanto a palavra está firme na sua memória. Os cards ficam num baralho: tire o de cima, e a próxima palavra já espera embaixo. A frente é quente, o verso é calmo, e virar o card não dá mais um clarão no modo escuro. Um set grande vai em rodadas de 20 palavras, e o Kolo lembra onde você parou, mesmo no meio de uma rodada. No fim de uma rodada, você vê as palavras difíceis e pode passar por elas até não sobrar nenhuma. O resumo agora é honesto: conta como foi a rodada, compara com a anterior e mostra seu caminho pelo set. Deslizar para a direita agora significa “Lembro”, não “Sei”, e enquanto você arrasta o card, ele mostra que avaliação você está prestes a dar. E “Praticar” na página de um set abre a escolha de modo, igual à lista de sets."
+        },
+        {
+          "title": "Quiz",
+          "text": "O quiz agora é uma prova sobre o seu set: 20 perguntas (ou 10, ou o set inteiro), começando pelas palavras que você errou da última vez e pelas que estão para revisar. Responda escolhendo, digitando ou misturando — na mistura, palavras fracas aparecem mais como opção e as fortes, para digitar, e de vez em quando você responde de ouvido. Uma resposta certa passa sozinha para a próxima, três seguidas começam uma sequência, e o som sobe junto. Depois do quiz, você pode ir direto para a revisão dos erros até acertar todas as palavras. O Kolo lembra quantas palavras do set você acertou, compara sua pontuação com a da última vez, registra um recorde do set e comemora quando o set inteiro é concluído. Um erro numa palavra que você ainda não aprendeu não bagunça mais o seu plano, e o bônus de quiz sem erros agora começa em 10 perguntas. Cada pergunta aparece num card, como nos flashcards, com a firmeza da palavra e a classe gramatical, e a folha de respostas no cabeçalho mostra como seu resultado está indo. Não sabe? Toque em “Não sei” em vez de chutar."
+        },
+        {
+          "title": "Rodada relâmpago",
+          "text": "O contra o relógio agora se chama rodada relâmpago, e o minuto dela trabalha para a sua memória: palavras para revisar e palavras fracas vêm primeiro, e uma palavra que você erra volta algumas perguntas depois. Uma contagem curta de 3-2-1 dispara o relógio, e se você sair do app, a rodada pausa. Depois de um erro, a resposta certa fica um pouco mais na tela enquanto o relógio continua correndo — então chutar não compensa, e quando você realmente não sabe, existe “Não sei”. Cada set guarda seu recorde: o cabeçalho mostra quando você o bate, e o resumo compara sua pontuação com a da última vez e lista as palavras que você errou, com som. Você também pode ser perguntado ao contrário, nos dois sentidos ou de ouvido. Aqui, palavras novas são só para jogar: elas não entram mais no seu plano, quem as apresenta é o Perigee. Uma rodada conta a partir de 10 respostas, e a conquista “Relâmpago” agora também pode ser ganha na rodada relâmpago."
+        },
+        {
+          "title": "Um plano para cada set",
+          "text": "Toque em “Praticar” num set e você vê primeiro o plano dele: quantas palavras estão firmes, firmando, aprendendo e novas, e quando o set inteiro vai estar em rotação. Você escolhe o ritmo — 5, 12 ou 20 palavras novas por dia — ali mesmo ou nos Ajustes, e a estimativa acompanha. Cada card de set em Palavras mostra o mesmo plano como uma barra fina."
+        },
+        {
+          "title": "Um curso para cada idioma",
+          "text": "Norueguês aqui, espanhol ali: cada curso tem seus próprios sets e pastas, então nada se mistura. Escolha seu idioma uma vez e troque de curso direto no cabeçalho."
+        },
+        {
+          "title": "Órbitas semanais",
+          "text": "Em vez de chamas que se apagam depois de um único dia perdido, você tem uma meta semanal de 3 a 7 dias. Cumpra e sua órbita fecha, e sua sequência cresce. Um escudo cobre uma semana difícil, e uma sequência quebrada pode ser recuperada nos três primeiros dias da semana seguinte."
+        },
+        {
+          "title": "XP e níveis",
+          "text": "Cada sessão e cada jogo rendem XP, e seu nível cresce junto. Se você já praticava antes, o XP de cada card que você estudou já é seu."
+        },
+        {
+          "title": "Cápsulas e coleções",
+          "text": "Novos níveis e órbitas fechadas trazem cápsulas. Dentro: satélites, cores de anel, fundos de perfil e títulos — 36 itens em quatro coleções. Repetidos viram poeira estelar, e a poeira estelar vira um escudo ou um item que está faltando. As chances estão na própria janela da cápsula."
+        },
+        {
+          "title": "Um perfil novinho",
+          "text": "Seu avatar no anel que você escolher, seu nível, sua órbita semanal, uma vitrine com suas três recompensas favoritas, medalhas e estatísticas — tudo numa página só. Quanto maior o seu nível, mais satélites cabem na sua órbita — até três."
+        },
+        {
+          "title": "Obrigado, beta testers",
+          "text": "Quem entrar antes do fim de 2026 ganha uma medalha, o título “Beta tester” e o anel “Primeira órbita”. Depois disso, eles somem para sempre."
+        },
+        {
+          "title": "Ajustes que fazem sentido",
+          "text": "Conta, aparência, aprendizado, notificações e dados — em linhas curtas, como os ajustes do seu celular, para ver de relance o que está ativado. E-mail, senha, sair, backup e exclusão da conta também ficam lá, em Mais → Ajustes. E a aba Outros agora se chama Mais."
+        },
+        {
+          "title": "Sons para a prática e as recompensas",
+          "text": "Respostas, flashcards e jogos agora têm sons próprios: notas suaves para acertos e erros, um farfalhar quando um card vira, um relógio tiquetaqueando nos últimos segundos de uma rodada relâmpago. Novos níveis, órbitas fechadas e cápsulas ganham cada um sua fanfarra, e cada raridade soa diferente. Você pode desligar os sons em Mais → Ajustes."
+        },
+        {
+          "title": "Compartilhe uma palavra",
+          "text": "Qualquer palavra de um set pode virar uma imagem para as redes sociais ou um chat: toque no botão de compartilhar ao lado dela. O card mostra a palavra, a tradução, a explicação e o exemplo num estilo claro, quente ou noturno. Envie direto pelo menu de compartilhar, baixe ou copie no computador."
+        },
+        {
+          "title": "Um Kolo mais vivo",
+          "text": "A tela inicial agora conversa com você. Acima do botão principal, uma linha curta diz o que importa agora: há quantos dias você não pratica, que uma sessão hoje fecha sua órbita semanal, quantos cards faltam para a meta do dia ou quantos você fez ontem — consegue superar? Cada estado tem sua própria imagem animada: as palavras saem de órbita quando é hora de revisar, as novas chegam voando para se juntar, e a lua aparece quando você já teve palavras novas suficientes por hoje. Numa tela larga, as palavras giram em volta da sua meta do dia. Cada quinto acerto seguido é comemorado no quiz, na rodada relâmpago e nas sessões Perigee, e o lembrete diário não diz mais a mesma coisa todo dia."
+        }
+      ],
+      "fixes": [
+        "Os flashcards voltaram a lembrar cada avaliação: por causa de um bug, só o último card da sessão era salvo.",
+        "Você pode praticar sem internet: os sets que você já abriu carregam offline, e suas avaliações são enviadas assim que você estiver online de novo.",
+        "Avaliou um card sem querer? Desfaça com o botão de seta no topo ou com a tecla Backspace, e o card volta do lado para onde voou.",
+        "Vai sair no meio de uma sessão? O Kolo mostra quanto falta e pergunta se você tem certeza: só uma sessão concluída conta, e suas respostas ficam guardadas de qualquer jeito.",
+        "O card não pula mais quando você mostra a resposta.",
+        "O quiz perdoa coisinhas: um erro de digitação, letras especiais faltando ou um artigo esquecido contam como certos, e o ponto exato aparece marcado na própria palavra: letras a mais, a menos ou trocadas. Se a sua resposta também está certa, mas o card não a traz, adicione-a ao card — daí em diante o quiz vai aceitar. Seu celular não corrige mais automaticamente as palavras estrangeiras enquanto você digita.",
+        "O quiz voltou a abrir: um bug o fechava logo depois de carregar o set.",
+        "Praticar um set inteiro antes da hora não empurra mais as palavras meses para a frente, e as palavras para revisar hoje esperam desde a manhã.",
+        "O progresso agora é contado pelo servidor, então não pode se perder nem ser falsificado.",
+        "Uma sessão feita offline não some mais — ela conta assim que o Kolo voltar a ficar online.",
+        "O novo design Orbita e uma nova fonte para os títulos.",
+        "Escrever para o suporte ficou mais simples: escolha um assunto, digite sua mensagem, e respondemos no e-mail da sua conta. Mensagens com caracteres como _ ou * agora são enviadas sem erro.",
+        "Chegou agora? Uma introdução curta e “Primeiros passos” na tela inicial levam você do primeiro set à primeira sessão — com dicas pelo caminho.",
+        "A tela inicial não diz mais que está tudo revisado enquanto há palavras novas esperando, e a página de um set agora tem um botão “Praticar”.",
+        "As pastas funcionam direito: renomeie e mude a cor, exclua só depois de confirmar (os sets ficam), o botão Voltar fecha uma pasta, e depois de uma sessão você volta para a mesma pasta. Dá para criar uma pasta direto do menu de um set, e sets com estrela dentro de pastas aparecem em Favoritos.",
+        "O lembrete diário agora fala o idioma do seu app e conta as palavras que esperam revisão.",
+        "O Kolo abre mais rápido: suas palavras e sets aparecem na hora e se atualizam em silêncio em segundo plano, e trocar de aba não pisca mais uma tela em branco. A tela inicial não mostra mais por um instante “Comece com seu primeiro set” ou “0 palavras” enquanto carrega.",
+        "As palavras que você adiciona a um set agora aparecem na hora na tela inicial, em Palavras e em “Primeiros passos”, sem recarregar o app. A página de um set também abre na hora.",
+        "A busca saiu do cabeçalho e foi para a aba Palavras: digite no topo uma palavra ou tradução e veja em qual set ela está. Toque num resultado e o set abre exatamente naquele card. Letras como é ou ü podem ser digitadas sem acento. No computador, ⌘K ou Ctrl+K leva você até lá de qualquer aba.",
+        "Se duas palavras têm a mesma tradução, a segunda não aparece mais entre as opções de resposta, onde um acerto contava como erro. Se você digitar um sinônimo no quiz, o Kolo reconhece e pede a outra palavra.",
+        "Os flashcards e a sessão Perigee mostram no cabeçalho a mesma folha de respostas do quiz: uma casa por palavra, colorida conforme a sua resposta. E um nome de set comprido não empurra mais os botões do cabeçalho para fora da tela.",
+        "“Jogar de novo” logo depois de uma rodada não mostra mais opções de resposta que não combinam com a palavra.",
+        "Uma sessão Perigee não mostra mais um botão de resposta “—” quando duas palavras têm a mesma tradução.",
+        "O Kolo agora se atualiza quando você volta para ele, não só depois de reiniciar, e nunca no meio de uma sessão. Em Mais, você vê qual versão tem e pode procurar atualizações você mesmo.",
+        "A tela de carregamento não parece mais travada numa conexão lenta: o satélite gira em volta do logo e, se o carregamento demorar mais que o normal, o Kolo conta o que está acontecendo: ainda carregando, conexão lenta ou sem internet. No tema escuro, ela não dá mais um clarão branco."
+      ]
+    },
+    {
+      "number": "0.3.0",
+      "date": "Julho de 2026",
+      "title": "O Kolo na sua tela inicial",
+      "intro": "Agora você pode instalar o Kolo como um app, e há três jogos para revisar rápido.",
+      "features": [
+        {
+          "title": "Instale o Kolo",
+          "text": "Adicione o Kolo à tela inicial do celular ou ao dock do computador: ele abre em tela cheia, sem barra de endereço, e se atualiza sozinho."
+        },
+        {
+          "title": "Três jogos",
+          "text": "Contra o relógio — responda o máximo que puder, com um multiplicador para acertos seguidos. Sobrevivência — três vidas, e cada erro custa uma. Pares — ligue as palavras às traduções antes que o tempo acabe."
+        },
+        {
+          "title": "Fotos de perfil do seu aparelho",
+          "text": "Chega de procurar um link: escolha uma foto do celular ou do computador, e o Kolo comprime para você."
+        },
+        {
+          "title": "Seu próprio @usuário",
+          "text": "Toda conta agora tem um nome de usuário único. Você pode mudá-lo no seu perfil."
+        },
+        {
+          "title": "Mais compacto no celular",
+          "text": "Início, Perfil e Outros ficaram bem mais compactos: menos cards gigantes, mais do que importa na tela. O calendário de atividade cabe na sua tela, e as conquistas se recolhem numa lista curta."
+        }
+      ],
+      "fixes": [
+        "O verso de um flashcard não se sobrepõe mais à frente.",
+        "A barra do navegador no celular não cobre mais os botões na parte de baixo da tela.",
+        "As páginas que você abre com frequência aparecem na hora, sem animação a mais.",
+        "O seletor “Minhas palavras / Kolo Sets” agora ocupa toda a largura no celular.",
+        "Os sets não somem mais quando você exclui uma pasta.",
+        "O jogo diário não se confunde mais com fusos horários, e os e-mails não aparecem mais no ranking.",
+        "Os lembretes diários passam para o dia seguinte corretamente."
+      ]
+    },
+    {
+      "number": "0.2.7",
+      "date": "Julho de 2026",
+      "title": "Oi, quem está chegando",
+      "intro": "Um tour de boas-vindas para quem chega pela primeira vez e dois novos idiomas no app.",
+      "features": [
+        {
+          "title": "Tour pelo app",
+          "text": "Seis passos curtos com prévias ao vivo mostram o essencial na primeira vez que você abre o Kolo. Dá para refazer o tour quando quiser."
+        },
+        {
+          "title": "Norueguês e ucraniano",
+          "text": "O Kolo agora fala norueguês 🇳🇴 e ucraniano 🇺🇦: cada tela, sessão e ajuste, e mais de 130 dicas."
+        },
+        {
+          "title": "Comemoração da sequência",
+          "text": "Quando sua sequência cresce, o Kolo solta uns fogos de artifício."
+        }
+      ],
+      "fixes": [
+        "Terminar uma sessão volta a contar o dia para a sua sequência."
+      ]
+    },
+    {
+      "number": "0.2.6",
+      "date": "Junho de 2026",
+      "title": "Mais arrumado em todo lugar",
+      "intro": "Uma pequena atualização dedicada ao visual.",
+      "features": [
+        {
+          "title": "Design refinado",
+          "text": "Ajustamos espaçamentos, tipografia e a ordem das coisas em cada tela — tudo ficou mais fácil de ler."
+        },
+        {
+          "title": "Novos cards de set",
+          "text": "Os cards dos sets são mais fáceis de ler de relance e mais rápidos de abrir."
+        }
+      ],
+      "fixes": [
+        "A navegação e o layout do Início e do Perfil estão mais arrumados."
+      ]
+    },
+    {
+      "number": "0.2.5",
+      "date": "Março de 2026",
+      "title": "Um novo Início",
+      "intro": "Refizemos a navegação: as palavras ganharam uma seção própria, e o Início agora é o seu painel pessoal.",
+      "features": [
+        {
+          "title": "A seção Palavras",
+          "text": "Todos os seus sets e cards ficam numa seção própria, mais fácil de organizar."
+        },
+        {
+          "title": "Início",
+          "text": "Sua meta do dia, os números principais e um atalho para voltar a revisar — tudo de que você precisa ao abrir o Kolo."
+        },
+        {
+          "title": "Sets prontos por nível",
+          "text": "A biblioteca agora tem sets do Kolo do iniciante ao avançado, e vêm mais por aí."
+        },
+        {
+          "title": "Um visual novo",
+          "text": "Renovamos o design do app inteiro."
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "number": "0.2.4",
+      "date": "Março de 2026",
+      "title": "Uma pausa rápida por segurança",
+      "intro": "Numa verificação de rotina, encontramos um ponto fraco na configuração do nosso servidor, e nossa hospedagem parou o Kolo por um instante para proteger seus dados. Revisamos todas as nossas proteções, corrigimos a configuração e trouxemos o Kolo de volta. Seus dados estão bem.",
+      "features": [],
+      "fixes": []
+    },
+    {
+      "number": "0.2.3",
+      "date": "Fevereiro de 2026",
+      "title": "Fale com a gente",
+      "intro": "O suporte chegou, e adicionar palavras ficou mais fácil.",
+      "features": [
+        {
+          "title": "Suporte",
+          "text": "Achou um bug ou tem uma ideia? Escreva para a gente direto do app — sua mensagem vai direto para a equipe do Kolo."
+        },
+        {
+          "title": "Uma nova importação de cards",
+          "text": "A janela de importação ficou mais simples, e um botão de ajuda com IA mostra como preparar sua lista de palavras."
+        },
+        {
+          "title": "Um design mais limpo",
+          "text": "A interface está mais limpa e moderna."
+        }
+      ],
+      "fixes": [
+        "Uma conquista que você ganhou não aparece mais como bloqueada."
+      ]
+    },
+    {
+      "number": "0.2.2",
+      "date": "Fevereiro de 2026",
+      "title": "Boas-vindas a bordo",
+      "intro": "Uma página de boas-vindas para quem chega e um pacote de correções.",
+      "features": [
+        {
+          "title": "Página de boas-vindas",
+          "text": "Quem abre o Kolo pela primeira vez vê o que ele sabe fazer."
+        },
+        {
+          "title": "Flashcards renovados",
+          "text": "O modo de estudo está mais limpo e moderno."
+        }
+      ],
+      "fixes": [
+        "Ao passar de uma página para outra, nenhuma se perde mais no caminho.",
+        "Os cards no modo de estudo não revelam mais a resposta antes da hora.",
+        "Corrigimos problemas de layout no celular.",
+        "Ficou mais claro ir de Outros para Novidades."
+      ]
+    },
+    {
+      "number": "0.2.1",
+      "date": "Fevereiro de 2026",
+      "title": "Mais rápido e amigável no celular",
+      "intro": "Uma pequena atualização: o Kolo responde mais rápido e se encaixa melhor em telas pequenas.",
+      "features": [],
+      "fixes": [
+        "A interface se adapta melhor aos celulares.",
+        "Corrigimos um punhado de pequenos bugs.",
+        "O app ficou mais rápido."
+      ]
+    },
+    {
+      "number": "0.2.0",
+      "date": "Fevereiro de 2026",
+      "title": "O Kolo ganha contas",
+      "intro": "Uma das grandes: suas palavras agora ficam na sua conta e acompanham você em qualquer aparelho.",
+      "features": [
+        {
+          "title": "Contas e sincronização na nuvem",
+          "text": "Entre, e seus sets sincronizam entre o celular e o computador."
+        },
+        {
+          "title": "Pronúncia",
+          "text": "O Kolo lê as palavras em voz alta, então fica mais fácil lembrar como elas soam."
+        },
+        {
+          "title": "Conquistas e chamas",
+          "text": "Chegaram as conquistas, junto com chamas por praticar dia após dia 🔥."
+        },
+        {
+          "title": "Estatísticas",
+          "text": "Um retrato detalhado do seu progresso: palavras, sessões e tempo."
+        },
+        {
+          "title": "Backup",
+          "text": "Baixe seus sets num arquivo e restaure quando precisar."
+        },
+        {
+          "title": "Idiomas do app",
+          "text": "Você pode mudar o Kolo para outro idioma."
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "number": "0.1.2",
+      "date": "Fevereiro de 2026",
+      "title": "Modo escuro",
+      "intro": "O Kolo aprendeu a ficar escuro e a se sentir em casa no celular.",
+      "features": [
+        {
+          "title": "Modo escuro",
+          "text": "Mais confortável para os olhos à noite — o Kolo segue o tema do seu sistema."
+        },
+        {
+          "title": "O Kolo no seu celular",
+          "text": "A interface se adapta às telas de celular, e o menu foi para baixo, bem embaixo do seu polegar."
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "number": "0.1.1",
+      "date": "Fevereiro de 2026",
+      "title": "Sets e estudo",
+      "intro": "Os primeiros passos depois do lançamento.",
+      "features": [
+        {
+          "title": "Sets e cards",
+          "text": "Agrupe palavras em sets — por tema, por lição ou como preferir."
+        },
+        {
+          "title": "Flashcards e quiz",
+          "text": "Aprenda palavras com flashcards e teste-se com um quiz."
+        },
+        {
+          "title": "Um Início mais claro",
+          "text": "A página inicial ficou mais simples e limpa."
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "number": "0.1.0",
+      "date": "Janeiro de 2026",
+      "title": "Olá, Kolo",
+      "intro": "A primeira versão pública. Foi aqui que tudo começou.",
+      "features": [
+        {
+          "title": "Sets e cards",
+          "text": "Crie sets de palavras com traduções."
+        },
+        {
+          "title": "Flashcards e quiz",
+          "text": "Revise com flashcards e teste-se com um quiz."
+        },
+        {
+          "title": "Tudo no seu navegador",
+          "text": "Suas palavras ficam salvas no seu próprio navegador — sem precisar de cadastro."
+        }
+      ],
+      "fixes": []
     }
   ],
   "fixesTitle": "Pequenas correções que fazem diferença"

@@ -111,12 +111,12 @@
       ]
     },
     "perigee": {
-      "tab": "Perigee-Algorithmus",
+      "tab": "Perigee-Motor",
       "meta": {
         "title": "Perigee – Kolos Algorithmus für verteilte Wiederholung",
         "description": "Wie Kolo entscheidet, wann ein Wort zurückkommt: die Vergessenskurve, vier Bewertungsknöpfe, wachsende Abstände und der SM-2-Algorithmus unter der Haube."
       },
-      "title": "Perigee, Kolos Wiederholungsalgorithmus",
+      "title": "Perigee, Kolos Motor für Wiederholungen",
       "lead": "Perigee entscheidet, wann jedes Wort wiederkommen soll: nicht zu früh, damit du keine Zeit mit Bekanntem verschwendest, und nicht zu spät, damit du es nicht vergisst.",
       "sections": [
         {

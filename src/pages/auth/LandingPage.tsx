@@ -4,7 +4,7 @@ import { AnimatePresence, MotionConfig, motion, useMotionValueEvent, useScroll }
 import { ArrowRight, ArrowUpRight, Check, Mail, Monitor, Plus, Rocket, Smartphone, TabletSmartphone } from "lucide-react";
 import { Badge, ButtonLink, Card, Heading, Logo, LogoMark, PerigeeMark, Ring, Text, buttonStyles, cx } from "../../ui";
 import { useI18n } from "../../contexts/I18nContext";
-import { APP_LANGUAGES, LANGUAGES, getLanguageInfo } from "../../locales/languages";
+import { APP_LANGUAGES, getLanguageInfo } from "../../locales/languages";
 import { FEATURES } from "../../config/features";
 import { LEGAL } from "../legal/legalInfo";
 import LandingFooter from "../../components/landing/LandingFooter";
@@ -191,14 +191,12 @@ export default function LandingPage() {
   usePageMeta({ title: l.meta.title, description: l.meta.description, path: "/welcome" });
   const info = getLanguageInfo(language);
 
-  // Списки языков считаем из LANGUAGES, чтобы не править тексты при добавлении нового.
-  // В «языках интерфейса» — только полностью переведённые (app: true), остальные пока есть лишь на сайте.
+  // Список языков считаем из APP_LANGUAGES, чтобы не править тексты при добавлении нового.
+  // Языков «только сайт» сейчас нет: все восемь переведены целиком (docs/roadmap.md, 2026-11-27)
   const listLanguages = (langs: readonly { label: string }[]) => langs.map((lang) => lang.label).join(", ");
   const faqItems = l.faq.items.map((item) => ({
     ...item,
-    a: item.a
-      .replace("{appLanguages}", listLanguages(APP_LANGUAGES))
-      .replace("{siteOnlyLanguages}", listLanguages(LANGUAGES.filter((lang) => !lang.app))),
+    a: item.a.replace("{appLanguages}", listLanguages(APP_LANGUAGES)),
   }));
 
   // Переход с другой страницы на раздел лендинга (/welcome#faq): прокручиваем, когда страница отрисовалась

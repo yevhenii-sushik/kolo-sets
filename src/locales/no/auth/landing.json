@@ -234,7 +234,7 @@
       },
       {
         "q": "Hvilke språk finnes grensesnittet på?",
-        "a": "Appen finnes på: {appLanguages}. Denne nettsiden finnes også på: {siteOnlyLanguages} — oversettelsen av appen til disse språkene er i gang."
+        "a": "Kolo finnes på: {appLanguages}. Du kan bytte språk når som helst i innstillingene eller nederst på denne siden."
       }
     ]
   },

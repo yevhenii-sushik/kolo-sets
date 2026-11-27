@@ -13,8 +13,12 @@
       "number": "0.4.1",
       "date": "November 2026",
       "title": "Kolo på ditt språk",
-      "intro": "Kolo lærer seg også nye språk: appen oversettes til tysk, spansk, fransk og portugisisk, og første gang du åpner nettstedet, møter det deg på språket i landet ditt. Og begynner du på norsk eller engelsk, finnes det nå ferdige ordsett: et helt tema med ett trykk.",
+      "intro": "Kolo lærer seg også nye språk: hele appen finnes nå på tysk, spansk, fransk og portugisisk, og første gang du åpner nettstedet, møter det deg på språket i landet ditt. Og begynner du på norsk eller engelsk, finnes det nå ferdige ordsett: et helt tema med ett trykk.",
       "features": [
+        {
+          "title": "Fire nye språk",
+          "text": "Tysk, spansk, fransk og portugisisk dekker nå hele Kolo: hver skjerm og hver treningsmodus, belønninger, profilen og innstillingene, sidene «Om Kolo» og hele historikken i «Hva er nytt». Til nå hadde disse språkene bare nettstedet og læringsskjermene."
+        },
         {
           "title": "Ditt språk fra første besøk",
           "text": "Første gang du åpner Kolo, vises nettstedet på språket i landet du er i, ut fra tidssonen på enheten din: ingenting sendes noe sted, og du trenger ikke å dele posisjonen din. Er nettleseren satt til et av språkene våre, går det foran. Når du har logget inn, ligger språket fast, også når du er på reise, og du kan bytte det når som helst i innstillingene eller nederst på startsiden."

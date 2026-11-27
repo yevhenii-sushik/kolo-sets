@@ -13,8 +13,12 @@
       "number": "0.4.1",
       "date": "November 2026",
       "title": "Kolo in deiner Sprache",
-      "intro": "Auch Kolo lernt neue Sprachen: Die App wird ins Deutsche, Spanische, Französische und Portugiesische übersetzt, und beim ersten Besuch begrüßt dich die Seite in der Sprache deines Landes. Und wenn du mit Norwegisch oder Englisch anfängst, gibt es jetzt fertige Wortsets: ein ganzes Thema mit einem Fingertipp.",
+      "intro": "Auch Kolo lernt neue Sprachen: Die ganze App gibt es jetzt auf Deutsch, Spanisch, Französisch und Portugiesisch, und beim ersten Besuch begrüßt dich die Seite in der Sprache deines Landes. Und wenn du mit Norwegisch oder Englisch anfängst, gibt es jetzt fertige Wortsets: ein ganzes Thema mit einem Fingertipp.",
       "features": [
+        {
+          "title": "Vier neue Sprachen",
+          "text": "Deutsch, Spanisch, Französisch und Portugiesisch gibt es jetzt in ganz Kolo: auf jedem Bildschirm und in jedem Übungsmodus, bei den Belohnungen, im Profil und in den Einstellungen, auf den Seiten „Über Kolo“ und in der ganzen Geschichte von „Was ist neu“. Bisher gab es in diesen Sprachen nur die Website und die Lernbildschirme."
+        },
         {
           "title": "Deine Sprache ab dem ersten Besuch",
           "text": "Wenn du Kolo zum ersten Mal öffnest, erscheint die Seite in der Sprache des Landes, in dem du gerade bist – ermittelt aus der Zeitzone deines Geräts: Es wird nichts verschickt, und du musst keinen Standort freigeben. Ist dein Browser auf eine unserer Sprachen eingestellt, hat diese Vorrang. Sobald du dich anmeldest, bleibt die Sprache fest, auch auf Reisen, und du kannst sie jederzeit in den Einstellungen oder unten auf der Willkommensseite ändern."
@@ -50,6 +54,362 @@
         "Sets, Wörter und Ordner werden sofort gespeichert, auch ohne Verbindung: Fenster hängen nicht mehr und warten aufs Netz, und die Änderungen gehen raus, sobald du wieder online bist. Wenn Kolo etwas nicht speichern kann, sagt es dir das und bietet an, es erneut zu versuchen, statt zu schweigen.",
         "Ein Set öffnet sich mit einem Tipp irgendwo auf seine Karte, nicht mehr nur über das Menü. In der Modusauswahl trägt nicht mehr jeder Modus ein Perigee-Zeichen, denn alle Modi tragen deine Antworten in den Plan ein, und Sets außerhalb von Favoriten und Ordnern stehen jetzt unter „Weitere Sets“."
       ]
+    },
+    {
+      "number": "0.4.0",
+      "date": "November 2026",
+      "title": "Orbits, Kapseln und ein Kurs für jede Sprache",
+      "intro": "Das größte Kolo-Update bisher. Die täglichen Flammen haben wöchentlichen Orbits Platz gemacht, Üben bringt jetzt Belohnungen, und jede Sprache bekommt ihren eigenen Kurs.",
+      "features": [
+        {
+          "title": "Perigee-Sessions",
+          "text": "Ein Knopf auf der Startseite startet eine kurze Session über alle Sets deines Kurses: bis zu 20 Wörter, 3–5 Minuten. Perigee zeigt dir zuerst neue Wörter, lässt sie dich dann unter Antwortmöglichkeiten wiederfinden und prüft bekannte je nachdem, wie gut du sie kannst – mit Auswahl, durch Eintippen, auf einer Karteikarte, als Lücke im Beispielsatz oder nach Gehör. Ein Fehler kommt ein paar Schritte später wieder, bis er sitzt. Jede der vier Bewertungen hat ihr eigenes Timing: „Weiß nicht“ zeigt das Wort später in derselben Session noch einmal, „Vergessen“ morgen, „Erinnert“ in ein paar Tagen, „Gewusst“ am spätesten. Das Timing steht unter jedem Knopf, und eine bewertete Karte fliegt zur Seite weg. Antworten im Quiz und in der Blitzrunde zählen jetzt auch für deinen Plan – diese Modi tragen das Perigee-Zeichen. In einem Set startet der Knopf „Lernen“ dieselbe Session nur mit den Wörtern dieses Sets. Es gibt jetzt weniger Modi, jeder mit eigener Aufgabe: Überleben, Paare und die separate tägliche Wiederholung sind weg – die Perigee-Session ersetzt sie. Jeder Schritt steht jetzt auf einer Fragekarte, wie im Quiz, mit der Festigkeit des Wortes und dem Set, aus dem es kommt, und die Kopfzeile zeigt, was in der Session steckt: wie viele Wörter zu wiederholen sind und wie viele neu. Nicht sicher? „Weiß ich nicht“ gibt es auch. Richtige Antworten in Folge bauen eine Serie auf, und die Zusammenfassung erzählt, wie die Session lief, welche Wörter fester geworden sind und welche schwer waren. Eine Bewertung auf der Karteikarte ist dein eigenes Urteil, deshalb bringt sie keinen Bonus für eine richtige Antwort mehr und zählt nicht für „Alles gewusst!“, und bekannte Wörter werden öfter durch Eintippen abgefragt."
+        },
+        {
+          "title": "Karteikarten",
+          "text": "Dreh eine Karte um, und die Übersetzung steht groß und deutlich da: Kein Suchen mehr hinter einem Symbol. In den Karteneinstellungen wählst du die Richtung: Das Wort aus der Übersetzung abzurufen ist schwerer, aber besser fürs Sprechen, und „Beide Richtungen“ wechselt von Karte zu Karte. Dort findest du auch gemischte Reihenfolge und Vorlesen: Das Wort erklingt, wenn du die Antwort aufdeckst. Jede Karte zeigt, wie fest das Wort in deinem Gedächtnis sitzt. Die Karten liegen in einem Stapel: Nimm die oberste weg, und das nächste Wort wartet schon darunter. Die Vorderseite ist warm, die Rückseite ruhig, und beim Umdrehen blitzt es im Dunkelmodus nicht mehr hell auf. Ein großes Set geht in Runden zu 20 Wörtern, und Kolo merkt sich, wo du aufgehört hast, sogar mitten in einer Runde. Am Ende einer Runde siehst du deine schwierigen Wörter und kannst sie durchgehen, bis keins mehr übrig ist. Die Zusammenfassung ist jetzt ehrlich: Sie sagt, wie die Runde lief, vergleicht sie mit dem letzten Mal und zeigt deinen Weg durch das Set. Nach rechts wischen heißt jetzt „Erinnert“, nicht „Gewusst“, und während du die Karte ziehst, zeigt sie, welche Bewertung du gleich gibst. Und „Üben“ auf der Seite eines Sets öffnet die Modusauswahl, genau wie in der Liste der Sets."
+        },
+        {
+          "title": "Quiz",
+          "text": "Das Quiz ist jetzt eine Prüfung zu deinem Set: 20 Fragen (oder 10, oder das ganze Set), beginnend mit den Wörtern, die du letztes Mal falsch hattest, und den fälligen. Antworte per Auswahl, durch Eintippen oder gemischt – im Mix kommen schwache Wörter öfter als Auswahl und starke als Eingabe, und ab und zu antwortest du nach Gehör. Eine richtige Antwort geht von selbst weiter, drei in Folge starten eine Serie, und der Ton steigt mit. Nach dem Quiz kannst du direkt Fehler üben, bis jedes Wort sitzt. Kolo merkt sich, wie viele Wörter des Sets du richtig hattest, vergleicht dein Ergebnis mit dem letzten Mal, notiert einen Set-Rekord und feiert, wenn das ganze Set geschafft ist. Ein Fehler bei einem Wort, das du noch nicht gelernt hast, bringt deinen Plan nicht mehr durcheinander, und der Bonus für ein fehlerfreies Quiz gilt jetzt ab 10 Fragen. Jede Frage steht auf einer Karte, wie bei den Karteikarten, mit der Festigkeit und der Wortart des Wortes, und der Antwortbogen in der Kopfzeile zeigt, wie sich dein Ergebnis entwickelt. Keine Ahnung? Tippe auf „Weiß ich nicht“, statt zu raten."
+        },
+        {
+          "title": "Blitzrunde",
+          "text": "Die Tempo-Runde heißt jetzt Blitzrunde, und ihre Minute arbeitet für dein Gedächtnis: Fällige und schwache Wörter kommen zuerst, und ein verpasstes Wort kommt ein paar Fragen später wieder. Ein kurzer Countdown 3-2-1 startet die Uhr, und wenn du die App verlässt, pausiert die Runde. Nach einem Fehler bleibt die richtige Antwort etwas länger stehen, während die Uhr weiterläuft – Raten lohnt sich also nicht, und wenn du es wirklich nicht weißt, gibt es „Weiß ich nicht“. Jedes Set hat seinen eigenen Rekord: Die Kopfzeile zeigt, wenn du ihn schlägst, und die Zusammenfassung vergleicht dein Ergebnis mit dem letzten Mal und listet die verpassten Wörter mit Ton auf. Du kannst auch umgekehrt, in beide Richtungen oder nach Gehör gefragt werden. Neue Wörter sind hier nur zum Spielen: Sie landen nicht mehr in deinem Plan, die führt Perigee ein. Eine Runde zählt ab 10 Antworten, und den Erfolg „Blitzschnell“ kannst du jetzt auch in der Blitzrunde verdienen."
+        },
+        {
+          "title": "Ein Plan für jedes Set",
+          "text": "Tippe bei einem Set auf „Üben“, und du siehst zuerst seinen Plan: wie viele Wörter sitzen, sich festigen, noch im Lernen und neu sind, und wann das ganze Set im Umlauf sein wird. Das Tempo bestimmst du selbst – 5, 12 oder 20 neue Wörter am Tag –, direkt dort oder in den Einstellungen, und die Schätzung zieht mit. Jede Set-Karte unter „Wörter“ zeigt denselben Plan als schmalen Balken."
+        },
+        {
+          "title": "Ein Kurs für jede Sprache",
+          "text": "Norwegisch hier, Spanisch dort: Jeder Kurs hat eigene Sets und Ordner, so kommt nichts durcheinander. Wähle deine Sprache einmal und wechsle Kurse direkt in der Kopfzeile."
+        },
+        {
+          "title": "Wöchentliche Orbits",
+          "text": "Statt Flammen, die nach einem einzigen verpassten Tag ausgehen, bekommst du ein Wochenziel von 3 bis 7 Tagen. Erreichst du es, schließt sich dein Orbit, und deine Serie wächst. Ein Schild fängt eine harte Woche ab, und eine gerissene Serie lässt sich in den ersten drei Tagen der nächsten Woche reparieren."
+        },
+        {
+          "title": "XP und Level",
+          "text": "Jede Session und jedes Spiel bringt XP, und dein Level wächst mit. Wenn du schon vorher geübt hast, gehören dir die XP für jede gelernte Karte bereits."
+        },
+        {
+          "title": "Kapseln und Sammlungen",
+          "text": "Neue Level und geschlossene Orbits bringen Kapseln. Darin: Satelliten, Ringfarben, Profilhintergründe und Titel – 36 Gegenstände in vier Sammlungen. Doppelte werden zu Sternenstaub, und Sternenstaub wird zu einem Schild oder einem fehlenden Gegenstand. Die Chancen stehen direkt im Kapselfenster."
+        },
+        {
+          "title": "Ein ganz neues Profil",
+          "text": "Dein Avatar im Ring deiner Wahl, dein Level, dein Wochen-Orbit, eine Vitrine mit deinen drei liebsten Belohnungen, Medaillen und Statistik – alles auf einer Seite. Je höher dein Level, desto mehr Satelliten passen auf deinen Orbit – bis zu drei."
+        },
+        {
+          "title": "Danke, Beta-Tester",
+          "text": "Alle, die vor Ende 2026 dazukommen, bekommen eine Medaille, den Titel „Beta-Tester“ und den Ring „Erster Orbit“. Danach sind sie für immer vergeben."
+        },
+        {
+          "title": "Einstellungen, die Sinn ergeben",
+          "text": "Konto, Aussehen, Lernen, Benachrichtigungen und Daten – in kurzen Zeilen, wie die Einstellungen auf deinem Handy, damit du auf einen Blick siehst, was eingeschaltet ist. E-Mail, Passwort, Abmelden, Sicherung und Kontolöschung wohnen auch dort, unter Mehr → Einstellungen. Und der Tab „Sonstiges“ heißt jetzt „Mehr“."
+        },
+        {
+          "title": "Töne fürs Üben und für Belohnungen",
+          "text": "Antworten, Karteikarten und Spiele haben jetzt eigene Töne: sanfte Klänge für richtige und falsche Antworten, ein Rascheln, wenn eine Karte umgedreht wird, eine tickende Uhr in den letzten Sekunden einer Blitzrunde. Neue Level, geschlossene Orbits und Kapseln bekommen jeweils eine eigene Fanfare, und jede Seltenheit klingt anders. Ausschalten kannst du die Töne unter Mehr → Einstellungen."
+        },
+        {
+          "title": "Ein Wort teilen",
+          "text": "Jedes Wort in einem Set kann zu einem Bild für soziale Netzwerke oder einen Chat werden: Tippe auf den Teilen-Knopf daneben. Die Karte zeigt das Wort, seine Übersetzung, Erklärung und Beispiel im hellen, warmen oder nächtlichen Stil. Schick sie direkt über das Teilen-Menü, lade sie herunter oder kopiere sie am Computer."
+        },
+        {
+          "title": "Ein lebendigeres Kolo",
+          "text": "Die Startseite spricht jetzt mit dir. Über dem Hauptknopf sagt eine kurze Zeile, was gerade zählt: wie viele Tage du schon nicht geübt hast, dass eine Session heute deinen Wochen-Orbit schließt, wie viele Karten noch bis zu deinem Tagesziel fehlen oder wie viele du gestern geschafft hast – kannst du das toppen? Jeder Zustand hat sein eigenes bewegtes Bild: Wörter driften aus dem Orbit, wenn es Zeit zum Wiederholen ist, neue Wörter fliegen herbei, und der Mond geht auf, wenn du für heute genug neue Wörter hattest. Auf einem breiten Bildschirm kreisen die Wörter um dein Tagesziel. Jede fünfte richtige Antwort in Folge wird im Quiz, in der Blitzrunde und in Perigee-Sessions bejubelt, und die tägliche Erinnerung sagt nicht mehr jeden Tag dasselbe."
+        }
+      ],
+      "fixes": [
+        "Karteikarten merken sich wieder jede Bewertung: Wegen eines Fehlers wurde nur die letzte Karte einer Session gespeichert.",
+        "Du kannst ohne Internet üben: Sets, die du schon geöffnet hast, laden offline, und deine Bewertungen werden gesendet, sobald du wieder online bist.",
+        "Eine Karte aus Versehen bewertet? Mach es mit dem Pfeilknopf oben oder mit der Rücktaste rückgängig, und die Karte kommt von der Seite zurück, zu der sie weggeflogen ist.",
+        "Mitten in einer Session gehen? Kolo zeigt, wie viel noch übrig ist, und fragt, ob du sicher bist: Nur eine beendete Session zählt, und deine Antworten bleiben so oder so erhalten.",
+        "Die Karte springt nicht mehr, wenn du die Antwort aufdeckst.",
+        "Das Quiz verzeiht Kleinigkeiten: Ein Tippfehler, fehlende Sonderzeichen oder ein vergessener Artikel zählen als richtig, und die genaue Stelle wird direkt im Wort markiert: überflüssige, fehlende und vertauschte Buchstaben. Ist deine Antwort auch richtig, steht aber nicht auf der Karte, füg sie der Karte hinzu – ab dann akzeptiert das Quiz sie. Dein Handy korrigiert fremde Wörter beim Tippen nicht mehr automatisch.",
+        "Das Quiz öffnet sich wieder: Ein Fehler hat es direkt nach dem Laden des Sets geschlossen.",
+        "Ein ganzes Set vor der Fälligkeit zu üben, schiebt Wörter nicht mehr Monate nach vorn, und heute fällige Wörter warten ab dem Morgen.",
+        "Der Fortschritt wird jetzt vom Server gezählt, damit er weder verloren gehen noch gefälscht werden kann.",
+        "Eine offline geübte Session verschwindet nicht mehr – sie zählt, sobald Kolo wieder online ist.",
+        "Das neue Design „Orbita“ und eine neue Überschriftenschrift.",
+        "An den Support zu schreiben ist einfacher: Wähle ein Thema, tippe deine Nachricht, und wir antworten an die E-Mail deines Kontos. Nachrichten mit Zeichen wie _ oder * werden jetzt ohne Fehler gesendet.",
+        "Neu hier? Eine kurze Einführung und „Erste Schritte“ auf der Startseite führen dich vom ersten Set bis zur ersten Session – mit Hinweisen unterwegs.",
+        "Die Startseite sagt nicht mehr, alles sei wiederholt, während neue Wörter warten, und die Seite eines Sets hat jetzt einen Knopf „Üben“.",
+        "Ordner funktionieren richtig: Umbenennen und umfärben, löschen nur nach Bestätigung (die Sets bleiben), der Zurück-Knopf schließt einen Ordner, und nach einer Session kommst du in denselben Ordner zurück. Einen Ordner kannst du direkt aus dem Menü eines Sets erstellen, und markierte Sets aus Ordnern erscheinen unter „Favoriten“.",
+        "Die tägliche Erinnerung spricht jetzt die Sprache deiner App und zählt die Wörter, die auf Wiederholung warten.",
+        "Kolo öffnet sich schneller: Deine Wörter und Sets erscheinen sofort und aktualisieren sich leise im Hintergrund, und beim Wechsel zwischen Tabs blitzt kein leerer Bildschirm mehr auf. Die Startseite zeigt beim Laden nicht mehr kurz „Starte mit deinem ersten Set“ oder „0 Wörter“.",
+        "Wörter, die du einem Set hinzufügst, erscheinen jetzt sofort auf der Startseite, unter „Wörter“ und in „Erste Schritte“, ohne die App neu zu laden. Auch die Seite eines Sets öffnet sich sofort.",
+        "Die Suche ist aus der Kopfzeile in den Tab „Wörter“ umgezogen: Tippe oben ein Wort oder eine Übersetzung ein, und du siehst, in welchem Set es steht. Tippe auf ein Ergebnis, und das Set öffnet sich genau bei dieser Karte. Buchstaben wie é oder ü kannst du ohne Zeichen eingeben. Am Computer bringt dich ⌘K oder Strg+K von jedem Tab dorthin.",
+        "Haben zwei Wörter dieselbe Übersetzung, erscheint das zweite nicht mehr unter den Antwortmöglichkeiten, wo eine richtige Antwort früher als Fehler zählte. Tippst du im Quiz ein Synonym, erkennt Kolo es und fragt nach dem anderen Wort.",
+        "Karteikarten und die Perigee-Session zeigen denselben Antwortbogen in der Kopfzeile wie das Quiz: ein Feld pro Wort, gefärbt nach deiner Antwort. Und ein langer Set-Name schiebt die Knöpfe der Kopfzeile nicht mehr aus dem Bildschirm.",
+        "„Nochmal spielen“ direkt nach einer Runde zeigt keine Antwortmöglichkeiten mehr, die nicht zum Wort passen.",
+        "Eine Perigee-Session zeigt keinen Antwortknopf „—“ mehr, wenn zwei Wörter dieselbe Übersetzung haben.",
+        "Kolo aktualisiert sich jetzt, wenn du zurückkommst, nicht erst nach einem Neustart, und nie mitten in einer Session. Unter „Mehr“ siehst du, welche Version du hast, und kannst selbst nach Updates suchen.",
+        "Der Ladebildschirm wirkt bei langsamer Verbindung nicht mehr eingefroren: Der Satellit kreist um das Logo, und dauert das Laden länger als sonst, sagt dir Kolo, was los ist: lädt noch, langsame Verbindung oder gar kein Internet. Im dunklen Design blitzt er nicht mehr weiß auf."
+      ]
+    },
+    {
+      "number": "0.3.0",
+      "date": "Juli 2026",
+      "title": "Kolo auf deinem Startbildschirm",
+      "intro": "Du kannst Kolo jetzt wie eine App installieren, und es gibt drei Spiele für schnelles Wiederholen.",
+      "features": [
+        {
+          "title": "Kolo installieren",
+          "text": "Leg Kolo auf den Startbildschirm deines Handys oder ins Dock deines Computers: Es öffnet sich im Vollbild, ohne Adressleiste, und aktualisiert sich selbst."
+        },
+        {
+          "title": "Drei Spiele",
+          "text": "Tempo-Runde – beantworte so viele Fragen wie möglich, richtige Antworten in Folge bringen einen Multiplikator. Überleben – drei Leben, jeder Fehler kostet eins. Paare – ordne Wörter ihren Übersetzungen zu, bevor die Zeit abläuft."
+        },
+        {
+          "title": "Profilfotos vom Gerät",
+          "text": "Schluss mit der Suche nach einem Link: Wähle ein Foto von Handy oder Computer, und Kolo komprimiert es für dich."
+        },
+        {
+          "title": "Dein eigener @Benutzername",
+          "text": "Jedes Konto hat jetzt einen eindeutigen Benutzernamen. Du kannst ihn in deinem Profil ändern."
+        },
+        {
+          "title": "Kompakter auf dem Handy",
+          "text": "Start, Profil und Sonstiges sind viel kompakter: weniger riesige Karten, mehr Wichtiges auf dem Bildschirm. Der Aktivitätskalender passt auf deinen Bildschirm, und die Erfolge klappen sich zu einer kurzen Liste zusammen."
+        }
+      ],
+      "fixes": [
+        "Die Rückseite einer Karteikarte überdeckt die Vorderseite nicht mehr.",
+        "Die Leiste des mobilen Browsers verdeckt keine Knöpfe mehr am unteren Bildschirmrand.",
+        "Oft geöffnete Seiten erscheinen sofort, ohne überflüssige Animation.",
+        "Der Umschalter „Meine Wörter / Kolo Sets“ reicht auf dem Handy jetzt über die volle Breite.",
+        "Sets verschwinden nicht mehr, wenn du einen Ordner löschst.",
+        "Das Tagesspiel kommt mit Zeitzonen nicht mehr durcheinander, und E-Mail-Adressen erscheinen nicht mehr in der Bestenliste.",
+        "Tägliche Erinnerungen springen korrekt auf den nächsten Tag."
+      ]
+    },
+    {
+      "number": "0.2.7",
+      "date": "Juli 2026",
+      "title": "Hallo, Neue!",
+      "intro": "Eine Einführung für alle, die neu sind, und zwei neue Sprachen der App.",
+      "features": [
+        {
+          "title": "Einführung in die App",
+          "text": "Sechs kurze Schritte mit lebendigen Vorschauen zeigen dir beim ersten Öffnen von Kolo das Wichtigste. Du kannst die Tour jederzeit wiederholen."
+        },
+        {
+          "title": "Norwegisch und Ukrainisch",
+          "text": "Kolo spricht jetzt Norwegisch 🇳🇴 und Ukrainisch 🇺🇦: jeder Bildschirm, jede Session, jede Einstellung und mehr als 130 Tipps."
+        },
+        {
+          "title": "Serie feiern",
+          "text": "Wenn deine Serie wächst, zündet Kolo ein kleines Feuerwerk."
+        }
+      ],
+      "fixes": [
+        "Eine beendete Session zählt wieder als Tag für deine Serie."
+      ]
+    },
+    {
+      "number": "0.2.6",
+      "date": "Juni 2026",
+      "title": "Überall aufgeräumter",
+      "intro": "Ein kleines Update, ganz im Zeichen des Aussehens.",
+      "features": [
+        {
+          "title": "Feinschliff am Design",
+          "text": "Wir haben Abstände, Schrift und Reihenfolge auf jedem Bildschirm gestrafft – alles liest sich leichter."
+        },
+        {
+          "title": "Neue Set-Karten",
+          "text": "Set-Karten lassen sich schneller überfliegen und öffnen."
+        }
+      ],
+      "fixes": [
+        "Navigation und Aufbau von Start und Profil sind aufgeräumter."
+      ]
+    },
+    {
+      "number": "0.2.5",
+      "date": "März 2026",
+      "title": "Eine neue Startseite",
+      "intro": "Wir haben die Navigation umgebaut: Wörter haben einen eigenen Bereich, und die Startseite ist jetzt dein persönliches Dashboard.",
+      "features": [
+        {
+          "title": "Der Bereich „Wörter“",
+          "text": "Alle deine Sets und Karten wohnen in einem eigenen Bereich und lassen sich leichter verwalten."
+        },
+        {
+          "title": "Start",
+          "text": "Dein Tagesziel, wichtige Zahlen und ein schneller Weg zurück ins Wiederholen – alles, was du beim Öffnen von Kolo brauchst."
+        },
+        {
+          "title": "Fertige Sets nach Niveau",
+          "text": "In der Bibliothek gibt es jetzt Kolo-Sets vom Anfänger- bis zum Fortgeschrittenenniveau, weitere folgen."
+        },
+        {
+          "title": "Ein frischer Look",
+          "text": "Wir haben das Design der ganzen App aufgefrischt."
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "number": "0.2.4",
+      "date": "März 2026",
+      "title": "Eine kurze Pause für die Sicherheit",
+      "intro": "Bei einer Routineprüfung haben wir eine Schwachstelle in unserer Serverkonfiguration gefunden, und unser Hoster hat Kolo kurz angehalten, um deine Daten zu schützen. Wir haben alle Schutzmaßnahmen überprüft, die Konfiguration korrigiert und Kolo zurückgebracht. Deinen Daten geht es gut.",
+      "features": [],
+      "fixes": []
+    },
+    {
+      "number": "0.2.3",
+      "date": "Februar 2026",
+      "title": "Schreib uns",
+      "intro": "Der Support ist da, und Wörter hinzuzufügen ist einfacher geworden.",
+      "features": [
+        {
+          "title": "Support",
+          "text": "Einen Fehler gefunden oder eine Idee? Schreib uns direkt aus der App – deine Nachricht geht sofort an das Kolo-Team."
+        },
+        {
+          "title": "Ein neuer Kartenimport",
+          "text": "Das Importfenster ist einfacher, und ein KI-Hilfeknopf zeigt dir, wie du deine Wortliste vorbereitest."
+        },
+        {
+          "title": "Ein klareres Design",
+          "text": "Die Oberfläche wirkt klarer und moderner."
+        }
+      ],
+      "fixes": [
+        "Ein verdienter Erfolg wird nicht mehr als gesperrt angezeigt."
+      ]
+    },
+    {
+      "number": "0.2.2",
+      "date": "Februar 2026",
+      "title": "Willkommen an Bord",
+      "intro": "Eine Willkommensseite für Neue und ein Bündel Korrekturen.",
+      "features": [
+        {
+          "title": "Willkommensseite",
+          "text": "Wer Kolo zum ersten Mal öffnet, sieht, was es kann."
+        },
+        {
+          "title": "Aufgefrischte Karteikarten",
+          "text": "Der Lernmodus ist klarer und moderner."
+        }
+      ],
+      "fixes": [
+        "Beim Wechsel zwischen Seiten geht unterwegs keine Seite mehr verloren.",
+        "Karten im Lernmodus verraten die Antwort nicht mehr zu früh.",
+        "Darstellungsfehler auf dem Handy behoben.",
+        "Der Weg zwischen „Sonstiges“ und „Was ist neu“ ist klarer."
+      ]
+    },
+    {
+      "number": "0.2.1",
+      "date": "Februar 2026",
+      "title": "Schneller und freundlicher auf dem Handy",
+      "intro": "Ein kleines Update: Kolo reagiert flotter und passt besser auf kleine Bildschirme.",
+      "features": [],
+      "fixes": [
+        "Die Oberfläche passt sich besser an Handys an.",
+        "Eine Handvoll kleiner Fehler behoben.",
+        "Die App läuft schneller."
+      ]
+    },
+    {
+      "number": "0.2.0",
+      "date": "Februar 2026",
+      "title": "Kolo bekommt Konten",
+      "intro": "Ein großes Update: Deine Wörter wohnen jetzt in deinem Konto und folgen dir auf jedes Gerät.",
+      "features": [
+        {
+          "title": "Konten und Cloud-Synchronisierung",
+          "text": "Melde dich an, und deine Sets werden zwischen Handy und Computer abgeglichen."
+        },
+        {
+          "title": "Aussprache",
+          "text": "Kolo liest Wörter vor, damit du dir leichter merkst, wie sie klingen."
+        },
+        {
+          "title": "Erfolge und Flammen",
+          "text": "Erfolge sind da, dazu Flammen fürs Üben Tag für Tag 🔥."
+        },
+        {
+          "title": "Statistik",
+          "text": "Ein genaues Bild deines Fortschritts: Wörter, Sessions und Zeit."
+        },
+        {
+          "title": "Sicherung",
+          "text": "Lade deine Sets als Datei herunter und stelle sie wieder her, wann immer du willst."
+        },
+        {
+          "title": "Sprachen der App",
+          "text": "Du kannst Kolo auf eine andere Sprache umstellen."
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "number": "0.1.2",
+      "date": "Februar 2026",
+      "title": "Dunkelmodus",
+      "intro": "Kolo kann jetzt dunkel und fühlt sich auf dem Handy zu Hause.",
+      "features": [
+        {
+          "title": "Dunkelmodus",
+          "text": "Angenehmer für die Augen am Abend – Kolo folgt dem Design deines Systems."
+        },
+        {
+          "title": "Kolo auf dem Handy",
+          "text": "Die Oberfläche passt sich an mobile Bildschirme an, und das Menü ist nach unten gewandert, direkt unter deinen Daumen."
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "number": "0.1.1",
+      "date": "Februar 2026",
+      "title": "Sets und Lernen",
+      "intro": "Die ersten Schritte nach dem Start.",
+      "features": [
+        {
+          "title": "Sets und Karten",
+          "text": "Fasse Wörter zu Sets zusammen – nach Thema, nach Lektion oder wie du willst."
+        },
+        {
+          "title": "Karteikarten und Quiz",
+          "text": "Lerne Wörter mit Karteikarten und teste dich mit einem Quiz."
+        },
+        {
+          "title": "Eine übersichtlichere Startseite",
+          "text": "Die Startseite ist einfacher und klarer."
+        }
+      ],
+      "fixes": []
+    },
+    {
+      "number": "0.1.0",
+      "date": "Januar 2026",
+      "title": "Hallo, Kolo",
+      "intro": "Die erste öffentliche Version. Hier hat alles angefangen.",
+      "features": [
+        {
+          "title": "Sets und Karten",
+          "text": "Erstelle Wortsets mit Übersetzungen."
+        },
+        {
+          "title": "Karteikarten und Quiz",
+          "text": "Wiederhole mit Karteikarten und teste dich mit einem Quiz."
+        },
+        {
+          "title": "Alles im Browser",
+          "text": "Deine Wörter werden direkt in deinem Browser gespeichert – keine Anmeldung nötig."
+        }
+      ],
+      "fixes": []
     }
   ],
   "fixesTitle": "Kleine, aber feine Korrekturen"

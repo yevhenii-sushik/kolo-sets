@@ -58,8 +58,9 @@ import ukGame from './uk/game.json';
 import ukLegal from './uk/legal.json';
 import ukError from './uk/error.json';
 
-// Языки, у которых переведена часть приложения: публичные страницы (лендинг, вход, юр. тексты, Explore)
-// и разделы, до которых уже дошли. Новые строки сразу переводятся на все 8 языков (CLAUDE.md, «Internationalization»)
+// de, es, fr, pt-BR переведены целиком, кроме совета дня (home.tips) и ежедневной игры (game) — обе скрыты флагами
+// и не переводятся (docs/roadmap.md, 2026-11-27); их, как и любую новую строку без перевода, fillFrom берёт из английского.
+// Новые строки сразу переводятся на все 8 языков (CLAUDE.md, «Internationalization»)
 import esLanding from './es/auth/landing.json';
 import esExplore from './es/other/explore.json';
 import deLanding from './de/auth/landing.json';
@@ -110,7 +111,7 @@ import deRewards from './de/rewards.json';
 import esRewards from './es/rewards.json';
 import frRewards from './fr/rewards.json';
 import ptBRRewards from './pt-BR/rewards.json';
-// «Что нового»: подписи страницы и записи с текущей версии; прежние записи — из английского (versionsFrom)
+// «Что нового»: переведены все записи; versionsFrom подставит английскую, если новой записи ещё нет в языке
 import deUpdates from './de/other/updates.json';
 import esUpdates from './es/other/updates.json';
 import frUpdates from './fr/other/updates.json';
