@@ -1,9 +1,8 @@
 import Sidebar from "../../components/ui/Sidebar";
 import { IconButton, Logo, cx } from "../../ui";
-import { APP_LANGUAGES } from "../../locales/languages";
 import BottomNav from "../../components/ui/BottomNav";
 import { Outlet, Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { Menu, Languages, ChevronRight, Share2 } from "lucide-react";
+import { Menu, ChevronRight, Share2 } from "lucide-react";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useI18n } from "../../contexts/I18nContext";
 import { useData } from "../../contexts/DataContext";
@@ -27,13 +26,11 @@ import { prefetchAppPages } from "../lazyPages";
 const SIDEBAR_KEY = "sidebar-open";
 
 export default function MainLayout() {
-  const { t, language, setLanguage } = useI18n();
+  const { t, language } = useI18n();
   const sh = t.shell;
   const locale = getLanguageInfo(language).htmlLang;
   const { profile, progression, courses, coursesReady } = useData();
   const orbit = progression?.orbit;
-  const [showLangMenu, setShowLangMenu] = useState(false);
-  const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [showWeekCard, setShowWeekCard] = useState(false);
   const [goalDismissed, setGoalDismissed] = useState(false);
 
@@ -102,48 +99,7 @@ export default function MainLayout() {
             </span>
 
             <Link to="/" className="flex items-center gap-2 group relative">
-
-              <div className="flex items-center gap-1.5 relative">
-                <Logo />
-
-                {/* Бейдж "Beta" — закомментирован по просьбе пользователя */}
-                {false && (
-                <div className="relative">
-                  <span
-                    onContextMenu={(e) => {
-                      e.preventDefault(); // Чтобы на мобилках не вылезало меню
-                      setShowEasterEgg(true);
-                      setTimeout(() => setShowEasterEgg(false), 3000);
-                    }}
-                    onClick={(e) => {
-                      if (e.detail === 4) {
-                        // Тройной клик - классика пасхалок
-                        setShowEasterEgg(true);
-                        setTimeout(() => setShowEasterEgg(false), 3000);
-                      }
-                    }}
-                    className="cursor-help select-none px-1.5 py-0.5 rounded-md bg-inset border border-line text-muted text-2xs font-semibold uppercase tracking-widest leading-none active:scale-90 transition-transform"
-                  >
-                    Beta
-                  </span>
-
-                  {/* Сама пасхалка */}
-                  <AnimatePresence>
-                    {showEasterEgg && (
-                      <motion.div
-                        initial={{ opacity: 0, x: 10, scale: 0.8 }}
-                        animate={{ opacity: 1, x: 20, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        className="absolute left-full top-0 ml-2 whitespace-nowrap bg-black dark:bg-white text-on-inverse text-2xs py-1 px-2 rounded-lg shadow-xl z-110 font-medium"
-                      >
-                        <div className="absolute -left-1 top-2 w-2 h-2 bg-black dark:bg-white rotate-45" />
-                        Бридж добавил, чтоб не расстраивались, что много багов
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-                )}
-              </div>
+              <Logo />
             </Link>
           </div>
 
@@ -204,64 +160,6 @@ export default function MainLayout() {
               </AnimatePresence>
             </div>
 
-            {/* Language switcher — закомментирован по просьбе пользователя */}
-            {false && (
-            <div className="relative">
-              <button
-                onClick={() => setShowLangMenu(!showLangMenu)}
-                className="flex items-center gap-2 p-2 hover:bg-inset rounded-xl transition-all active:scale-95"
-              >
-                <div className="w-8 h-8 rounded-full bg-inset flex items-center justify-center border border-line">
-                  <Languages
-                    size={16}
-                    className="text-muted"
-                  />
-                </div>
-                <span className="hidden lg:inline text-xs font-bold uppercase tracking-widest">
-                  {language}
-                </span>
-              </button>
-
-              <AnimatePresence>
-                {showLangMenu && (
-                  <>
-                    <div
-                      className="fixed inset-0 z-40"
-                      onClick={() => setShowLangMenu(false)}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 mt-2 w-56 bg-surface rounded-2xl shadow-2xl border border-line py-2 z-50 overflow-hidden"
-                    >
-                      {APP_LANGUAGES.map(
-                        ({ code: lang, flag, label }) => (
-                          <button
-                            key={lang}
-                            onClick={() => {
-                              setLanguage(lang);
-                              setShowLangMenu(false);
-                            }}
-                            className={`w-full px-5 py-3 text-left text-sm font-semibold flex items-center justify-between transition-colors ${
-                              language === lang
-                                ? "bg-special text-white"
-                                : "hover:bg-inset "
-                            }`}
-                          >
-                            {flag} {label}
-                            {language === lang && (
-                              <div className="w-1.5 h-1.5 bg-white rounded-full" />
-                            )}
-                          </button>
-                        ),
-                      )}
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
-            )}
           </div>
         </div>
       </header>

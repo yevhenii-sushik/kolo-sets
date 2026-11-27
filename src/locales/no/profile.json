@@ -37,7 +37,6 @@
     "avatarCompress": "Kunne ikke komprimere bildet",
     "avatarGeneric": "Kunne ikke laste opp bildet – prøv igjen"
   },
-  "easterEgg": "Såkalt «hemmelig» innhold lastes…",
   "legacyFlames": {
     "name": "Flammer",
     "description": "Rekorden for daglig rekke før banene: {days}."

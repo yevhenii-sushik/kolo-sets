@@ -58,7 +58,7 @@ Client side: `src/api/progress.ts` posts with a Bearer token. If the network or 
 ### Client
 
 - `src/App.tsx`: provider order `I18nProvider → AuthProvider → DataProvider`. Pages are lazy-loaded. Layouts:
-  - `MainLayout`: tabs `/`, `/words`, `/profile`, `/rewards`, `/other` (shown as «More»).
+  - `MainLayout`: tabs `/`, `/words`, `/profile`, `/other` (shown as «More»), listed in `src/navigation.ts`. `/rewards` uses the same layout but has no tab: it opens from the profile and from capsule celebrations.
   - `EmptyLayout`: full-screen study modes: `/learn` (Perigee session; `?set=<id>` for one set) and `/collection/:id/{flashcards,quiz,speed}`. `speed` is the Blitz game (`src/blitz/`, `pages/games/BlitzPage.tsx`); the internal name stays `speed` because the server and the offline queue know it. Old `/review`, `survival` and `match` routes only redirect.
   - `NavLayout`: sub-pages with a back bar.
   - `LegalLayout`: public legal pages.

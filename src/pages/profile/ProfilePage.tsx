@@ -130,14 +130,6 @@ export default function ProfilePage() {
     }
   }, [rawProfile, user]);
 
-  const handleAvatarEasterEgg = (e: React.DragEvent) => {
-    e.preventDefault();
-    success(p.easterEgg);
-    setTimeout(() => {
-      window.open("https://youtu.be/3MyecXEKBlo?si=Xj8Ih-GwndYy0Zok&t=27s", "_blank");
-    }, 2000);
-  };
-
   const handleAvatarFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     e.target.value = ""; // сброс — иначе повторный выбор того же файла не сработает
@@ -316,18 +308,9 @@ export default function ProfilePage() {
             <AvatarFrame ring={loot.equipped.ring} satellites={isEditing ? [] : satellitesOf(loot.equipped)} label={profile.displayName}>
             <div className="h-full w-full overflow-hidden rounded-full bg-accent-soft">
               {editForm.photoURL ? (
-                <img
-                  src={editForm.photoURL}
-                  alt=""
-                  className="h-full w-full cursor-grab object-cover active:cursor-grabbing"
-                  onDragStart={handleAvatarEasterEgg} // пасхалка: перетащи аватар
-                />
+                <img src={editForm.photoURL} alt="" draggable={false} className="h-full w-full object-cover" />
               ) : (
-                <div
-                  draggable // чтобы пасхалка срабатывала и без фото
-                  onDragStart={handleAvatarEasterEgg}
-                  className="grid h-full w-full place-items-center font-display text-4xl font-extrabold text-accent-ink"
-                >
+                <div className="grid h-full w-full place-items-center font-display text-4xl font-extrabold text-accent-ink">
                   {profile.displayName.charAt(0).toUpperCase()}
                 </div>
               )}

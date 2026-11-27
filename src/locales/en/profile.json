@@ -37,7 +37,6 @@
     "avatarCompress": "Couldn't compress the image",
     "avatarGeneric": "Couldn't upload the photo — try again"
   },
-  "easterEgg": "So-called “secret” content is loading…",
   "legacyFlames": {
     "name": "Flames",
     "description": "Your daily streak record before orbits: {days}."

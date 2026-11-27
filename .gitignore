@@ -35,3 +35,6 @@ firestore-debug.log*
 
 # Мастера звуков (WAV) и калибровка — собираются заново: python3 scripts/sounds/synth.py
 scripts/sounds/out
+
+# Кэш инкрементальной сборки tsc -b — меняется при каждой сборке
+*.tsbuildinfo
