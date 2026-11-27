@@ -125,31 +125,31 @@
     },
     "cards_10": {
       "name": "First words",
-      "description": "Add 10 words"
+      "description": "Start learning 10 words"
     },
     "cards_25": {
       "name": "Budding vocabulary",
-      "description": "Add 25 words"
+      "description": "Start learning 25 words"
     },
     "cards_50": {
       "name": "Collector",
-      "description": "Add 50 words"
+      "description": "Start learning 50 words"
     },
     "cards_100": {
       "name": "Card master",
-      "description": "Add 100 words"
+      "description": "Start learning 100 words"
     },
     "cards_200": {
       "name": "Encyclopedist",
-      "description": "Add 200 words"
+      "description": "Start learning 200 words"
     },
     "cards_500": {
       "name": "Legend",
-      "description": "Add 500 words"
+      "description": "Start learning 500 words"
     },
     "cards_1000": {
       "name": "Walking dictionary",
-      "description": "Add 1,000 words"
+      "description": "Start learning 1,000 words"
     },
     "flashcards_1": {
       "name": "First encounter",
@@ -197,11 +197,11 @@
     },
     "collections_3": {
       "name": "Librarian",
-      "description": "Create 3 sets"
+      "description": "Start learning 3 sets"
     },
     "collections_5": {
       "name": "Archivist",
-      "description": "Create 5 sets"
+      "description": "Start learning 5 sets"
     },
     "night_owl": {
       "name": "Night owl",

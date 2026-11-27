@@ -125,31 +125,31 @@
     },
     "cards_10": {
       "name": "De første ordene",
-      "description": "Legg til 10 ord"
+      "description": "Begynn å lære 10 ord"
     },
     "cards_25": {
       "name": "Spirende ordforråd",
-      "description": "Legg til 25 ord"
+      "description": "Begynn å lære 25 ord"
     },
     "cards_50": {
       "name": "Samler",
-      "description": "Legg til 50 ord"
+      "description": "Begynn å lære 50 ord"
     },
     "cards_100": {
       "name": "Kortmester",
-      "description": "Legg til 100 ord"
+      "description": "Begynn å lære 100 ord"
     },
     "cards_200": {
       "name": "Leksikograf",
-      "description": "Legg til 200 ord"
+      "description": "Begynn å lære 200 ord"
     },
     "cards_500": {
       "name": "Legende",
-      "description": "Legg til 500 ord"
+      "description": "Begynn å lære 500 ord"
     },
     "cards_1000": {
       "name": "Vandrende ordbok",
-      "description": "Legg til 1000 ord"
+      "description": "Begynn å lære 1000 ord"
     },
     "flashcards_1": {
       "name": "Første møte",
@@ -197,11 +197,11 @@
     },
     "collections_3": {
       "name": "Bibliotekar",
-      "description": "Lag 3 sett"
+      "description": "Begynn å lære 3 sett"
     },
     "collections_5": {
       "name": "Arkivar",
-      "description": "Lag 5 sett"
+      "description": "Begynn å lære 5 sett"
     },
     "night_owl": {
       "name": "Nattugle",

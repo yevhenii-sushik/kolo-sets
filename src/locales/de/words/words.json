@@ -1,5 +1,6 @@
 {
   "collectionCard": {
+    "confirmDelete": "Das Set und alle Wörter darin werden endgültig gelöscht. Das lässt sich nicht rückgängig machen.",
     "modal": {
       "chooseMode": "Modus wählen",
       "learn": "Lernen",

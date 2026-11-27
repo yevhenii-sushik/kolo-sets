@@ -42,7 +42,7 @@
       ],
       "fixes": [
         "The Log in button is now in the site header on phones too.",
-        "Medal progress now counts the same way as the medals themselves, by the words and sets you've started, so a bar no longer sits full next to a locked medal. Home and your profile show the same number of medals.",
+        "Medal progress now counts the same way as the medals themselves, by the words and sets you've started, so a bar no longer sits full next to a locked medal. Home and your profile show the same number of medals. Medal descriptions now say what counts, too: “Start learning 10 words” instead of “Add 10 words”.",
         "Profile stats now include Blitz rounds, and the counter that said “Flashcard sessions” is named for what it counts: Perigee and flashcard sessions. A Blitz round now earns the first-session medal too.",
         "A set's page shows its plan, with strong, growing, learning and new words, instead of “Learned”, which counted any word after a single right answer.",
         "Importing a list understands tabs, so words paste straight from Excel, Google Sheets, Quizlet or Anki, as well as semicolons, dashes and “=”. While you paste, Kolo shows how many words it recognised, how it read the first lines and which lines it couldn't read, and words already in the set aren't added twice.",

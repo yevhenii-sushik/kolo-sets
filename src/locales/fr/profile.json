@@ -35,6 +35,42 @@
     "flashcards_100": {
       "name": "As des cartes",
       "description": "Termine 100 séances Perigee ou de cartes mémoire"
+    },
+    "cards_10": {
+      "name": "Premiers mots",
+      "description": "Commence à apprendre 10 mots"
+    },
+    "cards_25": {
+      "name": "Vocabulaire en herbe",
+      "description": "Commence à apprendre 25 mots"
+    },
+    "cards_50": {
+      "name": "Collectionneur",
+      "description": "Commence à apprendre 50 mots"
+    },
+    "cards_100": {
+      "name": "Maître des mots",
+      "description": "Commence à apprendre 100 mots"
+    },
+    "cards_200": {
+      "name": "Encyclopédiste",
+      "description": "Commence à apprendre 200 mots"
+    },
+    "cards_500": {
+      "name": "Légende",
+      "description": "Commence à apprendre 500 mots"
+    },
+    "cards_1000": {
+      "name": "Dictionnaire ambulant",
+      "description": "Commence à apprendre 1 000 mots"
+    },
+    "collections_3": {
+      "name": "Bibliothécaire",
+      "description": "Commence à apprendre 3 sets"
+    },
+    "collections_5": {
+      "name": "Archiviste",
+      "description": "Commence à apprendre 5 sets"
     }
   },
   "stats": {

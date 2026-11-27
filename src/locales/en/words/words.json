@@ -15,7 +15,7 @@
     "study": "Study",
     "masteryLevel": "Mastery Level",
     "dueToday": "due today",
-    "confirmDelete": "This collection and all its cards will be permanently deleted. This action cannot be undone.",
+    "confirmDelete": "This set and all its words will be deleted for good. This can't be undone.",
     "modal": {
       "chooseMode": "Choose mode",
       "learn": "Learn",

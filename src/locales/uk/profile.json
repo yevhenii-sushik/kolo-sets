@@ -131,31 +131,31 @@
     },
     "cards_10": {
       "name": "Перші слова",
-      "description": "Додай 10 слів"
+      "description": "Почни вчити 10 слів"
     },
     "cards_25": {
       "name": "Паросток знань",
-      "description": "Додай 25 слів"
+      "description": "Почни вчити 25 слів"
     },
     "cards_50": {
       "name": "Колекціонер",
-      "description": "Додай 50 слів"
+      "description": "Почни вчити 50 слів"
     },
     "cards_100": {
       "name": "Майстер карток",
-      "description": "Додай 100 слів"
+      "description": "Почни вчити 100 слів"
     },
     "cards_200": {
       "name": "Енциклопедист",
-      "description": "Додай 200 слів"
+      "description": "Почни вчити 200 слів"
     },
     "cards_500": {
       "name": "Легенда",
-      "description": "Додай 500 слів"
+      "description": "Почни вчити 500 слів"
     },
     "cards_1000": {
       "name": "Ходяча енциклопедія",
-      "description": "Додай 1000 слів"
+      "description": "Почни вчити 1000 слів"
     },
     "flashcards_1": {
       "name": "Перше знайомство",
@@ -203,11 +203,11 @@
     },
     "collections_3": {
       "name": "Бібліотекар",
-      "description": "Створи 3 набори"
+      "description": "Почни вчити 3 набори"
     },
     "collections_5": {
       "name": "Архіваріус",
-      "description": "Створи 5 наборів"
+      "description": "Почни вчити 5 наборів"
     },
     "night_owl": {
       "name": "Сова",

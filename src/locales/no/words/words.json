@@ -15,7 +15,7 @@
     "study": "Studer",
     "masteryLevel": "Mestringsnivå",
     "dueToday": "til gjennomgang",
-    "confirmDelete": "Denne samlingen og alle kortene i den vil bli slettet permanent. Denne handlingen kan ikke angres.",
+    "confirmDelete": "Settet og alle ordene i det slettes for godt. Dette kan ikke angres.",
     "modal": {
       "chooseMode": "Velg modus",
       "learn": "Lær",

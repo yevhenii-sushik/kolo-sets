@@ -35,6 +35,42 @@
     "flashcards_100": {
       "name": "Kartenass",
       "description": "Schließe 100 Perigee- oder Karteikarten-Sessions ab"
+    },
+    "cards_10": {
+      "name": "Erste Wörter",
+      "description": "Beginne, 10 Wörter zu lernen"
+    },
+    "cards_25": {
+      "name": "Wachsender Wortschatz",
+      "description": "Beginne, 25 Wörter zu lernen"
+    },
+    "cards_50": {
+      "name": "Sammler",
+      "description": "Beginne, 50 Wörter zu lernen"
+    },
+    "cards_100": {
+      "name": "Wortmeister",
+      "description": "Beginne, 100 Wörter zu lernen"
+    },
+    "cards_200": {
+      "name": "Enzyklopädist",
+      "description": "Beginne, 200 Wörter zu lernen"
+    },
+    "cards_500": {
+      "name": "Legende",
+      "description": "Beginne, 500 Wörter zu lernen"
+    },
+    "cards_1000": {
+      "name": "Wandelndes Wörterbuch",
+      "description": "Beginne, 1.000 Wörter zu lernen"
+    },
+    "collections_3": {
+      "name": "Bibliothekar",
+      "description": "Beginne, 3 Sets zu lernen"
+    },
+    "collections_5": {
+      "name": "Archivar",
+      "description": "Beginne, 5 Sets zu lernen"
     }
   },
   "stats": {

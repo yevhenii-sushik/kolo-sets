@@ -1,5 +1,6 @@
 {
   "collectionCard": {
+    "confirmDelete": "Le set et tous ses mots seront supprimés définitivement. Impossible d'annuler.",
     "modal": {
       "chooseMode": "Choisis un mode",
       "learn": "Apprendre",

@@ -131,31 +131,31 @@
     },
     "cards_10": {
       "name": "Первые слова",
-      "description": "Добавь 10 слов"
+      "description": "Начни учить 10 слов"
     },
     "cards_25": {
       "name": "Росток знаний",
-      "description": "Добавь 25 слов"
+      "description": "Начни учить 25 слов"
     },
     "cards_50": {
       "name": "Коллекционер",
-      "description": "Добавь 50 слов"
+      "description": "Начни учить 50 слов"
     },
     "cards_100": {
       "name": "Мастер карточек",
-      "description": "Добавь 100 слов"
+      "description": "Начни учить 100 слов"
     },
     "cards_200": {
       "name": "Энциклопедист",
-      "description": "Добавь 200 слов"
+      "description": "Начни учить 200 слов"
     },
     "cards_500": {
       "name": "Легенда",
-      "description": "Добавь 500 слов"
+      "description": "Начни учить 500 слов"
     },
     "cards_1000": {
       "name": "Ходячая энциклопедия",
-      "description": "Добавь 1000 слов"
+      "description": "Начни учить 1000 слов"
     },
     "flashcards_1": {
       "name": "Первое знакомство",
@@ -203,11 +203,11 @@
     },
     "collections_3": {
       "name": "Библиотекарь",
-      "description": "Создай 3 набора"
+      "description": "Начни учить 3 набора"
     },
     "collections_5": {
       "name": "Архивариус",
-      "description": "Создай 5 наборов"
+      "description": "Начни учить 5 наборов"
     },
     "night_owl": {
       "name": "Сова",

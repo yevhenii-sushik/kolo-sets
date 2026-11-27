@@ -35,6 +35,42 @@
     "flashcards_100": {
       "name": "As de las tarjetas",
       "description": "Completa 100 sesiones de Perigee o de tarjetas"
+    },
+    "cards_10": {
+      "name": "Primeras palabras",
+      "description": "Empieza a aprender 10 palabras"
+    },
+    "cards_25": {
+      "name": "Vocabulario en ciernes",
+      "description": "Empieza a aprender 25 palabras"
+    },
+    "cards_50": {
+      "name": "Coleccionista",
+      "description": "Empieza a aprender 50 palabras"
+    },
+    "cards_100": {
+      "name": "Maestro de las palabras",
+      "description": "Empieza a aprender 100 palabras"
+    },
+    "cards_200": {
+      "name": "Enciclopedista",
+      "description": "Empieza a aprender 200 palabras"
+    },
+    "cards_500": {
+      "name": "Leyenda",
+      "description": "Empieza a aprender 500 palabras"
+    },
+    "cards_1000": {
+      "name": "Diccionario andante",
+      "description": "Empieza a aprender 1000 palabras"
+    },
+    "collections_3": {
+      "name": "Bibliotecario",
+      "description": "Empieza a aprender 3 sets"
+    },
+    "collections_5": {
+      "name": "Archivero",
+      "description": "Empieza a aprender 5 sets"
     }
   },
   "stats": {

@@ -42,7 +42,7 @@
       ],
       "fixes": [
         "Le bouton « Se connecter » est désormais aussi dans l'en-tête du site sur téléphone.",
-        "La progression vers les médailles se compte désormais comme les médailles elles-mêmes, d'après les mots et les sets que tu as commencés : une barre n'est plus pleine à côté d'une médaille verrouillée. L'accueil et ton profil affichent le même nombre de médailles.",
+        "La progression vers les médailles se compte désormais comme les médailles elles-mêmes, d'après les mots et les sets que tu as commencés : une barre n'est plus pleine à côté d'une médaille verrouillée. L'accueil et ton profil affichent le même nombre de médailles. Les médailles de mots et de sets disent aussi ce qui compte : « Commence à apprendre 10 mots ».",
         "Les statistiques du profil montrent maintenant les manches de Blitz, et le compteur des cartes mémoire porte le nom de ce qu'il compte : « Perigee et cartes mémoire ». Une manche de Blitz donne aussi la médaille de la première séance.",
         "La page d'un set affiche son plan, avec les mots solides, qui se consolident, en cours et nouveaux, au lieu de « Appris », qui comptait n'importe quel mot après une seule bonne réponse.",
         "L'import de listes comprend les tabulations : les mots se collent directement depuis Excel, Google Sheets, Quizlet et Anki, en plus du point-virgule, du tiret et de « = ». Pendant que tu colles, Kolo montre combien de mots il a reconnus, comment il a lu les premières lignes et quelles lignes il n'a pas comprises, et les mots déjà présents dans le set ne sont pas ajoutés deux fois.",

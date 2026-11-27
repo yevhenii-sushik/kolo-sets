@@ -1,5 +1,6 @@
 {
   "collectionCard": {
+    "confirmDelete": "El set y todas sus palabras se eliminarán para siempre. No se puede deshacer.",
     "modal": {
       "chooseMode": "Elige un modo",
       "learn": "Aprender",
