@@ -85,9 +85,10 @@ export default function CollectionCard({ collection, onDelete, onToggleFavorite,
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <h3 className="font-display text-xl font-extrabold leading-tight text-fg line-clamp-2">
+              {/* Обводка фокуса — внутрь края (-outline-offset-2): снаружи её обрезал бы overflow-hidden карточки */}
               <Link
                 to={setPath}
-                className="after:absolute after:inset-0 after:rounded-4xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-accent"
+                className="after:absolute after:inset-0 after:rounded-4xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-accent"
               >
                 {collection.name}
               </Link>

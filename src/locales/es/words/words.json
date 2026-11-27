@@ -503,7 +503,6 @@
       "formatHint": "Separa los campos con un tabulador (así se pegan las listas de Excel, Google Sheets y Quizlet), punto y coma, guion o «=». La explicación, el ejemplo y la categoría gramatical van en {lang}.",
       "copyPrompt": "Copiar prompt para IA",
       "promptCopied": "Copiado",
-      "importPlaceholder": "skrive; escribir; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
       "importFound": {
         "one": "{n} palabra reconocida",
         "many": "{n} palabras reconocidas",

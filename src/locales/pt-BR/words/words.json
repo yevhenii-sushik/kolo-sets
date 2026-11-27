@@ -503,7 +503,6 @@
       "formatHint": "Separe os campos com tab (é assim que as listas vêm do Excel, Google Planilhas e Quizlet), ponto e vírgula, travessão ou “=”. Explicação, exemplo e classe gramatical vão em {lang}.",
       "copyPrompt": "Copiar prompt de IA",
       "promptCopied": "Copiado",
-      "importPlaceholder": "skrive; escrever; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
       "importFound": {
         "one": "{n} palavra reconhecida",
         "many": "{n} palavras reconhecidas",

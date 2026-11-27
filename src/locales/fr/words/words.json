@@ -503,7 +503,6 @@
       "formatHint": "Sépare les champs par une tabulation (c'est ainsi que se collent les listes d'Excel, Google Sheets et Quizlet), un point-virgule, un tiret ou « = ». L'explication, l'exemple et la nature du mot s'écrivent en {lang}.",
       "copyPrompt": "Copier le prompt IA",
       "promptCopied": "Copié",
-      "importPlaceholder": "skrive; écrire; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
       "importFound": {
         "one": "{n} mot reconnu",
         "many": "{n} mots reconnus",

@@ -74,7 +74,6 @@
       "formatHint": "Поля разделяй табуляцией (так вставляются списки из Excel, Google Таблиц и Quizlet), «;», тире или «=». Объяснение, пример и часть речи — на изучаемом языке ({lang}).",
       "copyPrompt": "Копировать AI-промт",
       "promptCopied": "Скопировано",
-      "importPlaceholder": "skrive; писать; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
       "importFound": {
         "one": "Распознано {n} слово",
         "few": "Распознано {n} слова",

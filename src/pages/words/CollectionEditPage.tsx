@@ -419,6 +419,7 @@ export default function CollectionEditPage() {
         onImport={handleImportCards}
         existing={collection?.cards ?? []}
         lang={courseNameInline(courseCode, getLanguageInfo(language).htmlLang)}
+        courseCode={courseCode}
       />
       <ConfirmDialog {...confirmState} onConfirm={handleConfirm} onCancel={handleCancel} />
       {collection && (

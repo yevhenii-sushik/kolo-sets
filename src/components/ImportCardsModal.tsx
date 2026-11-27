@@ -4,6 +4,7 @@ import { useI18n } from "../contexts/I18nContext";
 import { getLanguageInfo } from "../locales/languages";
 import { plural } from "../utils/plural";
 import { parseImportText, type ImportedWord } from "../utils/importText";
+import { starterWords } from "../data/starterWords";
 import { Alert, Button, Modal, Text, Textarea } from "../ui";
 
 interface ImportCardsModalProps {
@@ -12,6 +13,7 @@ interface ImportCardsModalProps {
   onImport: (words: ImportedWord[]) => void;
   existing: readonly { word: string; translation: string }[]; // слова набора — чтобы не добавить их второй раз
   lang: string; // изучаемый язык по-человечески («норвежский») — в подсказке и в промте для ИИ
+  courseCode: string; // код курса — пример в пустом поле на изучаемом языке
 }
 
 const PREVIEW = 3;
@@ -20,9 +22,15 @@ const PREVIEW = 3;
 // Пока вставляешь, окно показывает, что распознано: сколько слов, первые строки так, как их поняли,
 // и строки, которые не вышло разобрать. Ноль слов — не «успех», а подсказка о формате
 // (docs/specs/06-audit-fixes.md, шаг 2). Можно скопировать подсказку для ИИ-ассистента
-export default function ImportCardsModal({ isOpen, onClose, onImport, existing, lang }: ImportCardsModalProps) {
+export default function ImportCardsModal({ isOpen, onClose, onImport, existing, lang, courseCode }: ImportCardsModalProps) {
   const { t, language } = useI18n();
   const m = t.words.editCollection.modals;
+  // Пример в пустом поле — первые слова первого набора на изучаемом языке (src/data/starterWords.ts), как в окне
+  // «Новое слово»: раньше в любом курсе стоял норвежский «skrive; писать; …». Для языка без готовых слов примера нет
+  const placeholder = starterWords(courseCode, t.home.firstSteps.guides.words.starter)
+    ?.slice(0, 3)
+    .map((s) => `${s.word}; ${s.translation}`)
+    .join("\n");
   const locale = getLanguageInfo(language).htmlLang;
   const [text, setText] = useState("");
   const [copied, setCopied] = useState(false);
@@ -66,7 +74,7 @@ export default function ImportCardsModal({ isOpen, onClose, onImport, existing, 
           rows={8}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={m.importPlaceholder}
+          placeholder={placeholder}
           aria-label={m.importTitle}
           className="font-mono"
         />

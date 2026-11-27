@@ -70,7 +70,6 @@
       "formatHint": "Separate fields with a tab (that's how lists paste from Excel, Google Sheets and Quizlet), a semicolon, a dash or “=”. Explanation, example and part of speech go in {lang}.",
       "copyPrompt": "Copy AI prompt",
       "promptCopied": "Copied",
-      "importPlaceholder": "skrive; to write; å uttrykke tanker med tegn; Jeg skriver en bok; verb",
       "importFound": {
         "one": "{n} word recognised",
         "other": "{n} words recognised"
