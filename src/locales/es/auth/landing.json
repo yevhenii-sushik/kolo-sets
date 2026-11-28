@@ -15,11 +15,12 @@
   },
   "hero": {
     "title": "La forma sencilla de aprender palabras en cualquier idioma y no olvidarlas.",
-    "subtitle": "Añade tus propias palabras, practica unos minutos al día y Kolo te devolverá cada una justo cuando empieces a olvidarla.",
+    "subtitle": "Elige un set listo o añade tus propias palabras, practica unos minutos al día y Kolo te devolverá cada una justo cuando empieces a olvidarla.",
     "start": "Probar sin registrarte",
     "promises": [
       "Sin anuncios",
       "Todo el aprendizaje es gratis",
+      "Sets listos para noruego e inglés",
       "En el navegador y en el móvil"
     ],
     "ratings": [

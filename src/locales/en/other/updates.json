@@ -28,6 +28,10 @@
           "text": "Someone sent you a set by link? “Learn these words in Kolo” now starts trial mode, adds the set and opens a session, with no sign-up in between."
         },
         {
+          "title": "A shorter sign-up",
+          "text": "Creating an account now takes an email and a password, nothing else: no name, no repeated password (a button shows what you typed) and no checkbox — a line under the buttons links to the Terms and Privacy Policy. With Google, your name comes from your Google account; otherwise you can add it in your profile whenever you like."
+        },
+        {
           "title": "Updated Terms and Privacy Policy",
           "text": "Both documents now describe trial mode: what we store for a trial account (a random identifier, no email or name) and when it's deleted. You'll see a one-time note about the update in the app."
         }

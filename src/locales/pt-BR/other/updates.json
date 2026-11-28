@@ -28,6 +28,10 @@
           "text": "Alguém mandou um set para você por link? “Aprender estas palavras no Kolo” agora ativa o modo de teste, adiciona o set e abre uma sessão, sem cadastro no meio do caminho."
         },
         {
+          "title": "Cadastro mais curto",
+          "text": "Para criar uma conta agora bastam e-mail e senha: sem nome, sem repetir a senha (um botão mostra o que você digitou) e sem caixa de seleção; uma linha abaixo dos botões leva aos Termos e à Política de Privacidade. Com o Google, seu nome vem da sua conta Google; se não, você pode adicioná-lo no perfil quando quiser."
+        },
+        {
           "title": "Termos e Política de Privacidade atualizados",
           "text": "Os dois documentos agora descrevem o modo de teste: o que guardamos de uma conta de teste (um identificador aleatório, sem e-mail nem nome) e quando ela é apagada. No app, você vai ver uma única vez um aviso sobre a atualização."
         }

@@ -8,12 +8,14 @@ import ConsentText from "../legal/ConsentText";
 // «Попробовать без регистрации» (шаг 16 в docs/specs/06-audit-fixes.md): анонимный вход Firebase и строка
 // согласия под кнопкой — галочки нет (решение пользователя 2026-11-28). Дальше ведёт маршрут: вошедшего
 // PublicRoute отправляет в приложение, а без курса приложение начинается с выбора языка.
-// onStarted — для страниц, которые сами продолжают после входа (набор по ссылке)
+// onStarted — для страниц, которые сами продолжают после входа (набор по ссылке, «О Kolo»).
+// inverse — кнопка на тёмном блоке (итог страниц «О Kolo»)
 export default function TrialButton({
   label,
   size = "lg",
   align = "center",
   icon = <ArrowRight size={18} />,
+  inverse = false,
   className,
   onStarted,
 }: {
@@ -21,6 +23,7 @@ export default function TrialButton({
   size?: "md" | "lg";
   align?: "center" | "start";
   icon?: ReactNode;
+  inverse?: boolean;
   className?: string;
   onStarted?: () => void;
 }) {
@@ -50,8 +53,8 @@ export default function TrialButton({
       <Button size={size} iconRight={icon} loading={busy} onClick={start}>
         {label}
       </Button>
-      <p className="text-xs text-muted">
-        <ConsentText template={c.trial} labels={c.labels} />
+      <p className={cx("text-xs", inverse ? "text-on-inverse/75" : "text-muted")}>
+        <ConsentText template={c.trial} labels={c.labels} inverse={inverse} />
       </p>
       {failed && <Alert>{t.auth.errors.trial}</Alert>}
     </div>

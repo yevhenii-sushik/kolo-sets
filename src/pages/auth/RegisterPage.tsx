@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, User } from 'lucide-react';
-import { Alert, Button, Checkbox, Field, Input } from '../../ui';
+import { Mail } from 'lucide-react';
+import { Alert, Button, Field, Input } from '../../ui';
 import { useAuth } from '../../contexts/AuthContext';
 import { useI18n } from '../../contexts/I18nContext';
 import { afterSignInPath } from '../../sharedSets/pending';
@@ -31,13 +31,10 @@ export default function RegisterPage() {
   const c = t.legal.consent;
   const a = t.auth;
 
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [accepted, setAccepted] = useState(false);
 
   // Сохраняем факт согласия; сбой записи не должен мешать регистрации
   const saveAcceptance = async () => {
@@ -50,18 +47,13 @@ export default function RegisterPage() {
     }
   };
 
+  // Регистрация короче (шаг 17 в docs/specs/06-audit-fixes.md): почта и пароль — и всё. Пароль не повторяем
+  // (его можно показать кнопкой в поле), имя — потом, в профиле; галочки нет — согласие строкой под кнопками,
+  // как у пробного входа (решение пользователя 2026-11-28). Факт и версия согласия записываются, как раньше
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (!accepted) {
-      setError(c.required);
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError(a.errors.passwordsDontMatch);
-      return;
-    }
     if (password.length < 6) {
       setError(a.errors.passwordTooShort);
       return;
@@ -69,7 +61,7 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      await register(email, password, name);
+      await register(email, password);
       await saveAcceptance();
       navigate(afterSignInPath());
     } catch (err: any) {
@@ -79,13 +71,9 @@ export default function RegisterPage() {
     }
   };
 
-  // Согласие обязательно и для Google: флажок стоит над обеими кнопками
+  // Согласие строкой под обеими кнопками — оно и для Google
   const handleGoogleRegister = async () => {
     setError('');
-    if (!accepted) {
-      setError(c.required);
-      return;
-    }
     setLoading(true);
     try {
       await loginGoogle();
@@ -115,17 +103,6 @@ export default function RegisterPage() {
         {error && <Alert>{error}</Alert>}
 
         <form onSubmit={handleRegister} className="grid gap-4">
-          <Field label={a.register.name} htmlFor="name">
-            <Input
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              autoComplete="name"
-              placeholder={a.register.namePlaceholder}
-              required
-              iconLeft={<User size={18} />}
-            />
-          </Field>
           <Field label={a.email} htmlFor="email">
             <Input
               id="email"
@@ -139,19 +116,6 @@ export default function RegisterPage() {
             />
           </Field>
           <PasswordField id="password" label={a.password} value={password} onChange={setPassword} autoComplete="new-password" />
-          <PasswordField
-            id="confirm-password"
-            label={a.register.confirm}
-            value={confirmPassword}
-            onChange={setConfirmPassword}
-            autoComplete="new-password"
-          />
-          <Checkbox
-            checked={accepted}
-            onChange={(e) => setAccepted(e.target.checked)}
-            className="pt-1"
-            label={<ConsentText template={c.agree} labels={c.labels} />}
-          />
           <Button type="submit" size="lg" fullWidth loading={loading}>
             {loading ? a.register.loading : a.register.submit}
           </Button>
@@ -162,6 +126,10 @@ export default function RegisterPage() {
         <GoogleButton onClick={handleGoogleRegister} disabled={loading}>
           {a.google}
         </GoogleButton>
+
+        <p className="text-center text-xs leading-snug text-faint">
+          <ConsentText template={c.register} labels={c.labels} />
+        </p>
       </div>
     </AuthLayout>
   );

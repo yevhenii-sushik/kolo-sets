@@ -92,7 +92,8 @@ export default function ProfilePage() {
           : null;
     return {
       uid: user.uid,
-      displayName: user.displayName || rawProfile.displayName || "User",
+      // Без имени (пробный аккаунт, регистрация без имени с 0.5.0) — имя пользователя, оно есть у всех
+      displayName: user.displayName || rawProfile.displayName || rawProfile.username || "Kolo",
       email: user.email || "",
       username: rawProfile.username ?? "",
       createdAt: rawProfile.createdAt?.toDate?.() ?? new Date(rawProfile.createdAt ?? Date.now()),

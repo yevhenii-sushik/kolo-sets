@@ -34,7 +34,7 @@ interface AuthContextType {
   /** «Сохранить прогресс»: привязать Google или почту к пробному аккаунту — uid тот же, ничего не теряется */
   saveWithGoogle: () => Promise<LinkResult>;
   saveWithEmail: (email: string, password: string) => Promise<LinkResult>;
-  register: (email: string, password: string, displayName: string) => Promise<void>;
+  register: (email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   loginGoogle: () => Promise<void>;
   logout: () => Promise<void>;
@@ -100,8 +100,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return result;
   };
 
-  const register = async (email: string, password: string, displayName: string) => {
-    await registerWithEmail(email, password, displayName);
+  const register = async (email: string, password: string) => {
+    await registerWithEmail(email, password);
   };
 
   const login = async (email: string, password: string) => {

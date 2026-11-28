@@ -151,6 +151,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 // Языки, которые можно учить: названия берём из Intl на языке сайта и ставим по алфавиту этих названий
 const LEARNABLE = [
+  ["en", "🇬🇧"],
   ["es", "🇪🇸"],
   ["fr", "🇫🇷"],
   ["de", "🇩🇪"],
@@ -286,8 +287,9 @@ export default function LandingPage() {
                 <TrialButton label={l.hero.start} className="pt-2 lg:justify-items-start lg:text-left" />
                 <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted lg:justify-start">
                   {l.hero.promises.map((promise) => (
-                    <li key={promise} className="flex items-center gap-1.5">
-                      <Check size={16} strokeWidth={2.5} className="text-success" />
+                    <li key={promise} className="flex items-start gap-1.5">
+                      {/* Галочка — у первой строки: «Готовые наборы для…» на узком телефоне переносится */}
+                      <Check size={16} strokeWidth={2.5} className="mt-0.5 shrink-0 text-success" />
                       {promise}
                     </li>
                   ))}
@@ -299,7 +301,7 @@ export default function LandingPage() {
             </Container>
           </section>
 
-          {FEATURES.learnLanguagesStrip && <LearnLanguagesStrip />}
+          <LearnLanguagesStrip />
 
           {/* ── Как это работает ── */}
           <section id="how" className="scroll-mt-16 py-20 md:py-28 bg-band">

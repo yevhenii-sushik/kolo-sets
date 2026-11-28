@@ -28,6 +28,10 @@
           "text": "Har noen sendt deg et sett via lenke? «Lær disse ordene i Kolo» starter nå prøvemodus, legger til settet og åpner en økt – uten registrering i mellomtiden."
         },
         {
+          "title": "Kortere registrering",
+          "text": "En konto krever nå bare e-post og passord: ikke navn, ikke gjentatt passord (en knapp viser det du skrev) og ingen avkrysning – en linje under knappene lenker til vilkårene og personvernerklæringen. Med Google hentes navnet fra Google-kontoen, ellers kan du legge det til i profilen når du vil."
+        },
+        {
           "title": "Oppdaterte vilkår og personvernerklæring",
           "text": "Begge dokumentene beskriver nå prøvemodus: hva vi lagrer for en prøvekonto (en tilfeldig ID, ingen e-post eller navn) og når den slettes. Du får en engangsmelding om oppdateringen i appen."
         }

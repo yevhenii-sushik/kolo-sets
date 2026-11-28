@@ -28,6 +28,10 @@
           "text": "Quelqu’un t’a envoyé un set par lien ? « Apprendre ces mots dans Kolo » lance maintenant le mode essai, ajoute le set et ouvre une séance, sans inscription entre les deux."
         },
         {
+          "title": "Une inscription plus courte",
+          "text": "Pour créer un compte, il suffit maintenant d’un e-mail et d’un mot de passe : pas de nom, pas de mot de passe à répéter (un bouton affiche ce que tu as tapé) et pas de case à cocher — une ligne sous les boutons renvoie aux Conditions et à la Politique de confidentialité. Avec Google, ton nom vient de ton compte Google ; sinon, tu peux l’ajouter dans ton profil quand tu veux."
+        },
+        {
           "title": "Conditions et Politique de confidentialité mises à jour",
           "text": "Les deux documents décrivent maintenant le mode essai : ce que nous gardons pour un compte d’essai (un identifiant aléatoire, sans e-mail ni nom) et quand il est supprimé. Tu verras une seule fois un message sur la mise à jour dans l’appli."
         }

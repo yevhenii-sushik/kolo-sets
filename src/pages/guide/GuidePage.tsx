@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Badge, ButtonLink, Card, Eyebrow, Heading, Loading, PerigeeMark, Text, cx } from "../../ui";
 import { useAuth } from "../../contexts/AuthContext";
 import { useI18n } from "../../contexts/I18nContext";
 import { courseFlag } from "../../courses/languages";
 import { usePageMeta } from "../../utils/pageMeta";
+import TrialButton from "../../components/auth/TrialButton";
 import {
   FlashcardsPreview,
   ForgettingCurve,
@@ -124,6 +125,7 @@ function Section({ section, step, flip }: { section: GuideSection; step?: number
 export default function GuidePage({ page }: { page: GuidePageKey }) {
   const { expectUser: user } = useAuth();
   const { t } = useI18n();
+  const navigate = useNavigate();
   const guide = useGuide();
   const content = guide?.pages[page];
   const index = GUIDE_PAGES.findIndex((p) => p.key === page);
@@ -167,9 +169,15 @@ export default function GuidePage({ page }: { page: GuidePageKey }) {
         <Text tone="inverse" className="max-w-md opacity-80">
           {guide.cta.text}
         </Text>
-        <ButtonLink to={user ? "/" : "/register"} size="lg" iconRight={<ArrowRight size={18} />} className="mt-2">
-          {user ? guide.cta.openApp : guide.cta.start}
-        </ButtonLink>
+        {/* Гостю — пробный вход (шаг 17 в docs/specs/06-audit-fixes.md): страница не под PublicRoute, в приложение ведём сами */}
+        {user ? (
+          <ButtonLink to="/" size="lg" iconRight={<ArrowRight size={18} />} className="mt-2">
+            {guide.cta.openApp}
+          </ButtonLink>
+        ) : (
+          // Средний размер: «Попробовать без регистрации» в большой кнопке не влезает в карточку на телефоне 360px
+          <TrialButton label={guide.cta.start} size="md" inverse className="mt-2" onStarted={() => navigate("/")} />
+        )}
       </Card>
 
       <Link

@@ -21,12 +21,11 @@
     "settings": "Innstillinger for informasjonskapsler"
   },
   "consent": {
-    "agree": "Jeg godtar {terms} og bekrefter at jeg har lest {privacy}.",
+    "register": "Ved å opprette en konto godtar du {terms} og bekrefter at du har lest {privacy}.",
     "labels": {
       "terms": "vilkårene for bruk",
       "privacy": "personvernerklæringen"
     },
-    "required": "Du må godta vilkårene for bruk for å opprette en konto.",
     "google": "Ved å fortsette med Google godtar du {terms} og bekrefter at du har lest {privacy}.",
     "trial": "Ved å fortsette godtar du {terms} og bekrefter at du har lest {privacy}.",
     "support": "Meldingen sendes til Kolo-teamet via Telegram. Les mer: {privacy}."

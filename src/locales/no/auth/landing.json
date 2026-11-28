@@ -15,11 +15,12 @@
   },
   "hero": {
     "title": "Den enkle måten å lære ord på hvilket som helst språk — og huske dem.",
-    "subtitle": "Legg til dine egne ord, øv noen minutter om dagen – og Kolo henter fram hvert ord akkurat når du er i ferd med å glemme det.",
+    "subtitle": "Ta et ferdig sett eller legg til dine egne ord, øv noen minutter om dagen – og Kolo henter fram hvert ord akkurat når du er i ferd med å glemme det.",
     "start": "Prøv uten konto",
     "promises": [
       "Ingen reklame",
       "All læring er gratis",
+      "Ferdige sett for norsk og engelsk",
       "I nettleseren og på mobilen"
     ],
     "ratings": [

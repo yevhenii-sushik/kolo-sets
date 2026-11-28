@@ -28,6 +28,10 @@
           "text": "Dir hat jemand ein Set per Link geschickt? „Diese Wörter in Kolo lernen“ startet jetzt den Testmodus, fügt das Set hinzu und öffnet eine Übung – ohne Anmeldung dazwischen."
         },
         {
+          "title": "Kürzere Anmeldung",
+          "text": "Für ein Konto brauchst du jetzt nur E-Mail und Passwort: keinen Namen, keine Passwortwiederholung (ein Knopf zeigt, was du getippt hast) und kein Häkchen – eine Zeile unter den Knöpfen verlinkt Nutzungsbedingungen und Datenschutzerklärung. Mit Google kommt dein Name aus dem Google-Konto, sonst trägst du ihn jederzeit im Profil ein."
+        },
+        {
           "title": "Aktualisierte Nutzungsbedingungen und Datenschutzerklärung",
           "text": "Beide Dokumente beschreiben jetzt den Testmodus: was wir für ein Testkonto speichern (eine zufällige ID, keine E-Mail-Adresse und kein Name) und wann es gelöscht wird. In der App siehst du einmalig einen Hinweis auf die Aktualisierung."
         }

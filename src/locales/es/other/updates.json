@@ -28,6 +28,10 @@
           "text": "¿Te enviaron un set por enlace? «Aprender estas palabras en Kolo» ahora activa el modo de prueba, añade el set y abre una sesión, sin registro de por medio."
         },
         {
+          "title": "Un registro más corto",
+          "text": "Para crear una cuenta ahora basta con un correo y una contraseña: sin nombre, sin repetir la contraseña (un botón muestra lo que escribiste) y sin casilla; una línea bajo los botones enlaza los Términos y la Política de privacidad. Con Google, tu nombre viene de tu cuenta de Google; si no, puedes añadirlo en tu perfil cuando quieras."
+        },
+        {
           "title": "Términos y Política de privacidad actualizados",
           "text": "Los dos documentos ahora describen el modo de prueba: qué guardamos de una cuenta de prueba (un identificador aleatorio, sin correo ni nombre) y cuándo se elimina. En la app verás una sola vez un aviso sobre la actualización."
         }

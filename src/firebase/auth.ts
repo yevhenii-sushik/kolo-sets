@@ -34,15 +34,11 @@ async function withContinueUrl(send: (settings?: ActionCodeSettings) => Promise<
   }
 }
 
-export const registerWithEmail = async (
-  email: string,
-  password: string,
-  displayName: string
-): Promise<User> => {
+// Регистрация — только почта и пароль (шаг 17 в docs/specs/06-audit-fixes.md): имя потом, в профиле
+export const registerWithEmail = async (email: string, password: string): Promise<User> => {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
   if (userCredential.user) {
-    await updateProfile(userCredential.user, { displayName });
     withContinueUrl((settings) => sendEmailVerification(userCredential.user, settings)).catch(() => {});
   }
 

@@ -21,12 +21,11 @@
     "settings": "Cookie settings"
   },
   "consent": {
-    "agree": "I accept the {terms} and have read the {privacy}.",
+    "register": "By creating an account, you accept the {terms} and confirm you have read the {privacy}.",
     "labels": {
       "terms": "Terms of Use",
       "privacy": "Privacy Policy"
     },
-    "required": "Please accept the Terms of Use to create an account.",
     "google": "By continuing with Google, you accept the {terms} and confirm you have read the {privacy}.",
     "trial": "By continuing, you accept the {terms} and confirm you have read the {privacy}.",
     "support": "Your message goes to the Kolo team via Telegram. Details in the {privacy}."
