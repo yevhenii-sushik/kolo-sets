@@ -222,6 +222,26 @@
     "removeError": "Kunne ikke slette kurset – prøv igjen",
     "moveTo": "Flytt til kurs",
     "moved": "Flyttet til {name}",
-    "moveError": "Kunne ikke flytte settet – prøv igjen"
+    "moveError": "Kunne ikke flytte settet – prøv igjen",
+    "flow": {
+      "progress": "Steg {n} av {total}",
+      "goalTitle": "Hvor mange dager i uka vil du øve?",
+      "goalHint": "Du kan endre målet i profilen når som helst.",
+      "lessonTitle": "Din første leksjon",
+      "lessonSteps": [
+        "Først ser du ordet, oversettelsen og et eksempel – og hører hvordan det uttales.",
+        "Så sjekker Kolo om du husker det.",
+        "Svarte du feil? Ikke noe problem: ordet kommer tilbake litt senere."
+      ],
+      "lessonStart": "Start leksjonen",
+      "ownTitle": "Vi begynner med dine egne ord",
+      "ownText": "Det finnes ingen ferdige sett for dette språket ennå, så den første leksjonen lager vi av dine egne ord.",
+      "ownSteps": [
+        "Lag et sett, for eksempel «Mat» eller «Jobb».",
+        "Legg til fem ord med oversettelse.",
+        "Så rett til den første leksjonen."
+      ],
+      "ownStart": "Lag mitt første sett"
+    }
   }
 }

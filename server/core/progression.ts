@@ -34,7 +34,7 @@ export interface ProgressionPatch {
   level: number;
   weekXp: { week: string; amount: number };
   orbit: OrbitState;
-  capsules: number;
+  capsules?: number; // нет — у новичка до первой тренировки: стартовая капсула ещё впереди
   legacyFlames?: number;
 }
 
@@ -79,11 +79,15 @@ export function prepare(state: ProgressionState, today: string) {
     if ((state.longestStreak ?? 0) >= 3) legacyFlames = state.longestStreak;
   }
 
-  // Капсулы появились в 2b: при первой встрече — подарок с учётом уже набранного уровня
-  const starter = state.capsules === undefined ? starterCapsules(levelFromXp(xp).level) : 0;
+  // Капсулы появились в 2b: при первой встрече — подарок с учётом уже набранного уровня. Новичку, который ещё
+  // не занимался, подарок — за первую тренировку, а не за первое открытие приложения: капсула ни за что на старте
+  // непонятна (решение пользователя 2026-11-28; награды — только за практику). До тех пор поле капсул не пишем
+  const studied = (state.studyHistory?.length ?? 0) > 0 || xp > 0;
+  const starterPending = state.capsules === undefined && !studied;
+  const starter = state.capsules === undefined && studied ? starterCapsules(levelFromXp(xp).level) : 0;
 
   orbit = expireRepair(rollTo(orbit, currentWeek, events), today);
-  return { orbit, xp, legacyFlames, migrated, events, currentWeek, capsules: (state.capsules ?? 0) + starter, starter };
+  return { orbit, xp, legacyFlames, migrated, events, currentWeek, capsules: (state.capsules ?? 0) + starter, starter, starterPending };
 }
 
 // Опыт недели (для лиг) — обнуляется в понедельник
@@ -110,17 +114,22 @@ export function settle(
     longestAfter: change.orbit.longest,
     newAchievements: change.newAchievements ?? [],
   });
-  const capsules = p.capsules + earned;
+  // Первая тренировка новичка — стартовая капсула (см. prepare)
+  const firstPractice = p.starterPending && change.gained > 0;
+  const starterNow = firstPractice ? starterCapsules(levelBefore) : 0;
+  const capsules = p.capsules + earned + starterNow;
+  // Новичок ещё не занимался и капсул не заработал — поле не пишем, подарок ждёт первой тренировки
+  const keepPending = p.starterPending && !firstPractice && earned === 0;
   return {
     patch: {
       xp,
       level,
       weekXp: addWeekXp(state.weekXp, p.currentWeek, change.gained),
       orbit: change.orbit,
-      capsules,
+      ...(keepPending ? {} : { capsules }),
       ...(p.legacyFlames !== undefined ? { legacyFlames: p.legacyFlames } : {}),
     },
-    view: view(change.orbit, xp, change.gained, levelBefore, today, change.events, capsules, p.starter + earned),
+    view: view(change.orbit, xp, change.gained, levelBefore, today, change.events, capsules, p.starter + earned + starterNow),
   };
 }
 

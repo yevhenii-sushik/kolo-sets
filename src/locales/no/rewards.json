@@ -104,7 +104,13 @@
     "text": "Inni: en satellitt, ring, bakgrunn eller tittel. Åpne den under Belønninger.",
     "open": "Åpne",
     "medalTitle": "Ny medalje",
-    "betaText": "Takk for at du har vært med siden betaen! Tittelen «Betatester» og ringen «Første bane» venter under Belønninger."
+    "betaText": "Takk for at du har vært med siden betaen! Tittelen «Betatester» og ringen «Første bane» venter under Belønninger.",
+    "welcomeTitle": "Dine første belønninger",
+    "welcomeCapsule": {
+      "one": "For den første leksjonen: en kapsel. Inni ligger en gjenstand til profilen – en satellitt, en ring, en bakgrunn eller en tittel.",
+      "other": "For den første leksjonen: {n} kapsler. Inni ligger gjenstander til profilen – satellitter, ringer, bakgrunner eller titler."
+    },
+    "welcomeBeta": "Og betatester-medaljen med tittel og ring – takk for at du er med Kolo helt fra starten."
   },
   "items": {
     "sat_moon": "Månen",

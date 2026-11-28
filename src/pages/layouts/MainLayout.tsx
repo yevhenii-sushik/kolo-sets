@@ -23,6 +23,7 @@ import { openOrbitShare } from "../../components/progress/ShareOrbitModal";
 import { OrbitGoalModal } from "../../components/progress/OrbitGoalModal";
 import PageLoading from "../../components/ui/PageLoading";
 import { prefetchAppPages } from "../lazyPages";
+import { localDateKey } from "../../utils/progress";
 
 const SIDEBAR_KEY = "sidebar-open";
 
@@ -79,11 +80,13 @@ export default function MainLayout() {
     return () => window.removeEventListener("keydown", handler);
   }, [navigate]);
 
-  // Цель недели: тем, кто уже занимался (первый вход после обновления), — сразу; новичку — после первой
-  // тренировки, когда он понял, что такое занятие. До этого цель ждёт в «Первых шагах» на главной
-  const hasStudied = (profile?.studyHistory?.length ?? 0) > 0;
+  // Цель недели новичок выбирает в пошаговом первом входе (StartPage). Кто её не выбрал (пришёл по ссылке на набор,
+  // старый аккаунт) — окно в другой день после первой тренировки, а не сразу после урока: тогда оно мешает
+  // (решение пользователя 2026-11-28). До этого цель ждёт в «Первых шагах» на главной
+  const today = localDateKey(new Date());
+  const studiedBefore = (profile?.studyHistory ?? []).some((d: { date?: string }) => !!d.date && d.date !== today);
   const needsGoal =
-    !!progression && !progression.orbit.goalSet && !goalDismissed && !showOnboarding && onboardingDone() && hasStudied;
+    !!progression && !progression.orbit.goalSet && !goalDismissed && !showOnboarding && onboardingDone() && studiedBefore;
 
   // Без курса приложение начинается с выбора языка
   if (coursesReady && courses.length === 0) return <Navigate to="/start" replace />;

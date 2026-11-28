@@ -104,7 +104,13 @@
     "text": "Darin: ein Satellit, ein Ring, ein Hintergrund oder ein Titel. Öffne sie unter „Belohnungen“.",
     "open": "Öffnen",
     "medalTitle": "Neue Medaille",
-    "betaText": "Danke, dass du seit der Beta dabei bist! Der Titel „Beta-Tester“ und der Ring „Erster Orbit“ warten unter „Belohnungen“."
+    "betaText": "Danke, dass du seit der Beta dabei bist! Der Titel „Beta-Tester“ und der Ring „Erster Orbit“ warten unter „Belohnungen“.",
+    "welcomeTitle": "Deine ersten Belohnungen",
+    "welcomeCapsule": {
+      "one": "Für deine erste Lektion: eine Kapsel. Darin steckt ein Gegenstand für dein Profil – ein Satellit, ein Ring, ein Hintergrund oder ein Titel.",
+      "other": "Für deine erste Lektion: {n} Kapseln. Darin stecken Gegenstände für dein Profil – Satelliten, Ringe, Hintergründe oder Titel."
+    },
+    "welcomeBeta": "Und die Beta-Tester-Medaille mit Titel und Ring – danke, dass du von Anfang an bei Kolo bist."
   },
   "items": {
     "sat_moon": "Mond",

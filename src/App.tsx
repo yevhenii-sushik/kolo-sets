@@ -112,6 +112,15 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+// Первый вход (StartPage): и без аккаунта — проба начинается с вопросов, аккаунт создаётся на последнем шаге
+// (решение пользователя 2026-11-28). Вошедшего с курсами StartPage сама отправит на главную
+function StartRoute({ children }: { children: React.ReactNode }) {
+  const { loading, expectUser, standing } = useAuth();
+  if (loading && expectUser) return <AppSplash />;
+  if (standing === "locked") return <VerifyEmailGate />;
+  return <>{children}</>;
+}
+
 // Публичный маршрут (лендинг, вход, регистрация). Новый посетитель видит страницу сразу, не дожидаясь
 // Firebase; если на устройстве уже входили — ждём, чтобы не мигнуть лендингом перед приложением
 function PublicRoute({ children }: { children: React.ReactNode }) {
@@ -180,13 +189,14 @@ function AppContent() {
         }
       />
 
-      {/* Первый вход: выбор языка — без шапки и меню (docs/specs/01-courses.md) */}
+      {/* Первый вход: язык → ритм недели → первый урок, без шапки и меню (docs/specs/01-courses.md,
+          docs/specs/06-audit-fixes.md → «Пошаговый первый вход») */}
       <Route
         path="/start"
         element={
-          <ProtectedRoute>
+          <StartRoute>
             <StartPage />
-          </ProtectedRoute>
+          </StartRoute>
         }
       />
 

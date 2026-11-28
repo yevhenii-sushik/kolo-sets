@@ -222,6 +222,26 @@
     "removeError": "Couldn't delete the course — try again",
     "moveTo": "Move to course",
     "moved": "Moved to {name}",
-    "moveError": "Couldn't move the set — try again"
+    "moveError": "Couldn't move the set — try again",
+    "flow": {
+      "progress": "Step {n} of {total}",
+      "goalTitle": "How many days a week will you practise?",
+      "goalHint": "You can change your goal in your profile at any time.",
+      "lessonTitle": "Your first lesson",
+      "lessonSteps": [
+        "First you'll see the word, its translation and an example, and hear how it sounds.",
+        "Then Kolo checks whether you remember it.",
+        "Got it wrong? No problem: the word comes back a little later."
+      ],
+      "lessonStart": "Start the lesson",
+      "ownTitle": "Let's start with your own words",
+      "ownText": "There are no ready-made sets for this language yet, so your first lesson will be made of your own words.",
+      "ownSteps": [
+        "Create a set, for example “Food” or “Work”.",
+        "Add five words with translations.",
+        "Then straight into your first lesson."
+      ],
+      "ownStart": "Create my first set"
+    }
   }
 }

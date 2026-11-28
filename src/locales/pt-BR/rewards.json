@@ -104,7 +104,13 @@
     "text": "Dentro: um satélite, um anel, um fundo ou um título. Abra em “Recompensas”.",
     "open": "Abrir",
     "medalTitle": "Nova medalha",
-    "betaText": "Obrigado por estar aqui desde o beta! O título “Beta tester” e o anel “Primeira órbita” estão esperando em “Recompensas”."
+    "betaText": "Obrigado por estar aqui desde o beta! O título “Beta tester” e o anel “Primeira órbita” estão esperando em “Recompensas”.",
+    "welcomeTitle": "Suas primeiras recompensas",
+    "welcomeCapsule": {
+      "one": "Pela sua primeira lição: uma cápsula. Dentro tem um item para o seu perfil: um satélite, um anel, um fundo ou um título.",
+      "other": "Pela sua primeira lição: {n} cápsulas. Dentro tem itens para o seu perfil: satélites, anéis, fundos ou títulos."
+    },
+    "welcomeBeta": "E a medalha de beta tester com um título e um anel: obrigado por estar com o Kolo desde o começo."
   },
   "items": {
     "sat_moon": "Lua",

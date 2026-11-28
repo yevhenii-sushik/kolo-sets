@@ -222,6 +222,26 @@
     "removeError": "Impossible de supprimer le cours. Réessaie",
     "moveTo": "Déplacer vers un cours",
     "moved": "Déplacé dans le cours « {name} »",
-    "moveError": "Impossible de déplacer le set. Réessaie"
+    "moveError": "Impossible de déplacer le set. Réessaie",
+    "flow": {
+      "progress": "Étape {n} sur {total}",
+      "goalTitle": "Combien de jours par semaine vas-tu t’entraîner ?",
+      "goalHint": "Tu peux changer ton objectif dans ton profil à tout moment.",
+      "lessonTitle": "Ta première leçon",
+      "lessonSteps": [
+        "D’abord, tu vois le mot, sa traduction et un exemple, et tu entends comment il se prononce.",
+        "Ensuite, Kolo vérifie si tu t’en souviens.",
+        "Une erreur ? Pas grave : le mot reviendra un peu plus tard."
+      ],
+      "lessonStart": "Commencer la leçon",
+      "ownTitle": "Commençons avec tes propres mots",
+      "ownText": "Il n’y a pas encore de sets prêts à l’emploi pour cette langue : ta première leçon sera faite de tes propres mots.",
+      "ownSteps": [
+        "Crée un set, par exemple « Nourriture » ou « Travail ».",
+        "Ajoute cinq mots avec leur traduction.",
+        "Et direction ta première leçon."
+      ],
+      "ownStart": "Créer mon premier set"
+    }
   }
 }

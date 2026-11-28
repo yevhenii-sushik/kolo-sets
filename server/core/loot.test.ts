@@ -216,6 +216,17 @@ describe("откуда капсулы", () => {
     expect(result.progression.capsules).toEqual({ count: 2, gained: 2 });
   });
 
+  it("новичок: при открытии приложения капсулы нет, стартовая — за первую тренировку", () => {
+    const opened = syncProgress({}, "2026-11-04");
+    expect(opened.patch?.capsules).toBeUndefined();
+    expect(opened.result.capsules).toEqual({ count: 0, gained: 0 });
+    // цель недели до первой тренировки тоже не съедает подарок
+    const state = { ...opened.patch!, capsules: undefined };
+    const { patch, result } = applySession(state, session, info, NOW);
+    expect(patch.capsules).toBe(2); // стартовая и за 2-й уровень
+    expect(result.progression.capsules.gained).toBe(2);
+  });
+
   it("синхронизация старого профиля: стартовые по уровню, без капсул за опыт прошлого", () => {
     const r = syncProgress({ studyHistory: [{ date: "2026-10-20", sessions: 3, cardsStudied: 300 }] }, "2026-11-04");
     expect(r.result.xp.level).toBe(3);

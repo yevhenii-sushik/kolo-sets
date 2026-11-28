@@ -104,7 +104,13 @@
     "text": "Inside: a satellite, ring, background or title. Open it in Rewards.",
     "open": "Open",
     "medalTitle": "New medal",
-    "betaText": "Thank you for being here since the beta! The Beta Tester title and the First Orbit ring are waiting in Rewards."
+    "betaText": "Thank you for being here since the beta! The Beta Tester title and the First Orbit ring are waiting in Rewards.",
+    "welcomeTitle": "Your first rewards",
+    "welcomeCapsule": {
+      "one": "For your first lesson: a capsule. Inside is an item for your profile — a satellite, a ring, a background or a title.",
+      "other": "For your first lesson: {n} capsules. Inside are items for your profile — satellites, rings, backgrounds or titles."
+    },
+    "welcomeBeta": "And the Beta Tester medal with a title and a ring — thank you for being with Kolo from the very start."
   },
   "items": {
     "sat_moon": "Moon",

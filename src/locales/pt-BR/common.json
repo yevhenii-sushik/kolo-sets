@@ -222,6 +222,26 @@
     "removeError": "Não foi possível excluir o curso — tente de novo",
     "moveTo": "Mover para outro curso",
     "moved": "Movido para o curso “{name}”",
-    "moveError": "Não foi possível mover o set — tente de novo"
+    "moveError": "Não foi possível mover o set — tente de novo",
+    "flow": {
+      "progress": "Passo {n} de {total}",
+      "goalTitle": "Quantos dias por semana você vai praticar?",
+      "goalHint": "Você pode mudar sua meta no perfil quando quiser.",
+      "lessonTitle": "Sua primeira lição",
+      "lessonSteps": [
+        "Primeiro você vê a palavra, a tradução e um exemplo, e ouve como ela soa.",
+        "Depois o Kolo confere se você lembra dela.",
+        "Errou? Tudo bem: a palavra volta um pouco mais tarde."
+      ],
+      "lessonStart": "Começar a lição",
+      "ownTitle": "Vamos começar com as suas palavras",
+      "ownText": "Ainda não há sets prontos para este idioma, então sua primeira lição vai ser feita com as suas próprias palavras.",
+      "ownSteps": [
+        "Crie um set, por exemplo “Comida” ou “Trabalho”.",
+        "Adicione cinco palavras com tradução.",
+        "E direto para a primeira lição."
+      ],
+      "ownStart": "Criar meu primeiro set"
+    }
   }
 }

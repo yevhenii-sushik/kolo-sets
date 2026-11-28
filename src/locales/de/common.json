@@ -222,6 +222,26 @@
     "removeError": "Der Kurs konnte nicht gelöscht werden – versuche es erneut",
     "moveTo": "In Kurs verschieben",
     "moved": "Nach {name} verschoben",
-    "moveError": "Das Set konnte nicht verschoben werden – versuche es erneut"
+    "moveError": "Das Set konnte nicht verschoben werden – versuche es erneut",
+    "flow": {
+      "progress": "Schritt {n} von {total}",
+      "goalTitle": "An wie vielen Tagen pro Woche willst du üben?",
+      "goalHint": "Dein Ziel kannst du jederzeit im Profil ändern.",
+      "lessonTitle": "Deine erste Lektion",
+      "lessonSteps": [
+        "Zuerst siehst du das Wort, die Übersetzung und ein Beispiel – und hörst, wie es klingt.",
+        "Dann prüft Kolo, ob du es dir gemerkt hast.",
+        "Falsch? Kein Problem: Das Wort kommt etwas später wieder."
+      ],
+      "lessonStart": "Lektion starten",
+      "ownTitle": "Wir starten mit deinen eigenen Wörtern",
+      "ownText": "Für diese Sprache gibt es noch keine fertigen Sets, deshalb besteht deine erste Lektion aus deinen eigenen Wörtern.",
+      "ownSteps": [
+        "Lege ein Set an, zum Beispiel „Essen“ oder „Arbeit“.",
+        "Füge fünf Wörter mit Übersetzung hinzu.",
+        "Und gleich geht’s zur ersten Lektion."
+      ],
+      "ownStart": "Mein erstes Set anlegen"
+    }
   }
 }

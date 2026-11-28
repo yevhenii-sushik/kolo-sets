@@ -31,6 +31,9 @@ export interface SessionReply {
   newAchievements: AchievementType[];
   progression?: Progression; // нет у тренировок, записанных до этапа 2
   duplicate?: boolean;
+  firstSession?: boolean; // первая тренировка: «Первые награды» одним окном
+  granted?: string[]; // особые медали (бета-тестерам) — за первую тренировку
+  loot?: Loot;
 }
 
 // Повторять имеет смысл только то, что может пройти позже: сеть, перегрузка, сбой сервера

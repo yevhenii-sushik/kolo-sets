@@ -135,8 +135,15 @@ export async function recordSession(uid: string, s: SessionInput, now = new Date
       return { status: 422, body: { error: "implausible" } };
     }
 
-    const { patch, result } = applySession(progressState(profile.data()), s, info, now);
-    writeProfile(tx, userRef, patch);
+    const data = profile.data()!;
+    const state = progressState(data);
+    const firstSession = (state.studyHistory?.length ?? 0) === 0;
+    const { patch, result } = applySession(state, s, info, now);
+    // Медаль, титул и кольцо бета-тестера — за первую тренировку, вместе со стартовой капсулой (решение 2026-11-28):
+    // на старте, до учёбы, они непонятны. Дату регистрации к этому времени уже записала синхронизация
+    const joined = data.joinedAt instanceof Timestamp ? data.joinedAt.toMillis() : null;
+    const beta = joined !== null ? grantBeta(state, joined, now) : null;
+    writeProfile(tx, userRef, { ...patch, ...(beta ?? {}) });
     tx.set(sessionRef, {
       kind: s.kind,
       collectionIds: s.collectionIds,
@@ -149,7 +156,16 @@ export async function recordSession(uid: string, s: SessionInput, now = new Date
       createdAt: Timestamp.fromDate(now),
       result,
     });
-    return { status: 200, body: { ...result, stats: patch.stats } };
+    return {
+      status: 200,
+      body: {
+        ...result,
+        stats: patch.stats,
+        // Первая тренировка — клиент показывает «Первые награды» одним окном
+        ...(firstSession ? { firstSession: true } : {}),
+        ...(beta ? { granted: ["beta_tester"], loot: lootView({ ...state, ...beta }) } : {}),
+      },
+    };
   });
 }
 
@@ -187,9 +203,11 @@ export async function syncUserProgress(uid: string, timezone: unknown, now = new
     const { tz, today } = todayFor(timezone, data, now);
     const state = progressState(data);
     const { patch, result } = syncProgress(state, today);
-    // Медаль, титул и кольцо бета-тестера (docs/specs/02-progression.md)
+    // Медаль, титул и кольцо бета-тестера (docs/specs/02-progression.md) — тем, кто уже занимался; новичок получит
+    // их за первую тренировку (recordSession), а не при первом открытии приложения
     const joined = data.joinedAt instanceof Timestamp ? data.joinedAt.toMillis() : joinedAt;
-    const beta = joined !== null && !Number.isNaN(joined) ? grantBeta(state, joined, now) : null;
+    const studied = (state.studyHistory?.length ?? 0) > 0;
+    const beta = studied && joined !== null && !Number.isNaN(joined) ? grantBeta(state, joined, now) : null;
     const extra = {
       ...(joinedAt !== null && !Number.isNaN(joinedAt) && !(data.joinedAt instanceof Timestamp) ? { joinedAt: Timestamp.fromMillis(joinedAt) } : {}),
       ...(beta ?? {}),

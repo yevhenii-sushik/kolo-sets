@@ -104,7 +104,13 @@
     "text": "À l'intérieur : un satellite, un anneau, un fond ou un titre. Ouvre-la dans « Récompenses ».",
     "open": "Ouvrir",
     "medalTitle": "Nouvelle médaille",
-    "betaText": "Merci d'être là depuis la bêta ! Le titre « Bêta-testeur » et l'anneau « Première orbite » t'attendent dans « Récompenses »."
+    "betaText": "Merci d'être là depuis la bêta ! Le titre « Bêta-testeur » et l'anneau « Première orbite » t'attendent dans « Récompenses ».",
+    "welcomeTitle": "Tes premières récompenses",
+    "welcomeCapsule": {
+      "one": "Pour ta première leçon : une capsule. À l’intérieur, un objet pour ton profil : un satellite, un anneau, un fond ou un titre.",
+      "other": "Pour ta première leçon : {n} capsules. À l’intérieur, des objets pour ton profil : satellites, anneaux, fonds ou titres."
+    },
+    "welcomeBeta": "Et la médaille de bêta-testeur avec un titre et un anneau — merci d’être avec Kolo depuis le tout début."
   },
   "items": {
     "sat_moon": "Lune",

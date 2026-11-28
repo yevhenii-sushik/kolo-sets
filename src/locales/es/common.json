@@ -222,6 +222,26 @@
     "removeError": "No se pudo eliminar el curso. Inténtalo de nuevo",
     "moveTo": "Mover a un curso",
     "moved": "Movido al curso «{name}»",
-    "moveError": "No se pudo mover el set. Inténtalo de nuevo"
+    "moveError": "No se pudo mover el set. Inténtalo de nuevo",
+    "flow": {
+      "progress": "Paso {n} de {total}",
+      "goalTitle": "¿Cuántos días a la semana vas a practicar?",
+      "goalHint": "Puedes cambiar tu objetivo en el perfil cuando quieras.",
+      "lessonTitle": "Tu primera lección",
+      "lessonSteps": [
+        "Primero verás la palabra, su traducción y un ejemplo, y oirás cómo suena.",
+        "Después Kolo comprobará si la recuerdas.",
+        "¿Te equivocaste? No pasa nada: la palabra volverá un poco más tarde."
+      ],
+      "lessonStart": "Empezar la lección",
+      "ownTitle": "Empecemos con tus palabras",
+      "ownText": "Todavía no hay sets listos para este idioma, así que tu primera lección se hará con tus propias palabras.",
+      "ownSteps": [
+        "Crea un set, por ejemplo «Comida» o «Trabajo».",
+        "Añade cinco palabras con su traducción.",
+        "Y directo a tu primera lección."
+      ],
+      "ownStart": "Crear mi primer set"
+    }
   }
 }

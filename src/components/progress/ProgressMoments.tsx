@@ -27,7 +27,10 @@ export type Moment =
   | { kind: "shieldUsed" }
   | { kind: "repair"; left: number }
   | { kind: "capsule"; count: number }
-  | { kind: "beta" };
+  | { kind: "beta" }
+  // Первая тренировка: стартовая капсула, медаль бета-тестера и новый уровень — одним окном с объяснением,
+  // а не три праздника подряд (решение пользователя 2026-11-28)
+  | { kind: "welcome"; capsules: number; beta: boolean; level: number | null };
 
 export function momentsOf(p: Progression): Moment[] {
   const e = p.events;
@@ -52,6 +55,17 @@ export function announceProgress(p: Progression) {
   if (moments.length > 0) window.dispatchEvent(new CustomEvent(PROGRESS_MOMENTS_EVENT, { detail: moments }));
 }
 
+// Итог первой тренировки: капсула, бета-медаль и уровень сливаются в «Первые награды», остальное — как обычно
+export function announceFirstSession(p: Progression, granted: string[]) {
+  const beta = granted.includes("beta_tester");
+  const rest = momentsOf(p).filter((m) => m.kind !== "capsule" && m.kind !== "level");
+  const capsules = p.capsules?.gained ?? 0;
+  const welcome: Moment[] =
+    capsules > 0 || beta ? [{ kind: "welcome", capsules, beta, level: p.xp.levelUp ? p.xp.level : null }] : momentsOf(p).filter((m) => m.kind === "level");
+  const moments = [...rest, ...welcome];
+  if (moments.length > 0) window.dispatchEvent(new CustomEvent(PROGRESS_MOMENTS_EVENT, { detail: moments }));
+}
+
 // Звук момента. «Серию можно починить» — без звука: это подсказка, а не награда
 const MOMENT_SOUND: Partial<Record<Moment["kind"], SoundId>> = {
   orbit: "orbit-closed",
@@ -60,6 +74,7 @@ const MOMENT_SOUND: Partial<Record<Moment["kind"], SoundId>> = {
   shieldUsed: "shield",
   capsule: "achievement",
   beta: "achievement",
+  welcome: "achievement",
 };
 
 // Глобальный хост на уровне App: страницы тренировок идут без MainLayout. Моменты — по очереди
@@ -103,13 +118,14 @@ function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }
     if (sound) playSound(sound);
   }, [moment.kind]);
 
-  // Кольцо стартует пустым и замыкается; через 4,5 секунды карточка закрывается сама
+  // Кольцо стартует пустым и замыкается; через 4,5 секунды карточка закрывается сама. «Первые награды» — нет:
+  // там объяснение, его надо успеть прочитать
   useEffect(() => {
     const fill = setTimeout(() => setFilled(true), 150);
-    const close = setTimeout(onClose, 4500);
+    const close = moment.kind === "welcome" ? undefined : setTimeout(onClose, 4500);
     return () => {
       clearTimeout(fill);
-      clearTimeout(close);
+      if (close) clearTimeout(close);
     };
   }, [onClose]);
 
@@ -201,6 +217,37 @@ function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }
         <>
           <span className="font-display text-xl font-extrabold text-fg">{t.rewards.medal.beta.name}</span>
           <span className="mt-1 text-sm text-muted">{t.rewards.moment.betaText}</span>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+              navigate("/rewards");
+            }}
+            className="mx-auto mt-3 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-hover"
+          >
+            {t.rewards.moment.open}
+          </button>
+        </>
+      );
+      break;
+    case "welcome":
+      title = t.rewards.moment.welcomeTitle;
+      visual = <CapsuleArt size={132} glow />;
+      text = (
+        <>
+          {moment.level !== null && (
+            <span className="mx-auto mb-1 w-fit rounded-full bg-special-soft px-3 py-1 text-sm font-semibold text-special">
+              {m.level.replace("{n}", String(moment.level))}
+            </span>
+          )}
+          {moment.capsules > 0 && <span className="text-sm text-muted">{plural(locale, moment.capsules, t.rewards.moment.welcomeCapsule)}</span>}
+          {moment.beta && (
+            <span className="mt-2 flex items-start gap-2 text-left text-sm text-muted">
+              <FlaskConical size={16} className="mt-0.5 shrink-0 text-special" />
+              {t.rewards.moment.welcomeBeta}
+            </span>
+          )}
           <button
             type="button"
             onClick={(e) => {

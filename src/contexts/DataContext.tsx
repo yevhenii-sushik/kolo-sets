@@ -35,7 +35,7 @@ import {
   type SessionPayload,
   type SessionReply,
 } from '../api/progress';
-import { announceMedals, announceProgress } from '../components/progress/ProgressMoments';
+import { announceFirstSession, announceMedals, announceProgress } from '../components/progress/ProgressMoments';
 import { localDateKey } from '../utils/progress';
 import { readCache, writeCache, profileCacheKey, progressionCacheKey } from '../utils/profileCache';
 
@@ -246,9 +246,15 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   const applyReply = useCallback((reply: SessionReply, celebrate: boolean) => {
     showUnlocks(reply.newAchievements);
+    if (reply.loot) patchProfile({ ...reply.loot });
     // Повтор возвращает старый ответ — его орбита уже устарела
-    if (!reply.duplicate) applyProgression(reply.progression, celebrate);
-  }, [showUnlocks, applyProgression]);
+    if (reply.duplicate) return;
+    // Первая тренировка: капсула, бета-медаль и уровень — одним окном «Первые награды»
+    const first = celebrate && reply.firstSession && reply.progression;
+    applyProgression(reply.progression, celebrate && !first);
+    if (first) announceFirstSession(reply.progression!, reply.granted ?? []);
+    else if (celebrate) announceMedals(reply.granted ?? []);
+  }, [showUnlocks, applyProgression, patchProfile]);
 
   const setWeeklyGoal = useCallback(async (goal: number) => {
     applyProgression(await setOrbitGoal(goal), true);

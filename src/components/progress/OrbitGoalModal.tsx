@@ -75,34 +75,44 @@ export function OrbitGoalModal({ open, onClose }: { open: boolean; onClose: () =
           </div>
         )}
 
-        <div role="radiogroup" aria-label={g.title} className="grid gap-2">
-          {GOALS.map((n) => {
-            const selected = n === goal;
-            return (
-              <button
-                key={n}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                onClick={() => setGoal(n)}
-                className={cx(
-                  "flex items-center gap-3 rounded-2xl border px-3.5 py-2.5 text-left transition-colors",
-                  selected ? "border-accent bg-accent-soft" : "border-line bg-surface hover:bg-inset",
-                )}
-              >
-                <OrbitRing goal={n} done={selected ? n : 0} closed={selected} size={30} />
-                <span className="grid">
-                  <span className="font-semibold text-fg">{plural(locale, n, g.perWeek)}</span>
-                  <span className="text-sm text-muted">{g.levels[String(n) as keyof typeof g.levels]}</span>
-                </span>
-              </button>
-            );
-          })}
-        </div>
+        <GoalOptions value={goal} onChange={setGoal} />
 
         <p className="text-sm text-faint">{first ? g.hint : g.nextWeek}</p>
         {failed && <Alert>{g.error}</Alert>}
       </div>
     </Modal>
+  );
+}
+
+// Выбор числа дней в неделю — в окне цели и в пошаговом первом входе (pages/courses/StartPage.tsx)
+export function GoalOptions({ value, onChange }: { value: number; onChange: (n: number) => void }) {
+  const { t, language } = useI18n();
+  const g = t.orbit.goal;
+  const locale = getLanguageInfo(language).htmlLang;
+  return (
+    <div role="radiogroup" aria-label={g.title} className="grid gap-2">
+      {GOALS.map((n) => {
+        const selected = n === value;
+        return (
+          <button
+            key={n}
+            type="button"
+            role="radio"
+            aria-checked={selected}
+            onClick={() => onChange(n)}
+            className={cx(
+              "flex items-center gap-3 rounded-2xl border px-3.5 py-2.5 text-left transition-colors",
+              selected ? "border-accent bg-accent-soft" : "border-line bg-surface hover:bg-inset",
+            )}
+          >
+            <OrbitRing goal={n} done={selected ? n : 0} closed={selected} size={30} />
+            <span className="grid">
+              <span className="font-semibold text-fg">{plural(locale, n, g.perWeek)}</span>
+              <span className="text-sm text-muted">{g.levels[String(n) as keyof typeof g.levels]}</span>
+            </span>
+          </button>
+        );
+      })}
+    </div>
   );
 }
