@@ -4,11 +4,13 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { Timestamp } from "firebase-admin/firestore";
 import overviewFn from "../netlify/functions/admin-overview";
 import userFn from "../netlify/functions/admin-user";
+import metricsFn from "../netlify/functions/admin-metrics";
 import { adminAuth, db } from "./admin";
 
 const ADMIN = "qa-admin";
 const PLAIN = "qa-plain";
 const TARGET = "qa-target";
+const LEARNER = "qa-learner";
 let adminToken = "";
 let plainToken = "";
 
@@ -37,6 +39,7 @@ beforeAll(async () => {
   await ensureUser(ADMIN, "admin@qa.test");
   await ensureUser(PLAIN, "plain@qa.test");
   await ensureUser(TARGET, "target@qa.test");
+  await ensureUser(LEARNER, "learner@qa.test");
   // claim попадает в токен при входе — ставим до получения токена, как скрипт grant-admin
   await adminAuth().setCustomUserClaims(ADMIN, { admin: true });
   await adminAuth().setCustomUserClaims(TARGET, { staff: true });
@@ -48,6 +51,15 @@ beforeAll(async () => {
   await db().doc("usernames/qa_target").set({ uid: TARGET });
   await user.collection("collections").doc("s1").set({ name: "Секретный набор", courseId: "nb", cards: [{ word: "hemmelig" }, { word: "ord" }] });
   await user.collection("sessions").doc("t1").set({ kind: "quiz", cards: 10, correct: 9, durationSec: 80, day: "2026-11-10", createdAt: Timestamp.now() });
+
+  // Обычный ученик для метрик: зарегистрирован сейчас, набор из шести слов, занимался сегодня
+  const today = new Date().toISOString().slice(0, 10);
+  const learner = db().doc(`users/${LEARNER}`);
+  await learner.set({ timezone: "UTC", courses: [{ id: "nb" }], studyHistory: [{ date: today, sessions: 1, cardsStudied: 6, timeSpent: 60 }] });
+  await learner
+    .collection("collections")
+    .doc("l1")
+    .set({ name: "Личный набор", courseId: "nb", cards: ["en", "to", "tre", "fire", "fem", "seks"].map((word) => ({ word })) });
 });
 
 describe("доступ к админским функциям", () => {
@@ -55,6 +67,8 @@ describe("доступ к админским функциям", () => {
     expect((await call(overviewFn, {}, "")).status).toBe(401);
     expect((await call(userFn, { query: "target@qa.test" }, "")).status).toBe(401);
     expect((await call(overviewFn, {}, plainToken)).status).toBe(403);
+    expect((await call(metricsFn, {}, "")).status).toBe(401);
+    expect((await call(metricsFn, {}, plainToken)).status).toBe(403);
     expect((await call(userFn, { query: "target@qa.test" }, plainToken)).status).toBe(403);
   });
 });
@@ -70,6 +84,27 @@ describe("POST /api/admin-overview", () => {
     expect(body.sessions.total).toBeGreaterThanOrEqual(1);
     expect(body.sessions.last7).toBeGreaterThanOrEqual(1);
     expect(body.recent.map((a: { uid: string }) => a.uid)).toContain(TARGET);
+  });
+});
+
+describe("POST /api/admin-metrics", () => {
+  it("когорты и воронка: ученик в счёте, команда — нет, слов в ответе нет", async () => {
+    const res = await call(metricsFn, {}, adminToken);
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    const body = JSON.parse(text);
+    expect(body.cohorts).toHaveLength(12);
+    // Админ и член команды зарегистрированы сейчас же — они в excluded, а не в когорте
+    expect(body.excluded.team).toBeGreaterThanOrEqual(2);
+    const step = (id: string) => body.funnel.find((s: { id: string }) => s.id === id).reached;
+    expect(step("account")).toBeGreaterThanOrEqual(1);
+    expect(step("words")).toBeGreaterThanOrEqual(1);
+    expect(step("session")).toBeGreaterThanOrEqual(1);
+    // Окна возврата у сегодняшней регистрации ещё не закончились
+    expect(body.cohorts[0].d1.of).toBe(0);
+    expect(text).not.toContain("Личный набор");
+    expect(text).not.toContain("seks");
+    expect(text).not.toContain(LEARNER);
   });
 });
 

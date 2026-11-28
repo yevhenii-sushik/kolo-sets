@@ -6,7 +6,10 @@ import { post } from "./http";
 import { rolesOf, type Roles } from "../../server/core/admin";
 import type { AccountLite, AccountsSummary, LearningView, ProfileView, SessionRow } from "../../server/core/admin";
 
+import type { CohortRow, FunnelId, FunnelStep, Metrics, Rate } from "../../server/core/metrics";
+
 export type { AccountLite, AccountsSummary, LearningView, ProfileView, Roles, SessionRow };
+export type { CohortRow, FunnelId, FunnelStep, Rate };
 
 export interface AdminOverview {
   accounts: AccountsSummary;
@@ -22,6 +25,14 @@ export interface AdminUser {
   learning: LearningView;
   sessions: SessionRow[];
 }
+
+// Удержание: excluded — сколько регистраций окна не в счёте (команда, отключённые)
+export interface AdminMetrics extends Metrics {
+  excluded: { team: number; disabled: number };
+  truncated: boolean;
+}
+
+export const fetchMetrics = () => post<AdminMetrics>("/api/admin-metrics", {});
 
 export const fetchOverview = () => post<AdminOverview>("/api/admin-overview", {});
 

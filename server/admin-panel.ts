@@ -14,6 +14,7 @@ import {
   type AccountLite,
   type Lookup,
 } from "./core/admin";
+import { excludedReason, metricUser, retentionMetrics, signedUpWithin, type MetricAccount, type MetricUser } from "./core/metrics";
 import type { Reply } from "./progress";
 
 const DAY_MS = 86_400_000;
@@ -50,16 +51,21 @@ const accountOf = (u: UserRecord): AccountLite => ({
   disabled: u.disabled,
 });
 
-async function allAccounts(): Promise<{ list: AccountLite[]; truncated: boolean }> {
-  const list: AccountLite[] = [];
+async function allUsers(): Promise<{ list: UserRecord[]; truncated: boolean }> {
+  const list: UserRecord[] = [];
   let pageToken: string | undefined;
   for (let page = 0; page < MAX_PAGES; page++) {
     const res = await adminAuth().listUsers(PAGE, pageToken);
-    list.push(...res.users.map(accountOf));
+    list.push(...res.users);
     pageToken = res.pageToken;
     if (!pageToken) return { list, truncated: false };
   }
   return { list, truncated: true };
+}
+
+async function allAccounts(): Promise<{ list: AccountLite[]; truncated: boolean }> {
+  const { list, truncated } = await allUsers();
+  return { list: list.map(accountOf), truncated };
 }
 
 // Счётчик; null — посчитать не вышло. Запросу по группе sessions с фильтром нужен индекс
@@ -95,6 +101,59 @@ export async function adminOverview(now = new Date()): Promise<Reply> {
   };
 }
 
+const cardCount = (data: FirebaseFirestore.DocumentData) => (Array.isArray(data.cards) ? data.cards.length : 0);
+
+// ── Удержание (шаг 8 в docs/specs/06-audit-fixes.md) ──
+
+// Профили читаем пачками, наборы — по нескольку людей сразу: функции отведено 10 с
+const PROFILE_BATCH = 100;
+const SETS_PARALLEL = 20;
+// Из профиля метрикам нужны только эти поля
+const METRIC_FIELDS = ["timezone", "courses", "studyHistory", "orbit"];
+
+async function inChunks<T, R>(items: T[], size: number, run: (chunk: T[]) => Promise<R[]>): Promise<R[]> {
+  const out: R[] = [];
+  for (let i = 0; i < items.length; i += size) out.push(...(await run(items.slice(i, i + size))));
+  return out;
+}
+
+// POST /api/admin-metrics — когорты по неделе регистрации и воронка новичка. Читаем только тех, кто
+// зарегистрировался за окно метрик: одно чтение на профиль и одно на набор. Из наборов — только число
+// карточек: слова и названия из функции не выходят
+export async function adminMetrics(now = new Date()): Promise<Reply> {
+  const store = db();
+  const accounts = await allUsers();
+  const excluded = { team: 0, disabled: 0 };
+  const people: { uid: string; account: MetricAccount }[] = [];
+  for (const u of accounts.list) {
+    const account: MetricAccount = { createdAt: iso(u.metadata.creationTime), disabled: u.disabled, claims: u.customClaims };
+    if (!signedUpWithin(account.createdAt, now)) continue;
+    const reason = excludedReason(account);
+    if (reason) excluded[reason]++;
+    else people.push({ uid: u.uid, account });
+  }
+
+  const profiles = await inChunks(people, PROFILE_BATCH, (chunk) =>
+    store.getAll(...chunk.map((p) => store.doc(`users/${p.uid}`)), { fieldMask: METRIC_FIELDS }),
+  );
+  const setCards = await inChunks(people, SETS_PARALLEL, (chunk) =>
+    Promise.all(
+      chunk.map((p) =>
+        store
+          .collection(`users/${p.uid}/collections`)
+          .select("cards")
+          .get()
+          .then((sets) => sets.docs.map((d) => cardCount(d.data()))),
+      ),
+    ),
+  );
+
+  const users = people
+    .map((p, i) => metricUser(p.account, profiles[i].exists ? plain(profiles[i].data()) : null, setCards[i], now))
+    .filter((u): u is MetricUser => u !== null);
+  return { status: 200, body: { ...retentionMetrics(users, now), excluded, truncated: accounts.truncated } };
+}
+
 const notFound = (err: unknown) => (err as { code?: string }).code === "auth/user-not-found";
 
 async function resolve(candidates: Lookup[]): Promise<UserRecord | null> {
@@ -111,8 +170,6 @@ async function resolve(candidates: Lookup[]): Promise<UserRecord | null> {
   }
   return null;
 }
-
-const cardCount = (data: FirebaseFirestore.DocumentData) => (Array.isArray(data.cards) ? data.cards.length : 0);
 
 // POST /api/admin-user { query } — карточка пользователя; каждый просмотр — в журнал adminLog
 export async function adminUser(admin: string, query: unknown): Promise<Reply> {
