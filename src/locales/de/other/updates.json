@@ -32,11 +32,17 @@
           "text": "Für ein Konto brauchst du jetzt nur E-Mail und Passwort: keinen Namen, keine Passwortwiederholung (ein Knopf zeigt, was du getippt hast) und kein Häkchen – eine Zeile unter den Knöpfen verlinkt Nutzungsbedingungen und Datenschutzerklärung. Mit Google kommt dein Name aus dem Google-Konto, sonst trägst du ihn jederzeit im Profil ein."
         },
         {
+          "title": "E-Mail innerhalb einer Woche bestätigen",
+          "text": "Wenn du dich mit einer E-Mail-Adresse registrierst, bittet Kolo dich jetzt, sie innerhalb von sieben Tagen zu bestätigen, und ein Hinweis oben zeigt, wie viele Tage noch bleiben. Nach einer Woche wartet Kolo auf die Bestätigung, bevor es weitergeht; deine Wörter und dein Fortschritt bleiben erhalten. Sets per Link teilen können jetzt Konten mit bestätigter E-Mail-Adresse oder Google – im Testmodus speicherst du also zuerst deinen Fortschritt. Konten, die vor dieser Version erstellt wurden, sind nicht betroffen."
+        },
+        {
           "title": "Aktualisierte Nutzungsbedingungen und Datenschutzerklärung",
           "text": "Beide Dokumente beschreiben jetzt den Testmodus: was wir für ein Testkonto speichern (eine zufällige ID, keine E-Mail-Adresse und kein Name) und wann es gelöscht wird. In der App siehst du einmalig einen Hinweis auf die Aktualisierung."
         }
       ],
-      "fixes": []
+      "fixes": [
+        "Belohnungsfenster (Kapsel, neues Level, Medaillen) tauchen nicht mehr mitten in einer Übung auf – sie warten auf den Ergebnisbildschirm."
+      ]
     },
     {
       "number": "0.4.1",

@@ -46,6 +46,7 @@
     "reply": "Répondre à mon e-mail",
     "send": "Envoyer",
     "sendError": "Impossible d'envoyer le message. Réessaie un peu plus tard.",
+    "limit": "Assez de messages pour aujourd’hui. Écris demain ou à {email}.",
     "sentTitle": "Merci !",
     "sentText": "Ton message est arrivé à l'équipe Kolo. Nous les lisons tous.",
     "sentReply": "Nous te répondrons à {email}.",

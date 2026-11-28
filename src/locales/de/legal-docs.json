@@ -145,6 +145,7 @@
               "Konto und Lerndaten: solange dein Konto besteht.",
               "Wenn du dein Konto in der App löschst („Mehr → Einstellungen“), werden Anmeldung, Profil, Wortsets und Benutzername sofort gelöscht.",
               "Testkonten (ohne verbundenes Google-Konto oder E-Mail-Adresse): werden 30 Tage nach dem letzten Öffnen automatisch mit allen Daten gelöscht. Wenn du den Testmodus in der App beendest („Mehr → Einstellungen“), wird das Testkonto sofort gelöscht.",
+              "Ab dem 28. November 2026 erstellte Konten mit nie bestätigter E-Mail-Adresse: werden 30 Tage nach dem letzten Öffnen automatisch mit allen Daten gelöscht.",
               "Ergebnisse im Spiel des Tages und ein hochgeladenes Profilbild werden beim Löschen des Kontos **noch nicht automatisch entfernt**. Schreib an {email.privacy}, dann löschen wir sie innerhalb von 30 Tagen.",
               "Support-Nachrichten: so lange, wie es zur Bearbeitung deiner Anfrage nötig ist. Du kannst uns bitten, sie zu löschen.",
               "Technische Protokolle bei unseren Dienstleistern: gemäß deren Aufbewahrungsfristen.",
@@ -229,7 +230,8 @@
               "Du musst mindestens 13 Jahre alt sein – oder älter, wenn das Recht deines Landes das verlangt, damit du diese Bedingungen selbst akzeptieren kannst.",
               "Mach bei der Registrierung korrekte Angaben und halte deine Zugangsdaten geheim.",
               "Du bist für Aktivitäten in deinem Konto verantwortlich. Sag uns sofort Bescheid, wenn du einen unbefugten Zugriff vermutest.",
-              "Du kannst Kolo auch ohne Konto ausprobieren. Der Testmodus existiert nur in dem Browser, in dem du ihn gestartet hast: Wenn du die Daten dieses Browsers löschst oder das Gerät verlierst, lassen sich das Testkonto und sein Fortschritt nicht wiederherstellen. Ein Testkonto, das 30 Tage nicht geöffnet wurde, wird automatisch gelöscht. Um deinen Fortschritt zu behalten, verbinde in der App Google oder eine E-Mail-Adresse."
+              "Du kannst Kolo auch ohne Konto ausprobieren. Der Testmodus existiert nur in dem Browser, in dem du ihn gestartet hast: Wenn du die Daten dieses Browsers löschst oder das Gerät verlierst, lassen sich das Testkonto und sein Fortschritt nicht wiederherstellen. Ein Testkonto, das 30 Tage nicht geöffnet wurde, wird automatisch gelöscht. Um deinen Fortschritt zu behalten, verbinde in der App Google oder eine E-Mail-Adresse.",
+              "Wenn du dich mit einer E-Mail-Adresse registrierst, bestätige sie innerhalb von 7 Tagen. Bis dahin kannst du keine Sets teilen; nach 7 Tagen pausiert Kolo, bis die Adresse bestätigt ist. Ein Konto mit nie bestätigter E-Mail-Adresse, das 30 Tage nicht geöffnet wurde, wird automatisch gelöscht. Das gilt für Konten, die ab dem 28. November 2026 erstellt wurden."
             ]
           }
         ]

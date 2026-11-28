@@ -44,10 +44,22 @@
     },
     "verify": {
       "text": "Confirme ton e-mail pour sécuriser ton compte.",
+      "textDays": "Confirme ton adresse e-mail : tu as {days} pour le faire. Ensuite, Kolo te demandera de la confirmer pour continuer.",
       "resend": "Renvoyer l'e-mail",
       "sending": "Envoi…",
       "sent": "E-mail envoyé : regarde dans ta boîte de réception.",
       "dismiss": "Masquer"
+    },
+    "verifyGate": {
+      "title": "Confirme ton adresse e-mail pour continuer",
+      "text": "Une semaine s’est écoulée depuis ton inscription. Touche le lien de l’e-mail envoyé à {email} : tes mots et ta progression t’attendent.",
+      "check": "Vérifier et continuer",
+      "resend": "Renvoyer l’e-mail",
+      "sent": "E-mail envoyé : regarde dans ta boîte de réception et tes spams.",
+      "notYet": "Ton adresse n’est pas encore confirmée. Ouvre le lien de l’e-mail, puis touche « Vérifier et continuer ».",
+      "sendError": "Un problème est survenu. Réessaie dans une minute.",
+      "logout": "Se déconnecter",
+      "help": "Pas d’e-mail ? Regarde dans tes spams ou écris à {email}."
     },
     "achievement": {
       "unlocked": "Nouvelle médaille"

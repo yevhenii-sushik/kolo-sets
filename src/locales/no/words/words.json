@@ -144,7 +144,9 @@
     "revokeTitle": "Slå av lenken?",
     "revokeText": "Den slutter å virke for alle som har den. Kopier som allerede er lagt til, blir værende hos eierne sine. Du kan lage en ny lenke når som helst.",
     "revokeYes": "Slå av",
-    "error": "Fikk ikke kontakt med Kolo. Sjekk nettet og prøv igjen."
+    "error": "Fikk ikke kontakt med Kolo. Sjekk nettet og prøv igjen.",
+    "needSave": "Du kan dele sett når du har lagret fremgangen: en lenke er en åpen side med ordene dine.",
+    "needVerify": "Du kan dele sett når du har bekreftet e-posten. Vi sendte bekreftelseslenken til {email}."
   },
   "sharedSet": {
     "eyebrow": "Ordsett · {language}",

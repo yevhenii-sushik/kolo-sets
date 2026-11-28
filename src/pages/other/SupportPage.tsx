@@ -56,7 +56,7 @@ export default function SupportPage() {
   const [message, setMessage] = useState("");
   const [reply, setReply] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [sendFailed, setSendFailed] = useState(false);
+  const [sendFailed, setSendFailed] = useState<false | "limit" | "failed">(false);
   const [sentReplyTo, setSentReplyTo] = useState<string | null>(null);
   const [isSent, setIsSent] = useState(false);
 
@@ -71,10 +71,10 @@ export default function SupportPage() {
     const replyTo = reply && email ? email : null;
 
     // Почту сервер берёт из аккаунта сам; отсюда — только тема, текст и нужен ли ответ
-    const ok = await sendSupport(topic, message.trim(), replyTo !== null);
+    const result = await sendSupport(topic, message.trim(), replyTo !== null);
     setIsSubmitting(false);
-    if (!ok) {
-      setSendFailed(true);
+    if (result !== "ok") {
+      setSendFailed(result);
       return;
     }
     setSentReplyTo(replyTo);
@@ -191,7 +191,11 @@ export default function SupportPage() {
         )}
 
         <div className="grid gap-3 p-4">
-          {sendFailed && <Alert>{sp.sendError}</Alert>}
+          {sendFailed && (
+            <Alert tone={sendFailed === "limit" ? "warning" : "danger"}>
+              {sendFailed === "limit" ? sp.limit.replace("{email}", LEGAL.email.support) : sp.sendError}
+            </Alert>
+          )}
           <Button
             type="submit"
             size="lg"

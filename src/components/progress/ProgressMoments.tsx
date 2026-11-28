@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useMomentsHeld } from "../../utils/momentsHold";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FlaskConical, Orbit, Share2, Shield, Sparkles, Wrench } from "lucide-react";
@@ -75,7 +76,9 @@ export function ProgressMomentsHost() {
   }, []);
 
   const next = useCallback(() => setQueue((q) => q.slice(1)), []);
-  const current = queue[0];
+  // Посреди тренировки праздники ждут её итога (utils/momentsHold.ts)
+  const held = useMomentsHeld();
+  const current = held ? undefined : queue[0];
 
   return (
     <AnimatePresence mode="wait">

@@ -34,7 +34,8 @@ export interface SessionReply {
 }
 
 // Повторять имеет смысл только то, что может пройти позже: сеть, перегрузка, сбой сервера
-const retriable = (err: unknown) => !(err instanceof ApiError) || err.status === 429 || err.status >= 500;
+// 403 — почта не подтверждена за неделю (server/core/access.ts): тренировка ждёт в очереди и уйдёт после подтверждения
+const retriable = (err: unknown) => !(err instanceof ApiError) || err.status === 403 || err.status === 429 || err.status >= 500;
 
 interface Pending extends SessionPayload {
   id: string;

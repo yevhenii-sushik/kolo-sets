@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Send } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { sendSupport } from "../../api/support";
+import { LEGAL } from "../../pages/legal/legalInfo";
 import { Alert, Button, Field, Modal, Select, Text, Textarea } from "../../ui";
 import type { Collection } from "../../types";
 
@@ -38,7 +39,7 @@ export default function ReportMistakeModal({
   const [cardId, setCardId] = useState("");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState<false | "limit" | "failed">(false);
 
   useEffect(() => {
     if (!target) return;
@@ -56,7 +57,7 @@ export default function ReportMistakeModal({
     setBusy(true);
     setFailed(false);
     // Ответ не просим: команде достаточно набора и карточки, почта аккаунта и так видна в сообщении
-    const ok = await sendSupport("problem", message.trim(), false, {
+    const result = await sendSupport("problem", message.trim(), false, {
       set: target.preset.id,
       version: target.preset.version,
       card: card.id,
@@ -65,8 +66,8 @@ export default function ReportMistakeModal({
       translation: card.translation,
     });
     setBusy(false);
-    if (!ok) {
-      setFailed(true);
+    if (result !== "ok") {
+      setFailed(result);
       return;
     }
     onSent();
@@ -120,7 +121,11 @@ export default function ReportMistakeModal({
               placeholder={r.placeholder}
             />
           </Field>
-          {failed && <Alert>{r.error}</Alert>}
+          {failed && (
+            <Alert tone={failed === "limit" ? "warning" : "danger"}>
+              {failed === "limit" ? t.other.supportPage.limit.replace("{email}", LEGAL.email.support) : r.error}
+            </Alert>
+          )}
         </form>
       )}
     </Modal>

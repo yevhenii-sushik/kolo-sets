@@ -47,8 +47,13 @@ function wrap<Who>(identify: (req: Request) => Promise<Who | Response>, run: Run
   };
 }
 
-export function handler(run: Run<string>) {
-  return wrap(async (req) => (await uidFrom(req)) ?? json(401, { error: "unauthorized" }), run);
+// run получает и проверенный токен: по нему функции решают, что можно пробе и неподтверждённой почте
+// (server/access.ts)
+export function handler(run: (uid: string, body: unknown, token: DecodedIdToken) => ReturnType<Run<string>>) {
+  return wrap(
+    async (req) => (await verifiedToken(req)) ?? json(401, { error: "unauthorized" }),
+    (token: DecodedIdToken, body) => run(token.uid, body, token),
+  );
 }
 
 // Публичные функции (набор по ссылке, docs/specs/07-shared-sets.md): вход не обязателен. uid — если токен

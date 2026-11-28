@@ -16,7 +16,7 @@ import {
 } from "./core/admin";
 import { excludedReason, metricUser, retentionMetrics, signedUpWithin, type MetricAccount, type MetricUser } from "./core/metrics";
 import type { Reply } from "./progress";
-import { TRIAL_STATS_DOC } from "./trial";
+import { TRIAL_STATS_DOC, UNVERIFIED_STATS_DOC } from "./trial";
 
 const DAY_MS = 86_400_000;
 // listUsers отдаёт по 1000 аккаунтов; 20 страниц — запас по времени функции (10 с) на 20 000 аккаунтов
@@ -157,10 +157,13 @@ export async function adminMetrics(now = new Date()): Promise<Reply> {
   const users = people
     .map((p, i) => metricUser(p.account, profiles[i].exists ? plain(profiles[i].data()) : null, setCards[i], now))
     .filter((u): u is MetricUser => u !== null);
-  // Пробные аккаунты, удалённые за 30 дней без входа (server/trial.ts), — одно число за всё время
-  const trialStats = await store.doc(TRIAL_STATS_DOC).get();
-  const trialsDeleted = typeof trialStats.get("deleted") === "number" ? (trialStats.get("deleted") as number) : 0;
-  return { status: 200, body: { ...retentionMetrics(users, now), trialsDeleted, excluded, truncated: accounts.truncated } };
+  // Удалённые уборкой за 30 дней без входа (server/trial.ts): пробные и неподтверждённая почта — по числу за всё время
+  const [trialStats, unverifiedStats] = await store.getAll(store.doc(TRIAL_STATS_DOC), store.doc(UNVERIFIED_STATS_DOC));
+  const count = (snap: FirebaseFirestore.DocumentSnapshot) => (typeof snap.get("deleted") === "number" ? (snap.get("deleted") as number) : 0);
+  return {
+    status: 200,
+    body: { ...retentionMetrics(users, now), trialsDeleted: count(trialStats), unverifiedDeleted: count(unverifiedStats), excluded, truncated: accounts.truncated },
+  };
 }
 
 const notFound = (err: unknown) => (err as { code?: string }).code === "auth/user-not-found";

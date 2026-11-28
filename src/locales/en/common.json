@@ -44,10 +44,22 @@
     },
     "verify": {
       "text": "Confirm your email to secure your account.",
+      "textDays": "Confirm your email — you have {days} to do it. After that, Kolo will ask you to confirm before you can continue.",
       "resend": "Send the email again",
       "sending": "Sending…",
       "sent": "Email sent — check your inbox.",
       "dismiss": "Hide"
+    },
+    "verifyGate": {
+      "title": "Confirm your email to continue",
+      "text": "A week has passed since you signed up. Tap the link in the email we sent to {email} — your words and progress are all here waiting.",
+      "check": "Check and continue",
+      "resend": "Send the email again",
+      "sent": "Email sent — check your inbox and spam folder.",
+      "notYet": "Your email isn't confirmed yet. Open the link in the email, then tap “Check and continue”.",
+      "sendError": "Something went wrong. Try again in a minute.",
+      "logout": "Sign out",
+      "help": "No email? Check your spam folder or write to {email}."
     },
     "achievement": {
       "unlocked": "New achievement"

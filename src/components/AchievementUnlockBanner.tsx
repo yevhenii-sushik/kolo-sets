@@ -5,6 +5,7 @@ import { useData } from '../contexts/DataContext';
 import { useI18n } from '../contexts/I18nContext';
 import { IconButton } from '../ui';
 import { playSound } from '../utils/sounds';
+import { useMomentsHeld } from '../utils/momentsHold';
 
 const DISPLAY_DURATION = 4.5; // секунд
 
@@ -12,7 +13,9 @@ const DISPLAY_DURATION = 4.5; // секунд
 export default function AchievementUnlockBanner() {
   const { pendingUnlocks, dismissUnlock } = useData();
   const { t } = useI18n();
-  const current = pendingUnlocks[0] ?? null;
+  // Посреди тренировки медали ждут её итога (utils/momentsHold.ts)
+  const held = useMomentsHeld();
+  const current = held ? null : pendingUnlocks[0] ?? null;
   const soundedId = useRef<string | null>(null);
 
   // Звук — один раз на достижение (ref переживает двойной запуск эффекта в StrictMode)

@@ -35,7 +35,7 @@ Three layers:
 
 - `server/core/`: **pure** functions with no I/O, covered by vitest. `session.ts` (parse and validate a session, plausibility check, apply), `xp.ts` (level step `100 + 50·(L−1)`, daily cap), `orbit.ts` (weekly goal of 3–7 days, shields, repair), `progression.ts` (prepare/settle/sync/goal/buyShield), `loot.ts` (capsule odds, pity, craft, equip, showcase, beta grant), `items.ts` (item catalog), `time.ts` (day keys in the user's timezone).
 - `server/progress.ts`: Firestore transactions via Admin SDK (`server/admin.ts`). It reads the profile, runs the core functions and writes a patch. `writeProfile` uses `mergeFields`, so a nested map is **replaced whole**, never deep-merged.
-- `netlify/functions/*.ts`: thin handlers wrapped in `handler()` from `server/http.ts`, which enforces POST, verifies the Firebase ID token and maps errors to JSON. `publicHandler()` is the same without requiring sign-in (uid or null; only `/api/shared-set`). The client calls `/api/<name>`. One scheduled function, `trial-cleanup` (`@daily`, runs only on the published production deploy and cannot be called by URL), deletes trial accounts nobody opened for 30 days (`server/trial.ts`, rule in `server/core/trial.ts`).
+- `netlify/functions/*.ts`: thin handlers wrapped in `handler()` from `server/http.ts`, which enforces POST, verifies the Firebase ID token and maps errors to JSON. `publicHandler()` is the same without requiring sign-in (uid or null; only `/api/shared-set`). The client calls `/api/<name>`. One scheduled function, `trial-cleanup` (`@daily`, runs only on the published production deploy and cannot be called by URL), deletes trial accounts and new never-confirmed email accounts nobody opened for 30 days (`server/trial.ts`, rule in `server/core/trial.ts`). `handler()` passes the verified token as a third argument; what an account may do (trial, email waiting for confirmation, locked after 7 days, verified, legacy = created before `VERIFY_RULE_FROM` and never restricted) is one rule in `server/core/access.ts`, shared with the client (`useAuth().standing`, `VerifyEmailGate`). It limits support messages per day (`rateLimits/{uid}`), share-link creation and, when locked, `/api/session`.
 
 **`/api/*` routing lives in `public/_redirects`, not `netlify.toml`.** Netlify applies `_redirects` first, and a toml rule once got swallowed by the SPA fallback in production. Keep the `/api/*` line above `/*`. The same file proxies `/__/auth/*` to `kolo-sets.firebaseapp.com`: Firebase `authDomain` is `kolo.dakuta.dev`, so the Google sign-in popup shows the Kolo domain. `https://kolo.dakuta.dev/__/auth/handler` must stay in the OAuth client's authorized redirect URIs (Google Cloud Console). The service worker skips `/__/*`.
 
@@ -55,7 +55,8 @@ Client side: `src/api/progress.ts` posts with a Bearer token. If the network or 
 - `dailyGame/{date}/scores/{uid}`: daily game leaderboard. The feature is hidden behind a flag.
 - `adminLog/{id}`: who viewed which user in the admin panel. Server-only; the catch-all rule keeps clients out.
 - `sharedSets/{id}`: set-by-link registry `{ ownerUid, collectionId, createdAt }`. Server-only, like `adminLog`.
-- `adminStats/{id}`: aggregate counters for the admin panel (`adminStats/trials.deleted`, written by the trial cleanup). Server-only.
+- `adminStats/{id}`: aggregate counters for the admin panel (`adminStats/trials.deleted`, `adminStats/unverified.deleted`, written by the cleanup). Server-only.
+- `rateLimits/{uid}`: per-user daily counters (support messages). Server-only.
 
 ### Client
 

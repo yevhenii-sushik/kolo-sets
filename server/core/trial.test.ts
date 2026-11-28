@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { isTrialAccount, lastActive, staleTrials, TRIAL_IDLE_DAYS, type TrialCandidate } from "./trial";
+import { isTrialAccount, isUnverifiedAccount, lastActive, staleAccounts, staleTrials, TRIAL_IDLE_DAYS, type TrialCandidate } from "./trial";
+import { VERIFY_RULE_FROM } from "./access";
 
 const now = new Date("2026-12-31T12:00:00Z");
 const daysAgo = (n: number) => new Date(now.getTime() - n * 86_400_000).toISOString();
@@ -51,5 +52,35 @@ describe("staleTrials", () => {
 
   it("аккаунт без дат не трогает", () => {
     expect(staleTrials([trial("a", { createdAt: null, lastSignInAt: null })], now)).toEqual([]);
+  });
+});
+
+describe("неподтверждённая почта", () => {
+  const afterRule = new Date(Date.parse(VERIFY_RULE_FROM) + 86_400_000).toISOString();
+  const beforeRule = new Date(Date.parse(VERIFY_RULE_FROM) - 86_400_000).toISOString();
+  const later = new Date(Date.parse(VERIFY_RULE_FROM) + 60 * 86_400_000);
+  const pwd = (uid: string, over: Partial<TrialCandidate> = {}): TrialCandidate => ({
+    uid,
+    providers: 1,
+    providerIds: ["password"],
+    emailVerified: false,
+    email: `${uid}@x.y`,
+    createdAt: afterRule,
+    lastSignInAt: afterRule,
+    lastRefreshAt: null,
+    ...over,
+  });
+
+  it("новый аккаунт на неподтверждённую почту — да; подтверждённый, с Google или старый — нет", () => {
+    expect(isUnverifiedAccount(pwd("a"))).toBe(true);
+    expect(isUnverifiedAccount(pwd("a", { emailVerified: true }))).toBe(false);
+    expect(isUnverifiedAccount(pwd("a", { providerIds: ["password", "google.com"], providers: 2 }))).toBe(false);
+    expect(isUnverifiedAccount(pwd("a", { createdAt: beforeRule, lastSignInAt: beforeRule }))).toBe(false);
+  });
+
+  it("удаляется через 30 дней без входа вместе с пробными, с пометкой, кто есть кто", () => {
+    const list = [pwd("mail"), trial("t", { createdAt: afterRule, lastSignInAt: afterRule }), pwd("old", { createdAt: beforeRule, lastSignInAt: beforeRule })];
+    expect(staleAccounts(list, later).map((x) => `${x.uid}:${x.kind}`).sort()).toEqual(["mail:unverified", "t:trial"]);
+    expect(staleTrials(list, later)).toEqual(["t"]);
   });
 });

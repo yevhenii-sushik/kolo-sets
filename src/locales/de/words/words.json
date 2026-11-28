@@ -144,7 +144,9 @@
     "revokeTitle": "Link ausschalten?",
     "revokeText": "Er funktioniert dann bei niemandem mehr, der ihn hat. Bereits übernommene Kopien bleiben bei ihren Besitzern. Einen neuen Link kannst du jederzeit erstellen.",
     "revokeYes": "Ausschalten",
-    "error": "Kolo ist gerade nicht erreichbar. Prüf deine Verbindung und versuch es noch mal."
+    "error": "Kolo ist gerade nicht erreichbar. Prüf deine Verbindung und versuch es noch mal.",
+    "needSave": "Sets teilen kannst du, sobald du deinen Fortschritt gespeichert hast: Ein Link ist eine öffentliche Seite mit deinen Wörtern.",
+    "needVerify": "Sets teilen kannst du, sobald deine E-Mail-Adresse bestätigt ist. Den Bestätigungslink haben wir an {email} geschickt."
   },
   "sharedSet": {
     "eyebrow": "Wortset · {language}",

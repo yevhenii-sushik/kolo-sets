@@ -145,6 +145,7 @@
               "Account and learning data: as long as your account exists.",
               "When you delete your account in the app (More → Settings), your login, profile, word sets and username are deleted right away.",
               "Trial accounts (no Google or email linked): deleted automatically with all their data 30 days after they were last opened. Leaving trial mode in the app (More → Settings) deletes the trial account right away.",
+              "Accounts created from 28 November 2026 whose email was never confirmed: deleted automatically with all their data 30 days after they were last opened.",
               "Daily puzzle scores and an uploaded profile photo are **not yet removed automatically** when you delete your account. Email {email.privacy} and we will delete them within 30 days.",
               "Support messages: as long as needed to handle your request. You can ask us to delete them.",
               "Technical logs at our providers: according to their retention periods.",
@@ -229,7 +230,8 @@
               "You must be at least 13 years old, or older if the law in your country requires it to accept these Terms on your own.",
               "Give accurate information when you sign up and keep your login details safe.",
               "You are responsible for activity under your account. Tell us right away if you suspect unauthorized use.",
-              "You can also try Kolo without an account. A trial lives only in the browser where you started it: if you clear that browser's data or lose the device, the trial account and its progress can't be restored. A trial account that hasn't been opened for 30 days is deleted automatically. To keep your progress, save it with Google or an email in the app."
+              "You can also try Kolo without an account. A trial lives only in the browser where you started it: if you clear that browser's data or lose the device, the trial account and its progress can't be restored. A trial account that hasn't been opened for 30 days is deleted automatically. To keep your progress, save it with Google or an email in the app.",
+              "If you sign up with an email, confirm it within 7 days. Until then, sharing sets is unavailable; after 7 days, Kolo pauses until you confirm. An account whose email was never confirmed and that hasn't been opened for 30 days is deleted automatically. This applies to accounts created from 28 November 2026."
             ]
           }
         ]

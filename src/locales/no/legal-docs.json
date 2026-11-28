@@ -145,6 +145,7 @@
               "Konto og læringsdata: så lenge kontoen din finnes.",
               "Når du sletter kontoen i appen («Mer → Innstillinger»), slettes innlogging, profil, ordsett og brukernavn med en gang.",
               "Prøvekontoer (uten Google eller e-post): slettes automatisk med alle data 30 dager etter at de sist ble åpnet. Avslutter du prøvemodus i appen («Mer → Innstillinger»), slettes prøvekontoen med en gang.",
+              "Kontoer opprettet fra 28. november 2026 der e-posten aldri ble bekreftet: slettes automatisk med alle data 30 dager etter at de sist ble åpnet.",
               "Resultater i dagens spill og et opplastet profilbilde **fjernes ennå ikke automatisk** når du sletter kontoen. Send e-post til {email.privacy}, så sletter vi dem innen 30 dager.",
               "Henvendelser til støtte: så lenge det trengs for å håndtere saken din. Du kan be oss slette dem.",
               "Tekniske logger hos leverandørene: etter deres lagringstider.",
@@ -229,7 +230,8 @@
               "Du må være minst 13 år, eller eldre hvis loven i landet ditt krever det for å godta vilkårene selv.",
               "Oppgi riktige opplysninger når du registrerer deg, og hold innloggingsopplysningene dine trygge.",
               "Du er ansvarlig for aktivitet på kontoen din. Si fra til oss med en gang hvis du mistenker uautorisert bruk.",
-              "Du kan også prøve Kolo uten konto. Prøvemodus finnes bare i nettleseren der du startet den: sletter du dataene i nettleseren eller mister enheten, kan prøvekontoen og fremgangen ikke gjenopprettes. En prøvekonto som ikke er åpnet på 30 dager, slettes automatisk. For å beholde fremgangen kobler du til Google eller e-post i appen."
+              "Du kan også prøve Kolo uten konto. Prøvemodus finnes bare i nettleseren der du startet den: sletter du dataene i nettleseren eller mister enheten, kan prøvekontoen og fremgangen ikke gjenopprettes. En prøvekonto som ikke er åpnet på 30 dager, slettes automatisk. For å beholde fremgangen kobler du til Google eller e-post i appen.",
+              "Registrerer du deg med e-post, må du bekrefte den innen 7 dager. Til da kan du ikke dele sett, og etter 7 dager stopper Kolo til e-posten er bekreftet. En konto med e-post som aldri ble bekreftet, og som ikke er åpnet på 30 dager, slettes automatisk. Dette gjelder kontoer opprettet fra 28. november 2026."
             ]
           }
         ]

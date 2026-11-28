@@ -3,15 +3,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MailCheck, X } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useI18n } from '../contexts/I18nContext';
+import { getLanguageInfo } from '../locales/languages';
+import { plural } from '../utils/plural';
 import { Alert, IconButton } from '../ui';
 
 const DISMISS_KEY = 'verify_email_dismissed';
 
-// Просьба подтвердить email — только для входа по паролю; скрывается до конца сессии
+// Просьба подтвердить email — только для входа по паролю; скрывается до конца сессии.
+// У новых аккаунтов — сколько дней осталось: через неделю без подтверждения приложение остановится
+// (server/core/access.ts, экран VerifyEmailGate). Старым аккаунтам — прежний текст без срока
 export default function VerifyEmailBanner() {
-  const { user, sendVerificationEmail } = useAuth();
-  const { t } = useI18n();
+  const { user, sendVerificationEmail, standing, verifyDaysLeft } = useAuth();
+  const { t, language } = useI18n();
   const v = t.shell.verify;
+  const text =
+    standing === 'pending'
+      ? v.textDays.replace('{days}', plural(getLanguageInfo(language).htmlLang, verifyDaysLeft, t.shell.streak.days))
+      : v.text;
   const [dismissed, setDismissed] = useState(() => sessionStorage.getItem(DISMISS_KEY) === '1');
   const [resent, setResent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -53,7 +61,7 @@ export default function VerifyEmailBanner() {
                 v.sent
               ) : (
                 <>
-                  {v.text}{' '}
+                  {text}{' '}
                   <button
                     type="button"
                     onClick={handleResend}

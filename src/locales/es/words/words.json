@@ -150,7 +150,9 @@
     "revokeTitle": "¿Desactivar el enlace?",
     "revokeText": "Dejará de funcionar para todas las personas que lo tengan. Las copias ya añadidas se quedan con sus dueños. Puedes crear un enlace nuevo cuando quieras.",
     "revokeYes": "Desactivar",
-    "error": "No se pudo conectar con Kolo. Revisa tu conexión e inténtalo de nuevo."
+    "error": "No se pudo conectar con Kolo. Revisa tu conexión e inténtalo de nuevo.",
+    "needSave": "Podrás compartir sets cuando guardes tu progreso: un enlace es una página pública con tus palabras.",
+    "needVerify": "Podrás compartir sets cuando confirmes tu correo. Enviamos el enlace de confirmación a {email}."
   },
   "sharedSet": {
     "eyebrow": "Set de palabras · {language}",

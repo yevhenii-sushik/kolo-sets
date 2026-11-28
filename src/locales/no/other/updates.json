@@ -32,11 +32,17 @@
           "text": "En konto krever nå bare e-post og passord: ikke navn, ikke gjentatt passord (en knapp viser det du skrev) og ingen avkrysning – en linje under knappene lenker til vilkårene og personvernerklæringen. Med Google hentes navnet fra Google-kontoen, ellers kan du legge det til i profilen når du vil."
         },
         {
+          "title": "Bekreft e-posten innen en uke",
+          "text": "Registrerer du deg med e-post, ber Kolo deg nå bekrefte den innen sju dager, og en linje øverst viser hvor mange dager som er igjen. Etter en uke venter Kolo på bekreftelsen før du kan fortsette; ordene og fremgangen blir værende. Å dele sett via lenke krever nå bekreftet e-post eller Google, så i prøvemodus lagrer du fremgangen først. Kontoer opprettet før denne versjonen berøres ikke."
+        },
+        {
           "title": "Oppdaterte vilkår og personvernerklæring",
           "text": "Begge dokumentene beskriver nå prøvemodus: hva vi lagrer for en prøvekonto (en tilfeldig ID, ingen e-post eller navn) og når den slettes. Du får en engangsmelding om oppdateringen i appen."
         }
       ],
-      "fixes": []
+      "fixes": [
+        "Belønningsvinduer (kapsel, nytt nivå, medaljer) dukker ikke lenger opp midt i en økt – de venter til resultatskjermen."
+      ]
     },
     {
       "number": "0.4.1",

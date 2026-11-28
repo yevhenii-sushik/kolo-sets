@@ -16,6 +16,15 @@ import {
 } from '../firebase/auth';
 import { recordTrialStart } from '../firebase/firestore';
 import { LEGAL } from '../pages/legal/legalInfo';
+import { standing as standingOf, verifyDaysLeft as daysLeftOf, type AccountFacts, type Standing } from '../../server/core/access';
+
+// Факты об аккаунте для правила доступа (server/core/access.ts) — те же, что видит сервер
+function factsOf(user: User): AccountFacts {
+  const ids = user.providerData.map((p) => p.providerId);
+  const provider = user.isAnonymous ? 'anonymous' : ids.includes('google.com') ? 'google.com' : ids.includes('password') ? 'password' : ids[0] ?? null;
+  const created = user.metadata.creationTime ? Date.parse(user.metadata.creationTime) : NaN;
+  return { provider, emailVerified: user.emailVerified, createdAt: Number.isFinite(created) ? new Date(created).toISOString() : null };
+}
 import { deleteUserData } from '../firebase/firestore';
 import { cleanupAccount } from '../api/progress';
 import { getUserProfile } from '../firebase/firestore';
@@ -29,6 +38,12 @@ interface AuthContextType {
   expectUser: boolean;
   /** Пробный режим: вошёл без аккаунта (анонимный вход), прогресс — только на этом устройстве */
   isTrial: boolean;
+  /** Кто это для правил доступа: проба, почта ждёт подтверждения (неделя), «стоп», подтверждён, старый аккаунт */
+  standing: Standing | null;
+  /** Сколько дней осталось подтвердить почту (у standing === 'pending') */
+  verifyDaysLeft: number;
+  /** Перечитать аккаунт после письма: true — почта подтверждена (токен обновлён, сервер это тоже увидит) */
+  refreshVerification: () => Promise<boolean>;
   /** «Попробовать без регистрации»: анонимный вход и согласие, данное строкой под кнопкой */
   startTrial: () => Promise<void>;
   /** «Сохранить прогресс»: привязать Google или почту к пробному аккаунту — uid тот же, ничего не теряется */
@@ -100,6 +115,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return result;
   };
 
+  const refreshVerification = async () => {
+    const current = auth.currentUser;
+    if (!current) return false;
+    await current.reload();
+    if (current.emailVerified) await current.getIdToken(true);
+    userChanged();
+    return current.emailVerified;
+  };
+
   const register = async (email: string, password: string) => {
     await registerWithEmail(email, password);
   };
@@ -144,6 +168,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     loading,
     expectUser: loading ? hadSignIn : !!user,
     isTrial: !!user?.isAnonymous,
+    standing: user ? standingOf(factsOf(user), new Date()) : null,
+    verifyDaysLeft: user ? daysLeftOf(factsOf(user), new Date()) : 0,
+    refreshVerification,
     startTrial,
     saveWithGoogle,
     saveWithEmail,

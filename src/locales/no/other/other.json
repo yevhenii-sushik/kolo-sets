@@ -46,6 +46,7 @@
     "reply": "Svar meg på e-post",
     "send": "Send",
     "sendError": "Kunne ikke sende meldingen. Prøv igjen litt senere.",
+    "limit": "Det holder med meldinger for i dag. Skriv igjen i morgen eller send en e-post til {email}.",
     "sentTitle": "Takk!",
     "sentText": "Meldingen er hos Kolo-teamet. Vi leser alle.",
     "sentReply": "Vi svarer til {email}.",

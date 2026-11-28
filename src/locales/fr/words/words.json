@@ -150,7 +150,9 @@
     "revokeTitle": "Désactiver le lien ?",
     "revokeText": "Il cessera de fonctionner pour toutes les personnes qui l’ont. Les copies déjà ajoutées restent à leurs propriétaires. Tu peux créer un nouveau lien à tout moment.",
     "revokeYes": "Désactiver",
-    "error": "Impossible de joindre Kolo. Vérifie ta connexion et réessaie."
+    "error": "Impossible de joindre Kolo. Vérifie ta connexion et réessaie.",
+    "needSave": "Tu pourras partager des sets une fois ta progression sauvegardée : un lien est une page publique avec tes mots.",
+    "needVerify": "Tu pourras partager des sets une fois ton adresse e-mail confirmée. Le lien de confirmation a été envoyé à {email}."
   },
   "sharedSet": {
     "eyebrow": "Set de mots · {language}",

@@ -3,6 +3,10 @@ import { Check, Copy, Link2, RotateCw, Send } from "lucide-react";
 import type { Collection } from "../../types";
 import { useI18n } from "../../contexts/I18nContext";
 import { createShareLink, revokeShareLink, shareLinkStatus, shareUrl } from "../../api/shareLinks";
+import { ApiError } from "../../api/http";
+import { useAuth } from "../../contexts/AuthContext";
+import { canShare } from "../../../server/core/access";
+import { openSaveProgress } from "../auth/SaveProgress";
 import { Alert, Button, Field, Input, Loading, Modal, Skeleton, Text } from "../../ui";
 
 type LinkState = { kind: "loading" } | { kind: "failed" } | { kind: "off" } | { kind: "on"; id: string };
@@ -14,6 +18,12 @@ const canShareUrl = () => typeof navigator !== "undefined" && typeof navigator.s
 export default function ShareSetModal({ collection, open, onClose }: { collection: Collection; open: boolean; onClose: () => void }) {
   const { t } = useI18n();
   const s = t.words.shareSet;
+  const { user, standing, sendVerificationEmail } = useAuth();
+  // Создать ссылку может только подтверждённый аккаунт (решение 2026-11-28, server/core/access.ts): ссылка — публичная
+  // страница на нашем адресе. Пробе — «сохрани прогресс», почте без подтверждения — «подтверди почту»
+  const [refused, setRefused] = useState(false);
+  const blocked = (standing !== null && !canShare(standing)) || refused;
+  const [mailSent, setMailSent] = useState(false);
 
   const [state, setState] = useState<LinkState>({ kind: "loading" });
   const [attempt, setAttempt] = useState(0);
@@ -30,6 +40,13 @@ export default function ShareSetModal({ collection, open, onClose }: { collectio
     setActionFailed(false);
     setConfirmOff(false);
     setCopied(false);
+    setRefused(false);
+    setMailSent(false);
+    // Пробе и неподтверждённой почте ссылку не создать — объяснение сразу, сервер не спрашиваем
+    if (standing !== null && !canShare(standing)) {
+      setState({ kind: "off" });
+      return;
+    }
     shareLinkStatus(collection.id).then(
       (id) => alive && setState(id ? { kind: "on", id } : { kind: "off" }),
       () => alive && setState({ kind: "failed" }),
@@ -37,7 +54,7 @@ export default function ShareSetModal({ collection, open, onClose }: { collectio
     return () => {
       alive = false;
     };
-  }, [open, collection.id, attempt]);
+  }, [open, collection.id, attempt, standing]);
 
   useEffect(() => {
     if (!copied) return;
@@ -52,8 +69,10 @@ export default function ShareSetModal({ collection, open, onClose }: { collectio
       const id = await action();
       setState(id ? { kind: "on", id } : { kind: "off" });
       setConfirmOff(false);
-    } catch {
-      setActionFailed(true);
+    } catch (err) {
+      // Сервер отказал по правилу доступа — показываем объяснение, а не «не получилось»
+      if (err instanceof ApiError && err.status === 403) setRefused(true);
+      else setActionFailed(true);
     } finally {
       setBusy(false);
     }
@@ -79,8 +98,32 @@ export default function ShareSetModal({ collection, open, onClose }: { collectio
     }
   };
 
+  const resend = async () => {
+    try {
+      await sendVerificationEmail();
+      setMailSent(true);
+    } catch {
+      setActionFailed(true);
+    }
+  };
+
   const footer =
-    state.kind === "off" ? (
+    state.kind === "off" && blocked ? (
+      standing === "trial" ? (
+        <Button
+          onClick={() => {
+            onClose();
+            openSaveProgress();
+          }}
+        >
+          {t.auth.save.submit}
+        </Button>
+      ) : (
+        <Button variant="secondary" disabled={mailSent} onClick={resend}>
+          {mailSent ? t.shell.verify.sent : t.shell.verify.resend}
+        </Button>
+      )
+    ) : state.kind === "off" ? (
       <Button iconLeft={<Link2 size={18} />} loading={busy} onClick={() => run(() => createShareLink(collection.id))}>
         {s.create}
       </Button>
@@ -166,6 +209,10 @@ export default function ShareSetModal({ collection, open, onClose }: { collectio
               </Text>
             </>
           ))}
+
+        {state.kind === "off" && blocked && (
+          <Alert tone="info">{standing === "trial" ? s.needSave : s.needVerify.replace("{email}", user?.email ?? "")}</Alert>
+        )}
 
         {actionFailed && <Alert>{s.error}</Alert>}
       </div>

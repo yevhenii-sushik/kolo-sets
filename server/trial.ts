@@ -1,17 +1,20 @@
-// Уборка пробных аккаунтов (шаг 16 в docs/specs/06-audit-fixes.md): раз в сутки удаляем пробные аккаунты,
-// которые 30 дней не открывали, со всеми данными — как при удалении аккаунта в настройках
+// Уборка (шаг 16 в docs/specs/06-audit-fixes.md): раз в сутки удаляем пробные аккаунты и новые аккаунты на так и не
+// подтверждённую почту, которые 30 дней не открывали, со всеми данными — как при удалении аккаунта в настройках
 import { FieldValue } from "firebase-admin/firestore";
 import type { UserRecord } from "firebase-admin/auth";
 import { adminAuth, db } from "./admin";
-import { staleTrials, type TrialCandidate } from "./core/trial";
+import { staleAccounts, type StaleKind, type TrialCandidate } from "./core/trial";
 import { deleteShareLinks } from "./shareLinks";
+import { rateLimitDoc } from "./support";
 
 const PAGE = 1000;
 const MAX_PAGES = 20;
 // Плановой функции Netlify отведено 30 с: за один запуск — не больше стольких аккаунтов, остальные — завтра
 const PER_RUN = 40;
-// Сколько пробных аккаунтов удалено всего — одно число для админ-панели, без uid и дат
+// Сколько удалено всего — одно число на вид для админ-панели, без uid и дат
 export const TRIAL_STATS_DOC = "adminStats/trials";
+export const UNVERIFIED_STATS_DOC = "adminStats/unverified";
+const STATS_DOC: Record<StaleKind, string> = { trial: TRIAL_STATS_DOC, unverified: UNVERIFIED_STATS_DOC };
 
 const iso = (s: string | undefined | null) => {
   const t = s ? Date.parse(s) : NaN;
@@ -21,15 +24,17 @@ const iso = (s: string | undefined | null) => {
 const candidateOf = (u: UserRecord): TrialCandidate => ({
   uid: u.uid,
   providers: u.providerData.length,
+  providerIds: u.providerData.map((p) => p.providerId),
+  emailVerified: u.emailVerified,
   email: u.email ?? null,
   createdAt: iso(u.metadata.creationTime),
   lastSignInAt: iso(u.metadata.lastSignInTime),
   lastRefreshAt: iso(u.metadata.lastRefreshTime),
 });
 
-// Данные человека: ссылки на наборы, профиль со всеми вложенными коллекциями (наборы, журнал тренировок)
-// и занятое имя. Сначала данные, потом аккаунт: сбой посередине — аккаунт остаётся, завтра попробуем снова
-async function deleteTrialData(uid: string): Promise<void> {
+// Данные человека: ссылки на наборы, профиль со всеми вложенными коллекциями (наборы, журнал тренировок),
+// занятое имя и счётчики лимитов. Сначала данные, потом аккаунт: сбой посередине — аккаунт остаётся, завтра снова
+async function deleteAccountData(uid: string): Promise<void> {
   const store = db();
   const userRef = store.doc(`users/${uid}`);
   const usernameLower = (await userRef.get()).get("usernameLower");
@@ -40,9 +45,10 @@ async function deleteTrialData(uid: string): Promise<void> {
     // Имя освобождаем, только если оно всё ещё за этим человеком
     if ((await nameRef.get()).get("uid") === uid) await nameRef.delete();
   }
+  await rateLimitDoc(uid).delete();
 }
 
-export async function cleanupTrials(now = new Date()): Promise<{ deleted: number; left: number }> {
+export async function cleanupTrials(now = new Date()): Promise<{ deleted: Record<StaleKind, number>; left: number }> {
   const candidates: TrialCandidate[] = [];
   let pageToken: string | undefined;
   for (let page = 0; page < MAX_PAGES; page++) {
@@ -52,23 +58,25 @@ export async function cleanupTrials(now = new Date()): Promise<{ deleted: number
     if (!pageToken) break;
   }
 
-  const stale = staleTrials(candidates, now);
-  const batch = stale.slice(0, PER_RUN);
-  const done: string[] = [];
-  for (const uid of batch) {
+  const stale = staleAccounts(candidates, now);
+  const done: { uid: string; kind: StaleKind }[] = [];
+  for (const item of stale.slice(0, PER_RUN)) {
     try {
-      await deleteTrialData(uid);
-      done.push(uid);
+      await deleteAccountData(item.uid);
+      done.push(item);
     } catch (err) {
-      console.error("[trial-cleanup] data", uid, err);
+      console.error("[trial-cleanup] data", item.uid, err);
     }
   }
+  const deleted: Record<StaleKind, number> = { trial: 0, unverified: 0 };
   if (done.length > 0) {
-    const res = await adminAuth().deleteUsers(done);
-    res.errors.forEach((e) => console.error("[trial-cleanup] auth", done[e.index], e.error));
-    const deleted = res.successCount;
-    if (deleted > 0) await db().doc(TRIAL_STATS_DOC).set({ deleted: FieldValue.increment(deleted) }, { merge: true });
-    return { deleted, left: stale.length - deleted };
+    const res = await adminAuth().deleteUsers(done.map((d) => d.uid));
+    const failed = new Set(res.errors.map((e) => e.index));
+    res.errors.forEach((e) => console.error("[trial-cleanup] auth", done[e.index].uid, e.error));
+    done.forEach((d, i) => !failed.has(i) && deleted[d.kind]++);
+    for (const kind of Object.keys(deleted) as StaleKind[]) {
+      if (deleted[kind] > 0) await db().doc(STATS_DOC[kind]).set({ deleted: FieldValue.increment(deleted[kind]) }, { merge: true });
+    }
   }
-  return { deleted: 0, left: stale.length };
+  return { deleted, left: stale.length - deleted.trial - deleted.unverified };
 }

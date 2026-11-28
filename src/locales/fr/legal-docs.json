@@ -145,6 +145,7 @@
               "Compte et données d'apprentissage : tant que ton compte existe.",
               "Quand tu supprimes ton compte dans l'appli (« Plus → Réglages »), ta connexion, ton profil, tes sets et ton nom d'utilisateur sont supprimés immédiatement.",
               "Comptes d'essai (sans Google ni e-mail connecté) : supprimés automatiquement avec toutes leurs données 30 jours après leur dernière ouverture. Quitter le mode essai dans l'appli (« Plus → Réglages ») supprime le compte d'essai immédiatement.",
+              "Comptes créés à partir du 28 novembre 2026 dont l'adresse e-mail n'a jamais été confirmée : supprimés automatiquement avec toutes leurs données 30 jours après leur dernière ouverture.",
               "Les scores du jeu du jour et une photo de profil ajoutée **ne sont pas encore supprimés automatiquement** avec le compte. Écris à {email.privacy} et nous les supprimerons sous 30 jours.",
               "Messages à l'assistance : le temps nécessaire pour traiter ta demande. Tu peux nous demander de les supprimer.",
               "Journaux techniques chez nos prestataires : selon leurs durées de conservation.",
@@ -229,7 +230,8 @@
               "Tu dois avoir au moins 13 ans, ou plus si la loi de ton pays l'exige pour accepter seul(e) ces Conditions.",
               "Donne des informations exactes à l'inscription et garde tes identifiants en sécurité.",
               "Tu es responsable de l'activité de ton compte. Préviens-nous immédiatement si tu soupçonnes une utilisation non autorisée.",
-              "Tu peux aussi essayer Kolo sans compte. Le mode essai n'existe que dans le navigateur où tu l'as commencé : si tu effaces les données de ce navigateur ou perds l'appareil, le compte d'essai et sa progression ne peuvent pas être récupérés. Un compte d'essai qui n'a pas été ouvert pendant 30 jours est supprimé automatiquement. Pour garder ta progression, connecte Google ou une adresse e-mail dans l'appli."
+              "Tu peux aussi essayer Kolo sans compte. Le mode essai n'existe que dans le navigateur où tu l'as commencé : si tu effaces les données de ce navigateur ou perds l'appareil, le compte d'essai et sa progression ne peuvent pas être récupérés. Un compte d'essai qui n'a pas été ouvert pendant 30 jours est supprimé automatiquement. Pour garder ta progression, connecte Google ou une adresse e-mail dans l'appli.",
+              "Si tu t'inscris avec une adresse e-mail, confirme-la dans les 7 jours. Jusque-là, tu ne peux pas partager de sets ; après 7 jours, Kolo se met en pause jusqu'à la confirmation. Un compte dont l'adresse n'a jamais été confirmée et qui n'a pas été ouvert pendant 30 jours est supprimé automatiquement. Cela concerne les comptes créés à partir du 28 novembre 2026."
             ]
           }
         ]

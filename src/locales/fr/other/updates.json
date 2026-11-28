@@ -32,11 +32,17 @@
           "text": "Pour créer un compte, il suffit maintenant d’un e-mail et d’un mot de passe : pas de nom, pas de mot de passe à répéter (un bouton affiche ce que tu as tapé) et pas de case à cocher — une ligne sous les boutons renvoie aux Conditions et à la Politique de confidentialité. Avec Google, ton nom vient de ton compte Google ; sinon, tu peux l’ajouter dans ton profil quand tu veux."
         },
         {
+          "title": "Confirme ton e-mail en une semaine",
+          "text": "Si tu t’inscris avec une adresse e-mail, Kolo te demande maintenant de la confirmer dans les sept jours, et une ligne en haut indique combien de jours il reste. Après une semaine, Kolo attend la confirmation avant de continuer ; tes mots et ta progression restent en place. Partager des sets par lien demande désormais une adresse confirmée ou Google : en mode essai, sauvegarde d’abord ta progression. Les comptes créés avant cette version ne sont pas concernés."
+        },
+        {
           "title": "Conditions et Politique de confidentialité mises à jour",
           "text": "Les deux documents décrivent maintenant le mode essai : ce que nous gardons pour un compte d’essai (un identifiant aléatoire, sans e-mail ni nom) et quand il est supprimé. Tu verras une seule fois un message sur la mise à jour dans l’appli."
         }
       ],
-      "fixes": []
+      "fixes": [
+        "Les fenêtres de récompense (capsule, nouveau niveau, médailles) n’apparaissent plus en pleine séance : elles attendent l’écran de résultats."
+      ]
     },
     {
       "number": "0.4.1",

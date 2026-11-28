@@ -32,11 +32,17 @@
           "text": "Creating an account now takes an email and a password, nothing else: no name, no repeated password (a button shows what you typed) and no checkbox — a line under the buttons links to the Terms and Privacy Policy. With Google, your name comes from your Google account; otherwise you can add it in your profile whenever you like."
         },
         {
+          "title": "Confirm your email within a week",
+          "text": "If you sign up with an email, Kolo now asks you to confirm it within seven days, and a note at the top shows how many days are left. After a week, Kolo waits for the confirmation before you continue; your words and progress stay put. Sharing sets by link is now for accounts with a confirmed email or Google, so in trial mode you save your progress first. Accounts created before this version aren't affected."
+        },
+        {
           "title": "Updated Terms and Privacy Policy",
           "text": "Both documents now describe trial mode: what we store for a trial account (a random identifier, no email or name) and when it's deleted. You'll see a one-time note about the update in the app."
         }
       ],
-      "fixes": []
+      "fixes": [
+        "Reward pop-ups (a capsule, a new level, medals) no longer appear in the middle of a session: they wait for the results screen."
+      ]
     },
     {
       "number": "0.4.1",

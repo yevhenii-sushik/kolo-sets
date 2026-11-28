@@ -44,10 +44,22 @@
     },
     "verify": {
       "text": "Bekreft e-posten din for å sikre kontoen.",
+      "textDays": "Bekreft e-posten din – du har {days} på deg. Etter det ber Kolo deg bekrefte før du kan fortsette.",
       "resend": "Send e-posten på nytt",
       "sending": "Sender…",
       "sent": "E-posten er sendt – sjekk innboksen.",
       "dismiss": "Skjul"
+    },
+    "verifyGate": {
+      "title": "Bekreft e-posten for å fortsette",
+      "text": "Det har gått en uke siden du registrerte deg. Trykk på lenken i e-posten vi sendte til {email} – alle ordene og fremgangen venter på deg.",
+      "check": "Sjekk og fortsett",
+      "resend": "Send e-posten på nytt",
+      "sent": "E-posten er sendt – sjekk innboksen og søppelposten.",
+      "notYet": "E-posten er ikke bekreftet ennå. Åpne lenken i e-posten og trykk «Sjekk og fortsett».",
+      "sendError": "Noe gikk galt. Prøv igjen om et minutt.",
+      "logout": "Logg ut",
+      "help": "Ingen e-post? Sjekk søppelposten eller skriv til {email}."
     },
     "achievement": {
       "unlocked": "Ny prestasjon"

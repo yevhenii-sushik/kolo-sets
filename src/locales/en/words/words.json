@@ -144,7 +144,9 @@
     "revokeTitle": "Turn off the link?",
     "revokeText": "It will stop working for everyone who has it. Copies already added stay with their owners. You can create a new link at any time.",
     "revokeYes": "Turn off",
-    "error": "Couldn't reach Kolo. Check your connection and try again."
+    "error": "Couldn't reach Kolo. Check your connection and try again.",
+    "needSave": "You can share sets once you save your progress: a link is a public page with your words.",
+    "needVerify": "You can share sets once you confirm your email. We sent the link to {email}."
   },
   "sharedSet": {
     "eyebrow": "Word set · {language}",

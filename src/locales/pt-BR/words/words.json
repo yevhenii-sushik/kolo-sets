@@ -150,7 +150,9 @@
     "revokeTitle": "Desativar o link?",
     "revokeText": "Ele vai parar de funcionar para todo mundo que o tem. As cópias já adicionadas continuam com seus donos. Você pode criar um link novo quando quiser.",
     "revokeYes": "Desativar",
-    "error": "Não deu para falar com o Kolo. Verifique sua conexão e tente de novo."
+    "error": "Não deu para falar com o Kolo. Verifique sua conexão e tente de novo.",
+    "needSave": "Você poderá compartilhar sets depois de salvar seu progresso: um link é uma página pública com suas palavras.",
+    "needVerify": "Você poderá compartilhar sets depois de confirmar seu e-mail. Enviamos o link de confirmação para {email}."
   },
   "sharedSet": {
     "eyebrow": "Set de palavras · {language}",

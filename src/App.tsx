@@ -20,6 +20,7 @@ import { ShareOrbitHost } from "./components/progress/ShareOrbitModal";
 import CookieConsentBanner from "./components/legal/CookieConsentBanner";
 import SaveErrorToast from "./components/SaveErrorToast";
 import { SaveProgressHost } from "./components/auth/SaveProgress";
+import VerifyEmailGate from "./components/auth/VerifyEmailGate";
 
 // Layouts (небольшие — грузим сразу)
 import MainLayout from "./pages/layouts/MainLayout";
@@ -102,10 +103,13 @@ function ReminderScheduler() {
 
 // Защищенный маршрут: ждём ответа Firebase (заставка видна, только если дольше 400 мс)
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+  const { user, loading, standing } = useAuth();
   if (loading) return <AppSplash />;
   // Если юзера нет, отправляем на лендинг
-  return user ? <>{children}</> : <Navigate to="/welcome" replace />;
+  if (!user) return <Navigate to="/welcome" replace />;
+  // Неделя без подтверждения почты прошла — сначала подтверждение (server/core/access.ts)
+  if (standing === "locked") return <VerifyEmailGate />;
+  return <>{children}</>;
 }
 
 // Публичный маршрут (лендинг, вход, регистрация). Новый посетитель видит страницу сразу, не дожидаясь

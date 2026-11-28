@@ -30,6 +30,7 @@ export interface AdminUser {
 export interface AdminMetrics extends Metrics {
   excluded: { team: number; disabled: number };
   trialsDeleted: number; // пробные аккаунты, удалённые за 30 дней без входа, — за всё время
+  unverifiedDeleted: number; // аккаунты на неподтверждённую почту, удалённые так же, — за всё время
   truncated: boolean;
 }
 

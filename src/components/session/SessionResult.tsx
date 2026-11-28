@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { RotateCcw } from "lucide-react";
 import { Button, Modal, Text, cx } from "../../ui";
+import { useResultOpen } from "../../utils/momentsHold";
 
 const TILE_TONES = {
   accent: "bg-accent-soft text-accent-ink",
@@ -48,6 +49,8 @@ export default function SessionResult({
   onExit: () => void;
   size?: "sm" | "md" | "lg";
 }) {
+  // На итоге тренировка закончена — праздники, которые ждали, можно показывать (utils/momentsHold.ts)
+  useResultOpen(open);
   return (
     <Modal
       open={open}

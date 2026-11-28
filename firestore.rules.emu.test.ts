@@ -97,3 +97,14 @@ describe("наборы", () => {
     await assertFails(getDoc(doc(as("mallory"), "users/alice/collections/c1")));
   });
 });
+
+describe("служебные коллекции сервера", () => {
+  // Лимиты (rateLimits/{uid}) и счётчики админ-панели (adminStats) пишет только сервер: свой лимит не сбросить
+  it("клиент не читает и не пишет лимиты и счётчики, даже свои", async () => {
+    const me = as("alice");
+    await assertFails(getDoc(doc(me, "rateLimits/alice")));
+    await assertFails(setDoc(doc(me, "rateLimits/alice"), { support: { day: "2026-12-01", count: 0 } }));
+    await assertFails(getDoc(doc(me, "adminStats/trials")));
+    await assertFails(setDoc(doc(me, "adminStats/trials"), { deleted: 0 }));
+  });
+});

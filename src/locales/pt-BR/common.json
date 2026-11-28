@@ -44,10 +44,22 @@
     },
     "verify": {
       "text": "Confirme seu e-mail para proteger sua conta.",
+      "textDays": "Confirme seu e-mail: você tem {days} para isso. Depois, o Kolo vai pedir a confirmação para você continuar.",
       "resend": "Enviar o e-mail de novo",
       "sending": "Enviando…",
       "sent": "E-mail enviado — confira sua caixa de entrada.",
       "dismiss": "Ocultar"
+    },
+    "verifyGate": {
+      "title": "Confirme seu e-mail para continuar",
+      "text": "Faz uma semana que você se cadastrou. Toque no link do e-mail que enviamos para {email}: suas palavras e seu progresso estão esperando.",
+      "check": "Verificar e continuar",
+      "resend": "Enviar o e-mail de novo",
+      "sent": "E-mail enviado: confira a caixa de entrada e o spam.",
+      "notYet": "Seu e-mail ainda não foi confirmado. Abra o link do e-mail e toque em “Verificar e continuar”.",
+      "sendError": "Algo deu errado. Tente de novo em um minuto.",
+      "logout": "Sair",
+      "help": "Não chegou? Confira o spam ou escreva para {email}."
     },
     "achievement": {
       "unlocked": "Nova medalha"

@@ -145,6 +145,7 @@
               "Cuenta y datos de aprendizaje: mientras exista tu cuenta.",
               "Cuando eliminas tu cuenta en la app («Más → Ajustes»), tu acceso, perfil, sets y nombre de usuario se eliminan de inmediato.",
               "Cuentas de prueba (sin Google ni correo conectados): se eliminan automáticamente con todos sus datos 30 días después de la última vez que se abrieron. Si sales del modo de prueba en la app («Más → Ajustes»), la cuenta de prueba se elimina de inmediato.",
+              "Cuentas creadas a partir del 28 de noviembre de 2026 cuyo correo nunca se confirmó: se eliminan automáticamente con todos sus datos 30 días después de la última vez que se abrieron.",
               "Las puntuaciones del juego del día y la foto de perfil que hayas subido **todavía no se eliminan automáticamente** al borrar la cuenta. Escribe a {email.privacy} y las eliminaremos en un plazo de 30 días.",
               "Mensajes al soporte: el tiempo necesario para atender tu solicitud. Puedes pedirnos que los eliminemos.",
               "Registros técnicos de nuestros proveedores: según sus plazos de conservación.",
@@ -229,7 +230,8 @@
               "Debes tener al menos 13 años, o más si la ley de tu país lo exige para aceptar estos Términos por tu cuenta.",
               "Da información veraz al registrarte y mantén seguros tus datos de acceso.",
               "Eres responsable de la actividad de tu cuenta. Avísanos enseguida si sospechas de un uso no autorizado.",
-              "También puedes probar Kolo sin cuenta. El modo de prueba solo existe en el navegador donde lo empezaste: si borras los datos de ese navegador o pierdes el dispositivo, la cuenta de prueba y su progreso no se pueden recuperar. Una cuenta de prueba que no se abre durante 30 días se elimina automáticamente. Para conservar tu progreso, conecta Google o un correo en la app."
+              "También puedes probar Kolo sin cuenta. El modo de prueba solo existe en el navegador donde lo empezaste: si borras los datos de ese navegador o pierdes el dispositivo, la cuenta de prueba y su progreso no se pueden recuperar. Una cuenta de prueba que no se abre durante 30 días se elimina automáticamente. Para conservar tu progreso, conecta Google o un correo en la app.",
+              "Si te registras con un correo, confírmalo en un plazo de 7 días. Hasta entonces no podrás compartir sets, y pasados 7 días Kolo se detendrá hasta que lo confirmes. Una cuenta cuyo correo nunca se confirmó y que no se abre durante 30 días se elimina automáticamente. Esto se aplica a las cuentas creadas a partir del 28 de noviembre de 2026."
             ]
           }
         ]

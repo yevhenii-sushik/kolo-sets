@@ -46,6 +46,7 @@
     "reply": "Antwort an meine E-Mail",
     "send": "Senden",
     "sendError": "Die Nachricht konnte nicht gesendet werden. Versuche es etwas später erneut.",
+    "limit": "Für heute reicht es mit Nachrichten. Schreib morgen wieder oder per E-Mail an {email}.",
     "sentTitle": "Danke!",
     "sentText": "Deine Nachricht ist beim Kolo-Team angekommen. Wir lesen jede.",
     "sentReply": "Wir antworten an {email}.",

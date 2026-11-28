@@ -32,11 +32,17 @@
           "text": "Para criar uma conta agora bastam e-mail e senha: sem nome, sem repetir a senha (um botão mostra o que você digitou) e sem caixa de seleção; uma linha abaixo dos botões leva aos Termos e à Política de Privacidade. Com o Google, seu nome vem da sua conta Google; se não, você pode adicioná-lo no perfil quando quiser."
         },
         {
+          "title": "Confirme seu e-mail em até uma semana",
+          "text": "Se você se cadastrar com e-mail, o Kolo agora pede que você o confirme em até sete dias, e um aviso no topo mostra quantos dias faltam. Depois de uma semana, o Kolo espera a confirmação antes de continuar; suas palavras e seu progresso continuam lá. Compartilhar sets por link agora exige e-mail confirmado ou Google, então no modo de teste salve seu progresso primeiro. Contas criadas antes desta versão não são afetadas."
+        },
+        {
           "title": "Termos e Política de Privacidade atualizados",
           "text": "Os dois documentos agora descrevem o modo de teste: o que guardamos de uma conta de teste (um identificador aleatório, sem e-mail nem nome) e quando ela é apagada. No app, você vai ver uma única vez um aviso sobre a atualização."
         }
       ],
-      "fixes": []
+      "fixes": [
+        "As janelas de recompensa (cápsula, novo nível, medalhas) não aparecem mais no meio de uma sessão: elas esperam a tela de resultados."
+      ]
     },
     {
       "number": "0.4.1",

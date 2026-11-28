@@ -145,6 +145,7 @@
               "Conta e dados de aprendizado: enquanto sua conta existir.",
               "Quando você exclui sua conta no app (“Mais → Ajustes”), seu login, perfil, sets e nome de usuário são apagados na hora.",
               "Contas de teste (sem Google nem e-mail conectado): apagadas automaticamente com todos os dados 30 dias depois da última vez que foram abertas. Sair do modo de teste no app (“Mais → Ajustes”) apaga a conta de teste na hora.",
+              "Contas criadas a partir de 28 de novembro de 2026 com e-mail nunca confirmado: apagadas automaticamente com todos os dados 30 dias depois da última vez que foram abertas.",
               "Pontuações do jogo do dia e uma foto de perfil enviada **ainda não são removidas automaticamente** quando você exclui a conta. Escreva para {email.privacy} e as apagaremos em até 30 dias.",
               "Mensagens ao suporte: pelo tempo necessário para atender seu pedido. Você pode pedir que as apaguemos.",
               "Registros técnicos dos fornecedores: conforme os prazos de retenção deles.",
@@ -229,7 +230,8 @@
               "Você precisa ter pelo menos 13 anos, ou mais se a lei do seu país exigir isso para aceitar estes Termos por conta própria.",
               "Informe dados verdadeiros no cadastro e mantenha seus dados de acesso em segurança.",
               "Você é responsável pela atividade na sua conta. Avise-nos imediatamente se suspeitar de uso não autorizado.",
-              "Você também pode experimentar o Kolo sem conta. O modo de teste existe só no navegador onde você começou: se você apagar os dados desse navegador ou perder o aparelho, a conta de teste e o progresso dela não podem ser recuperados. Uma conta de teste que não é aberta por 30 dias é apagada automaticamente. Para manter seu progresso, conecte o Google ou um e-mail no app."
+              "Você também pode experimentar o Kolo sem conta. O modo de teste existe só no navegador onde você começou: se você apagar os dados desse navegador ou perder o aparelho, a conta de teste e o progresso dela não podem ser recuperados. Uma conta de teste que não é aberta por 30 dias é apagada automaticamente. Para manter seu progresso, conecte o Google ou um e-mail no app.",
+              "Se você se cadastrar com e-mail, confirme-o em até 7 dias. Até lá, não é possível compartilhar sets; depois de 7 dias, o Kolo pausa até a confirmação. Uma conta com e-mail nunca confirmado que não é aberta por 30 dias é apagada automaticamente. Isso vale para contas criadas a partir de 28 de novembro de 2026."
             ]
           }
         ]

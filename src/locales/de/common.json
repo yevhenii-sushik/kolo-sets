@@ -44,10 +44,22 @@
     },
     "verify": {
       "text": "Bestätige deine E-Mail, um dein Konto zu schützen.",
+      "textDays": "Bestätige deine E-Mail-Adresse – dafür hast du {days}. Danach bittet Kolo dich um die Bestätigung, bevor es weitergeht.",
       "resend": "E-Mail erneut senden",
       "sending": "Wird gesendet…",
       "sent": "E-Mail gesendet – schau in dein Postfach.",
       "dismiss": "Ausblenden"
+    },
+    "verifyGate": {
+      "title": "Bestätige deine E-Mail-Adresse, um weiterzumachen",
+      "text": "Seit deiner Anmeldung ist eine Woche vergangen. Tippe auf den Link in der E-Mail, die wir an {email} geschickt haben – deine Wörter und dein Fortschritt warten auf dich.",
+      "check": "Prüfen und weiter",
+      "resend": "E-Mail erneut senden",
+      "sent": "E-Mail gesendet – schau in deinen Posteingang und in den Spam-Ordner.",
+      "notYet": "Deine E-Mail-Adresse ist noch nicht bestätigt. Öffne den Link in der E-Mail und tippe dann auf „Prüfen und weiter“.",
+      "sendError": "Etwas ist schiefgelaufen. Versuch es in einer Minute noch einmal.",
+      "logout": "Abmelden",
+      "help": "Keine E-Mail? Schau in den Spam-Ordner oder schreib an {email}."
     },
     "achievement": {
       "unlocked": "Neuer Erfolg"

@@ -64,7 +64,11 @@ export default function Retention() {
           value={n(data.trial.saved)}
           hint={data.trial.started ? `${Math.round((data.trial.saved / data.trial.started) * 100)} % начавших` : "пока некому"}
         />
-        <Stat label="Удалено без входа" value={n(data.trialsDeleted)} hint="30 дней не открывали, за всё время" />
+        <Stat
+          label="Удалено без входа"
+          value={n(data.trialsDeleted + data.unverifiedDeleted)}
+          hint={`30 дней не открывали, за всё время: проба — ${n(data.trialsDeleted)}, без подтверждения почты — ${n(data.unverifiedDeleted)}`}
+        />
       </div>
 
       <Text size="xs" tone="faint">
