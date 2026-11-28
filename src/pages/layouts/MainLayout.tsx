@@ -13,6 +13,7 @@ import OnboardingModal from "../../components/OnboardingModal";
 import { onboardingDone } from "../../utils/firstRun";
 import VerifyEmailBanner from "../../components/VerifyEmailBanner";
 import LegalUpdateBanner from "../../components/LegalUpdateBanner";
+import { TrialBanner } from "../../components/auth/SaveProgress";
 import InstallPrompt from "../../components/InstallPrompt";
 import { FIND_WORD_EVENT } from "../../utils/wordSearch";
 import CourseSwitcher from "../../components/courses/CourseSwitcher";
@@ -170,6 +171,7 @@ export default function MainLayout() {
         {/* pb-24 = ровно высота BottomNav (h-24=96px); pb-20 (80px) оставлял
             низ страницы частично под нижним меню на мобилке */}
         <main className="flex-1 w-full max-w-5xl mx-auto pt-6 pb-24 md:pb-6 px-5 sm:px-6 lg:px-8">
+          <TrialBanner />
           <VerifyEmailBanner />
           <LegalUpdateBanner />
           {/* Своя граница: шапка и меню не пропадают, пока грузится код вкладки */}

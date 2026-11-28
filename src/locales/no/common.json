@@ -37,6 +37,11 @@
         "other": "{n} dager"
       }
     },
+    "trial": {
+      "text": "Prøvemodus: fremgangen ligger bare på denne enheten.",
+      "action": "Lagre fremgangen",
+      "dismiss": "Skjul"
+    },
     "verify": {
       "text": "Bekreft e-posten din for å sikre kontoen.",
       "resend": "Send e-posten på nytt",
@@ -54,7 +59,7 @@
       "install": "Installer"
     },
     "legalUpdate": {
-      "text": "{date} oppdaterte vi vilkårene for bruk og personvernerklæringen: XP, ukentlige baner, kapsler og virtuelle gjenstander er på plass.",
+      "text": "{date} oppdaterte vi vilkårene for bruk og personvernerklæringen: nå kan du prøve Kolo uten konto.",
       "terms": "Vilkår",
       "privacy": "Personvern",
       "ok": "Skjønner"

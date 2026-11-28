@@ -5,6 +5,7 @@ import {
   BookOpenCheck,
   Check,
   Clock,
+  CloudUpload,
   Compass,
   Database,
   Download,
@@ -52,6 +53,7 @@ import { PageHeader } from "../../components/other/PageSection";
 import { Segmented, SettingsGroup, SettingsRow } from "../../components/other/SettingsList";
 import { DAILY_NEW_OPTIONS, DailyNew, readDailyNew, saveDailyNew } from "../../perigee/prefs";
 import { restartOnboarding } from "../../utils/firstRun";
+import { openSaveProgress } from "../../components/auth/SaveProgress";
 
 type Theme = "light" | "dark" | "system";
 
@@ -76,7 +78,7 @@ export default function SettingsPage() {
   const navigate = useNavigate();
   const s = t.settings;
   const locale = getLanguageInfo(language).htmlLang;
-  const { user, logout, resetPassword, deleteAccount } = useAuth();
+  const { user, isTrial, logout, resetPassword, deleteAccount } = useAuth();
   const { profile, activeCourse, refreshCollections } = useData();
   const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
   const { success, error, toastState, hideToast } = useToast();
@@ -151,6 +153,28 @@ export default function SettingsPage() {
       success(s.account.passwordSent.replace("{email}", user.email));
     } catch {
       error(s.account.passwordError);
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  // Из пробного аккаунта не выйти и не вернуться: войти в него можно только с этого устройства. Поэтому выход
+  // из пробы — удаление со всеми данными, с предупреждением и предложением сначала сохранить прогресс
+  const handleLeaveTrial = async () => {
+    const confirmed = await confirm({
+      title: s.account.trial.leaveTitle,
+      message: s.account.trial.leaveText,
+      type: "danger",
+      confirmText: s.account.trial.leave,
+      cancelText: t.cancel,
+    });
+    if (!confirmed) return;
+    setBusy("delete");
+    try {
+      await deleteAccount();
+      navigate("/welcome", { replace: true });
+    } catch {
+      error(s.account.deleteError);
     } finally {
       setBusy(null);
     }
@@ -270,6 +294,7 @@ export default function SettingsPage() {
               <span className="truncate font-semibold text-fg">{name}</span>
               <span className="truncate text-sm text-muted">{user?.email}</span>
               {method && <span className="truncate text-xs text-faint">{s.account.method}: {method}</span>}
+              {isTrial && <span className="text-xs text-faint">{s.account.trial.method}</span>}
             </span>
           </div>
           <SettingsRow icon={<UserRound size={16} />} tone="accent" title={t.profile.edit} to="/profile" />
@@ -284,7 +309,23 @@ export default function SettingsPage() {
               disabled={busy !== null}
             />
           )}
-          <SettingsRow icon={<LogOut size={16} />} title={s.account.logout} onClick={handleLogout} disabled={busy !== null} />
+          {isTrial && (
+            <SettingsRow
+              icon={<CloudUpload size={16} />}
+              tone="success"
+              title={s.account.trial.save}
+              description={s.account.trial.saveDesc}
+              onClick={openSaveProgress}
+              disabled={busy !== null}
+            />
+          )}
+          <SettingsRow
+            icon={<LogOut size={16} />}
+            title={isTrial ? s.account.trial.leaveRow : s.account.logout}
+            onClick={isTrial ? handleLeaveTrial : handleLogout}
+            loading={isTrial && busy === "delete"}
+            disabled={busy !== null}
+          />
         </SettingsGroup>
 
         {/* ── Оформление ── */}

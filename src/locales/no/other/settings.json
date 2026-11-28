@@ -116,6 +116,15 @@
       "password": "E-post og passord",
       "google": "Google"
     },
+    "trial": {
+      "method": "Prøvemodus – fremgangen ligger bare på denne enheten",
+      "save": "Lagre fremgangen",
+      "saveDesc": "Koble til Google eller e-post: ordene blir værende, og du kan logge inn på hvilken som helst enhet.",
+      "leaveRow": "Avslutt prøvemodus",
+      "leaveTitle": "Avslutte prøvemodus?",
+      "leaveText": "Settene og fremgangen slettes – du kan ikke komme tilbake til en prøvekonto. Lagre fremgangen først hvis du vil beholde dem.",
+      "leave": "Slett og avslutt"
+    },
     "changePassword": "Bytt passord",
     "changePasswordDesc": "Vi sender deg en lenke på e-post der du kan velge nytt passord.",
     "send": "Send lenke",

@@ -9,6 +9,7 @@ import { FEATURES } from "../../config/features";
 import { LEGAL } from "../legal/legalInfo";
 import LandingFooter from "../../components/landing/LandingFooter";
 import { DakutaLogo } from "../../components/brand/DakutaLogo";
+import TrialButton from "../../components/auth/TrialButton";
 import { usePageMeta } from "../../utils/pageMeta";
 import {
   AudioPreview,
@@ -26,7 +27,8 @@ import {
 } from "../../components/landing/LandingIllustrations";
 
 // Лендинг /welcome. Порядок блоков: что это → как работает → что внутри → почему не бросишь → где → вопросы.
-// Главное действие — «Начать учиться» — в шапке, на первом экране и в конце.
+// Главное действие — «Попробовать без регистрации» — на первом экране и в конце (шаг 16 в docs/specs/06-audit-fixes.md);
+// регистрация и вход — в шапке.
 
 
 const reveal = {
@@ -280,12 +282,8 @@ export default function LandingPage() {
                 <Text size="lg" tone="muted" className="max-w-xl">
                   {l.hero.subtitle}
                 </Text>
-                {/* Кто уже учится, заходит через «Войти» в шапке, здесь — только начало */}
-                <div className="flex flex-wrap justify-center gap-3 pt-2 lg:justify-start">
-                  <ButtonLink to="/register" size="lg" iconRight={<ArrowRight size={18} />}>
-                    {l.hero.start}
-                  </ButtonLink>
-                </div>
+                {/* Кто уже учится, заходит через «Войти» в шапке, здесь — только начало: сразу к словам, без аккаунта */}
+                <TrialButton label={l.hero.start} className="pt-2 lg:justify-items-start lg:text-left" />
                 <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted lg:justify-start">
                   {l.hero.promises.map((promise) => (
                     <li key={promise} className="flex items-center gap-1.5">
@@ -546,9 +544,7 @@ export default function LandingPage() {
               <Text size="lg" tone="muted" className="max-w-xl">
                 {l.cta.text}
               </Text>
-              <ButtonLink to="/register" size="lg" iconRight={<ArrowRight size={18} />} className="mt-2">
-                {l.cta.button}
-              </ButtonLink>
+              <TrialButton label={l.cta.button} className="mt-2" />
             </Container>
           </section>
         </main>

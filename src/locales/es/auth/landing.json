@@ -16,7 +16,7 @@
   "hero": {
     "title": "La forma sencilla de aprender palabras en cualquier idioma y no olvidarlas.",
     "subtitle": "Añade tus propias palabras, practica unos minutos al día y Kolo te devolverá cada una justo cuando empieces a olvidarla.",
-    "start": "Empieza a aprender",
+    "start": "Probar sin registrarte",
     "promises": [
       "Sin anuncios",
       "Todo el aprendizaje es gratis",
@@ -244,8 +244,8 @@
   },
   "cta": {
     "title": "Aprende cualquier idioma con Kolo",
-    "text": "Crea una cuenta y añade tus primeras palabras: te llevará un par de minutos.",
-    "button": "Empieza a aprender"
+    "text": "Elige un idioma y empieza ya con tus primeras palabras, sin cuenta. Puedes guardar tu progreso cuando quieras.",
+    "button": "Probar sin registrarte"
   },
   "footer": {
     "tagline": "Aprende palabras en cualquier idioma y recuérdalas.",

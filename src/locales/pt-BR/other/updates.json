@@ -10,6 +10,31 @@
   },
   "versions": [
     {
+      "number": "0.5.0",
+      "date": "Novembro de 2026",
+      "title": "Primeiro experimente, depois se cadastre",
+      "intro": "O Kolo não começa mais com um formulário de cadastro. Toque em “Experimentar sem cadastro”, escolha um idioma e, um instante depois, você já está aprendendo suas primeiras palavras. Seu progresso conta desde o primeiro cartão, e você pode salvá-lo quando decidir que o Kolo é para você.",
+      "features": [
+        {
+          "title": "Direto para as primeiras palavras",
+          "text": "Na página inicial, “Experimentar sem cadastro” leva você à lista de idiomas, sem nome, e-mail ou senha. Se você escolher norueguês ou inglês, o Kolo adiciona o primeiro set pronto, “Cumprimentos e apresentações”, e começa uma sessão na hora. Com outros idiomas, você chega ao Início com “Primeiros passos”, onde cria seu primeiro set. O modo de teste tem tudo: todos os modos de treino, XP, a órbita da semana e as recompensas."
+        },
+        {
+          "title": "Salve seu progresso quando quiser",
+          "text": "No modo de teste, seu progresso fica só neste aparelho, e um aviso no topo do app lembra disso. Toque em “Salvar progresso” ali ou em Ajustes e conecte o Google ou um e-mail: suas palavras, seu XP e suas recompensas continuam onde estão, e daí em diante você pode entrar em qualquer aparelho. Se essa conta do Google ou esse e-mail já tiverem uma conta no Kolo, você entra nela, e os sets do modo de teste vão para lá com o calendário de revisões. Uma conta de teste que ninguém abre por 30 dias é apagada automaticamente, e sair do modo de teste em Ajustes a apaga na hora."
+        },
+        {
+          "title": "Sets compartilhados com um toque",
+          "text": "Alguém mandou um set para você por link? “Aprender estas palavras no Kolo” agora ativa o modo de teste, adiciona o set e abre uma sessão, sem cadastro no meio do caminho."
+        },
+        {
+          "title": "Termos e Política de Privacidade atualizados",
+          "text": "Os dois documentos agora descrevem o modo de teste: o que guardamos de uma conta de teste (um identificador aleatório, sem e-mail nem nome) e quando ela é apagada. No app, você vai ver uma única vez um aviso sobre a atualização."
+        }
+      ],
+      "fixes": []
+    },
+    {
       "number": "0.4.1",
       "date": "Novembro de 2026",
       "title": "O Kolo no seu idioma",

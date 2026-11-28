@@ -28,6 +28,7 @@
     },
     "required": "Du må godta vilkårene for bruk for å opprette en konto.",
     "google": "Ved å fortsette med Google godtar du {terms} og bekrefter at du har lest {privacy}.",
+    "trial": "Ved å fortsette godtar du {terms} og bekrefter at du har lest {privacy}.",
     "support": "Meldingen sendes til Kolo-teamet via Telegram. Les mer: {privacy}."
   },
   "page": {

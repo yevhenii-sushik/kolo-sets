@@ -37,6 +37,11 @@
         "other": "{n} Tage"
       }
     },
+    "trial": {
+      "text": "Testmodus: Dein Fortschritt ist nur auf diesem Gerät gespeichert.",
+      "action": "Fortschritt speichern",
+      "dismiss": "Ausblenden"
+    },
     "verify": {
       "text": "Bestätige deine E-Mail, um dein Konto zu schützen.",
       "resend": "E-Mail erneut senden",
@@ -54,7 +59,7 @@
       "install": "Installieren"
     },
     "legalUpdate": {
-      "text": "Am {date} haben wir die Nutzungsbedingungen und die Datenschutzerklärung aktualisiert: XP, wöchentliche Orbits, Kapseln und virtuelle Gegenstände sind da.",
+      "text": "Am {date} haben wir die Nutzungsbedingungen und die Datenschutzerklärung aktualisiert: Du kannst Kolo jetzt ohne Konto ausprobieren.",
       "terms": "Bedingungen",
       "privacy": "Datenschutz",
       "ok": "Verstanden"

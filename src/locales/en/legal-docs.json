@@ -35,6 +35,11 @@
                   "Contract (GDPR Art. 6(1)(b))"
                 ],
                 [
+                  "**Trial without an account:** a random account identifier from Firebase Authentication and when you started the trial. No email or name until you save your progress.",
+                  "Let you try Kolo without signing up and keep your progress if you save it later.",
+                  "Contract"
+                ],
+                [
                   "**Username** (assigned automatically, you can change it).",
                   "Identify you on the daily puzzle leaderboard.",
                   "Contract"
@@ -83,6 +88,7 @@
             "list": [
               "We don't show ads or use advertising identifiers.",
               "We don't use analytics or tracking tools. If we ever add analytics, it will run only after you opt in, and we will update this policy first.",
+              "To see whether Kolo helps people keep learning, the team looks at overall numbers built from data we already store, such as how many new learners come back a week later. These numbers can't identify anyone and never leave Kolo.",
               "We don't sell or rent your personal data, and we don't use it for profiling.",
               "We don't collect precise location, contacts or biometric data."
             ]
@@ -138,6 +144,7 @@
             "list": [
               "Account and learning data: as long as your account exists.",
               "When you delete your account in the app (More → Settings), your login, profile, word sets and username are deleted right away.",
+              "Trial accounts (no Google or email linked): deleted automatically with all their data 30 days after they were last opened. Leaving trial mode in the app (More → Settings) deletes the trial account right away.",
               "Daily puzzle scores and an uploaded profile photo are **not yet removed automatically** when you delete your account. Email {email.privacy} and we will delete them within 30 days.",
               "Support messages: as long as needed to handle your request. You can ask us to delete them.",
               "Technical logs at our providers: according to their retention periods.",
@@ -221,7 +228,8 @@
             "list": [
               "You must be at least 13 years old, or older if the law in your country requires it to accept these Terms on your own.",
               "Give accurate information when you sign up and keep your login details safe.",
-              "You are responsible for activity under your account. Tell us right away if you suspect unauthorized use."
+              "You are responsible for activity under your account. Tell us right away if you suspect unauthorized use.",
+              "You can also try Kolo without an account. A trial lives only in the browser where you started it: if you clear that browser's data or lose the device, the trial account and its progress can't be restored. A trial account that hasn't been opened for 30 days is deleted automatically. To keep your progress, save it with Google or an email in the app."
             ]
           }
         ]
@@ -390,7 +398,7 @@
                   "Until you clear it"
                 ],
                 [
-                  "`language_cards_collections` `profile_cache_…` `collections_synced_…` `kolo_col_order_…`",
+                  "`profile_cache_…` `kolo_col_order_…`",
                   "A local copy of your word sets and profile for speed and offline use, sync status and the order of your sets.",
                   "Until you clear it"
                 ],
@@ -405,7 +413,7 @@
                   "Until you clear it"
                 ],
                 [
-                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed`",
+                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed` `kolo_trial_banner_dismissed`",
                   "Remembers that you've seen the welcome tour or closed a notice.",
                   "Until you clear it"
                 ]

@@ -35,12 +35,15 @@ export interface MetricUser {
   cards: number;
   studyDays: string[]; // дни с занятиями, без повторов, по возрастанию
   firstOrbit: boolean; // хоть раз замкнул орбиту недели
+  // Начал с пробного режима (шаг 16): open — всё ещё без входа, saved — сохранил прогресс почтой или Google
+  trial?: "open" | "saved";
 }
 
 export interface MetricAccount {
   createdAt: string | null; // ISO, из Firebase Auth
   disabled: boolean;
   claims: unknown;
+  providers?: number; // способы входа; у пробного аккаунта их нет
 }
 
 const isRecord = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
@@ -91,6 +94,8 @@ export function metricUser(account: MetricAccount, profile: unknown, setCards: n
     // День в истории есть, только если в нём была тренировка: закрепление (sessions: 0) — тоже занятие
     studyDays: [...new Set(history.map((h) => h.date))].sort(),
     firstOrbit: closedAnOrbit(p.orbit, history),
+    // Метку начала пробы пишет клиент при пробном входе (src/firebase/firestore.ts, recordTrialStart)
+    ...(p.trialStartedAt ? { trial: account.providers ? ("saved" as const) : ("open" as const) } : {}),
   };
 }
 
@@ -123,6 +128,7 @@ export interface Metrics {
   total: Omit<CohortRow, "week">;
   cohorts: CohortRow[]; // от новых к старым
   funnel: FunnelStep[];
+  trial: { started: number; saved: number }; // начали без аккаунта и сколько из них сохранили прогресс
 }
 
 const windowEnded = (u: MetricUser, w: WindowId) => daysBetween(u.signupDay, u.today) > WINDOWS[w][1];
@@ -191,5 +197,9 @@ export function retentionMetrics(users: MetricUser[], now: Date, weeks = METRIC_
     add(row, u);
     add(total, u);
   }
-  return { weeks, from, total, cohorts: [...rows.values()], funnel: funnelOf(inWindow) };
+  const trial = {
+    started: inWindow.filter((u) => u.trial).length,
+    saved: inWindow.filter((u) => u.trial === "saved").length,
+  };
+  return { weeks, from, total, cohorts: [...rows.values()], funnel: funnelOf(inWindow), trial };
 }

@@ -35,6 +35,11 @@
                   "Contrato (art. 6.1.b del RGPD)"
                 ],
                 [
+                  "**Modo de prueba sin cuenta:** un identificador de cuenta aleatorio de Firebase Authentication y cuándo empezaste el modo de prueba. Ni correo ni nombre hasta que guardes tu progreso.",
+                  "Dejarte probar Kolo sin registrarte y conservar tu progreso si lo guardas después.",
+                  "Contrato"
+                ],
+                [
                   "**Nombre de usuario** (se asigna automáticamente y puedes cambiarlo).",
                   "Identificarte en la clasificación del juego del día.",
                   "Contrato"
@@ -83,6 +88,7 @@
             "list": [
               "No mostramos anuncios ni usamos identificadores publicitarios.",
               "No usamos herramientas de analítica ni de rastreo. Si algún día añadimos analítica, solo funcionará después de que des tu consentimiento, y antes actualizaremos esta política.",
+              "Para saber si Kolo ayuda a seguir aprendiendo, el equipo mira cifras globales hechas con datos que ya guardamos, como cuántas personas nuevas vuelven una semana después. Estas cifras no permiten identificar a nadie y nunca salen de Kolo.",
               "No vendemos ni alquilamos tus datos personales ni los usamos para elaborar perfiles.",
               "No recogemos tu ubicación precisa, tus contactos ni datos biométricos."
             ]
@@ -137,7 +143,8 @@
           {
             "list": [
               "Cuenta y datos de aprendizaje: mientras exista tu cuenta.",
-              "Cuando eliminas tu cuenta en la app («More → Settings»), tu acceso, perfil, sets y nombre de usuario se eliminan de inmediato.",
+              "Cuando eliminas tu cuenta en la app («Más → Ajustes»), tu acceso, perfil, sets y nombre de usuario se eliminan de inmediato.",
+              "Cuentas de prueba (sin Google ni correo conectados): se eliminan automáticamente con todos sus datos 30 días después de la última vez que se abrieron. Si sales del modo de prueba en la app («Más → Ajustes»), la cuenta de prueba se elimina de inmediato.",
               "Las puntuaciones del juego del día y la foto de perfil que hayas subido **todavía no se eliminan automáticamente** al borrar la cuenta. Escribe a {email.privacy} y las eliminaremos en un plazo de 30 días.",
               "Mensajes al soporte: el tiempo necesario para atender tu solicitud. Puedes pedirnos que los eliminemos.",
               "Registros técnicos de nuestros proveedores: según sus plazos de conservación.",
@@ -155,8 +162,8 @@
             "list": [
               "Acceder a los datos personales que tenemos sobre ti.",
               "Rectificar datos inexactos: puedes editar tu nombre, nombre de usuario y foto en tu perfil.",
-              "Suprimir tus datos: puedes eliminar tu cuenta en «More → Settings».",
-              "Llevarte tus datos: puedes exportar tus sets en «More → Settings».",
+              "Suprimir tus datos: puedes eliminar tu cuenta en «Más → Ajustes».",
+              "Llevarte tus datos: puedes exportar tus sets en «Más → Ajustes».",
               "Limitar el tratamiento u oponerte al que se basa en nuestro interés legítimo.",
               "Retirar tu consentimiento en cualquier momento cuando nos basemos en él, por ejemplo en la configuración de cookies."
             ]
@@ -221,7 +228,8 @@
             "list": [
               "Debes tener al menos 13 años, o más si la ley de tu país lo exige para aceptar estos Términos por tu cuenta.",
               "Da información veraz al registrarte y mantén seguros tus datos de acceso.",
-              "Eres responsable de la actividad de tu cuenta. Avísanos enseguida si sospechas de un uso no autorizado."
+              "Eres responsable de la actividad de tu cuenta. Avísanos enseguida si sospechas de un uso no autorizado.",
+              "También puedes probar Kolo sin cuenta. El modo de prueba solo existe en el navegador donde lo empezaste: si borras los datos de ese navegador o pierdes el dispositivo, la cuenta de prueba y su progreso no se pueden recuperar. Una cuenta de prueba que no se abre durante 30 días se elimina automáticamente. Para conservar tu progreso, conecta Google o un correo en la app."
             ]
           }
         ]
@@ -258,7 +266,7 @@
               "Los sets de palabras, tarjetas y demás contenido que creas son tuyos.",
               "Nos concedes una licencia limitada y no exclusiva para almacenar, tratar y mostrar tu contenido solo para prestar Kolo; por ejemplo, para sincronizar tus sets y mostrar tu nombre de usuario en la clasificación.",
               "Eres responsable de que tu contenido no infrinja derechos de autor ni otros derechos.",
-              "Puedes exportar tus sets o eliminar tu cuenta en cualquier momento en «More → Settings»."
+              "Puedes exportar tus sets o eliminar tu cuenta en cualquier momento en «Más → Ajustes»."
             ]
           }
         ]
@@ -307,7 +315,7 @@
         "id": "termination",
         "title": "Fin del acuerdo",
         "blocks": [
-          "**Por tu parte:** puedes dejar de usar Kolo y eliminar tu cuenta en cualquier momento en «More → Settings».",
+          "**Por tu parte:** puedes dejar de usar Kolo y eliminar tu cuenta en cualquier momento en «Más → Ajustes».",
           "**Por la nuestra:** podemos suspender o cerrar una cuenta que incumpla estos Términos de forma grave o reiterada. Cuando sea razonable, te avisaremos antes y te explicaremos el motivo."
         ]
       },
@@ -390,7 +398,7 @@
                   "Hasta que lo borres"
                 ],
                 [
-                  "`language_cards_collections` `profile_cache_…` `collections_synced_…` `kolo_col_order_…`",
+                  "`profile_cache_…` `kolo_col_order_…`",
                   "Copia local de tus sets y tu perfil para mayor rapidez y uso sin conexión, estado de sincronización y orden de tus sets.",
                   "Hasta que lo borres"
                 ],
@@ -405,7 +413,7 @@
                   "Hasta que lo borres"
                 ],
                 [
-                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed`",
+                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed` `kolo_trial_banner_dismissed`",
                   "Recuerda que ya viste el recorrido de bienvenida o cerraste un aviso.",
                   "Hasta que lo borres"
                 ]

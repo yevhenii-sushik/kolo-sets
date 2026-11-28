@@ -10,6 +10,31 @@
   },
   "versions": [
     {
+      "number": "0.5.0",
+      "date": "November 2026",
+      "title": "Prøv først, registrer deg senere",
+      "intro": "Kolo starter ikke lenger med et registreringsskjema. Trykk «Prøv uten konto», velg et språk, og et øyeblikk senere lærer du de første ordene. Fremgangen teller fra første kort, og du kan lagre den når du har bestemt deg for at Kolo er noe for deg.",
+      "features": [
+        {
+          "title": "Rett til de første ordene",
+          "text": "På velkomstsiden tar «Prøv uten konto» deg til listen over språk – uten navn, e-post eller passord. Velger du norsk eller engelsk, legger Kolo til det første ferdige settet, «Hilsener og presentasjon», og starter en økt med en gang. For andre språk havner du på Hjem med «Første steg», der du lager ditt første sett. Prøvemodus har alt: alle treningsmodusene, XP, ukens bane og belønninger."
+        },
+        {
+          "title": "Lagre fremgangen når du er klar",
+          "text": "I prøvemodus ligger fremgangen bare på denne enheten, og en linje øverst i appen minner deg på det. Trykk «Lagre fremgangen» der eller i Innstillinger og koble til Google eller e-post: ordene, XP og belønningene blir der de er, og fra da av kan du logge inn på hvilken som helst enhet. Har den Google-kontoen eller e-posten allerede en Kolo-konto, logger du inn på den, og settene fra prøvemodus flyttes dit med repetisjonsplanen sin. En prøvekonto som ingen åpner på 30 dager, slettes automatisk, og avslutter du prøvemodus i Innstillinger, slettes den med en gang."
+        },
+        {
+          "title": "Delte sett med ett trykk",
+          "text": "Har noen sendt deg et sett via lenke? «Lær disse ordene i Kolo» starter nå prøvemodus, legger til settet og åpner en økt – uten registrering i mellomtiden."
+        },
+        {
+          "title": "Oppdaterte vilkår og personvernerklæring",
+          "text": "Begge dokumentene beskriver nå prøvemodus: hva vi lagrer for en prøvekonto (en tilfeldig ID, ingen e-post eller navn) og når den slettes. Du får en engangsmelding om oppdateringen i appen."
+        }
+      ],
+      "fixes": []
+    },
+    {
       "number": "0.4.1",
       "date": "November 2026",
       "title": "Kolo på ditt språk",

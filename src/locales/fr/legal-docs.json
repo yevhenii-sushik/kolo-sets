@@ -35,6 +35,11 @@
                   "Contrat (art. 6(1)(b) du RGPD)"
                 ],
                 [
+                  "**Mode essai sans compte :** un identifiant de compte aléatoire fourni par Firebase Authentication et la date de début du mode essai. Ni e-mail ni nom tant que tu n'as pas sauvegardé ta progression.",
+                  "Te laisser essayer Kolo sans inscription et garder ta progression si tu la sauvegardes ensuite.",
+                  "Contrat"
+                ],
+                [
                   "**Nom d'utilisateur** (attribué automatiquement, tu peux le changer).",
                   "T'identifier dans le classement du jeu du jour.",
                   "Contrat"
@@ -83,6 +88,7 @@
             "list": [
               "Nous n'affichons pas de publicité et n'utilisons pas d'identifiants publicitaires.",
               "Nous n'utilisons aucun outil de mesure d'audience ou de pistage. Si nous en ajoutons un jour, il ne fonctionnera qu'après ton accord, et nous mettrons d'abord cette politique à jour.",
+              "Pour savoir si Kolo aide à continuer d'apprendre, l'équipe consulte des chiffres globaux tirés des données que nous stockons déjà, par exemple combien de nouveaux venus reviennent une semaine plus tard. Ces chiffres ne permettent d'identifier personne et ne quittent jamais Kolo.",
               "Nous ne vendons ni ne louons tes données personnelles, et nous ne les utilisons pas pour du profilage.",
               "Nous ne collectons ni localisation précise, ni contacts, ni données biométriques."
             ]
@@ -137,7 +143,8 @@
           {
             "list": [
               "Compte et données d'apprentissage : tant que ton compte existe.",
-              "Quand tu supprimes ton compte dans l'appli (« More → Settings »), ta connexion, ton profil, tes sets et ton nom d'utilisateur sont supprimés immédiatement.",
+              "Quand tu supprimes ton compte dans l'appli (« Plus → Réglages »), ta connexion, ton profil, tes sets et ton nom d'utilisateur sont supprimés immédiatement.",
+              "Comptes d'essai (sans Google ni e-mail connecté) : supprimés automatiquement avec toutes leurs données 30 jours après leur dernière ouverture. Quitter le mode essai dans l'appli (« Plus → Réglages ») supprime le compte d'essai immédiatement.",
               "Les scores du jeu du jour et une photo de profil ajoutée **ne sont pas encore supprimés automatiquement** avec le compte. Écris à {email.privacy} et nous les supprimerons sous 30 jours.",
               "Messages à l'assistance : le temps nécessaire pour traiter ta demande. Tu peux nous demander de les supprimer.",
               "Journaux techniques chez nos prestataires : selon leurs durées de conservation.",
@@ -155,8 +162,8 @@
             "list": [
               "accéder aux données personnelles que nous détenons sur toi ;",
               "rectifier des données inexactes — ton nom, ton nom d'utilisateur et ta photo se modifient dans ton profil ;",
-              "effacer tes données — tu peux supprimer ton compte dans « More → Settings » ;",
-              "emporter tes données — tu peux exporter tes sets dans « More → Settings » ;",
+              "effacer tes données — tu peux supprimer ton compte dans « Plus → Réglages » ;",
+              "emporter tes données — tu peux exporter tes sets dans « Plus → Réglages » ;",
               "limiter un traitement ou t'opposer à un traitement fondé sur nos intérêts légitimes ;",
               "retirer ton consentement à tout moment lorsque nous nous fondons dessus, par exemple dans les paramètres des cookies."
             ]
@@ -221,7 +228,8 @@
             "list": [
               "Tu dois avoir au moins 13 ans, ou plus si la loi de ton pays l'exige pour accepter seul(e) ces Conditions.",
               "Donne des informations exactes à l'inscription et garde tes identifiants en sécurité.",
-              "Tu es responsable de l'activité de ton compte. Préviens-nous immédiatement si tu soupçonnes une utilisation non autorisée."
+              "Tu es responsable de l'activité de ton compte. Préviens-nous immédiatement si tu soupçonnes une utilisation non autorisée.",
+              "Tu peux aussi essayer Kolo sans compte. Le mode essai n'existe que dans le navigateur où tu l'as commencé : si tu effaces les données de ce navigateur ou perds l'appareil, le compte d'essai et sa progression ne peuvent pas être récupérés. Un compte d'essai qui n'a pas été ouvert pendant 30 jours est supprimé automatiquement. Pour garder ta progression, connecte Google ou une adresse e-mail dans l'appli."
             ]
           }
         ]
@@ -258,7 +266,7 @@
               "Les sets de mots, cartes et autres contenus que tu crées t'appartiennent.",
               "Tu nous accordes une licence limitée et non exclusive pour stocker, traiter et afficher ton contenu uniquement afin de fournir Kolo — par exemple pour synchroniser tes sets et afficher ton nom dans le classement.",
               "Tu dois t'assurer que ton contenu ne porte pas atteinte aux droits d'auteur ou à d'autres droits.",
-              "Tu peux exporter tes sets ou supprimer ton compte à tout moment dans « More → Settings »."
+              "Tu peux exporter tes sets ou supprimer ton compte à tout moment dans « Plus → Réglages »."
             ]
           }
         ]
@@ -307,7 +315,7 @@
         "id": "termination",
         "title": "Fin de l'accord",
         "blocks": [
-          "**De ton côté :** tu peux cesser d'utiliser Kolo et supprimer ton compte à tout moment dans « More → Settings ».",
+          "**De ton côté :** tu peux cesser d'utiliser Kolo et supprimer ton compte à tout moment dans « Plus → Réglages ».",
           "**De notre côté :** nous pouvons suspendre ou fermer un compte qui enfreint ces Conditions de façon grave ou répétée. Lorsque c'est raisonnable, nous te prévenons d'abord et expliquons pourquoi."
         ]
       },
@@ -390,7 +398,7 @@
                   "Jusqu'à ce que tu l'effaces"
                 ],
                 [
-                  "`language_cards_collections` `profile_cache_…` `collections_synced_…` `kolo_col_order_…`",
+                  "`profile_cache_…` `kolo_col_order_…`",
                   "Copie locale de tes sets et de ton profil pour la rapidité et le hors-ligne, état de synchronisation et ordre de tes sets.",
                   "Jusqu'à ce que tu l'effaces"
                 ],
@@ -405,7 +413,7 @@
                   "Jusqu'à ce que tu l'effaces"
                 ],
                 [
-                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed`",
+                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed` `kolo_trial_banner_dismissed`",
                   "Retient que tu as vu la visite de bienvenue ou fermé une notification.",
                   "Jusqu'à ce que tu l'effaces"
                 ]

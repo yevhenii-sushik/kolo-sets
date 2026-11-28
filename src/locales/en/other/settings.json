@@ -116,6 +116,15 @@
       "password": "Email and password",
       "google": "Google"
     },
+    "trial": {
+      "method": "Trial mode — progress is only on this device",
+      "save": "Save progress",
+      "saveDesc": "Add Google or an email to keep your words and sign in on any device.",
+      "leaveRow": "Leave trial mode",
+      "leaveTitle": "Leave trial mode?",
+      "leaveText": "Your sets and progress will be deleted — there's no way back into a trial account. Save your progress first if you want to keep them.",
+      "leave": "Delete and leave"
+    },
     "changePassword": "Change password",
     "changePasswordDesc": "We'll email you a link to set a new password.",
     "send": "Send link",

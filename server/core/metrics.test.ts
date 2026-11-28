@@ -138,6 +138,22 @@ describe("когорты", () => {
   });
 });
 
+describe("пробный режим", () => {
+  it("метка пробы из профиля; сохранил — если появился способ входа", () => {
+    const profile = { trialStartedAt: "2026-11-20T10:00:00.000Z" };
+    expect(metricUser({ ...account("2026-11-20T10:00:00Z"), providers: 0 }, profile, [], NOW)!.trial).toBe("open");
+    expect(metricUser({ ...account("2026-11-20T10:00:00Z"), providers: 1 }, profile, [], NOW)!.trial).toBe("saved");
+    expect(metricUser({ ...account("2026-11-20T10:00:00Z"), providers: 1 }, {}, [], NOW)!.trial).toBeUndefined();
+  });
+  it("сводка: сколько начали без аккаунта и сколько сохранили", () => {
+    const m = retentionMetrics(
+      [user("2026-11-20", [], { trial: "open" }), user("2026-11-20", [0], { trial: "saved" }), user("2026-11-20")],
+      NOW,
+    );
+    expect(m.trial).toEqual({ started: 2, saved: 1 });
+  });
+});
+
 describe("воронка новичка", () => {
   it("строгая: шаг засчитан, только если пройдены все до него", () => {
     const m = retentionMetrics(

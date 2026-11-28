@@ -115,6 +115,15 @@
     "methods": {
       "password": "E-Mail und Passwort"
     },
+    "trial": {
+      "method": "Testmodus – Fortschritt nur auf diesem Gerät",
+      "save": "Fortschritt speichern",
+      "saveDesc": "Verbinde Google oder eine E-Mail-Adresse: Deine Wörter bleiben, und du kannst dich auf jedem Gerät anmelden.",
+      "leaveRow": "Testmodus beenden",
+      "leaveTitle": "Testmodus beenden?",
+      "leaveText": "Deine Sets und dein Fortschritt werden gelöscht – zu einem Testkonto gibt es kein Zurück. Speichere zuerst deinen Fortschritt, wenn du sie behalten willst.",
+      "leave": "Löschen und beenden"
+    },
     "changePassword": "Passwort ändern",
     "changePasswordDesc": "Wir schicken dir per E-Mail einen Link, mit dem du ein neues Passwort festlegst.",
     "send": "Link senden",

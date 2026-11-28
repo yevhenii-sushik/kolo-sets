@@ -37,6 +37,11 @@
         "other": "{n} days"
       }
     },
+    "trial": {
+      "text": "Trial mode: your progress is only on this device.",
+      "action": "Save progress",
+      "dismiss": "Hide"
+    },
     "verify": {
       "text": "Confirm your email to secure your account.",
       "resend": "Send the email again",
@@ -54,7 +59,7 @@
       "install": "Install"
     },
     "legalUpdate": {
-      "text": "On {date} we updated our Terms of Use and Privacy Policy: XP, weekly orbits, capsules and virtual items have arrived.",
+      "text": "On {date} we updated our Terms of Use and Privacy Policy: you can now try Kolo without an account.",
       "terms": "Terms",
       "privacy": "Privacy",
       "ok": "Got it"

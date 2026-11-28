@@ -10,6 +10,31 @@
   },
   "versions": [
     {
+      "number": "0.5.0",
+      "date": "Noviembre de 2026",
+      "title": "Primero prueba, luego regístrate",
+      "intro": "Kolo ya no empieza con un formulario de registro. Toca «Probar sin registrarte», elige un idioma y, un momento después, ya estás aprendiendo tus primeras palabras. Tu progreso cuenta desde la primera tarjeta, y puedes guardarlo cuando decidas que Kolo es para ti.",
+      "features": [
+        {
+          "title": "Directo a tus primeras palabras",
+          "text": "En la página de bienvenida, «Probar sin registrarte» te lleva a la lista de idiomas, sin nombre, correo ni contraseña. Si eliges noruego o inglés, Kolo añade el primer set listo, «Saludos y presentaciones», y empieza una sesión al momento. Con otros idiomas llegas a Inicio con «Primeros pasos», donde creas tu primer set. El modo de prueba lo tiene todo: todos los modos de entrenamiento, XP, la órbita de la semana y las recompensas."
+        },
+        {
+          "title": "Guarda tu progreso cuando quieras",
+          "text": "En el modo de prueba tu progreso solo está en este dispositivo, y un aviso arriba en la app te lo recuerda. Toca «Guardar progreso» ahí o en Ajustes y conecta Google o un correo: tus palabras, tu XP y tus recompensas se quedan donde están, y desde entonces puedes entrar desde cualquier dispositivo. Si esa cuenta de Google o ese correo ya tienen una cuenta de Kolo, entras en ella y los sets del modo de prueba pasan allí con su calendario de repasos. Una cuenta de prueba que nadie abre en 30 días se elimina automáticamente, y si sales del modo de prueba en Ajustes, se elimina al momento."
+        },
+        {
+          "title": "Sets compartidos con un toque",
+          "text": "¿Te enviaron un set por enlace? «Aprender estas palabras en Kolo» ahora activa el modo de prueba, añade el set y abre una sesión, sin registro de por medio."
+        },
+        {
+          "title": "Términos y Política de privacidad actualizados",
+          "text": "Los dos documentos ahora describen el modo de prueba: qué guardamos de una cuenta de prueba (un identificador aleatorio, sin correo ni nombre) y cuándo se elimina. En la app verás una sola vez un aviso sobre la actualización."
+        }
+      ],
+      "fixes": []
+    },
+    {
       "number": "0.4.1",
       "date": "Noviembre de 2026",
       "title": "Kolo en tu idioma",

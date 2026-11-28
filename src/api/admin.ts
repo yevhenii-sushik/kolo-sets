@@ -29,6 +29,7 @@ export interface AdminUser {
 // Удержание: excluded — сколько регистраций окна не в счёте (команда, отключённые)
 export interface AdminMetrics extends Metrics {
   excluded: { team: number; disabled: number };
+  trialsDeleted: number; // пробные аккаунты, удалённые за 30 дней без входа, — за всё время
   truncated: boolean;
 }
 

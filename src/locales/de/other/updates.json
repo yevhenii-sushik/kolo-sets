@@ -10,6 +10,31 @@
   },
   "versions": [
     {
+      "number": "0.5.0",
+      "date": "November 2026",
+      "title": "Erst ausprobieren, dann anmelden",
+      "intro": "Kolo beginnt nicht mehr mit einem Anmeldeformular. Tippe auf „Ohne Anmeldung ausprobieren“, wähle eine Sprache, und einen Moment später lernst du deine ersten Wörter. Dein Fortschritt zählt ab der ersten Karte, und du kannst ihn behalten, sobald du merkst, dass Kolo zu dir passt.",
+      "features": [
+        {
+          "title": "Direkt zu den ersten Wörtern",
+          "text": "Auf der Startseite führt „Ohne Anmeldung ausprobieren“ zur Liste der Sprachen – ohne Name, E-Mail oder Passwort. Wählst du Norwegisch oder Englisch, fügt Kolo das erste fertige Set hinzu, „Begrüßung und Vorstellung“, und startet sofort eine Übung. Bei anderen Sprachen landest du auf der Startseite mit „Erste Schritte“, wo du dein erstes Set anlegst. Im Testmodus ist alles dabei: alle Übungsarten, XP, der Wochenorbit und Belohnungen."
+        },
+        {
+          "title": "Fortschritt speichern, wenn du so weit bist",
+          "text": "Im Testmodus ist dein Fortschritt nur auf diesem Gerät gespeichert, und ein Hinweis oben in der App erinnert daran. Tippe dort oder in den Einstellungen auf „Fortschritt speichern“ und verbinde Google oder eine E-Mail-Adresse: Deine Wörter, XP und Belohnungen bleiben, wo sie sind, und ab dann kannst du dich auf jedem Gerät anmelden. Hat dieses Google-Konto oder diese E-Mail-Adresse schon ein Kolo-Konto, meldest du dich dort an, und die Sets aus dem Testmodus ziehen mit ihrem Wiederholungsplan um. Ein Testkonto, das 30 Tage niemand öffnet, wird automatisch gelöscht, und wenn du den Testmodus in den Einstellungen beendest, sofort."
+        },
+        {
+          "title": "Geteilte Sets mit einem Tipp",
+          "text": "Dir hat jemand ein Set per Link geschickt? „Diese Wörter in Kolo lernen“ startet jetzt den Testmodus, fügt das Set hinzu und öffnet eine Übung – ohne Anmeldung dazwischen."
+        },
+        {
+          "title": "Aktualisierte Nutzungsbedingungen und Datenschutzerklärung",
+          "text": "Beide Dokumente beschreiben jetzt den Testmodus: was wir für ein Testkonto speichern (eine zufällige ID, keine E-Mail-Adresse und kein Name) und wann es gelöscht wird. In der App siehst du einmalig einen Hinweis auf die Aktualisierung."
+        }
+      ],
+      "fixes": []
+    },
+    {
       "number": "0.4.1",
       "date": "November 2026",
       "title": "Kolo in deiner Sprache",

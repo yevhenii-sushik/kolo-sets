@@ -12,72 +12,35 @@ import {
 export { isNewCard, isDueCard, updateSRSData } from './srs';
 import { initialSRS } from './srs';
 
-const STORAGE_KEY = 'language_cards_collections';
 const THEME_KEY = 'language_cards_theme';
 
-// Получить все коллекции (из Firestore если залогинен, иначе из localStorage)
+// Наборы живут только в Firestore: приложение открывается лишь после входа, а попробовать без аккаунта — это
+// анонимный вход Firebase (шаг 16 в docs/specs/06-audit-fixes.md). Прежний гостевой режим на localStorage
+// удалён: до него нельзя было добраться. Без входа записывать некуда — запись отклоняется, и экран это покажет
+const signedIn = () => {
+  const user = auth.currentUser;
+  if (!user) throw new Error('Not signed in');
+  return user;
+};
+
+// Все наборы человека. Ошибка сервера — пустой список, как и раньше (тренировка и экспорт скажут, что наборов нет)
 export const getCollections = async (): Promise<Collection[]> => {
   const user = auth.currentUser;
-  
-  if (user) {
-    // Получаем из Firestore
-    try {
-      return await getUserCollections(user.uid);
-    } catch (error) {
-      console.error('Ошибка получения из Firestore:', error);
-      return getLocalCollections();
-    }
-  }
-  
-  return getLocalCollections();
-};
-
-// Получить коллекции из localStorage
-export const getLocalCollections = (): Collection[] => {
+  if (!user) return [];
   try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    if (!data) return [];
-    
-    const collections = JSON.parse(data);
-    // Преобразуем строки дат обратно в объекты Date
-    return collections.map((col: any) => ({
-      ...col,
-      language: col.language || 'nb-NO', // Добавляем язык по умолчанию для старых коллекций
-      createdAt: new Date(col.createdAt),
-      lastStudied: col.lastStudied ? new Date(col.lastStudied) : undefined,
-      cards: col.cards.map((card: any) => ({
-        ...card,
-        createdAt: new Date(card.createdAt),
-        srsData: {
-          ...card.srsData,
-          nextReview: new Date(card.srsData.nextReview),
-          lastReviewed: card.srsData.lastReviewed ? new Date(card.srsData.lastReviewed) : undefined
-        }
-      }))
-    }));
+    return await getUserCollections(user.uid);
   } catch (error) {
-    console.error('Ошибка при загрузке коллекций:', error);
+    console.error('Ошибка получения из Firestore:', error);
     return [];
-  }
-};
-
-// Сохранить все коллекции в localStorage
-const saveLocalCollections = (collections: Collection[]): void => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(collections));
-  } catch (error) {
-    console.error('Ошибка при сохранении коллекций:', error);
   }
 };
 
 // Получить коллекцию по ID
 export const getCollection = async (id: string): Promise<Collection | undefined> => {
   const user = auth.currentUser;
-  if (user) {
-    const result = await getUserCollection(user.uid, id);
-    return result ?? undefined;
-  }
-  return getLocalCollections().find(col => col.id === id);
+  if (!user) return undefined;
+  const result = await getUserCollection(user.uid, id);
+  return result ?? undefined;
 };
 
 // Новый пустой набор — только объект, без записи: экран показывает его сразу, а запись идёт в фоне
@@ -96,58 +59,26 @@ export const buildCollection = (name: string, language: string, courseId?: strin
 
 // Сохранить готовый набор целиком (с карточками) — набор Kolo, собранный в presets/build.ts
 export const addCollection = async (newCollection: Collection): Promise<void> => {
-  const user = auth.currentUser;
-  if (user) {
-    await saveUserCollection(user.uid, newCollection);
-  } else {
-    saveLocalCollections([...getLocalCollections(), newCollection]);
-  }
+  await saveUserCollection(signedIn().uid, newCollection);
 };
 
 // Сохранить коллекцию целиком: новую или изменённую (setDoc в Firestore тоже создаёт или заменяет)
 export const updateCollection = async (updatedCollection: Collection): Promise<void> => {
-  const user = auth.currentUser;
-  
-  if (user) {
-    await saveUserCollection(user.uid, updatedCollection);
-  } else {
-    const collections = getLocalCollections();
-    const index = collections.findIndex(col => col.id === updatedCollection.id);
-    if (index !== -1) collections[index] = updatedCollection;
-    else collections.push(updatedCollection);
-    saveLocalCollections(collections);
-  }
+  await saveUserCollection(signedIn().uid, updatedCollection);
 };
 
-// Точечно обновить метаданные коллекции (isFavorite, folderId, ...).
-// Для залогиненных — updateDoc только изменённых полей (не гоняем все карточки);
-// undefined = удалить поле. Для гостей — обычное локальное обновление.
+// Точечно обновить метаданные коллекции (isFavorite, folderId, ...): updateDoc только изменённых полей
+// (не гоняем все карточки); undefined = удалить поле
 export const updateCollectionMeta = async (
   coll: Collection,
   fields: Partial<Pick<Collection, 'isFavorite' | 'folderId' | 'order' | 'name' | 'language' | 'courseId' | 'lastStudied'>>
 ): Promise<void> => {
-  const user = auth.currentUser;
-
-  if (user) {
-    await updateUserCollectionFields(user.uid, coll.id, fields);
-  } else {
-    await updateCollection({ ...coll, ...fields });
-  }
+  await updateUserCollectionFields(signedIn().uid, coll.id, fields);
 };
 
 // Удалить коллекцию
 export const deleteCollection = async (id: string): Promise<void> => {
-  const user = auth.currentUser;
-  
-  if (user) {
-    // Удаляем из Firestore
-    await deleteFirestoreCollection(user.uid, id);
-  } else {
-    // Удаляем локально
-    const collections = getLocalCollections();
-    const filtered = collections.filter(col => col.id !== id);
-    saveLocalCollections(filtered);
-  }
+  await deleteFirestoreCollection(signedIn().uid, id);
 };
 
 // Создать новую карточку с начальными данными SRS

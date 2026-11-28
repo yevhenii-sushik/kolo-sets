@@ -13,11 +13,14 @@ import { fetchSharedSet, type SharedSetReply } from "../../api/shareLinks";
 import { buildSharedCollection, sharedSetCourse, sharedSetVoice } from "../../sharedSets/build";
 import { clearPendingShare, rememberPendingShare } from "../../sharedSets/pending";
 import { APP_TITLE } from "../../utils/pageMeta";
+import { finishOnboarding } from "../../utils/firstRun";
+import TrialButton from "../../components/auth/TrialButton";
 
 type PageState = { kind: "loading" } | { kind: "gone" } | { kind: "failed" } | { kind: "ready"; reply: SharedSetReply };
 
 // Набор по ссылке (docs/specs/07-shared-sets.md): слова набора и копия себе. Открывается и без входа —
-// гость видит слова и идёт регистрироваться, а после входа возвращается сюда же (sharedSets/pending.ts)
+// гость видит слова и начинает их учить без аккаунта (пробный вход, шаг 16 в docs/specs/06-audit-fixes.md)
+// или входит в свой аккаунт и возвращается сюда же (sharedSets/pending.ts)
 export default function SharedSetPage() {
   const { id = "" } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -84,8 +87,8 @@ export default function SharedSetPage() {
 
   const [busy, setBusy] = useState(false);
   const [addFailed, setAddFailed] = useState(false);
-  const add = async () => {
-    if (!set || !course || busy) return;
+  const add = async (): Promise<string | null> => {
+    if (!set || !course || busy) return null;
     setBusy(true);
     setAddFailed(false);
     try {
@@ -99,12 +102,27 @@ export default function SharedSetPage() {
       setCollections((prev) => [col, ...prev]);
       clearPendingShare();
       checkAchievements();
+      return col.id;
     } catch {
       setAddFailed(true);
+      return null;
     } finally {
       setBusy(false);
     }
   };
+
+  // Гость нажал «Учить эти слова»: пробный вход, и как только аккаунт и его курсы загрузились — набор себе
+  // и сразу тренировка по нему. Вступление на главной не нужно: человек уже учится
+  const [learnAfterTrial, setLearnAfterTrial] = useState(false);
+  useEffect(() => {
+    if (!learnAfterTrial || !user || !coursesReady || !set || busy) return;
+    setLearnAfterTrial(false);
+    void add().then((colId) => {
+      if (!colId) return;
+      finishOnboarding();
+      navigate(`/learn?set=${colId}`);
+    });
+  }, [learnAfterTrial, user, coursesReady, set]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toAuth = (path: "/register" | "/login") => {
     rememberPendingShare(id);
@@ -188,14 +206,17 @@ export default function SharedSetPage() {
 
             {set.cards.length > 0 && (
               <Card padding="lg" className="grid gap-4">
-                {!signedIn ? (
+                {!signedIn || learnAfterTrial ? (
                   <>
                     <Text tone="muted">{s.guestPitch}</Text>
-                    <div className="flex flex-wrap gap-2">
-                      <Button iconLeft={<Plus size={18} />} onClick={() => toAuth("/register")}>
-                        {s.guestCta}
-                      </Button>
-                      <Button variant="secondary" onClick={() => toAuth("/login")}>
+                    <TrialButton
+                      label={s.guestCta}
+                      size="md"
+                      align="start"
+                      onStarted={() => setLearnAfterTrial(true)}
+                    />
+                    <div>
+                      <Button variant="ghost" size="sm" onClick={() => toAuth("/login")}>
                         {s.guestSignIn}
                       </Button>
                     </div>

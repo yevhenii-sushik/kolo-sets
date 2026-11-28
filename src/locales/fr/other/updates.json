@@ -10,6 +10,31 @@
   },
   "versions": [
     {
+      "number": "0.5.0",
+      "date": "Novembre 2026",
+      "title": "Essaie d’abord, inscris-toi ensuite",
+      "intro": "Kolo ne commence plus par un formulaire d’inscription. Touche « Essayer sans inscription », choisis une langue, et un instant plus tard tu apprends tes premiers mots. Ta progression compte dès la première carte, et tu peux la garder dès que tu décides que Kolo est fait pour toi.",
+      "features": [
+        {
+          "title": "Directement à tes premiers mots",
+          "text": "Sur la page d’accueil, « Essayer sans inscription » t’amène à la liste des langues, sans nom, e-mail ni mot de passe. Si tu choisis le norvégien ou l’anglais, Kolo ajoute le premier set prêt à l’emploi, « Salutations et présentations », et lance une séance tout de suite. Pour les autres langues, tu arrives sur l’Accueil avec « Premiers pas », où tu crées ton premier set. Le mode essai a tout : tous les modes d’entraînement, l’XP, l’orbite de la semaine et les récompenses."
+        },
+        {
+          "title": "Sauvegarde ta progression quand tu veux",
+          "text": "En mode essai, ta progression n’existe que sur cet appareil, et une ligne en haut de l’appli te le rappelle. Touche « Sauvegarder ma progression » à cet endroit ou dans les Réglages et connecte Google ou une adresse e-mail : tes mots, ton XP et tes récompenses restent là où ils sont, et tu peux ensuite te connecter sur n’importe quel appareil. Si ce compte Google ou cette adresse ont déjà un compte Kolo, tu t’y connectes, et les sets du mode essai y sont transférés avec leur calendrier de révisions. Un compte d’essai que personne n’ouvre pendant 30 jours est supprimé automatiquement, et quitter le mode essai dans les Réglages le supprime tout de suite."
+        },
+        {
+          "title": "Sets partagés en un geste",
+          "text": "Quelqu’un t’a envoyé un set par lien ? « Apprendre ces mots dans Kolo » lance maintenant le mode essai, ajoute le set et ouvre une séance, sans inscription entre les deux."
+        },
+        {
+          "title": "Conditions et Politique de confidentialité mises à jour",
+          "text": "Les deux documents décrivent maintenant le mode essai : ce que nous gardons pour un compte d’essai (un identifiant aléatoire, sans e-mail ni nom) et quand il est supprimé. Tu verras une seule fois un message sur la mise à jour dans l’appli."
+        }
+      ],
+      "fixes": []
+    },
+    {
       "number": "0.4.1",
       "date": "Novembre 2026",
       "title": "Kolo dans ta langue",

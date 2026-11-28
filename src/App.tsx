@@ -19,6 +19,7 @@ import { ProgressMomentsHost } from "./components/progress/ProgressMoments";
 import { ShareOrbitHost } from "./components/progress/ShareOrbitModal";
 import CookieConsentBanner from "./components/legal/CookieConsentBanner";
 import SaveErrorToast from "./components/SaveErrorToast";
+import { SaveProgressHost } from "./components/auth/SaveProgress";
 
 // Layouts (небольшие — грузим сразу)
 import MainLayout from "./pages/layouts/MainLayout";
@@ -133,6 +134,7 @@ function AppContent() {
     <ShareOrbitHost />
     <CookieConsentBanner />
     <SaveErrorToast />
+    <SaveProgressHost />
     {/* Граница для страниц без своего макета (вход, лендинг, выбор языка) и для ленивых макетов.
         У MainLayout, EmptyLayout и NavLayout — свои границы: шапка и меню не пропадают, пока грузится страница */}
     <Suspense fallback={<AppSplash />}>

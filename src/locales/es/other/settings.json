@@ -115,6 +115,15 @@
     "methods": {
       "password": "Correo y contraseña"
     },
+    "trial": {
+      "method": "Modo de prueba: el progreso solo está en este dispositivo",
+      "save": "Guardar progreso",
+      "saveDesc": "Conecta Google o un correo: tus palabras se quedan y podrás entrar desde cualquier dispositivo.",
+      "leaveRow": "Salir del modo de prueba",
+      "leaveTitle": "¿Salir del modo de prueba?",
+      "leaveText": "Tus sets y tu progreso se borrarán: a una cuenta de prueba no se puede volver. Guarda tu progreso antes si quieres conservarlos.",
+      "leave": "Borrar y salir"
+    },
     "changePassword": "Cambiar contraseña",
     "changePasswordDesc": "Te enviaremos por correo un enlace para crear una contraseña nueva.",
     "send": "Enviar enlace",

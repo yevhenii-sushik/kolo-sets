@@ -35,6 +35,11 @@
                   "Avtale (personvernforordningen art. 6(1)(b))"
                 ],
                 [
+                  "**Prøvemodus uten konto:** en tilfeldig konto-ID fra Firebase Authentication og når du startet prøvemodus. Ingen e-post eller navn før du lagrer fremgangen.",
+                  "La deg prøve Kolo uten å registrere deg, og beholde fremgangen hvis du lagrer den senere.",
+                  "Avtale"
+                ],
+                [
                   "**Brukernavn** (tildeles automatisk, du kan endre det).",
                   "Vise deg på topplisten for dagens spill.",
                   "Avtale"
@@ -83,6 +88,7 @@
             "list": [
               "Vi viser ikke reklame og bruker ikke annonse-ID-er.",
               "Vi bruker ikke analyse- eller sporingsverktøy. Hvis vi en gang legger til analyse, kjører den bare etter at du har samtykket, og vi oppdaterer denne erklæringen først.",
+              "For å se om Kolo hjelper folk å fortsette å lære, ser teamet på samlede tall laget av data vi allerede lagrer, for eksempel hvor mange nye som kommer tilbake en uke senere. Tallene kan ikke identifisere noen og forlater aldri Kolo.",
               "Vi selger eller leier ikke ut personopplysningene dine, og vi bruker dem ikke til profilering.",
               "Vi samler ikke inn presis posisjon, kontakter eller biometriske data."
             ]
@@ -138,6 +144,7 @@
             "list": [
               "Konto og læringsdata: så lenge kontoen din finnes.",
               "Når du sletter kontoen i appen («Mer → Innstillinger»), slettes innlogging, profil, ordsett og brukernavn med en gang.",
+              "Prøvekontoer (uten Google eller e-post): slettes automatisk med alle data 30 dager etter at de sist ble åpnet. Avslutter du prøvemodus i appen («Mer → Innstillinger»), slettes prøvekontoen med en gang.",
               "Resultater i dagens spill og et opplastet profilbilde **fjernes ennå ikke automatisk** når du sletter kontoen. Send e-post til {email.privacy}, så sletter vi dem innen 30 dager.",
               "Henvendelser til støtte: så lenge det trengs for å håndtere saken din. Du kan be oss slette dem.",
               "Tekniske logger hos leverandørene: etter deres lagringstider.",
@@ -221,7 +228,8 @@
             "list": [
               "Du må være minst 13 år, eller eldre hvis loven i landet ditt krever det for å godta vilkårene selv.",
               "Oppgi riktige opplysninger når du registrerer deg, og hold innloggingsopplysningene dine trygge.",
-              "Du er ansvarlig for aktivitet på kontoen din. Si fra til oss med en gang hvis du mistenker uautorisert bruk."
+              "Du er ansvarlig for aktivitet på kontoen din. Si fra til oss med en gang hvis du mistenker uautorisert bruk.",
+              "Du kan også prøve Kolo uten konto. Prøvemodus finnes bare i nettleseren der du startet den: sletter du dataene i nettleseren eller mister enheten, kan prøvekontoen og fremgangen ikke gjenopprettes. En prøvekonto som ikke er åpnet på 30 dager, slettes automatisk. For å beholde fremgangen kobler du til Google eller e-post i appen."
             ]
           }
         ]
@@ -390,7 +398,7 @@
                   "Til du sletter det"
                 ],
                 [
-                  "`language_cards_collections` `profile_cache_…` `collections_synced_…` `kolo_col_order_…`",
+                  "`profile_cache_…` `kolo_col_order_…`",
                   "En lokal kopi av ordsettene og profilen din for fart og frakoblet bruk, synkroniseringsstatus og rekkefølgen på settene.",
                   "Til du sletter det"
                 ],
@@ -405,7 +413,7 @@
                   "Til du sletter det"
                 ],
                 [
-                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed`",
+                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed` `kolo_trial_banner_dismissed`",
                   "Husker at du har sett velkomstomvisningen eller lukket et varsel.",
                   "Til du sletter det"
                 ]

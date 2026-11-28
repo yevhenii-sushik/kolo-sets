@@ -297,6 +297,14 @@ export const recordLegalAcceptance = async (userId: string, version: string) => 
   await updateUserProfile(userId, { legalAcceptance: { version, acceptedAt: Timestamp.now() } });
 };
 
+// Пробный вход (шаг 16 в docs/specs/06-audit-fixes.md): согласие дано строкой под кнопкой «Попробовать»,
+// а метка начала пробы нужна админ-панели — сколько начали без аккаунта и сколько потом сохранили прогресс
+export const recordTrialStart = async (userId: string, version: string) => {
+  await getUserProfile(userId);
+  const now = Timestamp.now();
+  await updateUserProfile(userId, { legalAcceptance: { version, acceptedAt: now, via: 'trial' }, trialStartedAt: now });
+};
+
 // Удалить все данные пользователя (коллекции + профиль). sessionsCleared — журнал тренировок уже
 // удалил сервер (/api/account-cleanup); иначе удаляем сами — правила это разрешают владельцу
 export const deleteUserData = async (userId: string, { sessionsCleared = false } = {}): Promise<void> => {

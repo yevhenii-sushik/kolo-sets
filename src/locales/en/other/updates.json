@@ -10,6 +10,31 @@
   },
   "versions": [
     {
+      "number": "0.5.0",
+      "date": "November 2026",
+      "title": "Try first, sign up later",
+      "intro": "Kolo no longer starts with a sign-up form. Tap “Try without signing up”, pick a language, and a moment later you're learning your first words. Your progress counts from the very first card, and you can keep it whenever you decide Kolo is for you.",
+      "features": [
+        {
+          "title": "Straight to your first words",
+          "text": "On the welcome page, “Try without signing up” takes you to the list of languages, with no name, email or password. If you pick Norwegian or English, Kolo adds the first ready-made set, “Greetings and introductions”, and starts a session right away. For other languages you land on Home with “First steps”, where you create your first set. Trial mode has everything: all training modes, XP, the weekly orbit and rewards."
+        },
+        {
+          "title": "Save your progress when you're ready",
+          "text": "In trial mode your progress lives only on this device, and a note at the top of the app says so. Tap “Save progress” there or in Settings and add Google or an email: your words, XP and rewards stay right where they are, and from then on you can sign in on any device. If that Google account or email already has a Kolo account, you sign in to it, and the sets from your trial move over with their review schedule. A trial account nobody opens for 30 days is deleted automatically, and leaving trial mode in Settings deletes it right away."
+        },
+        {
+          "title": "Shared sets in one tap",
+          "text": "Someone sent you a set by link? “Learn these words in Kolo” now starts trial mode, adds the set and opens a session, with no sign-up in between."
+        },
+        {
+          "title": "Updated Terms and Privacy Policy",
+          "text": "Both documents now describe trial mode: what we store for a trial account (a random identifier, no email or name) and when it's deleted. You'll see a one-time note about the update in the app."
+        }
+      ],
+      "fixes": []
+    },
+    {
       "number": "0.4.1",
       "date": "November 2026",
       "title": "Kolo in your language",

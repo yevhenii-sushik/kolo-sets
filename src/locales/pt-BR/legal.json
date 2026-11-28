@@ -28,6 +28,7 @@
     },
     "required": "Aceite os Termos de Uso para criar uma conta.",
     "google": "Ao continuar com o Google, você aceita os {terms} e confirma que leu a {privacy}.",
+    "trial": "Ao continuar, você aceita os {terms} e confirma que leu a {privacy}.",
     "support": "Sua mensagem vai para a equipe do Kolo pelo Telegram. Saiba mais na {privacy}."
   },
   "page": {

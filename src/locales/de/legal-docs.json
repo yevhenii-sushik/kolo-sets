@@ -35,6 +35,11 @@
                   "Vertrag (Art. 6 Abs. 1 lit. b DSGVO)"
                 ],
                 [
+                  "**Testmodus ohne Konto:** eine zufällige Konto-ID von Firebase Authentication und der Zeitpunkt, zu dem du den Testmodus gestartet hast. Keine E-Mail-Adresse und kein Name, bis du deinen Fortschritt speicherst.",
+                  "Dich Kolo ohne Registrierung ausprobieren lassen und deinen Fortschritt behalten, wenn du ihn später speicherst.",
+                  "Vertrag"
+                ],
+                [
                   "**Benutzername** (wird automatisch vergeben, du kannst ihn ändern).",
                   "Dich in der Bestenliste des Spiels des Tages anzeigen.",
                   "Vertrag"
@@ -83,6 +88,7 @@
             "list": [
               "Wir zeigen keine Werbung und nutzen keine Werbe-IDs.",
               "Wir nutzen keine Analyse- oder Tracking-Tools. Falls wir jemals Analysen einführen, laufen sie nur nach deiner Einwilligung, und wir aktualisieren diese Erklärung vorher.",
+              "Um zu sehen, ob Kolo beim Dranbleiben hilft, schaut sich das Team Gesamtzahlen aus Daten an, die wir ohnehin speichern – etwa, wie viele neue Lernende eine Woche später wiederkommen. Diese Zahlen lassen keinen Rückschluss auf einzelne Personen zu und verlassen Kolo nie.",
               "Wir verkaufen oder vermieten deine personenbezogenen Daten nicht und nutzen sie nicht für Profiling.",
               "Wir erheben keinen genauen Standort, keine Kontakte und keine biometrischen Daten."
             ]
@@ -137,7 +143,8 @@
           {
             "list": [
               "Konto und Lerndaten: solange dein Konto besteht.",
-              "Wenn du dein Konto in der App löschst („More → Settings“), werden Anmeldung, Profil, Wortsets und Benutzername sofort gelöscht.",
+              "Wenn du dein Konto in der App löschst („Mehr → Einstellungen“), werden Anmeldung, Profil, Wortsets und Benutzername sofort gelöscht.",
+              "Testkonten (ohne verbundenes Google-Konto oder E-Mail-Adresse): werden 30 Tage nach dem letzten Öffnen automatisch mit allen Daten gelöscht. Wenn du den Testmodus in der App beendest („Mehr → Einstellungen“), wird das Testkonto sofort gelöscht.",
               "Ergebnisse im Spiel des Tages und ein hochgeladenes Profilbild werden beim Löschen des Kontos **noch nicht automatisch entfernt**. Schreib an {email.privacy}, dann löschen wir sie innerhalb von 30 Tagen.",
               "Support-Nachrichten: so lange, wie es zur Bearbeitung deiner Anfrage nötig ist. Du kannst uns bitten, sie zu löschen.",
               "Technische Protokolle bei unseren Dienstleistern: gemäß deren Aufbewahrungsfristen.",
@@ -155,8 +162,8 @@
             "list": [
               "Auskunft über deine bei uns gespeicherten Daten zu erhalten;",
               "unrichtige Daten berichtigen zu lassen – Name, Benutzername und Foto änderst du im Profil;",
-              "deine Daten löschen zu lassen – dein Konto löschst du unter „More → Settings“;",
-              "deine Daten mitzunehmen – deine Wortsets exportierst du unter „More → Settings“;",
+              "deine Daten löschen zu lassen – dein Konto löschst du unter „Mehr → Einstellungen“;",
+              "deine Daten mitzunehmen – deine Wortsets exportierst du unter „Mehr → Einstellungen“;",
               "die Verarbeitung einzuschränken oder einer Verarbeitung auf Grundlage unserer berechtigten Interessen zu widersprechen;",
               "eine Einwilligung jederzeit zu widerrufen, wo wir uns darauf stützen, etwa in den Cookie-Einstellungen."
             ]
@@ -221,7 +228,8 @@
             "list": [
               "Du musst mindestens 13 Jahre alt sein – oder älter, wenn das Recht deines Landes das verlangt, damit du diese Bedingungen selbst akzeptieren kannst.",
               "Mach bei der Registrierung korrekte Angaben und halte deine Zugangsdaten geheim.",
-              "Du bist für Aktivitäten in deinem Konto verantwortlich. Sag uns sofort Bescheid, wenn du einen unbefugten Zugriff vermutest."
+              "Du bist für Aktivitäten in deinem Konto verantwortlich. Sag uns sofort Bescheid, wenn du einen unbefugten Zugriff vermutest.",
+              "Du kannst Kolo auch ohne Konto ausprobieren. Der Testmodus existiert nur in dem Browser, in dem du ihn gestartet hast: Wenn du die Daten dieses Browsers löschst oder das Gerät verlierst, lassen sich das Testkonto und sein Fortschritt nicht wiederherstellen. Ein Testkonto, das 30 Tage nicht geöffnet wurde, wird automatisch gelöscht. Um deinen Fortschritt zu behalten, verbinde in der App Google oder eine E-Mail-Adresse."
             ]
           }
         ]
@@ -258,7 +266,7 @@
               "Die Wortsets, Karten und anderen Inhalte, die du erstellst, gehören dir.",
               "Du gewährst uns eine beschränkte, nicht exklusive Lizenz, deine Inhalte nur zur Bereitstellung von Kolo zu speichern, zu verarbeiten und anzuzeigen – etwa um deine Sets zu synchronisieren und deinen Benutzernamen in der Bestenliste zu zeigen.",
               "Du bist dafür verantwortlich, dass deine Inhalte keine Urheber- oder sonstigen Rechte verletzen.",
-              "Du kannst deine Sets jederzeit unter „More → Settings“ exportieren oder dein Konto löschen."
+              "Du kannst deine Sets jederzeit unter „Mehr → Einstellungen“ exportieren oder dein Konto löschen."
             ]
           }
         ]
@@ -307,7 +315,7 @@
         "id": "termination",
         "title": "Beendigung",
         "blocks": [
-          "**Durch dich:** Du kannst Kolo jederzeit nicht mehr nutzen und dein Konto unter „More → Settings“ löschen.",
+          "**Durch dich:** Du kannst Kolo jederzeit nicht mehr nutzen und dein Konto unter „Mehr → Einstellungen“ löschen.",
           "**Durch uns:** Wir können ein Konto sperren oder schließen, das schwerwiegend oder wiederholt gegen diese Bedingungen verstößt. Wo es angemessen ist, warnen wir dich vorher und nennen den Grund."
         ]
       },
@@ -390,7 +398,7 @@
                   "Bis du es löschst"
                 ],
                 [
-                  "`language_cards_collections` `profile_cache_…` `collections_synced_…` `kolo_col_order_…`",
+                  "`profile_cache_…` `kolo_col_order_…`",
                   "Lokale Kopie deiner Wortsets und deines Profils für Tempo und Offline-Nutzung, Synchronisierungsstatus und Reihenfolge deiner Sets.",
                   "Bis du es löschst"
                 ],
@@ -405,7 +413,7 @@
                   "Bis du es löschst"
                 ],
                 [
-                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed`",
+                  "`kolo_onboarding_v1` `kolo_install_prompt_dismissed` `verify_email_dismissed` `kolo_trial_banner_dismissed`",
                   "Merkt sich, dass du die Einführung gesehen oder einen Hinweis geschlossen hast.",
                   "Bis du es löschst"
                 ]

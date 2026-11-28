@@ -16,6 +16,7 @@ import {
 } from "./core/admin";
 import { excludedReason, metricUser, retentionMetrics, signedUpWithin, type MetricAccount, type MetricUser } from "./core/metrics";
 import type { Reply } from "./progress";
+import { TRIAL_STATS_DOC } from "./trial";
 
 const DAY_MS = 86_400_000;
 // listUsers отдаёт по 1000 аккаунтов; 20 страниц — запас по времени функции (10 с) на 20 000 аккаунтов
@@ -109,7 +110,7 @@ const cardCount = (data: FirebaseFirestore.DocumentData) => (Array.isArray(data.
 const PROFILE_BATCH = 100;
 const SETS_PARALLEL = 20;
 // Из профиля метрикам нужны только эти поля
-const METRIC_FIELDS = ["timezone", "courses", "studyHistory", "orbit"];
+const METRIC_FIELDS = ["timezone", "courses", "studyHistory", "orbit", "trialStartedAt"];
 
 async function inChunks<T, R>(items: T[], size: number, run: (chunk: T[]) => Promise<R[]>): Promise<R[]> {
   const out: R[] = [];
@@ -126,7 +127,12 @@ export async function adminMetrics(now = new Date()): Promise<Reply> {
   const excluded = { team: 0, disabled: 0 };
   const people: { uid: string; account: MetricAccount }[] = [];
   for (const u of accounts.list) {
-    const account: MetricAccount = { createdAt: iso(u.metadata.creationTime), disabled: u.disabled, claims: u.customClaims };
+    const account: MetricAccount = {
+      createdAt: iso(u.metadata.creationTime),
+      disabled: u.disabled,
+      claims: u.customClaims,
+      providers: u.providerData.length,
+    };
     if (!signedUpWithin(account.createdAt, now)) continue;
     const reason = excludedReason(account);
     if (reason) excluded[reason]++;
@@ -151,7 +157,10 @@ export async function adminMetrics(now = new Date()): Promise<Reply> {
   const users = people
     .map((p, i) => metricUser(p.account, profiles[i].exists ? plain(profiles[i].data()) : null, setCards[i], now))
     .filter((u): u is MetricUser => u !== null);
-  return { status: 200, body: { ...retentionMetrics(users, now), excluded, truncated: accounts.truncated } };
+  // Пробные аккаунты, удалённые за 30 дней без входа (server/trial.ts), — одно число за всё время
+  const trialStats = await store.doc(TRIAL_STATS_DOC).get();
+  const trialsDeleted = typeof trialStats.get("deleted") === "number" ? (trialStats.get("deleted") as number) : 0;
+  return { status: 200, body: { ...retentionMetrics(users, now), trialsDeleted, excluded, truncated: accounts.truncated } };
 }
 
 const notFound = (err: unknown) => (err as { code?: string }).code === "auth/user-not-found";

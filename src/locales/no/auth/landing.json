@@ -16,7 +16,7 @@
   "hero": {
     "title": "Den enkle måten å lære ord på hvilket som helst språk — og huske dem.",
     "subtitle": "Legg til dine egne ord, øv noen minutter om dagen – og Kolo henter fram hvert ord akkurat når du er i ferd med å glemme det.",
-    "start": "Begynn å lære",
+    "start": "Prøv uten konto",
     "promises": [
       "Ingen reklame",
       "All læring er gratis",
@@ -244,8 +244,8 @@
   },
   "cta": {
     "title": "Lær nye språk med Kolo",
-    "text": "Lag en konto og legg til de første ordene – det tar et par minutter.",
-    "button": "Begynn å lære"
+    "text": "Velg et språk og begynn med de første ordene med en gang – uten konto. Du kan lagre fremgangen når du vil.",
+    "button": "Prøv uten konto"
   },
   "footer": {
     "tagline": "Lær ord på hvilket som helst språk — og husk dem.",

@@ -115,6 +115,15 @@
     "methods": {
       "password": "E-mail e senha"
     },
+    "trial": {
+      "method": "Modo de teste: progresso só neste aparelho",
+      "save": "Salvar progresso",
+      "saveDesc": "Conecte o Google ou um e-mail: suas palavras continuam e você poderá entrar em qualquer aparelho.",
+      "leaveRow": "Sair do modo de teste",
+      "leaveTitle": "Sair do modo de teste?",
+      "leaveText": "Seus sets e seu progresso serão apagados: não dá para voltar a uma conta de teste. Salve seu progresso antes se quiser mantê-los.",
+      "leave": "Apagar e sair"
+    },
     "changePassword": "Mudar senha",
     "changePasswordDesc": "Vamos enviar um link por e-mail para você criar uma senha nova.",
     "send": "Enviar link",

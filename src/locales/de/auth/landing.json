@@ -16,7 +16,7 @@
   "hero": {
     "title": "Der einfache Weg, Vokabeln in jeder Sprache zu lernen – und sie nicht zu vergessen.",
     "subtitle": "Füge deine eigenen Wörter hinzu, übe ein paar Minuten am Tag – und Kolo bringt jedes Wort genau dann zurück, wenn du es gerade zu vergessen beginnst.",
-    "start": "Jetzt lernen",
+    "start": "Ohne Anmeldung ausprobieren",
     "promises": [
       "Keine Werbung",
       "Lernen komplett kostenlos",
@@ -244,8 +244,8 @@
   },
   "cta": {
     "title": "Lerne jede Sprache mit Kolo",
-    "text": "Erstelle ein Konto und füge deine ersten Wörter hinzu – das dauert nur ein paar Minuten.",
-    "button": "Jetzt lernen"
+    "text": "Wähle eine Sprache und leg sofort mit deinen ersten Wörtern los – ganz ohne Konto. Deinen Fortschritt kannst du jederzeit speichern.",
+    "button": "Ohne Anmeldung ausprobieren"
   },
   "footer": {
     "tagline": "Vokabeln in jeder Sprache lernen – und behalten.",

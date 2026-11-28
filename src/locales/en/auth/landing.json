@@ -16,7 +16,7 @@
   "hero": {
     "title": "The simple way to learn words in any language — and remember them.",
     "subtitle": "Add your own words, practise a few minutes a day, and Kolo brings each one back right when you're about to forget it.",
-    "start": "Start learning",
+    "start": "Try without signing up",
     "promises": [
       "No ads",
       "All learning is free",
@@ -244,8 +244,8 @@
   },
   "cta": {
     "title": "Learn any language with Kolo",
-    "text": "Create an account and add your first words — it takes a couple of minutes.",
-    "button": "Start learning"
+    "text": "Pick a language and start with your first words right away — no account needed. Save your progress whenever you like.",
+    "button": "Try without signing up"
   },
   "footer": {
     "tagline": "Learn words in any language — and remember them.",

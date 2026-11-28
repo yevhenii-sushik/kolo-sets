@@ -56,9 +56,21 @@ export default function Retention() {
         <Funnel steps={data.funnel} />
       </Section>
 
+      {/* Пробный режим (шаг 16 в docs/specs/06-audit-fixes.md): сколько начали без аккаунта и сохранили прогресс */}
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Stat label="Начали без аккаунта" value={n(data.trial.started)} hint="за те же недели" />
+        <Stat
+          label="Сохранили прогресс"
+          value={n(data.trial.saved)}
+          hint={data.trial.started ? `${Math.round((data.trial.saved / data.trial.started) * 100)} % начавших` : "пока некому"}
+        />
+        <Stat label="Удалено без входа" value={n(data.trialsDeleted)} hint="30 дней не открывали, за всё время" />
+      </div>
+
       <Text size="xs" tone="faint">
         {skipped > 0 && `Не в счёте: команда — ${n(data.excluded.team)}, отключённые — ${n(data.excluded.disabled)}. `}
-        Удалённые аккаунты пропадают вместе с данными, поэтому настоящий возврат немного ниже. День регистрации — по
+        Удалённые аккаунты пропадают вместе с данными, поэтому настоящий возврат немного ниже; пробные аккаунты, которые
+        30 дней не открывали, удаляются сами — у когорт старше месяца пробных бросивших в счёте нет. День регистрации — по
         часовому поясу человека. Занятие — любая тренировка, включая закрепление.
       </Text>
 

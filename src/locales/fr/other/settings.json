@@ -115,6 +115,15 @@
     "methods": {
       "password": "E-mail et mot de passe"
     },
+    "trial": {
+      "method": "Mode essai : progression uniquement sur cet appareil",
+      "save": "Sauvegarder ma progression",
+      "saveDesc": "Connecte Google ou une adresse e-mail : tes mots restent et tu pourras te connecter sur n’importe quel appareil.",
+      "leaveRow": "Quitter le mode essai",
+      "leaveTitle": "Quitter le mode essai ?",
+      "leaveText": "Tes sets et ta progression seront supprimés : impossible de revenir à un compte d’essai. Sauvegarde d’abord ta progression si tu veux les garder.",
+      "leave": "Supprimer et quitter"
+    },
     "changePassword": "Changer le mot de passe",
     "changePasswordDesc": "Nous t'enverrons par e-mail un lien pour choisir un nouveau mot de passe.",
     "send": "Envoyer le lien",

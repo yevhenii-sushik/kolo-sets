@@ -16,7 +16,7 @@
   "hero": {
     "title": "La façon simple d'apprendre du vocabulaire dans n'importe quelle langue — et de le retenir.",
     "subtitle": "Ajoute tes propres mots, entraîne-toi quelques minutes par jour, et Kolo te ramène chaque mot juste au moment où tu commences à l'oublier.",
-    "start": "Commencer à apprendre",
+    "start": "Essayer sans inscription",
     "promises": [
       "Sans publicité",
       "Tout l'apprentissage est gratuit",
@@ -244,8 +244,8 @@
   },
   "cta": {
     "title": "Apprends n'importe quelle langue avec Kolo",
-    "text": "Crée un compte et ajoute tes premiers mots — ça prend deux minutes.",
-    "button": "Commencer à apprendre"
+    "text": "Choisis une langue et commence tout de suite avec tes premiers mots, sans compte. Tu pourras sauvegarder ta progression quand tu veux.",
+    "button": "Essayer sans inscription"
   },
   "footer": {
     "tagline": "Apprends du vocabulaire dans n'importe quelle langue et retiens-le.",

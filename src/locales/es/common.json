@@ -37,6 +37,11 @@
         "other": "{n} días"
       }
     },
+    "trial": {
+      "text": "Modo de prueba: tu progreso solo está en este dispositivo.",
+      "action": "Guardar progreso",
+      "dismiss": "Ocultar"
+    },
     "verify": {
       "text": "Confirma tu correo para proteger tu cuenta.",
       "resend": "Enviar el correo otra vez",
@@ -54,7 +59,7 @@
       "install": "Instalar"
     },
     "legalUpdate": {
-      "text": "El {date} actualizamos los Términos de uso y la Política de privacidad: llegaron la XP, las órbitas semanales, las cápsulas y los objetos virtuales.",
+      "text": "El {date} actualizamos los Términos de uso y la Política de privacidad: ahora puedes probar Kolo sin cuenta.",
       "terms": "Términos",
       "privacy": "Privacidad",
       "ok": "Entendido"
