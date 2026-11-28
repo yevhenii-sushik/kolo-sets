@@ -245,14 +245,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }), [profile, progression]);
 
   const applyReply = useCallback((reply: SessionReply, celebrate: boolean) => {
-    showUnlocks(reply.newAchievements);
     if (reply.loot) patchProfile({ ...reply.loot });
+    // Первая тренировка: капсула, бета-медаль, уровень и первые медали — одним окном «Первые награды»
+    const first = celebrate && !reply.duplicate && reply.firstSession && reply.progression;
+    if (!first) showUnlocks(reply.newAchievements);
     // Повтор возвращает старый ответ — его орбита уже устарела
     if (reply.duplicate) return;
-    // Первая тренировка: капсула, бета-медаль и уровень — одним окном «Первые награды»
-    const first = celebrate && reply.firstSession && reply.progression;
     applyProgression(reply.progression, celebrate && !first);
-    if (first) announceFirstSession(reply.progression!, reply.granted ?? []);
+    if (first) announceFirstSession(reply.progression!, reply.granted ?? [], reply.newAchievements);
     else if (celebrate) announceMedals(reply.granted ?? []);
   }, [showUnlocks, applyProgression, patchProfile]);
 

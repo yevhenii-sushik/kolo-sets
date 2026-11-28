@@ -110,6 +110,7 @@
       "one": "Por tu primera lección: una cápsula. Dentro hay un objeto para tu perfil: un satélite, un anillo, un fondo o un título.",
       "other": "Por tu primera lección: {n} cápsulas. Dentro hay objetos para tu perfil: satélites, anillos, fondos o títulos."
     },
+    "welcomeMedals": "Primeras medallas",
     "welcomeBeta": "Y la medalla de beta tester con un título y un anillo: gracias por estar con Kolo desde el principio."
   },
   "items": {

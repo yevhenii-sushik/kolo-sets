@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import type { AchievementType } from "../../types";
 import { useMomentsHeld } from "../../utils/momentsHold";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FlaskConical, Orbit, Share2, Shield, Sparkles, Wrench } from "lucide-react";
+import { FlaskConical, Medal, Orbit, Share2, Shield, Sparkles, Wrench } from "lucide-react";
 import { useI18n } from "../../contexts/I18nContext";
 import { getLanguageInfo } from "../../locales/languages";
 import { plural } from "../../utils/plural";
@@ -30,7 +31,7 @@ export type Moment =
   | { kind: "beta" }
   // Первая тренировка: стартовая капсула, медаль бета-тестера и новый уровень — одним окном с объяснением,
   // а не три праздника подряд (решение пользователя 2026-11-28)
-  | { kind: "welcome"; capsules: number; beta: boolean; level: number | null };
+  | { kind: "welcome"; capsules: number; beta: boolean; level: number | null; medals: AchievementType[] };
 
 export function momentsOf(p: Progression): Moment[] {
   const e = p.events;
@@ -55,13 +56,16 @@ export function announceProgress(p: Progression) {
   if (moments.length > 0) window.dispatchEvent(new CustomEvent(PROGRESS_MOMENTS_EVENT, { detail: moments }));
 }
 
-// Итог первой тренировки: капсула, бета-медаль и уровень сливаются в «Первые награды», остальное — как обычно
-export function announceFirstSession(p: Progression, granted: string[]) {
+// Итог первой тренировки: капсула, бета-медаль, уровень и первые медали сливаются в «Первые награды», остальное —
+// как обычно
+export function announceFirstSession(p: Progression, granted: string[], medals: AchievementType[]) {
   const beta = granted.includes("beta_tester");
   const rest = momentsOf(p).filter((m) => m.kind !== "capsule" && m.kind !== "level");
   const capsules = p.capsules?.gained ?? 0;
   const welcome: Moment[] =
-    capsules > 0 || beta ? [{ kind: "welcome", capsules, beta, level: p.xp.levelUp ? p.xp.level : null }] : momentsOf(p).filter((m) => m.kind === "level");
+    capsules > 0 || beta || medals.length > 0
+      ? [{ kind: "welcome", capsules, beta, level: p.xp.levelUp ? p.xp.level : null, medals }]
+      : momentsOf(p).filter((m) => m.kind === "level");
   const moments = [...rest, ...welcome];
   if (moments.length > 0) window.dispatchEvent(new CustomEvent(PROGRESS_MOMENTS_EVENT, { detail: moments }));
 }
@@ -242,6 +246,18 @@ function MomentCard({ moment, onClose }: { moment: Moment; onClose: () => void }
             </span>
           )}
           {moment.capsules > 0 && <span className="text-sm text-muted">{plural(locale, moment.capsules, t.rewards.moment.welcomeCapsule)}</span>}
+          {/* Первые медали — здесь же, а не отдельными баннерами следом */}
+          {moment.medals.length > 0 && (
+            <span className="mt-2 grid gap-1 text-left text-sm text-muted">
+              <span className="font-semibold text-fg">{t.rewards.moment.welcomeMedals}</span>
+              {moment.medals.map((id) => (
+                <span key={id} className="flex items-start gap-2">
+                  <Medal size={16} className="mt-0.5 shrink-0 text-accent" />
+                  {t.profile.achievementsList[id]?.name ?? id}
+                </span>
+              ))}
+            </span>
+          )}
           {moment.beta && (
             <span className="mt-2 flex items-start gap-2 text-left text-sm text-muted">
               <FlaskConical size={16} className="mt-0.5 shrink-0 text-special" />

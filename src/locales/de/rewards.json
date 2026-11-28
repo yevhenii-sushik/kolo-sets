@@ -110,6 +110,7 @@
       "one": "Für deine erste Lektion: eine Kapsel. Darin steckt ein Gegenstand für dein Profil – ein Satellit, ein Ring, ein Hintergrund oder ein Titel.",
       "other": "Für deine erste Lektion: {n} Kapseln. Darin stecken Gegenstände für dein Profil – Satelliten, Ringe, Hintergründe oder Titel."
     },
+    "welcomeMedals": "Erste Medaillen",
     "welcomeBeta": "Und die Beta-Tester-Medaille mit Titel und Ring – danke, dass du von Anfang an bei Kolo bist."
   },
   "items": {

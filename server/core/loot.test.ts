@@ -227,6 +227,16 @@ describe("откуда капсулы", () => {
     expect(result.progression.capsules.gained).toBe(2);
   });
 
+  it("новичок: опыт за медаль «Первый набор» до урока стартовую капсулу не приносит", () => {
+    const r = applyCollectionUnlocks({}, { cardsInSession: 0, totalCards: 23, collectionsCount: 1, hasCollection: true }, "2026-11-04");
+    expect(r?.result.newAchievements).toContain(AchievementType.FIRST_COLLECTION);
+    expect(r?.patch.capsules).toBeUndefined();
+    expect(r?.result.progression?.capsules.gained ?? 0).toBe(0);
+    // а первая тренировка после неё — приносит
+    const { result } = applySession({ ...r!.patch, achievements: r!.result.newAchievements }, session, info, NOW);
+    expect(result.progression.capsules.gained).toBeGreaterThan(0);
+  });
+
   it("синхронизация старого профиля: стартовые по уровню, без капсул за опыт прошлого", () => {
     const r = syncProgress({ studyHistory: [{ date: "2026-10-20", sessions: 3, cardsStudied: 300 }] }, "2026-11-04");
     expect(r.result.xp.level).toBe(3);

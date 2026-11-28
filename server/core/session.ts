@@ -234,7 +234,7 @@ export function applySession(
     (firstToday ? FIRST_SESSION_BONUS : 0) +
     (events.includes("orbitClosed") ? ORBIT_BONUS : 0) +
     newAchievements.reduce((n, id) => n + achievementXp(id), 0);
-  const progression = settle(state, prep, today, { gained, orbit, events, newAchievements });
+  const progression = settle(state, prep, today, { gained, orbit, events, newAchievements, practice: true });
 
   return {
     patch: {

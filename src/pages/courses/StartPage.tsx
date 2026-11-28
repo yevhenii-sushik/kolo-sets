@@ -37,7 +37,7 @@ export default function StartPage() {
   const locale = getLanguageInfo(language).htmlLang;
   const navigate = useNavigate();
   const { user, startTrial } = useAuth();
-  const { courses, coursesReady, addCourse, saveCollection, checkAchievements, setWeeklyGoal } = useData();
+  const { courses, coursesReady, addCourse, saveCollection, setWeeklyGoal } = useData();
 
   const [step, setStep] = useState<Step>("language");
   const [pick, setPick] = useState<{ code: string; voice: string } | null>(null);
@@ -82,10 +82,9 @@ export default function StartPage() {
           courseId: pick.code,
           now: new Date(),
         });
-        // Набор сразу в памяти, запись — в фоне; медаль за первый набор — когда запись дошла
-        void saveCollection(collection).then((ok) => {
-          if (ok) checkAchievements().catch(() => {});
-        });
+        // Набор сразу в памяти, запись — в фоне. Медаль «Первый набор» отдельно не спрашиваем: её выдаст первая
+        // тренировка вместе с остальными — одним окном «Первые награды», а не баннером посреди урока
+        void saveCollection(collection);
         // Главная — под уроком: «Выйти» из сессии возвращает на неё
         navigate("/", { replace: true });
         navigate(`/learn?set=${collection.id}`);

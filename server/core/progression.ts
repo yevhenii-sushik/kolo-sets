@@ -82,7 +82,9 @@ export function prepare(state: ProgressionState, today: string) {
   // Капсулы появились в 2b: при первой встрече — подарок с учётом уже набранного уровня. Новичку, который ещё
   // не занимался, подарок — за первую тренировку, а не за первое открытие приложения: капсула ни за что на старте
   // непонятна (решение пользователя 2026-11-28; награды — только за практику). До тех пор поле капсул не пишем
-  const studied = (state.studyHistory?.length ?? 0) > 0 || xp > 0;
+  // Занимался — есть хоть один день в истории. Опыт за медаль «Первый набор» учёбой не считается: иначе капсула
+  // приходила бы ещё до первого урока (так и было в первой выкладке 0.5.0)
+  const studied = (state.studyHistory?.length ?? 0) > 0;
   const starterPending = state.capsules === undefined && !studied;
   const starter = state.capsules === undefined && studied ? starterCapsules(levelFromXp(xp).level) : 0;
 
@@ -101,7 +103,8 @@ export function settle(
   state: ProgressionState,
   p: Prepared,
   today: string,
-  change: { gained: number; orbit: OrbitState; events: OrbitEvent[]; newAchievements?: readonly AchievementType[] },
+  // practice — это тренировка (applySession): только она приносит новичку стартовую капсулу
+  change: { gained: number; orbit: OrbitState; events: OrbitEvent[]; newAchievements?: readonly AchievementType[]; practice?: boolean },
 ): { patch: ProgressionPatch; view: ProgressionView } {
   const xp = p.xp + change.gained;
   const levelBefore = levelFromXp(p.xp).level;
@@ -115,7 +118,7 @@ export function settle(
     newAchievements: change.newAchievements ?? [],
   });
   // Первая тренировка новичка — стартовая капсула (см. prepare)
-  const firstPractice = p.starterPending && change.gained > 0;
+  const firstPractice = p.starterPending && change.practice === true;
   const starterNow = firstPractice ? starterCapsules(levelBefore) : 0;
   const capsules = p.capsules + earned + starterNow;
   // Новичок ещё не занимался и капсул не заработал — поле не пишем, подарок ждёт первой тренировки

@@ -110,6 +110,7 @@
       "one": "For your first lesson: a capsule. Inside is an item for your profile — a satellite, a ring, a background or a title.",
       "other": "For your first lesson: {n} capsules. Inside are items for your profile — satellites, rings, backgrounds or titles."
     },
+    "welcomeMedals": "First medals",
     "welcomeBeta": "And the Beta Tester medal with a title and a ring — thank you for being with Kolo from the very start."
   },
   "items": {
